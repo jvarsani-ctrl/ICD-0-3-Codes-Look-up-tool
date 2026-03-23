@@ -1,0 +1,925 @@
+[
+  {
+    "morphology_code": "9180",
+    "morphology_name": "Osteosarcoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9180"
+  },
+  {
+    "morphology_code": "9181",
+    "morphology_name": "Chondroblastic osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9181"
+  },
+  {
+    "morphology_code": "9182",
+    "morphology_name": "Fibroblastic osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9182"
+  },
+  {
+    "morphology_code": "9183",
+    "morphology_name": "Telangiectatic osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9183"
+  },
+  {
+    "morphology_code": "9184",
+    "morphology_name": "Osteosarcoma in Paget disease of bone",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9184"
+  },
+  {
+    "morphology_code": "9185",
+    "morphology_name": "Small cell osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9185"
+  },
+  {
+    "morphology_code": "9186",
+    "morphology_name": "Central osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9186"
+  },
+  {
+    "morphology_code": "9187",
+    "morphology_name": "Intraosseous well differentiated osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9187"
+  },
+  {
+    "morphology_code": "9191",
+    "morphology_name": "Osteoid osteoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9191"
+  },
+  {
+    "morphology_code": "9192",
+    "morphology_name": "Parosteal osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9192"
+  },
+  {
+    "morphology_code": "9193",
+    "morphology_name": "Periosteal osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9193"
+  },
+  {
+    "morphology_code": "9194",
+    "morphology_name": "High grade surface osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9194"
+  },
+  {
+    "morphology_code": "9195",
+    "morphology_name": "Intracortical osteosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9195"
+  },
+  {
+    "morphology_code": "9200",
+    "morphology_name": "Osteoblastoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIa",
+    "iccc3_subgroup_name": "Osteosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9200"
+  },
+  {
+    "morphology_code": "9210",
+    "morphology_name": "Osteochondroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9210"
+  },
+  {
+    "morphology_code": "9211",
+    "morphology_name": "Juxtacortical chondroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9211"
+  },
+  {
+    "morphology_code": "9220",
+    "morphology_name": "Chondroma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9220"
+  },
+  {
+    "morphology_code": "9221",
+    "morphology_name": "Juxtacortical chondroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9221"
+  },
+  {
+    "morphology_code": "9230",
+    "morphology_name": "Chondroblastoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9230"
+  },
+  {
+    "morphology_code": "9231",
+    "morphology_name": "Myxoid chondrosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9231"
+  },
+  {
+    "morphology_code": "9240",
+    "morphology_name": "Mesenchymal chondrosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9240"
+  },
+  {
+    "morphology_code": "9241",
+    "morphology_name": "Chondromyxoid fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9241"
+  },
+  {
+    "morphology_code": "9242",
+    "morphology_name": "Clear cell chondrosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9242"
+  },
+  {
+    "morphology_code": "9243",
+    "morphology_name": "Dedifferentiated chondrosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIb",
+    "iccc3_subgroup_name": "Chondrosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9243"
+  },
+  {
+    "morphology_code": "9260",
+    "morphology_name": "Ewing sarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIc1",
+    "iccc3_subgroup_name": "Ewing tumor and Askin tumor of bone",
+    "primary_sites": [
+      "C40.0-C41.9,C76.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9260"
+  },
+  {
+    "morphology_code": "9365",
+    "morphology_name": "Askin tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIc1",
+    "iccc3_subgroup_name": "Ewing tumor and Askin tumor of bone",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9365"
+  },
+  {
+    "morphology_code": "8810",
+    "morphology_name": "Fibroma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8810"
+  },
+  {
+    "morphology_code": "8811",
+    "morphology_name": "Fibromyxoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8811"
+  },
+  {
+    "morphology_code": "8812",
+    "morphology_name": "Periosteal fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8812"
+  },
+  {
+    "morphology_code": "8823",
+    "morphology_name": "Desmoplastic fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8823"
+  },
+  {
+    "morphology_code": "8830",
+    "morphology_name": "Benign fibrous histiocytoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8830"
+  },
+  {
+    "morphology_code": "9262",
+    "morphology_name": "Ossifying fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId1",
+    "iccc3_subgroup_name": "Malignant fibrous neoplasms of bone",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9262"
+  },
+  {
+    "morphology_code": "9370",
+    "morphology_name": "Chordoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId2",
+    "iccc3_subgroup_name": "Malignant chordomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9370"
+  },
+  {
+    "morphology_code": "9371",
+    "morphology_name": "Chondroid chordoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId2",
+    "iccc3_subgroup_name": "Malignant chordomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9371"
+  },
+  {
+    "morphology_code": "9372",
+    "morphology_name": "Dedifferentiated chordoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId2",
+    "iccc3_subgroup_name": "Malignant chordomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9372"
+  },
+  {
+    "morphology_code": "9270",
+    "morphology_name": "Odontogenic tumor, benign",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9270"
+  },
+  {
+    "morphology_code": "9271",
+    "morphology_name": "Ameloblastic fibrodentinoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9271"
+  },
+  {
+    "morphology_code": "9272",
+    "morphology_name": "Cementoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9272"
+  },
+  {
+    "morphology_code": "9273",
+    "morphology_name": "Cementoblastoma, benign",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9273"
+  },
+  {
+    "morphology_code": "9274",
+    "morphology_name": "Cementifying fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9274"
+  },
+  {
+    "morphology_code": "9275",
+    "morphology_name": "Gigantiform cementoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9275"
+  },
+  {
+    "morphology_code": "9280",
+    "morphology_name": "Odontoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9280"
+  },
+  {
+    "morphology_code": "9281",
+    "morphology_name": "Compound odontoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9281"
+  },
+  {
+    "morphology_code": "9282",
+    "morphology_name": "Complex odontoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9282"
+  },
+  {
+    "morphology_code": "9290",
+    "morphology_name": "Ameloblastic fibro-odontoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9290"
+  },
+  {
+    "morphology_code": "9300",
+    "morphology_name": "Adenomatoid odontogenic tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9300"
+  },
+  {
+    "morphology_code": "9301",
+    "morphology_name": "Calcifying odontogenic cyst",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9301"
+  },
+  {
+    "morphology_code": "9302",
+    "morphology_name": "Odontogenic ghost cell tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9302"
+  },
+  {
+    "morphology_code": "9310",
+    "morphology_name": "Ameloblastoma, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9310"
+  },
+  {
+    "morphology_code": "9311",
+    "morphology_name": "Odontoameloblastoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9311"
+  },
+  {
+    "morphology_code": "9312",
+    "morphology_name": "Squamous odontogenic tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9312"
+  },
+  {
+    "morphology_code": "9320",
+    "morphology_name": "Odontogenic myxoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9320"
+  },
+  {
+    "morphology_code": "9321",
+    "morphology_name": "Central odontogenic fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9321"
+  },
+  {
+    "morphology_code": "9322",
+    "morphology_name": "Peripheral odontogenic fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9322"
+  },
+  {
+    "morphology_code": "9330",
+    "morphology_name": "Ameloblastic fibroma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9330"
+  },
+  {
+    "morphology_code": "9340",
+    "morphology_name": "Calcifying epithelial odontogenic tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9340"
+  },
+  {
+    "morphology_code": "9341",
+    "morphology_name": "Clear cell odontogenic tumor",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9341"
+  },
+  {
+    "morphology_code": "9342",
+    "morphology_name": "Odontogenic carcinosarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId3",
+    "iccc3_subgroup_name": "Odontogenic malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9342"
+  },
+  {
+    "morphology_code": "9250",
+    "morphology_name": "Giant cell tumor of bone, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId4",
+    "iccc3_subgroup_name": "Miscellaneous malignant bone tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9250"
+  },
+  {
+    "morphology_code": "9261",
+    "morphology_name": "Adamantinoma of long bones",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIId4",
+    "iccc3_subgroup_name": "Miscellaneous malignant bone tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9261"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, benign",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, benign",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Clear cell tumor, NOS",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8005"
+  },
+  {
+    "morphology_code": "8800",
+    "morphology_name": "Soft tissue tumor, benign",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8800"
+  },
+  {
+    "morphology_code": "8801",
+    "morphology_name": "Spindle cell sarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8801"
+  },
+  {
+    "morphology_code": "8803",
+    "morphology_name": "Small cell sarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8803"
+  },
+  {
+    "morphology_code": "8804",
+    "morphology_name": "Epithelioid sarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8804"
+  },
+  {
+    "morphology_code": "8805",
+    "morphology_name": "Undifferentiated sarcoma",
+    "iccc3_group": "VIII",
+    "iccc3_group_name": "Malignant Bone Tumors",
+    "iccc3_subgroup_id": "VIIIe",
+    "iccc3_subgroup_name": "Unspecified malignant bone tumors",
+    "primary_sites": [
+      "C40.0-C41.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8805"
+  }
+]

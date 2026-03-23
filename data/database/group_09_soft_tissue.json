@@ -1,0 +1,1770 @@
+[
+  {
+    "morphology_code": "8900",
+    "morphology_name": "Rhabdomyosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8900"
+  },
+  {
+    "morphology_code": "8901",
+    "morphology_name": "Pleomorphic rhabdomyosarcoma, adult type",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8901"
+  },
+  {
+    "morphology_code": "8902",
+    "morphology_name": "Mixed type rhabdomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8902"
+  },
+  {
+    "morphology_code": "8903",
+    "morphology_name": "Fetal rhabdomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8903"
+  },
+  {
+    "morphology_code": "8904",
+    "morphology_name": "Adult rhabdomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8904"
+  },
+  {
+    "morphology_code": "8905",
+    "morphology_name": "Genital rhabdomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8905"
+  },
+  {
+    "morphology_code": "8910",
+    "morphology_name": "Embryonal rhabdomyosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8910"
+  },
+  {
+    "morphology_code": "8912",
+    "morphology_name": "Spindle cell rhabdomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8912"
+  },
+  {
+    "morphology_code": "8920",
+    "morphology_name": "Alveolar rhabdomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8920"
+  },
+  {
+    "morphology_code": "8991",
+    "morphology_name": "Embryonal sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXa",
+    "iccc3_subgroup_name": "Rhabdomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8991"
+  },
+  {
+    "morphology_code": "8810",
+    "morphology_name": "Fibrosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8810"
+  },
+  {
+    "morphology_code": "8811",
+    "morphology_name": "Fibromyxosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8811"
+  },
+  {
+    "morphology_code": "8813",
+    "morphology_name": "Fascial fibrosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8813"
+  },
+  {
+    "morphology_code": "8814",
+    "morphology_name": "Infantile fibrosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8814"
+  },
+  {
+    "morphology_code": "8815",
+    "morphology_name": "Solitary fibrous tumor, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8815"
+  },
+  {
+    "morphology_code": "8821",
+    "morphology_name": "Aggressive fibromatosis",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8821"
+  },
+  {
+    "morphology_code": "8823",
+    "morphology_name": "Desmoplastic fibroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8823"
+  },
+  {
+    "morphology_code": "8834",
+    "morphology_name": "Giant cell fibroblastoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8834"
+  },
+  {
+    "morphology_code": "8835",
+    "morphology_name": "Plexiform fibrohistiocytic tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8835"
+  },
+  {
+    "morphology_code": "8820",
+    "morphology_name": "Elastofibroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8820"
+  },
+  {
+    "morphology_code": "8822",
+    "morphology_name": "Abdominal fibromatosis",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8822"
+  },
+  {
+    "morphology_code": "8824",
+    "morphology_name": "Myofibroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8824"
+  },
+  {
+    "morphology_code": "8825",
+    "morphology_name": "Myofibroblastoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8825"
+  },
+  {
+    "morphology_code": "8826",
+    "morphology_name": "Angiomyofibroblastoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8826"
+  },
+  {
+    "morphology_code": "8827",
+    "morphology_name": "Myofibroblastic tumor, peribronchial",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8827"
+  },
+  {
+    "morphology_code": "9150",
+    "morphology_name": "Hemangiopericytoma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9150"
+  },
+  {
+    "morphology_code": "9160",
+    "morphology_name": "Angiofibroma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb1",
+    "iccc3_subgroup_name": "Fibroblastic and myofibroblastic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9160"
+  },
+  {
+    "morphology_code": "9540",
+    "morphology_name": "Malignant peripheral nerve sheath tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9540"
+  },
+  {
+    "morphology_code": "9541",
+    "morphology_name": "Melanotic neurofibroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9541"
+  },
+  {
+    "morphology_code": "9550",
+    "morphology_name": "Plexiform neurofibroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9550"
+  },
+  {
+    "morphology_code": "9560",
+    "morphology_name": "Neurilemoma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9560"
+  },
+  {
+    "morphology_code": "9561",
+    "morphology_name": "Malignant peripheral nerve sheath tumor with rhabdomyoblastic differentiation",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9561"
+  },
+  {
+    "morphology_code": "9562",
+    "morphology_name": "Neurothekeoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9562"
+  },
+  {
+    "morphology_code": "9570",
+    "morphology_name": "Neuroma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9570"
+  },
+  {
+    "morphology_code": "9571",
+    "morphology_name": "Perineurioma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb2",
+    "iccc3_subgroup_name": "Nerve sheath tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9571"
+  },
+  {
+    "morphology_code": "9491",
+    "morphology_name": "Ganglioneuromatosis",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb3",
+    "iccc3_subgroup_name": "Other fibromatous neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9491"
+  },
+  {
+    "morphology_code": "9580",
+    "morphology_name": "Granular cell tumor, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXb3",
+    "iccc3_subgroup_name": "Other fibromatous neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9580"
+  },
+  {
+    "morphology_code": "9140",
+    "morphology_name": "Kaposi sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXc",
+    "iccc3_subgroup_name": "Kaposi sarcoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9140"
+  },
+  {
+    "morphology_code": "9260",
+    "morphology_name": "Ewing sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd1",
+    "iccc3_subgroup_name": "Ewing tumor and Askin tumor of soft tissue",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C44.9,C47.0-C75.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9260"
+  },
+  {
+    "morphology_code": "9365",
+    "morphology_name": "Askin tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd1",
+    "iccc3_subgroup_name": "Ewing tumor and Askin tumor of soft tissue",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9365"
+  },
+  {
+    "morphology_code": "9364",
+    "morphology_name": "Peripheral neuroectodermal tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd2",
+    "iccc3_subgroup_name": "Peripheral neuroectodermal tumor (pPNET) of soft tissue",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C44.9,470-699,C73.9-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9364"
+  },
+  {
+    "morphology_code": "8963",
+    "morphology_name": "Malignant rhabdoid tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd3",
+    "iccc3_subgroup_name": "Extrarenal extrahepatic rhabdoid tumor",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C63.9,C65.9-C69.9,C73.9-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8963"
+  },
+  {
+    "morphology_code": "8850",
+    "morphology_name": "Liposarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8850"
+  },
+  {
+    "morphology_code": "8851",
+    "morphology_name": "Liposarcoma, well differentiated",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8851"
+  },
+  {
+    "morphology_code": "8852",
+    "morphology_name": "Myxoid liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8852"
+  },
+  {
+    "morphology_code": "8853",
+    "morphology_name": "Round cell liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8853"
+  },
+  {
+    "morphology_code": "8854",
+    "morphology_name": "Pleomorphic liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8854"
+  },
+  {
+    "morphology_code": "8855",
+    "morphology_name": "Mixed liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8855"
+  },
+  {
+    "morphology_code": "8856",
+    "morphology_name": "Intramuscular lipoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8856"
+  },
+  {
+    "morphology_code": "8857",
+    "morphology_name": "Fibroblastic liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8857"
+  },
+  {
+    "morphology_code": "8858",
+    "morphology_name": "Dedifferentiated liposarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8858"
+  },
+  {
+    "morphology_code": "8860",
+    "morphology_name": "Angiomyolipoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8860"
+  },
+  {
+    "morphology_code": "8861",
+    "morphology_name": "Angiolipoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8861"
+  },
+  {
+    "morphology_code": "8862",
+    "morphology_name": "Chondroid lipoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8862"
+  },
+  {
+    "morphology_code": "8870",
+    "morphology_name": "Myelolipoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8870"
+  },
+  {
+    "morphology_code": "8880",
+    "morphology_name": "Hibernoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8880"
+  },
+  {
+    "morphology_code": "8881",
+    "morphology_name": "Lipoblastomatosis",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd4",
+    "iccc3_subgroup_name": "Liposarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8881"
+  },
+  {
+    "morphology_code": "8830",
+    "morphology_name": "Malignant fibrous histiocytoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8830"
+  },
+  {
+    "morphology_code": "8831",
+    "morphology_name": "Histiocytoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8831"
+  },
+  {
+    "morphology_code": "8832",
+    "morphology_name": "Dermatofibrosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8832"
+  },
+  {
+    "morphology_code": "8833",
+    "morphology_name": "Pigmented dermatofibrosarcoma protuberans",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8833"
+  },
+  {
+    "morphology_code": "8836",
+    "morphology_name": "Angiomatoid fibrous histiocytoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8836"
+  },
+  {
+    "morphology_code": "9251",
+    "morphology_name": "Malignant giant cell tumor of soft parts",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9251"
+  },
+  {
+    "morphology_code": "9252",
+    "morphology_name": "Malignant tenosynovial giant cell tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd5",
+    "iccc3_subgroup_name": "Fibrohistiocytic tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9252"
+  },
+  {
+    "morphology_code": "8890",
+    "morphology_name": "Leiomyosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8890"
+  },
+  {
+    "morphology_code": "8891",
+    "morphology_name": "Epithelioid leiomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8891"
+  },
+  {
+    "morphology_code": "8892",
+    "morphology_name": "Cellular leiomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8892"
+  },
+  {
+    "morphology_code": "8893",
+    "morphology_name": "Bizarre leiomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8893"
+  },
+  {
+    "morphology_code": "8894",
+    "morphology_name": "Angiomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8894"
+  },
+  {
+    "morphology_code": "8895",
+    "morphology_name": "Myosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8895"
+  },
+  {
+    "morphology_code": "8896",
+    "morphology_name": "Myxoid leiomyosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8896"
+  },
+  {
+    "morphology_code": "8897",
+    "morphology_name": "Smooth muscle tumor of uncertain malignant potential",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8897"
+  },
+  {
+    "morphology_code": "8898",
+    "morphology_name": "Metastasizing leiomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd6",
+    "iccc3_subgroup_name": "Leiomyosarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8898"
+  },
+  {
+    "morphology_code": "9040",
+    "morphology_name": "Synovial sarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd7",
+    "iccc3_subgroup_name": "Synovial sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9040"
+  },
+  {
+    "morphology_code": "9041",
+    "morphology_name": "Synovial sarcoma, spindle cell",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd7",
+    "iccc3_subgroup_name": "Synovial sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9041"
+  },
+  {
+    "morphology_code": "9042",
+    "morphology_name": "Synovial sarcoma, epithelioid cell",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd7",
+    "iccc3_subgroup_name": "Synovial sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9042"
+  },
+  {
+    "morphology_code": "9043",
+    "morphology_name": "Synovial sarcoma, biphasic",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd7",
+    "iccc3_subgroup_name": "Synovial sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9043"
+  },
+  {
+    "morphology_code": "9044",
+    "morphology_name": "Clear cell sarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd7",
+    "iccc3_subgroup_name": "Synovial sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9044"
+  },
+  {
+    "morphology_code": "9120",
+    "morphology_name": "Hemangiosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9120"
+  },
+  {
+    "morphology_code": "9121",
+    "morphology_name": "Cavernous hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9121"
+  },
+  {
+    "morphology_code": "9122",
+    "morphology_name": "Venous hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9122"
+  },
+  {
+    "morphology_code": "9123",
+    "morphology_name": "Racemose hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9123"
+  },
+  {
+    "morphology_code": "9124",
+    "morphology_name": "Kupffer cell sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9124"
+  },
+  {
+    "morphology_code": "9125",
+    "morphology_name": "Epithelioid hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9125"
+  },
+  {
+    "morphology_code": "9130",
+    "morphology_name": "Hemangioendothelioma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9130"
+  },
+  {
+    "morphology_code": "9131",
+    "morphology_name": "Capillary hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9131"
+  },
+  {
+    "morphology_code": "9132",
+    "morphology_name": "Intramuscular hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9132"
+  },
+  {
+    "morphology_code": "9133",
+    "morphology_name": "Epithelioid hemangioendothelioma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9133"
+  },
+  {
+    "morphology_code": "9135",
+    "morphology_name": "Endovascular papillary angioendothelioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9135"
+  },
+  {
+    "morphology_code": "9136",
+    "morphology_name": "Spindle cell hemangioendothelioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9136"
+  },
+  {
+    "morphology_code": "9141",
+    "morphology_name": "Angiokeratoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9141"
+  },
+  {
+    "morphology_code": "9142",
+    "morphology_name": "Verrucous keratotic hemangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9142"
+  },
+  {
+    "morphology_code": "9161",
+    "morphology_name": "Hemangioblastoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9161"
+  },
+  {
+    "morphology_code": "9170",
+    "morphology_name": "Lymphangiosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9170"
+  },
+  {
+    "morphology_code": "9171",
+    "morphology_name": "Capillary lymphangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9171"
+  },
+  {
+    "morphology_code": "9172",
+    "morphology_name": "Cavernous lymphangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9172"
+  },
+  {
+    "morphology_code": "9173",
+    "morphology_name": "Cystic lymphangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9173"
+  },
+  {
+    "morphology_code": "9174",
+    "morphology_name": "Lymphangiomyomatosis",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9174"
+  },
+  {
+    "morphology_code": "9175",
+    "morphology_name": "Hemolymphangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd8",
+    "iccc3_subgroup_name": "Blood vessel tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9175"
+  },
+  {
+    "morphology_code": "9180",
+    "morphology_name": "Osteosarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9180"
+  },
+  {
+    "morphology_code": "9181",
+    "morphology_name": "Chondroblastic osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9181"
+  },
+  {
+    "morphology_code": "9182",
+    "morphology_name": "Fibroblastic osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9182"
+  },
+  {
+    "morphology_code": "9183",
+    "morphology_name": "Telangiectatic osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9183"
+  },
+  {
+    "morphology_code": "9184",
+    "morphology_name": "Osteosarcoma in Paget disease of bone",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9184"
+  },
+  {
+    "morphology_code": "9185",
+    "morphology_name": "Small cell osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9185"
+  },
+  {
+    "morphology_code": "9186",
+    "morphology_name": "Central osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9186"
+  },
+  {
+    "morphology_code": "9187",
+    "morphology_name": "Intraosseous well differentiated osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9187"
+  },
+  {
+    "morphology_code": "9191",
+    "morphology_name": "Osteoid osteoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9191"
+  },
+  {
+    "morphology_code": "9192",
+    "morphology_name": "Parosteal osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9192"
+  },
+  {
+    "morphology_code": "9193",
+    "morphology_name": "Periosteal osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9193"
+  },
+  {
+    "morphology_code": "9194",
+    "morphology_name": "High grade surface osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9194"
+  },
+  {
+    "morphology_code": "9195",
+    "morphology_name": "Intracortical osteosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9195"
+  },
+  {
+    "morphology_code": "9200",
+    "morphology_name": "Osteoblastoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9200"
+  },
+  {
+    "morphology_code": "9210",
+    "morphology_name": "Osteochondroma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9210"
+  },
+  {
+    "morphology_code": "9220",
+    "morphology_name": "Chondroma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9220"
+  },
+  {
+    "morphology_code": "9240",
+    "morphology_name": "Mesenchymal chondrosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C22.0,C30.0-C38.8,C47.0-C50.9,C60.0-C61.9,C64.9,C67.0-C67.9,C69.6,C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9240"
+  },
+  {
+    "morphology_code": "9231",
+    "morphology_name": "Myxoid chondrosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd9",
+    "iccc3_subgroup_name": "Osseous and chondromatous neoplasms of soft tissue",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9231"
+  },
+  {
+    "morphology_code": "9581",
+    "morphology_name": "Alveolar soft part sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd10",
+    "iccc3_subgroup_name": "Alveolar soft parts sarcoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9581"
+  },
+  {
+    "morphology_code": "8587",
+    "morphology_name": "Ectopic hamartomatous thymoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8587"
+  },
+  {
+    "morphology_code": "8710",
+    "morphology_name": "Glomangiosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8710"
+  },
+  {
+    "morphology_code": "8711",
+    "morphology_name": "Glomus tumor, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8711"
+  },
+  {
+    "morphology_code": "8712",
+    "morphology_name": "Glomangioma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8712"
+  },
+  {
+    "morphology_code": "8713",
+    "morphology_name": "Glomangiomyoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8713"
+  },
+  {
+    "morphology_code": "8806",
+    "morphology_name": "Desmoplastic small round cell tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8806"
+  },
+  {
+    "morphology_code": "8840",
+    "morphology_name": "Myxosarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8840"
+  },
+  {
+    "morphology_code": "8841",
+    "morphology_name": "Angiomyxoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8841"
+  },
+  {
+    "morphology_code": "8842",
+    "morphology_name": "Ossifying fibromyxoid tumor",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8842"
+  },
+  {
+    "morphology_code": "8921",
+    "morphology_name": "Rhabdomyosarcoma with ganglionic differentiation",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8921"
+  },
+  {
+    "morphology_code": "8990",
+    "morphology_name": "Mesenchymoma, malignant",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8990"
+  },
+  {
+    "morphology_code": "9373",
+    "morphology_name": "Parachordoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXd11",
+    "iccc3_subgroup_name": "Miscellaneous soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9373"
+  },
+  {
+    "morphology_code": "8800",
+    "morphology_name": "Sarcoma, NOS",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8800"
+  },
+  {
+    "morphology_code": "8801",
+    "morphology_name": "Spindle cell sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8801"
+  },
+  {
+    "morphology_code": "8802",
+    "morphology_name": "Giant cell sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8802"
+  },
+  {
+    "morphology_code": "8803",
+    "morphology_name": "Small cell sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8803"
+  },
+  {
+    "morphology_code": "8804",
+    "morphology_name": "Epithelioid sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8804"
+  },
+  {
+    "morphology_code": "8805",
+    "morphology_name": "Undifferentiated sarcoma",
+    "iccc3_group": "IX",
+    "iccc3_group_name": "Soft Tissue And Other Extraosseous Sarcomas",
+    "iccc3_subgroup_id": "IXe",
+    "iccc3_subgroup_name": "Unspecified soft tissue sarcomas",
+    "primary_sites": [
+      "C00.0-C39.9,C44.0-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8805"
+  }
+]

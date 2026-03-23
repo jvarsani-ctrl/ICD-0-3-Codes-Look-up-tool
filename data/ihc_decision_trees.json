@@ -1,0 +1,289 @@
+{
+  "all_b_vs_t": {
+    "id": "all_b_vs_t",
+    "title": "Acute Lymphoblastic Leukemia — B-cell vs T-cell",
+    "description": "Use this tree when the report says ALL or Lymphoblastic Leukemia without specifying B or T lineage.",
+    "question": "What does the IHC panel show?",
+    "nodes": {
+      "root": {
+        "question": "Is CD19 positive on IHC?",
+        "yes": "node_cd19_pos",
+        "no": "node_cd19_neg"
+      },
+      "node_cd19_pos": {
+        "question": "Is TdT (terminal deoxynucleotidyl transferase) positive?",
+        "yes": "result_b_all",
+        "no": "result_mature_b"
+      },
+      "node_cd19_neg": {
+        "question": "Is CD3 positive?",
+        "yes": "node_cd3_pos",
+        "no": "result_unknown"
+      },
+      "node_cd3_pos": {
+        "question": "Is TdT positive?",
+        "yes": "result_t_all",
+        "no": "result_mature_t"
+      }
+    },
+    "results": {
+      "result_b_all": {
+        "label": "B-ALL — B Lymphoblastic Leukemia/Lymphoma",
+        "morphology_code": "9811",
+        "morphology_name": "B lymphoblastic leukemia/lymphoma, NOS",
+        "iccc3_subgroup_id": "Ia1",
+        "iccc3_subgroup_name": "Precursor cell leukemias",
+        "iccc3_group": "I",
+        "marker_summary": "CD19+, TdT+",
+        "notes": "If specific cytogenetic abnormality known (e.g. BCR-ABL), use more specific code: 9812 (BCR-ABL1), 9814 (ETV6-RUNX1), 9815 (hyperdiploidy), 9816 (hypodiploidy)."
+      },
+      "result_t_all": {
+        "label": "T-ALL — Precursor T-cell Lymphoblastic Leukemia",
+        "morphology_code": "9837",
+        "morphology_name": "Precursor T-cell lymphoblastic leukemia",
+        "iccc3_subgroup_id": "Ia1",
+        "iccc3_subgroup_name": "Precursor cell leukemias",
+        "iccc3_group": "I",
+        "marker_summary": "CD3+, TdT+",
+        "notes": "Also CD7+, CD2+. TdT positivity confirms precursor (not mature T-cell)."
+      },
+      "result_mature_b": {
+        "label": "Mature B-cell Leukemia (not ALL)",
+        "morphology_code": "9823",
+        "morphology_name": "B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma",
+        "iccc3_subgroup_id": "Ia2",
+        "iccc3_subgroup_name": "Mature B-cell leukemias",
+        "iccc3_group": "I",
+        "marker_summary": "CD19+, TdT−",
+        "notes": "Consider Burkitt leukemia (9826) if CD10+, Ki-67 ~100%, MYC translocation."
+      },
+      "result_mature_t": {
+        "label": "Mature T-cell Leukemia (not ALL)",
+        "morphology_code": "9827",
+        "morphology_name": "Adult T-cell leukemia/lymphoma (HTLV-1 positive)",
+        "iccc3_subgroup_id": "Ia3",
+        "iccc3_subgroup_name": "Mature T-cell and NK cell leukemias",
+        "iccc3_group": "I",
+        "marker_summary": "CD3+, TdT−",
+        "notes": "Consider HTLV-1 status. Rare in paediatrics."
+      },
+      "result_unknown": {
+        "label": "Lineage Unclassifiable — Leukemia NOS",
+        "morphology_code": "9800",
+        "morphology_name": "Leukemia, NOS",
+        "iccc3_subgroup_id": "Ie",
+        "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+        "iccc3_group": "I",
+        "marker_summary": "CD19−, CD3−",
+        "notes": "Insufficient IHC for lineage determination. Use 9800 as last resort."
+      }
+    }
+  },
+
+  "lymphoma_nos": {
+    "id": "lymphoma_nos",
+    "title": "Lymphoma NOS — Hodgkin vs Non-Hodgkin vs Burkitt",
+    "description": "Use this tree when the report says 'Lymphoma' without specifying type.",
+    "question": "What does the IHC panel show?",
+    "nodes": {
+      "root": {
+        "question": "Are Reed-Sternberg cells present OR is CD30 strongly positive?",
+        "yes": "node_rs_pos",
+        "no": "node_rs_neg"
+      },
+      "node_rs_pos": {
+        "question": "Is CD15 positive?",
+        "yes": "result_hodgkin",
+        "no": "node_cd30_cd15_neg"
+      },
+      "node_cd30_cd15_neg": {
+        "question": "Is ALK positive?",
+        "yes": "result_alcl",
+        "no": "result_hodgkin_nlphl"
+      },
+      "node_rs_neg": {
+        "question": "Is CD20 positive?",
+        "yes": "node_cd20_pos",
+        "no": "node_cd20_neg"
+      },
+      "node_cd20_pos": {
+        "question": "Is Ki-67 close to 100% AND is MYC translocation present (or starry sky pattern)?",
+        "yes": "result_burkitt",
+        "no": "result_nhl_b"
+      },
+      "node_cd20_neg": {
+        "question": "Is CD3 positive?",
+        "yes": "result_nhl_t",
+        "no": "result_lymphoma_nos"
+      }
+    },
+    "results": {
+      "result_hodgkin": {
+        "label": "Hodgkin Lymphoma",
+        "morphology_code": "9650",
+        "morphology_name": "Hodgkin lymphoma, NOS",
+        "iccc3_subgroup_id": "IIa",
+        "iccc3_subgroup_name": "Hodgkin lymphomas",
+        "iccc3_group": "II",
+        "marker_summary": "CD30+, CD15+, Reed-Sternberg cells",
+        "notes": "Use specific subtype code if available: 9663 (nodular sclerosis — most common in adolescents), 9652 (mixed cellularity — more common in younger children / EBV-positive)."
+      },
+      "result_hodgkin_nlphl": {
+        "label": "Hodgkin Lymphoma, Nodular Lymphocyte Predominance",
+        "morphology_code": "9659",
+        "morphology_name": "Hodgkin lymphoma, nodular lymphocyte predominance",
+        "iccc3_subgroup_id": "IIa",
+        "iccc3_subgroup_name": "Hodgkin lymphomas",
+        "iccc3_group": "II",
+        "marker_summary": "CD30+, CD15−, CD20+, CD79a+",
+        "notes": "NLPHL — popcorn cells. Different biology from classical HL. Code 9659."
+      },
+      "result_alcl": {
+        "label": "Anaplastic Large Cell Lymphoma (ALCL)",
+        "morphology_code": "9714",
+        "morphology_name": "Anaplastic large cell lymphoma, T cell and Null cell type",
+        "iccc3_subgroup_id": "IIb3",
+        "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+        "iccc3_group": "II",
+        "marker_summary": "CD30+, ALK+",
+        "notes": "Common paediatric T-cell lymphoma. ALK+ve has better prognosis."
+      },
+      "result_burkitt": {
+        "label": "Burkitt Lymphoma",
+        "morphology_code": "9687",
+        "morphology_name": "Burkitt lymphoma, NOS",
+        "iccc3_subgroup_id": "IIc",
+        "iccc3_subgroup_name": "Burkitt lymphoma",
+        "iccc3_group": "II",
+        "marker_summary": "CD20+, CD10+, BCL6+, Ki-67 ~100%",
+        "notes": "Most common childhood lymphoma in sub-Saharan Africa. Jaw/abdominal involvement. MYC translocation t(8;14). Code 9687."
+      },
+      "result_nhl_b": {
+        "label": "B-cell Non-Hodgkin Lymphoma",
+        "morphology_code": "9680",
+        "morphology_name": "Malignant lymphoma, large B-cell, diffuse, NOS",
+        "iccc3_subgroup_id": "IIb2",
+        "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+        "iccc3_group": "II",
+        "marker_summary": "CD20+, Ki-67 < 100%",
+        "notes": "Default to DLBCL (9680) for large B-cell lymphoma. If follicular pattern → follicular lymphoma (9690). If small cells → CLL/SLL (9823 if leukemic)."
+      },
+      "result_nhl_t": {
+        "label": "T-cell Non-Hodgkin Lymphoma",
+        "morphology_code": "9702",
+        "morphology_name": "Mature T-cell lymphoma, NOS",
+        "iccc3_subgroup_id": "IIb3",
+        "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+        "iccc3_group": "II",
+        "marker_summary": "CD3+, CD20−",
+        "notes": "Code 9702 if NOS. Consider ALCL (9714, CD30+, ALK+) or PTCL (9702)."
+      },
+      "result_lymphoma_nos": {
+        "label": "Lymphoma NOS",
+        "morphology_code": "9590",
+        "morphology_name": "Malignant lymphoma, NOS",
+        "iccc3_subgroup_id": "IIe",
+        "iccc3_subgroup_name": "Unspecified lymphomas",
+        "iccc3_group": "II",
+        "marker_summary": "CD20−, CD3−",
+        "notes": "Last resort — consider repeating IHC panel. Code 9590."
+      }
+    }
+  },
+
+  "round_cell_tumour": {
+    "id": "round_cell_tumour",
+    "title": "Small Round Cell Tumour — Differential Diagnosis",
+    "description": "Use when pathology shows small round blue cells without clear diagnosis. Common paediatric entities: neuroblastoma, Ewing sarcoma, RMS, Wilms, lymphoma.",
+    "question": "What does the IHC panel show?",
+    "nodes": {
+      "root": {
+        "question": "Is Synaptophysin OR Chromogranin positive?",
+        "yes": "result_neuroblastoma",
+        "no": "node_syn_neg"
+      },
+      "node_syn_neg": {
+        "question": "Is CD99 (MIC2) strongly positive (membranous)?",
+        "yes": "result_ewing",
+        "no": "node_cd99_neg"
+      },
+      "node_cd99_neg": {
+        "question": "Is Desmin OR MyoD1 OR Myogenin positive?",
+        "yes": "result_rms",
+        "no": "node_desmin_neg"
+      },
+      "node_desmin_neg": {
+        "question": "Is WT1 positive (nuclear) AND primary site kidney?",
+        "yes": "result_wilms",
+        "no": "node_wt1_neg"
+      },
+      "node_wt1_neg": {
+        "question": "Is CD20 or CD3 or CD30 positive?",
+        "yes": "result_lymphoma",
+        "no": "result_unknown_srct"
+      }
+    },
+    "results": {
+      "result_neuroblastoma": {
+        "label": "Neuroblastoma",
+        "morphology_code": "9500",
+        "morphology_name": "Neuroblastoma, NOS",
+        "iccc3_subgroup_id": "IVa",
+        "iccc3_subgroup_name": "Neuroblastoma and ganglioneuroblastoma",
+        "iccc3_group": "IV",
+        "marker_summary": "Synaptophysin+ and/or Chromogranin+",
+        "notes": "Most common in adrenal/abdominal location. NSE+, CD56+. Urine catecholamines elevated. Code 9500."
+      },
+      "result_ewing": {
+        "label": "Ewing Sarcoma / PNET",
+        "morphology_code": "9260",
+        "morphology_name": "Ewing's sarcoma",
+        "iccc3_subgroup_id": "VIIIc1",
+        "iccc3_subgroup_name": "Ewing tumor and Askin tumor of bone",
+        "iccc3_group": "VIII",
+        "marker_summary": "CD99 strongly positive (membranous)",
+        "notes": "EWSR1 translocation (FISH). If bone primary → Group VIII (9260). If soft tissue → Group IX (9260 different topography). FLI1+. Code 9260."
+      },
+      "result_rms": {
+        "label": "Rhabdomyosarcoma",
+        "morphology_code": "8900",
+        "morphology_name": "Rhabdomyosarcoma, NOS",
+        "iccc3_subgroup_id": "IXa",
+        "iccc3_subgroup_name": "Rhabdomyosarcomas",
+        "iccc3_group": "IX",
+        "marker_summary": "Desmin+ and/or MyoD1+/Myogenin+",
+        "notes": "Code 8900 (NOS). Embryonal RMS more common in young children; alveolar RMS (8920) in older children/adolescents. PAX-FOXO1 fusion in alveolar type."
+      },
+      "result_wilms": {
+        "label": "Nephroblastoma (Wilms Tumour)",
+        "morphology_code": "8960",
+        "morphology_name": "Nephroblastoma, NOS",
+        "iccc3_subgroup_id": "VIa1",
+        "iccc3_subgroup_name": "Nephroblastoma",
+        "iccc3_group": "VI",
+        "marker_summary": "WT1+ (nuclear), kidney primary site",
+        "notes": "Triphasic histology (blastemal/stromal/epithelial). Must have C64.9 topography. Code 8960."
+      },
+      "result_lymphoma": {
+        "label": "Lymphoma — see IHC tree",
+        "morphology_code": "9591",
+        "morphology_name": "Malignant lymphoma, non-Hodgkin, NOS",
+        "iccc3_subgroup_id": "IIb4",
+        "iccc3_subgroup_name": "Non-Hodgkin lymphomas, NOS",
+        "iccc3_group": "II",
+        "marker_summary": "CD20+ or CD3+ or CD30+",
+        "notes": "See Lymphoma NOS decision tree for further classification."
+      },
+      "result_unknown_srct": {
+        "label": "Small Round Cell Tumour, Unclassified",
+        "morphology_code": "8005",
+        "morphology_name": "Clear cell tumor, NOS",
+        "iccc3_subgroup_id": "IIIf",
+        "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+        "iccc3_group": "XII",
+        "marker_summary": "All markers negative",
+        "notes": "Consider extended panel or molecular testing. Code 8005 as last resort."
+      }
+    }
+  }
+}

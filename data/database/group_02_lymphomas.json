@@ -1,0 +1,1172 @@
+[
+  {
+    "morphology_code": "9650",
+    "morphology_name": "Hodgkin lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9650"
+  },
+  {
+    "morphology_code": "9651",
+    "morphology_name": "Hodgkin lymphoma, lymphocyte-rich",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9651"
+  },
+  {
+    "morphology_code": "9652",
+    "morphology_name": "Hodgkin lymphoma, mixed cellularity, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9652"
+  },
+  {
+    "morphology_code": "9653",
+    "morphology_name": "Hodgkin lymphoma, lymphocyte depletion, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9653"
+  },
+  {
+    "morphology_code": "9654",
+    "morphology_name": "Hodgkin lymphoma, lymphocyte depletion, diffuse fibrosis",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9654"
+  },
+  {
+    "morphology_code": "9655",
+    "morphology_name": "Hodgkin lymphoma, lymphocyte depletion, reticular",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9655"
+  },
+  {
+    "morphology_code": "9659",
+    "morphology_name": "Hodgkin lymphoma, nodular lymphocyte predominance",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9659"
+  },
+  {
+    "morphology_code": "9661",
+    "morphology_name": "Hodgkin granuloma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9661"
+  },
+  {
+    "morphology_code": "9662",
+    "morphology_name": "Hodgkin sarcoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9662"
+  },
+  {
+    "morphology_code": "9663",
+    "morphology_name": "Hodgkin lymphoma, nodular sclerosis, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9663"
+  },
+  {
+    "morphology_code": "9664",
+    "morphology_name": "Hodgkin lymphoma, nodular sclerosis, cellular phase",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9664"
+  },
+  {
+    "morphology_code": "9665",
+    "morphology_name": "Hodgkin lymphoma, nodular sclerosis, grade 1",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9665"
+  },
+  {
+    "morphology_code": "9667",
+    "morphology_name": "Hodgkin lymphoma, nodular sclerosis, grade 2",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIa",
+    "iccc3_subgroup_name": "Hodgkin lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9667"
+  },
+  {
+    "morphology_code": "9727",
+    "morphology_name": "Precursor cell lymphoblastic lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9727"
+  },
+  {
+    "morphology_code": "9728",
+    "morphology_name": "Precursor B-cell lymphoblastic lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9728"
+  },
+  {
+    "morphology_code": "9729",
+    "morphology_name": "Precursor T-cell lymphoblastic lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9729"
+  },
+  {
+    "morphology_code": "9811",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9811"
+  },
+  {
+    "morphology_code": "9812",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(9;22)(q34;q11.2); BCR-ABL1",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9812"
+  },
+  {
+    "morphology_code": "9813",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(v;11q23); MLL rearranged",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9813"
+  },
+  {
+    "morphology_code": "9814",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(12;21)(p13;q22); TEL-AML1 (ETV6-RUNX1)",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9814"
+  },
+  {
+    "morphology_code": "9815",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with hyperdiploidy",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9815"
+  },
+  {
+    "morphology_code": "9816",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with hypodiploidy (Hypodiploid ALL)",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9816"
+  },
+  {
+    "morphology_code": "9817",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(5;14)(q31;q32); IL3-IGH",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9817"
+  },
+  {
+    "morphology_code": "9818",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(1;19)(q23;p13.3); E2A-PBX1 (TCF3-PBX1)",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9818"
+  },
+  {
+    "morphology_code": "9837",
+    "morphology_name": "Precursor T-cell lymphoblastic leukemia",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb1",
+    "iccc3_subgroup_name": "Precursor cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9837"
+  },
+  {
+    "morphology_code": "9597",
+    "morphology_name": "Primary cutaneous follicle centre lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9597"
+  },
+  {
+    "morphology_code": "9670",
+    "morphology_name": "Malignant lymphoma, small B lymphocytic, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9670"
+  },
+  {
+    "morphology_code": "9671",
+    "morphology_name": "Malignant lymphoma, lymphoplasmacytic",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9671"
+  },
+  {
+    "morphology_code": "9673",
+    "morphology_name": "Mantle cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9673"
+  },
+  {
+    "morphology_code": "9675",
+    "morphology_name": "Malignant lymphoma, mixed small and large cell, diffuse",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9675"
+  },
+  {
+    "morphology_code": "9678",
+    "morphology_name": "Primary effusion lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9678"
+  },
+  {
+    "morphology_code": "9679",
+    "morphology_name": "Mediastinal large B-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9679"
+  },
+  {
+    "morphology_code": "9680",
+    "morphology_name": "Malignant lymphoma, large B-cell, diffuse, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9680"
+  },
+  {
+    "morphology_code": "9684",
+    "morphology_name": "Malignant lymphoma, large B-cell, diffuse, immunoblastic, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9684"
+  },
+  {
+    "morphology_code": "9688",
+    "morphology_name": "T-cell/histiocyte rich large B-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9688"
+  },
+  {
+    "morphology_code": "9689",
+    "morphology_name": "Splenic marginal zone B-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9689"
+  },
+  {
+    "morphology_code": "9690",
+    "morphology_name": "Follicular lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9690"
+  },
+  {
+    "morphology_code": "9691",
+    "morphology_name": "Follicular lymphoma, grade 2",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9691"
+  },
+  {
+    "morphology_code": "9695",
+    "morphology_name": "Follicular lymphoma, grade 1",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9695"
+  },
+  {
+    "morphology_code": "9698",
+    "morphology_name": "Follicular lymphoma, grade 3",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9698"
+  },
+  {
+    "morphology_code": "9699",
+    "morphology_name": "Marginal zone B-cell lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9699"
+  },
+  {
+    "morphology_code": "9712",
+    "morphology_name": "Intravascular large B-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9712"
+  },
+  {
+    "morphology_code": "9731",
+    "morphology_name": "Plasmacytoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9731"
+  },
+  {
+    "morphology_code": "9732",
+    "morphology_name": "Multiple myeloma 9733,",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9732"
+  },
+  {
+    "morphology_code": "9734",
+    "morphology_name": "Plasmacytoma, extramedullary",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9734"
+  },
+  {
+    "morphology_code": "9735",
+    "morphology_name": "Plasmablastic lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9735"
+  },
+  {
+    "morphology_code": "9737",
+    "morphology_name": "ALK positive large B-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9737"
+  },
+  {
+    "morphology_code": "9738",
+    "morphology_name": "Large B-cell lymphoma arising in HHV8-associated multicentric Castleman disease",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9738"
+  },
+  {
+    "morphology_code": "9761",
+    "morphology_name": "Waldenstrom macroglobulinemia",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9761"
+  },
+  {
+    "morphology_code": "9762",
+    "morphology_name": "Heavy chain disease, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9762"
+  },
+  {
+    "morphology_code": "9764",
+    "morphology_name": "Immunoproliferative small intestinal disease",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9764"
+  },
+  {
+    "morphology_code": "9765",
+    "morphology_name": "Monoclonal gammopathy of undetermined significance",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9765"
+  },
+  {
+    "morphology_code": "9766",
+    "morphology_name": "Angiocentric immunoproliferative lesion",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9766"
+  },
+  {
+    "morphology_code": "9769",
+    "morphology_name": "Immunoglobulin deposition disease",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9769"
+  },
+  {
+    "morphology_code": "9970",
+    "morphology_name": "Lymphoproliferative disorder, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9970"
+  },
+  {
+    "morphology_code": "9971",
+    "morphology_name": "Post transplant lymphoproliferative disorder, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9971"
+  },
+  {
+    "morphology_code": "9823",
+    "morphology_name": "B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb2",
+    "iccc3_subgroup_name": "Mature B-cell lymphomas (except Burkitt lymphoma)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9823"
+  },
+  {
+    "morphology_code": "9700",
+    "morphology_name": "Mycosis fungoides",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9700"
+  },
+  {
+    "morphology_code": "9701",
+    "morphology_name": "Sezary syndrome",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9701"
+  },
+  {
+    "morphology_code": "9702",
+    "morphology_name": "Mature T-cell lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9702"
+  },
+  {
+    "morphology_code": "9705",
+    "morphology_name": "Angioimmunoblastic T-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9705"
+  },
+  {
+    "morphology_code": "9708",
+    "morphology_name": "Subcutaneous panniculitis-like T-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9708"
+  },
+  {
+    "morphology_code": "9709",
+    "morphology_name": "Cutaneous T-cell lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9709"
+  },
+  {
+    "morphology_code": "9714",
+    "morphology_name": "Anaplastic large cell lymphoma, T cell and Null cell type",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9714"
+  },
+  {
+    "morphology_code": "9716",
+    "morphology_name": "Hepatosplenic T-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9716"
+  },
+  {
+    "morphology_code": "9717",
+    "morphology_name": "Intestinal T-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9717"
+  },
+  {
+    "morphology_code": "9718",
+    "morphology_name": "Primary cutaneous CD30+ T-cell lymphoproliferative disorder",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9718"
+  },
+  {
+    "morphology_code": "9719",
+    "morphology_name": "NK/T-cell lymphoma, nasal and nasal-type",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9719"
+  },
+  {
+    "morphology_code": "9724",
+    "morphology_name": "Systemic EBV positive T-cell lymphoproliferative disease of childhood",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9724"
+  },
+  {
+    "morphology_code": "9725",
+    "morphology_name": "Hydroa vacciniforme-like lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9725"
+  },
+  {
+    "morphology_code": "9726",
+    "morphology_name": "Primary cutaneous gamma-delta T-cell lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9726"
+  },
+  {
+    "morphology_code": "9767",
+    "morphology_name": "Angioimmunoblastic lymphadenopathy",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9767"
+  },
+  {
+    "morphology_code": "9768",
+    "morphology_name": "T-gamma lymphoproliferative disease",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9768"
+  },
+  {
+    "morphology_code": "9827",
+    "morphology_name": "Adult T-cell leukemia/lymphoma (HTLV-1 positive)",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb3",
+    "iccc3_subgroup_name": "Mature T-cell and NK-cell lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9827"
+  },
+  {
+    "morphology_code": "9591",
+    "morphology_name": "Malignant lymphoma, non-Hodgkin, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb4",
+    "iccc3_subgroup_name": "Non-Hodgkin lymphomas, NOS",
+    "primary_sites": [
+      "C00.0-C41.9,C42.2,C44.0-C77.9,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9591"
+  },
+  {
+    "morphology_code": "9760",
+    "morphology_name": "Immunoproliferative disease, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIb4",
+    "iccc3_subgroup_name": "Non-Hodgkin lymphomas, NOS",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9760"
+  },
+  {
+    "morphology_code": "9687",
+    "morphology_name": "Burkitt lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIc",
+    "iccc3_subgroup_name": "Burkitt lymphoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9687"
+  },
+  {
+    "morphology_code": "9740",
+    "morphology_name": "Mastocytoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9740"
+  },
+  {
+    "morphology_code": "9741",
+    "morphology_name": "Indolent systemic mastocytosis",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9741"
+  },
+  {
+    "morphology_code": "9742",
+    "morphology_name": "Mast cell leukemia",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9742"
+  },
+  {
+    "morphology_code": "9750",
+    "morphology_name": "Malignant histiocytosis",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9750"
+  },
+  {
+    "morphology_code": "9751",
+    "morphology_name": "Langerhans cell histiocytosis, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9751"
+  },
+  {
+    "morphology_code": "9754",
+    "morphology_name": "Langerhans cell histiocytosis, NOS (replaces former 9751/1 through 9754/3 codes)",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9754"
+  },
+  {
+    "morphology_code": "9755",
+    "morphology_name": "Histiocytic sarcoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9755"
+  },
+  {
+    "morphology_code": "9756",
+    "morphology_name": "Langerhans cell sarcoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9756"
+  },
+  {
+    "morphology_code": "9757",
+    "morphology_name": "Interdigitating dendritic cell sarcoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9757"
+  },
+  {
+    "morphology_code": "9758",
+    "morphology_name": "Follicular dendritic cell sarcoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9758"
+  },
+  {
+    "morphology_code": "9759",
+    "morphology_name": "Fibroblastic reticular cell tumor",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IId",
+    "iccc3_subgroup_name": "Miscellaneous lymphoreticular neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9759"
+  },
+  {
+    "morphology_code": "9590",
+    "morphology_name": "Malignant lymphoma, NOS",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIe",
+    "iccc3_subgroup_name": "Unspecified lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9590"
+  },
+  {
+    "morphology_code": "9596",
+    "morphology_name": "Composite Hodgkin and non-Hodgkin lymphoma",
+    "iccc3_group": "II",
+    "iccc3_group_name": "Lymphomas And Reticuloendothelial Neoplasms",
+    "iccc3_subgroup_id": "IIe",
+    "iccc3_subgroup_name": "Unspecified lymphomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9596"
+  }
+]

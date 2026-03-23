@@ -1,0 +1,1185 @@
+[
+  {
+    "morphology_code": "8970",
+    "morphology_name": "Hepatoblastoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIa1",
+    "iccc3_subgroup_name": "Hepatoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8970"
+  },
+  {
+    "morphology_code": "8975",
+    "morphology_name": "Calcifying nested epithelial stromal tumor (Note: This is classified as \"uncertain whether benign or malignant\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIa1",
+    "iccc3_subgroup_name": "Hepatoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8975"
+  },
+  {
+    "morphology_code": "8963",
+    "morphology_name": "Malignant rhabdoid tumor",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIa2",
+    "iccc3_subgroup_name": "Rhabdoid hepatic tumor",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8963"
+  },
+  {
+    "morphology_code": "8991",
+    "morphology_name": "Embryonal sarcoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIa3",
+    "iccc3_subgroup_name": "Embryonal sarcoma of liver",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8991"
+  },
+  {
+    "morphology_code": "8010",
+    "morphology_name": "Carcinoma in situ, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8010"
+  },
+  {
+    "morphology_code": "8011",
+    "morphology_name": "Epithelioma, malignant",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8011"
+  },
+  {
+    "morphology_code": "8012",
+    "morphology_name": "Large cell carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8012"
+  },
+  {
+    "morphology_code": "8013",
+    "morphology_name": "Large cell neuroendocrine carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8013"
+  },
+  {
+    "morphology_code": "8014",
+    "morphology_name": "Large cell carcinoma with rhabdoid phenotype",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8014"
+  },
+  {
+    "morphology_code": "8015",
+    "morphology_name": "Glassy cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8015"
+  },
+  {
+    "morphology_code": "8020",
+    "morphology_name": "Carcinoma, undifferentiated, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8020"
+  },
+  {
+    "morphology_code": "8021",
+    "morphology_name": "Carcinoma, anaplastic, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8021"
+  },
+  {
+    "morphology_code": "8022",
+    "morphology_name": "Pleomorphic carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8022"
+  },
+  {
+    "morphology_code": "8030",
+    "morphology_name": "Giant cell and spindle cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8030"
+  },
+  {
+    "morphology_code": "8031",
+    "morphology_name": "Giant cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8031"
+  },
+  {
+    "morphology_code": "8032",
+    "morphology_name": "Spindle cell carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8032"
+  },
+  {
+    "morphology_code": "8033",
+    "morphology_name": "Pseudosarcomatous carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8033"
+  },
+  {
+    "morphology_code": "8034",
+    "morphology_name": "Polygonal cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8034"
+  },
+  {
+    "morphology_code": "8035",
+    "morphology_name": "Carcinoma with osteoclast-like giant cells",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8035"
+  },
+  {
+    "morphology_code": "8041",
+    "morphology_name": "Small cell carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8041"
+  },
+  {
+    "morphology_code": "8050",
+    "morphology_name": "Papillary carcinoma in situ",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8050"
+  },
+  {
+    "morphology_code": "8051",
+    "morphology_name": "Verrucous carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8051"
+  },
+  {
+    "morphology_code": "8052",
+    "morphology_name": "Papillary squamous cell carcinoma, non-invasive",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8052"
+  },
+  {
+    "morphology_code": "8070",
+    "morphology_name": "Squamous cell carcinoma in situ, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8070"
+  },
+  {
+    "morphology_code": "8071",
+    "morphology_name": "Squamous cell carcinoma, keratinizing, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8071"
+  },
+  {
+    "morphology_code": "8072",
+    "morphology_name": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8072"
+  },
+  {
+    "morphology_code": "8073",
+    "morphology_name": "Squamous cell carcinoma, small cell, nonkeratinizing",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8073"
+  },
+  {
+    "morphology_code": "8074",
+    "morphology_name": "Squamous cell carcinoma, spindle cell",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8074"
+  },
+  {
+    "morphology_code": "8075",
+    "morphology_name": "Squamous cell carcinoma, adenoid",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8075"
+  },
+  {
+    "morphology_code": "8082",
+    "morphology_name": "Lymphoepithelial carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8082"
+  },
+  {
+    "morphology_code": "8120",
+    "morphology_name": "Transitional cell carcinoma in situ",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8120"
+  },
+  {
+    "morphology_code": "8121",
+    "morphology_name": "Schneiderian carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8121"
+  },
+  {
+    "morphology_code": "8122",
+    "morphology_name": "Transitional cell carcinoma, spindle cell",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8122"
+  },
+  {
+    "morphology_code": "8140",
+    "morphology_name": "Adenocarcinoma in situ, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8140"
+  },
+  {
+    "morphology_code": "8141",
+    "morphology_name": "Scirrhous adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8141"
+  },
+  {
+    "morphology_code": "8143",
+    "morphology_name": "Superficial spreading adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8143"
+  },
+  {
+    "morphology_code": "8148",
+    "morphology_name": "Glandular intraepithelial neoplasia, high grade",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8148"
+  },
+  {
+    "morphology_code": "8155",
+    "morphology_name": "Vipoma, malignant",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8155"
+  },
+  {
+    "morphology_code": "8158",
+    "morphology_name": "Endocrine tumor, functioning, NOS (Note: This is classified as \"uncertain whether benign or malignant\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8158"
+  },
+  {
+    "morphology_code": "8190",
+    "morphology_name": "Trabecular adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8190"
+  },
+  {
+    "morphology_code": "8200",
+    "morphology_name": "Adenoid cystic carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8200"
+  },
+  {
+    "morphology_code": "8201",
+    "morphology_name": "Cribriform carcinoma in situ",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8201"
+  },
+  {
+    "morphology_code": "8202",
+    "morphology_name": "Microcystic adenoma (Note: This is classified as \"benign\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8202"
+  },
+  {
+    "morphology_code": "8210",
+    "morphology_name": "Adenocarcinoma in situ in adenomatous polyp",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8210"
+  },
+  {
+    "morphology_code": "8211",
+    "morphology_name": "Tubular adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8211"
+  },
+  {
+    "morphology_code": "8230",
+    "morphology_name": "Ductal carcinoma in situ, solid type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8230"
+  },
+  {
+    "morphology_code": "8231",
+    "morphology_name": "Carcinoma simplex",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8231"
+  },
+  {
+    "morphology_code": "8240",
+    "morphology_name": "Carcinoid tumor of uncertain malignant potential",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8240"
+  },
+  {
+    "morphology_code": "8241",
+    "morphology_name": "Enterochromaffin cell carcinoid",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8241"
+  },
+  {
+    "morphology_code": "8244",
+    "morphology_name": "Mixed adenoneuroendocrine carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8244"
+  },
+  {
+    "morphology_code": "8245",
+    "morphology_name": "Adenocarcinoid tumor",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8245"
+  },
+  {
+    "morphology_code": "8246",
+    "morphology_name": "Neuroendocrine carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8246"
+  },
+  {
+    "morphology_code": "8260",
+    "morphology_name": "Papillary adenocarcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8260"
+  },
+  {
+    "morphology_code": "8261",
+    "morphology_name": "Adenocarcinoma in situ in villous adenoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8261"
+  },
+  {
+    "morphology_code": "8262",
+    "morphology_name": "Villous adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8262"
+  },
+  {
+    "morphology_code": "8263",
+    "morphology_name": "Adenocarcinoma in situ in tubulovillous adenoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8263"
+  },
+  {
+    "morphology_code": "8264",
+    "morphology_name": "Papillomatosis, glandular (Note: This is classified as \"benign\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8264"
+  },
+  {
+    "morphology_code": "8310",
+    "morphology_name": "Clear cell adenocarcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8310"
+  },
+  {
+    "morphology_code": "8320",
+    "morphology_name": "Granular cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8320"
+  },
+  {
+    "morphology_code": "8323",
+    "morphology_name": "Mixed cell adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8323"
+  },
+  {
+    "morphology_code": "8401",
+    "morphology_name": "Apocrine adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8401"
+  },
+  {
+    "morphology_code": "8430",
+    "morphology_name": "Mucoepidermoid carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8430"
+  },
+  {
+    "morphology_code": "8440",
+    "morphology_name": "Cystadenocarcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8440"
+  },
+  {
+    "morphology_code": "8470",
+    "morphology_name": "Mucinous cystadenocarcinoma, non-invasive",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8470"
+  },
+  {
+    "morphology_code": "8480",
+    "morphology_name": "Mucinous adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8480"
+  },
+  {
+    "morphology_code": "8481",
+    "morphology_name": "Mucin-producing adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8481"
+  },
+  {
+    "morphology_code": "8482",
+    "morphology_name": "Mucinous adenocarcinoma, endocervical type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8482"
+  },
+  {
+    "morphology_code": "8490",
+    "morphology_name": "Signet ring cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8490"
+  },
+  {
+    "morphology_code": "8503",
+    "morphology_name": "Noninfiltrating intraductal papillary adenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8503"
+  },
+  {
+    "morphology_code": "8504",
+    "morphology_name": "Noninfiltrating intracystic carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8504"
+  },
+  {
+    "morphology_code": "8510",
+    "morphology_name": "Medullary carcinoma, NOS",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8510"
+  },
+  {
+    "morphology_code": "8550",
+    "morphology_name": "Acinar cell carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8550"
+  },
+  {
+    "morphology_code": "8560",
+    "morphology_name": "Adenosquamous carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8560"
+  },
+  {
+    "morphology_code": "8561",
+    "morphology_name": "Adenolymphoma (Note: This is classified as \"benign\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8561"
+  },
+  {
+    "morphology_code": "8562",
+    "morphology_name": "Epithelial-myoepithelial carcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8562"
+  },
+  {
+    "morphology_code": "8570",
+    "morphology_name": "Adenocarcinoma with squamous metaplasia",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8570"
+  },
+  {
+    "morphology_code": "8571",
+    "morphology_name": "Adenocarcinoma with cartilaginous and osseous metaplasia",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8571"
+  },
+  {
+    "morphology_code": "8572",
+    "morphology_name": "Adenocarcinoma with spindle cell metaplasia",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8572"
+  },
+  {
+    "morphology_code": "8573",
+    "morphology_name": "Adenocarcinoma with apocrine metaplasia",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8573"
+  },
+  {
+    "morphology_code": "9013",
+    "morphology_name": "Adenofibroma, NOS (Note: This is classified as \"benign\" in the source morphology, but is listed under this subgroup.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9013"
+  },
+  {
+    "morphology_code": "8160",
+    "morphology_name": "Cholangiocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8160"
+  },
+  {
+    "morphology_code": "8161",
+    "morphology_name": "Bile duct cystadenocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8161"
+  },
+  {
+    "morphology_code": "8162",
+    "morphology_name": "Klatskin tumor",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8162"
+  },
+  {
+    "morphology_code": "8170",
+    "morphology_name": "Hepatocellular carcinoma, NOS (Note: The source `group 7.md` listed `8170-8C18.0`. The `8C18.0` is a typographical error and appears to be a topography code. Only the valid morphology code `8170` is extracted.)",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8170"
+  },
+  {
+    "morphology_code": "8180",
+    "morphology_name": "Combined hepatocellular carcinoma and cholangiocarcinoma",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIb",
+    "iccc3_subgroup_name": "Hepatic carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8180"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, malignant",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, malignant",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Malignant tumor, clear cell type",
+    "iccc3_group": "VII",
+    "iccc3_group_name": "Hepatic Tumors",
+    "iccc3_subgroup_id": "VIIc",
+    "iccc3_subgroup_name": "Unspecified malignant hepatic tumors",
+    "primary_sites": [
+      "C22.0,C22.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8005"
+  }
+]

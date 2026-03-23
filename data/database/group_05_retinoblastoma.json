@@ -1,0 +1,67 @@
+[
+  {
+    "morphology_code": "9510",
+    "morphology_name": "Retinoblastoma, NOS",
+    "iccc3_group": "V",
+    "iccc3_group_name": "Retinoblastoma",
+    "iccc3_subgroup_id": "V",
+    "iccc3_subgroup_name": "Retinoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9510"
+  },
+  {
+    "morphology_code": "9511",
+    "morphology_name": "Retinoblastoma, differentiated",
+    "iccc3_group": "V",
+    "iccc3_group_name": "Retinoblastoma",
+    "iccc3_subgroup_id": "V",
+    "iccc3_subgroup_name": "Retinoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9511"
+  },
+  {
+    "morphology_code": "9512",
+    "morphology_name": "Retinoblastoma, undifferentiated",
+    "iccc3_group": "V",
+    "iccc3_group_name": "Retinoblastoma",
+    "iccc3_subgroup_id": "V",
+    "iccc3_subgroup_name": "Retinoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9512"
+  },
+  {
+    "morphology_code": "9513",
+    "morphology_name": "Retinoblastoma, diffuse",
+    "iccc3_group": "V",
+    "iccc3_group_name": "Retinoblastoma",
+    "iccc3_subgroup_id": "V",
+    "iccc3_subgroup_name": "Retinoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9513"
+  },
+  {
+    "morphology_code": "9514",
+    "morphology_name": "Retinoblastoma, spontaneously regressed",
+    "iccc3_group": "V",
+    "iccc3_group_name": "Retinoblastoma",
+    "iccc3_subgroup_id": "V",
+    "iccc3_subgroup_name": "Retinoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9514"
+  }
+]

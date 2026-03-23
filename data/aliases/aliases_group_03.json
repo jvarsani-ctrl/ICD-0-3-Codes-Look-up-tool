@@ -1,0 +1,292 @@
+[
+  {
+    "alias": "Brain tumour",
+    "full_form": "Brain Tumour, NOS",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["8000"],
+    "maps_to_iccc3_subgroup_id": "IIIf",
+    "confidence": "low",
+    "needs_ihc_tree": false,
+    "notes": "Very non-specific. Topography must be C70-C72. Use 8000 as fallback. Review pathology report for specific histology."
+  },
+  {
+    "alias": "Brain tumour NOS",
+    "full_form": "Brain Tumour, Not Otherwise Specified",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["8000"],
+    "maps_to_iccc3_subgroup_id": "IIIf",
+    "confidence": "low",
+    "needs_ihc_tree": false,
+    "notes": "Code 8000 with C70-C72 topography."
+  },
+  {
+    "alias": "Intracranial tumour",
+    "full_form": "Intracranial Neoplasm, NOS",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["8000"],
+    "maps_to_iccc3_subgroup_id": "IIIf",
+    "confidence": "low",
+    "needs_ihc_tree": false,
+    "notes": "Code 8000 if no specific histology available."
+  },
+  {
+    "alias": "Ependymoma",
+    "full_form": "Ependymoma, NOS",
+    "origin_system": "ICD-O-3 / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9391"],
+    "maps_to_iccc3_subgroup_id": "IIIa1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9391. GFAP+. Posterior fossa or spinal. Commonly in children under 5."
+  },
+  {
+    "alias": "Myxopapillary ependymoma",
+    "full_form": "Myxopapillary Ependymoma",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9394"],
+    "maps_to_iccc3_subgroup_id": "IIIa1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9394. Spinal/cauda equina location."
+  },
+  {
+    "alias": "Choroid plexus tumour",
+    "full_form": "Choroid Plexus Tumour",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9390"],
+    "maps_to_iccc3_subgroup_id": "IIIa2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "9390 covers papilloma and carcinoma variants. Transthyretin+, CK+."
+  },
+  {
+    "alias": "Glioma",
+    "full_form": "Glioma, NOS",
+    "origin_system": "Pathology / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9380"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "GFAP+. Code depends on specific type: astrocytoma (9380), oligodendroglioma (9450), mixed (9382). Use 9380 if NOS."
+  },
+  {
+    "alias": "Astrocytoma",
+    "full_form": "Astrocytoma, NOS",
+    "origin_system": "WHO Classification CNS / ICD-O-3",
+    "maps_to_morphology_codes": ["9400", "9380"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Use 9400 for astrocytoma NOS. 9380 for glioma NOS or if astrocytoma NOS with C72.3 topography. GFAP+."
+  },
+  {
+    "alias": "Pilocytic astrocytoma",
+    "full_form": "Pilocytic Astrocytoma",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9421"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Most common paediatric CNS tumour. BRAF fusion. Code 9421."
+  },
+  {
+    "alias": "JPA",
+    "full_form": "Juvenile Pilocytic Astrocytoma",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9421"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Juvenile astrocytoma / Spongioblastoma NOS. Code 9421."
+  },
+  {
+    "alias": "Glioblastoma",
+    "full_form": "Glioblastoma, NOS",
+    "origin_system": "WHO Classification CNS / pathology",
+    "maps_to_morphology_codes": ["9440"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "GBM. GFAP+, highly malignant. Code 9440. Includes 9441 (giant cell GBM) and 9442 (gliosarcoma)."
+  },
+  {
+    "alias": "GBM",
+    "full_form": "Glioblastoma Multiforme",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9440"],
+    "maps_to_iccc3_subgroup_id": "IIIb",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9440."
+  },
+  {
+    "alias": "Medulloblastoma",
+    "full_form": "Medulloblastoma, NOS",
+    "origin_system": "ICD-O-3 / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9470"],
+    "maps_to_iccc3_subgroup_id": "IIIc1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Most common malignant brain tumour in children. Cerebellar location (C71.6). Synaptophysin+, NeuN+. Code 9470."
+  },
+  {
+    "alias": "Cerebellar medulloblastoma",
+    "full_form": "Medulloblastoma (cerebellar)",
+    "origin_system": "Clinical / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9470"],
+    "maps_to_iccc3_subgroup_id": "IIIc1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9470 with C71.6 topography."
+  },
+  {
+    "alias": "Desmoplastic medulloblastoma",
+    "full_form": "Desmoplastic/Nodular Medulloblastoma",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9471"],
+    "maps_to_iccc3_subgroup_id": "IIIc1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "SHH-activated subtype. Code 9471."
+  },
+  {
+    "alias": "PNET",
+    "full_form": "Primitive Neuroectodermal Tumour",
+    "origin_system": "Clinical / WHO Classification CNS (older terminology)",
+    "maps_to_morphology_codes": ["9473"],
+    "maps_to_iccc3_subgroup_id": "IIIc2",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Central PNET (supratentorial). Code 9473. NOTE: peripheral PNET / Ewing (9364/9260) is in Group VIII or IX, NOT here. Synaptophysin+."
+  },
+  {
+    "alias": "Primitive neuroectodermal tumour",
+    "full_form": "Primitive Neuroectodermal Tumour",
+    "origin_system": "Clinical / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9473"],
+    "maps_to_iccc3_subgroup_id": "IIIc2",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Use 9473 for CNS/intracranial PNET. For peripheral PNET use 9364 (Group IX)."
+  },
+  {
+    "alias": "CPNET",
+    "full_form": "Central Primitive Neuroectodermal Tumour",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9473"],
+    "maps_to_iccc3_subgroup_id": "IIIc2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9473."
+  },
+  {
+    "alias": "Supratentorial PNET",
+    "full_form": "Supratentorial Primitive Neuroectodermal Tumour",
+    "origin_system": "Clinical / pathology",
+    "maps_to_morphology_codes": ["9473"],
+    "maps_to_iccc3_subgroup_id": "IIIc2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9473."
+  },
+  {
+    "alias": "AT/RT",
+    "full_form": "Atypical Teratoid/Rhabdoid Tumour",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9508"],
+    "maps_to_iccc3_subgroup_id": "IIIc4",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "SMARCB1/INI1 loss on IHC. Aggressive, typically <3 years. Code 9508."
+  },
+  {
+    "alias": "Atypical teratoid rhabdoid tumour",
+    "full_form": "Atypical Teratoid/Rhabdoid Tumour",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9508"],
+    "maps_to_iccc3_subgroup_id": "IIIc4",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9508. SMARCB1/INI1 loss."
+  },
+  {
+    "alias": "Oligodendroglioma",
+    "full_form": "Oligodendroglioma, NOS",
+    "origin_system": "WHO Classification CNS / ICD-O-3",
+    "maps_to_morphology_codes": ["9450"],
+    "maps_to_iccc3_subgroup_id": "IIId1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9450. IDH mutant + 1p/19q codeletion in adults; rare in paediatrics."
+  },
+  {
+    "alias": "Craniopharyngioma",
+    "full_form": "Craniopharyngioma",
+    "origin_system": "ICD-O-3 / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9350", "9351", "9352"],
+    "maps_to_iccc3_subgroup_id": "IIIe2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Sellar region tumour. Code 9350 (NOS), 9351 (adamantinomatous), 9352 (papillary). Common in children."
+  },
+  {
+    "alias": "Meningioma",
+    "full_form": "Meningioma, NOS",
+    "origin_system": "ICD-O-3 / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9530"],
+    "maps_to_iccc3_subgroup_id": "IIIe5",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9530 NOS. EMA+, Progesterone receptor+. Rare in children."
+  },
+  {
+    "alias": "Ganglioglioma",
+    "full_form": "Ganglioglioma, NOS",
+    "origin_system": "WHO Classification CNS / ICD-O-3",
+    "maps_to_morphology_codes": ["9505"],
+    "maps_to_iccc3_subgroup_id": "IIIe4",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9505. BRAF V600E in some. Common cause of temporal lobe epilepsy in children."
+  },
+  {
+    "alias": "Pineoblastoma",
+    "full_form": "Pineoblastoma",
+    "origin_system": "ICD-O-3 / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9362"],
+    "maps_to_iccc3_subgroup_id": "IIIe3",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9362. Pineal region embryonal tumour."
+  },
+  {
+    "alias": "Pituitary adenoma",
+    "full_form": "Pituitary Adenoma",
+    "origin_system": "Clinical / WHO Classification CNS",
+    "maps_to_morphology_codes": ["9272"],
+    "maps_to_iccc3_subgroup_id": "IIIe1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 8272. C75.1 topography. Rare in children."
+  },
+  {
+    "alias": "DYSEMBRYOPLASTIC NEUROEPITHELIAL TUMOUR",
+    "full_form": "Dysembryoplastic Neuroepithelial Tumour",
+    "origin_system": "WHO Classification CNS",
+    "maps_to_morphology_codes": ["9413"],
+    "maps_to_iccc3_subgroup_id": "IIIe4",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "DNET. Code 9413. Cortical, benign, epilepsy-associated."
+  },
+  {
+    "alias": "DNET",
+    "full_form": "Dysembryoplastic Neuroepithelial Tumour",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9413"],
+    "maps_to_iccc3_subgroup_id": "IIIe4",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9413."
+  }
+]

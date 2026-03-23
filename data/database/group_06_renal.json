@@ -1,0 +1,1276 @@
+[
+  {
+    "morphology_code": "8959",
+    "morphology_name": "Malignant cystic nephroma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa1",
+    "iccc3_subgroup_name": "Nephroblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8959"
+  },
+  {
+    "morphology_code": "8960",
+    "morphology_name": "Nephroblastoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa1",
+    "iccc3_subgroup_name": "Nephroblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8960"
+  },
+  {
+    "morphology_code": "8963",
+    "morphology_name": "Malignant rhabdoid tumor",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa2",
+    "iccc3_subgroup_name": "Rhabdoid renal tumor",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8963"
+  },
+  {
+    "morphology_code": "8964",
+    "morphology_name": "Clear cell sarcoma of kidney",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa3",
+    "iccc3_subgroup_name": "Kidney sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8964"
+  },
+  {
+    "morphology_code": "8965",
+    "morphology_name": "Nephrogenic adenofibroma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa3",
+    "iccc3_subgroup_name": "Kidney sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8965"
+  },
+  {
+    "morphology_code": "8966",
+    "morphology_name": "Renomedullary interstitial cell tumor",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa3",
+    "iccc3_subgroup_name": "Kidney sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8966"
+  },
+  {
+    "morphology_code": "8967",
+    "morphology_name": "Ossifying renal tumor",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIa3",
+    "iccc3_subgroup_name": "Kidney sarcomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8967"
+  },
+  {
+    "morphology_code": "8010",
+    "morphology_name": "Carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8010"
+  },
+  {
+    "morphology_code": "8011",
+    "morphology_name": "Epithelioma, malignant",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8011"
+  },
+  {
+    "morphology_code": "8012",
+    "morphology_name": "Large cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8012"
+  },
+  {
+    "morphology_code": "8013",
+    "morphology_name": "Large cell neuroendocrine carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8013"
+  },
+  {
+    "morphology_code": "8014",
+    "morphology_name": "Large cell carcinoma with rhabdoid phenotype",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8014"
+  },
+  {
+    "morphology_code": "8015",
+    "morphology_name": "Glassy cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8015"
+  },
+  {
+    "morphology_code": "8020",
+    "morphology_name": "Carcinoma, undifferentiated, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8020"
+  },
+  {
+    "morphology_code": "8021",
+    "morphology_name": "Carcinoma, anaplastic, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8021"
+  },
+  {
+    "morphology_code": "8022",
+    "morphology_name": "Pleomorphic carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8022"
+  },
+  {
+    "morphology_code": "8030",
+    "morphology_name": "Giant cell and spindle cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8030"
+  },
+  {
+    "morphology_code": "8031",
+    "morphology_name": "Giant cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8031"
+  },
+  {
+    "morphology_code": "8032",
+    "morphology_name": "Spindle cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8032"
+  },
+  {
+    "morphology_code": "8033",
+    "morphology_name": "Pseudosarcomatous carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8033"
+  },
+  {
+    "morphology_code": "8034",
+    "morphology_name": "Polygonal cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8034"
+  },
+  {
+    "morphology_code": "8035",
+    "morphology_name": "Carcinoma with osteoclast-like giant cells",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8035"
+  },
+  {
+    "morphology_code": "8040",
+    "morphology_name": "Small cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8040"
+  },
+  {
+    "morphology_code": "8041",
+    "morphology_name": "Small cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8041"
+  },
+  {
+    "morphology_code": "8050",
+    "morphology_name": "Papillary carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8050"
+  },
+  {
+    "morphology_code": "8051",
+    "morphology_name": "Verrucous carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8051"
+  },
+  {
+    "morphology_code": "8052",
+    "morphology_name": "Papillary squamous cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8052"
+  },
+  {
+    "morphology_code": "8053",
+    "morphology_name": "Squamous cell papilloma, inverted",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8053"
+  },
+  {
+    "morphology_code": "8060",
+    "morphology_name": "Squamous papillomatosis",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8060"
+  },
+  {
+    "morphology_code": "8070",
+    "morphology_name": "Squamous cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8070"
+  },
+  {
+    "morphology_code": "8071",
+    "morphology_name": "Squamous cell carcinoma, keratinizing, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8071"
+  },
+  {
+    "morphology_code": "8072",
+    "morphology_name": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8072"
+  },
+  {
+    "morphology_code": "8073",
+    "morphology_name": "Squamous cell carcinoma, small cell, nonkeratinizing",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8073"
+  },
+  {
+    "morphology_code": "8074",
+    "morphology_name": "Squamous cell carcinoma, spindle cell",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8074"
+  },
+  {
+    "morphology_code": "8075",
+    "morphology_name": "Squamous cell carcinoma, adenoid",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8075"
+  },
+  {
+    "morphology_code": "8082",
+    "morphology_name": "Lymphoepithelial carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8082"
+  },
+  {
+    "morphology_code": "8120",
+    "morphology_name": "Transitional cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8120"
+  },
+  {
+    "morphology_code": "8121",
+    "morphology_name": "Schneiderian carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8121"
+  },
+  {
+    "morphology_code": "8122",
+    "morphology_name": "Transitional cell carcinoma, spindle cell",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8122"
+  },
+  {
+    "morphology_code": "8130",
+    "morphology_name": "Papillary transitional cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8130"
+  },
+  {
+    "morphology_code": "8131",
+    "morphology_name": "Transitional cell carcinoma, micropapillary",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8131"
+  },
+  {
+    "morphology_code": "8140",
+    "morphology_name": "Adenocarcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8140"
+  },
+  {
+    "morphology_code": "8141",
+    "morphology_name": "Scirrhous adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8141"
+  },
+  {
+    "morphology_code": "8143",
+    "morphology_name": "Superficial spreading adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8143"
+  },
+  {
+    "morphology_code": "8155",
+    "morphology_name": "Vipoma, malignant",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8155"
+  },
+  {
+    "morphology_code": "8190",
+    "morphology_name": "Trabecular adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8190"
+  },
+  {
+    "morphology_code": "8191",
+    "morphology_name": "Embryonal adenoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8191"
+  },
+  {
+    "morphology_code": "8200",
+    "morphology_name": "Adenoid cystic carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8200"
+  },
+  {
+    "morphology_code": "8201",
+    "morphology_name": "Cribriform carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8201"
+  },
+  {
+    "morphology_code": "8210",
+    "morphology_name": "Adenocarcinoma in adenomatous polyp",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8210"
+  },
+  {
+    "morphology_code": "8211",
+    "morphology_name": "Tubular adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8211"
+  },
+  {
+    "morphology_code": "8221",
+    "morphology_name": "Adenocarcinoma in multiple adenomatous polyps",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8221"
+  },
+  {
+    "morphology_code": "8230",
+    "morphology_name": "Solid carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8230"
+  },
+  {
+    "morphology_code": "8231",
+    "morphology_name": "Carcinoma simplex",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8231"
+  },
+  {
+    "morphology_code": "8240",
+    "morphology_name": "Carcinoid tumor, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8240"
+  },
+  {
+    "morphology_code": "8241",
+    "morphology_name": "Enterochromaffin cell carcinoid",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8241"
+  },
+  {
+    "morphology_code": "8244",
+    "morphology_name": "Mixed adenoneuroendocrine carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8244"
+  },
+  {
+    "morphology_code": "8245",
+    "morphology_name": "Adenocarcinoid tumor",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8245"
+  },
+  {
+    "morphology_code": "8246",
+    "morphology_name": "Neuroendocrine carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8246"
+  },
+  {
+    "morphology_code": "8260",
+    "morphology_name": "Papillary adenocarcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8260"
+  },
+  {
+    "morphology_code": "8261",
+    "morphology_name": "Adenocarcinoma in villous adenoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8261"
+  },
+  {
+    "morphology_code": "8262",
+    "morphology_name": "Villous adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8262"
+  },
+  {
+    "morphology_code": "8263",
+    "morphology_name": "Adenocarcinoma in tubulovillous adenoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8263"
+  },
+  {
+    "morphology_code": "8290",
+    "morphology_name": "Oxyphilic adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8290"
+  },
+  {
+    "morphology_code": "8310",
+    "morphology_name": "Clear cell adenocarcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8310"
+  },
+  {
+    "morphology_code": "8311",
+    "morphology_name": "Hypernephroid tumor [obs]",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8311"
+  },
+  {
+    "morphology_code": "8312",
+    "morphology_name": "Renal cell carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8312"
+  },
+  {
+    "morphology_code": "8316",
+    "morphology_name": "Cyst-associated renal cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8316"
+  },
+  {
+    "morphology_code": "8317",
+    "morphology_name": "Renal cell carcinoma, chromophobe type",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8317"
+  },
+  {
+    "morphology_code": "8318",
+    "morphology_name": "Renal cell carcinoma, sarcomatoid",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8318"
+  },
+  {
+    "morphology_code": "8319",
+    "morphology_name": "Collecting duct carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8319"
+  },
+  {
+    "morphology_code": "8320",
+    "morphology_name": "Granular cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8320"
+  },
+  {
+    "morphology_code": "8323",
+    "morphology_name": "Mixed cell adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8323"
+  },
+  {
+    "morphology_code": "8325",
+    "morphology_name": "Metanephric adenoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8325"
+  },
+  {
+    "morphology_code": "8361",
+    "morphology_name": "Juxtaglomerular tumor",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8361"
+  },
+  {
+    "morphology_code": "8401",
+    "morphology_name": "Apocrine adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8401"
+  },
+  {
+    "morphology_code": "8430",
+    "morphology_name": "Mucoepidermoid carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8430"
+  },
+  {
+    "morphology_code": "8440",
+    "morphology_name": "Cystadenocarcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8440"
+  },
+  {
+    "morphology_code": "8480",
+    "morphology_name": "Mucinous adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8480"
+  },
+  {
+    "morphology_code": "8481",
+    "morphology_name": "Mucin-producing adenocarcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8481"
+  },
+  {
+    "morphology_code": "8490",
+    "morphology_name": "Signet ring cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8490"
+  },
+  {
+    "morphology_code": "8504",
+    "morphology_name": "Intracystic carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8504"
+  },
+  {
+    "morphology_code": "8510",
+    "morphology_name": "Medullary carcinoma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8510"
+  },
+  {
+    "morphology_code": "8550",
+    "morphology_name": "Acinar cell carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8550"
+  },
+  {
+    "morphology_code": "8560",
+    "morphology_name": "Adenosquamous carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8560"
+  },
+  {
+    "morphology_code": "8561",
+    "morphology_name": "Adenolymphoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8561"
+  },
+  {
+    "morphology_code": "8562",
+    "morphology_name": "Epithelial-myoepithelial carcinoma",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8562"
+  },
+  {
+    "morphology_code": "8570",
+    "morphology_name": "Adenocarcinoma with squamous metaplasia",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8570"
+  },
+  {
+    "morphology_code": "8571",
+    "morphology_name": "Adenocarcinoma with cartilaginous and osseous metaplasia",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8571"
+  },
+  {
+    "morphology_code": "8572",
+    "morphology_name": "Adenocarcinoma with spindle cell metaplasia",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8572"
+  },
+  {
+    "morphology_code": "8573",
+    "morphology_name": "Adenocarcinoma with apocrine metaplasia",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8573"
+  },
+  {
+    "morphology_code": "9013",
+    "morphology_name": "Adenofibroma, NOS",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIb",
+    "iccc3_subgroup_name": "Renal carcinomas",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9013"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, malignant",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, malignant",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Malignant tumor, clear cell type",
+    "iccc3_group": "VI",
+    "iccc3_group_name": "Renal Tumors",
+    "iccc3_subgroup_id": "VIc",
+    "iccc3_subgroup_name": "Unspecified malignant renal tumors",
+    "primary_sites": [
+      "C64.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8005"
+  }
+]

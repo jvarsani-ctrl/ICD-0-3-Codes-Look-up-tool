@@ -1,0 +1,2537 @@
+[
+  {
+    "morphology_code": "9060",
+    "morphology_name": "Dysgerminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9060"
+  },
+  {
+    "morphology_code": "9061",
+    "morphology_name": "Seminoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9061"
+  },
+  {
+    "morphology_code": "9062",
+    "morphology_name": "Seminoma, anaplastic",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9062"
+  },
+  {
+    "morphology_code": "9063",
+    "morphology_name": "Spermatocytic seminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9063"
+  },
+  {
+    "morphology_code": "9064",
+    "morphology_name": "Intratubular malignant germ cells",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9064"
+  },
+  {
+    "morphology_code": "9065",
+    "morphology_name": "Germ cell tumor, nonseminomatous",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa1",
+    "iccc3_subgroup_name": "Intracranial and intraspinal germinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9065"
+  },
+  {
+    "morphology_code": "9080",
+    "morphology_name": "Teratoma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa2",
+    "iccc3_subgroup_name": "Intracranial and intraspinal teratomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9080"
+  },
+  {
+    "morphology_code": "9081",
+    "morphology_name": "Teratocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa2",
+    "iccc3_subgroup_name": "Intracranial and intraspinal teratomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9081"
+  },
+  {
+    "morphology_code": "9082",
+    "morphology_name": "Malignant teratoma, undifferentiated",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa2",
+    "iccc3_subgroup_name": "Intracranial and intraspinal teratomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9082"
+  },
+  {
+    "morphology_code": "9083",
+    "morphology_name": "Malignant teratoma, intermediate",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa2",
+    "iccc3_subgroup_name": "Intracranial and intraspinal teratomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9083"
+  },
+  {
+    "morphology_code": "9084",
+    "morphology_name": "Dermoid cyst, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa2",
+    "iccc3_subgroup_name": "Intracranial and intraspinal teratomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9084"
+  },
+  {
+    "morphology_code": "9070",
+    "morphology_name": "Embryonal carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa3",
+    "iccc3_subgroup_name": "Intracranial and intraspinal embryonal carcinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9070"
+  },
+  {
+    "morphology_code": "9072",
+    "morphology_name": "Polyembryoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa3",
+    "iccc3_subgroup_name": "Intracranial and intraspinal embryonal carcinomas",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9072"
+  },
+  {
+    "morphology_code": "9071",
+    "morphology_name": "Yolk sac tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa4",
+    "iccc3_subgroup_name": "Intracranial and intraspinal yolk sac tumor",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9071"
+  },
+  {
+    "morphology_code": "9100",
+    "morphology_name": "Hydatidiform mole, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa5",
+    "iccc3_subgroup_name": "Intracranial and intraspinal choriocarcinoma",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9100"
+  },
+  {
+    "morphology_code": "9101",
+    "morphology_name": "Choriocarcinoma combined with other germ cell elements",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa5",
+    "iccc3_subgroup_name": "Intracranial and intraspinal choriocarcinoma",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9101"
+  },
+  {
+    "morphology_code": "9085",
+    "morphology_name": "Mixed germ cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xa6",
+    "iccc3_subgroup_name": "Intracranial and intraspinal tumors of mixed forms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9085"
+  },
+  {
+    "morphology_code": "9060",
+    "morphology_name": "Dysgerminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9060"
+  },
+  {
+    "morphology_code": "9061",
+    "morphology_name": "Seminoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9061"
+  },
+  {
+    "morphology_code": "9062",
+    "morphology_name": "Seminoma, anaplastic",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9062"
+  },
+  {
+    "morphology_code": "9063",
+    "morphology_name": "Spermatocytic seminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9063"
+  },
+  {
+    "morphology_code": "9064",
+    "morphology_name": "Intratubular malignant germ cells",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9064"
+  },
+  {
+    "morphology_code": "9065",
+    "morphology_name": "Germ cell tumor, nonseminomatous",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb1",
+    "iccc3_subgroup_name": "Malignant germinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9065"
+  },
+  {
+    "morphology_code": "9080",
+    "morphology_name": "Teratoma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb2",
+    "iccc3_subgroup_name": "Malignant teratomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9080"
+  },
+  {
+    "morphology_code": "9081",
+    "morphology_name": "Teratocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb2",
+    "iccc3_subgroup_name": "Malignant teratomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9081"
+  },
+  {
+    "morphology_code": "9082",
+    "morphology_name": "Malignant teratoma, undifferentiated",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb2",
+    "iccc3_subgroup_name": "Malignant teratomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9082"
+  },
+  {
+    "morphology_code": "9083",
+    "morphology_name": "Malignant teratoma, intermediate",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb2",
+    "iccc3_subgroup_name": "Malignant teratomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9083"
+  },
+  {
+    "morphology_code": "9084",
+    "morphology_name": "Dermoid cyst, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb2",
+    "iccc3_subgroup_name": "Malignant teratomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9084"
+  },
+  {
+    "morphology_code": "9070",
+    "morphology_name": "Embryonal carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb3",
+    "iccc3_subgroup_name": "Embryonal carcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9070"
+  },
+  {
+    "morphology_code": "9072",
+    "morphology_name": "Polyembryoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb3",
+    "iccc3_subgroup_name": "Embryonal carcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9072"
+  },
+  {
+    "morphology_code": "9071",
+    "morphology_name": "Yolk sac tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb4",
+    "iccc3_subgroup_name": "Yolk sac tumor of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9071"
+  },
+  {
+    "morphology_code": "9100",
+    "morphology_name": "Hydatidiform mole, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb5",
+    "iccc3_subgroup_name": "Choriocarcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9100"
+  },
+  {
+    "morphology_code": "9101",
+    "morphology_name": "Choriocarcinoma combined with other germ cell elements",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb5",
+    "iccc3_subgroup_name": "Choriocarcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9101"
+  },
+  {
+    "morphology_code": "9103",
+    "morphology_name": "Partial hydatidiform mole",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb5",
+    "iccc3_subgroup_name": "Choriocarcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9103"
+  },
+  {
+    "morphology_code": "9104",
+    "morphology_name": "Placental site trophoblastic tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb5",
+    "iccc3_subgroup_name": "Choriocarcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9104"
+  },
+  {
+    "morphology_code": "9105",
+    "morphology_name": "Trophoblastic tumor, epithelioid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb5",
+    "iccc3_subgroup_name": "Choriocarcinomas of extracranial and extragonadal sites",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9105"
+  },
+  {
+    "morphology_code": "9085",
+    "morphology_name": "Mixed germ cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb6",
+    "iccc3_subgroup_name": "Oth/unspec malig mixed germ cell tumors of extracranial/extragonadal",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9085"
+  },
+  {
+    "morphology_code": "9086",
+    "morphology_name": "Label not found in the provided \"Cancer Morphology.pdf\" source.",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xb6",
+    "iccc3_subgroup_name": "Oth/unspec malig mixed germ cell tumors of extracranial/extragonadal",
+    "primary_sites": [
+      "C00.0-C55.9,C57.0-C61.9,C63.0-C69.9,C73.9-C75.0,C75.4-C76.8,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9086"
+  },
+  {
+    "morphology_code": "9060",
+    "morphology_name": "Dysgerminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9060"
+  },
+  {
+    "morphology_code": "9061",
+    "morphology_name": "Seminoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9061"
+  },
+  {
+    "morphology_code": "9062",
+    "morphology_name": "Seminoma, anaplastic",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9062"
+  },
+  {
+    "morphology_code": "9063",
+    "morphology_name": "Spermatocytic seminoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9063"
+  },
+  {
+    "morphology_code": "9064",
+    "morphology_name": "Intratubular malignant germ cells",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9064"
+  },
+  {
+    "morphology_code": "9065",
+    "morphology_name": "Germ cell tumor, nonseminomatous",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc1",
+    "iccc3_subgroup_name": "Malignant gonadal germinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9065"
+  },
+  {
+    "morphology_code": "9080",
+    "morphology_name": "Teratoma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9080"
+  },
+  {
+    "morphology_code": "9081",
+    "morphology_name": "Teratocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9081"
+  },
+  {
+    "morphology_code": "9082",
+    "morphology_name": "Malignant teratoma, undifferentiated",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9082"
+  },
+  {
+    "morphology_code": "9083",
+    "morphology_name": "Malignant teratoma, intermediate",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9083"
+  },
+  {
+    "morphology_code": "9084",
+    "morphology_name": "Dermoid cyst, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9084"
+  },
+  {
+    "morphology_code": "9090",
+    "morphology_name": "Struma ovarii, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9090"
+  },
+  {
+    "morphology_code": "9091",
+    "morphology_name": "Strumal carcinoid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc2",
+    "iccc3_subgroup_name": "Malignant gonadal teratomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9091"
+  },
+  {
+    "morphology_code": "9070",
+    "morphology_name": "Embryonal carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc3",
+    "iccc3_subgroup_name": "Gonadal embryonal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9070"
+  },
+  {
+    "morphology_code": "9072",
+    "morphology_name": "Polyembryoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc3",
+    "iccc3_subgroup_name": "Gonadal embryonal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9072"
+  },
+  {
+    "morphology_code": "9071",
+    "morphology_name": "Yolk sac tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc4",
+    "iccc3_subgroup_name": "Gonadal yolk sac tumor",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9071"
+  },
+  {
+    "morphology_code": "9100",
+    "morphology_name": "Hydatidiform mole, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc5",
+    "iccc3_subgroup_name": "Gonadal choriocarcinoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9100"
+  },
+  {
+    "morphology_code": "9101",
+    "morphology_name": "Choriocarcinoma combined with other germ cell elements",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc5",
+    "iccc3_subgroup_name": "Gonadal choriocarcinoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9101"
+  },
+  {
+    "morphology_code": "9103",
+    "morphology_name": "Partial hydatidiform mole",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc5",
+    "iccc3_subgroup_name": "Gonadal choriocarcinoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9103"
+  },
+  {
+    "morphology_code": "9104",
+    "morphology_name": "Placental site trophoblastic tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc5",
+    "iccc3_subgroup_name": "Gonadal choriocarcinoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9104"
+  },
+  {
+    "morphology_code": "9105",
+    "morphology_name": "Trophoblastic tumor, epithelioid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc5",
+    "iccc3_subgroup_name": "Gonadal choriocarcinoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9105"
+  },
+  {
+    "morphology_code": "9085",
+    "morphology_name": "Mixed germ cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc6",
+    "iccc3_subgroup_name": "Malignant gonadal tumors of mixed forms",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9085"
+  },
+  {
+    "morphology_code": "9073",
+    "morphology_name": "Gonadoblastoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xc7",
+    "iccc3_subgroup_name": "Malignant gonadal gonadoblastoma",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9073"
+  },
+  {
+    "morphology_code": "8010",
+    "morphology_name": "Epithelial tumor, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8010"
+  },
+  {
+    "morphology_code": "8011",
+    "morphology_name": "Epithelioma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8011"
+  },
+  {
+    "morphology_code": "8012",
+    "morphology_name": "Large cell carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8012"
+  },
+  {
+    "morphology_code": "8013",
+    "morphology_name": "Large cell neuroendocrine carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8013"
+  },
+  {
+    "morphology_code": "8014",
+    "morphology_name": "Large cell carcinoma with rhabdoid phenotype",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8014"
+  },
+  {
+    "morphology_code": "8015",
+    "morphology_name": "Glassy cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8015"
+  },
+  {
+    "morphology_code": "8020",
+    "morphology_name": "Carcinoma, undifferentiated, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8020"
+  },
+  {
+    "morphology_code": "8021",
+    "morphology_name": "Carcinoma, anaplastic, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8021"
+  },
+  {
+    "morphology_code": "8022",
+    "morphology_name": "Pleomorphic carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8022"
+  },
+  {
+    "morphology_code": "8030",
+    "morphology_name": "Giant cell and spindle cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8030"
+  },
+  {
+    "morphology_code": "8031",
+    "morphology_name": "Giant cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8031"
+  },
+  {
+    "morphology_code": "8032",
+    "morphology_name": "Spindle cell carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8032"
+  },
+  {
+    "morphology_code": "8033",
+    "morphology_name": "Pseudosarcomatous carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8033"
+  },
+  {
+    "morphology_code": "8034",
+    "morphology_name": "Polygonal cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8034"
+  },
+  {
+    "morphology_code": "8035",
+    "morphology_name": "Carcinoma with osteoclast-like giant cells",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8035"
+  },
+  {
+    "morphology_code": "8040",
+    "morphology_name": "Tumorlet, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8040"
+  },
+  {
+    "morphology_code": "8041",
+    "morphology_name": "Small cell carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8041"
+  },
+  {
+    "morphology_code": "8044",
+    "morphology_name": "Small cell carcinoma, intermediate cell",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8044"
+  },
+  {
+    "morphology_code": "8050",
+    "morphology_name": "Papilloma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8050"
+  },
+  {
+    "morphology_code": "8051",
+    "morphology_name": "Verrucous papilloma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8051"
+  },
+  {
+    "morphology_code": "8052",
+    "morphology_name": "Squamous cell papilloma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8052"
+  },
+  {
+    "morphology_code": "8053",
+    "morphology_name": "Squamous cell papilloma, inverted",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8053"
+  },
+  {
+    "morphology_code": "8070",
+    "morphology_name": "Squamous cell carcinoma in situ, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8070"
+  },
+  {
+    "morphology_code": "8071",
+    "morphology_name": "Squamous cell carcinoma, keratinizing, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8071"
+  },
+  {
+    "morphology_code": "8072",
+    "morphology_name": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8072"
+  },
+  {
+    "morphology_code": "8073",
+    "morphology_name": "Squamous cell carcinoma, small cell, nonkeratinizing",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8073"
+  },
+  {
+    "morphology_code": "8074",
+    "morphology_name": "Squamous cell carcinoma, spindle cell",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8074"
+  },
+  {
+    "morphology_code": "8075",
+    "morphology_name": "Squamous cell carcinoma, adenoid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8075"
+  },
+  {
+    "morphology_code": "8082",
+    "morphology_name": "Lymphoepithelial carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8082"
+  },
+  {
+    "morphology_code": "8120",
+    "morphology_name": "Transitional cell papilloma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8120"
+  },
+  {
+    "morphology_code": "8121",
+    "morphology_name": "Schneiderian papilloma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8121"
+  },
+  {
+    "morphology_code": "8122",
+    "morphology_name": "Transitional cell carcinoma, spindle cell",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8122"
+  },
+  {
+    "morphology_code": "8123",
+    "morphology_name": "Basaloid carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8123"
+  },
+  {
+    "morphology_code": "8130",
+    "morphology_name": "Papillary transitional cell neoplasm of low malignant potential",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8130"
+  },
+  {
+    "morphology_code": "8131",
+    "morphology_name": "Transitional cell carcinoma, micropapillary",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8131"
+  },
+  {
+    "morphology_code": "8140",
+    "morphology_name": "Adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8140"
+  },
+  {
+    "morphology_code": "8141",
+    "morphology_name": "Scirrhous adenocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8141"
+  },
+  {
+    "morphology_code": "8143",
+    "morphology_name": "Superficial spreading adenocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8143"
+  },
+  {
+    "morphology_code": "8153",
+    "morphology_name": "Gastrinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8153"
+  },
+  {
+    "morphology_code": "8158",
+    "morphology_name": "Endocrine tumor, functioning, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8158"
+  },
+  {
+    "morphology_code": "8190",
+    "morphology_name": "Trabecular adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8190"
+  },
+  {
+    "morphology_code": "8191",
+    "morphology_name": "Embryonal adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8191"
+  },
+  {
+    "morphology_code": "8200",
+    "morphology_name": "Eccrine dermal cylindroma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8200"
+  },
+  {
+    "morphology_code": "8201",
+    "morphology_name": "Cribriform carcinoma in situ",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8201"
+  },
+  {
+    "morphology_code": "8210",
+    "morphology_name": "Adenomatous polyp, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8210"
+  },
+  {
+    "morphology_code": "8211",
+    "morphology_name": "Tubular adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8211"
+  },
+  {
+    "morphology_code": "8213",
+    "morphology_name": "Serrated adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8213"
+  },
+  {
+    "morphology_code": "8221",
+    "morphology_name": "Multiple adenomatous polyps",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8221"
+  },
+  {
+    "morphology_code": "8240",
+    "morphology_name": "Carcinoid tumor of uncertain malignant potential",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8240"
+  },
+  {
+    "morphology_code": "8241",
+    "morphology_name": "Enterochromaffin cell carcinoid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8241"
+  },
+  {
+    "morphology_code": "8243",
+    "morphology_name": "Goblet cell carcinoid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8243"
+  },
+  {
+    "morphology_code": "8244",
+    "morphology_name": "Mixed adenoneuroendocrine carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8244"
+  },
+  {
+    "morphology_code": "8245",
+    "morphology_name": "Tubular carcinoid",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8245"
+  },
+  {
+    "morphology_code": "8246",
+    "morphology_name": "Neuroendocrine carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8246"
+  },
+  {
+    "morphology_code": "8260",
+    "morphology_name": "Papillary adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8260"
+  },
+  {
+    "morphology_code": "8261",
+    "morphology_name": "Villous adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8261"
+  },
+  {
+    "morphology_code": "8262",
+    "morphology_name": "Villous adenocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8262"
+  },
+  {
+    "morphology_code": "8263",
+    "morphology_name": "Tubulovillous adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8263"
+  },
+  {
+    "morphology_code": "8290",
+    "morphology_name": "Oxyphilic adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8290"
+  },
+  {
+    "morphology_code": "8310",
+    "morphology_name": "Clear cell adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8310"
+  },
+  {
+    "morphology_code": "8313",
+    "morphology_name": "Clear cell adenofibroma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8313"
+  },
+  {
+    "morphology_code": "8320",
+    "morphology_name": "Granular cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8320"
+  },
+  {
+    "morphology_code": "8323",
+    "morphology_name": "Mixed cell adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8323"
+  },
+  {
+    "morphology_code": "8380",
+    "morphology_name": "Endometrioid adenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8380"
+  },
+  {
+    "morphology_code": "8381",
+    "morphology_name": "Endometrioid adenofibroma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8381"
+  },
+  {
+    "morphology_code": "8382",
+    "morphology_name": "Endometrioid adenocarcinoma, secretory variant",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8382"
+  },
+  {
+    "morphology_code": "8383",
+    "morphology_name": "Endometrioid adenocarcinoma, ciliated cell variant",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8383"
+  },
+  {
+    "morphology_code": "8384",
+    "morphology_name": "Adenocarcinoma, endocervical type",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8384"
+  },
+  {
+    "morphology_code": "8410",
+    "morphology_name": "Sebaceous adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8410"
+  },
+  {
+    "morphology_code": "8430",
+    "morphology_name": "Mucoepidermoid carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8430"
+  },
+  {
+    "morphology_code": "8440",
+    "morphology_name": "Cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8440"
+  },
+  {
+    "morphology_code": "8441",
+    "morphology_name": "Serous cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8441"
+  },
+  {
+    "morphology_code": "8442",
+    "morphology_name": "Serous cystadenoma, borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8442"
+  },
+  {
+    "morphology_code": "8443",
+    "morphology_name": "Clear cell cystadenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8443"
+  },
+  {
+    "morphology_code": "8444",
+    "morphology_name": "Clear cell cystic tumor of borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8444"
+  },
+  {
+    "morphology_code": "8450",
+    "morphology_name": "Papillary cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8450"
+  },
+  {
+    "morphology_code": "8451",
+    "morphology_name": "Papillary cystadenoma, borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8451"
+  },
+  {
+    "morphology_code": "8452",
+    "morphology_name": "Solid pseudopapillary tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8452"
+  },
+  {
+    "morphology_code": "8460",
+    "morphology_name": "Papillary serous cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8460"
+  },
+  {
+    "morphology_code": "8461",
+    "morphology_name": "Serous surface papilloma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8461"
+  },
+  {
+    "morphology_code": "8462",
+    "morphology_name": "Serous papillary cystic tumor of borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8462"
+  },
+  {
+    "morphology_code": "8463",
+    "morphology_name": "Serous surface papillary tumor of borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8463"
+  },
+  {
+    "morphology_code": "8470",
+    "morphology_name": "Mucinous cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8470"
+  },
+  {
+    "morphology_code": "8471",
+    "morphology_name": "Papillary mucinous cystadenoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8471"
+  },
+  {
+    "morphology_code": "8472",
+    "morphology_name": "Mucinous cystic tumor of borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8472"
+  },
+  {
+    "morphology_code": "8473",
+    "morphology_name": "Papillary mucinous cystadenoma, borderline malignancy",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8473"
+  },
+  {
+    "morphology_code": "8474",
+    "morphology_name": "Label not found in the provided \"Cancer Morphology.pdf\" source.",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8474"
+  },
+  {
+    "morphology_code": "8480",
+    "morphology_name": "Mucinous adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8480"
+  },
+  {
+    "morphology_code": "8481",
+    "morphology_name": "Mucin-producing adenocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8481"
+  },
+  {
+    "morphology_code": "8490",
+    "morphology_name": "Signet ring cell carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8490"
+  },
+  {
+    "morphology_code": "8504",
+    "morphology_name": "Intracystic papillary adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8504"
+  },
+  {
+    "morphology_code": "8510",
+    "morphology_name": "Medullary carcinoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8510"
+  },
+  {
+    "morphology_code": "8550",
+    "morphology_name": "Acinar cell adenoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8550"
+  },
+  {
+    "morphology_code": "8560",
+    "morphology_name": "Mixed squamous cell and glandular papilloma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8560"
+  },
+  {
+    "morphology_code": "8561",
+    "morphology_name": "Adenolymphoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8561"
+  },
+  {
+    "morphology_code": "8562",
+    "morphology_name": "Epithelial-myoepithelial carcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8562"
+  },
+  {
+    "morphology_code": "8570",
+    "morphology_name": "Adenocarcinoma with squamous metaplasia",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8570"
+  },
+  {
+    "morphology_code": "8571",
+    "morphology_name": "Adenocarcinoma with cartilaginous and osseous metaplasia",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8571"
+  },
+  {
+    "morphology_code": "8572",
+    "morphology_name": "Adenocarcinoma with spindle cell metaplasia",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8572"
+  },
+  {
+    "morphology_code": "8573",
+    "morphology_name": "Adenocarcinoma with apocrine metaplasia",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8573"
+  },
+  {
+    "morphology_code": "8576",
+    "morphology_name": "Hepatoid adenocarcinoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8576"
+  },
+  {
+    "morphology_code": "9000",
+    "morphology_name": "Brenner tumor, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9000"
+  },
+  {
+    "morphology_code": "9014",
+    "morphology_name": "Serous adenofibroma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C56.9,C62.0-C62.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9014"
+  },
+  {
+    "morphology_code": "9015",
+    "morphology_name": "Mucinous adenofibroma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xd",
+    "iccc3_subgroup_name": "Gonadal carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9015"
+  },
+  {
+    "morphology_code": "8590",
+    "morphology_name": "Sex cord-gonadal stromal tumor, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8590"
+  },
+  {
+    "morphology_code": "8591",
+    "morphology_name": "Sex cord-gonadal stromal tumor, incompletely differentiated",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8591"
+  },
+  {
+    "morphology_code": "8592",
+    "morphology_name": "Sex cord-gonadal stromal tumor, mixed forms",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8592"
+  },
+  {
+    "morphology_code": "8593",
+    "morphology_name": "Stromal tumor with minor sex cord elements",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8593"
+  },
+  {
+    "morphology_code": "8600",
+    "morphology_name": "Thecoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8600"
+  },
+  {
+    "morphology_code": "8601",
+    "morphology_name": "Thecoma, luteinized",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8601"
+  },
+  {
+    "morphology_code": "8602",
+    "morphology_name": "Sclerosing stromal tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8602"
+  },
+  {
+    "morphology_code": "8610",
+    "morphology_name": "Luteoma, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8610"
+  },
+  {
+    "morphology_code": "8620",
+    "morphology_name": "Granulosa cell tumor, adult type",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8620"
+  },
+  {
+    "morphology_code": "8621",
+    "morphology_name": "Granulosa cell-theca cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8621"
+  },
+  {
+    "morphology_code": "8622",
+    "morphology_name": "Granulosa cell tumor, juvenile",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8622"
+  },
+  {
+    "morphology_code": "8623",
+    "morphology_name": "Sex cord tumor with annular tubules",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8623"
+  },
+  {
+    "morphology_code": "8630",
+    "morphology_name": "Androblastoma, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8630"
+  },
+  {
+    "morphology_code": "8631",
+    "morphology_name": "Sertoli-Leydig cell tumor, well differentiated",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8631"
+  },
+  {
+    "morphology_code": "8632",
+    "morphology_name": "Gynandroblastoma",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8632"
+  },
+  {
+    "morphology_code": "8633",
+    "morphology_name": "Sertoli-Leydig cell tumor, retiform",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8633"
+  },
+  {
+    "morphology_code": "8634",
+    "morphology_name": "Sertoli-Leydig cell tumor, intermediate differentiation, with heterologous elements",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8634"
+  },
+  {
+    "morphology_code": "8640",
+    "morphology_name": "Sertoli cell tumor, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8640"
+  },
+  {
+    "morphology_code": "8641",
+    "morphology_name": "Sertoli cell tumor with lipid storage",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8641"
+  },
+  {
+    "morphology_code": "8642",
+    "morphology_name": "Large cell calcifying Sertoli cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8642"
+  },
+  {
+    "morphology_code": "8650",
+    "morphology_name": "Leydig cell tumor, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8650"
+  },
+  {
+    "morphology_code": "8660",
+    "morphology_name": "Hilus cell tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8660"
+  },
+  {
+    "morphology_code": "8670",
+    "morphology_name": "Lipid cell tumor of ovary",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8670"
+  },
+  {
+    "morphology_code": "8671",
+    "morphology_name": "Adrenal rest tumor",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8671"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, benign",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Clear cell tumor, NOS",
+    "iccc3_group": "X",
+    "iccc3_group_name": "Germ Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads",
+    "iccc3_subgroup_id": "Xe",
+    "iccc3_subgroup_name": "Other and unspecified malignant gonadal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8005"
+  }
+]

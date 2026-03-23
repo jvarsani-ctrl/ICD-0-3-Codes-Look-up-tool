@@ -1,0 +1,392 @@
+[
+  {
+    "morphology_code": "8936",
+    "morphology_name": "Gastrointestinal stromal tumor, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa1",
+    "iccc3_subgroup_name": "Malignant gastrointestinal stromal tumor",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8936"
+  },
+  {
+    "morphology_code": "8971",
+    "morphology_name": "Pancreatoblastoma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa2",
+    "iccc3_subgroup_name": "Pancreatoblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8971"
+  },
+  {
+    "morphology_code": "8972",
+    "morphology_name": "Pulmonary blastoma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa3",
+    "iccc3_subgroup_name": "Pulmonary blastoma and pleuropulmonary blastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8972"
+  },
+  {
+    "morphology_code": "8973",
+    "morphology_name": "Pleuropulmonary blastoma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa3",
+    "iccc3_subgroup_name": "Pulmonary blastoma and pleuropulmonary blastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8973"
+  },
+  {
+    "morphology_code": "8930",
+    "morphology_name": "Endometrial stromal sarcoma, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8930"
+  },
+  {
+    "morphology_code": "8931",
+    "morphology_name": "Endometrial stromal sarcoma, low grade",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8931"
+  },
+  {
+    "morphology_code": "8933",
+    "morphology_name": "Adenosarcoma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8933"
+  },
+  {
+    "morphology_code": "8934",
+    "morphology_name": "Carcinofibroma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8934"
+  },
+  {
+    "morphology_code": "8935",
+    "morphology_name": "Stromal sarcoma, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8935"
+  },
+  {
+    "morphology_code": "8940",
+    "morphology_name": "Mixed tumor, malignant, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8940"
+  },
+  {
+    "morphology_code": "8950",
+    "morphology_name": "Mullerian mixed tumor",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8950"
+  },
+  {
+    "morphology_code": "8951",
+    "morphology_name": "Mesodermal mixed tumor",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8951"
+  },
+  {
+    "morphology_code": "8974",
+    "morphology_name": "Sialoblastoma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8974"
+  },
+  {
+    "morphology_code": "8980",
+    "morphology_name": "Mesenchymoma, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8980"
+  },
+  {
+    "morphology_code": "8981",
+    "morphology_name": "Carcinosarcoma, embryonal",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8981"
+  },
+  {
+    "morphology_code": "8982",
+    "morphology_name": "Malignant myoepithelioma",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa4",
+    "iccc3_subgroup_name": "Other complex mixed and stromal neoplasms",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8982"
+  },
+  {
+    "morphology_code": "9050",
+    "morphology_name": "Mesothelioma, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9050"
+  },
+  {
+    "morphology_code": "9051",
+    "morphology_name": "Fibrous mesothelioma, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9051"
+  },
+  {
+    "morphology_code": "9052",
+    "morphology_name": "Epithelioid mesothelioma, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9052"
+  },
+  {
+    "morphology_code": "9053",
+    "morphology_name": "Mesothelioma, biphasic, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9053"
+  },
+  {
+    "morphology_code": "9054",
+    "morphology_name": "Adenomatoid tumor, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9054"
+  },
+  {
+    "morphology_code": "9055",
+    "morphology_name": "Cystic mesothelioma, NOS",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa5",
+    "iccc3_subgroup_name": "Mesothelioma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9055"
+  },
+  {
+    "morphology_code": "9110",
+    "morphology_name": "Mesonephroma, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa6",
+    "iccc3_subgroup_name": "Other specified malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9110"
+  },
+  {
+    "morphology_code": "9363",
+    "morphology_name": "Melanotic neuroectodermal tumor",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIa6",
+    "iccc3_subgroup_name": "Other specified malignant tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9363"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, malignant",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Malignant tumor, clear cell type",
+    "iccc3_group": "XII",
+    "iccc3_group_name": "Other And Unspecified Malignant Neoplasms",
+    "iccc3_subgroup_id": "XIIb",
+    "iccc3_subgroup_name": "Other unspecified malignant tumors",
+    "primary_sites": [
+      "C00.0-C21.8,C23.9-C39.9,C42.0-C55.9,C57.0-C61.9,C63.0-C63.9,C65.9-C69.9,C73.9-C75.0,C75.4-C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8005"
+  }
+]

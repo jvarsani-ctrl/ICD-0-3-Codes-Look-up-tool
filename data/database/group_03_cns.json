@@ -1,0 +1,1224 @@
+[
+  {
+    "morphology_code": "9383",
+    "morphology_name": "Subependymoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa1",
+    "iccc3_subgroup_name": "Ependymomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9383"
+  },
+  {
+    "morphology_code": "9391",
+    "morphology_name": "Ependymoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa1",
+    "iccc3_subgroup_name": "Ependymomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9391"
+  },
+  {
+    "morphology_code": "9392",
+    "morphology_name": "Ependymoma, anaplastic",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa1",
+    "iccc3_subgroup_name": "Ependymomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9392"
+  },
+  {
+    "morphology_code": "9393",
+    "morphology_name": "Papillary ependymoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa1",
+    "iccc3_subgroup_name": "Ependymomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9393"
+  },
+  {
+    "morphology_code": "9394",
+    "morphology_name": "Myxopapillary ependymoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa1",
+    "iccc3_subgroup_name": "Ependymomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9394"
+  },
+  {
+    "morphology_code": "9390",
+    "morphology_name": "Choroid plexus papilloma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIa2",
+    "iccc3_subgroup_name": "Choroid plexus tumor",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9390"
+  },
+  {
+    "morphology_code": "9380",
+    "morphology_name": "Glioma, malignant",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C72.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9380"
+  },
+  {
+    "morphology_code": "9384",
+    "morphology_name": "Subependymal giant cell astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9384"
+  },
+  {
+    "morphology_code": "9400",
+    "morphology_name": "Astrocytoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9400"
+  },
+  {
+    "morphology_code": "9401",
+    "morphology_name": "Astrocytoma, anaplastic",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9401"
+  },
+  {
+    "morphology_code": "9410",
+    "morphology_name": "Protoplasmic astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9410"
+  },
+  {
+    "morphology_code": "9411",
+    "morphology_name": "Gemistocytic astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9411"
+  },
+  {
+    "morphology_code": "9420",
+    "morphology_name": "Fibrillary astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9420"
+  },
+  {
+    "morphology_code": "9421",
+    "morphology_name": "Pilocytic astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9421"
+  },
+  {
+    "morphology_code": "9423",
+    "morphology_name": "Polar spongioblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9423"
+  },
+  {
+    "morphology_code": "9424",
+    "morphology_name": "Pleomorphic xanthoastrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9424"
+  },
+  {
+    "morphology_code": "9425",
+    "morphology_name": "Pilomyxoid astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9425"
+  },
+  {
+    "morphology_code": "9440",
+    "morphology_name": "Glioblastoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9440"
+  },
+  {
+    "morphology_code": "9441",
+    "morphology_name": "Giant cell glioblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9441"
+  },
+  {
+    "morphology_code": "9442",
+    "morphology_name": "Gliofibroma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIb",
+    "iccc3_subgroup_name": "Astrocytomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9442"
+  },
+  {
+    "morphology_code": "9470",
+    "morphology_name": "Medulloblastoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9470"
+  },
+  {
+    "morphology_code": "9471",
+    "morphology_name": "Desmoplastic nodular medulloblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9471"
+  },
+  {
+    "morphology_code": "9472",
+    "morphology_name": "Medullomyoblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9472"
+  },
+  {
+    "morphology_code": "9474",
+    "morphology_name": "Large cell medulloblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9474"
+  },
+  {
+    "morphology_code": "9475",
+    "morphology_name": "Medulloblastoma, SHH-activated and TP53-mutant",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9475"
+  },
+  {
+    "morphology_code": "9477",
+    "morphology_name": "Medulloblastoma, WNT-activated",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9477"
+  },
+  {
+    "morphology_code": "9478",
+    "morphology_name": "Medulloblastoma, non-WNT/non-SHH",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9478"
+  },
+  {
+    "morphology_code": "9480",
+    "morphology_name": "Cerebellar sarcoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc1",
+    "iccc3_subgroup_name": "Medulloblastomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9480"
+  },
+  {
+    "morphology_code": "9473",
+    "morphology_name": "Primitive neuroectodermal tumor, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc2",
+    "iccc3_subgroup_name": "Primitive neuroectodermal tumor (PNET)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9473"
+  },
+  {
+    "morphology_code": "9501",
+    "morphology_name": "Medulloepithelioma, benign",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc3",
+    "iccc3_subgroup_name": "Medulloepithelioma",
+    "primary_sites": [
+      "C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9501"
+  },
+  {
+    "morphology_code": "9502",
+    "morphology_name": "Teratoid medulloepithelioma, benign",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc3",
+    "iccc3_subgroup_name": "Medulloepithelioma",
+    "primary_sites": [
+      "C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9502"
+  },
+  {
+    "morphology_code": "9503",
+    "morphology_name": "Neuroepithelioma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc3",
+    "iccc3_subgroup_name": "Medulloepithelioma",
+    "primary_sites": [
+      "C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9503"
+  },
+  {
+    "morphology_code": "9504",
+    "morphology_name": "Spongioneuroblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc3",
+    "iccc3_subgroup_name": "Medulloepithelioma",
+    "primary_sites": [
+      "C70.0-C72.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9504"
+  },
+  {
+    "morphology_code": "9508",
+    "morphology_name": "Atypical teratoid/rhabdoid tumor",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIc4",
+    "iccc3_subgroup_name": "Atypical teratoid/rhabdoid tumor",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9508"
+  },
+  {
+    "morphology_code": "9450",
+    "morphology_name": "Oligodendroglioma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId1",
+    "iccc3_subgroup_name": "Oligodendrogliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9450"
+  },
+  {
+    "morphology_code": "9451",
+    "morphology_name": "Oligodendroglioma, anaplastic",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId1",
+    "iccc3_subgroup_name": "Oligodendrogliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9451"
+  },
+  {
+    "morphology_code": "9460",
+    "morphology_name": "Oligodendroblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId1",
+    "iccc3_subgroup_name": "Oligodendrogliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9460"
+  },
+  {
+    "morphology_code": "9380",
+    "morphology_name": "Glioma, malignant",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId2",
+    "iccc3_subgroup_name": "Mixed and unspecified gliomas",
+    "primary_sites": [
+      "C70.0-C72.2,C72.4-C72.9,C75.1,C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9380"
+  },
+  {
+    "morphology_code": "9381",
+    "morphology_name": "Gliomatosis cerebri, NOS**",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId2",
+    "iccc3_subgroup_name": "Mixed and unspecified gliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9381"
+  },
+  {
+    "morphology_code": "9382",
+    "morphology_name": "Mixed glioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId2",
+    "iccc3_subgroup_name": "Mixed and unspecified gliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9382"
+  },
+  {
+    "morphology_code": "9385",
+    "morphology_name": "Glioblastoma, IDH-wildtype",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId2",
+    "iccc3_subgroup_name": "Mixed and unspecified gliomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9385"
+  },
+  {
+    "morphology_code": "9381",
+    "morphology_name": "Gliomatosis cerebri",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId3",
+    "iccc3_subgroup_name": "Neuroepithelial glial tumors of uncertain origin",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9381"
+  },
+  {
+    "morphology_code": "9430",
+    "morphology_name": "Astroblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId3",
+    "iccc3_subgroup_name": "Neuroepithelial glial tumors of uncertain origin",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9430"
+  },
+  {
+    "morphology_code": "9431",
+    "morphology_name": "Angiocentric glioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId3",
+    "iccc3_subgroup_name": "Neuroepithelial glial tumors of uncertain origin",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9431"
+  },
+  {
+    "morphology_code": "9444",
+    "morphology_name": "Chordoid glioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId3",
+    "iccc3_subgroup_name": "Neuroepithelial glial tumors of uncertain origin",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9444"
+  },
+  {
+    "morphology_code": "9445",
+    "morphology_name": "Pleomorphic xanthoastrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIId3",
+    "iccc3_subgroup_name": "Neuroepithelial glial tumors of uncertain origin",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9445"
+  },
+  {
+    "morphology_code": "8158",
+    "morphology_name": "Endocrine tumor, functioning, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C75.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8158"
+  },
+  {
+    "morphology_code": "8273",
+    "morphology_name": "Oncocytoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8273"
+  },
+  {
+    "morphology_code": "8274",
+    "morphology_name": "Oncocytic adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8274"
+  },
+  {
+    "morphology_code": "8275",
+    "morphology_name": "Oncocytic carcinoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8275"
+  },
+  {
+    "morphology_code": "8276",
+    "morphology_name": "Mixed cell adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8276"
+  },
+  {
+    "morphology_code": "8277",
+    "morphology_name": "Papillary carcinoma, follicular variant",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8277"
+  },
+  {
+    "morphology_code": "8278",
+    "morphology_name": "Papillary carcinoma, encapsulated",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8278"
+  },
+  {
+    "morphology_code": "8279",
+    "morphology_name": "Papillary carcinoma, columnar cell type",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8279"
+  },
+  {
+    "morphology_code": "8290",
+    "morphology_name": "Oxyphilic adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C75.1"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8290"
+  },
+  {
+    "morphology_code": "8270",
+    "morphology_name": "Chromophobe adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8270"
+  },
+  {
+    "morphology_code": "8271",
+    "morphology_name": "Prolactinoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8271"
+  },
+  {
+    "morphology_code": "8272",
+    "morphology_name": "Pituitary adenoma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8272"
+  },
+  {
+    "morphology_code": "8280",
+    "morphology_name": "Acidophil adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8280"
+  },
+  {
+    "morphology_code": "8281",
+    "morphology_name": "Mixed acidophil-basophil adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8281"
+  },
+  {
+    "morphology_code": "8300",
+    "morphology_name": "Basophil adenoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe1",
+    "iccc3_subgroup_name": "Pituitary adenomas and carcinomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8300"
+  },
+  {
+    "morphology_code": "9350",
+    "morphology_name": "Craniopharyngioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe2",
+    "iccc3_subgroup_name": "Tumours of the sellar region (craniopharyngiomas)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9350"
+  },
+  {
+    "morphology_code": "9351",
+    "morphology_name": "Craniopharyngioma, adamantinomatous",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe2",
+    "iccc3_subgroup_name": "Tumours of the sellar region (craniopharyngiomas)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9351"
+  },
+  {
+    "morphology_code": "9352",
+    "morphology_name": "Craniopharyngioma, papillary",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe2",
+    "iccc3_subgroup_name": "Tumours of the sellar region (craniopharyngiomas)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9352"
+  },
+  {
+    "morphology_code": "9432",
+    "morphology_name": "Pituicytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe2",
+    "iccc3_subgroup_name": "Tumours of the sellar region (craniopharyngiomas)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9432"
+  },
+  {
+    "morphology_code": "9582",
+    "morphology_name": "Granular cell tumor of the sellar region",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe2",
+    "iccc3_subgroup_name": "Tumours of the sellar region (craniopharyngiomas)",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9582"
+  },
+  {
+    "morphology_code": "9360",
+    "morphology_name": "Pinealoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe3",
+    "iccc3_subgroup_name": "Pineal parenchymal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9360"
+  },
+  {
+    "morphology_code": "9361",
+    "morphology_name": "Pineocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe3",
+    "iccc3_subgroup_name": "Pineal parenchymal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9361"
+  },
+  {
+    "morphology_code": "9362",
+    "morphology_name": "Pineoblastoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe3",
+    "iccc3_subgroup_name": "Pineal parenchymal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9362"
+  },
+  {
+    "morphology_code": "9395",
+    "morphology_name": "Papillary tumor of the pineal region",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe3",
+    "iccc3_subgroup_name": "Pineal parenchymal tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9395"
+  },
+  {
+    "morphology_code": "9412",
+    "morphology_name": "Desmoplastic infantile astrocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9412"
+  },
+  {
+    "morphology_code": "9413",
+    "morphology_name": "Dysembryoplastic neuroepithelial tumor",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9413"
+  },
+  {
+    "morphology_code": "9492",
+    "morphology_name": "Gangliocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9492"
+  },
+  {
+    "morphology_code": "9493",
+    "morphology_name": "Dysplastic gangliocytoma of cerebellum (Lhermitte-Duclos)",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9493"
+  },
+  {
+    "morphology_code": "9505",
+    "morphology_name": "Ganglioglioma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9505"
+  },
+  {
+    "morphology_code": "9506",
+    "morphology_name": "Central neurocytoma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9506"
+  },
+  {
+    "morphology_code": "9507",
+    "morphology_name": "Pacinian tumor",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9507"
+  },
+  {
+    "morphology_code": "9509",
+    "morphology_name": "Papillary glioneuronal tumor",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe4",
+    "iccc3_subgroup_name": "Neuronal and mixed neuronal-glial tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9509"
+  },
+  {
+    "morphology_code": "9530",
+    "morphology_name": "Meningioma, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9530"
+  },
+  {
+    "morphology_code": "9531",
+    "morphology_name": "Meningothelial meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9531"
+  },
+  {
+    "morphology_code": "9532",
+    "morphology_name": "Fibrous meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9532"
+  },
+  {
+    "morphology_code": "9533",
+    "morphology_name": "Psammomatous meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9533"
+  },
+  {
+    "morphology_code": "9534",
+    "morphology_name": "Angiomatous meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9534"
+  },
+  {
+    "morphology_code": "9535",
+    "morphology_name": "Hemangioblastic meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9535"
+  },
+  {
+    "morphology_code": "9536",
+    "morphology_name": "Meningiomatosis",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9536"
+  },
+  {
+    "morphology_code": "9537",
+    "morphology_name": "Transitional meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9537"
+  },
+  {
+    "morphology_code": "9538",
+    "morphology_name": "Clear cell meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9538"
+  },
+  {
+    "morphology_code": "9539",
+    "morphology_name": "Atypical meningioma",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIe5",
+    "iccc3_subgroup_name": "Meningiomas",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9539"
+  },
+  {
+    "morphology_code": "8000",
+    "morphology_name": "Neoplasm, benign",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8000"
+  },
+  {
+    "morphology_code": "8001",
+    "morphology_name": "Tumor cells, benign",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8001"
+  },
+  {
+    "morphology_code": "8002",
+    "morphology_name": "Malignant tumor, small cell type",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8002"
+  },
+  {
+    "morphology_code": "8003",
+    "morphology_name": "Malignant tumor, giant cell type",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8003"
+  },
+  {
+    "morphology_code": "8004",
+    "morphology_name": "Malignant tumor, spindle cell type",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8004"
+  },
+  {
+    "morphology_code": "8005",
+    "morphology_name": "Clear cell tumor, NOS",
+    "iccc3_group": "III",
+    "iccc3_group_name": "CNS And Miscellaneous Intracranial And Intraspinal Neoplasms",
+    "iccc3_subgroup_id": "IIIf",
+    "iccc3_subgroup_name": "Unspecified intracranial and intraspinal neoplasms",
+    "primary_sites": [
+      "C70.0-C72.9,C75.1-C75.3"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "8005"
+  }
+]

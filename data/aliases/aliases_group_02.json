@@ -1,0 +1,255 @@
+[
+  {
+    "alias": "Hodgkin's disease",
+    "full_form": "Hodgkin Lymphoma",
+    "origin_system": "Clinical (eponymous) / WHO Classification",
+    "maps_to_morphology_codes": ["9650", "9651", "9652", "9653", "9654", "9655", "9659", "9661", "9662", "9663", "9664", "9665", "9667"],
+    "maps_to_iccc3_subgroup_id": "IIa",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Use 9650 (NOS) if subtype unknown. CD15+, CD30+, Reed-Sternberg cells. Nodular sclerosis (9663) is the most common subtype in paediatrics."
+  },
+  {
+    "alias": "Hodgkin Lymphoma",
+    "full_form": "Hodgkin Lymphoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9650"],
+    "maps_to_iccc3_subgroup_id": "IIa",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Default to 9650 NOS if subtype not documented."
+  },
+  {
+    "alias": "HL",
+    "full_form": "Hodgkin Lymphoma",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9650"],
+    "maps_to_iccc3_subgroup_id": "IIa",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "See IHC: CD15+, CD30+ confirms Hodgkin vs NHL."
+  },
+  {
+    "alias": "Nodular sclerosis",
+    "full_form": "Hodgkin Lymphoma, Nodular Sclerosis",
+    "origin_system": "WHO Classification / pathology nomenclature",
+    "maps_to_morphology_codes": ["9663"],
+    "maps_to_iccc3_subgroup_id": "IIa",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Most common HL subtype in adolescents. Code 9663."
+  },
+  {
+    "alias": "Mixed cellularity Hodgkin",
+    "full_form": "Hodgkin Lymphoma, Mixed Cellularity",
+    "origin_system": "WHO Classification / pathology nomenclature",
+    "maps_to_morphology_codes": ["9652"],
+    "maps_to_iccc3_subgroup_id": "IIa",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "More common in younger children and EBV-associated. Code 9652."
+  },
+  {
+    "alias": "NHL",
+    "full_form": "Non-Hodgkin Lymphoma",
+    "origin_system": "Clinical / ICD-10 (umbrella term)",
+    "maps_to_morphology_codes": ["9591"],
+    "maps_to_iccc3_subgroup_id": "IIb4",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "lymphoma_nos",
+    "notes": "Broad clinical term — needs IHC to classify subtype. If CD20+ → B-cell. If CD3+ → T-cell. If CD15/CD30+ → consider Hodgkin."
+  },
+  {
+    "alias": "Non-Hodgkin Lymphoma",
+    "full_form": "Non-Hodgkin Lymphoma",
+    "origin_system": "Clinical / ICD-10 (umbrella term)",
+    "maps_to_morphology_codes": ["9591"],
+    "maps_to_iccc3_subgroup_id": "IIb4",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "lymphoma_nos",
+    "notes": "Use 9591 only if subtype truly unclassifiable. IHC is essential for further classification."
+  },
+  {
+    "alias": "Lymphoma",
+    "full_form": "Lymphoma, NOS",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["9590"],
+    "maps_to_iccc3_subgroup_id": "IIe",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "lymphoma_nos",
+    "notes": "Very non-specific. IHC needed to distinguish Hodgkin vs NHL and subtype."
+  },
+  {
+    "alias": "Burkitt lymphoma",
+    "full_form": "Burkitt Lymphoma",
+    "origin_system": "WHO Classification (eponymous entity)",
+    "maps_to_morphology_codes": ["9687"],
+    "maps_to_iccc3_subgroup_id": "IIc",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD20+, CD10+, BCL6+, Ki-67 ~100%, MYC translocation. The most common childhood lymphoma in sub-Saharan Africa. Code 9687."
+  },
+  {
+    "alias": "Burkitt's lymphoma",
+    "full_form": "Burkitt Lymphoma",
+    "origin_system": "Clinical (eponymous)",
+    "maps_to_morphology_codes": ["9687"],
+    "maps_to_iccc3_subgroup_id": "IIc",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9687. See above."
+  },
+  {
+    "alias": "BL",
+    "full_form": "Burkitt Lymphoma",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9687"],
+    "maps_to_iccc3_subgroup_id": "IIc",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9687."
+  },
+  {
+    "alias": "Diffuse large B-cell lymphoma",
+    "full_form": "Diffuse Large B-Cell Lymphoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9680"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "DLBCL. CD20+, CD19+. Code 9680."
+  },
+  {
+    "alias": "DLBCL",
+    "full_form": "Diffuse Large B-Cell Lymphoma",
+    "origin_system": "WHO Classification abbreviation",
+    "maps_to_morphology_codes": ["9680"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9680."
+  },
+  {
+    "alias": "Anaplastic large cell lymphoma",
+    "full_form": "Anaplastic Large Cell Lymphoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9714"],
+    "maps_to_iccc3_subgroup_id": "IIb3",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "ALCL. CD30+, ALK+/- in paediatrics. Code 9714."
+  },
+  {
+    "alias": "ALCL",
+    "full_form": "Anaplastic Large Cell Lymphoma",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9714"],
+    "maps_to_iccc3_subgroup_id": "IIb3",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD30+, ALK+. Code 9714."
+  },
+  {
+    "alias": "Follicular lymphoma",
+    "full_form": "Follicular Lymphoma",
+    "origin_system": "WHO Classification / pathology nomenclature",
+    "maps_to_morphology_codes": ["9690"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD20+, CD10+, BCL2+. Rare in paediatrics. Code 9690."
+  },
+  {
+    "alias": "Mantle cell lymphoma",
+    "full_form": "Mantle Cell Lymphoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9673"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD20+, Cyclin D1+. Rare in paediatrics. Code 9673."
+  },
+  {
+    "alias": "T-cell lymphoma",
+    "full_form": "T-Cell Lymphoma, NOS",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["9702"],
+    "maps_to_iccc3_subgroup_id": "IIb3",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Use 9702 if T-cell lymphoma NOS. CD3+, CD5+."
+  },
+  {
+    "alias": "Precursor cell lymphoma",
+    "full_form": "Precursor Cell Lymphoblastic Lymphoma",
+    "origin_system": "ICD-O-3 / WHO",
+    "maps_to_morphology_codes": ["9727", "9728", "9729"],
+    "maps_to_iccc3_subgroup_id": "IIb1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "9727 NOS, 9728 B-precursor, 9729 T-precursor. TdT+."
+  },
+  {
+    "alias": "Mediastinal large B-cell lymphoma",
+    "full_form": "Primary Mediastinal Large B-Cell Lymphoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9679"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD20+, CD30+/-, anterior mediastinal mass. Code 9679."
+  },
+  {
+    "alias": "Langerhans cell histiocytosis",
+    "full_form": "Langerhans Cell Histiocytosis",
+    "origin_system": "WHO Classification (histiocytic disorder)",
+    "maps_to_morphology_codes": ["9751", "9754"],
+    "maps_to_iccc3_subgroup_id": "IId",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "LCH. CD1a+, S100+, Langerin+. Code 9751 or 9754."
+  },
+  {
+    "alias": "LCH",
+    "full_form": "Langerhans Cell Histiocytosis",
+    "origin_system": "Clinical abbreviation",
+    "maps_to_morphology_codes": ["9751"],
+    "maps_to_iccc3_subgroup_id": "IId",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9751."
+  },
+  {
+    "alias": "Histiocytic sarcoma",
+    "full_form": "Histiocytic Sarcoma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9755"],
+    "maps_to_iccc3_subgroup_id": "IId",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "CD68+, Lysozyme+. Code 9755."
+  },
+  {
+    "alias": "Plasma cell myeloma",
+    "full_form": "Multiple Myeloma / Plasma Cell Myeloma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9732"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Very rare under 20. CD138+, CD38+. Code 9732."
+  },
+  {
+    "alias": "Multiple myeloma",
+    "full_form": "Multiple Myeloma",
+    "origin_system": "Clinical / WHO",
+    "maps_to_morphology_codes": ["9732"],
+    "maps_to_iccc3_subgroup_id": "IIb2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9732."
+  }
+]

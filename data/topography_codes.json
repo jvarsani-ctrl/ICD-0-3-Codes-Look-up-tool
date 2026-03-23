@@ -1,0 +1,1964 @@
+[
+  {
+    "code": "C00.0",
+    "numeric": "000",
+    "name": "External upper lip",
+    "subsites": "Vermilion border of upper lip, Upper lip, NOS (excludes skin of upper lip C44.0)"
+  },
+  {
+    "code": "C00.1",
+    "numeric": "001",
+    "name": "External lower lip",
+    "subsites": "Vermilion border of lower lip, Lower lip, NOS (excludes skin of lower lip C44.0)"
+  },
+  {
+    "code": "C00.2",
+    "numeric": "002",
+    "name": "External lip, NOS",
+    "subsites": "Vermilion border of lip, NOS"
+  },
+  {
+    "code": "C00.3",
+    "numeric": "003",
+    "name": "Mucosa of upper lip",
+    "subsites": "Frenulum of upper lip, Inner aspect of upper lip"
+  },
+  {
+    "code": "C00.4",
+    "numeric": "004",
+    "name": "Mucosa of lower lip",
+    "subsites": "Inner aspect of lower lip, Frenulum of lower lip"
+  },
+  {
+    "code": "C00.5",
+    "numeric": "005",
+    "name": "Mucosa of lip, NOS",
+    "subsites": "Inner aspect of lip, NOS, Internal lip, NOS, Frenulum of lip, NOS, Frenulum labii, NOS"
+  },
+  {
+    "code": "C00.6",
+    "numeric": "006",
+    "name": "Commissure of lip",
+    "subsites": "Labial commissure"
+  },
+  {
+    "code": "C00.8",
+    "numeric": "008",
+    "name": "Overlapping lesion of lip",
+    "subsites": ""
+  },
+  {
+    "code": "C00.9",
+    "numeric": "009",
+    "name": "Lip, NOS",
+    "subsites": "excludes skin of lip C44.0"
+  },
+  {
+    "code": "C01.9",
+    "numeric": "019",
+    "name": "Base of tongue, NOS",
+    "subsites": "Dorsal surface of base of tongue, Posterior third of tongue, Posterior tongue, NOS, Root of tongue"
+  },
+  {
+    "code": "C02.0",
+    "numeric": "020",
+    "name": "Dorsal surface of tongue, NOS",
+    "subsites": "Anterior 2/3 of tongue, dorsal surface, Midline of tongue, Dorsal surface of anterior tongue"
+  },
+  {
+    "code": "C02.1",
+    "numeric": "021",
+    "name": "Border of tongue",
+    "subsites": "Tip of tongue"
+  },
+  {
+    "code": "C02.2",
+    "numeric": "022",
+    "name": "Ventral surface of tongue, NOS",
+    "subsites": "Anterior 2/3 of tongue, ventral surface, Frenulum linguae, Ventral surface of anterior tongue, NOS"
+  },
+  {
+    "code": "C02.3",
+    "numeric": "023",
+    "name": "Anterior 2/3 of tongue, NOS",
+    "subsites": "Anterior tongue, NOS"
+  },
+  {
+    "code": "C02.4",
+    "numeric": "024",
+    "name": "Lingual tonsil",
+    "subsites": ""
+  },
+  {
+    "code": "C02.8",
+    "numeric": "028",
+    "name": "Overlapping lesion of tongue",
+    "subsites": "see section 4.2.6, Junctional zone of tongue"
+  },
+  {
+    "code": "C02.9",
+    "numeric": "029",
+    "name": "Tongue, NOS",
+    "subsites": "Lingual, NOS"
+  },
+  {
+    "code": "C03.0",
+    "numeric": "030",
+    "name": "Upper gum",
+    "subsites": "Maxillary gingiva, Upper alveolar mucosa, Upper alveolar ridge mucosa, Upper alveolus, Upper gingiva"
+  },
+  {
+    "code": "C03.1",
+    "numeric": "031",
+    "name": "Lower gum",
+    "subsites": "Mandibular gingiva, Lower alveolar mucosa, Lower alveolar ridge mucosa, Lower alveolus, Lower gingiva"
+  },
+  {
+    "code": "C03.9",
+    "numeric": "039",
+    "name": "Gum, NOS",
+    "subsites": "Gingiva, NOS, Alveolar mucosa, NOS, Alveolar ridge mucosa, NOS, Alveolus, NOS, Periodontal tissue, Tooth socket"
+  },
+  {
+    "code": "C04.0",
+    "numeric": "040",
+    "name": "Anterior floor of mouth",
+    "subsites": ""
+  },
+  {
+    "code": "C04.1",
+    "numeric": "041",
+    "name": "Lateral floor of mouth",
+    "subsites": ""
+  },
+  {
+    "code": "C04.8",
+    "numeric": "048",
+    "name": "Overlapping lesion of floor of mouth",
+    "subsites": "see section 4.2.6"
+  },
+  {
+    "code": "C04.9",
+    "numeric": "049",
+    "name": "Floor of mouth, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C05.0",
+    "numeric": "050",
+    "name": "Hard palate",
+    "subsites": ""
+  },
+  {
+    "code": "C05.1",
+    "numeric": "051",
+    "name": "Soft palate, NOS",
+    "subsites": "excludes nasopharyngeal surface of soft palate C11.3"
+  },
+  {
+    "code": "C05.2",
+    "numeric": "052",
+    "name": "Uvula",
+    "subsites": ""
+  },
+  {
+    "code": "C05.8",
+    "numeric": "058",
+    "name": "Overlapping lesion of palate",
+    "subsites": "see section 4.2.6, Junction of hard and so! palate"
+  },
+  {
+    "code": "C05.9",
+    "numeric": "059",
+    "name": "Palate, NOS",
+    "subsites": "Roof of mouth"
+  },
+  {
+    "code": "C06.0",
+    "numeric": "060",
+    "name": "Cheek mucosa",
+    "subsites": "Buccal mucosa, Internal cheek"
+  },
+  {
+    "code": "C06.1",
+    "numeric": "061",
+    "name": "Vestibule of mouth",
+    "subsites": "Alveolar sulcus, Buccal sulcus, Labial sulcus"
+  },
+  {
+    "code": "C06.2",
+    "numeric": "062",
+    "name": "Retromolar area",
+    "subsites": "Retromolar triangle, Retromolar trigone"
+  },
+  {
+    "code": "C06.8",
+    "numeric": "068",
+    "name": "Overlapping lesion of other and unspecified parts of mouth",
+    "subsites": ""
+  },
+  {
+    "code": "C06.9",
+    "numeric": "069",
+    "name": "Mouth, NOS",
+    "subsites": "Buccal cavity, Oral cavity, Oral mucosa, Minor salivary gland, NOS"
+  },
+  {
+    "code": "C07.9",
+    "numeric": "079",
+    "name": "Parotid gland",
+    "subsites": "Parotid, NOS, Stensen duct, Parotid gland duct"
+  },
+  {
+    "code": "C08.0",
+    "numeric": "080",
+    "name": "Submandibular gland",
+    "subsites": "Submaxillary gland, Wharton duct, Submaxillary gland duct"
+  },
+  {
+    "code": "C08.1",
+    "numeric": "081",
+    "name": "Sublingual gland",
+    "subsites": "Sublingual gland duct"
+  },
+  {
+    "code": "C08.8",
+    "numeric": "088",
+    "name": "Overlapping lesion of major salivary glands",
+    "subsites": ""
+  },
+  {
+    "code": "C08.9",
+    "numeric": "089",
+    "name": "Major salivary gland, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C09.0",
+    "numeric": "090",
+    "name": "Tonsillar fossa",
+    "subsites": ""
+  },
+  {
+    "code": "C09.1",
+    "numeric": "091",
+    "name": "Tonsillar pillar",
+    "subsites": "Faucial pillar, Glossopalatine fold"
+  },
+  {
+    "code": "C09.8",
+    "numeric": "098",
+    "name": "Overlapping lesion of tonsil",
+    "subsites": ""
+  },
+  {
+    "code": "C09.9",
+    "numeric": "099",
+    "name": "Tonsil, NOS",
+    "subsites": "excludes lingual tonsil C02.4 and pharyngeal tonsil C11.1, Faucial tonsil, Palatine tonsil"
+  },
+  {
+    "code": "C10.0",
+    "numeric": "100",
+    "name": "Vallecula",
+    "subsites": ""
+  },
+  {
+    "code": "C10.1",
+    "numeric": "101",
+    "name": "Anterior surface of epiglottis",
+    "subsites": ""
+  },
+  {
+    "code": "C10.2",
+    "numeric": "102",
+    "name": "Lateral wall of oropharynx",
+    "subsites": "Lateral wall of mesopharynx"
+  },
+  {
+    "code": "C10.3",
+    "numeric": "103",
+    "name": "Posterior wall of oropharynx",
+    "subsites": "Posterior wall of mesopharynx"
+  },
+  {
+    "code": "C10.4",
+    "numeric": "104",
+    "name": "Branchial cleft",
+    "subsites": "site of neoplasm"
+  },
+  {
+    "code": "C10.8",
+    "numeric": "108",
+    "name": "Overlapping lesion of oropharynx",
+    "subsites": ""
+  },
+  {
+    "code": "C10.9",
+    "numeric": "109",
+    "name": "Oropharynx, NOS",
+    "subsites": "Mesopharynx, NOS, Fauces, NOS"
+  },
+  {
+    "code": "C11.0",
+    "numeric": "110",
+    "name": "Superior wall of nasopharynx",
+    "subsites": "Roof of nasopharynx"
+  },
+  {
+    "code": "C11.1",
+    "numeric": "111",
+    "name": "Posterior wall of nasopharynx",
+    "subsites": "Adenoid, Pharyngeal tonsil"
+  },
+  {
+    "code": "C11.2",
+    "numeric": "112",
+    "name": "Lateral wall of nasopharynx",
+    "subsites": "Fossa of Rosenmuller"
+  },
+  {
+    "code": "C11.3",
+    "numeric": "113",
+    "name": "Anterior wall of nasopharynx",
+    "subsites": "Nasopharyngeal surface of so! palate, Pharyngeal fornix, Choana, Posterior margin of nasal septum"
+  },
+  {
+    "code": "C11.8",
+    "numeric": "118",
+    "name": "Overlapping lesion of nasopharynx",
+    "subsites": ""
+  },
+  {
+    "code": "C11.9",
+    "numeric": "119",
+    "name": "Nasopharyngeal wall, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C12.9",
+    "numeric": "129",
+    "name": "Pyriform sinus",
+    "subsites": "Piriform sinus, Pyriform fossa, Piriform fossa"
+  },
+  {
+    "code": "C13.0",
+    "numeric": "130",
+    "name": "Postcricoid region",
+    "subsites": "Cricopharynx, Cricoid, NOS"
+  },
+  {
+    "code": "C13.1",
+    "numeric": "131",
+    "name": "Hypopharyngeal aspect of aryepiglottic fold",
+    "subsites": "Aryepiglottic fold, NOS (excludes laryngeal aspect of aryepiglottic fold C32.1), Arytenoid fold"
+  },
+  {
+    "code": "C13.2",
+    "numeric": "132",
+    "name": "Posterior wall of hypopharynx",
+    "subsites": ""
+  },
+  {
+    "code": "C13.8",
+    "numeric": "138",
+    "name": "Overlapping lesion of hypopharynx",
+    "subsites": ""
+  },
+  {
+    "code": "C13.9",
+    "numeric": "139",
+    "name": "Hypopharynx, NOS",
+    "subsites": "Hypopharyngeal wall, Laryngopharynx"
+  },
+  {
+    "code": "C14.0",
+    "numeric": "140",
+    "name": "Pharynx, NOS",
+    "subsites": "Pharyngeal wall, NOS, Wall of pharynx, NOS, Lateral wall of pharynx, NOS, Posterior wall of pharynx, NOS, Retropharynx, \"roat"
+  },
+  {
+    "code": "C14.2",
+    "numeric": "142",
+    "name": "Waldeyer ring",
+    "subsites": ""
+  },
+  {
+    "code": "C14.8",
+    "numeric": "148",
+    "name": "Overlapping lesion of lip, oral cavity and pharynx",
+    "subsites": ""
+  },
+  {
+    "code": "C15.0",
+    "numeric": "150",
+    "name": "Cervical esophagus",
+    "subsites": ""
+  },
+  {
+    "code": "C15.1",
+    "numeric": "151",
+    "name": "Thoracic esophagus",
+    "subsites": ""
+  },
+  {
+    "code": "C15.2",
+    "numeric": "152",
+    "name": "Abdominal esophagus",
+    "subsites": ""
+  },
+  {
+    "code": "C15.3",
+    "numeric": "153",
+    "name": "Upper third of esophagus",
+    "subsites": "Proximal third of esophagus"
+  },
+  {
+    "code": "C15.4",
+    "numeric": "154",
+    "name": "Middle third of esophagus",
+    "subsites": ""
+  },
+  {
+    "code": "C15.5",
+    "numeric": "155",
+    "name": "Lower third of esophagus",
+    "subsites": "Distal third of esophagus"
+  },
+  {
+    "code": "C15.8",
+    "numeric": "158",
+    "name": "Overlapping lesion of esophagus",
+    "subsites": ""
+  },
+  {
+    "code": "C15.9",
+    "numeric": "159",
+    "name": "Esophagus, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C16.0",
+    "numeric": "160",
+    "name": "Cardia, NOS",
+    "subsites": "Gastric cardia, Cardioesophageal junction, Esophagogastric junction, Gastroesophageal junction"
+  },
+  {
+    "code": "C16.1",
+    "numeric": "161",
+    "name": "Fundus of stomach",
+    "subsites": "Gastric fundus"
+  },
+  {
+    "code": "C16.2",
+    "numeric": "162",
+    "name": "Body of stomach",
+    "subsites": "Corpus of stomach, Gastric corpus"
+  },
+  {
+    "code": "C16.3",
+    "numeric": "163",
+    "name": "Gastric antrum",
+    "subsites": "Antrum of stomach, Pyloric antrum"
+  },
+  {
+    "code": "C16.4",
+    "numeric": "164",
+    "name": "Pylorus",
+    "subsites": "Pyloric canal, Prepylorus"
+  },
+  {
+    "code": "C16.5",
+    "numeric": "165",
+    "name": "Lesser curvature of stomach, NOS",
+    "subsites": "If anatomic Location within stomach cannot be specified"
+  },
+  {
+    "code": "C16.6",
+    "numeric": "166",
+    "name": "Greater curvature of stomach, NOS",
+    "subsites": "If anatomic Location within stomach cannot be specified"
+  },
+  {
+    "code": "C16.8",
+    "numeric": "168",
+    "name": "Overlapping lesion of stomach",
+    "subsites": "If anatomic Location within stomach cannot be specified"
+  },
+  {
+    "code": "C16.9",
+    "numeric": "169",
+    "name": "Stomach, NOS",
+    "subsites": "Gastric, NOS"
+  },
+  {
+    "code": "C17.0",
+    "numeric": "170",
+    "name": "Duodenum",
+    "subsites": ""
+  },
+  {
+    "code": "C17.1",
+    "numeric": "171",
+    "name": "Jejunum",
+    "subsites": ""
+  },
+  {
+    "code": "C17.2",
+    "numeric": "172",
+    "name": "Ileum",
+    "subsites": "excludes ileocecal valve C18.0"
+  },
+  {
+    "code": "C17.3",
+    "numeric": "173",
+    "name": "Meckel diverticulum",
+    "subsites": "site of neoplasm"
+  },
+  {
+    "code": "C17.8",
+    "numeric": "178",
+    "name": "Overlapping lesion of small intestine",
+    "subsites": ""
+  },
+  {
+    "code": "C17.9",
+    "numeric": "179",
+    "name": "Small intestine, NOS",
+    "subsites": "Small bowel, NOS"
+  },
+  {
+    "code": "C18.0",
+    "numeric": "180",
+    "name": "Cecum",
+    "subsites": "Ileocecal valve, Ileocecal junction"
+  },
+  {
+    "code": "C18.1",
+    "numeric": "181",
+    "name": "Appendix",
+    "subsites": ""
+  },
+  {
+    "code": "C18.2",
+    "numeric": "182",
+    "name": "Ascending colon",
+    "subsites": "Right colon"
+  },
+  {
+    "code": "C18.3",
+    "numeric": "183",
+    "name": "Hepatic flexure of colon",
+    "subsites": ""
+  },
+  {
+    "code": "C18.4",
+    "numeric": "184",
+    "name": "Transverse colon",
+    "subsites": ""
+  },
+  {
+    "code": "C18.5",
+    "numeric": "185",
+    "name": "Splenic flexure of colon",
+    "subsites": ""
+  },
+  {
+    "code": "C18.6",
+    "numeric": "186",
+    "name": "Descending colon",
+    "subsites": "Le! colon"
+  },
+  {
+    "code": "C18.7",
+    "numeric": "187",
+    "name": "Sigmoid colon",
+    "subsites": "Sigmoid, NOS, Sigmoid #exure of colon, Pelvic colon"
+  },
+  {
+    "code": "C18.8",
+    "numeric": "188",
+    "name": "Overlapping lesion of colon",
+    "subsites": ""
+  },
+  {
+    "code": "C18.9",
+    "numeric": "189",
+    "name": "Colon, NOS",
+    "subsites": "Large intestine (excludes rectum, NOS C20.9 and recrectosigmoid junction C19.9), Large bowel, NOS"
+  },
+  {
+    "code": "C19.9",
+    "numeric": "199",
+    "name": "Rectosigmoid junction",
+    "subsites": "Rectosigmoid, NOS, Rectosigmoid colon, Colon and rectum, Pelvirectal junction"
+  },
+  {
+    "code": "C20.9",
+    "numeric": "209",
+    "name": "Rectum, NOS",
+    "subsites": "Rectal ampulla"
+  },
+  {
+    "code": "C21.0",
+    "numeric": "210",
+    "name": "Anus, NOS",
+    "subsites": "excludes skin of anus and perianal skin C44.5"
+  },
+  {
+    "code": "C21.1",
+    "numeric": "211",
+    "name": "Anal canal",
+    "subsites": "Anal sphincter"
+  },
+  {
+    "code": "C21.2",
+    "numeric": "212",
+    "name": "Cloacogenic zone",
+    "subsites": ""
+  },
+  {
+    "code": "C21.8",
+    "numeric": "218",
+    "name": "Overlapping lesion of rectum, anus and anal canal",
+    "subsites": "Anorectal junction, Anorectum"
+  },
+  {
+    "code": "C22.0",
+    "numeric": "220",
+    "name": "Liver",
+    "subsites": "Hepatic, NOS"
+  },
+  {
+    "code": "C22.1",
+    "numeric": "221",
+    "name": "Intrahepatic bile duct",
+    "subsites": "Biliary canaliculus, Cholangiole"
+  },
+  {
+    "code": "C23.9",
+    "numeric": "239",
+    "name": "Gallbladder",
+    "subsites": ""
+  },
+  {
+    "code": "C24.0",
+    "numeric": "240",
+    "name": "Extrahepatic bile duct",
+    "subsites": "Bile duct, NOS, Biliary duct, NOS, Choledochal duct, Common bile duct, Common duct, Cystic bile duct, Cystic duct, Hepatic bile duct, Hepatic duct, Sphincter of Oddi"
+  },
+  {
+    "code": "C24.1",
+    "numeric": "241",
+    "name": "Ampulla of Vater",
+    "subsites": "Periampullary"
+  },
+  {
+    "code": "C24.8",
+    "numeric": "248",
+    "name": "Overlapping lesion of biliary tract",
+    "subsites": "Note: Neoplams involving both intrahepatic and extrahepatic bile ducts"
+  },
+  {
+    "code": "C24.9",
+    "numeric": "249",
+    "name": "Biliary tract, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C25.0",
+    "numeric": "250",
+    "name": "Head of pancreas",
+    "subsites": ""
+  },
+  {
+    "code": "C25.1",
+    "numeric": "251",
+    "name": "Body of pancreas",
+    "subsites": ""
+  },
+  {
+    "code": "C25.2",
+    "numeric": "252",
+    "name": "Tail of pancreas",
+    "subsites": ""
+  },
+  {
+    "code": "C25.3",
+    "numeric": "253",
+    "name": "Pancreatic duct",
+    "subsites": "Duct of Santorini, Duct of Wirsung"
+  },
+  {
+    "code": "C25.4",
+    "numeric": "254",
+    "name": "Islets of Langerhans",
+    "subsites": "Islands of Langerhans, Endocrine pancreas"
+  },
+  {
+    "code": "C25.7",
+    "numeric": "257",
+    "name": "Other specified parts of pancreas",
+    "subsites": "Neck of pancreas"
+  },
+  {
+    "code": "C25.8",
+    "numeric": "258",
+    "name": "Overlapping lesion of pancreas",
+    "subsites": ""
+  },
+  {
+    "code": "C25.9",
+    "numeric": "259",
+    "name": "Pancreas, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C26.0",
+    "numeric": "260",
+    "name": "Intestinal tract, NOS",
+    "subsites": "Bowel, NOS, Intestine, NOS"
+  },
+  {
+    "code": "C26.8",
+    "numeric": "268",
+    "name": "Overlapping lesion of digestive system",
+    "subsites": "see section 4.2.6) (Note: Neoplasms of digestive organs whose point of origin cannot be assigned to any one of the categories C15 to C26.0"
+  },
+  {
+    "code": "C26.9",
+    "numeric": "269",
+    "name": "Gastrointestinal tract, NOS",
+    "subsites": "Alimentary tract, NOS, Digestive organs, NOS"
+  },
+  {
+    "code": "C30.0",
+    "numeric": "300",
+    "name": "Nasal cavity",
+    "subsites": "Internal nose, Naris, Nasal cartilage, Nasal mucosa, Nasal septum, NOS (excludes posterior margin of nasal septum C11.3), Nasal turbinate, Nostril, Vestibule of nose"
+  },
+  {
+    "code": "C30.1",
+    "numeric": "301",
+    "name": "Middle ear",
+    "subsites": "Inner ear, Auditory tube, Eustachian tube, Mastoid antrum, Tympanic cavity"
+  },
+  {
+    "code": "C31.0",
+    "numeric": "310",
+    "name": "Maxillary sinus",
+    "subsites": "Maxillary antrum, Antrum, NOS"
+  },
+  {
+    "code": "C31.1",
+    "numeric": "311",
+    "name": "Ethmoid sinus",
+    "subsites": ""
+  },
+  {
+    "code": "C31.2",
+    "numeric": "312",
+    "name": "Frontal sinus",
+    "subsites": ""
+  },
+  {
+    "code": "C31.3",
+    "numeric": "313",
+    "name": "Sphenoid sinus",
+    "subsites": ""
+  },
+  {
+    "code": "C31.8",
+    "numeric": "318",
+    "name": "Overlapping lesion of accessory sinuses",
+    "subsites": ""
+  },
+  {
+    "code": "C31.9",
+    "numeric": "319",
+    "name": "Accessory sinus, NOS",
+    "subsites": "Accessory nasal sinus, Paranasal sinus"
+  },
+  {
+    "code": "C32.0",
+    "numeric": "320",
+    "name": "Glottis",
+    "subsites": "Intrinsic larynx, Laryngeal commissure, Vocal cord, NOS, True vocal cord, True cord"
+  },
+  {
+    "code": "C32.1",
+    "numeric": "321",
+    "name": "Supraglottis",
+    "subsites": "Epiglottis, NOS (excludes anterior surface of epiglottis C10.1), Extrinsic larynx, Laryngeal aspect of aryepiglottic fold, Posterior surface of epiglottis, Ventricular band of larynx, False vocal cord, False cord"
+  },
+  {
+    "code": "C32.2",
+    "numeric": "322",
+    "name": "Subglottis",
+    "subsites": ""
+  },
+  {
+    "code": "C32.3",
+    "numeric": "323",
+    "name": "Laryngeal cartilage",
+    "subsites": "Arytenoid cartilage, Cricoid cartilage, Cuneiform cartilage, Thyroid cartilage"
+  },
+  {
+    "code": "C32.8",
+    "numeric": "328",
+    "name": "Overlapping lesion of larynx",
+    "subsites": ""
+  },
+  {
+    "code": "C32.9",
+    "numeric": "329",
+    "name": "Larynx, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C33.9",
+    "numeric": "339",
+    "name": "Trachea",
+    "subsites": ""
+  },
+  {
+    "code": "C34.0",
+    "numeric": "340",
+    "name": "Main bronchus",
+    "subsites": "Carina, Hilus of lung"
+  },
+  {
+    "code": "C34.1",
+    "numeric": "341",
+    "name": "Upper lobe, lung",
+    "subsites": "Lingula of lung, Upper lobe, bronchus"
+  },
+  {
+    "code": "C34.2",
+    "numeric": "342",
+    "name": "Middle lobe, lung",
+    "subsites": "Middle lobe, bronchus"
+  },
+  {
+    "code": "C34.3",
+    "numeric": "343",
+    "name": "Lower lobe, lung",
+    "subsites": "Lower lobe, bronchus"
+  },
+  {
+    "code": "C34.8",
+    "numeric": "348",
+    "name": "Overlapping lesion of lung",
+    "subsites": ""
+  },
+  {
+    "code": "C34.9",
+    "numeric": "349",
+    "name": "Lung, NOS",
+    "subsites": "Bronchus, NOS, Bronchiole, Bronchogenic, Pulmonary, NOS"
+  },
+  {
+    "code": "C37.9",
+    "numeric": "379",
+    "name": "Thymus",
+    "subsites": ""
+  },
+  {
+    "code": "C38.0",
+    "numeric": "380",
+    "name": "Heart",
+    "subsites": "Endocardium, Epicardium, Myocardium, Pericardium, Cardiac ventricle, Cardiac atrium"
+  },
+  {
+    "code": "C38.1",
+    "numeric": "381",
+    "name": "Anterior mediastinum",
+    "subsites": ""
+  },
+  {
+    "code": "C38.2",
+    "numeric": "382",
+    "name": "Posterior mediastinum",
+    "subsites": ""
+  },
+  {
+    "code": "C38.3",
+    "numeric": "383",
+    "name": "Mediastinum, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C38.4",
+    "numeric": "384",
+    "name": "Pleura, NOS",
+    "subsites": "Parietal pleura, Visceral pleura"
+  },
+  {
+    "code": "C38.8",
+    "numeric": "388",
+    "name": "Overlapping lesion of heart, mediastinum and pleura",
+    "subsites": ""
+  },
+  {
+    "code": "C39.0",
+    "numeric": "390",
+    "name": "Upper respiratory tract, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C39.8",
+    "numeric": "398",
+    "name": "Overlapping lesion of respiratory system and intrathoracic organs",
+    "subsites": "Note: Neoplasm of respiratory and intrathoracic organs whose point of origin cannot be assigned to any one of the categories C30 to C39.0"
+  },
+  {
+    "code": "C39.9",
+    "numeric": "399",
+    "name": "Ill-defined sites within respiratory system",
+    "subsites": "Respiratory tract, NOS"
+  },
+  {
+    "code": "C40.0",
+    "numeric": "400",
+    "name": "Long bones of upper limb, scapula and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C40.1",
+    "numeric": "401",
+    "name": "Short bones of upper limb and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C40.2",
+    "numeric": "402",
+    "name": "Long bones of lower limb and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C40.3",
+    "numeric": "403",
+    "name": "Short bones of lower limb and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C40.8",
+    "numeric": "408",
+    "name": "Overlapping lesion of bones, joints and articular cartilage of limbs",
+    "subsites": ""
+  },
+  {
+    "code": "C40.9",
+    "numeric": "409",
+    "name": "Bone of limb, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C41.0",
+    "numeric": "410",
+    "name": "Bones of skull and face and associated joints",
+    "subsites": "excludes mandible"
+  },
+  {
+    "code": "C41.1",
+    "numeric": "411",
+    "name": "Mandible",
+    "subsites": ""
+  },
+  {
+    "code": "C41.2",
+    "numeric": "412",
+    "name": "Vertebral column",
+    "subsites": "excludes sacrum and coccyx C41.4"
+  },
+  {
+    "code": "C41.3",
+    "numeric": "413",
+    "name": "Rib, sternum, clavicle and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C41.4",
+    "numeric": "414",
+    "name": "Pelvic bones, sacrum, coccyx and associated joints",
+    "subsites": ""
+  },
+  {
+    "code": "C41.8",
+    "numeric": "418",
+    "name": "Overlapping lesion of bones, joints and articular cartilage",
+    "subsites": ""
+  },
+  {
+    "code": "C41.9",
+    "numeric": "419",
+    "name": "Bone, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C42.0",
+    "numeric": "420",
+    "name": "Blood",
+    "subsites": ""
+  },
+  {
+    "code": "C42.1",
+    "numeric": "421",
+    "name": "Bone marrow",
+    "subsites": ""
+  },
+  {
+    "code": "C42.2",
+    "numeric": "422",
+    "name": "Spleen",
+    "subsites": ""
+  },
+  {
+    "code": "C42.3",
+    "numeric": "423",
+    "name": "Reticuloendothelial system, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C42.4",
+    "numeric": "424",
+    "name": "Hematopoietic system, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C44.0",
+    "numeric": "440",
+    "name": "Skin of lip, NOS",
+    "subsites": "Skin of lower lip, Skin of upper lip"
+  },
+  {
+    "code": "C44.1",
+    "numeric": "441",
+    "name": "Eyelid",
+    "subsites": ""
+  },
+  {
+    "code": "C44.2",
+    "numeric": "442",
+    "name": "External ear",
+    "subsites": ""
+  },
+  {
+    "code": "C44.3",
+    "numeric": "443",
+    "name": "Skin of other and unspecified parts of face",
+    "subsites": ""
+  },
+  {
+    "code": "C44.5",
+    "numeric": "445",
+    "name": "Skin of trunk",
+    "subsites": ""
+  },
+  {
+    "code": "C44.6",
+    "numeric": "446",
+    "name": "Skin of upper limb and shoulder",
+    "subsites": ""
+  },
+  {
+    "code": "C44.7",
+    "numeric": "447",
+    "name": "Skin of lower limb and hip",
+    "subsites": ""
+  },
+  {
+    "code": "C44.8",
+    "numeric": "448",
+    "name": "Overlapping lesion of skin",
+    "subsites": ""
+  },
+  {
+    "code": "C44.9",
+    "numeric": "449",
+    "name": "Skin, NOS",
+    "subsites": "skin of labia majora, skin of vulva, skin of penis, and skin of scrotum"
+  },
+  {
+    "code": "C47.0",
+    "numeric": "470",
+    "name": "Peripheral nerves and autonomic nervous system of head, face, and neck",
+    "subsites": ""
+  },
+  {
+    "code": "C47.1",
+    "numeric": "471",
+    "name": "Peripheral nerves and autonomic nervous system of upper limb and shoulder",
+    "subsites": ""
+  },
+  {
+    "code": "C47.2",
+    "numeric": "472",
+    "name": "Peripheral nerves and autonomic nervous system of lower limband hip",
+    "subsites": ""
+  },
+  {
+    "code": "C47.3",
+    "numeric": "473",
+    "name": "Peripheral nerves and autonomic nervous system of thorax",
+    "subsites": ""
+  },
+  {
+    "code": "C47.4",
+    "numeric": "474",
+    "name": "Peripheral nerves and autonomic nervous system of abdomen",
+    "subsites": ""
+  },
+  {
+    "code": "C47.5",
+    "numeric": "475",
+    "name": "Peripheral nerves and autonomic nervous system of pelvis",
+    "subsites": ""
+  },
+  {
+    "code": "C47.6",
+    "numeric": "476",
+    "name": "Peripheral nerves and autonomic nervous system of trunk, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C47.8",
+    "numeric": "478",
+    "name": "Overlapping lesion of peripheral nerves and autonomic nervous system",
+    "subsites": ""
+  },
+  {
+    "code": "C47.9",
+    "numeric": "479",
+    "name": "Autonomic nervous system, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C48.0",
+    "numeric": "480",
+    "name": "Retroperitoneum",
+    "subsites": ""
+  },
+  {
+    "code": "C48.2",
+    "numeric": "482",
+    "name": "Peritoneum, NOS",
+    "subsites": "Peritoneal cavity"
+  },
+  {
+    "code": "C48.8",
+    "numeric": "488",
+    "name": "Overlapping lesion of retroperitoneum and peritoneum",
+    "subsites": ""
+  },
+  {
+    "code": "C49.0",
+    "numeric": "490",
+    "name": "Connective, subcutaneous and other soft tissues of head, face, and neck",
+    "subsites": ""
+  },
+  {
+    "code": "C49.1",
+    "numeric": "491",
+    "name": "Connective, subcutaneous and other soft tissues of upper limb and shoulder",
+    "subsites": ""
+  },
+  {
+    "code": "C49.2",
+    "numeric": "492",
+    "name": "Connective, subcutaneous and other soft tissues of lower limb and hip",
+    "subsites": ""
+  },
+  {
+    "code": "C49.3",
+    "numeric": "493",
+    "name": "Connective, subcutaneous and other soft tissues of thorax",
+    "subsites": ""
+  },
+  {
+    "code": "C49.4",
+    "numeric": "494",
+    "name": "Connective, subcutaneous and other soft tissues of abdomen",
+    "subsites": ""
+  },
+  {
+    "code": "C49.5",
+    "numeric": "495",
+    "name": "Connective, subcutaneous and other soft tissues of pelvis",
+    "subsites": ""
+  },
+  {
+    "code": "C49.6",
+    "numeric": "496",
+    "name": "Connective, subcutaneous and other soft tissues of trunk NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C49.8",
+    "numeric": "498",
+    "name": "Overlapping lesion of connective, subcutaneous and other soft tissues",
+    "subsites": ""
+  },
+  {
+    "code": "C49.9",
+    "numeric": "499",
+    "name": "Connective, subcutaneous and other soft tissues, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C50.0",
+    "numeric": "500",
+    "name": "Nipple",
+    "subsites": "Areola"
+  },
+  {
+    "code": "C50.1",
+    "numeric": "501",
+    "name": "Central portion of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.2",
+    "numeric": "502",
+    "name": "Upper-inner quadrant of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.3",
+    "numeric": "503",
+    "name": "Lower-inner quadrant of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.4",
+    "numeric": "504",
+    "name": "Upper-outer quadrant of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.5",
+    "numeric": "505",
+    "name": "Lower-outer quadrant of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.6",
+    "numeric": "506",
+    "name": "Axillary tail of breast",
+    "subsites": "Tail of breast, NOS"
+  },
+  {
+    "code": "C50.8",
+    "numeric": "508",
+    "name": "Overlapping lesion of breast",
+    "subsites": ""
+  },
+  {
+    "code": "C50.9",
+    "numeric": "509",
+    "name": "Breast, NOS",
+    "subsites": "Mammary gland"
+  },
+  {
+    "code": "C51.0",
+    "numeric": "510",
+    "name": "Labium majus",
+    "subsites": "Labia majora, NOS, Bartholin gland, Skin of labia majora"
+  },
+  {
+    "code": "C51.1",
+    "numeric": "511",
+    "name": "Labium minus",
+    "subsites": "Labia minora"
+  },
+  {
+    "code": "C51.2",
+    "numeric": "512",
+    "name": "Clitoris",
+    "subsites": ""
+  },
+  {
+    "code": "C51.8",
+    "numeric": "518",
+    "name": "Overlapping lesion of vulva",
+    "subsites": ""
+  },
+  {
+    "code": "C51.9",
+    "numeric": "519",
+    "name": "Vulva, NOS",
+    "subsites": "External female genitalia, Fourchette, Labia, NOS, Labium, NOS, Mons pubis, Mons veneris, Pudendum, Skin of vulva"
+  },
+  {
+    "code": "C52.9",
+    "numeric": "529",
+    "name": "Vagina, NOS",
+    "subsites": "Vaginal vault, Fornix of vagina, Gartner duct, Hymen"
+  },
+  {
+    "code": "C53.0",
+    "numeric": "530",
+    "name": "Endocervix",
+    "subsites": "Internal os, Cervical canal, Endocervical canal, Endocervical gland, Nabothian gland"
+  },
+  {
+    "code": "C53.1",
+    "numeric": "531",
+    "name": "Exocervix",
+    "subsites": "External os"
+  },
+  {
+    "code": "C53.8",
+    "numeric": "538",
+    "name": "Overlapping lesion of cervix uteri",
+    "subsites": "Cervical stump, Squamocolumnar junction of cervix"
+  },
+  {
+    "code": "C53.9",
+    "numeric": "539",
+    "name": "Cervix uteri",
+    "subsites": "Cervix, NOS, Uterine cervix"
+  },
+  {
+    "code": "C54.0",
+    "numeric": "540",
+    "name": "Isthmus uteri",
+    "subsites": "Lower uterine segment"
+  },
+  {
+    "code": "C54.1",
+    "numeric": "541",
+    "name": "Endometrium",
+    "subsites": "Endometrial gland, Endometrial stroma"
+  },
+  {
+    "code": "C54.2",
+    "numeric": "542",
+    "name": "Myometrium",
+    "subsites": ""
+  },
+  {
+    "code": "C54.3",
+    "numeric": "543",
+    "name": "Fundus uteri",
+    "subsites": ""
+  },
+  {
+    "code": "C54.8",
+    "numeric": "548",
+    "name": "Overlapping lesion of corpus uteri",
+    "subsites": ""
+  },
+  {
+    "code": "C54.9",
+    "numeric": "549",
+    "name": "Corpus uteri",
+    "subsites": "Body of uterus"
+  },
+  {
+    "code": "C55.9",
+    "numeric": "559",
+    "name": "Uterus, NOS",
+    "subsites": "Uterine, NOS"
+  },
+  {
+    "code": "C56.9",
+    "numeric": "569",
+    "name": "Ovary",
+    "subsites": ""
+  },
+  {
+    "code": "C57.0",
+    "numeric": "570",
+    "name": "Fallopian tube",
+    "subsites": "Uterine tube"
+  },
+  {
+    "code": "C57.1",
+    "numeric": "571",
+    "name": "Broad ligament",
+    "subsites": "Mesovarium, Parovarian region"
+  },
+  {
+    "code": "C57.2",
+    "numeric": "572",
+    "name": "Round ligament",
+    "subsites": ""
+  },
+  {
+    "code": "C57.3",
+    "numeric": "573",
+    "name": "Parametrium",
+    "subsites": "Uterine ligament, Uterosacral ligament"
+  },
+  {
+    "code": "C57.4",
+    "numeric": "574",
+    "name": "Uterine adnexa",
+    "subsites": "Adnexa, NOS"
+  },
+  {
+    "code": "C57.7",
+    "numeric": "577",
+    "name": "Other specified parts of female genital organs",
+    "subsites": "Wol%an body, Wol%an duct"
+  },
+  {
+    "code": "C57.8",
+    "numeric": "578",
+    "name": "Overlapping lesion of female genital organs",
+    "subsites": "Tubo-ovarian, Utero-ovarian"
+  },
+  {
+    "code": "C57.9",
+    "numeric": "579",
+    "name": "Female genital tract, NOS",
+    "subsites": "Female genital organs, NOS, Female genitourinary tract, NOS, Urethrovaginal septum, Vesicocervical tissue, Vesicovaginal septum"
+  },
+  {
+    "code": "C58.9",
+    "numeric": "589",
+    "name": "Placenta",
+    "subsites": "Fetal membranes"
+  },
+  {
+    "code": "C60.0",
+    "numeric": "600",
+    "name": "Prepuce",
+    "subsites": "Foreskin"
+  },
+  {
+    "code": "C60.1",
+    "numeric": "601",
+    "name": "Glans penis",
+    "subsites": ""
+  },
+  {
+    "code": "C60.2",
+    "numeric": "602",
+    "name": "Body of penis",
+    "subsites": "Corpus cavernosum, Corpus of penis"
+  },
+  {
+    "code": "C60.8",
+    "numeric": "608",
+    "name": "Overlapping lesion of penis",
+    "subsites": ""
+  },
+  {
+    "code": "C60.9",
+    "numeric": "609",
+    "name": "Penis, NOS",
+    "subsites": "Skin of penis"
+  },
+  {
+    "code": "C61.9",
+    "numeric": "619",
+    "name": "Prostate gland",
+    "subsites": "Prostate, NOS"
+  },
+  {
+    "code": "C62.0",
+    "numeric": "620",
+    "name": "Undescended testis",
+    "subsites": "site of neoplasm, Retained testis (site of neoplasm), Ectopic testis (site of neoplasm)"
+  },
+  {
+    "code": "C62.1",
+    "numeric": "621",
+    "name": "Descended testis",
+    "subsites": "Scrotal testis"
+  },
+  {
+    "code": "C62.9",
+    "numeric": "629",
+    "name": "Testis, NOS",
+    "subsites": "Testicle, NOS"
+  },
+  {
+    "code": "C63.0",
+    "numeric": "630",
+    "name": "Epididymis",
+    "subsites": ""
+  },
+  {
+    "code": "C63.1",
+    "numeric": "631",
+    "name": "Spermatic cord",
+    "subsites": "Vas deferens"
+  },
+  {
+    "code": "C63.2",
+    "numeric": "632",
+    "name": "Scrotum, NOS",
+    "subsites": "Skin of scrotum"
+  },
+  {
+    "code": "C63.7",
+    "numeric": "637",
+    "name": "Other specified parts of male genital organs",
+    "subsites": "Seminal vesicle, Tunica vaginalis"
+  },
+  {
+    "code": "C63.8",
+    "numeric": "638",
+    "name": "Overlapping lesion of male genital organs",
+    "subsites": ""
+  },
+  {
+    "code": "C63.9",
+    "numeric": "639",
+    "name": "Male genital organs, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C64.9",
+    "numeric": "649",
+    "name": "Kidney, NOS",
+    "subsites": "Renal, NOS, Kidney parenchyma"
+  },
+  {
+    "code": "C65.9",
+    "numeric": "659",
+    "name": "Renal pelvis",
+    "subsites": "Pelvis of kidney, Renal calyces, Renal calyx, Pelviureteric junction"
+  },
+  {
+    "code": "C66.9",
+    "numeric": "669",
+    "name": "Ureter",
+    "subsites": ""
+  },
+  {
+    "code": "C67.0",
+    "numeric": "670",
+    "name": "Trigone of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.1",
+    "numeric": "671",
+    "name": "Dome of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.2",
+    "numeric": "672",
+    "name": "Lateral wall of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.3",
+    "numeric": "673",
+    "name": "Anterior wall of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.4",
+    "numeric": "674",
+    "name": "Posterior wall of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.5",
+    "numeric": "675",
+    "name": "Bladder neck",
+    "subsites": "Internal urethral orifice"
+  },
+  {
+    "code": "C67.6",
+    "numeric": "676",
+    "name": "Ureteric orifice",
+    "subsites": ""
+  },
+  {
+    "code": "C67.7",
+    "numeric": "677",
+    "name": "Urachus",
+    "subsites": ""
+  },
+  {
+    "code": "C67.8",
+    "numeric": "678",
+    "name": "Overlapping lesion of bladder",
+    "subsites": ""
+  },
+  {
+    "code": "C67.9",
+    "numeric": "679",
+    "name": "Bladder, NOS",
+    "subsites": "Bladder wall, NOS, Urinary bladder, NOS"
+  },
+  {
+    "code": "C68.0",
+    "numeric": "680",
+    "name": "Urethra",
+    "subsites": "Urethral gland, Cowper gland, Prostatic utricle"
+  },
+  {
+    "code": "C68.1",
+    "numeric": "681",
+    "name": "Paraurethral gland",
+    "subsites": ""
+  },
+  {
+    "code": "C68.8",
+    "numeric": "688",
+    "name": "Overlapping lesion of urinary organs",
+    "subsites": ""
+  },
+  {
+    "code": "C68.9",
+    "numeric": "689",
+    "name": "Urinary system, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C69.0",
+    "numeric": "690",
+    "name": "Conjunctiva",
+    "subsites": ""
+  },
+  {
+    "code": "C69.1",
+    "numeric": "691",
+    "name": "Cornea, NOS",
+    "subsites": "Limbus of cornea"
+  },
+  {
+    "code": "C69.2",
+    "numeric": "692",
+    "name": "Retina",
+    "subsites": ""
+  },
+  {
+    "code": "C69.3",
+    "numeric": "693",
+    "name": "Choroid",
+    "subsites": "Crystalline lens"
+  },
+  {
+    "code": "C69.4",
+    "numeric": "694",
+    "name": "Ciliary body",
+    "subsites": "Iris, Sclera, Uveal tract, Intraocular, Eyeball"
+  },
+  {
+    "code": "C69.5",
+    "numeric": "695",
+    "name": "Lacrimal gland",
+    "subsites": "Lacrimal duct, NOS, Nasal lacrimal duct, Nasolacrimal duct, Lacrimal sac"
+  },
+  {
+    "code": "C69.6",
+    "numeric": "696",
+    "name": "Orbit, NOS",
+    "subsites": "Autonomic nervous system of orbit, Connective tissue of orbit, Extraocular muscle, Peripheral nerves of orbit, Retrobulbar tissue, So! tissue of orbit"
+  },
+  {
+    "code": "C69.8",
+    "numeric": "698",
+    "name": "Overlapping lesion of eye and adnexa",
+    "subsites": ""
+  },
+  {
+    "code": "C69.9",
+    "numeric": "699",
+    "name": "Eye, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C70.0",
+    "numeric": "700",
+    "name": "Cerebral meninges",
+    "subsites": ""
+  },
+  {
+    "code": "C70.1",
+    "numeric": "701",
+    "name": "Spinal meninges",
+    "subsites": ""
+  },
+  {
+    "code": "C70.9",
+    "numeric": "709",
+    "name": "Meninges, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C71.1",
+    "numeric": "711",
+    "name": "Frontal lobe",
+    "subsites": "Frontal pole"
+  },
+  {
+    "code": "C71.2",
+    "numeric": "712",
+    "name": "Temporal lobe",
+    "subsites": "Hippocampus, Uncus"
+  },
+  {
+    "code": "C71.3",
+    "numeric": "713",
+    "name": "Parietal lobe",
+    "subsites": ""
+  },
+  {
+    "code": "C71.4",
+    "numeric": "714",
+    "name": "Occipital lobe",
+    "subsites": "Occipital pole"
+  },
+  {
+    "code": "C71.5",
+    "numeric": "715",
+    "name": "Ventricle, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C71.6",
+    "numeric": "716",
+    "name": "Cerebellum, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C71.7",
+    "numeric": "717",
+    "name": "Brain stem",
+    "subsites": ""
+  },
+  {
+    "code": "C71.8",
+    "numeric": "718",
+    "name": "Overlapping lesion of brain",
+    "subsites": ""
+  },
+  {
+    "code": "C71.9",
+    "numeric": "719",
+    "name": "Brain, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C72.0",
+    "numeric": "720",
+    "name": "Spinal cord",
+    "subsites": ""
+  },
+  {
+    "code": "C72.1",
+    "numeric": "721",
+    "name": "Cauda equina",
+    "subsites": ""
+  },
+  {
+    "code": "C72.2",
+    "numeric": "722",
+    "name": "Olfactory nerve",
+    "subsites": ""
+  },
+  {
+    "code": "C72.3",
+    "numeric": "723",
+    "name": "Optic nerve",
+    "subsites": "Optic chiasm, Optic tract"
+  },
+  {
+    "code": "C72.4",
+    "numeric": "724",
+    "name": "Acoustic nerve",
+    "subsites": ""
+  },
+  {
+    "code": "C72.5",
+    "numeric": "725",
+    "name": "Cranial nerve, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C72.8",
+    "numeric": "728",
+    "name": "Overlapping lesion of brain and central nervous system",
+    "subsites": ""
+  },
+  {
+    "code": "C72.9",
+    "numeric": "729",
+    "name": "Nervous system, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C73.9",
+    "numeric": "739",
+    "name": "Thyroid gland",
+    "subsites": "Thyroid, NOS, Thyroglossal duct"
+  },
+  {
+    "code": "C74.0",
+    "numeric": "740",
+    "name": "Cortex of adrenal gland",
+    "subsites": ""
+  },
+  {
+    "code": "C74.1",
+    "numeric": "741",
+    "name": "Medulla of adrenal gland",
+    "subsites": ""
+  },
+  {
+    "code": "C74.9",
+    "numeric": "749",
+    "name": "Adrenal gland, NOS",
+    "subsites": "Suprarenal gland, Adrenal, NOS"
+  },
+  {
+    "code": "C75.0",
+    "numeric": "750",
+    "name": "Parathyroid gland",
+    "subsites": ""
+  },
+  {
+    "code": "C75.1",
+    "numeric": "751",
+    "name": "Pituitary gland",
+    "subsites": "Pituitary, NOS, Hypophysis, Rathke pouch, Sella turcica, Pituitary fossa"
+  },
+  {
+    "code": "C75.2",
+    "numeric": "752",
+    "name": "Craniopharyngeal duct",
+    "subsites": ""
+  },
+  {
+    "code": "C75.3",
+    "numeric": "753",
+    "name": "Pineal gland",
+    "subsites": ""
+  },
+  {
+    "code": "C75.4",
+    "numeric": "754",
+    "name": "Carotid body",
+    "subsites": ""
+  },
+  {
+    "code": "C75.5",
+    "numeric": "755",
+    "name": "Aortic body and other paraganglia",
+    "subsites": "Coccygeal body, Coccygeal glomus, Glomus jugulare, Para-aortic body, Organ of Zuckerkandl, Paraganglion"
+  },
+  {
+    "code": "C75.8",
+    "numeric": "758",
+    "name": "Overlapping lesion of endocrine glands and related structures",
+    "subsites": "Multiple endocrine glands, Pluriglandular"
+  },
+  {
+    "code": "C75.9",
+    "numeric": "759",
+    "name": "Endocrine gland, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.0",
+    "numeric": "760",
+    "name": "Head, face or neck, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.1",
+    "numeric": "761",
+    "name": "Thorax, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.2",
+    "numeric": "762",
+    "name": "Abdomen, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.3",
+    "numeric": "763",
+    "name": "Pelvis, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.4",
+    "numeric": "764",
+    "name": "Upper limb, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.5",
+    "numeric": "765",
+    "name": "Lower limb, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C76.7",
+    "numeric": "767",
+    "name": "Other ill-defined sites",
+    "subsites": ""
+  },
+  {
+    "code": "C76.8",
+    "numeric": "768",
+    "name": "Overlapping lesion of ill-defined sites",
+    "subsites": ""
+  },
+  {
+    "code": "C77.0",
+    "numeric": "770",
+    "name": "Lymph nodes of head, face and neck",
+    "subsites": ""
+  },
+  {
+    "code": "C77.1",
+    "numeric": "771",
+    "name": "Intrathoracic lymph nodes",
+    "subsites": ""
+  },
+  {
+    "code": "C77.2",
+    "numeric": "772",
+    "name": "Intra-abdominal lymph nodes",
+    "subsites": ""
+  },
+  {
+    "code": "C77.3",
+    "numeric": "773",
+    "name": "Lymph nodes of axilla or arm",
+    "subsites": ""
+  },
+  {
+    "code": "C77.4",
+    "numeric": "774",
+    "name": "Lymph nodes of inguinal region or leg",
+    "subsites": ""
+  },
+  {
+    "code": "C77.5",
+    "numeric": "775",
+    "name": "Pelvic lymph nodes",
+    "subsites": ""
+  },
+  {
+    "code": "C77.8",
+    "numeric": "778",
+    "name": "Lymph nodes of multiple regions",
+    "subsites": ""
+  },
+  {
+    "code": "C77.9",
+    "numeric": "779",
+    "name": "Lymph node, NOS",
+    "subsites": ""
+  },
+  {
+    "code": "C80.9",
+    "numeric": "809",
+    "name": "Unknown Primary Site",
+    "subsites": ""
+  }
+]

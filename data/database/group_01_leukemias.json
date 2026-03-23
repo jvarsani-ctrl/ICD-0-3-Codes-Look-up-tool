@@ -1,0 +1,990 @@
+[
+  {
+    "morphology_code": "9811",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9811"
+  },
+  {
+    "morphology_code": "9812",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(9;22)(q34;q11.2); BCR-ABL1",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9812"
+  },
+  {
+    "morphology_code": "9813",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(v;11q23); MLL rearranged",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9813"
+  },
+  {
+    "morphology_code": "9814",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(12;21)(p13;q22); TEL-AML1 (ETV6-RUNX1)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9814"
+  },
+  {
+    "morphology_code": "9815",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with hyperdiploidy",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9815"
+  },
+  {
+    "morphology_code": "9816",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with hypodiploidy (Hypodiploid ALL)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9816"
+  },
+  {
+    "morphology_code": "9817",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(5;14)(q31;q32); IL3-IGH",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9817"
+  },
+  {
+    "morphology_code": "9818",
+    "morphology_name": "B lymphoblastic leukemia/lymphoma with t(1;19)(q23;p13.3); E2A-PBX1 (TCF3-PBX1)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9818"
+  },
+  {
+    "morphology_code": "9835",
+    "morphology_name": "Precursor cell lymphoblastic leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9835"
+  },
+  {
+    "morphology_code": "9836",
+    "morphology_name": "Precursor B-cell lymphoblastic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9836"
+  },
+  {
+    "morphology_code": "9837",
+    "morphology_name": "Precursor T-cell lymphoblastic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia1",
+    "iccc3_subgroup_name": "Precursor cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9837"
+  },
+  {
+    "morphology_code": "9823",
+    "morphology_name": "B-cell chronic lymphocytic leukemia/small lymphocytic lymphoma",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia2",
+    "iccc3_subgroup_name": "Mature B-cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9823"
+  },
+  {
+    "morphology_code": "9826",
+    "morphology_name": "Burkitt cell leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia2",
+    "iccc3_subgroup_name": "Mature B-cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9826"
+  },
+  {
+    "morphology_code": "9832",
+    "morphology_name": "Prolymphocytic leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia2",
+    "iccc3_subgroup_name": "Mature B-cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9832"
+  },
+  {
+    "morphology_code": "9833",
+    "morphology_name": "Prolymphocytic leukemia, B-cell type",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia2",
+    "iccc3_subgroup_name": "Mature B-cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9833"
+  },
+  {
+    "morphology_code": "9940",
+    "morphology_name": "Hairy cell leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia2",
+    "iccc3_subgroup_name": "Mature B-cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9940"
+  },
+  {
+    "morphology_code": "9827",
+    "morphology_name": "Adult T-cell leukemia/lymphoma (HTLV-1 positive)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia3",
+    "iccc3_subgroup_name": "Mature T-cell and NK cell leukemias",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4,C80.9"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9827"
+  },
+  {
+    "morphology_code": "9831",
+    "morphology_name": "T-cell large granular lymphocytic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia3",
+    "iccc3_subgroup_name": "Mature T-cell and NK cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9831"
+  },
+  {
+    "morphology_code": "9834",
+    "morphology_name": "Prolymphocytic leukemia, T-cell type",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia3",
+    "iccc3_subgroup_name": "Mature T-cell and NK cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9834"
+  },
+  {
+    "morphology_code": "9948",
+    "morphology_name": "Aggressive NK-cell leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia3",
+    "iccc3_subgroup_name": "Mature T-cell and NK cell leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9948"
+  },
+  {
+    "morphology_code": "9591",
+    "morphology_name": "Malignant lymphoma, non-Hodgkin, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia4",
+    "iccc3_subgroup_name": "Lymphoid leukemia, NOS",
+    "primary_sites": [
+      "C42.0,C42.1,C42.3,C42.4"
+    ],
+    "topography_dependent": true,
+    "redcap_value": "9591"
+  },
+  {
+    "morphology_code": "9820",
+    "morphology_name": "Lymphoid leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ia4",
+    "iccc3_subgroup_name": "Lymphoid leukemia, NOS",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9820"
+  },
+  {
+    "morphology_code": "9840",
+    "morphology_name": "Acute myeloid leukemia, M6 type",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9840"
+  },
+  {
+    "morphology_code": "9861",
+    "morphology_name": "Acute myeloid leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9861"
+  },
+  {
+    "morphology_code": "9865",
+    "morphology_name": "Acute myeloid leukemia with t(6;9)(p23;q34); DEK-NUP214",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9865"
+  },
+  {
+    "morphology_code": "9866",
+    "morphology_name": "Acute promyelocytic leukemia, t(15;17)(q22;q11-12)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9866"
+  },
+  {
+    "morphology_code": "9867",
+    "morphology_name": "Acute myelomonocytic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9867"
+  },
+  {
+    "morphology_code": "9869",
+    "morphology_name": "Acute myeloid leukemia with inv(3)(q21;q26.2) or t(13.3)(q21;q26.2); RPN1-EVI1",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9869"
+  },
+  {
+    "morphology_code": "9870",
+    "morphology_name": "Acute basophilic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9870"
+  },
+  {
+    "morphology_code": "9871",
+    "morphology_name": "Acute myeloid leukemia with abnormal marrow eosinophils",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9871"
+  },
+  {
+    "morphology_code": "9872",
+    "morphology_name": "Acute myeloid leukemia, minimal differentiation",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9872"
+  },
+  {
+    "morphology_code": "9873",
+    "morphology_name": "Acute myeloid leukemia without maturation",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9873"
+  },
+  {
+    "morphology_code": "9874",
+    "morphology_name": "Acute myeloid leukemia with maturation",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9874"
+  },
+  {
+    "morphology_code": "9891",
+    "morphology_name": "Acute monocytic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9891"
+  },
+  {
+    "morphology_code": "9895",
+    "morphology_name": "Acute myeloid leukemia with myelodysplasia-related changes",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9895"
+  },
+  {
+    "morphology_code": "9896",
+    "morphology_name": "Acute myeloid leukemia, t(8;21)(q22;q22)",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9896"
+  },
+  {
+    "morphology_code": "9897",
+    "morphology_name": "Acute myeloid leukemia, 11q23 abnormalities",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9897"
+  },
+  {
+    "morphology_code": "9898",
+    "morphology_name": "Myeloid leukemia associated with Down Syndrome",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9898"
+  },
+  {
+    "morphology_code": "9910",
+    "morphology_name": "Acute megakaryoblastic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9910"
+  },
+  {
+    "morphology_code": "9911",
+    "morphology_name": "Acute myeloid leukemia (megakaryoblastic) with t(1;22)(p13;q13); RBM15-MKL1",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9911"
+  },
+  {
+    "morphology_code": "9920",
+    "morphology_name": "Therapy related myeloid neoplasm",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9920"
+  },
+  {
+    "morphology_code": "9930",
+    "morphology_name": "Myeloid sarcoma",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9930"
+  },
+  {
+    "morphology_code": "9931",
+    "morphology_name": "Acute panmyelosis with myelofibrosis",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ib",
+    "iccc3_subgroup_name": "Acute myeloid leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9931"
+  },
+  {
+    "morphology_code": "9863",
+    "morphology_name": "Chronic myeloid leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9863"
+  },
+  {
+    "morphology_code": "9875",
+    "morphology_name": "Chronic myelogenous leukemia, BCR/ABL positive",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9875"
+  },
+  {
+    "morphology_code": "9876",
+    "morphology_name": "Atypical chronic myeloid leukemia, BCR/ABL negative",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9876"
+  },
+  {
+    "morphology_code": "9950",
+    "morphology_name": "Polycythemia vera",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9950"
+  },
+  {
+    "morphology_code": "9960",
+    "morphology_name": "Myeloproliferative neoplasm, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9960"
+  },
+  {
+    "morphology_code": "9961",
+    "morphology_name": "Primary myelofibrosis",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9961"
+  },
+  {
+    "morphology_code": "9962",
+    "morphology_name": "Essential thrombocythemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9962"
+  },
+  {
+    "morphology_code": "9963",
+    "morphology_name": "Chronic neutrophilic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9963"
+  },
+  {
+    "morphology_code": "9964",
+    "morphology_name": "Chronic eosinophilic leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ic",
+    "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9964"
+  },
+  {
+    "morphology_code": "9945",
+    "morphology_name": "Chronic myelomonocytic leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9945"
+  },
+  {
+    "morphology_code": "9946",
+    "morphology_name": "Juvenile myelomonocytic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9946"
+  },
+  {
+    "morphology_code": "9975",
+    "morphology_name": "Myloproliferative neoplasm, unclassifiable",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9975"
+  },
+  {
+    "morphology_code": "9980",
+    "morphology_name": "Refractory anemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9980"
+  },
+  {
+    "morphology_code": "9982",
+    "morphology_name": "Refractory anemia with sideroblasts",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9982"
+  },
+  {
+    "morphology_code": "9983",
+    "morphology_name": "Refractory anemia with excess blasts",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9983"
+  },
+  {
+    "morphology_code": "9984",
+    "morphology_name": "Refractory anemia with excess blasts in transformation",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9984"
+  },
+  {
+    "morphology_code": "9985",
+    "morphology_name": "Refractory cytopenia with multilineage dysplasia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9985"
+  },
+  {
+    "morphology_code": "9986",
+    "morphology_name": "Myelodysplastic syndrome with 5q deletion (5q-) syndrome",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9986"
+  },
+  {
+    "morphology_code": "9987",
+    "morphology_name": "Therapy-related myelodysplastic syndrome, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9987"
+  },
+  {
+    "morphology_code": "9989",
+    "morphology_name": "Myelodysplastic syndrome, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9989"
+  },
+  {
+    "morphology_code": "9991",
+    "morphology_name": "Refractory neutropenia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9991"
+  },
+  {
+    "morphology_code": "9992",
+    "morphology_name": "Refractory thrombocytopenia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Id",
+    "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9992"
+  },
+  {
+    "morphology_code": "9800",
+    "morphology_name": "Leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9800"
+  },
+  {
+    "morphology_code": "9801",
+    "morphology_name": "Acute leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9801"
+  },
+  {
+    "morphology_code": "9805",
+    "morphology_name": "Acute biphenotypic leukemia",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9805"
+  },
+  {
+    "morphology_code": "9806",
+    "morphology_name": "Mixed phenotype acute leukemia with t(9;22)(q34;q11.2); BCR-ABL1",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9806"
+  },
+  {
+    "morphology_code": "9807",
+    "morphology_name": "Mixed phenotype acute leukemia with t(v;11q23); MLL rearranged",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9807"
+  },
+  {
+    "morphology_code": "9808",
+    "morphology_name": "Mixed phenotype acute leukemia, B/myeloid, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9808"
+  },
+  {
+    "morphology_code": "9809",
+    "morphology_name": "Mixed phenotype acute leukemia, T/myeloid, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9809"
+  },
+  {
+    "morphology_code": "9860",
+    "morphology_name": "Myeloid leukemia, NOS",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9860"
+  },
+  {
+    "morphology_code": "9965",
+    "morphology_name": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9965"
+  },
+  {
+    "morphology_code": "9966",
+    "morphology_name": "Myeloid neoplasms with PDGFRB rearrangement",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9966"
+  },
+  {
+    "morphology_code": "9967",
+    "morphology_name": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities",
+    "iccc3_group": "I",
+    "iccc3_group_name": "Leukemias, Myeloproliferative And Myelodysplastic Diseases",
+    "iccc3_subgroup_id": "Ie",
+    "iccc3_subgroup_name": "Unspecified and other specified leukemias",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9967"
+  }
+]

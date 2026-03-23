@@ -1,0 +1,249 @@
+[
+  {
+    "morphology_code": "9490",
+    "morphology_name": "Ganglioneuroma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVa",
+    "iccc3_subgroup_name": "Neuroblastoma and ganglioneuroblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9490"
+  },
+  {
+    "morphology_code": "9500",
+    "morphology_name": "Neuroblastoma, NOS",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVa",
+    "iccc3_subgroup_name": "Neuroblastoma and ganglioneuroblastoma",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9500"
+  },
+  {
+    "morphology_code": "8680",
+    "morphology_name": "Paraganglioma, benign",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8680"
+  },
+  {
+    "morphology_code": "8681",
+    "morphology_name": "Sympathetic paraganglioma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8681"
+  },
+  {
+    "morphology_code": "8682",
+    "morphology_name": "Parasympathetic paraganglioma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8682"
+  },
+  {
+    "morphology_code": "8683",
+    "morphology_name": "Gangliocytic paraganglioma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8683"
+  },
+  {
+    "morphology_code": "8690",
+    "morphology_name": "Glomus jugulare tumor, NOS",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8690"
+  },
+  {
+    "morphology_code": "8691",
+    "morphology_name": "Aortic body tumor",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8691"
+  },
+  {
+    "morphology_code": "8692",
+    "morphology_name": "Carotid body tumor",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8692"
+  },
+  {
+    "morphology_code": "8693",
+    "morphology_name": "Extra-adrenal paraganglioma, NOS",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8693"
+  },
+  {
+    "morphology_code": "8700",
+    "morphology_name": "Pheochromocytoma, NOS",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "8700"
+  },
+  {
+    "morphology_code": "9501",
+    "morphology_name": "Medulloepithelioma, benign",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9501"
+  },
+  {
+    "morphology_code": "9502",
+    "morphology_name": "Teratoid medulloepithelioma, benign",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9502"
+  },
+  {
+    "morphology_code": "9503",
+    "morphology_name": "Neuroepithelioma, NOS",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9503"
+  },
+  {
+    "morphology_code": "9504",
+    "morphology_name": "Spongioneuroblastoma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9504"
+  },
+  {
+    "morphology_code": "9520",
+    "morphology_name": "Olfactory neurogenic tumor",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9520"
+  },
+  {
+    "morphology_code": "9521",
+    "morphology_name": "Olfactory neurocytoma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9521"
+  },
+  {
+    "morphology_code": "9522",
+    "morphology_name": "Olfactory neuroblastoma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9522"
+  },
+  {
+    "morphology_code": "9523",
+    "morphology_name": "Olfactory neuroepithelioma",
+    "iccc3_group": "IV",
+    "iccc3_group_name": "Neuroblastoma And Other Peripheral Nervous Cell Tumors",
+    "iccc3_subgroup_id": "IVb",
+    "iccc3_subgroup_name": "Other peripheral nervous cell tumors",
+    "primary_sites": [
+      "C00.0-C80.9"
+    ],
+    "topography_dependent": false,
+    "redcap_value": "9523"
+  }
+]

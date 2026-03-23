@@ -1,0 +1,285 @@
+[
+  {
+    "alias": "ALL",
+    "full_form": "Acute Lymphoblastic Leukemia",
+    "origin_system": "WHO Classification / Clinical",
+    "maps_to_morphology_codes": ["9811", "9835", "9836", "9837"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "all_b_vs_t",
+    "notes": "Ambiguous — B-cell (9811) vs T-cell (9837) requires IHC. If CD19+/CD10+/TdT+ → B-ALL (9811). If CD3+/CD7+/TdT+ → T-ALL (9837)."
+  },
+  {
+    "alias": "Acute Lymphoblastic Leukemia",
+    "full_form": "Acute Lymphoblastic Leukemia",
+    "origin_system": "WHO Classification / Clinical",
+    "maps_to_morphology_codes": ["9811", "9835", "9836", "9837"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "all_b_vs_t",
+    "notes": "See IHC tree to distinguish B-ALL vs T-ALL."
+  },
+  {
+    "alias": "B-ALL",
+    "full_form": "B-cell Acute Lymphoblastic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9811"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "B-lymphoblastic leukemia/lymphoma, NOS (9811). CD19+, CD10+, TdT+."
+  },
+  {
+    "alias": "T-ALL",
+    "full_form": "T-cell Acute Lymphoblastic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9837"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Precursor T-cell lymphoblastic leukemia (9837). CD3+, CD7+, TdT+."
+  },
+  {
+    "alias": "Lymphoblastic Leukemia",
+    "full_form": "Lymphoblastic Leukemia",
+    "origin_system": "Clinical",
+    "maps_to_morphology_codes": ["9835", "9836", "9837", "9811"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "all_b_vs_t",
+    "notes": "Needs IHC to classify B vs T lineage."
+  },
+  {
+    "alias": "Precursor B-cell leukemia",
+    "full_form": "Precursor B-cell lymphoblastic leukemia",
+    "origin_system": "ICD-O-3 / WHO",
+    "maps_to_morphology_codes": ["9836"],
+    "maps_to_iccc3_subgroup_id": "Ia1",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9836."
+  },
+  {
+    "alias": "CLL",
+    "full_form": "Chronic Lymphocytic Leukemia",
+    "origin_system": "WHO Classification / Clinical",
+    "maps_to_morphology_codes": ["9823"],
+    "maps_to_iccc3_subgroup_id": "Ia2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "B-cell CLL/small lymphocytic lymphoma (9823). Rare in paediatrics."
+  },
+  {
+    "alias": "Chronic Lymphocytic Leukemia",
+    "full_form": "Chronic Lymphocytic Leukemia",
+    "origin_system": "WHO Classification / Clinical",
+    "maps_to_morphology_codes": ["9823"],
+    "maps_to_iccc3_subgroup_id": "Ia2",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9823. Very rare under age 15."
+  },
+  {
+    "alias": "AML",
+    "full_form": "Acute Myeloid Leukemia",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9861", "9840", "9865", "9866", "9867", "9869", "9870", "9871", "9872", "9873", "9874", "9891", "9895", "9896", "9897", "9910", "9920", "9930", "9931"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Use 9861 (AML NOS) if no specific subtype documented. MPO+ on IHC. Specific subtypes have their own codes (9866 = APL, 9867 = AMML, etc.)."
+  },
+  {
+    "alias": "Acute Myeloid Leukemia",
+    "full_form": "Acute Myeloid Leukemia",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9861"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Default code 9861 unless specific subtype known."
+  },
+  {
+    "alias": "APL",
+    "full_form": "Acute Promyelocytic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9866"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "AML with t(15;17). PML-RARA fusion. MPO strongly positive."
+  },
+  {
+    "alias": "Acute Promyelocytic Leukemia",
+    "full_form": "Acute Promyelocytic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9866"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9866."
+  },
+  {
+    "alias": "Myeloid sarcoma",
+    "full_form": "Myeloid sarcoma / Granulocytic sarcoma / Chloroma",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9930"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Also called chloroma or granulocytic sarcoma. Code 9930."
+  },
+  {
+    "alias": "Chloroma",
+    "full_form": "Granulocytic Sarcoma / Chloroma",
+    "origin_system": "Clinical (historical)",
+    "maps_to_morphology_codes": ["9930"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Historical name for myeloid sarcoma. Code 9930."
+  },
+  {
+    "alias": "CML",
+    "full_form": "Chronic Myeloid Leukemia",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9863", "9875"],
+    "maps_to_iccc3_subgroup_id": "Ic",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "9875 if BCR-ABL positive (most paediatric CML); 9863 if BCR-ABL status unknown."
+  },
+  {
+    "alias": "Chronic Myeloid Leukemia",
+    "full_form": "Chronic Myeloid Leukemia",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9875"],
+    "maps_to_iccc3_subgroup_id": "Ic",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "BCR-ABL positive CML. Code 9875."
+  },
+  {
+    "alias": "Chronic Myelogenous Leukemia",
+    "full_form": "Chronic Myelogenous Leukemia",
+    "origin_system": "Clinical synonym",
+    "maps_to_morphology_codes": ["9875"],
+    "maps_to_iccc3_subgroup_id": "Ic",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Synonym for CML. Code 9875."
+  },
+  {
+    "alias": "JMML",
+    "full_form": "Juvenile Myelomonocytic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9946"],
+    "maps_to_iccc3_subgroup_id": "Id",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Paediatric-specific entity. Code 9946. Monocytosis + splenomegaly."
+  },
+  {
+    "alias": "Juvenile Myelomonocytic Leukemia",
+    "full_form": "Juvenile Myelomonocytic Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9946"],
+    "maps_to_iccc3_subgroup_id": "Id",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9946."
+  },
+  {
+    "alias": "MDS",
+    "full_form": "Myelodysplastic Syndrome",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9989", "9980", "9982", "9983", "9985", "9986", "9987"],
+    "maps_to_iccc3_subgroup_id": "Id",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Use 9989 (MDS NOS) if no specific subtype documented. Includes refractory anaemia types (9980-9987)."
+  },
+  {
+    "alias": "Myelodysplastic Syndrome",
+    "full_form": "Myelodysplastic Syndrome",
+    "origin_system": "WHO Classification / ICD-10",
+    "maps_to_morphology_codes": ["9989"],
+    "maps_to_iccc3_subgroup_id": "Id",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Default to 9989 (NOS) unless specific subtype documented."
+  },
+  {
+    "alias": "Refractory anemia",
+    "full_form": "Refractory Anemia",
+    "origin_system": "WHO Classification (older terminology)",
+    "maps_to_morphology_codes": ["9980"],
+    "maps_to_iccc3_subgroup_id": "Id",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9980. MDS subtype."
+  },
+  {
+    "alias": "Leukemia NOS",
+    "full_form": "Leukemia, Not Otherwise Specified",
+    "origin_system": "ICD-O-3",
+    "maps_to_morphology_codes": ["9800"],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Use only when lineage truly unclassifiable. Code 9800."
+  },
+  {
+    "alias": "Acute leukemia NOS",
+    "full_form": "Acute Leukemia, Not Otherwise Specified",
+    "origin_system": "ICD-O-3",
+    "maps_to_morphology_codes": ["9801"],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9801. Use when acute leukemia confirmed but lineage unknown."
+  },
+  {
+    "alias": "Mixed phenotype acute leukemia",
+    "full_form": "Mixed Phenotype Acute Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9805", "9806", "9807", "9808", "9809"],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "MPAL. Uses codes 9805-9809 depending on genetic subtype."
+  },
+  {
+    "alias": "MPAL",
+    "full_form": "Mixed Phenotype Acute Leukemia",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9805"],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9805 for NOS; specific codes for BCR-ABL (9806) or MLL (9807) subtypes."
+  },
+  {
+    "alias": "Biphenotypic leukemia",
+    "full_form": "Biphenotypic Acute Leukemia",
+    "origin_system": "Clinical / WHO (older terminology)",
+    "maps_to_morphology_codes": ["9805"],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "medium",
+    "needs_ihc_tree": false,
+    "notes": "Older term for mixed phenotype acute leukemia. Now coded as MPAL (9805)."
+  },
+  {
+    "alias": "Down syndrome leukemia",
+    "full_form": "Myeloid leukemia associated with Down Syndrome",
+    "origin_system": "WHO Classification",
+    "maps_to_morphology_codes": ["9898"],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "notes": "Code 9898. Specific entity in children with trisomy 21."
+  }
+]
