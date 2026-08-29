@@ -603,6 +603,7 @@ function advance(target, label, value, before) {
   pushTrail(label, value, before);
   state.draft = {};
   if (target.morphology_code) return finish(target, label);
+  if (target.refer_group) return refer(target);
   if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy');
   if (target.next_node) {
     if (!findNode(target.next_node)) throw new Error('Unresolved next_node: ' + target.next_node);
@@ -665,6 +666,24 @@ function finish(target, basis) {
   state.stage = 'output';
 }
 
+/* A terminal for a case that IS a malignancy but belongs to a DIFFERENT ICCC-3
+   group. Distinct from both escape hatches: the case is neither an uncertain
+   subtype of this group nor a non-malignancy. Emitting a code from this
+   group's file would be wrong, and marking it non-reportable would drop a real
+   cancer from the registry — so it emits no code here and names where the case
+   belongs. The engine holds no view on which case goes where; the branch
+   declares it. */
+function refer(target) {
+  state.workup = [];
+  state.result = {
+    referral: true,
+    group: target.refer_group,
+    codeHint: target.refer_code || null,
+    note: target.reason || target.coding_note || null
+  };
+  state.stage = 'output';
+}
+
 /* A clean terminal that emits NO malignant code. Marked "not a reportable
    malignancy" and removed from the malignant registry (nodes.md §4). */
 function exclude(reason) {
@@ -679,6 +698,19 @@ function exclude(reason) {
    ========================================================================= */
 function renderOutput() {
   var r = state.result;
+  if (r.referral) {
+    var gname = ((state.router.groups || {})[String(r.group)] || {}).name;
+    return '<div class="node--live">' +
+      banner('warn', 'Belongs to another group',
+        'This case is a malignancy, but not one this group codes. Record it under group ' +
+        r.group + (gname ? ' — ' + gname : '') + '.') +
+      '<div class="orow"><b>Code here</b><span>None. Emitting a code from this group would put the case in the wrong ICCC-3 group.</span></div>' +
+      (r.codeHint ? orow('Code there', r.codeHint) : '') +
+      (r.note ? orow('Why', r.note) : '') +
+      orow('Topography', state.captured.topography || '—') +
+      orow('Based on', basisFromTrail() || '—') +
+      outActions() + '</div>';
+  }
   if (r.excluded) {
     return '<div class="node--live">' +
       banner('info', 'Not a reportable malignancy', r.reason) +
