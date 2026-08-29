@@ -1099,8 +1099,31 @@ def check_non_reportable_terminals(ctx: DTContext):
             if as_code(holder.get("nos_fallback_code")):
                 out.append((FAIL, "non-reportable terminal %s carries a nos_fallback_code"
                             % label))
+    # A near-miss spelling makes is_non_reportable() return False, so the checks above
+    # never run and the terminal passes silently — the check fails OPEN. Catch the shape
+    # instead: a branch that names a reason but goes nowhere is a terminal, and the only
+    # kind of terminal that emits no code is a non-reportable one.
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if is_non_reportable(holder) or not isinstance(holder, dict):
+                continue
+            if not holder.get("reason"):
+                continue
+            if as_code(holder.get("morphology_code")) or holder.get("next_node"):
+                continue
+            suspect = sorted(k for k in holder
+                             if "report" in k.lower() or k in ("terminal_type", "outcome",
+                                                               "terminal_kind", "result_type"))
+            out.append((FAIL, "%s (%s) carries a 'reason' but no destination and no "
+                              "recognised non-reportable flag%s — if this is the clean "
+                              "'not a reportable malignancy' terminal it must say so with "
+                              "\"non_reportable\": true, or its emit-no-code rule is never "
+                              "checked" % (node_id, where or "(node level)",
+                                           (" (saw %s)" % ", ".join(suspect)) if suspect else "")))
+
     if not out:
-        out.append((OK, "%d non-reportable terminal(s) emit no morphology code" % found))
+        out.append((OK, "%d non-reportable terminal(s) emit no morphology code; no "
+                        "unflagged code-less terminals" % found))
     return out
 
 
