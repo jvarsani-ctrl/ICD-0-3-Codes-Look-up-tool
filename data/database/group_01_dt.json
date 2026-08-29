@@ -513,8 +513,8 @@
         "C42.4",
         "C80.9"
       ],
-      "topography_dependent": false,
-      "topography_routing_note": null
+      "topography_dependent": true,
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1 (T-ALL). C42.2 (spleen) and every nodal or extranodal site (C00.0–C41.9, C44.0–C77.9) → Group II, IIb1 Precursor cell lymphomas, i.e. T-lymphoblastic lymphoma. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side. Confirmed against Layer 1 ICCC-2017, which lists 9811–9818 and 9837 under both Ia1 and IIb1 by topography."
     },
     {
       "morphology_code": "9823",
@@ -581,11 +581,11 @@
       ],
       "imaging_sufficient": false,
       "imaging_features": null,
-      "nos_fallback_code": "9820",
-      "nos_fallback_name": "Lymphoid leukemia, NOS",
+      "nos_fallback_code": null,
+      "nos_fallback_name": null,
       "confidence_ceiling": "low",
       "clinical_alert": null,
-      "coding_note": "RETIRED for diagnoses from 1 January 2021 — leukaemic Burkitt codes 9687/3 and moves to Group II (IIc). Registry ruling: adopt 9687, no Group I/II override (Pathway §3.3, §5.3.11, §5.7c). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry. sIgM is not the gate in either direction; MYC rearrangement is required (absence excludes Burkitt). Where FISH is unavailable, Ki-67 >95% with MYC protein IHC >80% predicts MYC-r in about 99% (§3.3). Time-series discontinuity — flag to biostatistics for trends spanning the change.",
+      "coding_note": "RETIRED for diagnoses from 1 January 2021 — leukaemic Burkitt codes 9687/3 and moves to Group II (IIc). Registry ruling: adopt 9687, no Group I/II override (Pathway §3.3, §5.3.11, §5.7c). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry. nos_fallback_code is null: Pathway §6 annotates the mature-B chain 'leukaemic Burkitt is 9687, Group II — not in this chain', and 9687 is a Group II code that does not exist in this file, so there is no valid in-file downgrade. Nothing depends on it — the entry is not terminal-reachable. sIgM is not the gate in either direction; MYC rearrangement is required (absence excludes Burkitt). Where FISH is unavailable, Ki-67 >95% with MYC protein IHC >80% predicts MYC-r in about 99% (§3.3). Time-series discontinuity — flag to biostatistics for trends spanning the change.",
       "code_neutral_molecular": false,
       "redcap_value": "9826",
       "redcap_option_verified": true,
@@ -1505,8 +1505,8 @@
       "nos_fallback_code": null,
       "nos_fallback_name": null,
       "confidence_ceiling": "high",
-      "clinical_alert": "⚠️ Transient abnormal myelopoiesis is **not** a malignancy. Confirm trisomy 21, GATA1s and age <3 months. If TAM criteria are met this case must reach a non-reportable terminal — never code 9898/3.",
-      "coding_note": "TRANSIENT ABNORMAL MYELOPOIESIS (TAM) — behaviour /1, the non-malignant member of the behaviour-overloaded 9898 pair. Criteria: age <3 months, confirmed trisomy 21, GATA1s mutation, spontaneous resolution. NON-REPORTABLE as a malignancy (§4.5, §4.9) — this entry exists so the behaviour code can be recorded, not so a malignant registration can be raised. Never code 9898/3 for a TAM case. Needs a watch flag with a re-entry path: 10–20% progress to true ML-DS, which is then coded 9898/3 at that later diagnosis. nos_fallback_code is deliberately null — a non-reportable terminal must never be wired to a malignant NOS fallback (§7.5). Distinguish from the third trisomy 21 entity, B-ALL in Down syndrome (9811 family, frequently CRLF2-rearranged). No REDCap dropdown option exists for the /1 behaviour — the single 9898 option string names the /3 entity only.",
+      "clinical_alert": "⚠️ Transient abnormal myelopoiesis is **not** a malignancy. Confirm trisomy 21, GATA1s and age <3 months. If TAM criteria are met this case must reach a non-reportable terminal — never code 9898.",
+      "coding_note": "TRANSIENT ABNORMAL MYELOPOIESIS (TAM) — behaviour /1, the non-malignant member of the behaviour-overloaded 9898 pair. Criteria: age <3 months, confirmed trisomy 21, GATA1s mutation, spontaneous resolution. NON-REPORTABLE as a malignancy (§4.5, §4.9) — this entry exists so the behaviour code can be recorded, not so a malignant registration can be raised. Never code 9898/3 for a TAM case. NOTE — UNRESOLVED, REFERRED TO THE REGISTRAR: §4.9 assigns TAM to 9898/1 while the §5.6 alert (reproduced verbatim in clinical_alert) says 'never code 9898' without qualifying the behaviour. §3.8 states 'TAM → 9898/1 … Never 9898/3', which reads as the /3 behaviour being the thing prohibited. This entry is authored on that reading — the /1 behaviour is recordable, non-reportable as a malignancy — but the alert text is left unnarrowed and the question is referred to the registrar for a ruling before go-live. Needs a watch flag with a re-entry path: 10–20% progress to true ML-DS, which is then coded 9898/3 at that later diagnosis. nos_fallback_code is deliberately null — a non-reportable terminal must never be wired to a malignant NOS fallback (§7.5). Distinguish from the third trisomy 21 entity, B-ALL in Down syndrome (9811 family, frequently CRLF2-rearranged). No REDCap dropdown option exists for the /1 behaviour — the single 9898 option string names the /3 entity only.",
       "code_neutral_molecular": false,
       "redcap_value": "9898",
       "redcap_option_verified": false,
