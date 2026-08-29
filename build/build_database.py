@@ -1450,6 +1450,68 @@ def check_classification_system(ctx: DTContext):
     return out
 
 
+def check_satisfies_tests(ctx: DTContext):
+    """
+    `satisfies_tests[]` SUPPRESSES an outstanding-workup row. That makes it the one
+    field in the file that can make a case look better worked up than it is, and it
+    fails silently in both directions: a typo ("FISH" for "Cytogenetics/FISH") is
+    simply never matched, so the suppression quietly does nothing; and app.js only
+    ever subtracts it from `diagnostic_tests_required`, so a value the code does not
+    require is an inert no-op that still reads, to the next author, as a live claim.
+    Neither shows up as a broken build, a stack trace or a wrong screen — which is
+    exactly why it needs a check rather than care.
+    """
+    out = []
+    by_code: dict = {}
+    for entry in ctx.entries:
+        if isinstance(entry, dict):
+            code = as_code(entry.get("morphology_code"))
+            if code:
+                req = entry.get("diagnostic_tests_required")
+                by_code.setdefault(code, set()).update(req if isinstance(req, list) else [])
+
+    seen = 0
+    inert = []
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if "satisfies_tests" not in holder:
+                continue
+            st = holder.get("satisfies_tests")
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            if not isinstance(st, list) or not st or not all(isinstance(v, str) for v in st):
+                out.append((FAIL, "%s: satisfies_tests must be a non-empty list of "
+                                  "strings, got %r" % (loc, st)))
+                continue
+            code = as_code(holder.get("morphology_code"))
+            if not code:
+                out.append((FAIL, "%s: satisfies_tests on a branch that emits no "
+                                  "morphology_code — app.js applies it only in finish(), "
+                                  "so it is silently inert here" % loc))
+                continue
+            seen += 1
+            required = by_code.get(code, set())
+            for value in st:
+                if value not in DIAGNOSTIC_TESTS:
+                    out.append((FAIL, "%s: satisfies_tests value %r is not in the closed "
+                                      "diagnostic-test vocabulary — it can never match a "
+                                      "required test, so the suppression silently does "
+                                      "nothing" % (loc, value)))
+                elif value not in required:
+                    inert.append("%s -> %s declares %r, which %s does not require"
+                                 % (loc, code, value, code))
+
+    if inert:
+        out.append((NOTE, "%d satisfies_tests value(s) name a test the terminal code does "
+                          "not require. Inert today (app.js subtracts only from "
+                          "diagnostic_tests_required) but it becomes a live suppression the "
+                          "day that code gains the requirement:\n        %s"
+                    % (len(inert), "\n        ".join(inert))))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "%d satisfies_tests declaration(s): all values in the closed "
+                        "vocabulary, all on code-emitting terminals" % seen))
+    return out
+
+
 # --------------------------------------------------------------------------------------
 # B3. The four checks that did not exist before (data.md §5)
 # --------------------------------------------------------------------------------------
@@ -2093,6 +2155,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_marker_intensity_tokens, ctx)
         report.run(check_detection_method, ctx)
         report.run(check_classification_system, ctx)
+        report.run(check_satisfies_tests, ctx)
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)

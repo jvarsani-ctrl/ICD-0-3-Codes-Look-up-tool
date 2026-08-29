@@ -59,6 +59,15 @@ function esc(v) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
+/* Clinical alerts are authored with **markdown emphasis** on the word that
+   carries the warning — "does **not** exclude", "on the **same** blast
+   population". Escaped and printed raw, the asterisks show literally and the
+   emphasis is lost on exactly the sentences that most need it. Bold is applied
+   AFTER esc(), so the input is already inert HTML and this can only ever wrap
+   text in <strong>. */
+function rich(v) {
+  return esc(v).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
 function byId(id) { return document.getElementById(id); }
 function arr(v) { return Array.isArray(v) ? v : []; }
 
@@ -400,7 +409,6 @@ function renderLiveNode() {
   return panel(n.step_label || ('Step ' + (n.step_number === undefined ? '' : n.step_number)),
     n.question || '', n.hint,
     (n.clinical_alert ? banner('alert', 'Clinical alert', n.clinical_alert) : '') +
-    (n.coding_note ? banner('info', 'Coding note', n.coding_note) : '') +
     dispatchNode(n) + renderEscapes(n));
 }
 
@@ -435,7 +443,7 @@ function optionList(n) {
       esc(n.accept_label || 'this result') + '</button></div>';
   }
   return pick('opt', opts.map(function (o) {
-    return { label: optionLabel(o), meta: o.coding_note };
+    return { label: optionLabel(o) };
   }));
 }
 
@@ -452,7 +460,6 @@ function cytogeneticsSelect(n) {
   if (chosen && chosen.detection_method) {
     h += banner('info', 'Detection method', String(chosen.detection_method).replace(/_/g, ' '));
   }
-  if (chosen && chosen.coding_note) h += banner('warn', 'Coding note', chosen.coding_note);
   h += '<div class="actions"><button class="btn" data-act="resolve"' + (chosen ? '' : ' disabled') + '>Continue</button></div>';
   return h;
 }
@@ -529,7 +536,7 @@ function renderEscapes(n) {
 
 function banner(kind, label, text) {
   return '<div class="banner banner--' + esc(kind) + '"><span class="banner__label">' +
-    esc(label) + '</span>' + esc(text) + '</div>';
+    esc(label) + '</span>' + rich(text) + '</div>';
 }
 
 /* ============================================================================
@@ -693,7 +700,7 @@ function refer(target) {
     referral: true,
     group: target.refer_group,
     codeHint: target.refer_code || null,
-    note: target.reason || target.coding_note || null
+    note: target.reason || null
   };
   state.stage = 'output';
 }
@@ -766,7 +773,6 @@ function renderOutput() {
   if (redcap) h += orow('REDCap value', e.redcap_value);
   h += orow('Based on', r.basis || '—');
   if (r.discordant) h += orow('Discordance', 'Subtype uncertain — recorded as a quality signal.');
-  if (e.coding_note) h += orow('Coding note', e.coding_note);
   if (r.classification_system) h += orow('Classification', r.classification_system);
   if (e.who_version) h += orow('WHO version', e.who_version);
   if (arr(state.captured.qualifiers).length) {
@@ -778,7 +784,6 @@ function renderOutput() {
      uncoded entity loses its genotype permanently (Pathway §7.3 item 7). */
   if (state.captured.genotype_annotation) h += orow('Genotype', state.captured.genotype_annotation);
   if (r.routing && r.routing.note) h += orow('Group routing', r.routing.note);
-  if (e.topography_routing_note) h += orow('Topography note', e.topography_routing_note);
   h += outActions();
   return h + '</div>';
 }
