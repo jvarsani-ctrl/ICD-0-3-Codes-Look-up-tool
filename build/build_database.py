@@ -302,6 +302,27 @@ def is_non_reportable(container) -> bool:
     return False
 
 
+def is_nos_fallback_object(holder, where) -> bool:
+    """
+    True when `holder` IS a `nos_fallback` object — {"code", "name", "reason"} per DT
+    master §3C/§3D, consumed by app.js's fallbackTarget() — rather than some other
+    dict that merely happens to carry a 'reason'.
+
+    Identified by two things at once, deliberately narrow: the key it hangs off (its
+    walk_dicts path ends in "nos_fallback") AND its shape (both 'code' and 'name'
+    present). Neither alone is enough — a holder could be named nos_fallback without
+    yet having code/name (still a shape bug worth catching), or could carry an
+    unrelated 'code'/'name' pair under some other key. Requiring both keeps this from
+    ever masking a real code-less-terminal violation.
+    """
+    if not isinstance(holder, dict):
+        return False
+    last_key = where.rsplit(".", 1)[-1] if where else ""
+    if last_key != "nos_fallback":
+        return False
+    return as_code(holder.get("code")) is not None and bool(holder.get("name"))
+
+
 # --------------------------------------------------------------------------------------
 # Layer 1 — source of truth parsers (read-only)
 # --------------------------------------------------------------------------------------
@@ -980,23 +1001,19 @@ def check_metadata_counts(ctx: DTContext):
                     % (meta_nodes, n_nodes)))
     listed = ctx.metadata_tree_ids
     present = [t["tree_id"] for t in ctx.trees]
-    if listed and not present:
-        # Entries authored, trees not yet — the documented first-run state
-        # (Group 1 Pathway §7.6: the validator runs after EACH tree).
+    missing = sorted(set(listed) - set(present))   # declared, not yet authored
+    extra = sorted(set(present) - set(listed))     # authored, but not declared
+    if missing:
+        # Declared ahead of authoring is the documented in-progress state (Group 1
+        # Pathway §7.6: the validator runs after EACH tree is authored, so a group's
+        # later trees are legitimately still missing) — the same leniency the
+        # presentation_router.json tree_id check already grants via its union of
+        # metadata_tree_ids and present trees.
         out.append((NOTE, "metadata.decision_trees declares %d tree(s) not yet authored: %s"
-                    % (len(listed), ", ".join(sorted(listed)))))
-    elif sorted(listed) != sorted(present):
-        only_meta = sorted(set(listed) - set(present))
-        only_file = sorted(set(present) - set(listed))
-        detail = []
-        if only_meta:
-            detail.append("listed but absent: %s" % ", ".join(only_meta))
-        if only_file:
-            detail.append("present but unlisted: %s" % ", ".join(only_file))
-        msg = "metadata.decision_trees does not match the trees present"
-        if detail:
-            msg += " (%s)" % "; ".join(detail)
-        out.append((FAIL, msg))
+                    % (len(missing), ", ".join(missing))))
+    if extra:
+        out.append((FAIL, "metadata.decision_trees does not match the trees present "
+                          "(present but unlisted: %s)" % ", ".join(extra)))
     if not out:
         out.append((OK, "metadata counts match: %d entries, %d nodes, %d tree(s)"
                     % (n_entries, n_nodes, len(ctx.trees))))
@@ -1106,6 +1123,11 @@ def check_non_reportable_terminals(ctx: DTContext):
     for node_id, node in sorted(ctx.nodes.items()):
         for holder, where in walk_dicts(node):
             if is_non_reportable(holder) or not isinstance(holder, dict):
+                continue
+            if is_nos_fallback_object(holder, where):
+                # A nos_fallback object is {"code", "name", "reason"} by design (DT
+                # master §3C/§3D) — a reason with no next_node/morphology_code of its
+                # own is exactly its documented shape, not a code-less terminal.
                 continue
             if not holder.get("reason"):
                 continue
