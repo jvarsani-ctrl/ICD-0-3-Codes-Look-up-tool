@@ -300,8 +300,8 @@
     "alias": "Early T-cell precursor ALL",
     "full_form": "Early T-cell precursor acute lymphoblastic leukaemia -> Precursor T-cell lymphoblastic leukemia (9837)",
     "also_known_as": [],
-    "alias_type": "molecular",
-    "origin_system": "Molecular / cytogenetic notation",
+    "alias_type": "who_preferred",
+    "origin_system": "WHO-HAEM5",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
@@ -318,8 +318,8 @@
     "alias": "ETP-ALL",
     "full_form": "Early T-cell precursor acute lymphoblastic leukaemia -> Precursor T-cell lymphoblastic leukemia (9837)",
     "also_known_as": [],
-    "alias_type": "molecular",
-    "origin_system": "Molecular / cytogenetic notation",
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
@@ -534,8 +534,8 @@
     "alias": "Near-ETP ALL",
     "full_form": "Near-ETP acute lymphoblastic leukaemia -> Precursor T-cell lymphoblastic leukemia (9837)",
     "also_known_as": [],
-    "alias_type": "molecular",
-    "origin_system": "Molecular / cytogenetic notation",
+    "alias_type": "who_preferred",
+    "origin_system": "WHO-HAEM5",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
@@ -3160,13 +3160,10 @@
   {
     "alias": "TAM",
     "full_form": "Transient abnormal myelopoiesis (9898/1)",
-    "also_known_as": [
-      "MLDS",
-      "AML Occurring in Children with Down Syndrome"
-    ],
+    "also_known_as": [],
     "alias_type": "abbreviation",
     "origin_system": "Clinical abbreviation",
-    "nci_concept_id": "NCIT:C43223",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9898"
@@ -3176,7 +3173,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child."
+    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child. TAM (9898/1) has no separately recorded NCIt concept in the Group 1 OLS results; C43223 names ML-DS (9898/3), so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "Therapy-related AML",
@@ -3240,13 +3237,10 @@
   {
     "alias": "Transient abnormal myelopoiesis",
     "full_form": "Transient abnormal myelopoiesis (9898/1)",
-    "also_known_as": [
-      "MLDS",
-      "AML Occurring in Children with Down Syndrome"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "WHO Classification 2022",
-    "nci_concept_id": "NCIT:C43223",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9898"
@@ -3256,18 +3250,15 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child."
+    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child. TAM (9898/1) has no separately recorded NCIt concept in the Group 1 OLS results; C43223 names ML-DS (9898/3), so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "Transient leukaemia of Down syndrome",
     "full_form": "Transient abnormal myelopoiesis (9898/1)",
-    "also_known_as": [
-      "MLDS",
-      "AML Occurring in Children with Down Syndrome"
-    ],
+    "also_known_as": [],
     "alias_type": "who_historical",
     "origin_system": "Clinical descriptive",
-    "nci_concept_id": "NCIT:C43223",
+    "nci_concept_id": null,
     "who_version_current": "historical",
     "maps_to_morphology_codes": [
       "9898"
@@ -3277,7 +3268,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child."
+    "notes": "Code 9898 — constitutional trisomy 21 + GATA1s. BEHAVIOUR-OVERLOADED: 9898/1 is transient abnormal myelopoiesis (TAM, under 3 months, NON-REPORTABLE) and 9898/3 is myeloid leukaemia of Down syndrome (>=3 months, reportable). The two are separate morphology_entries[] rows in group_01_dt.json — pick by behaviour, and always verify trisomy 21 (Pathway 3.8, 4.5, 5.7). Never use 9910 or 9861 for myeloid leukaemia in a Down-syndrome child. TAM (9898/1) has no separately recorded NCIt concept in the Group 1 OLS results; C43223 names ML-DS (9898/3), so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "aCML",
@@ -4203,13 +4194,10 @@
   {
     "alias": "Childhood MDS with low blasts",
     "full_form": "Childhood MDS with low blasts -> Refractory cytopenia with multilineage dysplasia (9985)",
-    "also_known_as": [
-      "MDS-MLD",
-      "RCMD"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "WHO-HAEM5",
-    "nci_concept_id": "NCIT:C8574",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9985"
@@ -4219,7 +4207,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed."
+    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. No NCIt concept for cMDS-LB was recorded in the Group 1 OLS results; C8574 names MDS-MLD/RCMD, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "Chronic monocytic leukemia",
@@ -4265,13 +4253,10 @@
   {
     "alias": "cMDS-LB",
     "full_form": "Childhood MDS with low blasts -> Refractory cytopenia with multilineage dysplasia (9985)",
-    "also_known_as": [
-      "MDS-MLD",
-      "RCMD"
-    ],
+    "also_known_as": [],
     "alias_type": "abbreviation",
     "origin_system": "Clinical abbreviation",
-    "nci_concept_id": "NCIT:C8574",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9985"
@@ -4281,7 +4266,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed."
+    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. No NCIt concept for cMDS-LB was recorded in the Group 1 OLS results; C8574 names MDS-MLD/RCMD, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "CMML",
@@ -4488,13 +4473,10 @@
   {
     "alias": "MDS with low blasts",
     "full_form": "MDS with low blasts, NOS -> Refractory cytopenia with multilineage dysplasia (9985)",
-    "also_known_as": [
-      "MDS-MLD",
-      "RCMD"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "WHO-HAEM5",
-    "nci_concept_id": "NCIT:C8574",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9985"
@@ -4504,7 +4486,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed."
+    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. No NCIt concept for the WHO-HAEM5 label was recorded in the Group 1 OLS results; C8574 names MDS-MLD/RCMD, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "MDS with ring sideroblasts",
@@ -4670,13 +4652,10 @@
   {
     "alias": "MDS/MPN overlap",
     "full_form": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable (9975)",
-    "also_known_as": [
-      "MPN-NOS",
-      "MPN-U"
-    ],
+    "also_known_as": [],
     "alias_type": "descriptive",
     "origin_system": "Clinical descriptive",
-    "nci_concept_id": "NCIT:C27350",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9975"
@@ -4686,18 +4665,15 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2)."
+    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2). The Group 1 OLS results record C27350 against 9975, but C27350 is the MPN-NOS concept, not MDS/MPN-U — nci_concept_id is left null pending a re-query."
   },
   {
     "alias": "MDS/MPN-U",
     "full_form": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable (9975)",
-    "also_known_as": [
-      "MPN-NOS",
-      "MPN-U"
-    ],
+    "also_known_as": [],
     "alias_type": "abbreviation",
     "origin_system": "Clinical abbreviation",
-    "nci_concept_id": "NCIT:C27350",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9975"
@@ -4707,7 +4683,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2)."
+    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2). The Group 1 OLS results record C27350 against 9975, but C27350 is the MPN-NOS concept, not MDS/MPN-U — nci_concept_id is left null pending a re-query."
   },
   {
     "alias": "Myelodysplasia",
@@ -4777,13 +4753,10 @@
   {
     "alias": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable",
     "full_form": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable (9975)",
-    "also_known_as": [
-      "MPN-NOS",
-      "MPN-U"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "WHO Classification 2022",
-    "nci_concept_id": "NCIT:C27350",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9975"
@@ -4793,7 +4766,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2)."
+    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2). The Group 1 OLS results record C27350 against 9975, but C27350 is the MPN-NOS concept, not MDS/MPN-U — nci_concept_id is left null pending a re-query."
   },
   {
     "alias": "Preleukemia",
@@ -4878,13 +4851,10 @@
   {
     "alias": "RCC",
     "full_form": "Refractory cytopenia of childhood -> Refractory cytopenia with multilineage dysplasia (9985)",
-    "also_known_as": [
-      "MDS-MLD",
-      "RCMD"
-    ],
+    "also_known_as": [],
     "alias_type": "abbreviation",
     "origin_system": "Clinical abbreviation",
-    "nci_concept_id": "NCIT:C8574",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9985"
@@ -4894,7 +4864,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. AMBIGUITY WARNING: 'RCC' also means renal cell carcinoma (Group XI/VI) and rhabdoid tumour is sometimes abbreviated the same way in ward notes. alias_index.json will resolve this string to more than one group — the clerk must confirm the presentation before the code is accepted. confidence=low for that reason: the abbreviation alone does not identify the disease."
+    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. AMBIGUITY WARNING: 'RCC' also means renal cell carcinoma (Group XI/VI) and rhabdoid tumour is sometimes abbreviated the same way in ward notes. alias_index.json will resolve this string to more than one group — the clerk must confirm the presentation before the code is accepted. confidence=low for that reason: the abbreviation alone does not identify the disease. No NCIt concept for RCC was recorded in the Group 1 OLS results; C8574 names MDS-MLD/RCMD, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "RCMD",
@@ -5002,13 +4972,10 @@
   {
     "alias": "Refractory cytopenia of childhood",
     "full_form": "Refractory cytopenia of childhood -> Refractory cytopenia with multilineage dysplasia (9985)",
-    "also_known_as": [
-      "MDS-MLD",
-      "RCMD"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "WHO Classification 2022",
-    "nci_concept_id": "NCIT:C8574",
+    "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
       "9985"
@@ -5018,7 +4985,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed."
+    "notes": "Code 9985 — THE paediatric MDS code: SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names, and it is the commonest MDS of childhood (~50%) (Pathway 3.5). Criteria: persistent age-adjusted cytopenia, dysplasia in >=2 lineages or >=10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis; ~80% hypocellular marrow, monosomy 7 in ~20%. CD61 or CD41 IHC ON THE TREPHINE IS MANDATORY — micromegakaryocytes are what separate RCC from severe aplastic anaemia. MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. SEER over-counting rule: code only the first MDS subtype diagnosed. No NCIt concept for RCC was recorded in the Group 1 OLS results; C8574 names MDS-MLD/RCMD, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "Refractory cytopenia with multilineage dysplasia",
@@ -5044,13 +5011,10 @@
   {
     "alias": "Refractory neutropenia",
     "full_form": "Refractory neutropenia (9991, retired) -> Refractory anemia (9980)",
-    "also_known_as": [
-      "RA",
-      "Aregenerative Anemia"
-    ],
+    "also_known_as": [],
     "alias_type": "who_historical",
     "origin_system": "WHO Classification 2001",
-    "nci_concept_id": "NCIT:C2872",
+    "nci_concept_id": null,
     "who_version_current": "historical",
     "maps_to_morphology_codes": [
       "9980"
@@ -5060,18 +5024,15 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. RETIRED CODE: 9991 was retired in ICD-O-3.2 and aliases to 9980 (Pathway 5.7). 9991 is valid only for pre-2021 diagnoses and is not a live terminal — this alias deliberately resolves to 9980 so the clerk does not dead-end. SEER over-counting rule applies to the whole MDS family."
+    "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. RETIRED CODE: 9991 was retired in ICD-O-3.2 and aliases to 9980 (Pathway 5.7). 9991 is valid only for pre-2021 diagnoses and is not a live terminal — this alias deliberately resolves to 9980 so the clerk does not dead-end. SEER over-counting rule applies to the whole MDS family. 9991 has no NCIt concept of its own; C2872 names refractory anaemia, a different entity, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "Refractory thrombocytopenia",
     "full_form": "Refractory thrombocytopenia (9992, retired) -> Refractory anemia (9980)",
-    "also_known_as": [
-      "RA",
-      "Aregenerative Anemia"
-    ],
+    "also_known_as": [],
     "alias_type": "who_historical",
     "origin_system": "WHO Classification 2001",
-    "nci_concept_id": "NCIT:C2872",
+    "nci_concept_id": null,
     "who_version_current": "historical",
     "maps_to_morphology_codes": [
       "9980"
@@ -5081,7 +5042,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. RETIRED CODE: 9992 was retired in ICD-O-3.2 and aliases to 9980 (Pathway 5.7). Valid only for pre-2021 diagnoses; not a live terminal. Exclude ITP and HIV-related thrombocytopenia before registering."
+    "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. RETIRED CODE: 9992 was retired in ICD-O-3.2 and aliases to 9980 (Pathway 5.7). Valid only for pre-2021 diagnoses; not a live terminal. Exclude ITP and HIV-related thrombocytopenia before registering. 9992 has no NCIt concept of its own; C2872 names refractory anaemia, a different entity, so nci_concept_id is null rather than inherited."
   },
   {
     "alias": "t-MDS",
