@@ -925,7 +925,7 @@
   },
   {
     "alias": "Burkitt cell leukemia",
-    "full_form": "Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "FAB L3",
       "L3 ALL"
@@ -942,11 +942,12 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "Burkitt leukaemia",
-    "full_form": "Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "Burkitt cell leukemia",
       "FAB L3",
@@ -964,7 +965,8 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "Chronic lymphocytic leukemia",
@@ -1012,7 +1014,7 @@
   },
   {
     "alias": "FAB L3",
-    "full_form": "FAB L3 -> Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "FAB L3 -> Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "Burkitt cell leukemia",
       "L3 ALL"
@@ -1029,7 +1031,8 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "Hairy cell leukaemia variant",
@@ -1110,7 +1113,7 @@
   },
   {
     "alias": "L3 ALL",
-    "full_form": "FAB L3 -> Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "FAB L3 -> Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "Burkitt cell leukemia",
       "FAB L3"
@@ -1127,17 +1130,18 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "Leukaemic Burkitt lymphoma",
-    "full_form": "Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "Burkitt cell leukemia",
       "FAB L3",
       "L3 ALL"
     ],
-    "alias_type": "descriptive",
+    "alias_type": "who_historical",
     "origin_system": "Clinical descriptive",
     "nci_concept_id": "NCIT:C7400",
     "who_version_current": "historical",
@@ -1149,7 +1153,8 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "Leukemic reticuloendotheliosis",
@@ -1173,13 +1178,13 @@
   },
   {
     "alias": "Mature B-cell ALL",
-    "full_form": "Burkitt cell leukemia (9826, retired -> 9687 Group II)",
+    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
     "also_known_as": [
       "Burkitt cell leukemia",
       "FAB L3",
       "L3 ALL"
     ],
-    "alias_type": "descriptive",
+    "alias_type": "who_historical",
     "origin_system": "Clinical descriptive",
     "nci_concept_id": "NCIT:C7400",
     "who_version_current": "historical",
@@ -1191,7 +1196,8 @@
     "needs_ihc_tree": true,
     "ihc_tree_id": "tree_mature_lymphoid",
     "tree_entry_node": "ml_document_inventory",
-    "notes": "Cross-group, ICD-O-3.2: 9826 was RETIRED 1 Jan 2021 and leukaemic Burkitt now codes 9687/3 in Group II (IIc) — registry ruling, no Group I/II override (Pathway 3.3, 5.7c). 9826 is retained here read-only for pre-2021 archival records; the same alias string is carried in aliases_group_02.json so the clerk lands in Group II for any current case. Selection is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid."
+    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string must be carried in aliases_group_02.json so a clerk lands in Group II for any current case — THAT MIRROR DOES NOT YET EXIST and is a flagged gap. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
+    "archival_only": true
   },
   {
     "alias": "PLL",
@@ -3035,6 +3041,25 @@
     "notes": "Code 9866, t(15;17) PML::RARA. MEDICAL EMERGENCY — DIC/coagulopathy is common at presentation and ATRA is started on the presumptive morphological diagnosis. Coding requires confirmation by FISH, RT-PCR or anti-PML immunostaining. Flow signature: HLA-DR- CD34- MPO-bright, high side scatter. MIMIC: NPM1-mutated AML (9877) is also CD34-/HLA-DR- but CD4+ with low/moderate SSC and high WBC — do not code 9866 until PML::RARA is molecularly excluded (Pathway 3.6)."
   },
   {
+    "alias": "RAEB-T",
+    "full_form": "Refractory anaemia with excess blasts in transformation -> AML (9861) or MDS-EB (9983) by blast count",
+    "also_known_as": [],
+    "alias_type": "who_historical",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C27080",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9861",
+      "9983"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "OBSOLETE ENTITY — DO NOT CODE 9984. WHO 2001 lowered the AML blast threshold from 30% to 20% and absorbed the whole RAEB-T band, so the code has had no live entity behind it since (Pathway 5.3.6); terminal_reachable is false on 9984 and it is valid only for pre-2001 archival records. A case described as RAEB-T today is resolved by the BLAST GATE, which is why this alias enters tree_acute_leukemia: blasts >=20% -> AML (9861, or 9895 if myelodysplasia-related changes are documented), blasts 5-19% -> MDS-EB (9983), and the acute tree re-routes to tree_mds_jmml when blasts prove <20%. Both candidate codes are listed; the gate picks one. confidence=low: the alias spans two subgroups (Ib and Id) and cannot be resolved without the blast percentage."
+  },
+  {
     "alias": "RBM15-MKL1 AML",
     "full_form": "Acute myeloid leukemia (megakaryoblastic) with t(1;22)(p13;q13); RBM15-MKL1 (9911)",
     "also_known_as": [
@@ -3053,6 +3078,27 @@
     "ihc_tree_id": null,
     "tree_entry_node": "ac_document_inventory",
     "notes": "Code 9911. MRTFA is the current name for MKL1."
+  },
+  {
+    "alias": "Refractory anemia with excess blasts in transformation",
+    "full_form": "Refractory anaemia with excess blasts in transformation -> AML (9861) or MDS-EB (9983) by blast count",
+    "also_known_as": [
+      "RAEB-T"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "FAB / WHO Classification 1994",
+    "nci_concept_id": "NCIT:C27080",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9861",
+      "9983"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "OBSOLETE ENTITY — DO NOT CODE 9984. WHO 2001 lowered the AML blast threshold from 30% to 20% and absorbed the whole RAEB-T band, so the code has had no live entity behind it since (Pathway 5.3.6); terminal_reachable is false on 9984 and it is valid only for pre-2001 archival records. A case described as RAEB-T today is resolved by the BLAST GATE, which is why this alias enters tree_acute_leukemia: blasts >=20% -> AML (9861, or 9895 if myelodysplasia-related changes are documented), blasts 5-19% -> MDS-EB (9983), and the acute tree re-routes to tree_mds_jmml when blasts prove <20%. Both candidate codes are listed; the gate picks one. confidence=low: the alias spans two subgroups (Ib and Id) and cannot be resolved without the blast percentage."
   },
   {
     "alias": "RUNX1-mutated AML",
@@ -3117,7 +3163,7 @@
   },
   {
     "alias": "t-AML",
-    "full_form": "Therapy related myeloid neoplasm (9920)",
+    "full_form": "Therapy-related AML -> code the underlying AML entity + therapy_related qualifier (9861 pending subtype)",
     "also_known_as": [
       "Therapy-Related Myeloid Neoplasm",
       "Therapy-Related AML and MDS"
@@ -3127,18 +3173,18 @@
     "nci_concept_id": "NCIT:C27912",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9920"
+      "9861"
     ],
     "maps_to_iccc3_subgroup_id": "Ib",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9920. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]. terminal_reachable is false for 9920 — it is retained as a code but is not a tree terminal. If the disease is specifically MDS, use 9987. In paediatrics this implies a second malignancy: record the prior cytotoxic exposure."
+    "notes": "DO NOT CODE 9920. Therapy-related myeloid neoplasm is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022 no longer treats it as a disease entity), and terminal_reachable is false on 9920. Enter tree_acute_leukemia, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING entity — e.g. therapy-related AML with MDS-related cytogenetics resolves to 9895 — and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9861 (AML, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the underlying disease is MDS rather than AML, use the t-MDS alias. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. In paediatrics this implies a second malignancy — record the prior cytotoxic exposure. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "t-MN",
-    "full_form": "Therapy related myeloid neoplasm (9920)",
+    "full_form": "Therapy-related myeloid neoplasm -> code the underlying AML entity + therapy_related qualifier (9861 pending subtype)",
     "also_known_as": [
       "Therapy-Related Myeloid Neoplasm",
       "Therapy-Related AML and MDS"
@@ -3148,14 +3194,14 @@
     "nci_concept_id": "NCIT:C27912",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9920"
+      "9861"
     ],
     "maps_to_iccc3_subgroup_id": "Ib",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9920. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]. terminal_reachable is false for 9920 — it is retained as a code but is not a tree terminal. If the disease is specifically MDS, use 9987. In paediatrics this implies a second malignancy: record the prior cytotoxic exposure."
+    "notes": "DO NOT CODE 9920. Therapy-related myeloid neoplasm is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022 no longer treats it as a disease entity), and terminal_reachable is false on 9920. Enter tree_acute_leukemia, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING entity — e.g. therapy-related AML with MDS-related cytogenetics resolves to 9895 — and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9861 (AML, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the underlying disease is MDS rather than AML, use the t-MDS alias. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. In paediatrics this implies a second malignancy — record the prior cytotoxic exposure. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "TAM",
@@ -3177,7 +3223,7 @@
   },
   {
     "alias": "Therapy-related AML",
-    "full_form": "Therapy related myeloid neoplasm (9920)",
+    "full_form": "Therapy-related AML -> code the underlying AML entity + therapy_related qualifier (9861 pending subtype)",
     "also_known_as": [
       "Therapy-Related Myeloid Neoplasm",
       "Therapy-Related AML and MDS"
@@ -3187,18 +3233,18 @@
     "nci_concept_id": "NCIT:C27912",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9920"
+      "9861"
     ],
     "maps_to_iccc3_subgroup_id": "Ib",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9920. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]. terminal_reachable is false for 9920 — it is retained as a code but is not a tree terminal. If the disease is specifically MDS, use 9987. In paediatrics this implies a second malignancy: record the prior cytotoxic exposure."
+    "notes": "DO NOT CODE 9920. Therapy-related myeloid neoplasm is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022 no longer treats it as a disease entity), and terminal_reachable is false on 9920. Enter tree_acute_leukemia, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING entity — e.g. therapy-related AML with MDS-related cytogenetics resolves to 9895 — and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9861 (AML, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the underlying disease is MDS rather than AML, use the t-MDS alias. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. In paediatrics this implies a second malignancy — record the prior cytotoxic exposure. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "Therapy-related myeloid neoplasm",
-    "full_form": "Therapy related myeloid neoplasm (9920)",
+    "full_form": "Therapy-related myeloid neoplasm -> code the underlying AML entity + therapy_related qualifier (9861 pending subtype)",
     "also_known_as": [
       "Therapy-Related AML and MDS"
     ],
@@ -3207,14 +3253,14 @@
     "nci_concept_id": "NCIT:C27912",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9920"
+      "9861"
     ],
     "maps_to_iccc3_subgroup_id": "Ib",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
-    "notes": "Code 9920. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]. terminal_reachable is false for 9920 — it is retained as a code but is not a tree terminal. If the disease is specifically MDS, use 9987. In paediatrics this implies a second malignancy: record the prior cytotoxic exposure."
+    "notes": "DO NOT CODE 9920. Therapy-related myeloid neoplasm is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022 no longer treats it as a disease entity), and terminal_reachable is false on 9920. Enter tree_acute_leukemia, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING entity — e.g. therapy-related AML with MDS-related cytogenetics resolves to 9895 — and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9861 (AML, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the underlying disease is MDS rather than AML, use the t-MDS alias. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. In paediatrics this implies a second malignancy — record the prior cytotoxic exposure. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "TP53-mutated AML",
@@ -4810,24 +4856,6 @@
     "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. Code 9983, includes RAEB-1 and RAEB-2. >=20% blasts is AML, not MDS."
   },
   {
-    "alias": "RAEB-T",
-    "full_form": "Refractory anemia with excess blasts in transformation (9984, obsolete)",
-    "also_known_as": [],
-    "alias_type": "who_historical",
-    "origin_system": "Clinical abbreviation",
-    "nci_concept_id": "NCIT:C27080",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9984"
-    ],
-    "maps_to_iccc3_subgroup_id": "Id",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
-    "tree_entry_node": "mds_document_inventory",
-    "notes": "OBSOLETE ENTITY (Pathway 5.3.6): WHO 2001 lowered the AML blast threshold 30% -> 20% and absorbed the whole RAEB-T band. Retain 9984 for pre-2001 archival records ONLY. A current case with >=20% blasts is AML — code 9861, or 9895 if myelodysplasia-related changes are documented."
-  },
-  {
     "alias": "RARS",
     "full_form": "Refractory anemia with sideroblasts (9982)",
     "also_known_as": [
@@ -4929,26 +4957,6 @@
     "notes": "MANDATORY before any sporadic paediatric MDS code (Pathway 3.5): (1) germline predisposition screen — GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6 (recorded as a modifier, does not change the code); (2) IBMFS exclusion — chromosome breakage/G2 arrest, telomere length, Shwachman-Diamond; (3) UGANDA ADDITION: exclude nutritional (B12/folate/iron) and HIV-related cytopenia/macrocytosis FIRST. Code 9983. Paediatric MDS-EB: BM blasts 5-19%, PB 2-19%. WHO 2016 renamed it MDS-EB. Includes RAEB-1 and RAEB-2. One of the three usable paediatric MDS codes."
   },
   {
-    "alias": "Refractory anemia with excess blasts in transformation",
-    "full_form": "Refractory anemia with excess blasts in transformation (9984, obsolete)",
-    "also_known_as": [
-      "RAEB-T"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "FAB / WHO Classification 1994",
-    "nci_concept_id": "NCIT:C27080",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9984"
-    ],
-    "maps_to_iccc3_subgroup_id": "Id",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
-    "tree_entry_node": "mds_document_inventory",
-    "notes": "OBSOLETE — see RAEB-T. Pre-2001 archival records only; a current case is AML (9861/9895)."
-  },
-  {
     "alias": "Refractory anemia with ring sideroblasts",
     "full_form": "Refractory anemia with sideroblasts (9982)",
     "also_known_as": [
@@ -5046,7 +5054,7 @@
   },
   {
     "alias": "t-MDS",
-    "full_form": "Therapy-related myelodysplastic syndrome, NOS (9987)",
+    "full_form": "Therapy-related MDS -> code the underlying MDS subtype + therapy_related qualifier (9989 pending subtype)",
     "also_known_as": [
       "Therapy-Related MDS",
       "MDS-pCT"
@@ -5056,18 +5064,18 @@
     "nci_concept_id": "NCIT:C27722",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9987"
+      "9989"
     ],
     "maps_to_iccc3_subgroup_id": "Id",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_mds_jmml",
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9987. Implies documented prior chemotherapy/radiation. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]."
+    "notes": "DO NOT CODE 9987. Therapy-related MDS is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022), and terminal_reachable is false on 9987. Enter tree_mds_jmml, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING MDS subtype and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9989 (MDS, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the disease has evolved to AML, use the t-AML alias instead. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. Implies documented prior chemotherapy or radiation — in paediatrics, a second malignancy. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "Therapy-related myelodysplastic syndrome",
-    "full_form": "Therapy-related myelodysplastic syndrome, NOS (9987)",
+    "full_form": "Therapy-related MDS -> code the underlying MDS subtype + therapy_related qualifier (9989 pending subtype)",
     "also_known_as": [
       "Therapy-Related MDS",
       "MDS-pCT"
@@ -5077,14 +5085,14 @@
     "nci_concept_id": "NCIT:C27722",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9987"
+      "9989"
     ],
     "maps_to_iccc3_subgroup_id": "Id",
-    "confidence": "medium",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": null,
+    "confidence": "low",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "tree_mds_jmml",
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9987, MDS after prior cytotoxic therapy. Therapy-related disease is a QUALIFIER, not a terminal (Pathway 4.8): code the underlying entity and set qualifiers:[therapy_related]. terminal_reachable is false. If the disease has evolved to AML use 9920."
+    "notes": "DO NOT CODE 9987. Therapy-related MDS is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway 4.8, 5.3.7; ELN 2022), and terminal_reachable is false on 9987. Enter tree_mds_jmml, capture prior_cytotoxic_therapy at document_inventory, code the UNDERLYING MDS subtype and set qualifiers:[therapy_related] on the output block. maps_to_morphology_codes carries 9989 (MDS, NOS) as the code the workup lands on if no subtype is established; it is a starting point for the tree, not the answer. If the disease has evolved to AML, use the t-AML alias instead. BUILD LINT: prior_cytotoxic_therapy = yes together with a resolved code of 9920 or 9987 is a build error. Implies documented prior chemotherapy or radiation — in paediatrics, a second malignancy. confidence=low: the alias names a qualifier, not an entity — no code can be assigned until the underlying subtype is resolved in the tree."
   },
   {
     "alias": "Acute biphenotypic leukemia",
