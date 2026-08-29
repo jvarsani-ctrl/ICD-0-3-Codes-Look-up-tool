@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 84,
-    "total_decision_nodes": 25,
+    "total_decision_nodes": 50,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -4664,6 +4664,1774 @@
                   "Flow cytometry"
                 ]
               }
+            }
+          ],
+          "nos_fallback": null
+        }
+      ]
+    },
+    {
+      "tree_id": "tree_mds_jmml",
+      "tree_label": "Myelodysplastic syndromes, JMML and MDS/MPN overlap",
+      "entry_node": "mds_document_inventory",
+      "nodes": [
+        {
+          "node_id": "mds_document_inventory",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Evidence in file",
+          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). A case that arrived here from the acute tree's blast gate enters at mds_eb_pediatric_entry or mds_rcc_entry instead and skips this node.",
+          "options": [
+            {
+              "label": "Referral / clinical note only — no marrow report",
+              "next_node": "mds_clinical_alias",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "not done",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Blood film / marrow aspirate morphology only (no trephine, no IHC, no cytogenetics)",
+              "next_node": "mds_morphology_only",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)",
+              "next_node": "mds_marrow_pattern",
+              "coding_note": "CD61 or CD41 IHC on the trephine is mandatory in paediatric MDS — it identifies the micromegakaryocytes that separate refractory cytopenia of childhood from severe aplastic anaemia (Pathway §3.5).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Marrow + trephine/IHC + cytogenetics / FISH",
+              "next_node": "mds_marrow_pattern",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "incomplete",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Marrow + trephine/IHC + cytogenetics + molecular / PCR / NGS",
+              "next_node": "mds_marrow_pattern",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Monocytosis-predominant picture — persistent monocytosis with or without splenomegaly (JMML / CMML suspicion)",
+              "next_node": "mds_monocytosis_gate",
+              "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+              "coding_note": "JMML is the flagship paediatric Group I MDS/MPN entity. Monocytosis alone is not a diagnosis — reactive monocytosis (TB, HIV, other chronic infection) is the commonest cause in the UCI catchment and must reach a non-reportable terminal (Pathway §3.10, §4.9).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "karyotype_result_status": "not done",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Hypereosinophilia is the dominant finding, not monocytosis or dysplasia",
+              "next_node": "mds_overlap_confirm",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9967), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "coding_note": "The eosinophilia cascade (9964–9968) belongs to the chronic myeloid / MPN tree, not to this one (Pathway §3.10, §7.1). Do not code a clonal eosinophilia terminal from the MDS/JMML tree — exclude parasitic infection and HIV first, then re-enter at the chronic myeloid / MPN tree.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "secondary_eosinophilia_excluded": "not assessed",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Malignancy excluded on review — reactive, non-neoplastic or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "The abstractor recorded that this case is not a reportable malignancy. No morphology code is emitted and the case leaves the malignant registry."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_clinical_alias",
+          "node_type": "clinical_alias",
+          "step_number": 2,
+          "step_label": "Referral wording",
+          "question": "What exactly does the referral or clinical note say?",
+          "hint": "A referral naming an entity is not the same as a marrow report establishing it. The wording chooses the NOS parent, never the specific code.",
+          "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+          "coding_note": "Referral-only tier: confidence is LOW and every downstream test is listed as an upgrade. 9946 and 9985 are never emitted from this node — both require marrow evidence the file does not contain (Pathway §3.4, §3.5).",
+          "options": [
+            {
+              "label": "Note reads \"myelodysplastic syndrome\", \"MDS\", \"myelodysplasia\" or \"preleukaemia\" — no marrow report",
+              "morphology_code": "9989",
+              "confidence": "low",
+              "upgrade_path": "A marrow aspirate and trephine with CD61/CD41 IHC would separate 9985 (refractory cytopenia of childhood) from 9983 (excess blasts); cytogenetics would add 9986.",
+              "coding_note": "9989 is the honest referral-tier code. Do not assume 9985 — the commonest paediatric MDS is still a marrow diagnosis.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"refractory anaemia\", \"RAEB\", \"RARS\" or another FAB-era term — no marrow report",
+              "morphology_code": "9989",
+              "confidence": "low",
+              "upgrade_path": "A marrow aspirate with a blast count and a trephine would establish the WHO/ICC subtype.",
+              "coding_note": "FAB terms in a referral do not carry a blast count. 9980/9982/9983 all require the marrow report.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"JMML\", \"juvenile myelomonocytic leukaemia\" or \"juvenile chronic myeloid leukaemia\" — no marrow and no molecular report",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A marrow report (blasts <20%), BCR::ABL1 exclusion by FISH/RT-PCR and a RAS-pathway panel (PTPN11, KRAS, NRAS, RRAS, NF1, CBL) would establish 9946.",
+              "coding_note": "9946 requires a somatic RAS-pathway lesion (Pathway §3.4). A referral naming JMML is not that evidence — 9975 is the MDS/MPN NOS parent in the §6 fallback chain (9945 / 9946 → 9975 → 9800).",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "ras_pathway_lesion": "none identified",
+                "bcr_abl1_status": "not tested"
+              }
+            },
+            {
+              "label": "Note reads \"CMML\", \"chronic myelomonocytic leukaemia\" or \"chronic monocytic leukaemia\" — no marrow report",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A monocyte count (absolute and as % of WBC), a marrow blast count and evidence of dysplasia or clonality would establish 9945.",
+              "coding_note": "CMML needs the two-tier monocyte rule of Pathway §3.10 before 9945 is defensible. 9975 is the NOS parent.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"MDS/MPN overlap\" or \"myelodysplastic/myeloproliferative neoplasm, unclassifiable\"",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A marrow report with a blast count, monocyte count and cytogenetics would establish 9945, 9946 or a specific MDS subtype.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"therapy-related MDS\" / \"t-MDS\" after prior chemotherapy or radiotherapy",
+              "morphology_code": "9989",
+              "confidence": "low",
+              "clinical_alert": "⚠️ Prior cytotoxic therapy is a qualifier on the underlying neoplasm (ELN 2022), not a separate entity. Code the underlying subtype and set the qualifier rather than defaulting to 9920/9987.",
+              "upgrade_path": "A marrow report would establish the underlying MDS subtype, which is the code; the therapy relationship stays a qualifier.",
+              "coding_note": "DO NOT CODE 9987. Therapy-related MDS is a QUALIFIER on the underlying diagnosis, not a terminal (Pathway §4.8, §5.3.7). 9987 and 9920 are closed as terminals.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "therapy_related_qualifier": "yes",
+                "qualifiers": [
+                  "therapy_related"
+                ]
+              }
+            },
+            {
+              "label": "Note reads only \"pancytopenia\", \"bone marrow failure\" or \"anaemia under investigation\" — no malignant diagnosis is asserted",
+              "non_reportable": true,
+              "reason": "The referral asserts a cytopenia, not a malignancy. No morphology code is emitted; the case is not entered on the malignant registry until a marrow report establishes a neoplasm."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_morphology_only",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "Marrow morphology",
+          "question": "What does the marrow aspirate / blood film report describe?",
+          "hint": "Iron stain (ring sideroblasts) and cytochemistry count as morphology. A trephine with CD61/CD41 IHC does not — that is the next tier up.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Morphology-only tier. The mandatory paediatric pre-conditions (reversible causes, prior therapy, germline predisposition, IBMFS) are still unasked — every dysplastic option routes into that chain rather than terminating here.",
+          "options": [
+            {
+              "label": "Cytopenia(s) with dysplasia — marrow blasts under 5%",
+              "next_node": "mds_rcc_entry",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "blast_percent_band": "<5"
+              }
+            },
+            {
+              "label": "Cytopenia(s) with dysplasia — marrow blasts 5–19%",
+              "next_node": "mds_eb_pediatric_entry",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "blast_percent_band": "5-19"
+              }
+            },
+            {
+              "label": "Persistent monocytosis with a myeloproliferative picture — circulating myeloid precursors, splenomegaly",
+              "next_node": "mds_monocytosis_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Dysplasia described; blast count not stated and no further investigation is possible at this facility",
+              "morphology_code": "9989",
+              "confidence": "low",
+              "upgrade_path": "A blast count would separate 9983 from 9985; a trephine with CD61/CD41 IHC would exclude aplastic anaemia; cytogenetics would add 9986.",
+              "coding_note": "A permanent LMIC terminal state, recorded as such. The §5.6 pre-conditions were not documented — germline_predisposition and ibmfs_exclusion_status stay 'not tested' on the output block.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "karyotype_result_status": "unavailable"
+              }
+            },
+            {
+              "label": "Marrow reviewed — megaloblastic / reactive change, not dysplasia",
+              "non_reportable": true,
+              "reason": "Marrow morphology showed reactive or megaloblastic change rather than a dysplastic clone. Not a reportable malignancy — no code is emitted."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_marrow_pattern",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Marrow pattern",
+          "question": "Which pattern does the marrow aspirate and trephine describe?",
+          "hint": "Pick the dominant pattern. The blast count is confirmed later, at the gate that actually fixes the code.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Group I has no site resolution — the marrow pattern plus the blast band does the work topography does in solid-tumour groups (Pathway §2.2).",
+          "options": [
+            {
+              "descriptor": "Monocytosis with myeloproliferative features — splenomegaly, leucocytosis, circulating myeloid precursors",
+              "next_node": "mds_monocytosis_gate"
+            },
+            {
+              "descriptor": "Cytopenia(s) with dysplasia — marrow blasts under 5% and peripheral blasts under 2%",
+              "next_node": "mds_rcc_entry",
+              "captures": {
+                "blast_percent_band": "<5"
+              }
+            },
+            {
+              "descriptor": "Cytopenia(s) with dysplasia and increased blasts — marrow 5–19%, peripheral 2–19%",
+              "next_node": "mds_eb_pediatric_entry",
+              "classification_system": "ICC-2022",
+              "coding_note": "Paediatric MDS with excess blasts is the 5–19% band under ICC. ICC's separate MDS/AML 10–19% category is explicitly excluded under 18 years (Pathway §5.4).",
+              "captures": {
+                "blast_percent_band": "5-19"
+              }
+            },
+            {
+              "descriptor": "Ring sideroblasts prominent on the iron stain, with dysplasia",
+              "next_node": "mds_reversible_cause_gate",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Ring-sideroblast entities (9982, 9993) are adult-predominant — <1% of paediatric MDS. They stay reachable; the age-implausibility warning travels with them (Pathway §7.5).",
+              "captures": {
+                "ring_sideroblast_status": "present"
+              }
+            },
+            {
+              "descriptor": "Hypocellular marrow with cytopenias — refractory cytopenia of childhood versus severe aplastic anaemia not yet separated",
+              "next_node": "mds_rcc_aplastic_ihc",
+              "coding_note": "About 80% of refractory cytopenia of childhood is hypocellular. CD61/CD41 IHC on the trephine is the discriminator (Pathway §3.5).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ]
+              }
+            },
+            {
+              "descriptor": "Overlapping myelodysplastic and myeloproliferative features — the CMML, atypical CML and JMML criteria are all unmet",
+              "next_node": "mds_overlap_confirm"
+            },
+            {
+              "descriptor": "Dysplasia documented but the subtype is not stated in the report",
+              "next_node": "mds_reversible_cause_gate",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "descriptor": "Marrow reviewed — no dysplasia, no excess blasts and no clonal population",
+              "non_reportable": true,
+              "reason": "The marrow shows neither dysplasia nor a clonal population. Not a reportable malignancy — no code is emitted."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_monocytosis_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "Monocyte count",
+          "question": "Absolute peripheral-blood monocyte count?",
+          "hint": "Absolute count in ×10⁹/L. The relative criterion (≥10% of WBC) is asked at the next step. Tick 'not documented' rather than guessing — monocytosis is absent in about 7% of true JMML.",
+          "variable": "monocyte_count_absolute",
+          "variable_label": "Absolute monocyte count",
+          "unit": "×10⁹/L",
+          "band_variable": "monocyte_band",
+          "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+          "coding_note": "≥1×10⁹/L is the JMML clinical criterion and the CMML one-supporting-criterion tier; 0.5–<1×10⁹/L is the CMML two-supporting-criteria tier (Pathway §3.4, §3.10).",
+          "override_when": [
+            {
+              "captured_variable": "blast_percent_band",
+              "equals": ">=20",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "Blasts ≥20% — this is acute leukaemia, not an MDS/MPN. Blasts <20% in both blood and marrow is a MANDATORY JMML criterion (Pathway §3.4); the case belongs in the acute tree."
+            }
+          ],
+          "bands": [
+            {
+              "range": ">=1",
+              "next_node": "mds_monocytosis_context",
+              "coding_note": "Meets the JMML monocyte criterion and the CMML ≥1×10⁹/L tier. Reactive monocytosis must be excluded first, especially at this level (Pathway §3.10)."
+            },
+            {
+              "range": "0.5-0.99",
+              "next_node": "mds_monocytosis_context",
+              "coding_note": "CMML two-tier rule: at 0.5–<1×10⁹/L BOTH supporting criteria are required — dysplasia ≥10% in ≥1 lineage AND clonal cytogenetic/molecular evidence."
+            },
+            {
+              "range": "<0.5",
+              "next_node": "mds_marrow_pattern",
+              "coding_note": "Below the monocytosis threshold under both WHO-HAEM5 and ICC — neither CMML nor the JMML monocyte criterion is met. Assess the case as a myelodysplastic syndrome on its marrow pattern instead."
+            },
+            {
+              "range": "not_documented",
+              "next_node": "mds_monocytosis_context",
+              "coding_note": "Monocyte count not documented. Monocytosis is absent in about 7% of true JMML, so an undocumented count does not close the JMML branch — it is the genetics that decide (Pathway §3.4)."
+            }
+          ],
+          "captured_variables": [
+            "monocyte_count_absolute",
+            "monocyte_band",
+            "blast_percent_band",
+            "splenomegaly_present",
+            "bcr_abl1_status",
+            "ras_pathway_lesion"
+          ],
+          "nos_fallback": {
+            "code": "9975",
+            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
+          }
+        },
+        {
+          "node_id": "mds_monocytosis_context",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Reactive causes",
+          "question": "Is the monocytosis persistent, and have reactive causes been excluded and documented?",
+          "hint": "Persistence means ≥3 months unless a clonal marker is already present. In the UCI catchment tuberculosis and HIV are the commonest causes of a persistent monocytosis.",
+          "clinical_alert": "⚠️ Reactive monocytosis (tuberculosis, HIV, other chronic infection, marrow recovery, G-CSF) is not a malignancy. It must reach a non-reportable terminal, never an NOS malignant code (Pathway §4.9).",
+          "coding_note": "CMUS / CCMUS — persistent monocytosis ≥10% of WBC and ≥0.5×10⁹/L with the CMML criteria unmet — is explicitly not malignant and must not be reported (Pathway §3.10).",
+          "options": [
+            {
+              "label": "Persistent monocytosis, ≥10% of the white cell count, reactive causes excluded and documented",
+              "next_node": "mds_monocytic_entity_fork",
+              "captures": {
+                "reactive_monocytosis_excluded": "excluded",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Reactive cause identified — tuberculosis, HIV, other chronic infection, marrow recovery or G-CSF",
+              "non_reportable": true,
+              "reason": "The monocytosis is reactive (infection, marrow recovery or growth-factor effect). Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            },
+            {
+              "label": "Persistent monocytosis but under 10% of the white cell count, or the CMML criteria are otherwise unmet — CMUS / CCMUS",
+              "non_reportable": true,
+              "reason": "Clonal or idiopathic monocytosis of undetermined significance (CMUS/CCMUS). Explicitly not malignant and must not be reported (Pathway §3.10, §4.9)."
+            },
+            {
+              "label": "Splenomegaly and cytopenias fully explained by malaria or HIV hypersplenism",
+              "non_reportable": true,
+              "reason": "Hypersplenism from malaria or HIV accounts for the splenomegaly and cytopenias, and confounds the JMML criteria. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            },
+            {
+              "label": "Reactive causes not yet assessed — the file does not document the exclusions",
+              "next_node": "mds_monocytic_entity_fork",
+              "coding_note": "Recorded as an incomplete exclusion. It does not change the code, but it is the single largest false-positive registration risk in this group and must appear on the output block.",
+              "captures": {
+                "reactive_monocytosis_excluded": "not assessed",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_monocytic_entity_fork",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Monocytic entity",
+          "question": "Which entity does the marrow and clinical picture describe?",
+          "hint": "Age is not diagnostic for JMML — it is prognostic only (Pathway §3.4). The genetics decide, not the age.",
+          "coding_note": "JMML (9946) and CMML (9945) share a monocytic phenotype and separate on the RAS-pathway lesion and the supporting-criteria rule, not on age.",
+          "options": [
+            {
+              "descriptor": "Myeloproliferative picture — splenomegaly, elevated HbF for age, circulating myeloid precursors, monosomy 7 (JMML pattern)",
+              "next_node": "mds_jmml_mandatory_gate",
+              "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+              "captures": {
+                "splenomegaly_present": "yes"
+              }
+            },
+            {
+              "descriptor": "Dysplastic monocytic picture — dysplasia ≥10% in ≥1 lineage and/or a clonal marker, no splenomegaly-led myeloproliferative picture (CMML pattern)",
+              "next_node": "mds_cmml_criteria",
+              "captures": {
+                "splenomegaly_present": "no"
+              }
+            },
+            {
+              "descriptor": "Overlapping myelodysplastic and myeloproliferative features — the CMML, atypical CML and JMML criteria are all unmet",
+              "next_node": "mds_overlap_confirm"
+            },
+            {
+              "descriptor": "Blasts ≥20% in blood or marrow — an acute picture",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "Blasts <20% in both blood and marrow is a MANDATORY JMML criterion and bounds CMML too. At ≥20% the case is acute leukaemia and belongs in the acute tree (Pathway §3.4, §3.10).",
+              "captures": {
+                "blast_percent_band": ">=20"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_jmml_mandatory_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "JMML mandatory criteria",
+          "question": "Two JMML criteria are MANDATORY: blasts under 20% in blood and marrow, and documented absence of BCR::ABL1. What does the file show?",
+          "hint": "'Absence of BCR::ABL1' means a negative FISH or RT-PCR result in the file. A normal karyotype is not that result.",
+          "clinical_alert": "⚠️ BCR::ABL1 must be EXCLUDED before 9946 is emitted — it is a mandatory JMML criterion (Pathway §3.4). If BCR::ABL1 is POSITIVE this is chronic myeloid leukaemia, not JMML: leave this tree and re-enter at the chronic myeloid / MPN tree (mpn_document_inventory). Do not code 9946 and do not code an MDS terminal.",
+          "coding_note": "Category I criteria (Pathway §3.4): PB monocytes ≥1×10⁹/L (absent in ~7%), splenomegaly (absent in ~3%), blasts <20% — MANDATORY, absence of BCR::ABL1 — MANDATORY. Only the last two are hard gates.",
+          "options": [
+            {
+              "label": "BCR::ABL1 excluded — FISH or RT-PCR negative — and blasts under 20% in both blood and marrow",
+              "next_node": "mds_jmml_clinical_criteria",
+              "captures": {
+                "bcr_abl1_status": "negative",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Blasts under 20% but BCR::ABL1 not tested, or the result is not in the file",
+              "next_node": "mds_jmml_unconfirmed",
+              "coding_note": "A mandatory criterion is unestablished. 9946 cannot be emitted on this evidence — the case lands on the MDS/MPN NOS parent with the missing tests listed as upgrades (Pathway §3.4, §6 fallback chain).",
+              "captures": {
+                "bcr_abl1_status": "not tested",
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Blasts 20% or more in blood or marrow",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "The mandatory blast criterion fails. This is acute leukaemia — assign lineage in the acute tree.",
+              "captures": {
+                "blast_percent_band": ">=20"
+              }
+            },
+            {
+              "label": "Reviewed — the monocytosis, splenomegaly and cytopenias are fully explained by malaria or HIV hypersplenism",
+              "non_reportable": true,
+              "reason": "Hypersplenism from malaria or HIV accounts for the whole picture and confounds the JMML criteria. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_jmml_clinical_criteria",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "JMML supporting criteria",
+          "question": "Which supporting findings does the file document?",
+          "hint": "Supporting criteria are recorded, not decisive. Category II — a RAS-pathway lesion — is what establishes JMML, and it is asked next.",
+          "coding_note": "Supporting criteria (Pathway §3.4): HbF elevated for age, circulating myeloid precursors, monosomy 7. None of them changes the code; all of them belong on the output block.",
+          "options": [
+            {
+              "label": "Splenomegaly present and HbF elevated for age",
+              "next_node": "mds_jmml_genetics",
+              "captures": {
+                "splenomegaly_present": "yes",
+                "hbf_for_age": "elevated"
+              }
+            },
+            {
+              "label": "Splenomegaly present, HbF normal or not tested",
+              "next_node": "mds_jmml_genetics",
+              "captures": {
+                "splenomegaly_present": "yes",
+                "hbf_for_age": "not tested"
+              }
+            },
+            {
+              "label": "No splenomegaly — HbF elevated for age and/or circulating myeloid precursors present",
+              "next_node": "mds_jmml_genetics",
+              "coding_note": "Splenomegaly is absent in about 3% of true JMML. Its absence does not close the branch.",
+              "captures": {
+                "splenomegaly_present": "no",
+                "hbf_for_age": "elevated"
+              }
+            },
+            {
+              "label": "Monosomy 7 on cytogenetics, with or without splenomegaly",
+              "next_node": "mds_jmml_genetics",
+              "coding_note": "Monosomy 7 is supporting, not defining. It is also the commonest cytogenetic abnormality in refractory cytopenia of childhood (~20%) — it does not by itself choose between 9946 and 9985.",
+              "captures": {
+                "splenomegaly_present": "yes",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "label": "None of the supporting findings is documented",
+              "next_node": "mds_jmml_genetics",
+              "captures": {
+                "splenomegaly_present": "no",
+                "hbf_for_age": "not tested",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_jmml_genetics",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "RAS-pathway lesion",
+          "question": "What does the molecular / cytogenetic report show on the RAS pathway?",
+          "hint": "Category II requires at least one of these, and it is present in over 95% of true JMML. The distinction that matters is SOMATIC versus germline-only.",
+          "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+          "coding_note": "DNA-methylation subgroups (low / intermediate / high) are prognostic and code-neutral — all remain 9946. Spontaneous regression (~15%, germline CBL and some NRAS G12S) does not retract the diagnosis: code at diagnosis on the evidence then available (Pathway §3.4, §5.3.9).",
+          "options": [
+            {
+              "finding": "Somatic PTPN11 mutation (marrow, not germline)",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "coding_note": "Somatic PTPN11 is the commonest JMML lesion. Confirm it is somatic — a germline PTPN11 variant alone is Noonan-spectrum myeloproliferation, not JMML.",
+              "captures": {
+                "ras_pathway_lesion": "PTPN11 somatic",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "germline_predisposition": "not tested"
+              }
+            },
+            {
+              "finding": "Somatic KRAS mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "captures": {
+                "ras_pathway_lesion": "KRAS somatic",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "Somatic NRAS mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "coding_note": "Some NRAS G12S cases regress spontaneously. Regression is a follow-up fact, not a coding fact — the case stays an incident registration (Pathway §5.3.9).",
+              "captures": {
+                "ras_pathway_lesion": "NRAS somatic",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "Somatic RRAS mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "captures": {
+                "ras_pathway_lesion": "RRAS somatic",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "Germline NF1 with loss of heterozygosity, or clinical neurofibromatosis type 1 (≥6 café-au-lait macules over 5 mm)",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "coding_note": "Clinical NF1 satisfies Category II without a molecular NF1 report. Record the germline finding as a qualifier on the output block.",
+              "captures": {
+                "ras_pathway_lesion": "NF1 germline+LOH",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "qualifiers": [
+                  "germline_predisposition"
+                ]
+              }
+            },
+            {
+              "finding": "Germline CBL with loss of heterozygosity",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9946",
+              "coding_note": "Germline CBL JMML regresses spontaneously in a substantial minority. It is still an incident case coded at diagnosis (Pathway §5.3.9).",
+              "captures": {
+                "ras_pathway_lesion": "CBL germline+LOH",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "qualifiers": [
+                  "germline_predisposition"
+                ]
+              }
+            },
+            {
+              "finding": "Germline PTPN11, KRAS, NRAS or RIT1 ONLY — no somatic secondary lesion, normal karyotype",
+              "detection_method": "fish_or_rtpcr_only",
+              "next_node": "mds_noonan_spectrum",
+              "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+              "coding_note": "Noonan-spectrum myeloproliferative disease. Distinct from JMML and usually self-limiting — do NOT auto-code 9946 (Pathway §3.4, §4.9, §5.6).",
+              "captures": {
+                "ras_pathway_lesion": "germline PTPN11 only (NS/MPD)",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "finding": "RAS-pathway panel performed — no lesion identified; an ALK, ROS1, FIP1L1::RARA or CCDC88C::FLT3 fusion, or nothing at all",
+              "detection_method": "fish_or_rtpcr_only",
+              "next_node": "mds_jmml_like_genotype",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "ICC-2022's RAS-negative 'JMML-like neoplasm' is NOT adopted (registry decision, Pathway §5.3.2 and §5.4). It has no ICD-O-3.2 code and is coded 9975 on its own merits, with the fusion preserved in genotype_annotation.",
+              "captures": {
+                "ras_pathway_lesion": "none identified",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "Monosomy 7 only — no RAS-pathway lesion on a panel that was performed",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_jmml_like_genotype",
+              "coding_note": "Monosomy 7 is supporting, never defining. Without a Category II lesion the case is not JMML.",
+              "captures": {
+                "ras_pathway_lesion": "none identified",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Molecular testing not performed, or unavailable at this facility",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A RAS-pathway panel (PTPN11, KRAS, NRAS, RRAS, NF1, CBL, with germline/somatic discrimination) would establish or exclude 9946.",
+              "coding_note": "Category II is unestablished, so 9946 cannot be emitted — the case lands on the MDS/MPN NOS parent (Pathway §6 fallback chain: 9945 / 9946 → 9975 → 9800). \"Molecular unavailable at UCI\" is a legitimate permanent terminal state, but it must be recorded as such.",
+              "captures": {
+                "ras_pathway_lesion": "none identified",
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            }
+          ],
+          "captured_variables": [
+            "ras_pathway_lesion",
+            "bcr_abl1_status",
+            "monocyte_count_absolute",
+            "splenomegaly_present",
+            "hbf_for_age",
+            "germline_predisposition",
+            "jmml_methylation_subgroup",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9975",
+            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
+          }
+        },
+        {
+          "node_id": "mds_jmml_unconfirmed",
+          "node_type": "molecular_freetext",
+          "step_number": 5,
+          "step_label": "JMML unconfirmed",
+          "question": "Record exactly what molecular or cytogenetic testing the file does contain, and what it showed.",
+          "capture_label": "Testing as reported (e.g. \"karyotype 46,XY; no FISH, no RAS panel\", \"no molecular testing performed\")",
+          "hint": "A mandatory JMML criterion is unestablished. This node records why, so the upgrade line on the output block is accurate.",
+          "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+          "coding_note": "A JMML with no molecular testing must NOT reach 9946 (Pathway §8 scenario list). 9975 is the honest terminal — the MDS/MPN NOS parent — with the missing tests listed as upgrades.",
+          "resolution_logic": [
+            {
+              "when": {
+                "bcr_abl1_status": "not tested"
+              },
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "BCR::ABL1 by FISH or RT-PCR, and a RAS-pathway panel (PTPN11, KRAS, NRAS, RRAS, NF1, CBL), would establish or exclude 9946.",
+              "coding_note": "Absence of BCR::ABL1 is a MANDATORY JMML criterion and it is unestablished here. 9946 is not emitted (Pathway §3.4)."
+            },
+            {
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A RAS-pathway panel (PTPN11, KRAS, NRAS, RRAS, NF1, CBL) would establish or exclude 9946.",
+              "coding_note": "Category II is unestablished. 9975 on its own merits, genotype preserved."
+            }
+          ],
+          "captured_variables": [
+            "bcr_abl1_status",
+            "ras_pathway_lesion",
+            "genotype_annotation",
+            "monocyte_count_absolute",
+            "splenomegaly_present",
+            "blast_percent_band"
+          ],
+          "nos_fallback": {
+            "code": "9975",
+            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
+          }
+        },
+        {
+          "node_id": "mds_noonan_spectrum",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "Noonan spectrum",
+          "question": "A germline RASopathy variant is present. Has a SOMATIC secondary lesion been documented on the marrow?",
+          "hint": "Noonan-spectrum myeloproliferative disease has a germline variant, no somatic second hit, a normal karyotype and a self-limiting course.",
+          "clinical_alert": "⚠️ Germline PTPN11 without a somatic secondary lesion is Noonan-spectrum myeloproliferation, not JMML. Confirm a somatic RAS-pathway lesion before coding 9946.",
+          "coding_note": "This is one of the ten non-reportable mimic points (Pathway §4.9). Forcing an NOS malignant code here would record a cancer that does not exist.",
+          "options": [
+            {
+              "label": "No somatic secondary lesion; normal karyotype; self-limiting or resolving course — Noonan-spectrum myeloproliferative disease",
+              "non_reportable": true,
+              "reason": "Germline RASopathy (PTPN11, KRAS, NRAS or RIT1) with no somatic secondary lesion, a normal karyotype and a self-limiting course. This is Noonan-spectrum myeloproliferation, not JMML — not a reportable malignancy, no code is emitted (Pathway §3.4, §4.9). Keep under haematology follow-up and re-abstract if a somatic lesion or a clonal cytogenetic abnormality emerges."
+            },
+            {
+              "label": "A somatic secondary lesion HAS been documented — a second RAS-pathway hit, monosomy 7 or another clonal marker on the marrow",
+              "morphology_code": "9946",
+              "coding_note": "Germline RASopathy plus a documented somatic secondary lesion is JMML. The germline variant is recorded as a qualifier, not as the code. ras_pathway_lesion carries the controlled value; record the actual somatic gene or clonal marker verbatim in genotype_annotation, because the controlled vocabulary of Pathway §5.1 has no value for 'somatic secondary lesion, gene unspecified'.",
+              "captures": {
+                "ras_pathway_lesion": "PTPN11 somatic",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "qualifiers": [
+                  "germline_predisposition"
+                ]
+              }
+            },
+            {
+              "label": "Somatic testing on the marrow has not been performed — clonality unresolved",
+              "non_reportable": true,
+              "reason": "A germline RASopathy variant with no somatic marrow testing. Clonality is unresolved, so a malignancy is not established: not a reportable malignancy at this point and no code is emitted (Pathway §5.6). Repeat the marrow with somatic RAS-pathway testing and re-abstract if a somatic lesion is found."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_jmml_like_genotype",
+          "node_type": "molecular_freetext",
+          "step_number": 5,
+          "step_label": "RAS-negative genotype",
+          "question": "Record the fusion or mutation exactly as the report states it.",
+          "capture_label": "Genotype as reported (e.g. \"CCDC88C::FLT3 by RNA-seq\", \"ALK fusion by FISH\", \"monosomy 7 only, RAS panel negative\")",
+          "hint": "The code does not change, but the genotype is preserved on the case record — otherwise the information is lost permanently.",
+          "coding_note": "ICC-2022's 'JMML-like neoplasm' category is NOT adopted (Pathway §5.3.2). RAS-negative JMML phenocopies code 9975 (MDS/MPN, unclassifiable) on their own merits, so 9975 needs no disambiguating note on the code itself.",
+          "resolution_logic": [
+            {
+              "morphology_code": "9975",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "RAS-negative JMML-like neoplasm recorded as an annotation on 9975.",
+              "upgrade_path": "None — no ICD-O-3.2 code exists for this entity. The genotype is preserved on the case record instead."
+            }
+          ],
+          "captured_variables": [
+            "genotype_annotation",
+            "ras_pathway_lesion",
+            "jmml_methylation_subgroup",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9975",
+            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
+          }
+        },
+        {
+          "node_id": "mds_cmml_criteria",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "CMML criteria",
+          "question": "Which tier of the CMML supporting-criteria rule does this case satisfy?",
+          "hint": "Supporting criteria are: dysplasia in ≥10% of cells in ≥1 lineage, and clonal cytogenetic or molecular evidence. How many you need depends on the monocyte count.",
+          "clinical_alert": "⚠️ Exclude reactive monocytosis before coding 9945, especially at the ≥1×10⁹/L level. CMUS / CCMUS — the criteria unmet — is not malignant and must not be reported (Pathway §3.10).",
+          "coding_note": "CMML-1 (<5% PB / <10% BM blasts) versus CMML-2 (5–19% / 10–19%) is a grade, not a code — both are 9945. WHO-HAEM5 and ICC have converged on the monocyte threshold; there is no divergence to record here (Pathway §5.4).",
+          "options": [
+            {
+              "label": "Monocytes ≥1×10⁹/L and ≥10% of WBC, blasts under 20%, and AT LEAST ONE supporting criterion — dysplasia ≥10% in ≥1 lineage, OR clonal cytogenetic/molecular evidence",
+              "morphology_code": "9945",
+              "coding_note": "The one-supporting-criterion tier (Pathway §3.10). Record which criterion was met on the output block.",
+              "captures": {
+                "monocyte_band": ">=1",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Monocytes 0.5–<1×10⁹/L and ≥10% of WBC, blasts under 20%, and BOTH supporting criteria — dysplasia ≥10% in ≥1 lineage AND clonal cytogenetic/molecular evidence",
+              "morphology_code": "9945",
+              "coding_note": "The two-supporting-criteria tier (Pathway §3.10). Both are required at this monocyte level.",
+              "captures": {
+                "monocyte_band": "0.5-0.99",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Blasts in the CMML-2 range (peripheral 5–19% or marrow 10–19%), criteria otherwise met",
+              "morphology_code": "9945",
+              "coding_note": "CMML-2. The grade is recorded on the output block; the code stays 9945.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete",
+                "blast_percent_band": "10-19"
+              }
+            },
+            {
+              "label": "Monocytes 0.5–<1×10⁹/L with only ONE supporting criterion",
+              "non_reportable": true,
+              "reason": "The two-tier CMML rule is not satisfied: at 0.5–<1×10⁹/L both supporting criteria are required. This is CMUS/CCMUS — not malignant, no code is emitted (Pathway §3.10, §4.9)."
+            },
+            {
+              "label": "Neither supporting criterion has been assessed — no dysplasia assessment and no cytogenetics",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "A dysplasia assessment on the marrow and cytogenetics/FISH would establish or exclude 9945.",
+              "coding_note": "The monocytic MDS/MPN picture is real but the CMML criteria are unestablished. 9975 is the NOS parent (Pathway §6 fallback chain).",
+              "captures": {
+                "karyotype_result_status": "unavailable",
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_overlap_confirm",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "MDS/MPN overlap",
+          "question": "Confirm that the specific MDS/MPN categories have each been considered and excluded.",
+          "hint": "9975 is a diagnosis of exclusion, not a shortcut. It is also the registry's landing code for RAS-negative JMML phenocopies.",
+          "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9967), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+          "coding_note": "9975 is distinct from 9960 (MPN, NOS, subgroup Ic). The eosinophilia cascade (9964–9968) and atypical CML (9876) belong to the chronic myeloid / MPN tree, not to this one (Pathway §3.10, §7.1).",
+          "options": [
+            {
+              "label": "CMML, atypical CML, JMML and MDS/MPN-RS-T all considered and excluded — overlapping myelodysplastic and myeloproliferative features remain",
+              "morphology_code": "9975",
+              "coding_note": "MDS/MPN, unclassifiable, on its own merits.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Hypereosinophilia dominates and parasitic infection and HIV have BOTH been excluded and documented",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9967), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "upgrade_path": "FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA, and a karyotype for 5q31-33 (PDGFRB) and 8p11-12 (FGFR1), would move this case to the clonal-eosinophilia codes 9965–9967 in the chronic myeloid / MPN tree.",
+              "coding_note": "The clonal-eosinophilia terminals (9964–9968) are owned by the chronic myeloid / MPN tree and must not be emitted from here. FIP1L1::PDGFRA is CRYPTIC — a normal karyotype does not exclude 9965 (Pathway §3.10, §5.6).",
+              "captures": {
+                "secondary_eosinophilia_excluded": "both excluded",
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "label": "Hypereosinophilia with a secondary cause identified — parasitic infection (strongyloides, schistosoma, filariasis, hookworm, toxocara), HIV, drugs, allergy or autoimmune disease",
+              "non_reportable": true,
+              "reason": "The hypereosinophilia has a documented secondary cause. Not a reportable malignancy — no code is emitted. This is the commonest false-positive registration risk in Group I in the UCI catchment (Pathway §3.10, §4.9)."
+            },
+            {
+              "label": "Reviewed — the overlap picture is reactive or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "Reviewed as reactive or non-neoplastic rather than an MDS/MPN overlap neoplasm. Not a reportable malignancy — no code is emitted."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_rcc_entry",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "RCC criteria",
+          "question": "Marrow blasts are under 5% and peripheral blasts under 2%. What does the marrow and trephine report support?",
+          "hint": "This is refractory cytopenia of childhood territory — the commonest myelodysplastic syndrome of childhood, about 50% of paediatric MDS. Its code is 9985.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Entry point from the acute tree's blast gate (<5% band) and from this tree's own marrow-pattern node. ICC criteria (Pathway §3.5): persistent age-adjusted cytopenia, dysplasia in ≥2 lineages or ≥10% in one, blasts PB <2% / BM <5%, no prior cytotoxic therapy, no fibrosis. About 80% are hypocellular; monosomy 7 in about 20%.",
+          "options": [
+            {
+              "label": "Persistent age-adjusted cytopenia with dysplasia in ≥2 lineages, or ≥10% dysplasia in a single lineage",
+              "next_node": "mds_reversible_cause_gate",
+              "captures": {
+                "blast_percent_band": "<5",
+                "dysplasia_extent": "multilineage",
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Hypocellular marrow with cytopenias — refractory cytopenia of childhood versus severe aplastic anaemia not yet separated",
+              "next_node": "mds_rcc_aplastic_ihc",
+              "coding_note": "CD61 or CD41 IHC on the trephine is MANDATORY here — micromegakaryocytes are the feature that separates refractory cytopenia of childhood from severe aplastic anaemia, the key differential (Pathway §3.5).",
+              "captures": {
+                "blast_percent_band": "<5",
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ]
+              }
+            },
+            {
+              "label": "Cytopenia only — dysplasia not assessed, no trephine performed",
+              "next_node": "mds_reversible_cause_gate",
+              "coding_note": "Without a trephine the aplastic-anaemia differential cannot be closed. Record the omission; it drives the upgrade line.",
+              "captures": {
+                "blast_percent_band": "<5",
+                "dysplasia_extent": "not assessed",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Ring sideroblasts prominent on the iron stain",
+              "next_node": "mds_reversible_cause_gate",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "captures": {
+                "blast_percent_band": "<5",
+                "ring_sideroblast_status": "present",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Reviewed — the cytopenia is fully explained by a non-neoplastic cause and there is no dysplastic clone",
+              "non_reportable": true,
+              "reason": "The cytopenia has a documented non-neoplastic cause and no dysplastic clone was found. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_rcc_aplastic_ihc",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Megakaryocyte IHC",
+          "question": "Tick every marker the trephine IHC report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "CD61 or CD41 identifies micromegakaryocytes. Their presence is what separates refractory cytopenia of childhood from severe aplastic anaemia.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "CD61 / CD41 IHC on the trephine is mandatory in this differential (Pathway §3.5). A negative panel does not by itself code aplastic anaemia — it routes to the aplastic-anaemia and IBMFS exclusions.",
+          "marker_groups": [
+            {
+              "group_label": "Megakaryocyte panel — mandatory on the trephine",
+              "markers": [
+                "CD61",
+                "CD41",
+                "CD42b",
+                "von Willebrand factor"
+              ]
+            },
+            {
+              "group_label": "Erythroid and progenitor",
+              "markers": [
+                "glycophorin A",
+                "CD71",
+                "CD34",
+                "E-cadherin"
+              ]
+            },
+            {
+              "group_label": "Myeloid and reticulin",
+              "markers": [
+                "MPO",
+                "CD117",
+                "lysozyme",
+                "reticulin grade ≥2"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "CD61"
+              ],
+              "when": {
+                "blast_percent_band": "5-19"
+              },
+              "next_node": "mds_eb_pediatric_entry",
+              "coding_note": "Micromegakaryocytes with 5–19% blasts is paediatric MDS with excess blasts, not refractory cytopenia of childhood."
+            },
+            {
+              "positive": [
+                "CD41"
+              ],
+              "when": {
+                "blast_percent_band": "5-19"
+              },
+              "next_node": "mds_eb_pediatric_entry"
+            },
+            {
+              "positive": [
+                "CD61",
+                "CD41"
+              ],
+              "next_node": "mds_reversible_cause_gate",
+              "coding_note": "Micromegakaryocytes present — a dysplastic megakaryocyte lineage. Refractory cytopenia of childhood territory; the mandatory exclusions come next.",
+              "captures": {
+                "dysplasia_extent": "multilineage"
+              }
+            },
+            {
+              "positive": [
+                "CD61"
+              ],
+              "next_node": "mds_reversible_cause_gate",
+              "coding_note": "CD61-positive micromegakaryocytes are sufficient — CD41 is the alternative, not an additional requirement."
+            },
+            {
+              "positive": [
+                "CD41"
+              ],
+              "next_node": "mds_reversible_cause_gate"
+            },
+            {
+              "positive": [
+                "reticulin grade ≥2"
+              ],
+              "next_node": "mds_aplastic_differential",
+              "coding_note": "Fibrosis excludes refractory cytopenia of childhood under the ICC criteria (Pathway §3.5). Re-assess the differential before coding."
+            },
+            {
+              "negative": [
+                "CD61",
+                "CD41"
+              ],
+              "next_node": "mds_aplastic_differential",
+              "coding_note": "No micromegakaryocytes in a hypocellular marrow — severe aplastic anaemia and inherited bone-marrow failure are now the leading differentials."
+            },
+            {
+              "next_node": "mds_aplastic_differential",
+              "coding_note": "No marker combination met. The differential is unresolved and must be settled explicitly — do not default to an MDS code."
+            }
+          ],
+          "captured_variables": [
+            "blast_percent_band",
+            "dysplasia_extent",
+            "ibmfs_exclusion_status",
+            "germline_predisposition",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9989",
+            "name": "Myelodysplastic syndrome, NOS",
+            "reason": "Myelodysplastic picture recorded but the subtype could not be established."
+          }
+        },
+        {
+          "node_id": "mds_aplastic_differential",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Aplastic / IBMFS",
+          "question": "The marrow is hypocellular without micromegakaryocytes. What does the bone-marrow-failure workup show?",
+          "hint": "Chromosome breakage / G2 arrest tests for Fanconi anaemia; telomere length for dyskeratosis congenita and the telomere biology disorders; consider Shwachman-Diamond.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Two of the ten non-reportable mimic points sit here: severe aplastic anaemia and inherited bone-marrow-failure syndromes (Pathway §4.9). Neither may be recorded as an MDS code.",
+          "options": [
+            {
+              "label": "Hypocellular marrow, no micromegakaryocytes, no dysplasia, normal cytogenetics — severe aplastic anaemia",
+              "non_reportable": true,
+              "reason": "Severe aplastic anaemia — the key differential of refractory cytopenia of childhood. Not a reportable malignancy, no code is emitted (Pathway §3.5, §4.9). Re-abstract if dysplasia, micromegakaryocytes or a clonal cytogenetic abnormality emerge on follow-up."
+            },
+            {
+              "label": "Chromosome breakage / G2 arrest abnormal, telomeres short, or a syndromic phenotype — inherited bone-marrow-failure syndrome (Fanconi anaemia, dyskeratosis congenita, Shwachman-Diamond)",
+              "non_reportable": true,
+              "reason": "Inherited bone-marrow-failure syndrome. Not reportable as a myelodysplastic syndrome — no code is emitted; refer to the genetics and haematology services (Pathway §4.9). Re-abstract if the patient later develops MDS or acute leukaemia."
+            },
+            {
+              "label": "Dysplasia and/or a clonal cytogenetic abnormality (for example monosomy 7) is present after all",
+              "next_node": "mds_reversible_cause_gate",
+              "coding_note": "A clone changes the answer — continue down the myelodysplastic pathway.",
+              "captures": {
+                "dysplasia_extent": "multilineage",
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Breakage and telomere testing are not available at this facility — the differential is unresolved",
+              "non_reportable": true,
+              "reason": "Bone-marrow failure with no dysplasia, no micromegakaryocytes and no clonal marker, and with inherited-bone-marrow-failure testing unavailable. A myelodysplastic syndrome is not established, so no code is emitted. Refer for a bone-marrow-failure workup and re-abstract if dysplasia or a clone emerges."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_eb_pediatric_entry",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "MDS-EB criteria",
+          "question": "Marrow blasts are 5–19% (peripheral 2–19%). What does the marrow report support?",
+          "hint": "Paediatric MDS with excess blasts stays a 5–19% band. ICC's separate MDS/AML 10–19% category does not apply under 18 years.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "classification_system": "ICC-2022",
+          "coding_note": "Entry point from the acute tree's blast gate (5–19% band). Registry arbitration (Pathway §5.4): ICC is used for blast thresholds AND for the <18-years MDS/AML exclusion — a child in the 10–19% band with a dysplastic marrow is paediatric MDS-EB (9983), not MDS/AML.",
+          "options": [
+            {
+              "label": "Dysplasia documented — continue the mandatory paediatric MDS exclusions (reversible causes, prior therapy, germline predisposition, IBMFS)",
+              "next_node": "mds_reversible_cause_gate",
+              "classification_system": "ICC-2022",
+              "captures": {
+                "blast_percent_band": "5-19",
+                "dysplasia_extent": "multilineage",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Marrow report gives a blast count only — dysplasia not assessed and no trephine performed",
+              "next_node": "mds_reversible_cause_gate",
+              "coding_note": "Record the omission. Without a dysplasia assessment the case cannot be separated from a hypoplastic acute leukaemia or from marrow recovery.",
+              "captures": {
+                "blast_percent_band": "5-19",
+                "dysplasia_extent": "not assessed",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "The marrow reads as an acute picture rather than dysplasia — sheets of blasts, no maturation",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "Return to the acute tree and assign lineage. A missed AML/APL is the costlier error (Pathway §7.1)."
+            },
+            {
+              "label": "No dysplasia — the blast increase and cytopenia are explained by a recovering marrow, B12/folate deficiency or infection",
+              "non_reportable": true,
+              "reason": "The blast increase is reactive — marrow recovery, nutritional deficiency or infection — with no dysplastic clone. Not a reportable malignancy, no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_reversible_cause_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Reversible causes",
+          "question": "Have the reversible causes of cytopenia and dysplasia-like change been excluded and documented?",
+          "hint": "Uganda addition to the ICC criteria: exclude nutritional (B12, folate, iron) and HIV-related cytopenia and macrocytosis BEFORE any paediatric MDS code.",
+          "clinical_alert": "⚠️ Nutritional (B12 / folate / iron) deficiency, HIV, chronic infection and drug effect all mimic myelodysplasia. Exclude them and document the exclusion before coding — they are non-reportable terminals, not NOS codes (Pathway §3.5, §4.9).",
+          "coding_note": "This gate does not change the code; it decides whether there is a code at all. Its result is carried on the output block.",
+          "options": [
+            {
+              "label": "B12 / folate / iron deficiency, HIV, chronic infection and drug effect all excluded and documented",
+              "next_node": "mds_prior_therapy_gate",
+              "captures": {
+                "reversible_cytopenia_excluded": "excluded"
+              }
+            },
+            {
+              "label": "Nutritional deficiency (B12, folate or iron) identified and the cytopenia or macrocytosis is attributable to it",
+              "non_reportable": true,
+              "reason": "Nutritional deficiency accounts for the macrocytosis and dysplasia-like change. Not a reportable malignancy — no code is emitted (Pathway §3.5, §4.9). Re-abstract if the picture persists after replacement."
+            },
+            {
+              "label": "HIV-related cytopenia or HIV-associated marrow change accounts for the picture",
+              "non_reportable": true,
+              "reason": "HIV-related marrow change accounts for the cytopenia and dysplasia-like features. Not a reportable malignancy — no code is emitted (Pathway §3.5, §4.9)."
+            },
+            {
+              "label": "Malaria or HIV hypersplenism accounts for the splenomegaly and cytopenias",
+              "non_reportable": true,
+              "reason": "Hypersplenism from malaria or HIV accounts for the splenomegaly and cytopenias. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            },
+            {
+              "label": "Not assessed — the file does not document these exclusions",
+              "next_node": "mds_prior_therapy_gate",
+              "coding_note": "The case can still be coded, but the omission is recorded and appears as a workup row on the output block. Skipping this step is the largest single false-positive registration risk in this group.",
+              "captures": {
+                "reversible_cytopenia_excluded": "not assessed",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_prior_therapy_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Prior therapy",
+          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
+          "hint": "'No prior cytotoxic therapy' is one of the ICC criteria for refractory cytopenia of childhood, so it is asked explicitly.",
+          "clinical_alert": "⚠️ Prior cytotoxic therapy is a qualifier on the underlying neoplasm (ELN 2022), not a separate entity. Code the underlying subtype and set the qualifier rather than defaulting to 9920/9987.",
+          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8, §5.3.7). This tree never routes to 9987 or 9920 — both are closed as terminals. Code the underlying MDS subtype and set the qualifier.",
+          "options": [
+            {
+              "label": "No prior cytotoxic chemotherapy or radiotherapy",
+              "next_node": "mds_germline_ibmfs_gate",
+              "coding_note": "Satisfies the ICC 'no prior cytotoxic therapy' criterion for refractory cytopenia of childhood.",
+              "captures": {
+                "therapy_related_qualifier": "no",
+                "prior_cytotoxic_therapy": "no"
+              }
+            },
+            {
+              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
+              "next_node": "mds_germline_ibmfs_gate",
+              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying MDS entity — never 9987, never 9920. The ICC criteria for refractory cytopenia of childhood are not met once prior cytotoxic therapy is documented, so 9985 is not available on this branch.",
+              "captures": {
+                "therapy_related_qualifier": "yes",
+                "prior_cytotoxic_therapy": "yes",
+                "qualifiers": [
+                  "therapy_related"
+                ]
+              }
+            },
+            {
+              "label": "Not documented in the file",
+              "next_node": "mds_germline_ibmfs_gate",
+              "captures": {
+                "therapy_related_qualifier": "unknown",
+                "prior_cytotoxic_therapy": "unknown"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_germline_ibmfs_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Germline / IBMFS",
+          "question": "What germline predisposition and inherited-bone-marrow-failure testing does the file document?",
+          "hint": "About 20% of refractory cytopenia of childhood has an underlying germline hit, so this is high-yield. It does not change the code — it must be recorded.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Mandatory pre-condition before any sporadic paediatric MDS code (Pathway §3.5): a germline predisposition screen (GATA2, SAMD9/SAMD9L, RUNX1, ANKRD26, ETV6) and an IBMFS exclusion (chromosome breakage / G2 arrest, telomere length; consider Shwachman-Diamond). Recorded as a modifier on the output block.",
+          "options": [
+            {
+              "label": "Germline panel performed — no predisposition variant; breakage and telomere testing normal",
+              "next_node": "mds_mds_cytogenetics",
+              "captures": {
+                "germline_predisposition": "none identified",
+                "ibmfs_exclusion_status": "breakage normal",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Germline GATA2 variant identified",
+              "next_node": "mds_mds_cytogenetics",
+              "coding_note": "GATA2 deficiency is the commonest germline predisposition in paediatric MDS with monosomy 7. It is a modifier, not a code — the MDS subtype still sets the code.",
+              "captures": {
+                "germline_predisposition": "GATA2",
+                "ibmfs_exclusion_status": "telomere normal",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "qualifiers": [
+                  "germline_predisposition"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Germline SAMD9 or SAMD9L variant identified",
+              "next_node": "mds_mds_cytogenetics",
+              "coding_note": "SAMD9/SAMD9L (MIRAGE, ataxia-pancytopenia) is associated with monosomy 7 and with somatic reversion. Modifier only.",
+              "captures": {
+                "germline_predisposition": "SAMD9-SAMD9L",
+                "ibmfs_exclusion_status": "telomere normal",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "qualifiers": [
+                  "germline_predisposition"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Germline RUNX1, ETV6 or ANKRD26 variant identified",
+              "next_node": "mds_mds_cytogenetics",
+              "coding_note": "Familial platelet disorder with predisposition to myeloid malignancy. Modifier only — the code is still the MDS subtype.",
+              "captures": {
+                "germline_predisposition": "RUNX1",
+                "ibmfs_exclusion_status": "telomere normal",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "qualifiers": [
+                  "germline_predisposition"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Chromosome breakage / G2 arrest abnormal, or telomeres short — inherited bone-marrow-failure syndrome",
+              "non_reportable": true,
+              "reason": "Inherited bone-marrow-failure syndrome (Fanconi anaemia, dyskeratosis congenita or a related telomere biology disorder). Not reportable as a myelodysplastic syndrome — no code is emitted; refer to genetics and haematology (Pathway §3.5, §4.9). Re-abstract if the patient later develops MDS or acute leukaemia."
+            },
+            {
+              "label": "Germline and IBMFS testing are not available at this facility",
+              "next_node": "mds_mds_cytogenetics",
+              "coding_note": "The code is unchanged, but the omission MUST be recorded — it appears as a workup row and an upgrade line on the output block (Pathway §5.6).",
+              "captures": {
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_mds_cytogenetics",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "MDS cytogenetics",
+          "question": "Which cytogenetic / FISH finding does the report give?",
+          "hint": "Cytogenetics in paediatric MDS are prognostic and supporting; only isolated del(5q) is code-defining, and it is confirmed with the blast count and the dysplasia pattern.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "Monosomy 7 is the commonest abnormality in paediatric MDS (~20% of refractory cytopenia of childhood) and is NOT code-defining. SEER over-counting rule (Pathway §3.5): within the MDS family code only the first subtype diagnosed — do not re-abstract a later, more specific subtype.",
+          "options": [
+            {
+              "finding": "Monosomy 7 or del(7q)",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_blast_confirm_gate",
+              "coding_note": "Supporting, not defining. It appears in refractory cytopenia of childhood, in paediatric MDS-EB, in GATA2 deficiency and in JMML alike.",
+              "captures": {
+                "mds_defining_cytogenetics": "present",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Isolated del(5q)",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_blast_confirm_gate",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "9986 requires the deletion to be ISOLATED and the blast count to be under 5%. Both are confirmed at the next two steps before the code is emitted.",
+              "captures": {
+                "mds_defining_cytogenetics": "present",
+                "del5q_status": "isolated",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Complex karyotype — three or more abnormalities",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_blast_confirm_gate",
+              "coding_note": "Prognostically adverse, not code-defining within the MDS family.",
+              "captures": {
+                "mds_defining_cytogenetics": "present",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Trisomy 8, del(20q), or another single abnormality",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_blast_confirm_gate",
+              "captures": {
+                "mds_defining_cytogenetics": "present",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Karyotype normal",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mds_blast_confirm_gate",
+              "coding_note": "A normal karyotype does not exclude a myelodysplastic syndrome — the diagnosis rests on persistent cytopenia plus dysplasia, not on a clone.",
+              "captures": {
+                "mds_defining_cytogenetics": "absent",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "An AML-defining abnormality — PML::RARA, RUNX1::RUNX1T1, CBFB::MYH11, KMT2A-r, NUP98-r or MECOM-r",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "ac_aml_genetics_upgrade",
+              "coding_note": "This is not a myelodysplastic syndrome. Under WHO-HAEM5 a defining abnormality makes the case AML at any blast percentage; ICC applies a ≥10% floor to the same list. Either way the case leaves this tree for the acute tree.",
+              "captures": {
+                "aml_defining_genetic_abnormality": true,
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "Cytogenetics not performed, or unavailable at this facility",
+              "next_node": "mds_blast_confirm_gate",
+              "coding_note": "\"Cytogenetics unavailable at UCI\" is a legitimate, permanent terminal state — but it must be recorded as such, not passed off as a completed workup. 9986 is not reachable without it.",
+              "captures": {
+                "mds_defining_cytogenetics": "not tested",
+                "karyotype_result_status": "unavailable",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "finding": "MDS-defining cytogenetics after prior cytotoxic chemotherapy or radiotherapy, subtype otherwise unclassified",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9989",
+              "clinical_alert": "⚠️ Prior cytotoxic therapy is a qualifier on the underlying neoplasm (ELN 2022), not a separate entity. Code the underlying subtype and set the qualifier rather than defaulting to 9920/9987.",
+              "coding_note": "DO NOT CODE 9987. Therapy-related MDS is a qualifier on the underlying diagnosis, not a terminal (Pathway §4.8, §5.3.7). 9989 carries the subtype-unclassified MDS; therapy_related_qualifier carries the relationship.",
+              "captures": {
+                "therapy_related_qualifier": "yes",
+                "qualifiers": [
+                  "therapy_related"
+                ],
+                "karyotype_result_status": "received",
+                "mds_defining_cytogenetics": "present",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            }
+          ],
+          "captured_variables": [
+            "mds_defining_cytogenetics",
+            "karyotype_result_status",
+            "del5q_status",
+            "therapy_related_qualifier",
+            "germline_predisposition",
+            "ibmfs_exclusion_status",
+            "aml_defining_genetic_abnormality"
+          ],
+          "nos_fallback": {
+            "code": "9989",
+            "name": "Myelodysplastic syndrome, NOS",
+            "reason": "Myelodysplastic picture recorded but the subtype could not be established."
+          }
+        },
+        {
+          "node_id": "mds_blast_confirm_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "Blast %",
+          "question": "Marrow blast percentage (of ALL nucleated marrow cells)?",
+          "hint": "The denominator is all nucleated cells, not non-erythroid cells. If the acute tree already recorded a blast count, re-enter the same value — this is the gate that fixes the code. Tick 'not documented' rather than guessing.",
+          "variable": "marrow_blast_percentage",
+          "variable_label": "Marrow blast percentage",
+          "unit": "%",
+          "band_variable": "blast_percent_band",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "The blast band is what separates 9983 from the low-blast MDS codes. The all-nucleated-cell denominator retires the old erythroid/myeloid split (Pathway §2.2).",
+          "override_when": [
+            {
+              "captured_variable": "aml_defining_genetic_abnormality",
+              "equals": true,
+              "next_node": "ac_aml_genetics_upgrade",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "A defining AML abnormality overrides the blast threshold under WHO-HAEM5; ICC applies a ≥10% floor to the same list. Either way this is not a myelodysplastic syndrome."
+            }
+          ],
+          "bands": [
+            {
+              "range": ">=20",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "≥20% is acute leukaemia under both WHO-HAEM5 and ICC — no divergence. Leave the MDS tree and assign lineage."
+            },
+            {
+              "range": "10-19",
+              "morphology_code": "9983",
+              "classification_system": "ICC-2022",
+              "coding_note": "ICC's MDS/AML 10–19% category is explicitly EXCLUDED under 18 years (Pathway §5.4). In a child a dysplastic marrow at 10–19% blasts is paediatric MDS with excess blasts — 9983 — not MDS/AML. In an adult patient this band would be MDS/AML under ICC; flag for review if the patient is 18 or over.",
+              "upgrade_path": "None on the blast count. Cytogenetics/FISH would add prognostic detail; the code is unchanged."
+            },
+            {
+              "range": "5-19",
+              "morphology_code": "9983",
+              "classification_system": "ICC-2022",
+              "coding_note": "Paediatric MDS with excess blasts: BM 5–19%, PB 2–19% (Pathway §3.5). The 5–19% band is retained for children under both the ICC arbitration and the registry's code list.",
+              "upgrade_path": "None on the blast count. Cytogenetics/FISH would add prognostic detail; the code is unchanged."
+            },
+            {
+              "range": "<5",
+              "next_node": "mds_dysplasia_extent",
+              "coding_note": "BM <5% / PB <2% — low-blast territory. The dysplasia pattern now chooses between 9985, 9980, 9982, 9993, 9986 and 9989."
+            },
+            {
+              "range": "not_documented",
+              "next_node": "mds_dysplasia_extent",
+              "coding_note": "Blast percentage undocumented. Do not assume the excess-blast band — resolve the case on the dysplasia pattern and record the missing blast count as an upgrade."
+            }
+          ],
+          "captured_variables": [
+            "marrow_blast_percentage",
+            "blast_percent_band",
+            "aml_defining_genetic_abnormality",
+            "mds_defining_cytogenetics",
+            "del5q_status",
+            "therapy_related_qualifier",
+            "germline_predisposition",
+            "ibmfs_exclusion_status",
+            "ring_sideroblast_status"
+          ],
+          "nos_fallback": {
+            "code": "9989",
+            "name": "Myelodysplastic syndrome, NOS",
+            "reason": "Myelodysplastic picture recorded but the subtype could not be established."
+          }
+        },
+        {
+          "node_id": "mds_dysplasia_extent",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Dysplasia pattern",
+          "question": "Which dysplasia pattern does the marrow and trephine report describe?",
+          "hint": "Blasts are under 5% in the marrow and under 2% in the blood. The dysplasia pattern now chooses the code.",
+          "clinical_alert": "⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
+          "coding_note": "9985 is THE paediatric refractory-cytopenia-of-childhood code and the commonest myelodysplastic syndrome of childhood, about 50% (Pathway §3.5). SEER lists 'refractory cytopenia of childhood' and 'childhood MDS with low blasts' as explicit alternate names for 9985/3.",
+          "options": [
+            {
+              "descriptor": "Dysplasia in ≥2 lineages, or ≥10% dysplasia in a single lineage, with persistent age-adjusted cytopenia — refractory cytopenia of childhood",
+              "morphology_code": "9985",
+              "coding_note": "Refractory cytopenia of childhood / childhood MDS with low blasts. About 80% are hypocellular with patchy erythroid islands; monosomy 7 in about 20%. CD61/CD41 IHC must have separated this from severe aplastic anaemia.",
+              "upgrade_path": "None on the code. Germline predisposition and IBMFS results, if still outstanding, are recorded as modifiers.",
+              "captures": {
+                "dysplasia_extent": "multilineage"
+              }
+            },
+            {
+              "descriptor": "Single-lineage dysplasia, anaemia predominant, no ring sideroblasts",
+              "morphology_code": "9980",
+              "coding_note": "9980 (refractory anaemia) is a FAB-era term retained for the single-lineage presentation; the retired codes 9991 (refractory neutropenia) and 9992 (refractory thrombocytopenia) alias to it. In a child, review whether the multilineage criteria are in fact met — 9985 is the commoner paediatric assignment.",
+              "upgrade_path": "A repeat trephine assessing all three lineages would establish whether the case is in fact 9985.",
+              "captures": {
+                "dysplasia_extent": "single lineage"
+              }
+            },
+            {
+              "descriptor": "Ring sideroblasts ≥15% (or ≥5% with SF3B1), single-lineage dysplasia",
+              "morphology_code": "9982",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Under 1% of paediatric myelodysplastic syndromes. Kept reachable for the genuine rare paediatric case, with the age-implausibility warning attached (Pathway §7.5).",
+              "captures": {
+                "ring_sideroblast_status": "present",
+                "dysplasia_extent": "single lineage",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "descriptor": "Ring sideroblasts with MULTILINEAGE dysplasia, with or without SF3B1",
+              "morphology_code": "9993",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "9993 was ADDED in ICD-O-3.2 (Pathway §5.7). Adult-predominant; kept reachable with the age-implausibility warning.",
+              "captures": {
+                "ring_sideroblast_status": "present",
+                "dysplasia_extent": "multilineage",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "descriptor": "Isolated del(5q) with macrocytic anaemia and preserved or raised platelets",
+              "morphology_code": "9986",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "The deletion must be ISOLATED and the blasts under 5%. Rare in children; kept reachable with the age-implausibility warning.",
+              "captures": {
+                "del5q_status": "isolated",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "descriptor": "Dysplasia documented but the subtype is not stated, or the lineages involved are not recorded",
+              "morphology_code": "9989",
+              "coding_note": "9989 is the MDS fallback when the subtype is undocumented. It is a real terminal, not a placeholder — but the missing detail is listed as an upgrade.",
+              "upgrade_path": "A trephine reporting dysplasia by lineage would establish 9985 or 9980; an iron stain would establish 9982 or 9993; cytogenetics would establish 9986.",
+              "captures": {
+                "dysplasia_extent": "not assessed",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "descriptor": "Reviewed — no dysplasia; the cytopenia is non-neoplastic",
+              "non_reportable": true,
+              "reason": "No dysplastic clone on review — the cytopenia is non-neoplastic. Not a reportable malignancy, no code is emitted (Pathway §4.9)."
             }
           ],
           "nos_fallback": null
