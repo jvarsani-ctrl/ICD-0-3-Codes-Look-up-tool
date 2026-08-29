@@ -79,7 +79,7 @@ python3 build/build_database.py
 
 All checks must pass. `--strict` also promotes warnings to failures. The gate covers
 decision-tree integrity, the NOS-fallback rule *by node type*, the closed node vocabulary,
-cross-layer references, and four checks that exist because their absence would be invisible:
+cross-layer references, and the checks that exist because their absence would be invisible:
 
 - **exact-string match** of every `morphology_name` to the REDCap option string — the clerk
   matches on the whole string, so drift between the tool and the options file breaks the
@@ -90,11 +90,26 @@ cross-layer references, and four checks that exist because their absence would b
   normal-karyotype branch. Valid JSON, clinically wrong;
 - **rule-ordering lint** — inside every `resolution_logic[]`, rules carrying a `when` must
   precede unconditioned ones, because first match wins.
+- **`satisfies_tests` guard** — that field suppresses an outstanding-workup row, so it is the
+  one field that can make a case look better worked up than it is. A typo never matches (the
+  suppression quietly does nothing); a value the code does not require is an inert no-op that
+  still reads as a live claim.
+- **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
+  morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
+
+Every check is proved with a **negative control** — break the data, watch it fail, restore.
+The exact-string check is keyed off Layer 1, never off `redcap_option_verified`: a flag
+authored to mean "not yet checked" was once read as "exempt", and six drifted names passed a
+green build.
 
 ## Status
 
-Group 1 (Leukaemias) is the group under construction. Groups 2–12 are declared in the router
-as `built: false`; the tool says "not yet available" rather than throwing.
+Group 1 (Leukaemias) is built and passing: 84 morphology entries, 4 trees, 97 nodes, 283
+aliases, 32 checks green. Groups 2–12 are declared in the router as `built: false`; the tool
+says "not yet available" rather than throwing.
+
+Group 1's 15 `refer_group` branches point at a Group II that does not exist, so leukaemic
+Burkitt currently lands nowhere — building Group II clears that debt.
 
 See `../CLAUDE.md` for the project map and `../memory/` for the ratified decisions behind
 every choice in this repository.
