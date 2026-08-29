@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 84,
-    "total_decision_nodes": 71,
+    "total_decision_nodes": 97,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -4664,6 +4664,2462 @@
                   "Flow cytometry"
                 ]
               }
+            }
+          ],
+          "nos_fallback": null
+        }
+      ]
+    },
+    {
+      "tree_id": "tree_mature_lymphoid",
+      "tree_label": "Mature B-cell, T-cell and NK-cell leukaemias and the lymphoid NOS codes",
+      "entry_node": "ml_document_inventory",
+      "nodes": [
+        {
+          "node_id": "ml_document_inventory",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Evidence in file",
+          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "coding_note": "This tree owns the mature lymphoid leukaemias: Ia2 (9823, 9832, 9833, 9940), Ia3 (9827, 9831, 9834, 9948) and the Ia4 NOS codes (9820, 9591). Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). Precursor (blast) disease belongs to the acute tree; leukaemic Burkitt is no longer a Group I code at all and is referred to Group II (Pathway §3.3, §5.3.11).",
+          "options": [
+            {
+              "label": "Referral / clinical note only — no blood film, no marrow, no flow report",
+              "next_node": "ml_clinical_alias",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Blood film and/or marrow morphology only (no flow cytometry, no IHC)",
+              "next_node": "ml_morphology_only",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Morphology + flow cytometry and/or IHC",
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC"
+                ],
+                "workup_status": "incomplete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "The marrow shows 20% or more blasts — an acute leukaemia, not a mature lymphoid neoplasm",
+              "next_node": "ac_document_inventory",
+              "coding_note": "Cross-tree handover (Pathway §7.1). Blasts at or above 20% are acute leukaemia and the acute tree owns Ia1 and Ib. The mature lymphoid tree emits no precursor code.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Malignancy excluded on review — reactive lymphocytosis, viral, or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "The abstractor recorded that this case is not a reportable malignancy. No morphology code is emitted and the case leaves the malignant registry."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_clinical_alias",
+          "node_type": "clinical_alias",
+          "step_number": 2,
+          "step_label": "Referral wording",
+          "question": "What exactly does the referral or clinical note say?",
+          "hint": "A referral naming an entity is not a flow report. At this tier the wording chooses a placeholder code, not a diagnosis.",
+          "coding_note": "Referral-only tier: confidence is LOW and every downstream test is listed as an upgrade. 9820 is the chain-termination root for the lymphoid fallback chains (Pathway §6, §7.4) and the mandated landing code for an unconfirmed mature T-cell leukaemia. Record why the case is NOS via workup_status.",
+          "options": [
+            {
+              "label": "Note reads \"CLL\", \"chronic lymphocytic leukaemia\", \"SLL\" or \"small lymphocytic lymphoma\" — no flow report in the file",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "upgrade_path": "Flow cytometry with the ERIC/ESCCA core panel (CD19, CD5, CD20, CD23, kappa, lambda) plus an absolute clonal B-cell count would resolve 9823.",
+              "coding_note": "A referral word is not a flow result. 9823 requires at least 5×10⁹/L clonal B cells with the core panel (Pathway §3.11); the wording alone cannot support it, and CLL is an adult-only entity that must be independently confirmed in a child. 9820 is the honest code.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"hairy cell leukaemia\" or \"HCL\" — no flow, no IHC",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "upgrade_path": "CD11c, CD25, CD103, CD123 and annexin-A1, plus BRAF V600E, would resolve 9940.",
+              "coding_note": "9940 is defined by its marker panel (Pathway §3.11). An adult-only entity named in a referral note is not evidence of it.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"ATL\", \"ATLL\" or \"HTLV-1 associated leukaemia/lymphoma\" — no serology result in the file",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "clinical_alert": "⚠️ ATLL — HTLV-1 serology mandatory; cannot diagnose without confirmed positivity. An unconfirmed mature T-cell leukaemia goes to 9820, not 9827.",
+              "upgrade_path": "Confirmed HTLV-1 serology (screening EIA confirmed by western blot / line immunoassay, or proviral DNA) with a mature CD4+ phenotype would resolve 9827.",
+              "coding_note": "Do not default to 9827 without confirmed HTLV-1 positivity (Pathway §6). The referral word is not the serology.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "htlv1_status": "not tested"
+              }
+            },
+            {
+              "label": "Note reads \"prolymphocytic leukaemia\", \"B-PLL\" or \"T-PLL\" — no flow report",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "upgrade_path": "Flow lineage markers (CD19/CD20 versus CD3/CD5/CD7 and TCL1) would resolve 9833, 9834 or 9832.",
+              "coding_note": "9832 is kept live as the lineage-indeterminate fallback (Pathway §5.3.5), but it still requires a flow report establishing a prolymphocytic leukaemia. A referral word supports neither it nor 9833/9834.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"NK-cell leukaemia\", \"LGL leukaemia\" or \"large granular lymphocytic leukaemia\" — no flow report",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "upgrade_path": "Flow (CD3, CD8, CD57, CD16, CD56, CD94/NKG2A), TCR clonality and a STAT3/STAT5B panel would resolve 9831 or 9948.",
+              "coding_note": "T-LGL (9831) and aggressive NK-cell leukaemia (9948) are separate codes with separate criteria; the referral wording rarely distinguishes them.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"non-Hodgkin lymphoma\" or \"NHL\" with no subtype stated",
+              "next_node": "ml_nhl_nos_site",
+              "coding_note": "9591 is dual-group by topography (Pathway §5.3.10). The site decides Group I (Ia4) or Group II (IIb4), so it must be settled before the code is emitted.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"lymphocytosis\" or \"lymphocytic leukaemia\" with no further detail",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "upgrade_path": "A blood film with an absolute lymphocyte count, and flow cytometry, would establish lineage and entity.",
+              "coding_note": "Lineage is stated (lymphoid) but no entity is. 9820 is the correct NOS parent (Pathway §6).",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads only \"leukaemia\" — neither lineage nor acuity stated",
+              "morphology_code": "9800",
+              "confidence": "low",
+              "upgrade_path": "A blood film and a blast count would establish acuity and lineage.",
+              "coding_note": "Root chain-termination code for the whole group (Pathway §6, §7.4). 9820 asserts a lymphoid lineage the note does not state.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_morphology_only",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "Blood film / marrow morphology",
+          "question": "What does the blood film, marrow aspirate or trephine report describe?",
+          "hint": "Cytochemistry and a manual differential count as morphology, not as flow cytometry.",
+          "coding_note": "Morphology-only tier: NOS-parent and placeholder codes, confidence MEDIUM at best. Flow cytometry is the upgrade for every branch here — none of the Ia2/Ia3 entities is diagnosable on morphology alone.",
+          "options": [
+            {
+              "label": "Absolute lymphocytosis of small mature lymphocytes with smudge (Gumprecht) cells — no flow",
+              "morphology_code": "9820",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "The ERIC/ESCCA core panel (CD19, CD5, CD20, CD23, kappa, lambda) plus an absolute clonal B-cell count would resolve 9823.",
+              "coding_note": "Morphology cannot separate CLL from a reactive lymphocytosis, from monoclonal B-cell lymphocytosis, or from mantle-cell / marginal-zone disease in leukaemic phase. 9823 requires the panel (Pathway §3.11). 9820 is the honest code; it requires only a referral-tier record, which this case exceeds.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Prolymphocytes (large nucleolated cells) over 55% of the lymphoid population — no flow",
+              "morphology_code": "9832",
+              "confidence": "medium",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "upgrade_path": "Flow lineage markers (CD19/CD20 versus CD3/CD5/CD7, and TCL1) would resolve 9833 or 9834. Cytogenetics for inv(14)/t(14;14) would confirm T-PLL.",
+              "coding_note": "9832 (PLL, NOS) is kept live precisely for the lineage-indeterminate residual (Pathway §5.3.5) — a morphological prolymphocytic picture with no immunophenotype is exactly that. Prefer 9833 (B-cell) or 9834 (T-cell) as soon as lineage is determinable.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Lymphoid cells with circumferential hairy cytoplasmic projections; dry tap or reticulin-fibrotic marrow — no flow, no IHC",
+              "morphology_code": "9820",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "CD11c, CD25, CD103, CD123 and annexin-A1 by flow or IHC, plus BRAF V600E, would resolve 9940.",
+              "coding_note": "Hairy morphology is suggestive, not diagnostic — splenic marginal zone lymphoma with villous lymphocytes is the main mimic and is a Group II entity. 9940 requires the marker panel (Pathway §3.11).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Large granular lymphocytes with azurophilic granules — no flow",
+              "morphology_code": "9820",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Flow (CD3, CD8, CD57, CD16, CD56, CD94/NKG2A) with an absolute LGL count, TCR clonality and a STAT3/STAT5B panel would resolve 9831 or 9948.",
+              "coding_note": "Large granular lymphocytes are a normal blood constituent and expand reactively. Neither 9831 nor 9948 is codeable without lineage and clonality (Pathway §3.11).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Pleomorphic lymphoid cells with multilobated \"flower\" nuclei, with or without hypercalcaemia — no flow, no serology",
+              "morphology_code": "9820",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "clinical_alert": "⚠️ ATLL — HTLV-1 serology mandatory; cannot diagnose without confirmed positivity. An unconfirmed mature T-cell leukaemia goes to 9820, not 9827.",
+              "upgrade_path": "Confirmed HTLV-1 serology plus a mature CD4+CD25+ phenotype would resolve 9827.",
+              "coding_note": "Flower cells are suggestive of ATLL but HTLV-1 serology is mandatory and code-defining. 9827 is structurally unreachable from this tier (Pathway §6).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "htlv1_status": "not tested"
+              }
+            },
+            {
+              "label": "Medium-sized cells with deeply basophilic vacuolated cytoplasm, starry-sky pattern (FAB L3) — Burkitt suspected",
+              "next_node": "ml_burkitt_screen",
+              "clinical_alert": "⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ and MYC-r negative — a different tree and a different code. sIgM is unreliable in both directions and is not the gate.",
+              "coding_note": "Burkitt is no longer a Group I code. Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021; 9826 is retired (Pathway §3.3, §5.3.11, §5.7c).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Marrow or tissue reported as \"non-Hodgkin lymphoma, NOS\" with no subtype stated",
+              "next_node": "ml_nhl_nos_site",
+              "coding_note": "9591 is dual-group by topography (Pathway §5.3.10, §5.5.4). The site decides Group I (Ia4) or Group II (IIb4).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Blasts 20% or more of nucleated marrow cells — an acute leukaemia",
+              "next_node": "ac_blast_gate",
+              "coding_note": "Cross-tree handover (Pathway §7.1). The acute tree's blast gate re-reads the percentage and owns every precursor code.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Film reviewed — the lymphocytosis is reactive (viral, EBV, pertussis, HIV, post-splenectomy)",
+              "non_reportable": true,
+              "reason": "A reactive lymphocytosis is not a lymphoid neoplasm. Not a reportable malignancy — no code is emitted (Pathway §4.9 principle). Re-enter if a clonal population is later demonstrated."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_compartment_gate",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Disease compartment",
+          "question": "Where is the disease? Settle this before any code is chosen.",
+          "hint": "The router asks this once as its dual-group discriminator; this node confirms it against the report in front of you.",
+          "coding_note": "9823 (CLL/SLL) and 9827 (ATLL) sit in Group I or Group II by COMPARTMENT, not by morphology (DT master §6; Pathway §5.1, §5.3). C42.0/C42.1/C42.3/C42.4 → Group I. C42.2 (spleen), nodal and extranodal → Group II. A nodal-only case is not a Group I leukaemia and must be referred, not coded here.",
+          "options": [
+            {
+              "label": "Blood and/or bone marrow — a leukaemic presentation (C42.0 / C42.1 / C42.3 / C42.4)",
+              "next_node": "ml_prior_therapy_gate",
+              "captures": {
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "label": "Marrow involvement together with nodal disease — the marrow is the dominant compartment",
+              "next_node": "ml_prior_therapy_gate",
+              "coding_note": "Marrow-dominant disease routes to Group I on the compartment discriminator even when nodes are involved.",
+              "captures": {
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "label": "Lymph nodes only — no blood or marrow involvement",
+              "refer_group": 2,
+              "coding_note": "Nodal-only disease with no blood or marrow involvement is a Group II lymphoma, not a Group I leukaemia. If the immunophenotype shows CD5+CD23+ clonal B cells the entity is small lymphocytic lymphoma and still codes 9823, but in Group II (IIb2); any other subtype is resolved by the Group II tree. No Group I code is emitted (DT master §6; Pathway §5.3)."
+            },
+            {
+              "label": "Spleen only (C42.2) — splenomegaly with no blood or marrow involvement",
+              "refer_group": 2,
+              "coding_note": "C42.2 (spleen) is deliberately carved out of the Group I topography set for the lymphoid dual-group codes. A splenic presentation routes to Group II. No Group I code is emitted (Pathway §1 Ia4, §5.3.10)."
+            },
+            {
+              "label": "Extranodal tissue only (skin, gut, CNS, other) — no blood or marrow involvement",
+              "refer_group": 2,
+              "coding_note": "Extranodal disease with no blood or marrow involvement is a Group II lymphoma. No Group I code is emitted (DT master §6)."
+            },
+            {
+              "label": "Compartment not stated in the file",
+              "next_node": "ml_prior_therapy_gate",
+              "coding_note": "The compartment is left unset rather than guessed. The topography captured at Stage 1 then decides the group for the dual-group codes; an undocumented compartment must be recorded as an outstanding abstraction item, not invented.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_prior_therapy_gate",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Prior therapy",
+          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
+          "hint": "Asked once, here, and carried in session state for the rest of the case.",
+          "clinical_alert": "⚠️ Prior cytotoxic therapy is a qualifier on the underlying neoplasm (ELN 2022), not a separate entity. Code the underlying subtype and set the qualifier rather than defaulting to 9920/9987.",
+          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8, §5.3.7). This tree never routes to 9920 or 9987 — both are retained as codes but closed as terminals. It codes the underlying entity and sets therapy_related_qualifier.",
+          "options": [
+            {
+              "label": "No prior cytotoxic chemotherapy or radiotherapy",
+              "next_node": "ml_morphology_pattern",
+              "captures": {
+                "therapy_related_qualifier": "no",
+                "prior_cytotoxic_therapy": "no"
+              }
+            },
+            {
+              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
+              "next_node": "ml_morphology_pattern",
+              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying entity.",
+              "captures": {
+                "therapy_related_qualifier": "yes",
+                "prior_cytotoxic_therapy": "yes",
+                "qualifiers": [
+                  "therapy_related"
+                ]
+              }
+            },
+            {
+              "label": "Not documented in the file",
+              "next_node": "ml_morphology_pattern",
+              "captures": {
+                "therapy_related_qualifier": "unknown",
+                "prior_cytotoxic_therapy": "unknown"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_morphology_pattern",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Dominant cell pattern",
+          "question": "What does the film or marrow describe as the dominant lymphoid population?",
+          "hint": "This only chooses which marker panel to open. The immunophenotype, not the descriptor, sets the code.",
+          "coding_note": "No option here emits a code. Morphology in the mature lymphoid group orients the panel; every entity in Ia2 and Ia3 is defined immunophenotypically (Pathway §3.11).",
+          "options": [
+            {
+              "descriptor": "Small mature lymphocytes with condensed chromatin and smudge cells",
+              "next_node": "ml_lineage_screen"
+            },
+            {
+              "descriptor": "Prolymphocytes (large cells with a prominent single nucleolus) over 55% of the lymphoid population",
+              "next_node": "ml_pll_lineage",
+              "coding_note": "The 55% prolymphocyte threshold opens the PLL branch. Lineage is settled next: 9833 (B), 9834 (T) or 9832 for the genuinely indeterminate residual (Pathway §5.3.5)."
+            },
+            {
+              "descriptor": "Lymphoid cells with circumferential hairy projections or villous cytoplasm",
+              "next_node": "ml_b_entity_panel",
+              "coding_note": "Hairy cell leukaemia and splenic marginal zone lymphoma share this morphology. The B panel separates them on CD11c/CD25/CD103/CD123 and annexin-A1."
+            },
+            {
+              "descriptor": "Large granular lymphocytes with azurophilic granules",
+              "next_node": "ml_lineage_screen",
+              "coding_note": "T-lineage (9831) and NK-lineage (9948) LGL disease are different codes with different criteria — the lineage screen separates them before either is reachable."
+            },
+            {
+              "descriptor": "Pleomorphic cells with multilobated \"flower\" nuclei, with or without hypercalcaemia or lytic bone lesions",
+              "next_node": "ml_t_entity_panel",
+              "clinical_alert": "⚠️ ATLL — HTLV-1 serology mandatory; cannot diagnose without confirmed positivity. An unconfirmed mature T-cell leukaemia goes to 9820, not 9827."
+            },
+            {
+              "descriptor": "Medium-sized cells, deeply basophilic vacuolated cytoplasm, starry-sky pattern (FAB L3)",
+              "next_node": "ml_burkitt_screen",
+              "clinical_alert": "⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ and MYC-r negative — a different tree and a different code. sIgM is unreliable in both directions and is not the gate."
+            },
+            {
+              "descriptor": "Blasts 20% or more of nucleated marrow cells",
+              "next_node": "ac_blast_gate",
+              "coding_note": "Cross-tree handover (Pathway §7.1). This tree emits no precursor code."
+            },
+            {
+              "descriptor": "Pattern not determinable or not described",
+              "next_node": "ml_lineage_screen"
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_lineage_screen",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Lineage markers",
+          "question": "Tick every marker the flow / IHC report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "General positivity cutoff is 10% or more of the gated lymphoid population. This node assigns lineage only — the entity panel comes next.",
+          "coding_note": "TdT or CD34 positivity means this is not a mature lymphoid neoplasm: hand the case to the acute tree rather than forcing a mature code (Pathway §3.3 discriminator table). Cross-tree next_node is schema-legal — all four trees share group_01_dt.json (Pathway §7.1).",
+          "marker_groups": [
+            {
+              "group_label": "Mature B panel — ERIC/ESCCA orientation",
+              "markers": [
+                "CD19",
+                "CD20",
+                "CD5",
+                "CD23",
+                "CD10",
+                "kappa",
+                "lambda",
+                "CD200",
+                "CD79b",
+                "FMC7"
+              ]
+            },
+            {
+              "group_label": "Mature T panel",
+              "markers": [
+                "CD2",
+                "CD3",
+                "CD4",
+                "CD7",
+                "CD8",
+                "CD25",
+                "CD26",
+                "CD57",
+                "TCL1"
+              ]
+            },
+            {
+              "group_label": "NK and precursor-exclusion panel",
+              "markers": [
+                "CD16",
+                "CD56",
+                "CD94/NKG2A",
+                "EBV (EBER)",
+                "TdT",
+                "CD34",
+                "CD117",
+                "cCD3"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "TdT is a precursor marker and is negative in every mature lymphoid entity in Ia2/Ia3. This is a precursor neoplasm — the acute tree owns it (Pathway §3.3, §7.1)."
+            },
+            {
+              "positive": [
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 expression indicates a precursor population. Hand to the acute tree rather than coding a mature entity."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD5",
+                "CD23"
+              ],
+              "next_node": "ml_b_entity_panel"
+            },
+            {
+              "positive": [
+                "CD19"
+              ],
+              "negative": [
+                "cCD3",
+                "CD3"
+              ],
+              "next_node": "ml_b_entity_panel"
+            },
+            {
+              "positive": [
+                "CD20"
+              ],
+              "negative": [
+                "cCD3",
+                "CD3"
+              ],
+              "next_node": "ml_b_entity_panel"
+            },
+            {
+              "positive": [
+                "kappa"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_b_entity_panel",
+              "coding_note": "Surface light-chain restriction establishes a clonal mature B population."
+            },
+            {
+              "positive": [
+                "lambda"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_b_entity_panel"
+            },
+            {
+              "positive": [
+                "CD3",
+                "CD4"
+              ],
+              "next_node": "ml_t_entity_panel"
+            },
+            {
+              "positive": [
+                "CD3",
+                "CD8"
+              ],
+              "next_node": "ml_t_entity_panel"
+            },
+            {
+              "positive": [
+                "CD3"
+              ],
+              "next_node": "ml_t_entity_panel"
+            },
+            {
+              "positive": [
+                "CD2",
+                "CD7"
+              ],
+              "negative": [
+                "CD19"
+              ],
+              "next_node": "ml_t_entity_panel"
+            },
+            {
+              "positive": [
+                "TCL1",
+                "CD7"
+              ],
+              "next_node": "ml_t_entity_panel"
+            },
+            {
+              "positive": [
+                "CD56",
+                "CD16"
+              ],
+              "negative": [
+                "CD3",
+                "cCD3"
+              ],
+              "next_node": "ml_nk_lgl_criteria",
+              "coding_note": "Surface CD3-negative with CD16/CD56 is NK lineage (Pathway §3.11)."
+            },
+            {
+              "positive": [
+                "CD56"
+              ],
+              "negative": [
+                "CD3",
+                "cCD3",
+                "CD19"
+              ],
+              "next_node": "ml_nk_lgl_criteria"
+            },
+            {
+              "positive": [
+                "CD16"
+              ],
+              "negative": [
+                "CD3",
+                "cCD3",
+                "CD19"
+              ],
+              "next_node": "ml_nk_lgl_criteria"
+            },
+            {
+              "positive": [
+                "CD94/NKG2A"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_nk_lgl_criteria"
+            },
+            {
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A complete lineage panel — CD19/CD20 with surface light chains, CD3/CD2/CD5/CD7, and CD16/CD56 — would open the B, T or NK entity branch.",
+              "coding_note": "No lineage-defining combination met. 9820 (Lymphoid leukemia, NOS) is this tree's chain-termination landing code (Pathway §6, §7.4). It must never be upgraded to an entity code on an incomplete panel."
+            }
+          ],
+          "captured_variables": [
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "htlv1_status",
+            "workup_status",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Mature lymphoid population recorded but no lineage-defining marker combination was met."
+          }
+        },
+        {
+          "node_id": "ml_b_entity_panel",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Mature B entity markers",
+          "question": "Tick every marker the flow / IHC report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "CLL is CD20-dim; B-PLL and Burkitt are CD20-bright. Use the intensity taps — they are what separate these entities.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "Ia2 mature B leukaemias are adult entities (Pathway §7.5) and are retained, never removed, so a genuine rare paediatric case stays codeable. Mantle cell lymphoma (cyclin D1 / SOX11 positive) is the principal CLL mimic and is a Group II entity — it is referred, not coded here.",
+          "marker_groups": [
+            {
+              "group_label": "CLL/SLL core panel (ERIC/ESCCA)",
+              "markers": [
+                "CD19",
+                "CD5",
+                "CD20",
+                "CD23",
+                "kappa",
+                "lambda"
+              ]
+            },
+            {
+              "group_label": "CLL scoring / borderline panel",
+              "markers": [
+                "CD43",
+                "CD79b",
+                "CD81",
+                "CD200",
+                "CD10",
+                "ROR1",
+                "FMC7",
+                "cyclin D1",
+                "SOX11"
+              ]
+            },
+            {
+              "group_label": "Hairy cell panel",
+              "markers": [
+                "CD11c",
+                "CD25",
+                "CD103",
+                "CD123",
+                "annexin-A1"
+              ]
+            },
+            {
+              "group_label": "High-grade B and precursor exclusion",
+              "markers": [
+                "CD45",
+                "Ki-67 >95%",
+                "MYC protein IHC >80%",
+                "TdT",
+                "CD34",
+                "CD58"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "TdT is negative in every mature B entity in Ia2. This is a precursor neoplasm — the acute tree owns it."
+            },
+            {
+              "positive": [
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 expression indicates a precursor population."
+            },
+            {
+              "positive": [
+                "CD11c",
+                "CD25",
+                "CD103",
+                "CD123"
+              ],
+              "next_node": "ml_hcl_confirm",
+              "coding_note": "The full hairy cell panel (Pathway §3.11). BRAF V600E and the variant question are settled next."
+            },
+            {
+              "positive": [
+                "CD103",
+                "annexin-A1"
+              ],
+              "next_node": "ml_hcl_confirm"
+            },
+            {
+              "positive": [
+                "CD11c",
+                "CD103",
+                "CD123"
+              ],
+              "next_node": "ml_hcl_confirm"
+            },
+            {
+              "positive": [
+                "CD11c",
+                "CD25",
+                "CD103"
+              ],
+              "next_node": "ml_hcl_confirm"
+            },
+            {
+              "positive": [
+                "CD103"
+              ],
+              "next_node": "ml_hcl_confirm",
+              "coding_note": "CD103 is the most specific single hairy-cell marker. The confirmation node records the rest of the panel, BRAF V600E, and the HCL-variant question (Pathway §5.2)."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD5",
+                "cyclin D1"
+              ],
+              "refer_group": 2,
+              "coding_note": "CD5-positive, cyclin D1-positive clonal B cells are mantle cell lymphoma — a Group II entity, not a Group I mature B-cell leukaemia. A leukaemic phase does not move it to Group I. No Group I code is emitted; the Group II tree resolves the code."
+            },
+            {
+              "positive": [
+                "cyclin D1"
+              ],
+              "refer_group": 2,
+              "coding_note": "Cyclin D1 expression in a clonal B population indicates mantle cell lymphoma, a Group II entity. No Group I code is emitted."
+            },
+            {
+              "positive": [
+                "SOX11"
+              ],
+              "refer_group": 2,
+              "coding_note": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD5",
+                "CD23",
+                "CD20:weak"
+              ],
+              "next_node": "ml_cll_count_gate",
+              "coding_note": "The classic CLL immunophenotype: CD19+ CD5+ CD23+ with dim CD20 and light-chain restriction (Pathway §3.11)."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD5",
+                "CD23"
+              ],
+              "next_node": "ml_cll_count_gate"
+            },
+            {
+              "positive": [
+                "CD5",
+                "CD23",
+                "CD200"
+              ],
+              "next_node": "ml_cll_count_gate",
+              "coding_note": "CD200 positivity with CD5/CD23 favours CLL over mantle cell lymphoma in the borderline panel."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD5",
+                "ROR1"
+              ],
+              "next_node": "ml_cll_count_gate"
+            },
+            {
+              "positive": [
+                "CD20:strong",
+                "Ki-67 >95%",
+                "MYC protein IHC >80%"
+              ],
+              "next_node": "ml_burkitt_screen",
+              "coding_note": "Ki-67 above 95% with MYC protein above 80% is the accepted low-resource surrogate for MYC rearrangement (Pathway §3.3). The Burkitt screen settles it."
+            },
+            {
+              "positive": [
+                "CD10",
+                "CD20:strong"
+              ],
+              "negative": [
+                "CD5",
+                "TdT"
+              ],
+              "next_node": "ml_burkitt_screen",
+              "coding_note": "CD10-positive, CD5-negative, CD20-bright mature B cells raise Burkitt and the other high-grade B-cell lymphomas. The Burkitt screen settles MYC rearrangement; a non-Burkitt mature B lymphoma is a Group II entity."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD20:strong"
+              ],
+              "negative": [
+                "CD5",
+                "CD23"
+              ],
+              "next_node": "ml_pll_lineage",
+              "coding_note": "A CD5-negative, CD23-negative mature B leukaemia with bright CD20 and bright FMC7 raises B-PLL — a diagnosis of exclusion (Pathway §3.11)."
+            },
+            {
+              "positive": [
+                "CD19",
+                "FMC7"
+              ],
+              "negative": [
+                "CD5",
+                "CD23"
+              ],
+              "next_node": "ml_pll_lineage"
+            },
+            {
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Completing the ERIC/ESCCA core panel (CD19, CD5, CD20, CD23, kappa, lambda), the hairy cell panel (CD11c, CD25, CD103, CD123, annexin-A1) and cyclin D1 would resolve 9823, 9940 or refer a Group II entity.",
+              "coding_note": "A clonal mature B population with no entity-defining combination. 9820 is the honest NOS parent for the mature-B chain (Pathway §6: 9823 / 9940 → 9820 → 9800)."
+            }
+          ],
+          "captured_variables": [
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "workup_status",
+            "karyotype_result_status",
+            "clonal_b_cell_count"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Clonal mature B population recorded but no entity-defining marker combination was met."
+          }
+        },
+        {
+          "node_id": "ml_cll_count_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "Clonal B-cell count",
+          "question": "Absolute clonal (monotypic) B-cell count in peripheral blood?",
+          "hint": "The threshold is on the CLONAL B-cell count, not the total lymphocyte count. Tick 'not documented' rather than substituting the lymphocyte count.",
+          "variable": "clonal_b_cell_count",
+          "variable_label": "Clonal B-cell count",
+          "unit": "×10⁹/L",
+          "band_variable": "clonal_b_cell_band",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "5×10⁹/L is the CLL threshold (Pathway §3.11). Below it, the case is monoclonal B-cell lymphocytosis, small lymphocytic lymphoma (Group II) or — only where cytopenia is attributable to marrow infiltration — CLL. The two bands are contiguous and exhaustive: a value at exactly 5.0 falls in the upper band.",
+          "bands": [
+            {
+              "range": ">=5",
+              "next_node": "ml_cll_confirm",
+              "coding_note": "The leukaemic threshold is met. Persistence and compartment are settled next."
+            },
+            {
+              "range": "<5",
+              "next_node": "ml_mbl_gate",
+              "coding_note": "Below the leukaemic threshold. CLL is only diagnosable here when cytopenia or disease-related symptoms are attributable to marrow infiltration; otherwise the differential is monoclonal B-cell lymphocytosis or tissue-based SLL."
+            },
+            {
+              "range": "not_documented",
+              "next_node": "ml_cll_confirm",
+              "coding_note": "Count not documented. The confirmation node records that explicitly rather than assuming the threshold was met."
+            }
+          ],
+          "captured_variables": [
+            "clonal_b_cell_count",
+            "clonal_b_cell_band",
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "workup_status"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Clonal B-cell count could not be banded and no CLL criterion was established."
+          }
+        },
+        {
+          "node_id": "ml_cll_confirm",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "CLL criteria",
+          "question": "What does the file document about persistence, panel completeness and compartment?",
+          "hint": "The registry codes at diagnosis on the evidence then available. A shorter follow-up lowers confidence; it does not change the code.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "9823 requires 5×10⁹/L or more clonal B cells sustained 3 months or longer plus the ERIC/ESCCA core panel (CD19, CD5, CD20, CD23, kappa, lambda); borderline phenotypes add CD43, CD79b, CD81, CD200, CD10 and ROR1 (Pathway §3.11). CLL and SLL are one entity, code 9823 — the compartment decides Group I (Ia2) or Group II (IIb2), not the code.",
+          "options": [
+            {
+              "label": "5×10⁹/L or more clonal B cells sustained 3 months or longer on repeat counts, with the core panel complete",
+              "morphology_code": "9823",
+              "confidence": "high",
+              "coding_note": "The full WHO / iwCLL criterion is met and the compartment is marrow. Group I, Ia2.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete",
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "label": "5×10⁹/L or more on a single count — fewer than 3 months of follow-up documented",
+              "morphology_code": "9823",
+              "confidence": "medium",
+              "upgrade_path": "A repeat count at 3 months or more would confirm persistence. The code does not change.",
+              "coding_note": "The registry codes at diagnosis on the evidence then available (Pathway §3.4 principle). Persistence is a confidence question, not a code question — but a single count cannot exclude a transient reactive or infection-driven clonal expansion, so confidence is medium.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "incomplete",
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "label": "Count met but the ERIC/ESCCA core panel is incomplete — CD19, CD5, CD20, CD23, kappa and lambda are not all reported",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Completing the ERIC/ESCCA core panel would resolve 9823. Borderline phenotypes add CD43, CD79b, CD81, CD200, CD10 and ROR1.",
+              "coding_note": "A lymphocytosis with a partial panel cannot exclude mantle cell lymphoma or marginal zone lymphoma in leukaemic phase, both Group II entities. 9820 is the honest code until the panel is complete.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Clonal B-cell count not documented in the file",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "An absolute clonal B-cell count would resolve 9823 (5×10⁹/L or more) or open the monoclonal B-cell lymphocytosis / SLL branch (below 5×10⁹/L).",
+              "coding_note": "The immunophenotype alone does not distinguish CLL from monoclonal B-cell lymphocytosis, which is not a reportable malignancy. Do not code 9823 without the count.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Lymph-node or splenic disease is dominant; the blood and marrow involvement is secondary",
+              "refer_group": 2,
+              "refer_code": "9823",
+              "coding_note": "Same entity, different compartment. Nodal- or splenic-dominant CLL/SLL is small lymphocytic lymphoma and codes 9823 in Group II (IIb2), not Group I (DT master §6; Pathway §5.3). No Group I code is emitted."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_mbl_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Below the CLL threshold",
+          "question": "Clonal B cells are below 5×10⁹/L. What else does the file document?",
+          "hint": "Below the threshold the diagnosis turns on tissue disease and cytopenia, not on the count.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "Clonal B cells below 5×10⁹/L with no tissue disease and no cytopenia are monoclonal B-cell lymphocytosis — a precursor state, not a reportable malignancy. Forcing an NOS malignant code on it would register a cancer that does not exist (nodes.md §4).",
+          "options": [
+            {
+              "label": "Cytopenia and/or disease-related symptoms attributable to marrow infiltration by the clonal B cells",
+              "morphology_code": "9823",
+              "confidence": "medium",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "WHO-HAEM5 permits the CLL diagnosis below 5×10⁹/L when cytopenia is attributable to marrow infiltration. Record which framework was applied.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete",
+                "primary_compartment": "marrow",
+                "classification_system_applied": "WHO-HAEM5"
+              }
+            },
+            {
+              "label": "Lymphadenopathy and/or splenomegaly with tissue involvement, no cytopenia",
+              "refer_group": 2,
+              "refer_code": "9823",
+              "coding_note": "Tissue-based disease below the leukaemic threshold is small lymphocytic lymphoma — the same entity and the same code (9823), but Group II (IIb2). No Group I code is emitted (DT master §6)."
+            },
+            {
+              "label": "No lymphadenopathy, no organomegaly, no cytopenia — clonal B cells only",
+              "non_reportable": true,
+              "reason": "Monoclonal B-cell lymphocytosis: clonal B cells below 5×10⁹/L with no tissue disease and no cytopenia. A precursor state, not a reportable malignancy. Re-enter if the count rises above 5×10⁹/L or tissue disease appears."
+            },
+            {
+              "label": "Nothing beyond the count is recorded",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Documenting nodal and splenic status, a full blood count and the marrow findings would separate CLL, small lymphocytic lymphoma (Group II) and monoclonal B-cell lymphocytosis (not reportable).",
+              "coding_note": "⚠ Do not finalise this case on 9820 without excluding monoclonal B-cell lymphocytosis — below the threshold, a clonal B population with no tissue disease and no cytopenia is not a malignancy. If the review establishes that, use the 'malignancy excluded' terminal instead.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_hcl_confirm",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "BRAF V600E status",
+          "question": "What does the file record for BRAF V600E?",
+          "hint": "BRAF V600E is present in classic hairy cell leukaemia and absent in HCL-variant. It changes the variant flag, never the code.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "HCL-variant and splenic B-cell lymphoma/leukaemia with prominent nucleoli have no dedicated ICD-O-3.2 code and both fall to 9940 with a variant flag (Pathway §5.2). The variant status is recorded in qualifiers and genotype_annotation — it does not change the code. This node captures the status; the next node preserves the genotype text.",
+          "options": [
+            {
+              "label": "BRAF V600E DETECTED (allele-specific PCR, NGS, or VE1 immunohistochemistry)",
+              "next_node": "ml_hcl_genotype",
+              "coding_note": "Classic hairy cell leukaemia. The molecular requirement on 9940 is discharged.",
+              "captures": {
+                "braf_v600e_status": "positive",
+                "hcl_variant_status": "classic",
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "BRAF V600E NOT detected — hairy-cell phenotype with a variant picture (prominent nucleoli, CD25-negative, annexin-A1-negative)",
+              "next_node": "ml_hcl_genotype",
+              "clinical_alert": "⚠️ HCL-variant and splenic B-cell lymphoma/leukaemia with prominent nucleoli have no dedicated ICD-O-3.2 code. They code 9940 with a variant flag (Pathway §5.2) — record the flag, do not invent a code and do not downgrade to NOS.",
+              "coding_note": "The variant flag is set in qualifiers. MAP2K1 mutation is frequent in HCL-variant and is recorded as genotype annotation on the next node.",
+              "captures": {
+                "braf_v600e_status": "negative",
+                "hcl_variant_status": "variant",
+                "qualifiers": [
+                  "hcl_variant"
+                ],
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "BRAF V600E not tested, or molecular testing unavailable at this facility",
+              "next_node": "ml_hcl_genotype",
+              "coding_note": "The marker panel carries the diagnosis; BRAF is confirmatory. Molecular/PCR stays on the record as an outstanding test rather than being silently discharged.",
+              "captures": {
+                "braf_v600e_status": "not tested",
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC"
+                ],
+                "workup_status": "incomplete",
+                "karyotype_result_status": "unavailable"
+              }
+            },
+            {
+              "label": "The hairy cell panel is incomplete — CD11c, CD25, CD103, CD123 and annexin-A1 were not all reported",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Completing CD11c, CD25, CD103, CD123 and annexin-A1, plus BRAF V600E, would resolve 9940.",
+              "coding_note": "Splenic marginal zone lymphoma with villous lymphocytes is the mimic and is a Group II entity. An incomplete panel cannot exclude it, so 9940 is not defensible.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_hcl_genotype",
+          "node_type": "molecular_freetext",
+          "step_number": 5,
+          "step_label": "Hairy cell genotype",
+          "question": "Record the molecular result exactly as the report states it.",
+          "capture_label": "Molecular result as reported (e.g. \"BRAF V600E detected by allele-specific PCR\", \"BRAF V600E not detected; MAP2K1 exon 2 mutated\", \"not tested\")",
+          "hint": "The code is 9940 either way. The annotation is what preserves the variant entity, which has no code of its own.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "The genotype annotation is always persisted, even though the finding is code-neutral for 9940 — otherwise the HCL-variant / splenic B-cell lymphoma-leukaemia with prominent nucleoli entity is lost permanently (Pathway §5.2, §7.3 item 7).",
+          "resolution_logic": [
+            {
+              "when": {
+                "braf_v600e_status": "positive"
+              },
+              "morphology_code": "9940",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Classic hairy cell leukaemia: the marker panel with BRAF V600E. Group I, Ia2."
+            },
+            {
+              "when": {
+                "braf_v600e_status": "negative"
+              },
+              "morphology_code": "9940",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "upgrade_path": "None — HCL-variant and splenic B-cell lymphoma/leukaemia with prominent nucleoli have no ICD-O-3.2 code of their own. The variant flag and the genotype are preserved on the case record instead; revisit if a future ICD-O revision codes them.",
+              "coding_note": "BRAF V600E-negative hairy cell disease is HCL-variant or splenic B-cell lymphoma/leukaemia with prominent nucleoli. Neither has a dedicated code; both fall to 9940 with the variant flag already set in qualifiers (Pathway §5.2). The variant does not change the code and must not be downgraded to 9820."
+            },
+            {
+              "morphology_code": "9940",
+              "confidence": "medium",
+              "upgrade_path": "BRAF V600E by allele-specific PCR, NGS or VE1 immunohistochemistry would raise confidence and settle the classic-versus-variant question.",
+              "coding_note": "BRAF not tested. The CD11c/CD25/CD103/CD123 and annexin-A1 panel carries the diagnosis; Molecular/PCR remains outstanding on the workup block and is deliberately not declared as satisfied."
+            }
+          ],
+          "captured_variables": [
+            "braf_v600e_status",
+            "hcl_variant_status",
+            "genotype_annotation",
+            "qualifiers",
+            "workup_status",
+            "therapy_related_qualifier"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Hairy cell phenotype not established on review; no other mature B entity was demonstrated."
+          }
+        },
+        {
+          "node_id": "ml_pll_lineage",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Prolymphocytic lineage",
+          "question": "Tick every marker the flow / IHC report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "Lineage is the whole question here. 9832 exists for the case where it genuinely cannot be established — not for the case where nobody looked.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "Registry decision §5.3.5: 9832 (PLL, NOS) is KEPT LIVE as a fallback, not retired — ICD-O-3.2 lists it Preferred/current. Prefer 9833 (B-cell) or 9834 (T-cell) whenever lineage is determinable; 9832 is for the genuinely lineage-indeterminate residual only. B-PLL is a diagnosis of exclusion: rule out CLL transformation, mantle cell lymphoma and splenic marginal zone lymphoma (Pathway §3.11).",
+          "marker_groups": [
+            {
+              "group_label": "B lineage",
+              "markers": [
+                "CD19",
+                "CD20",
+                "CD22",
+                "CD79b",
+                "FMC7",
+                "kappa",
+                "lambda"
+              ]
+            },
+            {
+              "group_label": "T lineage",
+              "markers": [
+                "CD2",
+                "CD3",
+                "CD4",
+                "CD5",
+                "CD7",
+                "CD8",
+                "TCL1"
+              ]
+            },
+            {
+              "group_label": "Exclusion panel",
+              "markers": [
+                "CD23",
+                "cyclin D1",
+                "SOX11",
+                "CD103",
+                "CD11c",
+                "TdT",
+                "CD34"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "TdT is a precursor marker — this is not a prolymphocytic leukaemia. The acute tree owns it."
+            },
+            {
+              "positive": [
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 expression indicates a precursor population."
+            },
+            {
+              "positive": [
+                "cyclin D1"
+              ],
+              "refer_group": 2,
+              "coding_note": "Cyclin D1-positive clonal B cells are mantle cell lymphoma, which mimics B-PLL and must be excluded before 9833 (Pathway §3.11). Mantle cell lymphoma is a Group II entity — no Group I code is emitted."
+            },
+            {
+              "positive": [
+                "SOX11"
+              ],
+              "refer_group": 2,
+              "coding_note": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
+            },
+            {
+              "positive": [
+                "CD103"
+              ],
+              "next_node": "ml_hcl_confirm",
+              "coding_note": "CD103 positivity in a prolymphocytoid picture raises HCL-variant / splenic B-cell lymphoma-leukaemia with prominent nucleoli, which codes 9940 with a variant flag (Pathway §5.2) — not 9833."
+            },
+            {
+              "positive": [
+                "CD11c",
+                "CD22"
+              ],
+              "next_node": "ml_hcl_confirm",
+              "coding_note": "Bright CD11c with CD22 in a prominent-nucleoli picture raises the hairy cell variant spectrum. Settle it before coding a prolymphocytic leukaemia."
+            },
+            {
+              "positive": [
+                "TCL1",
+                "CD3"
+              ],
+              "next_node": "ml_tpll_confirm"
+            },
+            {
+              "positive": [
+                "CD3",
+                "CD7"
+              ],
+              "next_node": "ml_tpll_confirm"
+            },
+            {
+              "positive": [
+                "CD2",
+                "CD3"
+              ],
+              "next_node": "ml_tpll_confirm"
+            },
+            {
+              "positive": [
+                "CD3"
+              ],
+              "next_node": "ml_tpll_confirm"
+            },
+            {
+              "positive": [
+                "TCL1"
+              ],
+              "negative": [
+                "CD19",
+                "CD20"
+              ],
+              "next_node": "ml_tpll_confirm",
+              "coding_note": "TCL1 over-expression without B markers is the T-PLL signature."
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD20:strong"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium",
+              "coding_note": "B-lineage prolymphocytic leukaemia. A diagnosis of exclusion (ICC): CLL transformation, mantle cell lymphoma and splenic marginal zone lymphoma are ruled out by the cyclin D1/SOX11-negative, CD5/CD23-non-CLL pattern above (Pathway §3.11). Lineage is determinable, so 9833 is preferred over 9832 (§5.3.5).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "positive": [
+                "CD19",
+                "CD22"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium",
+              "coding_note": "B lineage established — 9833 is preferred over 9832 whenever lineage is determinable (Pathway §5.3.5)."
+            },
+            {
+              "positive": [
+                "CD19"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium",
+              "coding_note": "B lineage established on CD19 with no T markers."
+            },
+            {
+              "positive": [
+                "CD20"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium",
+              "coding_note": "B lineage established on CD20 with no T markers."
+            },
+            {
+              "morphology_code": "9832",
+              "confidence": "medium",
+              "upgrade_path": "B markers (CD19, CD20, CD22, FMC7, surface light chains) or T markers (CD2, CD3, CD5, CD7, TCL1) would resolve 9833 or 9834.",
+              "coding_note": "Lineage genuinely indeterminate. 9832 is kept live precisely for this residual (Pathway §5.3.5) — it is not a retired code and not a placeholder for an unperformed panel. If the panel was simply not done, record that in workup_status so the case is upgradeable."
+            }
+          ],
+          "captured_variables": [
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "workup_status",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9832",
+            "name": "Prolymphocytic leukemia, NOS",
+            "reason": "Prolymphocytic leukaemia established on morphology but the lineage markers did not resolve B or T lineage."
+          }
+        },
+        {
+          "node_id": "ml_tpll_confirm",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "T-PLL major criteria",
+          "question": "What do the cytogenetics, FISH or TCL1 studies show?",
+          "hint": "The third major criterion is satisfied by EITHER a 14q32/Xq28 abnormality OR TCL1/MTCP1 involvement — either one is enough.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "T-PLL major criteria (Pathway §3.11): more than 5×10⁹/L cells with a T-PLL phenotype, demonstrated T-cell clonality, AND a 14q32/Xq28 abnormality or TCL1/MTCP1 involvement. 9834's only valid downgrade is 9832 (PLL, NOS) — never 9833 and never a 'lesser T-PLL'.",
+          "options": [
+            {
+              "finding": "inv(14)(q11q32) or t(14;14)(q11;q32) on karyotype and/or FISH",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9834",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
+              "coding_note": "The classic T-PLL abnormality, juxtaposing TCL1 to the TCR alpha/delta locus.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "t(X;14)(q28;q11) or MTCP1 involvement on karyotype and/or FISH",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9834",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
+              "coding_note": "The Xq28/MTCP1 variant satisfies the same major criterion as 14q32.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "TCL1 protein over-expression by flow cytometry or immunohistochemistry; karyotype normal or not performed",
+              "morphology_code": "9834",
+              "confidence": "medium",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
+              "coding_note": "Pathway §3.11 accepts a 14q32/Xq28 abnormality OR TCL1/MTCP1 involvement — either satisfies the third major criterion. TCL1 over-expression therefore discharges the cytogenetics requirement on 9834, and the alternative is declared satisfied so a fully-subtyped case is not put on the pending worklist. A normal karyotype must not close this branch.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "Karyotype normal — no 14q32 or Xq28 abnormality — and TCL1 was NOT tested",
+              "detection_method": "karyotype_only",
+              "morphology_code": "9832",
+              "confidence": "medium",
+              "upgrade_path": "TCL1 by flow or immunohistochemistry, or FISH for TCL1/MTCP1, would resolve 9834. A normal karyotype alone does not exclude it.",
+              "coding_note": "A normal karyotype with no TCL1 result leaves the third major criterion untested, so 9834 is not established. 9832 is 9834's declared NOS parent (Pathway §6: mature T 9834 → 9832) — it is the honest downgrade, not a lineage claim.",
+              "captures": {
+                "karyotype_result_status": "received",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "finding": "Cytogenetics, FISH and TCL1 all unavailable at this facility, or not performed",
+              "morphology_code": "9832",
+              "confidence": "medium",
+              "upgrade_path": "inv(14)/t(14;14) or t(X;14) by karyotype or FISH, or TCL1 by flow or immunohistochemistry, would resolve 9834.",
+              "coding_note": "\"Cytogenetics unavailable at UCI\" is a legitimate permanent terminal state but must be recorded as such via karyotype_result_status, not passed off as a completed workup (Pathway §2.5).",
+              "captures": {
+                "karyotype_result_status": "unavailable",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "captured_variables": [
+            "karyotype_result_status",
+            "workup_status",
+            "therapy_related_qualifier",
+            "genotype_annotation",
+            "primary_compartment"
+          ],
+          "nos_fallback": {
+            "code": "9832",
+            "name": "Prolymphocytic leukemia, NOS",
+            "reason": "T-lineage prolymphocytic leukaemia recorded but the T-PLL major criteria were not demonstrated. 9834 has no lesser T-PLL downgrade (Pathway §7.4 trap)."
+          }
+        },
+        {
+          "node_id": "ml_t_entity_panel",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Mature T / NK entity markers",
+          "question": "Tick every marker the flow / IHC report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "No route from this node reaches 9827 directly. Every ATLL-shaped phenotype goes to the HTLV-1 gate first.",
+          "clinical_alert": "⚠️ ATLL — HTLV-1 serology mandatory; cannot diagnose without confirmed positivity. An unconfirmed mature T-cell leukaemia goes to 9820, not 9827.",
+          "coding_note": "Do not default to 9827 without confirmed HTLV-1 positivity (Pathway §6). This node routes an ATLL phenotype to the mandatory serology gate; 9827 is emitted only downstream of a confirmed-positive answer. Adult-only entities in this branch (9834) are retained per §7.5 with a soft warning, never removed.",
+          "marker_groups": [
+            {
+              "group_label": "Mature T core",
+              "markers": [
+                "CD2",
+                "CD3",
+                "CD4",
+                "CD5",
+                "CD7",
+                "CD8",
+                "TCR alpha/beta"
+              ]
+            },
+            {
+              "group_label": "ATLL / activation phenotype",
+              "markers": [
+                "CD25",
+                "CD26",
+                "CCR4",
+                "FoxP3",
+                "CD30"
+              ]
+            },
+            {
+              "group_label": "LGL and NK panel",
+              "markers": [
+                "CD16",
+                "CD56",
+                "CD57",
+                "granzyme B",
+                "TIA-1",
+                "perforin",
+                "CD94/NKG2A"
+              ]
+            },
+            {
+              "group_label": "Other entity and precursor exclusion",
+              "markers": [
+                "TCL1",
+                "EBV (EBER)",
+                "TdT",
+                "CD34",
+                "CD1a"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "TdT is a precursor marker and is negative in every Ia3 entity. The acute tree owns precursor T disease."
+            },
+            {
+              "positive": [
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 expression indicates a precursor population."
+            },
+            {
+              "positive": [
+                "CD1a"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD1a marks the cortical thymocyte stage — a precursor T neoplasm, not a mature T leukaemia."
+            },
+            {
+              "positive": [
+                "CD4",
+                "CD25"
+              ],
+              "negative": [
+                "CD7"
+              ],
+              "next_node": "ml_htlv1_gate",
+              "coding_note": "CD4-positive, CD25-positive with loss of CD7 is the ATLL phenotype. HTLV-1 serology is mandatory and code-defining — it is asked next, and 9827 is unreachable without it."
+            },
+            {
+              "positive": [
+                "CD4",
+                "CD25"
+              ],
+              "next_node": "ml_htlv1_gate",
+              "coding_note": "A mature CD4+CD25+ phenotype raises ATLL. The serology gate settles it."
+            },
+            {
+              "positive": [
+                "CD4",
+                "CCR4"
+              ],
+              "next_node": "ml_htlv1_gate"
+            },
+            {
+              "positive": [
+                "CD4",
+                "FoxP3"
+              ],
+              "next_node": "ml_htlv1_gate"
+            },
+            {
+              "positive": [
+                "CD3",
+                "CD8",
+                "CD57"
+              ],
+              "next_node": "ml_lgl_count_gate",
+              "coding_note": "CD3+CD8+CD57+ is the T-LGL phenotype (Pathway §3.11). The count threshold and clonality are settled next."
+            },
+            {
+              "positive": [
+                "CD8",
+                "CD57"
+              ],
+              "next_node": "ml_lgl_count_gate"
+            },
+            {
+              "positive": [
+                "CD3",
+                "CD57"
+              ],
+              "next_node": "ml_lgl_count_gate"
+            },
+            {
+              "positive": [
+                "CD3",
+                "granzyme B",
+                "TIA-1"
+              ],
+              "next_node": "ml_lgl_count_gate",
+              "coding_note": "A cytotoxic T phenotype with granular morphology — the T-LGL branch."
+            },
+            {
+              "positive": [
+                "CD3",
+                "perforin"
+              ],
+              "next_node": "ml_lgl_count_gate"
+            },
+            {
+              "positive": [
+                "TCL1",
+                "CD3"
+              ],
+              "next_node": "ml_tpll_confirm",
+              "coding_note": "TCL1 over-expression in a mature T population is the T-PLL signature."
+            },
+            {
+              "positive": [
+                "CD56",
+                "CD16"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_nk_lgl_criteria",
+              "coding_note": "Surface CD3-negative with CD16/CD56 is NK lineage."
+            },
+            {
+              "positive": [
+                "CD56"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_nk_lgl_criteria"
+            },
+            {
+              "positive": [
+                "CD94/NKG2A"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "next_node": "ml_nk_lgl_criteria"
+            },
+            {
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A complete mature T/NK panel — CD2, CD3, CD4, CD5, CD7, CD8, CD25, CD57, CD16, CD56, TCL1 — with TCR clonality and HTLV-1 serology would resolve 9827, 9831, 9834 or 9948.",
+              "coding_note": "A mature T-cell population with no entity-defining combination. 9820 is the MANDATED landing code for an unconfirmed mature T-cell leukaemia — never 9827 (Pathway §6)."
+            }
+          ],
+          "captured_variables": [
+            "htlv1_status",
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "workup_status",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Mature T-cell population recorded but no entity-defining marker combination was met. An unconfirmed mature T-cell leukaemia codes 9820, never 9827."
+          }
+        },
+        {
+          "node_id": "ml_htlv1_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "HTLV-1 serology",
+          "question": "ATLL cannot be diagnosed without confirmed HTLV-1 positivity. What does the file record?",
+          "hint": "A reactive screening assay is not a confirmed result. Only the confirmed-positive option opens the ATLL branch.",
+          "clinical_alert": "⚠️ ATLL — HTLV-1 serology mandatory; cannot diagnose without confirmed positivity. An unconfirmed mature T-cell leukaemia goes to 9820, not 9827.",
+          "coding_note": "HARD GATE. 9827 is structurally reachable only through the confirmed-positive option below — every other answer lands on 9820 or refers the case (Pathway §3.11, §6; DT master §5). Serology is recorded under Molecular/PCR in this schema's closed test vocabulary.",
+          "options": [
+            {
+              "label": "HTLV-1 CONFIRMED POSITIVE — screening EIA confirmed by western blot or line immunoassay, or HTLV-1 proviral DNA detected by PCR",
+              "next_node": "ml_atll_subtype",
+              "coding_note": "The mandatory criterion is met. The Shimoyama subtype is recorded next; it is code-neutral.",
+              "captures": {
+                "htlv1_status": "positive",
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "HTLV-1 serology NEGATIVE — and no alternative entity is established",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A full mature T-cell panel (TCL1, CD57, CD56, granzyme B) with TCR clonality would open 9831, 9834 or 9948.",
+              "coding_note": "A negative HTLV-1 result EXCLUDES ATLL. The case is a mature T-cell leukaemia with no established entity, and 9820 is the mandated code (Pathway §6). 9827 is unreachable from here.",
+              "captures": {
+                "htlv1_status": "negative",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "HTLV-1 NEGATIVE and the file establishes a mature T-cell lymphoma in leukaemic phase — Sézary syndrome, peripheral T-cell lymphoma, other",
+              "refer_group": 2,
+              "captures": {
+                "htlv1_status": "negative"
+              },
+              "coding_note": "Sézary syndrome and the peripheral T-cell lymphomas are Group II entities even when they circulate. HTLV-1 negativity excludes ATLL, so no Group I code is emitted; the Group II tree resolves the subtype."
+            },
+            {
+              "label": "HTLV-1 screening assay REACTIVE — confirmatory test pending or not performed",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A confirmatory western blot / line immunoassay, or HTLV-1 proviral DNA by PCR, would resolve 9827. Re-enter when the result returns.",
+              "coding_note": "A reactive screening EIA is NOT confirmed positivity — indeterminate and false-reactive screens are common in this catchment. Do not code 9827 on a screen alone (Pathway §3.11).",
+              "captures": {
+                "htlv1_status": "not tested",
+                "workup_status": "incomplete",
+                "karyotype_result_status": "pending"
+              }
+            },
+            {
+              "label": "HTLV-1 serology NOT TESTED, or unavailable at this facility",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Confirmed HTLV-1 serology would resolve 9827. Until then the case cannot be coded as ATLL at any confidence.",
+              "coding_note": "\"Do not default to 9827 without confirmed HTLV-1 positivity\" (Pathway §6). An untested case lands on 9820 — this is a hard rule, not a confidence adjustment.",
+              "captures": {
+                "htlv1_status": "not tested",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_atll_subtype",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Shimoyama subtype",
+          "question": "HTLV-1 is confirmed positive. Which Shimoyama subtype does the file describe?",
+          "hint": "Every leukaemic subtype emits the same code. The subtype is an annotation; the compartment is what decides the group.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "Shimoyama subtypes (acute / lymphomatous / chronic / smouldering) are CODE-NEUTRAL — all remain 9827 (Pathway §1 Ia3, §3.11). 9827 is dual-group by compartment: leukaemic phase → Group I (Ia3); lymphoma phase → Group II (IIb3) (DT master §6). The lymphomatous subtype is therefore referred, not coded here — the code is the same, the group is not.",
+          "options": [
+            {
+              "descriptor": "Acute — leukaemic, rapidly progressive, circulating flower cells, hypercalcaemia and/or high LDH",
+              "morphology_code": "9827",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Leukaemic phase — Group I, Ia3. The subtype is stored as a display-only qualifier.",
+              "captures": {
+                "shimoyama_subtype": "acute",
+                "qualifiers": [
+                  "shimoyama_subtype"
+                ],
+                "primary_compartment": "marrow",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Chronic — persistent lymphocytosis, indolent course",
+              "morphology_code": "9827",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Leukaemic phase — Group I, Ia3. Code-neutral subtype.",
+              "captures": {
+                "shimoyama_subtype": "chronic",
+                "qualifiers": [
+                  "shimoyama_subtype"
+                ],
+                "primary_compartment": "marrow",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Smouldering — under 5% circulating abnormal lymphocytes, skin or lung lesions, normal lymphocyte count",
+              "morphology_code": "9827",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Still 9827 and still an incident case. Indolence is prognostic, not code-defining.",
+              "captures": {
+                "shimoyama_subtype": "smouldering",
+                "qualifiers": [
+                  "shimoyama_subtype"
+                ],
+                "primary_compartment": "marrow",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Lymphomatous — nodal disease dominant, under 1% circulating abnormal lymphocytes",
+              "refer_group": 2,
+              "refer_code": "9827",
+              "coding_note": "Lymphomatous ATLL is the lymphoma phase and routes to Group II (IIb3) by the dual-group rule (DT master §6; Pathway §1 Ia3). The code is still 9827 — the group is not Group I, so no Group I code is emitted here."
+            },
+            {
+              "descriptor": "Subtype not stated in the file",
+              "morphology_code": "9827",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "upgrade_path": "Recording the Shimoyama subtype would complete the qualifier block. It does not change the code.",
+              "coding_note": "The code is complete without the subtype. Leave shimoyama_subtype unset rather than guessing — an unrecorded qualifier is honest, an invented one is not. The compartment was established upstream as blood/marrow, so this is Group I, Ia3.",
+              "captures": {
+                "workup_status": "complete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_lgl_count_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "LGL count",
+          "question": "Absolute large granular lymphocyte (clonal T-cell) count in peripheral blood?",
+          "hint": "The threshold is a sustained 0.5×10⁹/L. Tick 'not documented' rather than guessing.",
+          "variable": "lgl_count",
+          "variable_label": "Absolute large granular lymphocyte count",
+          "unit": "×10⁹/L",
+          "band_variable": "lgl_count_band",
+          "coding_note": "T-LGL leukaemia threshold is 0.5×10⁹/L or more, sustained (Pathway §3.11). The two bands are contiguous and exhaustive — a value at exactly 0.5 falls in the upper band. Clonality, not the count alone, is what makes the diagnosis.",
+          "bands": [
+            {
+              "range": ">=0.5",
+              "next_node": "ml_lgl_clonality",
+              "coding_note": "Threshold met. Clonality is decisive and is settled next."
+            },
+            {
+              "range": "<0.5",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A sustained count of 0.5×10⁹/L or more with demonstrated TCR clonality, or a STAT3/STAT5B mutation, would resolve 9831.",
+              "coding_note": "Below the sustained 0.5×10⁹/L threshold the T-LGL criteria are not met (Pathway §3.11). If the review establishes that the expansion is reactive — viral, rheumatoid, post-transplant or HIV-associated — use the 'malignancy excluded' terminal instead of leaving the case on 9820."
+            },
+            {
+              "range": "not_documented",
+              "next_node": "ml_lgl_clonality",
+              "coding_note": "Count not documented. Clonality is asked anyway — a demonstrated clonal LGL population with cytopenias is still T-LGL leukaemia — and the missing count is carried as an upgrade on the record."
+            }
+          ],
+          "captured_variables": [
+            "lgl_count",
+            "lgl_count_band",
+            "primary_compartment",
+            "therapy_related_qualifier",
+            "workup_status"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Large granular lymphocyte population recorded but the T-LGL count and clonality criteria were not established."
+          }
+        },
+        {
+          "node_id": "ml_lgl_clonality",
+          "node_type": "document_inventory",
+          "step_number": 5,
+          "step_label": "TCR clonality",
+          "question": "What does the file record for T-cell receptor clonality and STAT3/STAT5B?",
+          "hint": "A polyclonal LGL expansion is reactive. Clonality is what separates a malignancy from a benign response.",
+          "coding_note": "9831 requires a demonstrated clonal population: TCR gene rearrangement by PCR/NGS, or a restricted TCR-Vβ repertoire on flow. STAT3 or STAT5B mutation is supportive and clonality-establishing (Pathway §3.11). Do not use 9831 for NK-lineage LGL disease — that is a different code with different criteria (§5.3.3).",
+          "options": [
+            {
+              "label": "Clonal TCR gene rearrangement demonstrated (PCR / NGS), and/or a restricted TCR-Vβ repertoire on flow",
+              "morphology_code": "9831",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "upgrade_path": "Record the absolute LGL count if it is not already in the file — a sustained 0.5×10⁹/L or more supports the diagnosis. It does not change the code.",
+              "coding_note": "CD3+CD8+CD57+ with demonstrated clonality. Group I, Ia3.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "STAT3 or STAT5B mutation detected",
+              "morphology_code": "9831",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "A somatic STAT3 or STAT5B mutation establishes clonality and is present in a substantial minority of T-LGL leukaemias (Pathway §3.11).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "TCR clonality tested and POLYCLONAL, with no STAT3/STAT5B mutation",
+              "non_reportable": true,
+              "reason": "A polyclonal large granular lymphocyte expansion is reactive — commonly viral, rheumatoid, post-transplant or HIV-associated — and is not a reportable malignancy (Pathway §4.9 principle). Re-enter if a clonal population is later demonstrated."
+            },
+            {
+              "label": "Clonality not tested, or molecular testing unavailable at this facility",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "TCR gene rearrangement by PCR, a TCR-Vβ flow repertoire, or a STAT3/STAT5B panel would resolve 9831.",
+              "coding_note": "An LGL phenotype without demonstrated clonality cannot be separated from a reactive expansion. 9820 is the honest code; record why via workup_status.",
+              "captures": {
+                "workup_status": "incomplete",
+                "karyotype_result_status": "unavailable"
+              }
+            },
+            {
+              "label": "On review the population is NK-lineage (surface CD3-negative), not T-lineage",
+              "next_node": "ml_nk_lgl_criteria",
+              "coding_note": "NK-lineage LGL disease is a different code with different criteria (Pathway §3.11, §5.3.3). 9831 is a T-lineage code and must not be used for it."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_nk_lgl_criteria",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "NK-cell criteria",
+          "question": "NK-lineage large granular lymphocyte disease. Which picture does the file support?",
+          "hint": "Aggressive NK-cell leukaemia and indolent NK-LGLL both code 9948. Indolence is not flagged on the code.",
+          "coding_note": "Registry decision §5.3.3: indolent NK-LGLL codes 9948 UNCHANGED, with NO indolent flag — survival analysis is performed separately in biostatistics and is not derived from the morphology code. Pastoret diagnostic rule (Table 3): 3 or more major criteria, OR 2 major plus 2 minor. Major — NK count 1.0×10⁹/L or more; KIR restriction (reduced expression of 2 or more of CD158A <9%, CD158B <2%, NKB1 <4%); CD94/NKG2A over-expression; somatic STAT3/STAT5B, CCL22 or TET2 mutation without MDS-classifying alterations. Minor — other phenotypic aberration (CD161-low, activating KIR restriction); other JAK-STAT / NF-κB / PI3K mutation; sinusoidal NK infiltrate on trephine; no MDS-classifying changes.",
+          "options": [
+            {
+              "label": "Aggressive NK-cell leukaemia — CD3-negative, CD16+/CD56+, EBV (EBER) positive, systemic illness with fever, hepatosplenomegaly and cytopenias",
+              "morphology_code": "9948",
+              "confidence": "medium",
+              "coding_note": "The defining evidence for 9948 is CD3−CD16+CD56+ with EBV positivity (Pathway §1 Ia3, §3.11). This entity occurs in adolescents and young adults and is genuinely relevant paediatrically — no adult-only warning applies.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "NK-LGLL meeting the Pastoret rule — 3 or more MAJOR criteria",
+              "morphology_code": "9948",
+              "confidence": "medium",
+              "coding_note": "Indolent NK-LGLL codes 9948 unchanged and carries NO indolent flag (Pathway §5.3.3). STAT3/STAT5B/CCL22/TET2 mutations are code-neutral and are recorded as annotation.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "NK-LGLL meeting the Pastoret rule — 2 MAJOR plus 2 or more MINOR criteria",
+              "morphology_code": "9948",
+              "confidence": "medium",
+              "coding_note": "The second limb of the verbatim diagnostic rule (Pathway §3.11). Same code, no indolent flag (§5.3.3).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Exactly 2 major criteria and NO histological (trephine) investigation",
+              "next_node": "ml_nk_greyzone",
+              "coding_note": "Explicitly unresolved by the source (Pathway §3.11). Carry it as a distinct non-terminal state rather than forcing the call — 9948 is an aggressive-disease code and two major criteria do not support it."
+            },
+            {
+              "label": "CD3-negative CD16/CD56-positive population, criteria not assessed or not documented",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "An absolute NK count, the KIR repertoire (CD158A, CD158B, NKB1), CD94/NKG2A, EBER and a STAT3/STAT5B panel would resolve 9948.",
+              "coding_note": "An NK phenotype alone does not establish a neoplasm — NK expansions are common reactively. 9948 requires the criteria; 9820 is the honest code until they are documented.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "On review the NK-cell expansion is reactive or transient (viral, post-transplant, chronic infection)",
+              "non_reportable": true,
+              "reason": "A reactive or transient NK-cell expansion is not a neoplasm and is not a reportable malignancy (Pathway §4.9 principle). Re-enter if the criteria are subsequently met."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_nk_greyzone",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "NK grey zone",
+          "question": "Two major criteria and no trephine — the source leaves this state unresolved. What can the file support now?",
+          "hint": "This state is deliberately non-terminal in the source. Record what is achievable rather than forcing 9948.",
+          "coding_note": "Pathway §3.11 grey zone, verbatim: \"2 major criteria with no histological investigation is explicitly unresolved by the source — carry as a distinct non-terminal state rather than forcing a call.\" Coding 9948 here would assert an aggressive-disease code the evidence does not support.",
+          "options": [
+            {
+              "label": "Trephine biopsy now available and describes a sinusoidal NK infiltrate — a further criterion is met",
+              "next_node": "ml_nk_lgl_criteria",
+              "coding_note": "Go back and re-score against the Pastoret rule with the histological criterion included.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Trephine requested — result pending",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "A trephine biopsy, and a STAT3/STAT5B panel, would complete the Pastoret criteria and resolve 9948. Result pending — re-enter when it returns.",
+              "coding_note": "Recorded as an open workup, not as a settled diagnosis. The NK branch stays open in both directions.",
+              "captures": {
+                "workup_status": "incomplete",
+                "karyotype_result_status": "pending"
+              }
+            },
+            {
+              "label": "Trephine not available at this facility — permanent terminal state",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Histological investigation is unavailable at this facility, so the Pastoret criteria cannot be completed and the code cannot be upgraded here.",
+              "coding_note": "\"Histology unavailable at UCI\" is a legitimate permanent terminal state but must be recorded as such (Pathway §2.5), not passed off as a completed workup.",
+              "captures": {
+                "workup_status": "incomplete",
+                "karyotype_result_status": "unavailable"
+              }
+            },
+            {
+              "label": "On review the NK-cell expansion is reactive or transient",
+              "non_reportable": true,
+              "reason": "A reactive or transient NK-cell expansion is not a neoplasm and is not a reportable malignancy (Pathway §4.9 principle)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_burkitt_screen",
+          "node_type": "ihc_checklist",
+          "step_number": 3,
+          "step_label": "Burkitt discriminators",
+          "question": "Tick every marker the flow / IHC / FISH report calls positive. Tap again for strong, again for weak, again for negative.",
+          "hint": "MYC rearrangement is the gate — its absence excludes Burkitt. sIgM is unreliable in both directions and is deliberately not on this panel.",
+          "clinical_alert": "⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ in nearly all cases and MYC-r negative — a different tree and a different code. sIgM is unreliable in both directions: sIgM-positive cases can be BCP-ALL, and sIgM-negative Burkitt is documented.",
+          "coding_note": "BURKITT IS NO LONGER A GROUP I CODE. From 1 January 2021 leukaemic Burkitt codes 9687/3 in Group II (IIc); 9826/3 is retired and read-only for pre-2021 records. Registry ruling: adopt 9687, leukaemic Burkitt moves to Group II, NO Group I/II override — an override would break ICCC-3 comparability (Pathway §3.3, §5.3.11, §5.7c). This node therefore emits no Group I code on the Burkitt branch; it refers the case. 9687 does not exist in this file and must not be invented, and 9826 is terminal_reachable false and must never be emitted. Uganda-specific: endemic Burkitt is EBV-positive in about 95% with a typical jaw or facial mass; where FISH is unavailable, Ki-67 above 95% with MYC protein IHC above 80% predicts MYC rearrangement in about 99% and is the accepted surrogate.",
+          "marker_groups": [
+            {
+              "group_label": "MYC and proliferation",
+              "markers": [
+                "MYC rearrangement (FISH)",
+                "Ki-67 >95%",
+                "MYC protein IHC >80%",
+                "EBV (EBER)"
+              ]
+            },
+            {
+              "group_label": "Mature B phenotype",
+              "markers": [
+                "CD19",
+                "CD20",
+                "CD45",
+                "CD10",
+                "BCL6",
+                "kappa",
+                "lambda"
+              ]
+            },
+            {
+              "group_label": "Precursor discriminators (B-ALL)",
+              "markers": [
+                "TdT",
+                "CD34",
+                "CD58",
+                "CD117"
+              ]
+            }
+          ],
+          "resolution_logic": [
+            {
+              "positive": [
+                "MYC rearrangement (FISH)",
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "MYC rearrangement WITH TdT positivity is MYC-rearranged B-ALL, not Burkitt — an uncoded WHO entity that falls to 9811 in the acute tree (Pathway §5.2). Do not refer this to Group II."
+            },
+            {
+              "positive": [
+                "MYC rearrangement (FISH)",
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 positivity with MYC rearrangement indicates a precursor population — MYC-rearranged B-ALL, handled by the acute tree."
+            },
+            {
+              "positive": [
+                "MYC rearrangement (FISH)",
+                "CD20:strong"
+              ],
+              "negative": [
+                "TdT",
+                "CD34"
+              ],
+              "next_node": "ml_burkitt_blast_gate",
+              "coding_note": "MYC rearrangement with a mature, TdT-negative, CD34-negative, CD20-bright B phenotype. This is Burkitt."
+            },
+            {
+              "positive": [
+                "MYC rearrangement (FISH)",
+                "CD20"
+              ],
+              "negative": [
+                "TdT",
+                "CD34"
+              ],
+              "next_node": "ml_burkitt_blast_gate"
+            },
+            {
+              "positive": [
+                "MYC rearrangement (FISH)",
+                "CD45:strong"
+              ],
+              "negative": [
+                "TdT",
+                "CD34"
+              ],
+              "next_node": "ml_burkitt_blast_gate"
+            },
+            {
+              "positive": [
+                "MYC rearrangement (FISH)"
+              ],
+              "negative": [
+                "TdT",
+                "CD34"
+              ],
+              "next_node": "ml_burkitt_blast_gate",
+              "coding_note": "MYC rearrangement with the precursor markers negative. Its absence excludes Burkitt; its presence with a mature phenotype establishes it (Pathway §3.3)."
+            },
+            {
+              "positive": [
+                "Ki-67 >95%",
+                "MYC protein IHC >80%"
+              ],
+              "negative": [
+                "TdT",
+                "CD34"
+              ],
+              "next_node": "ml_burkitt_blast_gate",
+              "coding_note": "The accepted low-resource surrogate for MYC rearrangement — Ki-67 above 95% with MYC protein above 80% predicts MYC-r in about 99% (Pathway §3.3). Record that FISH was not the basis."
+            },
+            {
+              "positive": [
+                "TdT"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "TdT is negative in Burkitt and positive in BCP-ALL (Pathway §3.3 discriminator table). This is a precursor neoplasm — the acute tree owns it."
+            },
+            {
+              "positive": [
+                "CD34"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD34 is negative in Burkitt and frequently positive in BCP-ALL."
+            },
+            {
+              "positive": [
+                "CD58"
+              ],
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "CD58 is positive in nearly all BCP-ALL and negative in Burkitt (Pathway §3.3). With no MYC rearrangement demonstrated, this is B-ALL."
+            },
+            {
+              "next_node": "ac_morphology_only",
+              "coding_note": "MYC rearrangement neither demonstrated nor surrogated, and the precursor discriminators are not recorded. Burkitt is NOT established — absence of MYC-r excludes it (Pathway §3.3) — and this tree must not emit a mature B code it cannot support. The case is an unresolved lymphoid blast population and the acute tree's morphology-only tier carries the correct code for that state. If FISH is simply unavailable, order Ki-67 and MYC protein IHC and re-enter."
+            }
+          ],
+          "captured_variables": [
+            "marrow_blast_percentage",
+            "blast_percent_band",
+            "primary_compartment",
+            "workup_status",
+            "karyotype_result_status",
+            "genotype_annotation"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Burkitt suspected but neither MYC rearrangement nor the Ki-67/MYC-protein surrogate was demonstrated, and no other mature lymphoid entity was established. 9826 is retired and is never emitted; a confirmed Burkitt is referred to Group II as 9687."
+          }
+        },
+        {
+          "node_id": "ml_burkitt_blast_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "Burkitt marrow blast %",
+          "question": "Marrow blast percentage (of all nucleated marrow cells)?",
+          "hint": "The 25% rule historically separated Burkitt cell leukaemia from Burkitt lymphoma. Both now code 9687/3 in Group II — record the percentage for the time-series break, not to choose a group.",
+          "variable": "marrow_blast_percentage",
+          "variable_label": "Marrow blast percentage",
+          "unit": "%",
+          "band_variable": "blast_percent_band",
+          "clinical_alert": "⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ in nearly all cases and MYC-r negative — a different tree and a different code. Confirm the discriminators before referring.",
+          "coding_note": "Every band on this gate exits Group I. Registry ruling (Pathway §3.3, §5.3.11, §5.7c): adopt 9687 — leukaemic Burkitt moves to Group II (IIc), no Group I/II override, because an override would break ICCC-3 comparability. 9826/3 is retired and read-only for pre-2021 diagnoses; it is terminal_reachable false and must never be emitted. 9687 is a Group II code that does not exist in this file and must not be invented. Burkitt IS a malignancy — this is a referral, not a non-reportable terminal. The two numeric bands are contiguous and exhaustive: a value at exactly 25 falls in the upper band.",
+          "bands": [
+            {
+              "range": ">=25",
+              "coding_note": "Leukaemic Burkitt — more than 25% marrow blasts with MYC rearrangement and a mature B phenotype. Codes 9687/3 in Group II (IIc) from 1 January 2021. 9826 is retired and read-only for earlier records; the registry adopted 9687 with no Group I/II override (Pathway §3.3, §5.3.11, §5.7c). No Group I code is emitted. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change.",
+              "next_node": "ml_burkitt_refer"
+            },
+            {
+              "range": "<25",
+              "coding_note": "Burkitt with marrow involvement below the 25% leukaemic threshold. This presentation was always Group II (IIc) — only the leukaemic presentation was ever 9826 / Group I — and codes 9687/3. No Group I code is emitted (Pathway §3.3).",
+              "next_node": "ml_burkitt_refer"
+            },
+            {
+              "range": "not_documented",
+              "coding_note": "Burkitt established on MYC rearrangement with a mature B phenotype; marrow blast percentage not documented. Both the leukaemic and the lymphoma presentation now code 9687/3 in Group II (IIc), so the missing percentage does not change the destination — record it when available for the biostatistics time-series break. No Group I code is emitted.",
+              "next_node": "ml_burkitt_refer"
+            }
+          ],
+          "captured_variables": [
+            "marrow_blast_percentage",
+            "blast_percent_band",
+            "primary_compartment",
+            "workup_status",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9820",
+            "name": "Lymphoid leukemia, NOS",
+            "reason": "Reached only by the 'uncertain subtype' escape — the abstractor was not satisfied that this is Burkitt. 9820 is the mature lymphoid NOS parent. If Burkitt IS established the case belongs in Group II as 9687 and must not be coded here."
+          }
+        },
+        {
+          "node_id": "ml_nhl_nos_site",
+          "node_type": "site_resolution",
+          "step_number": 3,
+          "step_label": "NHL NOS topography",
+          "question": "Non-Hodgkin lymphoma, NOS with no subtype stated. Which topography does the file record as the primary site?",
+          "hint": "This code sits in Group I or Group II purely by site. Record the site the abstractor will enter in REDCap.",
+          "coding_note": "9591 is dual-group by topography and confirmed as such by registry policy (Pathway §5.3.10, §5.5.4): C42.0 / C42.1 / C42.3 / C42.4 → Group I (Ia4); C42.2 (spleen) and every other site → Group II (IIb4). Prefer 9820 when the process is explicitly leukaemic; 9591 is for a non-Hodgkin lymphoma NOS abstracted at a Group I topography.",
+          "options": [
+            {
+              "site": "C42.0 — Blood",
+              "morphology_code": "9591",
+              "confidence": "low",
+              "upgrade_path": "Flow cytometry, immunohistochemistry and a subtype-directed panel would replace this NOS code with a specific lymphoma entity — most of which are Group II.",
+              "coding_note": "Group I, Ia4 by topography. This is a genuine Ia4 terminal, not a Group II code borrowed (Pathway §5.5.4).",
+              "captures": {
+                "topography": "C42.0",
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "site": "C42.1 — Bone marrow",
+              "morphology_code": "9591",
+              "confidence": "low",
+              "upgrade_path": "Flow cytometry, immunohistochemistry and a subtype-directed panel would replace this NOS code with a specific entity.",
+              "coding_note": "Group I, Ia4 by topography.",
+              "captures": {
+                "topography": "C42.1",
+                "primary_compartment": "marrow"
+              }
+            },
+            {
+              "site": "C42.3 — Reticuloendothelial system, NOS",
+              "morphology_code": "9591",
+              "confidence": "low",
+              "upgrade_path": "Flow cytometry, immunohistochemistry and a subtype-directed panel would replace this NOS code with a specific entity.",
+              "coding_note": "Group I, Ia4 by topography.",
+              "captures": {
+                "topography": "C42.3"
+              }
+            },
+            {
+              "site": "C42.4 — Haematopoietic system, NOS",
+              "morphology_code": "9591",
+              "confidence": "low",
+              "upgrade_path": "Flow cytometry, immunohistochemistry and a subtype-directed panel would replace this NOS code with a specific entity.",
+              "coding_note": "Group I, Ia4 by topography.",
+              "captures": {
+                "topography": "C42.4"
+              }
+            },
+            {
+              "site": "C42.2 — Spleen",
+              "refer_group": 2,
+              "refer_code": "9591",
+              "coding_note": "C42.2 (spleen) is deliberately carved out of the Group I topography set for 9591 (Pathway §1 Ia4, §5.3.10). A splenic non-Hodgkin lymphoma NOS codes 9591 in Group II (IIb4). The code is the same; the group is not Group I, so no Group I code is emitted."
+            },
+            {
+              "site": "A nodal or extranodal site — lymph nodes, gut, skin, CNS, other",
+              "refer_group": 2,
+              "refer_code": "9591",
+              "coding_note": "Every site other than C42.0 / C42.1 / C42.3 / C42.4 routes 9591 to Group II (IIb4, Non-Hodgkin lymphomas NOS) (Pathway §5.3.10). No Group I code is emitted."
+            },
+            {
+              "site": "The process is explicitly leukaemic — circulating clonal lymphoid cells, no tissue mass",
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "Flow cytometry with a lineage and entity panel would resolve a specific Ia2 or Ia3 code.",
+              "coding_note": "Prefer 9820 when the process is explicitly leukaemic — 9591's own coding note makes this the tie-break (Pathway §1 Ia4).",
+              "captures": {
+                "primary_compartment": "marrow"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ml_burkitt_refer",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Burkitt — Group II referral",
+          "question": "This case is Burkitt. Burkitt is not a Group I code — confirm the referral to Group II.",
+          "hint": "No Group I code is emitted. Burkitt IS a malignancy, so this is a referral, not a non-reportable terminal.",
+          "clinical_alert": "⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ in nearly all cases and MYC-r negative — a different tree and a different code. Confirm the discriminators before referring.",
+          "coding_note": "Registry ruling (Pathway §3.3, §5.3.11, §5.7c): adopt 9687 — leukaemic Burkitt moves to Group II (IIc), no Group I/II override, because an override would break ICCC-3 comparability (same reasoning as the myeloid-sarcoma question, §4.7). 9826/3 is RETIRED and read-only for pre-2021 diagnoses; it is terminal_reachable false and is never emitted. 9687/3 is a Group II code that does not exist in this file and must not be invented. The marrow blast percentage recorded on the previous node does not change the destination — only the leukaemic presentation was ever 9826 / Group I, and both presentations now code 9687/3 in Group II.",
+          "options": [
+            {
+              "label": "Confirm — refer this case to Group II and code 9687/3 (IIc)",
+              "refer_group": 2,
+              "refer_code": "9687",
+              "coding_note": "Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021. 9826 is retired and read-only for earlier records. No Group I code is emitted, and this is NOT a non-reportable terminal — Burkitt is a malignancy and must stay on the registry, in Group II. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change. The same alias strings must exist in aliases_group_02.json for the clerk to land there; that mirror is a flagged gap."
+            },
+            {
+              "label": "On review MYC rearrangement is not established — go back to the discriminator panel",
+              "next_node": "ml_burkitt_screen",
+              "coding_note": "Absence of MYC rearrangement excludes Burkitt (Pathway §3.3). Re-score the panel: a TdT-positive, CD34-positive, CD58-positive blast population is B-ALL and belongs to the acute tree."
             }
           ],
           "nos_fallback": null
