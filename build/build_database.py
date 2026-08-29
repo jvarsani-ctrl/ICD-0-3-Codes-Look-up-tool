@@ -1334,6 +1334,7 @@ def check_raw_hex_ban(repo: Path):
             except OSError as exc:
                 out.append((WARN, "could not read %s: %s" % (path, exc)))
                 continue
+            text = _mask_comments(text)
             allowed = _root_block_spans(text)
             rel = path.relative_to(repo)
             hits = 0
@@ -1351,10 +1352,48 @@ def check_raw_hex_ban(repo: Path):
     return out
 
 
+def _mask_comments(text: str) -> str:
+    """
+    Replace the CONTENT of /* … */ and // … comments with spaces, preserving every
+    newline so line numbers still line up.
+
+    Without this the scan is defeated by a commented-out token block: a stray
+    `/* :root {` makes the brace matcher swallow every rule after it, whitelisting
+    their colours. It also stops a hex written in a comment (documentation, not a
+    colour in use) from being reported as a violation.
+    """
+    out = list(text)
+    i, n = 0, len(text)
+    while i < n:
+        if text.startswith("/*", i):
+            j = text.find("*/", i + 2)
+            j = n if j == -1 else j + 2
+            for k in range(i, j):
+                if out[k] != "\n":
+                    out[k] = " "
+            i = j
+        elif text.startswith("//", i) and not text.startswith("://", max(0, i - 1)):
+            j = text.find("\n", i)
+            j = n if j == -1 else j
+            for k in range(i, j):
+                out[k] = " "
+            i = j
+        else:
+            i += 1
+    return "".join(out)
+
+
 def _root_block_spans(text: str):
-    """Return [(first_line, last_line)] for every `:root … { … }` block in the text."""
+    """
+    Return [(first_line, last_line)] for every `:root … { … }` token block.
+
+    The selector must OPEN a rule (start of file, or straight after `}` or `;`) and must
+    reach its `{` without crossing a comma — so a genuine `:root {` or
+    `:root:not([data-theme]) {` is whitelisted, while `html, :root, body {` is not: that
+    rule also styles other elements, so its colours are not token declarations.
+    """
     spans = []
-    for m in re.finditer(r":root\b[^{]{0,200}?\{", text):
+    for m in re.finditer(r"(?:\A|[};])\s*:root\b[^{,]{0,120}?\{", text):
         depth = 0
         i = m.end() - 1
         while i < len(text):
