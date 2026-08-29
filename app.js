@@ -598,9 +598,17 @@ function capture(map) {
   Object.keys(map).forEach(function (k) { state.captured[k] = map[k]; });
 }
 
-/* Every branch ends here: another node, or a terminal. */
+/* Every branch ends here: another node, or a terminal. Captures are applied
+   HERE rather than at each call site, so a `captures` block works identically
+   on an option, an ihc_checklist rule, a numeric_gate band, an override, or a
+   molecular rule. They were previously applied only for options and the
+   cytogenetics dropdown, so a capture declared on a marker rule was silently
+   dropped — the JSON looked right and the variable never arrived, which is
+   the worst shape a bug can take here. Applied before finish() so the output
+   block sees them. */
 function advance(target, label, value, before) {
   pushTrail(label, value, before);
+  capture(target.captures);
   state.draft = {};
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
@@ -838,7 +846,6 @@ function handleOption(act, el) {
     }
     case 'opt': {
       var o2 = arr(n.options)[i];
-      capture(o2.captures);
       return advance(o2, n.step_label || 'Answer', optionLabel(o2), before);
     }
     case 'direct': return advance(n, n.step_label || 'Answer', n.accept_label || n.question, before);
@@ -910,7 +917,6 @@ function resolveNode(n, before) {
     case 'cytogenetics_dropdown': {
       var o = arr(n.options)[+state.draft.option];
       if (!o) return;
-      capture(o.captures);
       if (o.classification_system) state.captured.classification_system_applied = o.classification_system;
       return advance(o, n.step_label || 'Genetics', o.label || o.finding, before);
     }
