@@ -562,6 +562,17 @@ function matchRules(rules) {
   }
   return null;
 }
+/* A written range is inclusive of both endpoints AT THE PRECISION IT IS
+   WRITTEN. "10-19" covers [10, 20); "0.5-0.99" covers [0.5, 1.00). Reading the
+   upper endpoint as a bare <= leaves a hole between one band and the next —
+   marrow blasts of 19.5% matched neither ">=20" nor "10-19" and fell silently
+   to the NOS fallback, which for a blast gate means reporting an acute
+   leukaemia NOS for a case that is squarely in the band below. Bands are
+   still tried in array order and the first match wins. */
+function bandStep(text) {
+  var dot = String(text).indexOf('.');
+  return dot === -1 ? 1 : Math.pow(10, -(String(text).length - dot - 1));
+}
 function inBand(range, v) {
   if (range === 'not_documented') return v === null;
   if (v === null || v === undefined) return false;
@@ -570,7 +581,9 @@ function inBand(range, v) {
   if ((m = /^>\s*([\d.]+)$/.exec(range))) return v > +m[1];
   if ((m = /^<=\s*([\d.]+)$/.exec(range))) return v <= +m[1];
   if ((m = /^<\s*([\d.]+)$/.exec(range))) return v < +m[1];
-  if ((m = /^([\d.]+)\s*-\s*([\d.]+)$/.exec(range))) return v >= +m[1] && v <= +m[2];
+  if ((m = /^([\d.]+)\s*-\s*([\d.]+)$/.exec(range))) {
+    return v >= +m[1] && v < +m[2] + bandStep(m[2]);
+  }
   return false;
 }
 
