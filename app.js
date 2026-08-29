@@ -662,9 +662,15 @@ function finish(target, basis) {
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };
   });
   var discordant = !!target.discordant;
+  /* The ceiling is what is achievable WITH ALL REQUIRED TESTS PRESENT (Design
+     Spec §6). While one is still outstanding the case cannot claim it — a
+     morphology-only result reporting "high" next to an outstanding flow
+     cytometry row tells the clerk the answer is firmer than the evidence
+     supports, which is the one thing an advisory tool must never do. */
   state.result = {
     code: code, entry: entry, basis: basisFromTrail() || basis,
-    confidence: lowestConfidence([entry.confidence_ceiling, target.confidence, discordant ? 'low' : null]),
+    confidence: lowestConfidence([entry.confidence_ceiling, target.confidence,
+      missing.length ? 'medium' : null, discordant ? 'low' : null]),
     discordant: discordant,
     upgrade: target.upgrade_path || entry.upgrade_path ||
       (missing.length ? missing.join(', ') + ' would yield a more specific code.' : ''),
