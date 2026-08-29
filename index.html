@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ICCC-3 Lookup Tool — UCI / UCCF Paediatric Cancer Registry</title>
+  <meta name="description" content="Advisory ICD-O-3 morphology lookup for the UCI/UCCF paediatric cancer registry. The abstractor confirms every code.">
+  <!-- One flattened stylesheet: no @import chain, no CDN, no Google Fonts
+       request. design.md §7 supersedes Architecture §12's "CSS inline in
+       index.html" here — data.md §7's startup list names uccf-tool.css as its
+       own file, so it caches independently of the markup. -->
+  <link rel="stylesheet" href="uccf-tool.css">
+  <link rel="icon" href="assets/uccf-mark.png">
+</head>
+<body>
+  <!-- data-shell is set by app.js from ?mode=; "auto" defers to the 880px
+       container query in uccf-tool.css. -->
+  <main class="app" id="app" data-shell="auto">
+    <div class="appbar">
+      <img class="appbar__mark" src="assets/uccf-mark.png" alt="">
+      <span>ICCC-3 Lookup</span>
+      <span class="appbar__context" id="appbar-context">Loading…</span>
+    </div>
+
+    <div class="layout">
+      <!-- Rail shell: the case trail as a persistent left column. -->
+      <aside class="rail" id="rail" aria-label="This case"></aside>
+
+      <div class="canvas">
+        <!-- Transcript shell: the same caseTrail array, collapsed into rows
+             stacked above the live node. renderNode() never learns which
+             shell it is in (engine.md §3). -->
+        <div class="trail-rows" id="trail-rows"></div>
+
+        <!-- The live node. Every renderer writes into this slot and nothing
+             outside it. -->
+        <section id="slot" aria-live="polite"></section>
+      </div>
+    </div>
+
+    <footer class="appfoot">
+      <!-- Full colour wide lockup, white footer strip only. Never the header:
+           at header height the wordmark renders at ~8px — present, unreadable,
+           worse than absent (design.md §8). -->
+      <img class="appfoot__lockup" src="assets/uccf-colour-wide.png"
+           alt="Uganda Child Cancer Foundation">
+      <!-- Permanent overconfidence guardrail (Critical Review §4.3), and
+           load-bearing now the tool is advisory (design.md §9). -->
+      <span class="appfoot__note">Advisory only — the abstractor confirms every code.</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

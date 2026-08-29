@@ -1,0 +1,669 @@
+/* ============================================================================
+   uccf-tool.css — ICCC-3 Lookup Tool
+   ONE flattened stylesheet. No @import, no CDN, no Google Fonts request.
+   (memory/design.md §7 — styles.css's four-file @import chain ends in a Google
+   Fonts request, which breaks Architecture §7's lean startup and the offline
+   direction in Critical Review §3.1.)
+
+   Layers, in order:
+     1. Tokens              — ported verbatim from ../UCCF Design System/tokens/
+     2. Contrast corrections— the ramp steps this tool moves, and why
+     3. Compact application scale — the one added layer (design.md §6)
+     4. Primitives          — Button, Badge, Tag, Card (four of ten DS components)
+     5. Shell               — header, rail, transcript, footer
+     6. Nodes               — the twelve node-type renderers
+     7. Output block        — advisory result, both host framings
+
+   ⚠ NO RAW HEX OUTSIDE THE :root BLOCK. The build pipeline greps for
+   /#[0-9a-fA-F]{3,8}/ outside :root and FAILS the build on a hit
+   (memory/data.md §5). Everything below :root uses var(--…).
+   ========================================================================= */
+
+:root {
+  /* ---- 1. Core brand, from the logo (UCCF tokens/colors.css) ------------ */
+  --uccf-sunshine: #F2D411;
+  --uccf-sky:      #00ACEA;
+  --uccf-ink:      #00012B;
+  --uccf-paper:    #FFFFFF;
+
+  --sunshine-100: #FEF9D3;
+  --sunshine-200: #FCEF8E;
+  --sunshine-300: #F8E24A;
+  --sunshine-400: #F2D411;
+  --sunshine-500: #D8BC00;
+
+  --sky-100: #D3F1FC;
+  --sky-200: #99DEF7;
+  --sky-300: #4FC4F1;
+  --sky-400: #00ACEA;
+  --sky-500: #0089BE;
+  --sky-600: #00648C;
+  --sky-700: #004A69;   /* derived one step past the shipped ramp, for :hover */
+
+  --ink-900: #00012B;
+  --ink-800: #0A1140;
+  --ink-700: #1E2653;
+  --ink-600: #3B426B;
+  --ink-500: #626890;
+  --ink-400: #9297B4;
+  --ink-300: #C2C5D6;
+  --ink-200: #E1E3EC;
+  --ink-100: #F1F2F7;
+  --ink-050: #F8F9FC;
+
+  --coral-100:  #FBD9D0;
+  --coral-400:  #F2603F;
+  --coral-500:  #D8492C;
+  --coral-600:  #A8351D;   /* derived — see the clinical-alert note below */
+
+  --marigold-100: #FCE7C6;
+  --marigold-400: #F59A1E;
+  --marigold-500: #DB7F04;
+
+  --savanna-100: #CDEBD9;
+  --savanna-400: #1E9E5A;
+  --savanna-500: #157A44;
+
+  /* ---- 2. Contrast corrections (design.md §2) --------------------------- */
+  /* The DS Button spec is `primary` = Sky 400 + white. Measured at UI size
+     that is 2.60:1 — it FAILS WCAG AA. This is not a flaw in the design
+     system: Sky 400 + white is legal on a poster at display size. It breaks
+     only when carried into 13px chrome a clerk reads all day. So this tool
+     moves the RAMP STEP, never the palette.
+
+       white on sky-400 ....... 2.60:1  FAIL  → sky-600 (6.56:1)   --color-primary
+       sky-400 link on white .. 2.60:1  FAIL  → sky-600            --color-link
+       white on savanna-400 ... 3.45:1  large → savanna-500 (5.39) --color-success
+       white on coral-500 ..... 4.28:1  large → see below          --color-alert-*
+       ink on sunshine-400 ... 13.66:1  PASS  → kept               --color-accent
+       ink on marigold-400 .... 9.16:1  PASS  → kept               --color-warn-fill
+       ink-500 on white ....... 5.38:1  PASS  → kept               --color-muted
+       ink-900 on white ...... 20.21:1  PASS  → kept               --color-text   */
+  --color-primary:       var(--sky-600);
+  --color-primary-hover: var(--sky-700);
+  --color-link:          var(--sky-600);
+  --color-success:       var(--savanna-500);
+  --color-accent:        var(--sunshine-400);
+  --color-text:          var(--ink-900);
+  --color-muted:         var(--ink-500);
+  --color-surface:       var(--uccf-paper);
+  --color-surface-sunk:  var(--ink-050);
+  --color-border:        var(--ink-200);
+  --color-border-strong: var(--ink-900);
+
+  /* Warning — marigold-400 fill + ink text, kept as specified (9.16:1). */
+  --color-warn-fill:   var(--marigold-400);
+  --color-warn-soft:   var(--marigold-100);
+  --color-warn-edge:   var(--marigold-500);
+
+  /* Clinical alert — RESERVED for `clinical_alert` only (APL, ATLL, ATRT…).
+     design.md §2 rules out white on coral-500 (4.28:1) and offers "ink text,
+     or a darker step". Ink on coral-500 measures ~4.0:1, which also misses AA
+     at 13px — so this build takes the third form of the same instruction:
+     coral stays the alert colour but carries as a 4px coral-600 EDGE on a
+     coral-100 field with ink text (≈16:1). Coral is still reserved, still
+     never a warning, and the banner now passes AA at body size. */
+  --color-alert-fill:  var(--coral-100);
+  --color-alert-edge:  var(--coral-600);
+
+  /* Upgrade-path panel — sky-100 field, sky top border (design.md §4). */
+  --color-upgrade-fill: var(--sky-100);
+  --color-upgrade-edge: var(--sky-400);
+
+  /* ---- 3. Compact application scale (design.md §6) ---------------------- */
+  /* The shipped ramp is poster-scaled (--fs-h2 38px, --fs-body 17px, --sp-5
+     24px, --container 1120px). A blast gate + ten markers + an alert + two
+     escape hatches will not fit that rhythm in a 600px iframe. Families,
+     weights, palette and radii carry over unchanged; only size and spacing
+     are re-scaled. */
+  --font-sans: Montserrat, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  /* ⚠ Montserrat woff2 is NOT on disk. The design system ships Butler .otf
+     only, and a Google Fonts <link> is forbidden (design.md §7, §8). The
+     stack above degrades honestly until the self-hosted subset arrives; then
+     uncomment the @font-face block directly below this :root. */
+
+  --fs-title:   20px;
+  --fs-h:       17px;
+  --fs-q:       15px;
+  --fs-body:    13.5px;
+  --fs-small:   12px;
+  --fs-micro:   10.5px;
+  --fs-over:     9.5px;
+
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-semi:    600;
+  --w-bold:    700;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+
+  --radius-sm:   6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 6px 18px rgba(0, 1, 43, 0.10);
+  --shadow-lift: 0 4px 10px rgba(0, 1, 43, 0.16);
+
+  --container-min: 560px;
+  --container-max: 900px;
+  --rail-width:    196px;
+  --shell-break:   880px;   /* documented here; the query below repeats it */
+}
+
+/* Self-hosted Montserrat — pending the woff2 subset from UCCF (design.md §8).
+@font-face { font-family: Montserrat; font-weight: 400 700; font-display: swap;
+             src: url("assets/montserrat-subset.woff2") format("woff2"); }
+*/
+
+/* ==========================================================================
+   4. Reset + base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-surface-sunk);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.45;
+}
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+/* ==========================================================================
+   5. Primitives — four of the design system's ten components, ~15 lines each
+   ========================================================================== */
+
+/* Button — BORDERLESS. The chunky navy outline is the DS `sticker` variant
+   only: hero CTAs on campaign artwork, never a dense clinical panel
+   (design.md §5). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  font-weight: var(--w-semi);
+  font-size: var(--fs-small);
+  cursor: pointer;
+  transition: background 120ms ease, transform 90ms ease, box-shadow 120ms ease;
+}
+.btn:hover  { background: var(--color-primary-hover); box-shadow: var(--shadow-lift); }
+.btn:active { transform: scale(0.97); box-shadow: none; }
+.btn[disabled] { background: var(--ink-300); cursor: not-allowed; box-shadow: none; }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-link);
+  font-weight: var(--w-semi);
+}
+.btn--ghost:hover { background: var(--ink-100); box-shadow: none; }
+
+.btn--sm { padding: var(--sp-1) var(--sp-3); font-size: var(--fs-micro); }
+
+/* Badge — confidence and status. Never colour alone: every badge carries an
+   explicit word (design.md §4, "second channel is mandatory"). Phosphor icons
+   are deferred; when they arrive the labels stay. */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 3px var(--sp-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+}
+.badge--high   { background: var(--color-success);   color: var(--color-surface); }
+.badge--medium { background: var(--ink-200);         color: var(--ink-900); border-color: var(--ink-400); }
+.badge--low    { background: var(--color-warn-fill); color: var(--ink-900); border-color: var(--color-warn-edge); }
+.badge--none   { background: var(--ink-100);         color: var(--ink-700); border-color: var(--ink-300); }
+
+/* Tag — the overline label used above every question and on every output row */
+.tag {
+  font-size: var(--fs-over);
+  font-weight: var(--w-semi);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Card */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3);
+}
+
+/* ==========================================================================
+   6. Shell — header, layout, rail, transcript, footer
+   ========================================================================== */
+.app {
+  container-type: inline-size;
+  container-name: app;
+  max-width: var(--container-max);
+  min-width: 0;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.appbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--ink-900);
+  color: var(--color-surface);
+  font-size: var(--fs-small);
+  font-weight: var(--w-semi);
+}
+/* Mark at 22px. The wide lockup NEVER goes here — its wordmark renders at
+   ~8px: present, unreadable, worse than absent (design.md §8). */
+.appbar__mark { width: 22px; height: 22px; flex: none; }
+.appbar__context { margin-left: auto; color: var(--ink-400); font-weight: var(--w-medium); font-size: var(--fs-micro); }
+
+.layout { display: block; min-width: 0; }
+.canvas { padding: var(--sp-3); min-width: 0; flex: 1; }
+
+/* --- The case trail: ONE array, two renderings (engine.md §3) ------------
+   renderNode() never learns which shell it is in. Only the surround changes. */
+.rail {
+  display: none;
+  width: var(--rail-width);
+  flex: none;
+  padding: var(--sp-3);
+  background: var(--color-surface-sunk);
+  border-right: 2px solid var(--color-border);
+}
+.rail__title { margin-bottom: var(--sp-2); }
+.rail__row {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--sp-2) 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: none;
+  cursor: pointer;
+}
+.rail__row b {
+  display: block;
+  font-size: var(--fs-over);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: var(--w-semi);
+}
+.rail__row span { font-size: var(--fs-small); font-weight: var(--w-semi); }
+.rail__row:hover span { color: var(--color-link); text-decoration: underline; }
+.rail__row--now {
+  margin-left: calc(var(--sp-3) * -1);
+  padding-left: calc(var(--sp-3) - 3px);
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-upgrade-fill);
+  cursor: default;
+}
+.rail__row--todo { cursor: default; }
+.rail__row--todo b, .rail__row--todo span { color: var(--ink-300); }
+
+.trail-rows { display: block; }
+.trail-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  text-align: left;
+  padding: var(--sp-2) var(--sp-2);
+  margin-bottom: var(--sp-1);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-sunk);
+  cursor: pointer;
+}
+.trail-row:hover { border-color: var(--color-primary); }
+.trail-row em {
+  font-style: normal;
+  flex: none;
+  width: 92px;
+  font-size: var(--fs-over);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: var(--w-semi);
+}
+.trail-row b { flex: 1; font-size: var(--fs-small); font-weight: var(--w-semi); }
+.trail-row u { text-decoration: none; color: var(--color-link); font-size: var(--fs-micro); font-weight: var(--w-bold); }
+.trail-row__tick { color: var(--color-success); font-weight: var(--w-bold); }
+
+/* Shell selection. Transcript is the base case; the rail is the enhancement.
+   880px is where a 196px rail plus a usable 640px canvas stops fitting.
+   ?mode= overrides the breakpoint and is LOAD-BEARING, not a testing
+   convenience: on a 1440px screen the REDCap form region is ~1000–1050px,
+   over the breakpoint, so width alone would wrongly give REDCap the rail
+   (engine.md §4). */
+[data-shell="rail"] .layout    { display: flex; }
+[data-shell="rail"] .rail      { display: block; }
+[data-shell="rail"] .trail-rows{ display: none; }
+
+@container app (min-width: 880px) {
+  [data-shell="auto"] .layout     { display: flex; }
+  [data-shell="auto"] .rail       { display: block; }
+  [data-shell="auto"] .trail-rows { display: none; }
+}
+
+.appfoot {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: var(--sp-2) var(--sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+.appfoot__lockup { height: 26px; width: auto; }
+.appfoot__note {
+  font-size: var(--fs-micro);
+  color: var(--color-muted);
+  font-weight: var(--w-semi);
+}
+
+/* ==========================================================================
+   7. Nodes — the question surface
+   ========================================================================== */
+.node__over { margin-bottom: var(--sp-1); }
+.node__q {
+  font-size: var(--fs-q);
+  font-weight: var(--w-bold);
+  line-height: 1.25;
+  margin: var(--sp-1) 0 var(--sp-1);
+}
+.node__hint { color: var(--color-muted); font-size: var(--fs-small); margin: 0 0 var(--sp-3); }
+
+.node--live {
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3);
+  box-shadow: var(--shadow-card);
+}
+
+/* Option list — single-select rows, large tap targets */
+.opts { display: flex; flex-direction: column; gap: var(--sp-1); margin-bottom: var(--sp-3); }
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  width: 100%;
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+.opt:hover { border-color: var(--color-primary); background: var(--ink-050); }
+.opt__label { font-weight: var(--w-semi); font-size: var(--fs-body); }
+.opt__meta  { display: block; font-weight: var(--w-regular); font-size: var(--fs-micro); color: var(--color-muted); margin-top: 2px; }
+
+/* Marker chips — the IHC checklist. Tap cycles: off → positive → strong →
+   weak → negative. Intensity tokens are a ratified Group 1 extension
+   (Pathway §7.3 item 2) and are backward-compatible with plain markers. */
+.markers { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-bottom: var(--sp-3); }
+.marker {
+  border: 2px solid var(--ink-300);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-small);
+  font-weight: var(--w-semi);
+  color: var(--ink-800);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+.marker[data-value="pos"],
+.marker[data-value="strong"],
+.marker[data-value="weak"] { border-color: var(--color-border-strong); background: var(--color-accent); }
+.marker[data-value="neg"] {
+  border-color: var(--ink-300);
+  background: var(--ink-100);
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+.marker__int {
+  margin-left: var(--sp-1);
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  padding: 1px var(--sp-1);
+  border-radius: var(--radius-pill);
+  background: var(--ink-900);
+  color: var(--color-accent);
+}
+.marker__state { margin-left: var(--sp-1); font-size: var(--fs-over); font-weight: var(--w-bold); }
+
+.field { display: block; margin-bottom: var(--sp-3); }
+.field__label { display: block; font-weight: var(--w-semi); font-size: var(--fs-small); margin-bottom: var(--sp-1); }
+.field input[type="number"],
+.field input[type="text"],
+.field input[type="search"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: var(--sp-2);
+  border: 2px solid var(--ink-300);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.field textarea { min-height: 72px; resize: vertical; }
+
+.checks { display: flex; flex-direction: column; gap: var(--sp-1); margin-bottom: var(--sp-3); }
+.check { display: flex; align-items: flex-start; gap: var(--sp-2); font-size: var(--fs-body); }
+.check input { margin-top: 3px; }
+
+/* Banners. Colour is never the only channel — each carries a bold word label
+   and a distinct border weight (design.md §4). */
+.banner {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-small);
+  margin-bottom: var(--sp-3);
+}
+.banner__label {
+  display: block;
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.banner--alert { background: var(--color-alert-fill); border-left: 4px solid var(--color-alert-edge); color: var(--ink-900); }
+.banner--warn  { background: var(--color-warn-soft);  border-left: 3px solid var(--color-warn-edge); color: var(--ink-900); }
+.banner--info  { background: var(--ink-100);          border-left: 2px solid var(--ink-400);         color: var(--ink-800); }
+.banner--error { background: var(--color-alert-fill); border-left: 4px solid var(--color-alert-edge); color: var(--ink-900); }
+
+/* The two escape hatches. They mean different things and must NEVER be
+   collapsed into one control (nodes.md §4). Forcing an NOS *malignant* code
+   on the second would record a cancer that does not exist — so they are
+   given different shapes, different borders and different words. */
+.escapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--color-border);
+}
+.escape {
+  flex: 1 1 220px;
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-small);
+  font-weight: var(--w-semi);
+  cursor: pointer;
+  background: var(--color-surface);
+}
+.escape small { display: block; font-weight: var(--w-regular); font-size: var(--fs-micro); color: var(--color-muted); margin-top: 2px; }
+/* Still a malignancy → dashed, warning-edged, rounded: a fallback. */
+.escape--nos {
+  border: 2px dashed var(--color-warn-edge);
+  border-radius: var(--radius-pill);
+  color: var(--ink-800);
+}
+.escape--nos:hover { background: var(--color-warn-soft); }
+/* Not a malignancy → solid, square, ink-edged: a different kind of exit. */
+.escape--excluded {
+  border: 2px solid var(--ink-600);
+  border-radius: var(--radius-sm);
+  color: var(--ink-900);
+}
+.escape--excluded:hover { background: var(--ink-100); }
+
+.actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-3); }
+
+/* ==========================================================================
+   8. Output block
+   ========================================================================== */
+.out__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--savanna-100);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--sp-3);
+}
+.out__head--medium { background: var(--ink-100); }
+.out__head--low    { background: var(--color-warn-soft); }
+.out__subgroup { flex: 1; min-width: 160px; font-size: var(--fs-small); font-weight: var(--w-semi); }
+
+/* ?host=redcap only. Sunshine is brand/wayfinding — NEVER a warning
+   (design.md §4). The headline is the FULL option string, verbatim, because
+   the clerk's real task is finding one row among eight near-identical
+   B-lymphoblastic entries: matching a whole string is self-checking, and it
+   fails loudly when the tool and the options file drift apart
+   (memory/redcap.md §2). */
+.pickbox {
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--sp-3);
+}
+.pickbox__head {
+  background: var(--color-accent);
+  color: var(--ink-900);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pickbox__value {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--fs-h);
+  font-weight: var(--w-bold);
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Standalone framing: no yellow box, no REDCap vocabulary. It answers the
+   diagnostic question and stops (memory/redcap.md §3). */
+.headline {
+  padding: var(--sp-2) 0 var(--sp-3);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--sp-2);
+}
+.headline__code { font-size: var(--fs-title); font-weight: var(--w-bold); font-variant-numeric: tabular-nums; }
+.headline__name { font-size: var(--fs-body); font-weight: var(--w-semi); }
+
+.orow {
+  display: flex;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-top: 1px solid var(--color-border);
+  font-size: var(--fs-small);
+}
+.orow b {
+  flex: none;
+  width: 104px;
+  color: var(--color-muted);
+  font-weight: var(--w-semi);
+  font-size: var(--fs-over);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+.orow span { flex: 1; min-width: 0; }
+/* Renders even when empty ("None — fully subtyped"). Design Spec §5 calls it
+   mandatory; if it vanishes on complete cases the clerk stops trusting it as
+   a checklist (memory/redcap.md §4). */
+.orow--upgrade {
+  background: var(--color-upgrade-fill);
+  border-top: 2px solid var(--color-upgrade-edge);
+  padding-left: var(--sp-2);
+  padding-right: var(--sp-2);
+}
+.orow--excluded { background: var(--ink-100); }
+
+.workup { display: flex; flex-direction: column; gap: var(--sp-1); }
+.workup__row { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.workup__test { flex: 1; min-width: 120px; font-weight: var(--w-semi); }
+.workup__row select { padding: 2px var(--sp-1); border: 2px solid var(--ink-300); border-radius: var(--radius-sm); }
+
+.qualifiers { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.qualifier {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-semi);
+  padding: 2px var(--sp-2);
+  border: 1px solid var(--ink-300);
+  border-radius: var(--radius-pill);
+  background: var(--ink-050);
+}
+
+/* Override sits VISIBLY beside the primary action, never hidden. Discordances
+   and overrides are quality signals, not noise (Design Spec §3.10). */
+.out__actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-3); }
+
+/* ==========================================================================
+   9. Landing + search
+   ========================================================================== */
+.landing__lead { font-size: var(--fs-body); color: var(--ink-700); margin: 0 0 var(--sp-3); max-width: 60ch; }
+.doors { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.door { flex: 1 1 260px; }
+.door h2 { font-size: var(--fs-h); margin: 0 0 var(--sp-1); }
+.door p { font-size: var(--fs-small); color: var(--color-muted); margin: 0 0 var(--sp-2); }
+
+.results { display: flex; flex-direction: column; gap: var(--sp-1); margin-top: var(--sp-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .opt, .marker { transition: none; }
+  .btn:active { transform: none; }
+}
