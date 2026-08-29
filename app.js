@@ -563,12 +563,15 @@ function matchRules(rules) {
   return null;
 }
 /* A written range is inclusive of both endpoints AT THE PRECISION IT IS
-   WRITTEN. "10-19" covers [10, 20); "0.5-0.99" covers [0.5, 1.00). Reading the
-   upper endpoint as a bare <= leaves a hole between one band and the next —
-   marrow blasts of 19.5% matched neither ">=20" nor "10-19" and fell silently
-   to the NOS fallback, which for a blast gate means reporting an acute
-   leukaemia NOS for a case that is squarely in the band below. Bands are
-   still tried in array order and the first match wins. */
+   WRITTEN: "10-19" covers [10, 20); "0.5-0.99" covers [0.5, 1.00).
+
+   Reading the upper endpoint as a bare <= leaves a hole between one band and
+   the next, and a value landing in that hole matches nothing and falls to the
+   node's NOS fallback. A gate is the one place that failure is invisible —
+   the clerk gets a plausible answer for a value that belongs in the band
+   below, with nothing on screen to say a band was missed.
+
+   Bands are still tried in array order and the first match wins. */
 function bandStep(text) {
   var dot = String(text).indexOf('.');
   return dot === -1 ? 1 : Math.pow(10, -(String(text).length - dot - 1));
