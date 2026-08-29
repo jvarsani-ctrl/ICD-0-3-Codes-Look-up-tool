@@ -33,6 +33,9 @@ var NODE_TYPES = [
 var WORKUP_STATES = ['pending', 'not done', 'unavailable', 'declined'];
 
 var MARKER_CYCLE = [undefined, 'pos', 'strong', 'weak', 'neg'];
+/* Screen-reader wording for each marker state. The visible chip shows a short
+   token; a marker read aloud needs the whole word. */
+var MARKER_LABELS = { pos: 'positive', strong: 'strongly positive', weak: 'weakly positive', neg: 'negative' };
 
 /* Cleared per case. No localStorage — the iframe reloads between patients
    (Architecture §4D, §7). */
@@ -457,7 +460,10 @@ function markerGrid(n) {
     return '<div class="tag">' + esc(g.group_label) + '</div><div class="markers">' +
       arr(g.markers).map(function (m) {
         var v = state.markers[m];
+        var pressed = v && v !== 'neg' ? 'true' : 'false';
         return '<button class="marker" data-act="marker" data-m="' + esc(m) + '"' +
+          ' aria-pressed="' + pressed + '"' +
+          ' aria-label="' + esc(m) + ': ' + esc(v ? MARKER_LABELS[v] : 'not recorded') + '"' +
           (v ? ' data-value="' + esc(v) + '"' : '') + '>' + esc(m) +
           (v === 'strong' || v === 'weak' ? '<span class="marker__int">' + esc(v === 'strong' ? 'str' : 'wk') + '</span>' : '') +
           (v === 'neg' ? '<span class="marker__state">neg</span>' : '') +
@@ -709,7 +715,8 @@ function renderWorkup() {
   if (!state.workup.length) return 'Complete — no outstanding tests.';
   return '<span class="workup">' + state.workup.map(function (w, i) {
     return '<span class="workup__row"><span class="workup__test">' + esc(w.test) + '</span>' +
-      '<select data-act="workup" data-i="' + i + '">' + WORKUP_STATES.map(function (s) {
+      '<select data-act="workup" data-i="' + i + '" aria-label="Workup status for ' + esc(w.test) + '">' +
+      WORKUP_STATES.map(function (s) {
         return '<option value="' + esc(s) + '"' + (w.status === s ? ' selected' : '') + '>' + esc(s) + '</option>';
       }).join('') + '</select></span>';
   }).join('') + '</span>';
