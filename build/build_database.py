@@ -323,6 +323,38 @@ def is_nos_fallback_object(holder, where) -> bool:
     return as_code(holder.get("code")) is not None and bool(holder.get("name"))
 
 
+def is_refer_branch(container) -> bool:
+    """
+    True when this branch is a CROSS-GROUP REFERRAL terminal — the fourth branch
+    destination app.js supports (advance() -> refer()), alongside next_node,
+    morphology_code and a non-reportable exclusion.
+
+    The case IS a malignancy, but it is not one this group codes — leukaemic Burkitt
+    belongs in Group II as 9687. Emitting a code from THIS group's file would file the
+    case under the wrong ICCC-3 group; marking it non_reportable would drop a real
+    cancer off the registry altogether. So it emits no code here and names where the
+    case belongs. Identified solely by carrying `refer_group`; whether that value is
+    well formed is check_refer_terminals()'s business, not this predicate's — a
+    malformed refer branch must still be RECOGNISED as one, or it falls through to the
+    code-less-terminal check and gets the wrong diagnosis.
+    """
+    return isinstance(container, dict) and "refer_group" in container
+
+
+def has_destination(container) -> bool:
+    """
+    True when a branch resolves to something. The four destinations app.js's advance()
+    dispatches on, in its order: a morphology_code, a refer_group, a non_reportable
+    exclusion, a next_node.
+    """
+    if not isinstance(container, dict):
+        return False
+    return bool(as_code(container.get("morphology_code"))
+                or is_refer_branch(container)
+                or is_non_reportable(container)
+                or container.get("next_node"))
+
+
 # --------------------------------------------------------------------------------------
 # Layer 1 — source of truth parsers (read-only)
 # --------------------------------------------------------------------------------------
@@ -1131,6 +1163,13 @@ def check_non_reportable_terminals(ctx: DTContext):
                 continue
             if not holder.get("reason"):
                 continue
+            if is_refer_branch(holder):
+                # A cross-group referral is a destination — it names another ICCC-3
+                # group rather than a node or a code. A `reason` on one is its
+                # DOCUMENTED shape (app.js refer() renders it as the "Why" row), not a
+                # code-less terminal that forgot to flag itself. Its own rules are
+                # enforced by check_refer_terminals().
+                continue
             if as_code(holder.get("morphology_code")) or holder.get("next_node"):
                 continue
             suspect = sorted(k for k in holder
@@ -1139,13 +1178,134 @@ def check_non_reportable_terminals(ctx: DTContext):
             out.append((FAIL, "%s (%s) carries a 'reason' but no destination and no "
                               "recognised non-reportable flag%s — if this is the clean "
                               "'not a reportable malignancy' terminal it must say so with "
-                              "\"non_reportable\": true, or its emit-no-code rule is never "
-                              "checked" % (node_id, where or "(node level)",
-                                           (" (saw %s)" % ", ".join(suspect)) if suspect else "")))
+                              "\"non_reportable\": true; if it belongs to another ICCC-3 "
+                              "group it must say so with \"refer_group\"; otherwise its "
+                              "emit-no-code rule is never checked"
+                        % (node_id, where or "(node level)",
+                           (" (saw %s)" % ", ".join(suspect)) if suspect else "")))
 
     if not out:
         out.append((OK, "%d non-reportable terminal(s) emit no morphology code; no "
                         "unflagged code-less terminals" % found))
+    return out
+
+
+def check_refer_terminals(ctx: DTContext):
+    """
+    The CROSS-GROUP REFERRAL terminal — app.js's fourth branch destination (advance()
+    -> refer()), previously unknown to this script.
+
+    The case is a malignancy that this group does not code: leukaemic Burkitt is
+    9687/3 in Group II, nodal-dominant CLL/SLL is 9823 but in IIb2, and so on. The
+    branch emits NO code from this file and names the group the case belongs to.
+
+    Two other checks used to misfire on this shape, because a refer branch is a
+    terminal that carries an explanation and emits nothing:
+
+      * check_non_reportable_terminals flagged "carries a 'reason' but no destination
+        and no non_reportable flag" — the description of a refer branch exactly;
+      * check_numeric_gate_shape demanded next_node / morphology_code / non_reportable
+        on every band.
+
+    Both now recognise refer_group as a destination, so the explanation can live in
+    `reason` where the schema says it belongs (it had been displaced into coding_note
+    purely to dodge the first check).
+
+    The rules enforced here:
+      * refer_group must be an INTEGER in 1..12 — it is an ICCC-3 group number, and
+        app.js looks it up in the router's groups table by string key. A float, a
+        numeric string or 0/13 all render a broken referral panel. bool is rejected
+        explicitly: it is an int subclass in Python and True would otherwise pass as
+        group 1.
+      * NO morphology_code. advance() tests morphology_code BEFORE refer_group, so a
+        refer branch carrying one silently emits this group's code and never refers —
+        the referral is dead data and the case is filed in the wrong group. FAIL.
+      * a `reason` SHOULD be present — it is the "Why" row the clerk reads. app.js
+        falls back to coding_note, so its absence is a WARN, not a FAIL.
+      * refer_code, where present, must be digits-only (same shape as a
+        morphology_code; it is one, in the other group's file).
+      * refer_code must NOT be a code this group's morphology_entries[] already owns.
+        Referring a case away to a code sitting in this very file is normally a routing
+        error: either the branch should have emitted it here, or the code does not
+        belong in this group's entry list. FAIL.
+
+        ONE exemption, and it is not a loophole — it is the DUAL-GROUP rule (DT master
+        §6). 9823, 9827 and 9591 are legitimately codeable in BOTH Group I and Group II;
+        which group applies is decided by compartment or topography, not by the code.
+        Nodal-dominant CLL/SLL really is 9823 in IIb2 while leukaemic CLL is 9823 in
+        Ia2. Such an entry declares itself with `topography_dependent: true` and spells
+        the split out in `topography_routing_note`, so the referral is checkable rather
+        than merely asserted: the exemption applies ONLY when the owning entry carries
+        that flag. A refer_code owned by an entry that does NOT declare itself
+        topography-dependent stays a FAIL — that is the real routing error.
+    """
+    out = []
+    refers = 0
+    dual = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if not is_refer_branch(holder):
+                continue
+            refers += 1
+            label = "%s (%s)" % (node_id, where or "(node level)")
+            grp = holder.get("refer_group")
+            if isinstance(grp, bool) or not isinstance(grp, int):
+                out.append((FAIL, "refer terminal %s: refer_group must be an integer "
+                                  "ICCC-3 group number, got %r" % (label, grp)))
+            elif not 1 <= grp <= 12:
+                out.append((FAIL, "refer terminal %s: refer_group %d is outside the "
+                                  "ICCC-3 range 1-12" % (label, grp)))
+            elif grp == ctx.group:
+                out.append((FAIL, "refer terminal %s: refer_group %d is this group — a "
+                                  "referral must name a DIFFERENT group, or the branch "
+                                  "should emit a code here" % (label, grp)))
+
+            code = as_code(holder.get("morphology_code"))
+            if code:
+                out.append((FAIL, "refer terminal %s carries morphology_code %s — app.js "
+                                  "advance() tests morphology_code before refer_group, so "
+                                  "this emits a group %d code and never refers; the case "
+                                  "would be filed in the wrong ICCC-3 group"
+                            % (label, code, ctx.group)))
+
+            if not holder.get("reason"):
+                out.append((WARN, "refer terminal %s carries no 'reason' — the clerk sees "
+                                  "no explanation for why the case leaves this group "
+                                  "(app.js falls back to coding_note)" % label))
+
+            if "refer_code" in holder:
+                rc = holder.get("refer_code")
+                rcs = as_code(rc)
+                if not isinstance(rc, str) or not rcs or not rcs.isdigit():
+                    out.append((FAIL, "refer terminal %s: refer_code must be a digits-only "
+                                      "string, got %r" % (label, rc)))
+                elif rcs in ctx.codes:
+                    owner = next((e for e in ctx.entries
+                                  if isinstance(e, dict)
+                                  and as_code(e.get("morphology_code")) == rcs), None)
+                    if owner is not None and owner.get("topography_dependent") is True:
+                        dual += 1
+                        if not owner.get("topography_routing_note"):
+                            out.append((WARN, "refer terminal %s refers to dual-group code "
+                                              "%s, but that entry declares "
+                                              "topography_dependent without a "
+                                              "topography_routing_note saying where the "
+                                              "split falls" % (label, rcs)))
+                    else:
+                        out.append((FAIL, "refer terminal %s refers to code %s, but %s is "
+                                          "in this group's morphology_entries[] and that "
+                                          "entry is NOT declared topography_dependent — "
+                                          "referring a case to a code this group already "
+                                          "owns outright is a routing error"
+                                    % (label, rcs, rcs)))
+    if dual:
+        out.append((NOTE, "%d referral(s) name a code this file also carries; each owning "
+                          "entry declares topography_dependent, so this is the dual-group "
+                          "rule (DT master §6), not a routing error" % dual))
+    if not any(level == FAIL for level, _ in out):
+        out.append((OK, "%d cross-group referral terminal(s) well formed: group in 1-12 "
+                        "and not this group, no morphology_code, refer_code digits-only "
+                        "and not owned outright here" % refers))
     return out
 
 
@@ -1176,10 +1336,12 @@ def check_numeric_gate_shape(ctx: DTContext):
                 continue
             if not isinstance(band.get("range"), str) or not band["range"]:
                 out.append((FAIL, "numeric_gate %s: bands[%d] has no 'range'" % (node_id, i)))
-            if not band.get("next_node") and not as_code(band.get("morphology_code")) \
-                    and not is_non_reportable(band):
-                out.append((FAIL, "numeric_gate %s: bands[%d] (%r) has neither a next_node "
-                                  "nor a morphology_code"
+            # Four destinations, matching app.js advance(): next_node, morphology_code,
+            # a non-reportable exclusion, or a cross-group referral.
+            if not has_destination(band):
+                out.append((FAIL, "numeric_gate %s: bands[%d] (%r) has no destination — "
+                                  "it needs a next_node, a morphology_code, "
+                                  "\"non_reportable\": true or a refer_group"
                             % (node_id, i, band.get("range"))))
         ovs = node.get("override_when")
         if ovs is not None and not isinstance(ovs, list):
@@ -1197,9 +1359,11 @@ def check_numeric_gate_shape(ctx: DTContext):
             if "equals" not in ov:
                 out.append((FAIL, "numeric_gate %s: override_when[%d] has no 'equals'"
                             % (node_id, i)))
-            if not ov.get("next_node") and not as_code(ov.get("morphology_code")):
-                out.append((FAIL, "numeric_gate %s: override_when[%d] has neither a "
-                                  "next_node nor a morphology_code" % (node_id, i)))
+            if not has_destination(ov):
+                out.append((FAIL, "numeric_gate %s: override_when[%d] has no destination — "
+                                  "it needs a next_node, a morphology_code, "
+                                  "\"non_reportable\": true or a refer_group"
+                            % (node_id, i)))
     if not out:
         out.append((OK, "%d numeric_gate node(s) well formed (Pathway §7.3 item 1)" % gates))
     return out
@@ -1296,9 +1460,35 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
 
     The tool is ADVISORY: the clerk finds the row in REDCap by matching the WHOLE option
     string, not four digits (redcap.md §2, §5). Any drift between morphology_name and the
-    REDCap option's name half therefore breaks the model, so it is a FAIL — but only for
-    entries that claim `redcap_option_verified: true`. Entries flagged false are a WARN
-    listing the codes that have no REDCap option yet.
+    REDCap option's name half therefore breaks the model.
+
+    This check used to key off `redcap_option_verified` alone — only entries claiming
+    `true` were compared, and `false` was a bare WARN. That left a hole wide enough to
+    drive six codes through: an entry could be flagged `false` while Layer 1 DID carry an
+    option string for its code, so its morphology_name was free to drift from a string
+    sitting right there in the source of truth, and the build still passed.
+
+    The rule is now keyed off Layer 1, not off the flag:
+
+        code HAS an option string in Layer 1  ->  the name must be character-identical,
+                                                  and a mismatch is a FAIL, whatever the
+                                                  flag says.
+        code has NO option string in Layer 1  ->  WARN. There is nothing to compare
+                                                  against; the registry must add the
+                                                  option before the terminal is usable.
+
+    `redcap_option_verified: true` on a code Layer 1 does not carry stays a FAIL, and a
+    stale `false` on a code it does carry is reported as a WARN so the flag is corrected.
+
+    ONE exemption, deliberately narrow — the behaviour-overloaded code. 9898 has a single
+    option string and that string names one of the two entities (ML-DS, /3); the sibling
+    it does not name (TAM, /1) genuinely has no option string of its own. An entry is
+    exempt only when ALL of:
+        * it is flagged `redcap_option_verified: false` (it makes no claim), AND
+        * another entry shares its morphology_code with a DIFFERENT behavior_code, AND
+        * that sibling's morphology_name IS character-identical to the option.
+    i.e. the option is demonstrably spoken for by the sibling. Anything less than all
+    three and the mismatch is a FAIL — the exemption can never absorb ordinary drift.
     """
     out = []
     options = redcap_options.get(ctx.group)
@@ -1306,13 +1496,33 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
         return [(NOTE, "no REDCap options parsed for group %d — exact-string check skipped"
                  % ctx.group)]
 
-    verified = matched = 0
-    unverified: list[str] = []
-    has_flag = any(isinstance(e, dict) and "redcap_option_verified" in e for e in ctx.entries)
-    if not has_flag and ctx.entries:
-        out.append((NOTE, "no entry carries 'redcap_option_verified'; unclaimed entries are "
-                          "compared against REDCap at WARN level only"))
+    def variants_of(option):
+        return option.get("names") or [option["name"]]
 
+    # code -> [entries], so the behaviour-overload exemption can see an entry's siblings.
+    by_code: dict[str, list] = {}
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is not None:
+            by_code.setdefault(code, []).append(entry)
+
+    def sibling_claims_option(entry, code, variants):
+        """True when a DIFFERENT-behaviour entry on this code already matches the option."""
+        mine = entry.get("behavior_code")
+        for other in by_code.get(code, []):
+            if other is entry:
+                continue
+            if other.get("behavior_code") == mine:
+                continue
+            if isinstance(other.get("morphology_name"), str) \
+                    and other["morphology_name"] in variants:
+                return True
+        return False
+
+    compared = matched = 0
+    no_option: list[str] = []
     for entry in ctx.entries:
         if not isinstance(entry, dict):
             continue
@@ -1322,39 +1532,56 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
             continue
         flag = entry.get("redcap_option_verified")
         option = options.get(code)
-        if flag is True:
-            verified += 1
-            if option is None:
+
+        if option is None:
+            # Nothing in Layer 1 to compare against.
+            if flag is True:
                 out.append((FAIL, "entry %s claims redcap_option_verified: true but no "
                                   "REDCap option with that code exists for group %d"
                             % (code, ctx.group)))
-                continue
-            variants = option.get("names") or [option["name"]]
-            if not isinstance(name, str) or name not in variants:
-                out.append((FAIL, "entry %s: morphology_name is not character-identical to "
-                                  "the REDCap option.\n"
-                                  "               dt.json : %r\n"
-                                  "               REDCap  : %s"
-                            % (code, name, " | ".join(repr(v) for v in variants))))
             else:
-                matched += 1
-        elif flag is False:
-            unverified.append(code)
-        else:
-            # No claim made — still worth surfacing drift, but only as a WARN.
-            variants = option.get("names") or [option["name"]] if option else []
-            if option is not None and isinstance(name, str) and name not in variants:
-                out.append((WARN, "entry %s (redcap_option_verified not set): "
-                                  "morphology_name %r differs from the REDCap option %s"
-                            % (code, name, " | ".join(repr(v) for v in variants))))
-            elif option is None:
-                unverified.append(code)
-    if unverified:
-        out.append((WARN, "%d code(s) have no verified REDCap option yet: %s"
-                    % (len(unverified), ", ".join(sorted(set(unverified))))))
-    if verified:
-        out.append((OK, "%d/%d verified morphology_name(s) are character-identical to the "
-                        "REDCap option string" % (matched, verified)))
+                no_option.append(code)
+            continue
+
+        # Layer 1 carries an option for this code — the name MUST match it.
+        variants = variants_of(option)
+        compared += 1
+        if isinstance(name, str) and name in variants:
+            matched += 1
+            if flag is not True:
+                out.append((WARN, "entry %s: morphology_name matches the REDCap option but "
+                                  "redcap_option_verified is %r — the flag is stale and "
+                                  "should be true" % (code, flag)))
+            continue
+
+        if flag is not True and sibling_claims_option(entry, code, variants):
+            # Behaviour-overloaded code: the one option string is spoken for by the
+            # sibling behaviour. This entry has no option string of its own.
+            compared -= 1
+            out.append((NOTE, "entry %s/%s (%r) is the unnamed half of a behaviour-"
+                              "overloaded code — the single REDCap option names the "
+                              "%s behaviour; no option string of its own"
+                        % (code, entry.get("behavior_code"), name,
+                           next((o.get("behavior_code") for o in by_code.get(code, [])
+                                 if o is not entry
+                                 and isinstance(o.get("morphology_name"), str)
+                                 and o["morphology_name"] in variants), "?"))))
+            no_option.append("%s/%s" % (code, entry.get("behavior_code")))
+            continue
+
+        out.append((FAIL, "entry %s: a REDCap option EXISTS for this code and "
+                          "morphology_name is not character-identical to it "
+                          "(redcap_option_verified: %r — the flag does not exempt it).\n"
+                          "               dt.json : %r\n"
+                          "               REDCap  : %s"
+                    % (code, flag, name, " | ".join(repr(v) for v in variants))))
+
+    if no_option:
+        out.append((WARN, "%d code(s) have no REDCap option string in Layer 1: %s"
+                    % (len(no_option), ", ".join(sorted(set(no_option))))))
+    if compared:
+        out.append((OK, "%d/%d morphology_name(s) whose code HAS a REDCap option are "
+                        "character-identical to it" % (matched, compared)))
     return out
 
 
@@ -1860,6 +2087,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_node_ids_unique_and_prefixed, ctx)
         report.run(check_orphan_nodes, ctx)
         report.run(check_non_reportable_terminals, ctx)
+        report.run(check_refer_terminals, ctx)
         # Group 1 schema extensions
         report.run(check_numeric_gate_shape, ctx)
         report.run(check_marker_intensity_tokens, ctx)

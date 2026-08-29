@@ -371,7 +371,7 @@
     },
     {
       "morphology_code": "9819",
-      "morphology_name": "B-lymphoblastic leukaemia/lymphoma, BCR-ABL1-like (Ph-like)",
+      "morphology_name": "B lymphoblastic leukemia/lymphoma, BCR-ABL1-like",
       "iccc3_subgroup_id": "Ia1",
       "iccc3_subgroup_name": "Precursor cell leukemias",
       "who_version": "WHO-HAEM5",
@@ -399,10 +399,10 @@
       "nos_fallback_name": "B lymphoblastic leukemia/lymphoma, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": "⚠️ Down syndrome-associated — confirm trisomy 21 karyotype and GATA1s.",
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9811. Requires a documented Ph-like signature — CRLF2 rearrangement, an ABL-class fusion or a JAK-STAT lesion — by FISH or RNA-seq; BCR::ABL1 itself must be negative (that is 9812). Enriched in Down-syndrome B-ALL, which is why the trisomy 21 alert is attached (§5.5.1). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ia1 assignment follows Pathway §1 by analogy with 9811–9818. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9811. Requires a documented Ph-like signature — CRLF2 rearrangement, an ABL-class fusion or a JAK-STAT lesion — by FISH or RNA-seq; BCR::ABL1 itself must be negative (that is 9812). Enriched in Down-syndrome B-ALL, which is why the trisomy 21 alert is attached (§5.5.1). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ia1 assignment follows Pathway §1 by analogy with 9811–9818.",
       "code_neutral_molecular": false,
       "redcap_value": "9819",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C42.0",
@@ -1240,7 +1240,7 @@
     },
     {
       "morphology_code": "9877",
-      "morphology_name": "AML with mutated NPM1",
+      "morphology_name": "Acute myeloid leukemia with mutated NPM1",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1267,10 +1267,10 @@
       "nos_fallback_name": "Acute myeloid leukemia, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": "⚠️ NPM1-mutated AML mimics APL (CD34−, HLA-DR−, MPO+, coagulopathy) but is CD4-positive with normal/low side scatter. Confirm PML::RARA is negative before coding 9877.",
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires a documented NPM1 mutation. Principal APL mimic: shares CD33+/CD13+/cMPO+ with CD34−/HLA-DR− but is CD4-positive with low-to-moderate side scatter and high WBC, where APL has high SSC. Code 9877 only once PML::RARA is molecularly excluded (§3.6). Registry applies the ICC ≥10% blast floor (§5.4). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires a documented NPM1 mutation. Principal APL mimic: shares CD33+/CD13+/cMPO+ with CD34−/HLA-DR− but is CD4-positive with low-to-moderate side scatter and high WBC, where APL has high SSC. Code 9877 only once PML::RARA is molecularly excluded (§3.6). Registry applies the ICC ≥10% blast floor (§5.4). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9877",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -1278,7 +1278,7 @@
     },
     {
       "morphology_code": "9878",
-      "morphology_name": "AML with biallelic mutations of CEBPA",
+      "morphology_name": "Acute myeloid leukemia with biallelic mutations of CEBPA",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1301,10 +1301,10 @@
       "nos_fallback_name": "Acute myeloid leukemia, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": null,
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires biallelic CEBPA mutation, or an in-frame bZIP mutation. One of the two blast-threshold exceptions: WHO-HAEM5 exempts both BCR::ABL1 and CEBPA from the blast requirement, ICC/ELN exempt only BCR::ABL1 from the ≥10% rule. The registry applies ICC thresholds (§5.4), so ≥10% blasts is required here. NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires biallelic CEBPA mutation, or an in-frame bZIP mutation. One of the two blast-threshold exceptions: WHO-HAEM5 exempts both BCR::ABL1 and CEBPA from the blast requirement, ICC/ELN exempt only BCR::ABL1 from the ≥10% rule. The registry applies ICC thresholds (§5.4), so ≥10% blasts is required here. NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9878",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -1312,7 +1312,7 @@
     },
     {
       "morphology_code": "9879",
-      "morphology_name": "AML with mutated RUNX1",
+      "morphology_name": "Acute myeloid leukemia with mutated RUNX1",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1335,10 +1335,10 @@
       "nos_fallback_name": "Acute myeloid leukemia, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": null,
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9895. Requires a documented RUNX1 mutation. Boundary with 9895: RUNX1 is also a member of the nine-gene MDS-related set, so a case with a RUNX1 mutation and MDS-related cytogenetics or other MDS-related gene mutations may resolve to 9895 instead — record which rule was applied in classification_system. TP53-mutated (VAF ≥10%) takes precedence over both (§3.7). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9895. Requires a documented RUNX1 mutation. Boundary with 9895: RUNX1 is also a member of the nine-gene MDS-related set, so a case with a RUNX1 mutation and MDS-related cytogenetics or other MDS-related gene mutations may resolve to 9895 instead — record which rule was applied in classification_system. TP53-mutated (VAF ≥10%) takes precedence over both (§3.7). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9879",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -1618,7 +1618,7 @@
     },
     {
       "morphology_code": "9912",
-      "morphology_name": "AML with BCR-ABL1",
+      "morphology_name": "Acute myeloid leukemia with BCR-ABL1",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1642,10 +1642,10 @@
       "nos_fallback_name": "Acute myeloid leukemia, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": null,
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires BCR::ABL1 plus AML criteria. Must be distinguished from CML in myeloid blast phase, which is 9875 — ask whether a preceding chronic phase is documented (§1, §3.9). BCR::ABL1 is the one abnormality for which both WHO-HAEM5 and ICC retain a blast-count requirement (§3.7, §5.4). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9861. Requires BCR::ABL1 plus AML criteria. Must be distinguished from CML in myeloid blast phase, which is 9875 — ask whether a preceding chronic phase is documented (§1, §3.9). BCR::ABL1 is the one abnormality for which both WHO-HAEM5 and ICC retain a blast-count requirement (§3.7, §5.4). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ib assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9912",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -2366,7 +2366,7 @@
     },
     {
       "morphology_code": "9993",
-      "morphology_name": "MDS with ring sideroblasts and multilineage dysplasia",
+      "morphology_name": "Myelodysplastic syndrome with ring sideroblasts and multilineage dysplasia",
       "iccc3_subgroup_id": "Id",
       "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
       "who_version": "ICC-2022",
@@ -2383,10 +2383,10 @@
       "nos_fallback_name": "Myelodysplastic syndrome, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising. ⚠️ Before coding paediatric MDS, document germline predisposition testing (GATA2, SAMD9/SAMD9L, RUNX1, ETV6, ANKRD26) and IBMFS exclusion (chromosome breakage, telomere length). These do not change the code but must be recorded.",
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); not addressed by the previous 76-code list. Ring sideroblasts plus multilineage dysplasia, with or without an SF3B1 mutation. Adult-predominant — keep the age-implausibility warning; rare in children. Distinguish from 9982 (ring sideroblasts, single lineage). SEER over-counting rule applies (§3.5). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Id assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); not addressed by the previous 76-code list. Ring sideroblasts plus multilineage dysplasia, with or without an SF3B1 mutation. Adult-predominant — keep the age-implausibility warning; rare in children. Distinguish from 9982 (ring sideroblasts, single lineage). SEER over-counting rule applies (§3.5). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Id assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9993",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -2722,10 +2722,10 @@
       "nos_fallback_name": "Chronic eosinophilic leukemia, NOS",
       "confidence_ceiling": "high",
       "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
-      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9964. Requires t(8;9)(p22;p24) on karyotype, or FISH, or RT-PCR for PCM1::JAK2. The secondary-eosinophilia exclusion cascade is a hard gate that must be documented before this code is reachable (§3.10). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ie assignment follows Pathway §1. No REDCap dropdown option exists for this code — registry action required before this terminal can be selected in REDCap.",
+      "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9964. Requires t(8;9)(p22;p24) on karyotype, or FISH, or RT-PCR for PCM1::JAK2. The secondary-eosinophilia exclusion cascade is a hard gate that must be documented before this code is reachable (§3.10). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ie assignment follows Pathway §1.",
       "code_neutral_molecular": false,
       "redcap_value": "9968",
-      "redcap_option_verified": false,
+      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": null,
       "topography_dependent": false,
@@ -3702,6 +3702,9 @@
             {
               "finding": "t(9;22)(q34;q11.2) BCR::ABL1",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9812",
               "coding_note": "Record the p190 vs p210 isoform. Rule out CML in lymphoid blast phase: >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is 9875, not 9812.",
               "clinical_alert": "⚠️ Lymphoid blast crisis of CML masquerades as B-ALL. >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is CML in lymphoid blast phase (9875, chronic-myeloid tree), not de novo 9812.",
@@ -3713,6 +3716,9 @@
             {
               "finding": "t(v;11q23) KMT2A (MLL) rearranged",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9813",
               "coding_note": "KMT2A break-apart FISH is the required method. The phenotype is CD10-dim/negative with CD24 negative — do not let that drop the case into AML or MPAL.",
               "captures": {
@@ -3723,6 +3729,10 @@
             {
               "finding": "t(12;21)(p13;q22) ETV6::RUNX1",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9814",
               "coding_note": "Cryptic — never visible on karyotype. Only FISH or RT-PCR can establish or exclude it.",
               "captures": {
@@ -3732,6 +3742,9 @@
             {
               "finding": "Hyperdiploidy, >50 chromosomes",
               "detection_method": "karyotype_or_dna_index",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9815",
               "coding_note": "Check for MASKED hypodiploidy — a hypodiploid clone that doubles reads hyperdiploid on karyotype but behaves as hypodiploid. SNP array or DNA index unmasks it; misreading inverts the prognosis.",
               "captures": {
@@ -3741,6 +3754,9 @@
             {
               "finding": "Hypodiploidy — near-haploid 24–31 or low-hypodiploid 32–39 chromosomes",
               "detection_method": "karyotype_or_dna_index",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9816",
               "coding_note": "Low-hypodiploid cases warrant germline testing — around half carry germline TP53 (Li-Fraumeni). Record it in germline_predisposition.",
               "captures": {
@@ -3751,6 +3767,9 @@
             {
               "finding": "t(5;14)(q31;q32) IL3::IGH",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9817",
               "coding_note": "Clinical clue: eosinophilia. Confirm with FISH.",
               "captures": {
@@ -3760,6 +3779,9 @@
             {
               "finding": "t(1;19)(q23;p13.3) TCF3::PBX1",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9818",
               "coding_note": "Phenotype clue: CD9 strong, CD34 negative.",
               "captures": {
@@ -3769,6 +3791,10 @@
             {
               "finding": "BCR::ABL1-like (Ph-like) signature confirmed — CRLF2-r, ABL-class or JAK-class kinase fusion",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9819",
               "coding_note": "9819 is a live ICD-O-3.2 code (Pathway §5.7) — do not downgrade Ph-like to 9811. CRLF2-r is enriched in B-ALL of Down syndrome.",
               "captures": {
@@ -3794,6 +3820,10 @@
             {
               "finding": "Karyotype normal AND FISH / RT-PCR negative for the cryptic set",
               "detection_method": "karyotype_and_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9811",
               "coding_note": "The cryptic branch has been properly closed — 9811 is a defensible terminal here, not an incomplete workup.",
               "upgrade_path": "None — the cryptic set has been excluded by an adequate method.",
@@ -4006,6 +4036,10 @@
             {
               "finding": "t(15;17)(q22;q11-12) PML::RARA positive — by FISH, RT-PCR/RQ-PCR or anti-PML immunostain",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9866",
               "clinical_alert": "⚠️ APL — haematological emergency. Document the DIC screen and ATRA initiation. Presumptive treatment is a clinical decision, not a coding one.",
               "coding_note": "Run RT-PCR in parallel where available — it defines the isoform and enables MRD. Treat anti-PML immunofluorescence as lower-confidence unless the reader is experienced.",
@@ -4021,17 +4055,26 @@
             {
               "finding": "t(8;21)(q22;q22) RUNX1::RUNX1T1",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9896",
               "coding_note": "Frequently co-expresses CD19, PAX5 and cCD79a. Aberrant B markers in an MPO-strong blast population with t(8;21) are AML, not B-ALL and not MPAL (Pathway §4.3)."
             },
             {
               "finding": "inv(16)(p13.1q22) or t(16;16) CBFB::MYH11 — abnormal marrow eosinophils",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9871"
             },
             {
               "finding": "KMT2A / 11q23 rearrangement, myeloid",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9897",
               "captures": {
                 "kmt2a_status": "positive"
@@ -4040,21 +4083,33 @@
             {
               "finding": "t(6;9)(p23;q34) DEK::NUP214",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9865"
             },
             {
               "finding": "inv(3)(q21q26.2) or t(3;3) MECOM rearranged",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9869"
             },
             {
               "finding": "t(1;22)(p13;q13) RBM15::MRTFA — megakaryoblastic",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9911"
             },
             {
               "finding": "NPM1 mutated",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
               "morphology_code": "9877",
               "clinical_alert": "⚠️ NPM1-mutated AML mimics APL (CD34−, HLA-DR−, MPO+, coagulopathy) but is CD4-positive with normal/low side scatter and a high WBC. Confirm PML::RARA before coding 9866.",
               "coding_note": "9877 is a live ICD-O-3.2 code (Pathway §5.7) — do not downgrade NPM1-mutated AML to 9861."
@@ -4062,6 +4117,9 @@
             {
               "finding": "CEBPA, biallelic (or bZIP in-frame) mutation",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
               "morphology_code": "9878",
               "classification_system": "ICC-2022",
               "coding_note": "WHO-HAEM5 exempts CEBPA from the blast-count requirement; ICC does not. The registry applies ICC for blast thresholds, so ≥20% blasts are still required here."
@@ -4069,12 +4127,18 @@
             {
               "finding": "RUNX1 mutated",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
               "morphology_code": "9879",
               "coding_note": "9879 is a live ICD-O-3.2 code (Pathway §5.7) — previously (wrongly) advised as 9895."
             },
             {
               "finding": "BCR::ABL1 positive AML, ≥20% blasts, no documented preceding chronic phase",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9912",
               "classification_system": "ICC-2022",
               "clinical_alert": "⚠️ Lymphoid blast crisis of CML masquerades as B-ALL. >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is CML in lymphoid blast phase (9875, chronic-myeloid tree), not de novo 9812.",
@@ -4086,6 +4150,9 @@
             {
               "finding": "MDS-related cytogenetics, complex karyotype, or a mutation in ASXL1, BCOR, EZH2, RUNX1, SF3B1, SRSF2, STAG2, U2AF1 or ZRSR2",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9895",
               "coding_note": "Per ELN 2022 these define AML with myelodysplasia-related changes irrespective of prior MDS history. TP53-mutated (VAF ≥10%) takes precedence as a separate entity in ICC but has no separate ICD-O-3.2 code — it also codes here or at 9861 with the genotype recorded. The registry's WHO-vs-ICC choice for 9895's internal split is not yet ratified (Pathway §5.4).",
               "captures": {
@@ -4223,6 +4290,9 @@
             {
               "finding": "t(1;22)(p13;q13) RBM15::MRTFA",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9911",
               "captures": {
                 "cryptic_genetics_tested": "FISH performed"
@@ -4231,6 +4301,10 @@
             {
               "finding": "CBFA2T3::GLIS2 (RAM phenotype: bright CD56, dim CD45/CD38, HLA-DR negative)",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9910",
               "coding_note": "Cryptic on karyotype — RT-PCR or NGS only. No distinct ICD-O-3.2 code; falls to 9910 with the fusion recorded.",
               "captures": {
@@ -4240,6 +4314,10 @@
             {
               "finding": "NUP98 rearranged, megakaryoblastic",
               "detection_method": "fish_or_rtpcr_only",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9910",
               "coding_note": "No distinct code — 9910 with the fusion recorded (Pathway §5.2).",
               "captures": {
@@ -4249,6 +4327,9 @@
             {
               "finding": "KMT2A rearranged, megakaryoblastic",
               "detection_method": "karyotype_or_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
               "morphology_code": "9910",
               "captures": {
                 "kmt2a_status": "positive",
@@ -4258,6 +4339,10 @@
             {
               "finding": "Karyotype normal AND the cryptic fusion panel (RT-PCR / NGS) was negative",
               "detection_method": "karyotype_and_fish",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
               "morphology_code": "9910",
               "upgrade_path": "None — the cryptic AMKL fusions have been excluded by an adequate method.",
               "captures": {
@@ -5031,17 +5116,17 @@
             {
               "label": "Lymph nodes only — no blood or marrow involvement",
               "refer_group": 2,
-              "coding_note": "Nodal-only disease with no blood or marrow involvement is a Group II lymphoma, not a Group I leukaemia. If the immunophenotype shows CD5+CD23+ clonal B cells the entity is small lymphocytic lymphoma and still codes 9823, but in Group II (IIb2); any other subtype is resolved by the Group II tree. No Group I code is emitted (DT master §6; Pathway §5.3)."
+              "reason": "Nodal-only disease with no blood or marrow involvement is a Group II lymphoma, not a Group I leukaemia. If the immunophenotype shows CD5+CD23+ clonal B cells the entity is small lymphocytic lymphoma and still codes 9823, but in Group II (IIb2); any other subtype is resolved by the Group II tree. No Group I code is emitted (DT master §6; Pathway §5.3)."
             },
             {
               "label": "Spleen only (C42.2) — splenomegaly with no blood or marrow involvement",
               "refer_group": 2,
-              "coding_note": "C42.2 (spleen) is deliberately carved out of the Group I topography set for the lymphoid dual-group codes. A splenic presentation routes to Group II. No Group I code is emitted (Pathway §1 Ia4, §5.3.10)."
+              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for the lymphoid dual-group codes. A splenic presentation routes to Group II. No Group I code is emitted (Pathway §1 Ia4, §5.3.10)."
             },
             {
               "label": "Extranodal tissue only (skin, gut, CNS, other) — no blood or marrow involvement",
               "refer_group": 2,
-              "coding_note": "Extranodal disease with no blood or marrow involvement is a Group II lymphoma. No Group I code is emitted (DT master §6)."
+              "reason": "Extranodal disease with no blood or marrow involvement is a Group II lymphoma. No Group I code is emitted (DT master §6)."
             },
             {
               "label": "Compartment not stated in the file",
@@ -5481,21 +5566,21 @@
                 "cyclin D1"
               ],
               "refer_group": 2,
-              "coding_note": "CD5-positive, cyclin D1-positive clonal B cells are mantle cell lymphoma — a Group II entity, not a Group I mature B-cell leukaemia. A leukaemic phase does not move it to Group I. No Group I code is emitted; the Group II tree resolves the code."
+              "reason": "CD5-positive, cyclin D1-positive clonal B cells are mantle cell lymphoma — a Group II entity, not a Group I mature B-cell leukaemia. A leukaemic phase does not move it to Group I. No Group I code is emitted; the Group II tree resolves the code."
             },
             {
               "positive": [
                 "cyclin D1"
               ],
               "refer_group": 2,
-              "coding_note": "Cyclin D1 expression in a clonal B population indicates mantle cell lymphoma, a Group II entity. No Group I code is emitted."
+              "reason": "Cyclin D1 expression in a clonal B population indicates mantle cell lymphoma, a Group II entity. No Group I code is emitted."
             },
             {
               "positive": [
                 "SOX11"
               ],
               "refer_group": 2,
-              "coding_note": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
+              "reason": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
             },
             {
               "positive": [
@@ -5711,7 +5796,7 @@
               "label": "Lymph-node or splenic disease is dominant; the blood and marrow involvement is secondary",
               "refer_group": 2,
               "refer_code": "9823",
-              "coding_note": "Same entity, different compartment. Nodal- or splenic-dominant CLL/SLL is small lymphocytic lymphoma and codes 9823 in Group II (IIb2), not Group I (DT master §6; Pathway §5.3). No Group I code is emitted."
+              "reason": "Same entity, different compartment. Nodal- or splenic-dominant CLL/SLL is small lymphocytic lymphoma and codes 9823 in Group II (IIb2), not Group I (DT master §6; Pathway §5.3). No Group I code is emitted."
             }
           ],
           "nos_fallback": null
@@ -5746,7 +5831,7 @@
               "label": "Lymphadenopathy and/or splenomegaly with tissue involvement, no cytopenia",
               "refer_group": 2,
               "refer_code": "9823",
-              "coding_note": "Tissue-based disease below the leukaemic threshold is small lymphocytic lymphoma — the same entity and the same code (9823), but Group II (IIb2). No Group I code is emitted (DT master §6)."
+              "reason": "Tissue-based disease below the leukaemic threshold is small lymphocytic lymphoma — the same entity and the same code (9823), but Group II (IIb2). No Group I code is emitted (DT master §6)."
             },
             {
               "label": "No lymphadenopathy, no organomegaly, no cytopenia — clonal B cells only",
@@ -5968,14 +6053,14 @@
                 "cyclin D1"
               ],
               "refer_group": 2,
-              "coding_note": "Cyclin D1-positive clonal B cells are mantle cell lymphoma, which mimics B-PLL and must be excluded before 9833 (Pathway §3.11). Mantle cell lymphoma is a Group II entity — no Group I code is emitted."
+              "reason": "Cyclin D1-positive clonal B cells are mantle cell lymphoma, which mimics B-PLL and must be excluded before 9833 (Pathway §3.11). Mantle cell lymphoma is a Group II entity — no Group I code is emitted."
             },
             {
               "positive": [
                 "SOX11"
               ],
               "refer_group": 2,
-              "coding_note": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
+              "reason": "SOX11 expression indicates mantle cell lymphoma, including the cyclin D1-negative variant. Group II entity — no Group I code is emitted."
             },
             {
               "positive": [
@@ -6457,7 +6542,7 @@
               "captures": {
                 "htlv1_status": "negative"
               },
-              "coding_note": "Sézary syndrome and the peripheral T-cell lymphomas are Group II entities even when they circulate. HTLV-1 negativity excludes ATLL, so no Group I code is emitted; the Group II tree resolves the subtype."
+              "reason": "Sézary syndrome and the peripheral T-cell lymphomas are Group II entities even when they circulate. HTLV-1 negativity excludes ATLL, so no Group I code is emitted; the Group II tree resolves the subtype."
             },
             {
               "label": "HTLV-1 screening assay REACTIVE — confirmatory test pending or not performed",
@@ -6556,7 +6641,7 @@
               "descriptor": "Lymphomatous — nodal disease dominant, under 1% circulating abnormal lymphocytes",
               "refer_group": 2,
               "refer_code": "9827",
-              "coding_note": "Lymphomatous ATLL is the lymphoma phase and routes to Group II (IIb3) by the dual-group rule (DT master §6; Pathway §1 Ia3). The code is still 9827 — the group is not Group I, so no Group I code is emitted here."
+              "reason": "Lymphomatous ATLL is the lymphoma phase and routes to Group II (IIb3) by the dual-group rule (DT master §6; Pathway §1 Ia3). The code is still 9827 — the group is not Group I, so no Group I code is emitted here."
             },
             {
               "descriptor": "Subtype not stated in the file",
@@ -7076,13 +7161,13 @@
               "site": "C42.2 — Spleen",
               "refer_group": 2,
               "refer_code": "9591",
-              "coding_note": "C42.2 (spleen) is deliberately carved out of the Group I topography set for 9591 (Pathway §1 Ia4, §5.3.10). A splenic non-Hodgkin lymphoma NOS codes 9591 in Group II (IIb4). The code is the same; the group is not Group I, so no Group I code is emitted."
+              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for 9591 (Pathway §1 Ia4, §5.3.10). A splenic non-Hodgkin lymphoma NOS codes 9591 in Group II (IIb4). The code is the same; the group is not Group I, so no Group I code is emitted."
             },
             {
               "site": "A nodal or extranodal site — lymph nodes, gut, skin, CNS, other",
               "refer_group": 2,
               "refer_code": "9591",
-              "coding_note": "Every site other than C42.0 / C42.1 / C42.3 / C42.4 routes 9591 to Group II (IIb4, Non-Hodgkin lymphomas NOS) (Pathway §5.3.10). No Group I code is emitted."
+              "reason": "Every site other than C42.0 / C42.1 / C42.3 / C42.4 routes 9591 to Group II (IIb4, Non-Hodgkin lymphomas NOS) (Pathway §5.3.10). No Group I code is emitted."
             },
             {
               "site": "The process is explicitly leukaemic — circulating clonal lymphoid cells, no tissue mass",
@@ -7114,7 +7199,7 @@
               "label": "Confirm — refer this case to Group II and code 9687/3 (IIc)",
               "refer_group": 2,
               "refer_code": "9687",
-              "coding_note": "Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021. 9826 is retired and read-only for earlier records. No Group I code is emitted, and this is NOT a non-reportable terminal — Burkitt is a malignancy and must stay on the registry, in Group II. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change. The same alias strings must exist in aliases_group_02.json for the clerk to land there; that mirror is a flagged gap."
+              "reason": "Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021. 9826 is retired and read-only for earlier records. No Group I code is emitted, and this is NOT a non-reportable terminal — Burkitt is a malignancy and must stay on the registry, in Group II. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change. The same alias strings must exist in aliases_group_02.json for the clerk to land there; that mirror is a flagged gap."
             },
             {
               "label": "On review MYC rearrangement is not established — go back to the discriminator panel",
