@@ -1,14 +1,17 @@
 {
   "_comment": "Shared cross-group front door. See Architecture & File System §4C/§5/§6 and Decision Tree JSON Build master §3A-§3C/§6. Router-tier only: clinical_presentation (Stage 0) and site_capture (Stage 1) live here, never in a group_XX_dt.json.",
-
   "archetypes": [
     {
       "archetype_id": "blood_marrow",
       "label": "Blood / marrow signs (cytopenias, blasts)",
-      "typical_groups": [1],
+      "typical_groups": [
+        1
+      ],
       "site_capture": false,
       "auto_topography": "C42.x",
-      "candidate_groups": [1],
+      "candidate_groups": [
+        1
+      ],
       "candidate_groups_advisory": false,
       "scaffold": "straight to marrow morphology + flow/IHC (no mass, no imaging)",
       "dual_group_discriminator": "primary_compartment"
@@ -16,9 +19,24 @@
     {
       "archetype_id": "solid_mass",
       "label": "Mass / swelling (solid tumour)",
-      "typical_groups": [4, 6, 7, 8, 9, 10],
+      "typical_groups": [
+        4,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
       "site_capture": true,
-      "candidate_groups": [4, 6, 7, 8, 9, 10],
+      "candidate_groups": [
+        2,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
       "candidate_groups_advisory": true,
       "scaffold": "site → imaging → tissue gate",
       "dual_group_discriminator": "tumour_origin",
@@ -27,9 +45,15 @@
     {
       "archetype_id": "lymphadenopathy",
       "label": "Lymphadenopathy",
-      "typical_groups": [2, 1],
+      "typical_groups": [
+        2,
+        1
+      ],
       "site_capture": true,
-      "candidate_groups": [2, 1],
+      "candidate_groups": [
+        2,
+        1
+      ],
       "candidate_groups_advisory": true,
       "scaffold": "site (nodal vs extranodal) → tissue gate",
       "dual_group_discriminator": "primary_compartment"
@@ -37,18 +61,34 @@
     {
       "archetype_id": "organ_functional_sign",
       "label": "Organ-functional sign (leukocoria, proptosis, haematuria, jaundice + AFP, raised ICP)",
-      "typical_groups": [3, 5, 6, 7],
+      "typical_groups": [
+        3,
+        5,
+        6,
+        7
+      ],
       "site_capture": true,
-      "candidate_groups": [3, 5, 6, 7],
+      "candidate_groups": [
+        3,
+        5,
+        6,
+        7
+      ],
       "candidate_groups_advisory": true,
       "scaffold": "site → imaging (may be imaging-sufficient)"
     },
     {
       "archetype_id": "cutaneous_mucosal_lesion",
       "label": "Cutaneous / mucosal lesion",
-      "typical_groups": [9, 2],
+      "typical_groups": [
+        9,
+        2
+      ],
       "site_capture": true,
-      "candidate_groups": [9, 2],
+      "candidate_groups": [
+        9,
+        2
+      ],
       "candidate_groups_advisory": true,
       "scaffold": "site → tissue gate"
     },
@@ -72,48 +112,96 @@
       "notes": "Ambiguous or blurred presentations (leukaemia/lymphoma overlap, a mass with cytopenias) degrade gracefully to site-first entry rather than a silent wrong guess."
     }
   ],
-
   "discriminators": {
     "primary_compartment": {
       "variable": "primary_compartment",
       "question": "Is the disease marrow-based, nodal, or extranodal?",
-      "options": ["marrow", "nodal", "extranodal"],
-      "asked_by": ["blood_marrow", "lymphadenopathy", "unsure"],
+      "options": [
+        "marrow",
+        "nodal",
+        "extranodal"
+      ],
+      "asked_by": [
+        "blood_marrow",
+        "lymphadenopathy",
+        "unsure"
+      ],
       "settles": "Group I vs Group II split for 9811-9819 (B-ALL family), 9823 (SLL/CLL), 9827 (ATLL) when the compartment (not topography alone) determines the group. See dual_group_rules."
     },
     "tumour_origin": {
       "variable": "tumour_origin",
       "question": "Does the tumour arise in bone (cortical destruction on imaging) or soft tissue (bone intact)?",
-      "options": ["bone", "soft_tissue"],
-      "asked_by": ["solid_mass"],
+      "options": [
+        "bone",
+        "soft_tissue"
+      ],
+      "asked_by": [
+        "solid_mass"
+      ],
       "settles": "Group VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules."
     }
   },
-
   "site_to_group": {
-    "C40-C41": [8],
-    "C47-C49": [9],
-    "C64.9": [6],
-    "C22": [7],
-    "C74": [4],
-    "C42.x": [1, 2],
-    "C56,C62": [10],
-    "C70-C72": [3],
-    "C75.1": [3, 11],
-    "C69": [5],
-    "C77": [2],
-    "abdomen-bowel/nodal": [2]
+    "C40-C41": [
+      8
+    ],
+    "C47-C49": [
+      9
+    ],
+    "C64.9": [
+      6
+    ],
+    "C22": [
+      7
+    ],
+    "C74": [
+      4
+    ],
+    "C42.x": [
+      1,
+      2
+    ],
+    "C56,C62": [
+      10
+    ],
+    "C70-C72": [
+      3
+    ],
+    "C75.1": [
+      3,
+      11
+    ],
+    "C69": [
+      5
+    ],
+    "C77": [
+      2
+    ],
+    "abdomen-bowel/nodal": [
+      2
+    ]
   },
-
   "groups": {
     "1": {
       "name": "Leukemias, Myeloproliferative and Myelodysplastic Diseases",
       "built": true,
       "trees": [
-        { "tree_id": "tree_acute_leukemia", "entry_node": "ac_document_inventory" },
-        { "tree_id": "tree_mature_lymphoid", "entry_node": "ml_document_inventory" },
-        { "tree_id": "tree_chronic_myeloid_mpn", "entry_node": "mpn_document_inventory" },
-        { "tree_id": "tree_mds_jmml", "entry_node": "mds_document_inventory" }
+        {
+          "tree_id": "tree_acute_leukemia",
+          "entry_node": "ac_document_inventory"
+        },
+        {
+          "tree_id": "tree_mature_lymphoid",
+          "entry_node": "ml_document_inventory"
+        },
+        {
+          "tree_id": "tree_chronic_myeloid_mpn",
+          "entry_node": "mpn_document_inventory"
+        },
+        {
+          "tree_id": "tree_mds_jmml",
+          "entry_node": "mds_document_inventory"
+        }
       ],
       "tree_selection": {
         "_comment": "Site cannot select the tree (every Group I case is C42.x) and blast % may be unknown at entry (Pathway §7.1). This is a second one-tap DATA-LEVEL option appended to Stage 1 site_capture, distinct from organ-of-origin site capture used by solid-tumour archetypes.",
@@ -158,185 +246,534 @@
             "is_default": false
           }
         ]
+      },
+      "handoff": {
+        "group": 1,
+        "tree_id": "tree_acute_leukemia",
+        "entry_node": "ac_document_inventory"
       }
     },
-    "2": { "name": "Lymphomas", "built": false, "trees": [] },
-    "3": { "name": "CNS and Miscellaneous Intracranial and Intraspinal Neoplasms", "built": false, "trees": [] },
-    "4": { "name": "Neuroblastoma", "built": false, "trees": [] },
-    "5": { "name": "Retinoblastoma", "built": false, "trees": [] },
-    "6": { "name": "Renal Tumors", "built": false, "trees": [] },
-    "7": { "name": "Hepatic Tumors", "built": false, "trees": [] },
-    "8": { "name": "Malignant Bone Tumors", "built": false, "trees": [] },
-    "9": { "name": "Soft Tissue and Other Extraosseous Sarcomas", "built": false, "trees": [] },
-    "10": { "name": "Germ Cell, Trophoblastic Tumors and Neoplasms of Gonads", "built": false, "trees": [] },
-    "11": { "name": "Other Malignant Epithelial Neoplasms and Malignant Melanomas", "built": false, "trees": [] },
-    "12": { "name": "Other and Unspecified Malignant Neoplasms", "built": false, "trees": [] }
+    "2": {
+      "name": "Lymphomas and Reticuloendothelial Neoplasms",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "3": {
+      "name": "CNS and Miscellaneous Intracranial and Intraspinal Neoplasms",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "4": {
+      "name": "Neuroblastoma and Other Peripheral Nervous Cell Tumours",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "5": {
+      "name": "Retinoblastoma",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "6": {
+      "name": "Renal Tumors",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "7": {
+      "name": "Hepatic Tumors",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "8": {
+      "name": "Malignant Bone Tumors",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "9": {
+      "name": "Soft Tissue and Other Extraosseous Sarcomas",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "10": {
+      "name": "Germ Cell, Trophoblastic Tumors and Neoplasms of Gonads",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "11": {
+      "name": "Other Malignant Epithelial Neoplasms and Malignant Melanomas",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    },
+    "12": {
+      "name": "Other and Unspecified Malignant Neoplasms",
+      "built": false,
+      "trees": [],
+      "handoff": null
+    }
   },
-
   "dual_group_rules": {
     "_comment": "Transcribed from Decision Tree JSON Build master §6. Consulted at Moment 1 (routePresentation, before any tree loads, when candidates.length > 1) and/or Moment 2 (resolveGroup at a terminal, Architecture §6). Engine walks branches[] in order; first match wins; falls to default if none match.",
-
     "9811-9819": {
-      "codes": ["9811", "9812", "9813", "9814", "9815", "9816", "9817", "9818", "9819"],
+      "codes": [
+        "9811",
+        "9812",
+        "9813",
+        "9814",
+        "9815",
+        "9816",
+        "9817",
+        "9818",
+        "9819"
+      ],
       "label": "B lymphoblastic leukemia/lymphoma family",
       "topography_dependent": true,
       "discriminator": "primary_compartment",
       "branches": [
         {
-          "when": { "captured_variable": "marrow_blast_percentage", "operator": ">=", "value": 25 },
-          "result": { "group": 1, "subgroup": "Ia1" },
+          "when": {
+            "captured_variable": "marrow_blast_percentage",
+            "operator": ">=",
+            "value": 25
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia1"
+          },
           "note": "≥25% marrow blasts overrides a nodal/extranodal presentation — routes to Group I regardless of compartment."
         },
-        { "when": { "captured_variable": "primary_compartment", "equals": "marrow" }, "result": { "group": 1, "subgroup": "Ia1" } },
-        { "when": { "topography_in": ["C42.0", "C42.1", "C42.3", "C42.4"] }, "result": { "group": 1, "subgroup": "Ia1" } },
-        { "when": { "captured_variable": "primary_compartment", "equals": "nodal" }, "result": { "group": 2, "subgroup": "IIb1" } },
-        { "when": { "captured_variable": "primary_compartment", "equals": "extranodal" }, "result": { "group": 2, "subgroup": "IIb1" } }
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "marrow"
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia1"
+          }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C42.0",
+              "C42.1",
+              "C42.3",
+              "C42.4"
+            ]
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia1"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "nodal"
+          },
+          "result": {
+            "group": 2,
+            "subgroup": "IIb1"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "extranodal"
+          },
+          "result": {
+            "group": 2,
+            "subgroup": "IIb1"
+          }
+        }
       ],
-      "default": { "group": 2, "subgroup": "IIb1" }
+      "default": {
+        "group": 2,
+        "subgroup": "IIb1"
+      },
+      "note": "Includes 9819 (B-ALL, BCR::ABL1-like/Ph-like) alongside 9811-9818: 9819 is an ICD-O-3.2 addition postdating DT master §6's table (Pathway §5.7), belongs to the same B-ALL family, and group_01_dt.json sets topography_dependent:true on it with the identical routing note applied to 9811-9818.",
+      "spleen_carveout_note": "C42.2 (spleen) is deliberately excluded from the C42.x branch here, consistent with the 9591 rule's carve-out -- not a transcription slip. DT master §6's literal text says only 'C42.x' without naming spleen, but the registry reads it the same way it reads 9591 (spleen presentation of a B-ALL-family code is not marrow-primary)."
     },
-
     "9823": {
-      "codes": ["9823"],
+      "codes": [
+        "9823"
+      ],
       "label": "B-CLL / small lymphocytic lymphoma",
       "topography_dependent": true,
       "discriminator": "primary_compartment",
       "branches": [
-        { "when": { "captured_variable": "primary_compartment", "equals": "marrow" }, "result": { "group": 1, "subgroup": "Ia2" } },
-        { "when": { "topography_in": ["C42.0", "C42.1", "C42.3", "C42.4"] }, "result": { "group": 1, "subgroup": "Ia2" } },
-        { "when": { "captured_variable": "primary_compartment", "equals": "nodal" }, "result": { "group": 2, "subgroup": "IIb2" } }
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "marrow"
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia2"
+          }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C42.0",
+              "C42.1",
+              "C42.3",
+              "C42.4"
+            ]
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia2"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "nodal"
+          },
+          "result": {
+            "group": 2,
+            "subgroup": "IIb2"
+          }
+        }
       ],
-      "default": { "group": 2, "subgroup": "IIb2" }
+      "default": {
+        "group": 2,
+        "subgroup": "IIb2"
+      },
+      "spleen_carveout_note": "C42.2 (spleen) is deliberately excluded from the C42.x branch here, consistent with the 9591 rule's carve-out -- not a transcription slip. DT master §6's literal text says only 'C42.x' without naming spleen, but the registry reads it the same way it reads 9591."
     },
-
     "9827": {
-      "codes": ["9827"],
+      "codes": [
+        "9827"
+      ],
       "label": "Adult T-cell leukemia/lymphoma (ATLL)",
       "topography_dependent": true,
       "discriminator": "primary_compartment",
       "branches": [
         {
-          "when": { "captured_variable": "primary_compartment", "equals": "marrow" },
-          "result": { "group": 1, "subgroup": "Ia3" },
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "marrow"
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia3"
+          },
           "note": "Leukaemic phase."
         },
         {
-          "when": { "captured_variable": "primary_compartment", "equals": "nodal" },
-          "result": { "group": 2, "subgroup": "IIb3" },
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "nodal"
+          },
+          "result": {
+            "group": 2,
+            "subgroup": "IIb3"
+          },
           "note": "Lymphoma phase."
         }
       ],
-      "default": { "group": 2, "subgroup": "IIb3" },
+      "default": {
+        "group": 2,
+        "subgroup": "IIb3"
+      },
       "note": "HTLV-1 serology mandatory before coding either way (clinical_alert, DT master §5)."
     },
-
     "9591": {
-      "codes": ["9591"],
+      "codes": [
+        "9591"
+      ],
       "label": "Malignant lymphoma, non-Hodgkin, NOS",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C42.0", "C42.1", "C42.3", "C42.4"] }, "result": { "group": 1, "subgroup": "Ia4" } }
+        {
+          "when": {
+            "topography_in": [
+              "C42.0",
+              "C42.1",
+              "C42.3",
+              "C42.4"
+            ]
+          },
+          "result": {
+            "group": 1,
+            "subgroup": "Ia4"
+          }
+        }
       ],
-      "default": { "group": 2, "subgroup": "IIb4" },
+      "default": {
+        "group": 2,
+        "subgroup": "IIb4"
+      },
       "note": "Group-1-specific dual-group rule (Pathway §1, §5.3). C42.2 (spleen) and every other site fall to the default — this is exactly why C42.0-C42.4 must be individually addressable in topography_codes.json, not lumped as C42.x."
     },
-
     "9380": {
-      "codes": ["9380"],
+      "codes": [
+        "9380"
+      ],
       "label": "Glioma, NOS",
       "topography_dependent": true,
       "discriminator": "fine_topography",
       "branches": [
-        { "when": { "topography_equals": "C72.3" }, "result": { "group": 3, "subgroup": "IIIb" }, "note": "Optic nerve." }
+        {
+          "when": {
+            "topography_equals": "C72.3"
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIb"
+          },
+          "note": "Optic nerve."
+        }
       ],
-      "default": { "group": 3, "subgroup": "IIId2" }
+      "default": {
+        "group": 3,
+        "subgroup": "IIId2"
+      }
     },
-
     "9473": {
-      "codes": ["9473"],
+      "codes": [
+        "9473"
+      ],
       "label": "Primitive neuroectodermal tumour (PNET)",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C70", "C71", "C72"] }, "result": { "group": 3, "subgroup": "IIIc2" }, "note": "Intracranial." }
+        {
+          "when": {
+            "topography_in": [
+              "C70.9",
+              "C71.9",
+              "C72.9"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIc2"
+          },
+          "note": "Intracranial."
+        }
       ],
-      "default": { "group": 9, "subgroup": null, "note": "Peripheral / soft tissue PNET." }
+      "default": {
+        "group": 9,
+        "subgroup": null,
+        "note": "Peripheral / soft tissue PNET."
+      },
+      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
     },
-
     "9501-9504": {
-      "codes": ["9501", "9502", "9503", "9504"],
+      "codes": [
+        "9501",
+        "9502",
+        "9503",
+        "9504"
+      ],
       "label": "Medulloepithelioma",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C70", "C71", "C72"] }, "result": { "group": 3, "subgroup": "IIIc3" } }
+        {
+          "when": {
+            "topography_in": [
+              "C70.9",
+              "C71.9",
+              "C72.9"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIc3"
+          }
+        }
       ],
-      "default": { "group": 4, "subgroup": null, "note": "Non-CNS." }
+      "default": {
+        "group": 4,
+        "subgroup": null,
+        "note": "Non-CNS."
+      },
+      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
     },
-
     "8158,8290": {
-      "codes": ["8158", "8290"],
+      "codes": [
+        "8158",
+        "8290"
+      ],
       "label": "Pituitary tumour, NOS",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_equals": "C75.1" }, "result": { "group": 3, "subgroup": "IIIe1" } }
+        {
+          "when": {
+            "topography_equals": "C75.1"
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIe1"
+          }
+        }
       ],
-      "default": { "group": 11, "subgroup": null }
+      "default": {
+        "group": 11,
+        "subgroup": null
+      }
     },
-
     "9260": {
-      "codes": ["9260"],
+      "codes": [
+        "9260"
+      ],
       "label": "Ewing sarcoma",
       "topography_dependent": true,
       "discriminator": "tumour_origin",
       "branches": [
-        { "when": { "captured_variable": "tumour_origin", "equals": "bone" }, "result": { "group": 8, "subgroup": "VIIIc1" } },
-        { "when": { "captured_variable": "tumour_origin", "equals": "soft_tissue" }, "result": { "group": 9, "subgroup": "IXd1" } }
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "bone"
+          },
+          "result": {
+            "group": 8,
+            "subgroup": "VIIIc1"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "soft_tissue"
+          },
+          "result": {
+            "group": 9,
+            "subgroup": "IXd1"
+          }
+        }
       ],
-      "default": { "group": null, "subgroup": null, "requires_disambiguation": true, "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue." }
+      "default": {
+        "group": null,
+        "subgroup": null,
+        "requires_disambiguation": true,
+        "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
+      }
     },
-
     "8963": {
-      "codes": ["8963"],
+      "codes": [
+        "8963"
+      ],
       "label": "Rhabdoid tumour, NOS",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C70", "C71", "C72"] }, "result": { "group": 3, "subgroup": null }, "note": "Via 9508 (ATRT)." },
-        { "when": { "topography_equals": "C64.9" }, "result": { "group": 6, "subgroup": "VIa2" } }
+        {
+          "when": {
+            "topography_in": [
+              "C70.9",
+              "C71.9",
+              "C72.9"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": null
+          },
+          "note": "Via 9508 (ATRT)."
+        },
+        {
+          "when": {
+            "topography_equals": "C64.9"
+          },
+          "result": {
+            "group": 6,
+            "subgroup": "VIa2"
+          }
+        }
       ],
-      "default": { "group": 9, "subgroup": "IXd3" }
+      "default": {
+        "group": 9,
+        "subgroup": "IXd3"
+      },
+      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
     },
-
     "8170": {
-      "codes": ["8170"],
+      "codes": [
+        "8170"
+      ],
       "label": "Hepatocellular carcinoma (HCC)",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C22.0", "C22.1"] }, "result": { "group": 7, "subgroup": "VIIb" } }
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIb"
+          }
+        }
       ],
-      "default": { "group": 11, "subgroup": null }
+      "default": {
+        "group": 11,
+        "subgroup": null
+      }
     },
-
     "8000-8005": {
-      "codes": ["8000", "8001", "8002", "8003", "8004", "8005"],
+      "codes": [
+        "8000",
+        "8001",
+        "8002",
+        "8003",
+        "8004",
+        "8005"
+      ],
       "label": "Malignant neoplasm, NOS (unspecified)",
       "topography_dependent": true,
       "discriminator": "site",
       "branches": [
-        { "when": { "topography_in": ["C70", "C71", "C72", "C75.1", "C75.2", "C75.3"] }, "result": { "group": 3, "subgroup": "IIIf" } }
+        {
+          "when": {
+            "topography_in": [
+              "C70.9",
+              "C71.9",
+              "C72.9",
+              "C75.1",
+              "C75.2",
+              "C75.3"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIf"
+          }
+        }
       ],
-      "default": { "group": 12, "subgroup": null }
+      "default": {
+        "group": 12,
+        "subgroup": null
+      },
+      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
     },
-
     "9930": {
-      "codes": ["9930"],
+      "codes": [
+        "9930"
+      ],
       "label": "Myeloid sarcoma",
       "topography_dependent": false,
       "type": "warning_not_dual_group",
-      "always": { "group": 1, "subgroup": "Ib" },
+      "always": {
+        "group": 1,
+        "subgroup": "Ib"
+      },
       "note": "Always Group I (Ib), regardless of presenting site. An orbital, cutaneous, nodal or other extramedullary myeloid sarcoma must NOT be re-routed to Group II or IX. Record the involved site in topography — it does not change the group."
     }
   }
