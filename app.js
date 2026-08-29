@@ -85,8 +85,13 @@ function pushTrail(label, value, before) {
 }
 
 /* --------------------------------------------------------------- fetching */
+/* `no-cache` forces a revalidation against the server on every load. It does
+   NOT disable caching — a 304 still serves from disk — but it guarantees the
+   clerk never works from stale clinical data. Without it, a browser that has
+   cached group_NN_dt.json keeps serving the old codes after the registry
+   corrects one, and nothing in the UI would reveal it. */
 function getJSON(path) {
-  return fetch(path).then(function (r) {
+  return fetch(path, { cache: 'no-cache' }).then(function (r) {
     if (!r.ok) throw new Error(path + ' → HTTP ' + r.status);
     return r.json();
   });
@@ -617,7 +622,15 @@ function finish(target, basis) {
   var code = String(target.morphology_code);
   var entry = entryFor(code, target.behavior_code);
   if (!entry) throw new Error('Terminal code not in morphology_entries: ' + code);
-  var evidence = arr(state.captured.evidence_tests);
+  /* `diagnostic_tests_required` has no OR semantics — an entry that names both
+     "Cytogenetics/FISH" and "Molecular/PCR" means "either will do", but the
+     list cannot say so. A branch therefore declares `satisfies_tests[]`: the
+     requirements the finding it just captured actually discharges. Without
+     this the tool reports an outstanding test on a fully-subtyped case, which
+     both invents an upgrade path and feeds a false pending-worklist entry.
+     The engine holds no opinion on which test substitutes for which — that
+     judgement stays in the JSON. */
+  var evidence = arr(state.captured.evidence_tests).concat(arr(target.satisfies_tests));
   var missing = arr(entry.diagnostic_tests_required).filter(function (t) { return evidence.indexOf(t) === -1; });
   state.workup = missing.map(function (t) {
     var prior = state.workup.filter(function (w) { return w.test === t; })[0];
