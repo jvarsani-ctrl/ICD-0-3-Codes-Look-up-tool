@@ -1,0 +1,251 @@
+{
+  "_comment": "Shared topography lookup + coarse-organ -> ICD-O-3 C-code crosswalk consulted by site_capture, presentation_router.site_to_group and dual_group_rules, and the output block (Architecture & File System §4C). Labels drawn from the RedCap topography drop-down (RedCap Options/Topography Redcap.md); redcap_code is that file's 3-digit dropdown value (drop the 'C' and the decimal point).",
+
+  "coarse_organ_crosswalk": [
+    {
+      "organ": "blood_marrow_haematopoietic",
+      "topography_range": "C42.0-C42.4",
+      "codes": ["C42.0", "C42.1", "C42.2", "C42.3", "C42.4"],
+      "candidate_groups": [1, 2],
+      "note": "Group 1's Ia4 dual-group rule for 9591 turns on exactly the C42.2-vs-rest distinction, so these four codes are individually addressable below, never lumped as C42.x."
+    },
+    { "organ": "kidney", "topography_range": "C64.9", "codes": ["C64.9"], "candidate_groups": [6] },
+    { "organ": "bone", "topography_range": "C40-C41", "codes": ["C40.9", "C41.0", "C41.1", "C41.2", "C41.3", "C41.4", "C41.9"], "candidate_groups": [8] },
+    { "organ": "soft_tissue", "topography_range": "C47,C49", "codes": ["C47.9", "C49.9"], "candidate_groups": [9] },
+    { "organ": "adrenal_paraspinal", "topography_range": "C74", "codes": ["C74.0", "C74.1", "C74.9"], "candidate_groups": [4] },
+    { "organ": "liver", "topography_range": "C22", "codes": ["C22.0", "C22.1"], "candidate_groups": [7] },
+    { "organ": "gonad_sacrococcygeal_midline", "topography_range": "C56,C62", "codes": ["C56.9", "C62.9"], "candidate_groups": [10] },
+    { "organ": "brain_cns", "topography_range": "C70-C72", "codes": ["C70.9", "C71.9", "C72.9"], "candidate_groups": [3] },
+    { "organ": "pituitary", "topography_range": "C75.1", "codes": ["C75.1"], "candidate_groups": [3, 11] },
+    { "organ": "eye", "topography_range": "C69", "codes": ["C69.9"], "candidate_groups": [5] },
+    { "organ": "lymph_node", "topography_range": "C77", "codes": ["C77.9"], "candidate_groups": [2] }
+  ],
+
+  "topography_lookup": {
+    "C42.0": {
+      "code": "C42.0",
+      "label": "Blood",
+      "redcap_code": "420",
+      "coarse_organ": "blood_marrow_haematopoietic",
+      "candidate_groups": [1, 2]
+    },
+    "C42.1": {
+      "code": "C42.1",
+      "label": "Bone marrow",
+      "redcap_code": "421",
+      "coarse_organ": "blood_marrow_haematopoietic",
+      "candidate_groups": [1, 2]
+    },
+    "C42.2": {
+      "code": "C42.2",
+      "label": "Spleen",
+      "redcap_code": "422",
+      "coarse_organ": "blood_marrow_haematopoietic",
+      "candidate_groups": [1, 2],
+      "note": "Spleen is the exception inside the C42.x set: 9591 at C42.2 routes to Group II (IIb4), not Group I (Ia4) — see presentation_router.dual_group_rules['9591']."
+    },
+    "C42.3": {
+      "code": "C42.3",
+      "label": "Reticuloendothelial system, NOS",
+      "redcap_code": "423",
+      "coarse_organ": "blood_marrow_haematopoietic",
+      "candidate_groups": [1, 2]
+    },
+    "C42.4": {
+      "code": "C42.4",
+      "label": "Hematopoietic system, NOS",
+      "redcap_code": "424",
+      "coarse_organ": "blood_marrow_haematopoietic",
+      "candidate_groups": [1, 2]
+    },
+
+    "C64.9": {
+      "code": "C64.9",
+      "label": "Kidney, NOS",
+      "redcap_code": "649",
+      "coarse_organ": "kidney",
+      "candidate_groups": [6]
+    },
+
+    "C40.9": {
+      "code": "C40.9",
+      "label": "Bone of limb, NOS",
+      "redcap_code": "409",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.0": {
+      "code": "C41.0",
+      "label": "Bones of skull and face and associated joints (excludes mandible)",
+      "redcap_code": "410",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.1": {
+      "code": "C41.1",
+      "label": "Mandible",
+      "redcap_code": "411",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.2": {
+      "code": "C41.2",
+      "label": "Vertebral column (excludes sacrum and coccyx)",
+      "redcap_code": "412",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.3": {
+      "code": "C41.3",
+      "label": "Rib, sternum, clavicle and associated joints",
+      "redcap_code": "413",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.4": {
+      "code": "C41.4",
+      "label": "Pelvic bones, sacrum, coccyx and associated joints",
+      "redcap_code": "414",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+    "C41.9": {
+      "code": "C41.9",
+      "label": "Bone, NOS",
+      "redcap_code": "419",
+      "coarse_organ": "bone",
+      "candidate_groups": [8]
+    },
+
+    "C47.9": {
+      "code": "C47.9",
+      "label": "Autonomic nervous system, NOS",
+      "redcap_code": "479",
+      "coarse_organ": "soft_tissue",
+      "candidate_groups": [9],
+      "note": "Peripheral nerve sheath tumours (e.g. MPNST) are coded as soft tissue sarcomas (Group IX); ICD-O-3 topography files them separately from C49 but the clinical crosswalk treats C47 and C49 as one 'soft tissue' bucket."
+    },
+    "C49.9": {
+      "code": "C49.9",
+      "label": "Connective, subcutaneous and other soft tissues, NOS",
+      "redcap_code": "499",
+      "coarse_organ": "soft_tissue",
+      "candidate_groups": [9]
+    },
+
+    "C74.0": {
+      "code": "C74.0",
+      "label": "Cortex of adrenal gland",
+      "redcap_code": "740",
+      "coarse_organ": "adrenal_paraspinal",
+      "candidate_groups": [4]
+    },
+    "C74.1": {
+      "code": "C74.1",
+      "label": "Medulla of adrenal gland",
+      "redcap_code": "741",
+      "coarse_organ": "adrenal_paraspinal",
+      "candidate_groups": [4]
+    },
+    "C74.9": {
+      "code": "C74.9",
+      "label": "Adrenal gland, NOS",
+      "redcap_code": "749",
+      "coarse_organ": "adrenal_paraspinal",
+      "candidate_groups": [4]
+    },
+
+    "C22.0": {
+      "code": "C22.0",
+      "label": "Liver",
+      "redcap_code": "220",
+      "coarse_organ": "liver",
+      "candidate_groups": [7]
+    },
+    "C22.1": {
+      "code": "C22.1",
+      "label": "Intrahepatic bile duct",
+      "redcap_code": "221",
+      "coarse_organ": "liver",
+      "candidate_groups": [7]
+    },
+
+    "C56.9": {
+      "code": "C56.9",
+      "label": "Ovary",
+      "redcap_code": "569",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [10]
+    },
+    "C62.9": {
+      "code": "C62.9",
+      "label": "Testis, NOS",
+      "redcap_code": "629",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [10]
+    },
+
+    "C70.9": {
+      "code": "C70.9",
+      "label": "Meninges, NOS",
+      "redcap_code": "709",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [3]
+    },
+    "C71.9": {
+      "code": "C71.9",
+      "label": "Brain, NOS",
+      "redcap_code": "719",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [3]
+    },
+    "C72.3": {
+      "code": "C72.3",
+      "label": "Optic nerve (optic chiasm, optic tract)",
+      "redcap_code": "723",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [3],
+      "note": "9380 (Glioma, NOS) at this site routes to Group III (IIIb) instead of IIId2 — see presentation_router.dual_group_rules['9380']."
+    },
+    "C72.9": {
+      "code": "C72.9",
+      "label": "Nervous system, NOS",
+      "redcap_code": "729",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [3]
+    },
+
+    "C75.1": {
+      "code": "C75.1",
+      "label": "Pituitary gland",
+      "redcap_code": "751",
+      "coarse_organ": "pituitary",
+      "candidate_groups": [3, 11]
+    },
+
+    "C69.9": {
+      "code": "C69.9",
+      "label": "Eye, NOS",
+      "redcap_code": "699",
+      "coarse_organ": "eye",
+      "candidate_groups": [5]
+    },
+
+    "C77.9": {
+      "code": "C77.9",
+      "label": "Lymph node, NOS",
+      "redcap_code": "779",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [2]
+    },
+
+    "C80.9": {
+      "code": "C80.9",
+      "label": "Unknown Primary Site",
+      "redcap_code": "809",
+      "coarse_organ": null,
+      "candidate_groups": "route_by_morphology",
+      "note": "Primary unknown — route by morphology (Architecture §6 / Design Spec §3.3); falls to Group XII only when morphology is itself unspecified (8000-8005)."
+    }
+  }
+}
