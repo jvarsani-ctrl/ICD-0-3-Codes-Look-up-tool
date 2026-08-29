@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 84,
-    "total_decision_nodes": 50,
+    "total_decision_nodes": 71,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -4671,6 +4671,1405 @@
       ]
     },
     {
+      "tree_id": "tree_chronic_myeloid_mpn",
+      "tree_label": "Chronic myeloid leukaemia, myeloproliferative neoplasms and clonal eosinophilia",
+      "entry_node": "mpn_document_inventory",
+      "nodes": [
+        {
+          "node_id": "mpn_document_inventory",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Evidence in file",
+          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). This tree owns subgroup Ic (9863, 9875, 9876, 9950, 9960–9964) and, through its eosinophilia branch, the Ie clonal-eosinophilia codes 9965–9968. CMML and JMML belong to the MDS/JMML tree; acute leukaemia (blasts ≥20%) belongs to the acute tree unless BCR::ABL1 is positive, in which case a blast-phase CML stays here as 9875.",
+          "options": [
+            {
+              "label": "Referral / clinical note only — no blood film or marrow report",
+              "next_node": "mpn_clinical_alias",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "not done",
+                "bcr_abl1_status": "not tested"
+              }
+            },
+            {
+              "label": "Blood film and/or marrow morphology only (no cytogenetics, no molecular)",
+              "next_node": "mpn_morphology_only",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete",
+                "bcr_abl1_status": "not tested"
+              }
+            },
+            {
+              "label": "Morphology + cytogenetics / FISH",
+              "next_node": "mpn_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Morphology + cytogenetics / FISH + molecular / PCR / NGS",
+              "next_node": "mpn_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Hypereosinophilia is the dominant finding, whatever else is in the file",
+              "next_node": "mpn_eosinophilia_secondary_gate",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "coding_note": "The eosinophilia cascade starts at a HARD GATE, not at a laboratory result. In the UCI catchment hypereosinophilia is overwhelmingly parasitic or HIV-related; skipping the exclusion step is the largest single false-positive cancer-registration risk in Group I (Pathway §3.10).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "secondary_eosinophilia_excluded": "not assessed",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Monocytosis-predominant picture — persistent monocytosis with or without splenomegaly",
+              "next_node": "mds_monocytosis_gate",
+              "coding_note": "CMML (9945), JMML (9946) and MDS/MPN-U (9975) are owned by the MDS/JMML tree (Pathway §7.1). Hand the case over rather than coding a monocytic entity here. A Ph-POSITIVE monocytic case is the exception — that is CML and comes back to this tree.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Malignancy excluded on review — reactive, non-neoplastic or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "The abstractor recorded that this case is not a reportable malignancy. No morphology code is emitted and the case leaves the malignant registry."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_clinical_alias",
+          "node_type": "clinical_alias",
+          "step_number": 2,
+          "step_label": "Referral wording",
+          "question": "What exactly does the referral or clinical note say?",
+          "hint": "A referral naming CML is not a BCR::ABL1 result. The wording chooses the code, and at this tier the code is a placeholder.",
+          "coding_note": "Referral-only tier: confidence is LOW and every downstream test is listed as an upgrade. 9863 is the \"BCR::ABL1 pending\" placeholder and never a positive diagnosis (Pathway §3.9) — record why via workup_status and karyotype_result_status.",
+          "options": [
+            {
+              "label": "Note reads \"CML\", \"chronic myeloid leukaemia\" or \"chronic granulocytic leukaemia\" — no BCR::ABL1 result in the file",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "upgrade_path": "A Philadelphia chromosome on karyotype, BCR::ABL1 FISH or RT-PCR would upgrade this to 9875.",
+              "coding_note": "9863 is a PLACEHOLDER — \"BCR::ABL1 pending\". It must never be reported as a confirmed CML. If BCR::ABL1 later returns negative the case is reassessed against atypical CML (9876) and the other MPN entities, not left on 9863.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "bcr_abl1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads \"CML in blast crisis\" / \"blast phase\" — no BCR::ABL1 result in the file",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "clinical_alert": "⚠️ Phase is staging annotation, never a code. Chronic, accelerated and blast phase all code 9875. Lymphoid blast crisis masquerades as B-ALL: >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is CML in lymphoid blast phase (9875), not de novo 9812.",
+              "upgrade_path": "BCR::ABL1 by FISH or RT-PCR would upgrade this to 9875. The phase does not change the code either way.",
+              "coding_note": "Phase is NOT a code (Pathway §3.9). A blast crisis without a BCR::ABL1 result is still the 9863 placeholder, not an acute-leukaemia code; once BCR::ABL1 is confirmed positive the code is 9875 whatever the blast percentage. Record the phase as a display-only qualifier.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "bcr_abl1_status": "not tested",
+                "cml_phase": "blast",
+                "qualifiers": [
+                  "cml_phase"
+                ]
+              }
+            },
+            {
+              "label": "Note reads \"myeloproliferative disorder\", \"MPN\", \"polycythaemia\", \"essential thrombocythaemia\" or \"myelofibrosis\" — no marrow, no driver mutation",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "A marrow trephine with a graded reticulin stain and a JAK2 / CALR / MPL driver panel would resolve 9950, 9961 or 9962.",
+              "coding_note": "The named entities each require a driver mutation plus a phenotype threshold (Pathway §1, Ic). A referral word is not that evidence — 9960 is the honest code.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Note reads only \"leukaemia\" — neither acuity nor lineage stated",
+              "morphology_code": "9800",
+              "confidence": "low",
+              "upgrade_path": "A blood film and a blast count would establish acuity and lineage.",
+              "coding_note": "Root chain-termination code (Pathway §6: CML 9875 → 9863 → 9960 → 9800). Neither 9863 nor 9960 is defensible on this wording.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_morphology_only",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "Blood film / marrow morphology",
+          "question": "What does the blood film / marrow aspirate report describe?",
+          "hint": "Cytochemistry and a manual differential count as morphology, not as cytogenetics.",
+          "coding_note": "Morphology-only tier: placeholder and NOS-parent codes, confidence MEDIUM. Cytogenetics / FISH is the upgrade for every branch here.",
+          "options": [
+            {
+              "label": "Marked leucocytosis with a full myeloid left shift, basophilia and splenomegaly — the classic CML film, no genetics in the file",
+              "morphology_code": "9863",
+              "confidence": "medium",
+              "upgrade_path": "A Philadelphia chromosome on karyotype, or BCR::ABL1 by FISH or RT-PCR, would upgrade this to 9875.",
+              "coding_note": "9863 is the \"BCR::ABL1 pending\" placeholder (Pathway §3.9). A classic film is a strong clinical impression, not a molecular result — basophils <2% distinguishes atypical CML from CML but is not itself a criterion.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "bcr_abl1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Neutrophilic or myeloproliferative picture, entity not determinable on morphology alone",
+              "morphology_code": "9960",
+              "confidence": "medium",
+              "upgrade_path": "BCR::ABL1 (FISH or RT-PCR), a karyotype, and a JAK2 / CALR / MPL / CSF3R panel would resolve 9875, 9876, 9950, 9961, 9962 or 9963.",
+              "coding_note": "9960 is the chain-termination NOS parent for subgroup Ic (Pathway §6, §7.4).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Hypereosinophilia is the dominant abnormality",
+              "next_node": "mpn_eosinophilia_secondary_gate",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "secondary_eosinophilia_excluded": "not assessed",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Monocytosis is the dominant abnormality — monocytes ≥0.5×10⁹/L and ≥10% of WBC",
+              "next_node": "mds_monocytosis_gate",
+              "coding_note": "CMML and JMML are owned by the MDS/JMML tree (Pathway §7.1). Reactive monocytosis — TB, HIV, other chronic infection — is the commonest cause in the UCI catchment and that tree carries the exclusion.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Film reviewed — the leucocytosis is reactive (infection, inflammation, steroids, post-splenectomy)",
+              "non_reportable": true,
+              "reason": "The blood picture is reactive, not a myeloproliferative neoplasm. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_prior_therapy_gate",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Prior therapy",
+          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
+          "hint": "Asked once, here, and carried in session state for the rest of the case.",
+          "clinical_alert": "⚠️ Prior cytotoxic therapy is a qualifier on the underlying neoplasm (ELN 2022), not a separate entity. Code the underlying subtype and set the qualifier rather than defaulting to 9920/9987.",
+          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8). This tree never routes to 9920 or 9987 — it codes the underlying entity and sets therapy_related_qualifier.",
+          "options": [
+            {
+              "label": "No prior cytotoxic chemotherapy or radiotherapy",
+              "next_node": "mpn_bcr_abl1_gate",
+              "captures": {
+                "therapy_related_qualifier": "no",
+                "prior_cytotoxic_therapy": "no"
+              }
+            },
+            {
+              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
+              "next_node": "mpn_bcr_abl1_gate",
+              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying entity.",
+              "captures": {
+                "therapy_related_qualifier": "yes",
+                "prior_cytotoxic_therapy": "yes",
+                "qualifiers": [
+                  "therapy_related"
+                ]
+              }
+            },
+            {
+              "label": "Not documented in the file",
+              "next_node": "mpn_bcr_abl1_gate",
+              "captures": {
+                "therapy_related_qualifier": "unknown",
+                "prior_cytotoxic_therapy": "unknown"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_bcr_abl1_gate",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "BCR::ABL1 status",
+          "question": "What does the cytogenetics / FISH / molecular report say about BCR::ABL1?",
+          "hint": "This is the master fork of the tree. Everything Ph-positive is CML; everything Ph-negative is assessed on its blood and marrow picture.",
+          "clinical_alert": "⚠️ ELN 2022 risk (favourable/intermediate/adverse) is prognostic only and never code-defining. The same holds for CML phase.",
+          "coding_note": "BCR::ABL1 positive is 9875 REGARDLESS OF PHASE (Pathway §3.9). 9863 is reachable from here ONLY as the \"BCR::ABL1 pending\" placeholder — never as the answer for a case whose BCR::ABL1 came back positive. There is no valid downgrade from 9875 to a lesser CML code, so this node's NOS fallback is 9960 (Pathway §7.4).",
+          "options": [
+            {
+              "finding": "Philadelphia chromosome t(9;22)(q34;q11.2) on karyotype, and/or BCR::ABL1 positive on FISH",
+              "detection_method": "karyotype_or_fish",
+              "next_node": "mpn_cml_phase_capture",
+              "coding_note": "Ph-positive. The next step records the phase as a display-only qualifier; it does not change the code.",
+              "captures": {
+                "bcr_abl1_status": "positive",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "finding": "BCR::ABL1 transcript detected by RT-PCR (p210 and/or p190), with or without a karyotype",
+              "detection_method": "fish_or_rtpcr_only",
+              "next_node": "mpn_cml_phase_capture",
+              "coding_note": "The transcript isoform (p190 / p210 / p230) is code-neutral — record it in genotype_annotation. A variant or masked Philadelphia translocation is RT-PCR- or FISH-detectable when the karyotype looks normal.",
+              "captures": {
+                "bcr_abl1_status": "positive",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "finding": "BCR::ABL1 NEGATIVE — FISH and/or RT-PCR performed and negative",
+              "detection_method": "fish_or_rtpcr_only",
+              "next_node": "mpn_ph_negative_picture",
+              "coding_note": "BCR::ABL1 is properly excluded, so the Ph-negative entities (9876, 9950, 9961–9964) are now reachable on their own criteria.",
+              "captures": {
+                "bcr_abl1_status": "negative",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "finding": "Karyotype normal / no Philadelphia chromosome seen — FISH and RT-PCR NOT performed",
+              "detection_method": "karyotype_only",
+              "next_node": "mpn_bcr_abl1_pending",
+              "coding_note": "A normal karyotype does not exclude BCR::ABL1: variant three-way translocations and masked / cryptic insertions are invisible on karyotype and need FISH or RT-PCR. Do not resolve to a Ph-negative entity yet.",
+              "captures": {
+                "bcr_abl1_status": "not tested",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "finding": "BCR::ABL1 testing not performed, or unavailable at this facility",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "upgrade_path": "BCR::ABL1 by FISH or RT-PCR would resolve this to 9875 if positive, or open the Ph-negative branch (9876, 9950, 9961–9964) if negative.",
+              "coding_note": "This is the ONE legitimate use of 9863 — \"BCR::ABL1 pending\" (Pathway §3.9). \"Molecular unavailable at UCI\" is a legitimate permanent terminal state but must be recorded as such via karyotype_result_status, not passed off as a completed workup.",
+              "captures": {
+                "bcr_abl1_status": "not tested",
+                "karyotype_result_status": "unavailable",
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            }
+          ],
+          "captured_variables": [
+            "bcr_abl1_status",
+            "karyotype_result_status",
+            "workup_status",
+            "therapy_related_qualifier",
+            "genotype_annotation"
+          ],
+          "nos_fallback": {
+            "code": "9960",
+            "name": "Myeloproliferative neoplasm, NOS",
+            "reason": "Chronic myeloproliferative picture recorded but no specific entity could be established. 9875 has no valid downgrade to a lesser CML code (Pathway §7.4)."
+          }
+        },
+        {
+          "node_id": "mpn_bcr_abl1_pending",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "BCR::ABL1 pending",
+          "question": "A normal karyotype cannot exclude BCR::ABL1. Has FISH or RT-PCR been performed since?",
+          "hint": "This branch deliberately cannot close to a Ph-negative diagnosis. It closes to the 9863 placeholder with the missing test named on the record.",
+          "coding_note": "Variant t(9;22) translocations and masked insertions of ABL1 into BCR are cryptic on karyotype. Closing to atypical CML (9876) or to an MPN entity on a normal karyotype alone would mis-code a treatable, TKI-responsive disease (Pathway §3.9).",
+          "options": [
+            {
+              "label": "FISH / RT-PCR now available — go back and enter the result",
+              "next_node": "mpn_bcr_abl1_gate",
+              "captures": {
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "FISH / RT-PCR requested — result pending",
+              "next_node": "mpn_bcr_abl1_unresolved"
+            },
+            {
+              "label": "FISH / RT-PCR not available at this facility",
+              "next_node": "mpn_bcr_abl1_unresolved"
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_bcr_abl1_unresolved",
+          "node_type": "morphology_only",
+          "step_number": 4,
+          "step_label": "BCR::ABL1 unresolved",
+          "question": "Record why BCR::ABL1 could not be tested. The case codes 9863 with the missing test named.",
+          "hint": "9863 here is an honest pending-workup placeholder, not a diagnosis of CML.",
+          "coding_note": "A case coded on the placeholder must record WHY, via karyotype_result_status (pending / not done / unavailable / declined). \"Cytogenetics unavailable at UCI\" is a legitimate permanent terminal state (Pathway §2.5).",
+          "options": [
+            {
+              "label": "Pending — record now and re-enter the tool when the result returns",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "upgrade_path": "BCR::ABL1 by FISH or RT-PCR would upgrade this to 9875, or open the Ph-negative branch. Result pending — re-enter when it returns.",
+              "coding_note": "Do not treat this as a settled diagnosis of CML. The BCR::ABL1 branch is still open in both directions.",
+              "captures": {
+                "karyotype_result_status": "pending",
+                "bcr_abl1_status": "not tested",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Not available at this facility — permanent terminal state",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "upgrade_path": "BCR::ABL1 FISH and RT-PCR are unavailable; the code cannot be upgraded at this facility.",
+              "coding_note": "Recorded as a permanent unavailable-workup terminal, not as an excluded BCR::ABL1.",
+              "captures": {
+                "karyotype_result_status": "unavailable",
+                "bcr_abl1_status": "not tested",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Test declined or not done for another reason",
+              "morphology_code": "9863",
+              "confidence": "low",
+              "upgrade_path": "BCR::ABL1 by FISH or RT-PCR would resolve the case; the test was not done.",
+              "captures": {
+                "karyotype_result_status": "not done",
+                "bcr_abl1_status": "not tested",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_cml_phase_capture",
+          "node_type": "histology_subclassification",
+          "step_number": 4,
+          "step_label": "CML phase",
+          "question": "BCR::ABL1 is positive, so the code is 9875. What blast percentage does the file record, so the phase can be stored as a qualifier?",
+          "hint": "Every option on this node emits the SAME code. You are recording staging, not choosing a diagnosis.",
+          "clinical_alert": "⚠️ Phase is staging annotation, never a code. Chronic, accelerated and blast phase all code 9875. Lymphoid blast crisis masquerades as B-ALL: >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is CML in lymphoid blast phase (9875), not de novo 9812.",
+          "coding_note": "PHASE IS NOT A CODE (Pathway §3.9, §5.1). Chronic, accelerated and blast phase all code 9875; cml_phase is display-only and must never appear in resolution logic. Registry phase definition is WHO 2022 — blast % only, chronic <20%, blast phase ≥20%, no accelerated tier. A blast-phase CML must NOT be re-coded as an acute leukaemia: 9875 stays, whatever the blast count and whatever the blast lineage.",
+          "options": [
+            {
+              "descriptor": "Blasts under 10% in blood and marrow — chronic phase on every definition",
+              "morphology_code": "9875",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "coding_note": "Chronic phase. Recorded as a qualifier only.",
+              "captures": {
+                "cml_phase": "chronic",
+                "qualifiers": [
+                  "cml_phase"
+                ],
+                "blast_percent_band": "<5",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Blasts 10–19% in blood or marrow",
+              "morphology_code": "9875",
+              "confidence": "high",
+              "classification_system": "ICC-2022",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "coding_note": "Divergent staging, identical code. ICC 2022 and ELN call this accelerated phase; the registry's ratified definition is WHO 2022, which has no accelerated tier and calls this chronic phase. Either way the code is 9875 — record which framework was applied.",
+              "captures": {
+                "cml_phase": "accelerated",
+                "qualifiers": [
+                  "cml_phase"
+                ],
+                "blast_percent_band": "10-19",
+                "classification_system_applied": "ICC-2022",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Blasts 20% or more in blood or marrow — blast phase (myeloid or lymphoid blast crisis)",
+              "morphology_code": "9875",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "clinical_alert": "⚠️ Phase is staging annotation, never a code. Chronic, accelerated and blast phase all code 9875. Lymphoid blast crisis masquerades as B-ALL: >5% lymphoblasts with BCR::ABL1 and a documented preceding chronic phase is CML in lymphoid blast phase (9875), not de novo 9812.",
+              "coding_note": "Blast phase is still 9875. Do NOT route this case to the acute-leukaemia tree and do NOT code 9812, 9861 or 9912. A lymphoid blast crisis with a documented preceding chronic phase is CML in lymphoid blast phase, not de novo BCR::ABL1-positive B-ALL (Pathway §3.9). If no preceding chronic phase is documented and the presentation is de novo acute, use the acute tree instead — that is a clinical judgement about the history, never about the blast count.",
+              "captures": {
+                "cml_phase": "blast",
+                "qualifiers": [
+                  "cml_phase"
+                ],
+                "blast_percent_band": ">=20",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "descriptor": "Blast percentage not documented in the file",
+              "morphology_code": "9875",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "upgrade_path": "A blast count on blood and marrow would let the phase qualifier be recorded. It does not change the code.",
+              "coding_note": "The code is complete without the phase. Leave cml_phase unset rather than guessing — an unrecorded qualifier is honest, an invented one is not.",
+              "captures": {
+                "workup_status": "complete"
+              }
+            }
+          ],
+          "captured_variables": [
+            "cml_phase",
+            "bcr_abl1_status",
+            "marrow_blast_percentage",
+            "blast_percent_band",
+            "therapy_related_qualifier",
+            "classification_system_applied",
+            "qualifiers"
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_ph_negative_picture",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Ph-negative picture",
+          "question": "BCR::ABL1 is excluded. Which picture do the blood film and marrow describe?",
+          "hint": "Pick the dominant abnormality. Eosinophilia and monocytosis take priority over neutrophilia when both are present, because each carries its own mandatory exclusion.",
+          "coding_note": "With BCR::ABL1 excluded, the Ph-negative Ic entities separate on the blood picture: dysplastic neutrophilia → atypical CML (9876); mature neutrophilia → CNL (9963); erythrocytosis / thrombocytosis / fibrosis → the driver-mutation entities (9950, 9961, 9962). 9950, 9961, 9962 and 9963 are vanishingly rare in children and carry an age-implausibility warning — they stay reachable so genuine rare paediatric cases remain codeable (Pathway §7.5).",
+          "options": [
+            {
+              "descriptor": "Neutrophilic leucocytosis WITH dysgranulopoiesis — immature granulocytes ≥10% of WBC, blasts <20%, eosinophils <10%, monocytes <10%",
+              "next_node": "mpn_acml_criteria",
+              "coding_note": "Atypical CML territory (9876). Dysgranulopoiesis is the discriminator against CNL.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "descriptor": "Sustained MATURE neutrophilia — segmented plus banded neutrophils ≥80% of WBC, precursors <10%, no significant dysgranulopoiesis, monocytes <10%, blasts rare",
+              "next_node": "mpn_cnl_wbc_gate",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Chronic neutrophilic leukaemia territory (9963). The shared criteria are met; the next node applies the disjunctive WBC gate (Pathway §3.9).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "descriptor": "Erythrocytosis, thrombocytosis, or a fibrotic marrow with megakaryocyte atypia",
+              "next_node": "mpn_classic_mpn_driver",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "The classic Ph-negative MPN triad: polycythaemia vera (9950), essential thrombocythaemia (9962), primary myelofibrosis (9961). Each needs a phenotype threshold AND a driver mutation.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "descriptor": "Hypereosinophilia — eosinophils ≥10% of WBC and/or a persistently raised absolute eosinophil count",
+              "next_node": "mpn_eosinophilia_secondary_gate",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "coding_note": "The clonal-eosinophilia cascade (9964–9968) begins at a hard secondary-cause gate, never at a laboratory result (Pathway §3.10).",
+              "captures": {
+                "secondary_eosinophilia_excluded": "not assessed"
+              }
+            },
+            {
+              "descriptor": "Monocytosis — monocytes ≥0.5×10⁹/L and ≥10% of WBC",
+              "next_node": "mds_monocytosis_gate",
+              "coding_note": "CMML (9945), JMML (9946) and MDS/MPN-U (9975) are owned by the MDS/JMML tree (Pathway §7.1). BCR::ABL1 has already been excluded, which is one of that tree's mandatory JMML criteria.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "descriptor": "A myeloproliferative picture that fits none of the above, or the marrow detail needed to choose is not in the file",
+              "morphology_code": "9960",
+              "confidence": "medium",
+              "upgrade_path": "A trephine with a graded reticulin stain, a full differential count, and a JAK2 / CALR / MPL / CSF3R panel would resolve 9876, 9950, 9961, 9962 or 9963.",
+              "coding_note": "9960 is the chain-termination NOS parent for subgroup Ic (Pathway §6, §7.4). Record why via workup_status.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "descriptor": "Reviewed — the picture is reactive or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "Reviewed as a reactive blood picture rather than a myeloproliferative neoplasm. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_acml_criteria",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Atypical CML criteria",
+          "question": "Atypical CML has a closed criteria list. Which statement matches the file?",
+          "hint": "SETBP1 and ETNK1 are supportive, not required. Basophils <2% distinguishes atypical CML from CML but is not itself a formal criterion.",
+          "coding_note": "Criteria (Pathway §3.9): WBC ≥13×10⁹/L with immature myeloid cells ≥10% of WBC · PB/BM blasts <20% · dysgranulopoiesis · eosinophils <10% · monocytes <10% · hypercellular marrow with granulocytic hyperplasia and dysplasia · BCR::ABL1 and the M/LN-eo kinase fusions excluded. WHO-HAEM5 renames the entity \"MDS/MPN with neutrophilia\"; ICC keeps \"atypical CML\" — naming only, same code 9876 (Pathway §5.4).",
+          "options": [
+            {
+              "label": "All criteria met AND an MDS-qualifying cytopenia is present",
+              "morphology_code": "9876",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Both WHO-HAEM5 and ICC-2022 classify this case identically — no arbitration needed. BCR::ABL1 exclusion by FISH or RT-PCR discharges the molecular requirement.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete",
+                "bcr_abl1_status": "negative"
+              }
+            },
+            {
+              "label": "All criteria met but there is NO MDS-qualifying cytopenia",
+              "morphology_code": "9876",
+              "confidence": "medium",
+              "classification_system": "WHO-HAEM5",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Divergent rule (Pathway §5.4). WHO-HAEM5 requires no cytopenia and classifies this as MDS/MPN with neutrophilia = 9876. ICC-2022 additionally requires an MDS-qualifying cytopenia and would not classify it as atypical CML. The registry codes 9876 and records which framework was applied.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete",
+                "bcr_abl1_status": "negative",
+                "classification_system_applied": "WHO-HAEM5"
+              }
+            },
+            {
+              "label": "Eosinophils are 10% or more of the WBC",
+              "next_node": "mpn_eosinophilia_secondary_gate",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "coding_note": "Eosinophils ≥10% fails an atypical CML criterion and opens the myeloid/lymphoid-neoplasm-with-eosinophilia cascade, which atypical CML explicitly excludes (Pathway §3.9, §3.10).",
+              "captures": {
+                "secondary_eosinophilia_excluded": "not assessed"
+              }
+            },
+            {
+              "label": "Monocytes are 10% or more of the WBC",
+              "next_node": "mds_monocytosis_gate",
+              "coding_note": "Monocytes ≥10% fails an atypical CML criterion and puts the case in CMML territory, owned by the MDS/JMML tree (Pathway §3.9, §7.1).",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "label": "The PDGFRA / PDGFRB / FGFR1 / PCM1::JAK2 kinase fusions have NOT been excluded, or the dysplasia assessment is missing",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "FISH or RT-PCR for the M/LN-eo kinase fusions, and a documented dysgranulopoiesis assessment, would establish or exclude 9876.",
+              "coding_note": "Exclusion of the kinase fusions is part of the atypical CML definition. Until it is documented, 9876 is not defensible and 9960 is the honest NOS parent (Pathway §3.9, §6).",
+              "captures": {
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "label": "Reviewed — the neutrophilia is reactive or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "Reviewed as a reactive neutrophilia rather than atypical CML. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_cnl_wbc_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "CNL WBC threshold",
+          "question": "Total white cell count?",
+          "hint": "Value in ×10⁹/L. Tick 'not documented' rather than guessing.",
+          "variable": "wbc_count",
+          "variable_label": "Total white cell count",
+          "unit": "×10⁹/L",
+          "band_variable": "wbc_band",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "THE GATE IS A DISJUNCTION and the registry adopts BOTH routes (Pathway §3.9, §5.4). Route A — WBC ≥25×10⁹/L, no molecular test required (WHO-HAEM5; ICC too when CSF3R is negative). Route B — WBC ≥13×10⁹/L with an activating CSF3R mutation (ICC only). The shared criteria (neutrophils ≥80%, precursors <10%, no dysgranulopoiesis, monocytes <10%, blasts rare, normal maturation, BCR::ABL1/PV/ET/PMF/M-LN-eo excluded) were confirmed at the previous node.",
+          "override_when": [
+            {
+              "captured_variable": "bcr_abl1_status",
+              "equals": "positive",
+              "next_node": "mpn_cml_phase_capture",
+              "coding_note": "BCR::ABL1-positive disease is CML (9875), and its exclusion is a shared CNL criterion. A Ph-positive case can never be CNL, whatever the white count (Pathway §3.9)."
+            }
+          ],
+          "bands": [
+            {
+              "range": ">=25",
+              "morphology_code": "9963",
+              "confidence": "high",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "Route A — count alone. WHO-HAEM5 accepts ≥25×10⁹/L unconditionally and ICC accepts it too when CSF3R is negative, so no molecular result is required. Phase is not a code here either: 10–19% blasts is accelerated phase, ≥20% is blast phase — both stay 9963.",
+              "captures": {
+                "wbc_band": ">=25",
+                "classification_system_applied": "WHO-HAEM5",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "range": "13-24",
+              "next_node": "mpn_cnl_csf3r",
+              "classification_system": "ICC-2022",
+              "coding_note": "Route B territory — ICC only, and only with an activating CSF3R mutation (or the ICC non-molecular alternative). WHO-HAEM5 would not call this CNL at all.",
+              "captures": {
+                "wbc_band": "13-24",
+                "classification_system_applied": "ICC-2022"
+              }
+            },
+            {
+              "range": "<13",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "A repeat full blood count documenting persistent neutrophilia would establish whether either CNL route's threshold is met.",
+              "coding_note": "Below BOTH routes' thresholds — this is not CNL under either classification. If the marrow nonetheless documents a myeloproliferative process, 9960 is the honest code; if the neutrophilia is reactive, use the not-a-reportable-malignancy terminal on the previous node instead.",
+              "captures": {
+                "wbc_band": "<13",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "range": "not_documented",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "A full blood count with a differential would apply the CNL threshold and could resolve this to 9963.",
+              "coding_note": "The white count is the gate. Undocumented means the gate cannot be applied — 9960, not 9963.",
+              "captures": {
+                "wbc_band": "not_documented",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "captured_variables": [
+            "wbc_count",
+            "wbc_band",
+            "bcr_abl1_status",
+            "csf3r_status",
+            "classification_system_applied",
+            "therapy_related_qualifier"
+          ],
+          "nos_fallback": {
+            "code": "9960",
+            "name": "Myeloproliferative neoplasm, NOS",
+            "reason": "Chronic myeloproliferative picture recorded but no specific entity could be established. 9875 has no valid downgrade to a lesser CML code (Pathway §7.4)."
+          }
+        },
+        {
+          "node_id": "mpn_cnl_csf3r",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "CSF3R status",
+          "question": "WBC is 13–24×10⁹/L, so ICC route B applies. What does the file show for CSF3R?",
+          "hint": "Route B is the only way to reach 9963 below 25×10⁹/L, and it is an ICC-2022 rule.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "ICC route B: WBC ≥13×10⁹/L WITH an activating CSF3R mutation (typically T618I). ICC also allows a non-molecular alternative where CSF3R is unavailable: persistent neutrophilia for ≥3 months, splenomegaly, and reactive causes excluded — including demonstrated clonality if a plasma-cell neoplasm is present (Pathway §3.9).",
+          "options": [
+            {
+              "finding": "Activating CSF3R mutation present (e.g. T618I)",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9963",
+              "confidence": "high",
+              "classification_system": "ICC-2022",
+              "coding_note": "ICC route B satisfied. WHO-HAEM5 would not classify this as CNL at this white count — record which framework was applied (Pathway §5.4).",
+              "captures": {
+                "csf3r_status": "positive",
+                "classification_system_applied": "ICC-2022",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "CSF3R unavailable, BUT persistent neutrophilia for ≥3 months, splenomegaly, and documented exclusion of reactive causes",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9963",
+              "confidence": "medium",
+              "classification_system": "ICC-2022",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "ICC's explicit non-molecular alternative for settings where CSF3R testing is not available (Pathway §3.9). The clinical constellation discharges the molecular requirement; record that CSF3R itself was never performed.",
+              "captures": {
+                "csf3r_status": "not tested",
+                "classification_system_applied": "ICC-2022",
+                "karyotype_result_status": "unavailable",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "CSF3R tested and NEGATIVE",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9960",
+              "confidence": "medium",
+              "upgrade_path": "None on this route. ICC requires ≥25×10⁹/L when CSF3R is negative; a rising white count on repeat testing would re-open the CNL question.",
+              "coding_note": "CSF3R-negative at 13–24×10⁹/L fails BOTH routes — ICC then requires ≥25×10⁹/L, and WHO-HAEM5 always does. 9963 is not defensible; 9960 is the honest NOS parent (Pathway §3.9).",
+              "captures": {
+                "csf3r_status": "negative",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "CSF3R not performed, and the non-molecular alternative is not documented",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "CSF3R sequencing, or documentation of ≥3 months of neutrophilia with splenomegaly and reactive causes excluded, would establish 9963 on ICC route B.",
+              "coding_note": "Route B is unestablished. \"Molecular unavailable at UCI\" is a legitimate permanent terminal state but must be recorded as such (Pathway §2.5).",
+              "captures": {
+                "csf3r_status": "not tested",
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "finding": "Reviewed — the neutrophilia has a documented reactive cause (infection, chronic inflammation, corticosteroids, G-CSF)",
+              "non_reportable": true,
+              "reason": "The neutrophilia is reactive. Exclusion of reactive causes is a shared CNL criterion under both classifications, so this is not a reportable malignancy — no code is emitted (Pathway §3.9, §4.9)."
+            }
+          ],
+          "captured_variables": [
+            "csf3r_status",
+            "wbc_band",
+            "classification_system_applied",
+            "karyotype_result_status",
+            "bcr_abl1_status"
+          ],
+          "nos_fallback": {
+            "code": "9960",
+            "name": "Myeloproliferative neoplasm, NOS",
+            "reason": "Chronic myeloproliferative picture recorded but no specific entity could be established. 9875 has no valid downgrade to a lesser CML code (Pathway §7.4)."
+          }
+        },
+        {
+          "node_id": "mpn_classic_mpn_driver",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "MPN driver mutation",
+          "question": "Which phenotype-plus-driver combination does the file document?",
+          "hint": "Each of these entities needs BOTH a phenotype threshold and a driver mutation. One without the other does not reach the code.",
+          "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+          "coding_note": "Polycythaemia vera, essential thrombocythaemia and primary myelofibrosis are vanishingly rare in children (Pathway §1, Ic). They stay reachable — removing them would make a genuine rare paediatric case uncodeable — but every option carries the age-implausibility warning and should be confirmed independently before finalising (Pathway §7.5).",
+          "options": [
+            {
+              "finding": "Erythrocytosis above threshold (Hb >16.5 g/dL male / >16.0 g/dL female, or Hct >49% male / >48% female) WITH a JAK2 V617F or JAK2 exon-12 mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9950",
+              "confidence": "high",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Polycythaemia vera. Paediatric erythrocytosis is far more often congenital (EPO-receptor, high-affinity haemoglobin, hypoxia) — a JAK2 mutation is what separates PV from those, and it is required here.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "bcr_abl1_status": "negative"
+              }
+            },
+            {
+              "finding": "Platelets ≥450×10⁹/L WITH a JAK2, CALR or MPL mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9962",
+              "confidence": "high",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Essential thrombocythaemia. Reactive thrombocytosis — iron deficiency, infection, inflammation, post-splenectomy — is far commoner in children and is excluded by the driver requirement.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "bcr_abl1_status": "negative"
+              }
+            },
+            {
+              "finding": "Trephine megakaryocyte atypia with a GRADED reticulin / collagen stain WITH a JAK2, CALR or MPL mutation",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9961",
+              "confidence": "high",
+              "clinical_alert": "⚠️ This entity is described almost exclusively in adults. Confirm independently in a paediatric patient and flag for senior pathology review before finalising.",
+              "coding_note": "Primary myelofibrosis. The trephine and the graded reticulin stain are both required — an aspirate alone cannot support this code.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "bcr_abl1_status": "negative"
+              }
+            },
+            {
+              "finding": "The phenotype is present but the JAK2 / CALR / MPL panel was NEGATIVE or was not performed",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "A JAK2 V617F and exon-12, CALR and MPL panel would resolve this to 9950, 9961 or 9962.",
+              "coding_note": "A driver mutation is required for all three entities. Triple-negative primary myelofibrosis exists in adults but needs another clonal marker plus exclusion of reactive marrow fibrosis — in a child, refer for senior review and use the uncertain-subtype escape rather than assuming it. 9960 is the honest code here.",
+              "captures": {
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "finding": "Reviewed — secondary or reactive erythrocytosis, thrombocytosis or marrow fibrosis (hypoxia, congenital polycythaemia, iron deficiency, infection, inflammation, post-splenectomy)",
+              "non_reportable": true,
+              "reason": "The blood or marrow finding has a documented reactive or congenital cause. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "captured_variables": [
+            "bcr_abl1_status",
+            "karyotype_result_status",
+            "workup_status",
+            "genotype_annotation"
+          ],
+          "nos_fallback": {
+            "code": "9960",
+            "name": "Myeloproliferative neoplasm, NOS",
+            "reason": "Chronic myeloproliferative picture recorded but no specific entity could be established. 9875 has no valid downgrade to a lesser CML code (Pathway §7.4)."
+          }
+        },
+        {
+          "node_id": "mpn_eosinophilia_secondary_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Secondary eosinophilia gate",
+          "question": "HARD GATE. Before ANY clonal-eosinophilia code, the file must document exclusion of parasitic infection AND HIV. What does it show?",
+          "hint": "This gate is not optional and cannot be skipped. Answer from what is written in the file, not from clinical impression.",
+          "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+          "coding_note": "STEP 1 OF THE CASCADE IS A HARD GATE (Pathway §3.10, §5.6). Secondary causes to exclude: parasitic (strongyloides, schistosoma, filariasis, hookworm, toxocara), HIV, drugs, allergy, autoimmune disease and solid-tumour-associated eosinophilia. In the UCI catchment hypereosinophilia is overwhelmingly parasitic or HIV-related; skipping this step is the largest single false-positive cancer-registration risk in Group I. An unresolved secondary cause must reach a non-reportable terminal, never a myeloid-neoplasm code.",
+          "options": [
+            {
+              "label": "BOTH excluded and documented — stool microscopy and/or serology negative for the parasitic set, AND an HIV test is negative; drugs, allergy, autoimmune disease and solid tumour also considered",
+              "next_node": "mpn_eos_clonality_gate",
+              "coding_note": "The hard gate is satisfied. Only now do the clonal-eosinophilia codes (9964–9968) become reachable.",
+              "captures": {
+                "secondary_eosinophilia_excluded": "both excluded",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "label": "A secondary cause has been IDENTIFIED — parasitic infection, HIV, a drug reaction, allergy, autoimmune disease or a solid tumour",
+              "non_reportable": true,
+              "reason": "The hypereosinophilia has a documented secondary cause. Not a reportable malignancy — no code is emitted. This is the commonest false-positive registration risk in Group I in the UCI catchment (Pathway §3.10, §4.9)."
+            },
+            {
+              "label": "Parasitic infection excluded, but HIV status is unknown or not tested",
+              "next_node": "mpn_eos_secondary_pending",
+              "coding_note": "Half a gate is not a gate. HIV-associated eosinophilia is common in this catchment and the exclusion must be documented before any clonal code.",
+              "captures": {
+                "secondary_eosinophilia_excluded": "parasitic excluded"
+              }
+            },
+            {
+              "label": "HIV excluded, but no parasitic screen has been performed",
+              "next_node": "mpn_eos_secondary_pending",
+              "coding_note": "Half a gate is not a gate. The parasitic screen must be documented before any clonal code.",
+              "captures": {
+                "secondary_eosinophilia_excluded": "HIV excluded"
+              }
+            },
+            {
+              "label": "Neither has been assessed",
+              "next_node": "mpn_eos_secondary_pending",
+              "coding_note": "The gate has not been attempted. No clonal-eosinophilia code is reachable from here.",
+              "captures": {
+                "secondary_eosinophilia_excluded": "not assessed"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_secondary_pending",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Secondary screen incomplete",
+          "question": "The secondary-cause exclusion is incomplete, so no myeloid-neoplasm code can be emitted. What is the status of the missing test?",
+          "hint": "This branch deliberately cannot reach a morphology code. It exists so the case is recorded honestly and can be re-entered when the screen is done.",
+          "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+          "coding_note": "An unresolved secondary cause must reach a NON-REPORTABLE terminal, not a myeloid-neoplasm code (Pathway §3.10, §5.6, §4.9). Coding 9964–9968 here would register a cancer that has not been established. If a senior pathologist judges the case neoplastic on other grounds, use the uncertain-subtype escape hatch rather than this branch.",
+          "options": [
+            {
+              "label": "The parasitic screen / HIV test is now available — go back and enter the result",
+              "next_node": "mpn_eosinophilia_secondary_gate"
+            },
+            {
+              "label": "Screening requested — result pending",
+              "non_reportable": true,
+              "reason": "The secondary-cause exclusion required before any clonal-eosinophilia code is still pending. Not reportable on the present evidence — no code is emitted. Re-enter the tool when the parasitic screen and HIV result return (Pathway §3.10)."
+            },
+            {
+              "label": "Screening not available at this facility",
+              "non_reportable": true,
+              "reason": "The parasitic screen and/or HIV test that the hard gate requires is unavailable, so a secondary cause cannot be excluded. Not reportable — no code is emitted. In this catchment an unexcluded secondary cause is far more likely than a clonal eosinophilic neoplasm (Pathway §3.10, §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_clonality_gate",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Eosinophilia clonality",
+          "question": "Secondary causes are excluded. What clonality evidence does the file contain?",
+          "hint": "Idiopathic hypereosinophilic syndrome and a clonal eosinophilic neoplasm look identical on the film — clonality is what separates them.",
+          "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+          "coding_note": "Cascade step 5 is asked BEFORE the fusion dropdown, because the dropdown's NOS fallback is 9964 and 9964 requires demonstrated clonality (ICC, Pathway §5.4). Without clonality the case is idiopathic HES and is NOT REPORTABLE (Pathway §3.10, §4.9). A normal karyotype is not \"tested and normal\" for this purpose — FIP1L1::PDGFRA is cryptic and needs FISH for the CHIC2 deletion or RT-PCR.",
+          "options": [
+            {
+              "label": "A clonal abnormality is demonstrated, or specific fusion testing has been performed — an abnormal karyotype, a kinase fusion, another clonal molecular marker, or an increased blast count",
+              "next_node": "mpn_eos_molecular",
+              "coding_note": "Clonality established (or specific fusion testing done). The cascade can now resolve the specific entity.",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Karyotype normal, but FISH for the CHIC2 deletion / RT-PCR for FIP1L1::PDGFRA has NOT been performed",
+              "next_node": "mpn_eos_cryptic_fish_prompt",
+              "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+              "coding_note": "A normal karyotype closes nothing here. FIP1L1::PDGFRA is a cryptic deletion, invisible on karyotype, and the resulting disease is imatinib-responsive — the most consequential miss in this branch (Pathway §4.4, §5.6).",
+              "captures": {
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Cytogenetics AND molecular testing performed and completely normal — including FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA — with no clonal marker and no increased blasts",
+              "non_reportable": true,
+              "reason": "Persistent hypereosinophilia with secondary causes excluded and no demonstrable clonality is idiopathic hypereosinophilic syndrome. HES is not a malignancy — no code is emitted, and in particular not 9964 (Pathway §3.10 step 5, §4.9)."
+            },
+            {
+              "label": "No cytogenetic or molecular testing has been performed at all",
+              "next_node": "mpn_eos_untested",
+              "captures": {
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Reviewed — the hypereosinophilia is reactive or the diagnosis was revised",
+              "non_reportable": true,
+              "reason": "Reviewed as reactive or non-neoplastic hypereosinophilia. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_untested",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "Clonality untested",
+          "question": "No clonality testing has been done. What is its status?",
+          "hint": "Untested is not the same as negative — but neither is it evidence of a neoplasm.",
+          "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+          "coding_note": "CEL (9964) requires demonstrated clonality under the registry's ratified ICC criteria (Pathway §5.4). With no testing at all, clonality is unestablished and the case cannot be coded as a myeloid neoplasm; the honest record is a non-reportable terminal naming the missing tests. If a senior pathologist judges the case neoplastic on other grounds, use the uncertain-subtype escape hatch, which lands on the nearest NOS code with a discordance flag.",
+          "options": [
+            {
+              "label": "Karyotype / FISH / RT-PCR now available — go back and enter the result",
+              "next_node": "mpn_eos_molecular",
+              "captures": {
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
+              }
+            },
+            {
+              "label": "Testing requested — result pending",
+              "non_reportable": true,
+              "reason": "Clonality is unestablished and the fusion cascade is untested. Not reportable on the present evidence — no code is emitted. Re-enter the tool when the karyotype, FISH (CHIC2) or RT-PCR result returns (Pathway §3.10)."
+            },
+            {
+              "label": "Cytogenetics and molecular testing not available at this facility",
+              "non_reportable": true,
+              "reason": "Clonality cannot be demonstrated at this facility, and CEL (9964) requires demonstrated clonality. Recorded as not reportable with the missing tests named, rather than as an unproven myeloid neoplasm (Pathway §3.10, §4.9, §5.4)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_molecular",
+          "node_type": "cytogenetics_dropdown",
+          "step_number": 4,
+          "step_label": "Eosinophilia fusion cascade",
+          "question": "Which finding does the cytogenetics / FISH / molecular report give?",
+          "hint": "Work down the list in order. The detection method shown under each choice is the method that finding actually requires.",
+          "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+          "coding_note": "Cascade order (Pathway §3.10): FIP1L1::PDGFRA → 9965, then karyotype 5q31-33 PDGFRB → 9966 and 8p11-12 FGFR1 → 9967, then PCM1::JAK2 → 9968, then clonality without a named fusion → 9964. The secondary-cause hard gate and the clonality gate are both upstream of this node and cannot be bypassed.",
+          "options": [
+            {
+              "finding": "FIP1L1::PDGFRA — CHIC2 deletion on FISH, or RT-PCR positive (or another PDGFRA rearrangement with a variant partner)",
+              "detection_method": "fish_or_rtpcr_only",
+              "morphology_code": "9965",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+              "coding_note": "CRYPTIC — never visible on karyotype. Only FISH for the CHIC2 deletion or RT-PCR can establish or exclude it, and either method alone is sufficient. Clinically the most important call in this branch: these cases are imatinib-responsive (Pathway §4.4, §5.6).",
+              "captures": {
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "PDGFRB rearrangement — 5q31-33 abnormality on karyotype, confirmed by FISH",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9966",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
+              "coding_note": "Visible on karyotype as a 5q31-33 rearrangement; FISH confirms the partner. Also imatinib-responsive.",
+              "captures": {
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "FGFR1 abnormality — 8p11-12 rearrangement on karyotype, confirmed by FISH",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9967",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH"
+              ],
+              "coding_note": "8p11-12 myeloproliferative syndrome. Not imatinib-responsive — the distinction from PDGFRA/PDGFRB matters clinically as well as for coding.",
+              "captures": {
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "PCM1::JAK2 — t(8;9)(p22;p24) on karyotype, or FISH, or RT-PCR positive",
+              "detection_method": "karyotype_or_fish",
+              "morphology_code": "9968",
+              "confidence": "high",
+              "satisfies_tests": [
+                "Cytogenetics/FISH",
+                "Molecular/PCR"
+              ],
+              "coding_note": "9968 became a live ICD-O-3.2 code at the 3.2 revision and was previously (and wrongly) advised to 9964 (Pathway §5.7). REGISTRY ACTION OUTSTANDING: no REDCap dropdown option exists for this code yet, so the clerk cannot select it in REDCap until one is added.",
+              "captures": {
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "finding": "ETV6::ABL1, a FLT3 fusion, or another kinase fusion with no dedicated ICD-O-3.2 code",
+              "detection_method": "fish_or_rtpcr_only",
+              "next_node": "mpn_eos_uncoded_genotype",
+              "coding_note": "No ICD-O-3.2 code exists for these. They land provisionally on 9964 with the genotype preserved, or the information is lost permanently (Pathway §5.2).",
+              "captures": {
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ]
+              }
+            },
+            {
+              "finding": "Karyotype abnormal or blasts increased, but FISH for the CHIC2 deletion / RT-PCR for FIP1L1::PDGFRA NOT performed",
+              "detection_method": "karyotype_only",
+              "next_node": "mpn_eos_cryptic_fish_prompt",
+              "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+              "coding_note": "Clonality is established but the cryptic branch is still open. Do not resolve to 9964 yet — a normal or non-specific karyotype does not exclude 9965 (Pathway §4.4, §5.6).",
+              "captures": {
+                "cryptic_genetics_tested": "karyotype only",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "finding": "Karyotype done AND FISH / RT-PCR negative for the whole kinase-fusion set, with clonality shown by another marker or by increased blasts",
+              "detection_method": "karyotype_and_fish",
+              "morphology_code": "9964",
+              "confidence": "high",
+              "classification_system": "ICC-2022",
+              "satisfies_tests": [
+                "Molecular/PCR"
+              ],
+              "coding_note": "Chronic eosinophilic leukaemia, NOS — the properly closed terminal. Registry applies ICC criteria for CEL versus HES: ≥10% peripheral eosinophils, clonality required, blast increase supportive (Pathway §5.4). The cryptic branch has been closed by an adequate method, so this is a defensible terminal and not an incomplete workup.",
+              "captures": {
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "classification_system_applied": "ICC-2022",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete"
+              }
+            }
+          ],
+          "captured_variables": [
+            "secondary_eosinophilia_excluded",
+            "cryptic_genetics_tested",
+            "karyotype_result_status",
+            "classification_system_applied",
+            "genotype_annotation",
+            "workup_status"
+          ],
+          "nos_fallback": {
+            "code": "9964",
+            "name": "Chronic eosinophilic leukemia, NOS",
+            "reason": "Clonal hypereosinophilia with the secondary causes excluded, but no specific kinase fusion identified."
+          }
+        },
+        {
+          "node_id": "mpn_eos_cryptic_fish_prompt",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "CHIC2 FISH status",
+          "question": "A normal karyotype cannot exclude FIP1L1::PDGFRA. Has FISH for the CHIC2 deletion or RT-PCR been performed since?",
+          "hint": "This branch deliberately cannot close to 9964. It closes to the MPN NOS parent only with the missing test named on the record.",
+          "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+          "coding_note": "FIP1L1::PDGFRA arises from an interstitial 4q12 deletion that removes CHIC2 — there is no karyotypic abnormality to see. A normal karyotype must never close this branch, and must never resolve to 9964 (Pathway §4.4, §5.6, §7.5).",
+          "options": [
+            {
+              "label": "FISH (CHIC2) / RT-PCR now available — go back and enter the result",
+              "next_node": "mpn_eos_molecular",
+              "captures": {
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "FISH / RT-PCR requested — result pending",
+              "next_node": "mpn_eos_cryptic_unresolved"
+            },
+            {
+              "label": "FISH / RT-PCR not available at this facility",
+              "next_node": "mpn_eos_cryptic_unresolved"
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_cryptic_unresolved",
+          "node_type": "morphology_only",
+          "step_number": 4,
+          "step_label": "Cryptic set unresolved",
+          "question": "Record why FIP1L1::PDGFRA could not be tested. The case codes 9960 with the missing test named.",
+          "hint": "9960, not 9964: the alert forbids assigning 9964 on a normal karyotype, so the case steps one rung further up the chain instead.",
+          "clinical_alert": "⚠️ Cryptic deletion. Do not assign 9964 or exclude 9965 on a normal karyotype — FISH (CHIC2 deletion) or RT-PCR required.",
+          "coding_note": "The eosinophilic fallback chain is 9965 / 9966 / 9967 → 9964 → 9960 (Pathway §6). 9964 is unavailable here because \"do not assign 9964 ... on a normal karyotype\" is an explicit alert (Pathway §5.6), so the honest terminal is the next rung, 9960, with karyotype_result_status recording why.",
+          "options": [
+            {
+              "label": "Pending — record now and re-enter the tool when the result returns",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA would upgrade this to 9965; if negative with clonality shown, to 9964. Result pending — re-enter when it returns.",
+              "coding_note": "Do not treat this as a settled 9960. The FIP1L1::PDGFRA branch is still open, and that diagnosis is imatinib-responsive.",
+              "captures": {
+                "karyotype_result_status": "pending",
+                "cryptic_genetics_tested": "karyotype only",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Not available at this facility — permanent terminal state",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "FISH (CHIC2) and RT-PCR for FIP1L1::PDGFRA are unavailable; the code cannot be upgraded at this facility.",
+              "coding_note": "Recorded as a permanent unavailable-workup terminal, not as an excluded cryptic set. Consider referral for testing if imatinib is a realistic option.",
+              "captures": {
+                "karyotype_result_status": "unavailable",
+                "cryptic_genetics_tested": "karyotype only",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Test declined or not done for another reason",
+              "morphology_code": "9960",
+              "confidence": "low",
+              "upgrade_path": "FISH (CHIC2) or RT-PCR for FIP1L1::PDGFRA would upgrade this code; the test was not done.",
+              "captures": {
+                "karyotype_result_status": "not done",
+                "cryptic_genetics_tested": "not tested",
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_uncoded_genotype",
+          "node_type": "molecular_freetext",
+          "step_number": 5,
+          "step_label": "Uncoded eosinophilic fusion",
+          "question": "Record the fusion exactly as the report states it.",
+          "capture_label": "Genotype as reported (e.g. \"ETV6::ABL1 by RT-PCR\", \"FLT3 fusion, partner not stated\")",
+          "hint": "The code does not change, but the genotype is preserved on the case record.",
+          "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+          "coding_note": "ETV6::ABL1 and the FLT3-fusion myeloid/lymphoid neoplasms have no dedicated ICD-O-3.2 code and land provisionally on 9964 (Pathway §5.2). The annotation is always persisted, even though the finding is code-neutral — otherwise the entity is lost permanently.",
+          "resolution_logic": [
+            {
+              "morphology_code": "9964",
+              "confidence": "medium",
+              "classification_system": "ICC-2022",
+              "coding_note": "Provisional landing code. The secondary-cause hard gate and the clonality gate are both satisfied upstream, and the fusion itself demonstrates clonality.",
+              "upgrade_path": "None — no ICD-O-3.2 code exists for this entity. The genotype is preserved on the case record instead; revisit if a future ICD-O revision codes it."
+            }
+          ],
+          "captured_variables": [
+            "genotype_annotation",
+            "secondary_eosinophilia_excluded",
+            "classification_system_applied",
+            "karyotype_result_status"
+          ],
+          "nos_fallback": {
+            "code": "9964",
+            "name": "Chronic eosinophilic leukemia, NOS",
+            "reason": "Clonal hypereosinophilia with the secondary causes excluded, but no specific kinase fusion identified."
+          }
+        }
+      ]
+    },
+    {
       "tree_id": "tree_mds_jmml",
       "tree_label": "Myelodysplastic syndromes, JMML and MDS/MPN overlap",
       "entry_node": "mds_document_inventory",
@@ -5176,7 +6575,7 @@
           "step_label": "JMML mandatory criteria",
           "question": "Two JMML criteria are MANDATORY: blasts under 20% in blood and marrow, and documented absence of BCR::ABL1. What does the file show?",
           "hint": "'Absence of BCR::ABL1' means a negative FISH or RT-PCR result in the file. A normal karyotype is not that result.",
-          "clinical_alert": "⚠️ BCR::ABL1 must be EXCLUDED before 9946 is emitted — it is a mandatory JMML criterion (Pathway §3.4). If BCR::ABL1 is POSITIVE this is chronic myeloid leukaemia, not JMML: leave this tree and re-enter at the chronic myeloid / MPN tree (mpn_document_inventory). Do not code 9946 and do not code an MDS terminal.",
+          "clinical_alert": "⚠️ BCR::ABL1 must be EXCLUDED before 9946 is emitted — it is a mandatory JMML criterion (Pathway §3.4). If BCR::ABL1 is POSITIVE this is chronic myeloid leukaemia, not JMML — take the BCR::ABL1-positive branch below, which hands the case to the chronic myeloid / MPN tree. Do not code 9946 and do not code an MDS terminal.",
           "coding_note": "Category I criteria (Pathway §3.4): PB monocytes ≥1×10⁹/L (absent in ~7%), splenomegaly (absent in ~3%), blasts <20% — MANDATORY, absence of BCR::ABL1 — MANDATORY. Only the last two are hard gates.",
           "options": [
             {
@@ -5184,6 +6583,20 @@
               "next_node": "mds_jmml_clinical_criteria",
               "captures": {
                 "bcr_abl1_status": "negative",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "BCR::ABL1 POSITIVE — Philadelphia chromosome t(9;22) on karyotype, or BCR::ABL1 detected by FISH or RT-PCR",
+              "next_node": "mpn_document_inventory",
+              "clinical_alert": "⚠️ A Ph-positive monocytic picture is chronic myeloid leukaemia, not JMML and not CMML. BCR::ABL1 positive codes 9875 regardless of phase (Pathway §3.9).",
+              "coding_note": "The mandatory JMML criterion fails in the POSITIVE direction, which is diagnostic rather than merely disqualifying. Monocytosis in a Ph-positive case does not make it CMML: the case is owned by the chronic myeloid / MPN tree (Pathway §7.1), which resolves BCR::ABL1-positive disease to 9875 and records the phase as a display-only qualifier. Do not code 9946, 9945 or any MDS terminal here.",
+              "captures": {
+                "bcr_abl1_status": "positive",
                 "evidence_tests": [
                   "Histology",
                   "Cytogenetics/FISH"
@@ -5659,11 +7072,9 @@
             },
             {
               "label": "Hypereosinophilia dominates and parasitic infection and HIV have BOTH been excluded and documented",
-              "morphology_code": "9975",
-              "confidence": "low",
-              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9967), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
-              "upgrade_path": "FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA, and a karyotype for 5q31-33 (PDGFRB) and 8p11-12 (FGFR1), would move this case to the clonal-eosinophilia codes 9965–9967 in the chronic myeloid / MPN tree.",
-              "coding_note": "The clonal-eosinophilia terminals (9964–9968) are owned by the chronic myeloid / MPN tree and must not be emitted from here. FIP1L1::PDGFRA is CRYPTIC — a normal karyotype does not exclude 9965 (Pathway §3.10, §5.6).",
+              "next_node": "mpn_eosinophilia_secondary_gate",
+              "clinical_alert": "⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.",
+              "coding_note": "The clonal-eosinophilia terminals (9964–9968) are owned by the chronic myeloid / MPN tree and are never emitted from here (Pathway §3.10, §7.1). This branch now hands the case straight to that tree's hard secondary-cause gate, which re-confirms the parasitic and HIV exclusions — one tap, and no path into 9964–9968 bypasses the gate — and then runs the FIP1L1::PDGFRA / PDGFRB / FGFR1 / PCM1::JAK2 cascade. FIP1L1::PDGFRA is CRYPTIC: a normal karyotype does not exclude 9965 (Pathway §5.6).",
               "captures": {
                 "secondary_eosinophilia_excluded": "both excluded",
                 "workup_status": "incomplete",
