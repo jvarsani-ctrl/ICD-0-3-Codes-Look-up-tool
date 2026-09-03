@@ -143,7 +143,8 @@
   },
   "site_to_group": {
     "C40-C41": [
-      8
+      8,
+      2
     ],
     "C47-C49": [
       9
@@ -178,6 +179,10 @@
       2
     ],
     "abdomen-bowel/nodal": [
+      2
+    ],
+    "C44": [
+      9,
       2
     ]
   },
@@ -255,9 +260,74 @@
     },
     "2": {
       "name": "Lymphomas and Reticuloendothelial Neoplasms",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g2_lymphoid_main",
+          "entry_node": "g2_document_inventory"
+        },
+        {
+          "tree_id": "g2_cutaneous",
+          "entry_node": "g2cut_document_inventory"
+        },
+        {
+          "tree_id": "g2_histiocytic",
+          "entry_node": "g2hist_document_inventory"
+        },
+        {
+          "tree_id": "g2_mastcell",
+          "entry_node": "g2mast_document_inventory"
+        }
+      ],
+      "tree_selection": {
+        "_comment": "Group II's four families diverge before any marker is read, and site cannot separate them: a skin lesion, a lytic bone lesion and a node can all be lymphoid, histiocytic or mast cell (Pathway §7.1). This is a second one-tap DATA-LEVEL option appended to Stage 1, the same mechanism Group 1 uses for dominant_marrow_pattern — not organ-of-origin site capture. Cutaneous and mast-cell presentations must not be forced down the nodal flow.",
+        "variable": "dominant_lymphoid_pattern",
+        "question": "What does the lesion look like on the report (one tap)?",
+        "default_value": "nodal_or_extranodal_mass",
+        "default_rationale": "A lymphoid mass is by a wide margin the commonest Group II presentation, and the main tree carries the not-lymphoma gate and the compartment gate that every other tree assumes has already been passed. An unclassified or undocumented presentation therefore defaults here rather than to a narrower tree that would skip those gates.",
+        "options": [
+          {
+            "value": "nodal_or_extranodal_mass",
+            "label": "Lymphadenopathy or a nodal / extranodal mass",
+            "tree_id": "g2_lymphoid_main",
+            "entry_node": "g2_document_inventory",
+            "is_default": false
+          },
+          {
+            "value": "unknown_or_unclassified",
+            "label": "Not stated / not yet classified",
+            "tree_id": "g2_lymphoid_main",
+            "entry_node": "g2_document_inventory",
+            "is_default": true
+          },
+          {
+            "value": "skin_limited_lesion",
+            "label": "Skin-limited lesion (plaques, papules, nodules, panniculitis)",
+            "tree_id": "g2_cutaneous",
+            "entry_node": "g2cut_document_inventory",
+            "is_default": false
+          },
+          {
+            "value": "histiocytic_dendritic",
+            "label": "Histiocytic / dendritic proliferation (incl. lytic bone lesion, CD1a or S100 positive)",
+            "tree_id": "g2_histiocytic",
+            "entry_node": "g2hist_document_inventory",
+            "is_default": false
+          },
+          {
+            "value": "mast_cell",
+            "label": "Mast cell infiltrate (tryptase or CD117 positive, urticaria pigmentosa)",
+            "tree_id": "g2_mastcell",
+            "entry_node": "g2mast_document_inventory",
+            "is_default": false
+          }
+        ]
+      },
+      "handoff": {
+        "group": 2,
+        "tree_id": "g2_lymphoid_main",
+        "entry_node": "g2_document_inventory"
+      }
     },
     "3": {
       "name": "CNS and Miscellaneous Intracranial and Intraspinal Neoplasms",

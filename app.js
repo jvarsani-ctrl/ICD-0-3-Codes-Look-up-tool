@@ -32,6 +32,11 @@ var NODE_TYPES = [
    different registry facts (redcap.md §4). */
 var WORKUP_STATES = ['pending', 'not done', 'unavailable', 'declined'];
 
+/* A behaviour criterion is a yes/no clinical question. These are the generic
+   words for the two answers — UI chrome, not clinical content — and a leaf may
+   override either with its own `label`. */
+var ANSWER_LABELS = { y: 'Yes', n: 'No', yes: 'Yes', no: 'No', unknown: 'Not known' };
+
 var MARKER_CYCLE = [undefined, 'pos', 'strong', 'weak', 'neg'];
 /* Screen-reader wording for each marker state. The visible chip shows a short
    token; a marker read aloud needs the whole word. */
@@ -48,6 +53,8 @@ var state = {
   captured: {},          /* every resolution_logic[].when variable reads here */
   markers: {},
   draft: {},             /* in-progress input for the live node only */
+  pending: null,         /* a branch parked mid-flight waiting on one answer */
+  firedAlert: null,      /* alert of the branch that routed here, one hop only */
   trail: [], trailAtGroupEntry: 0, workup: [], result: null, error: null, query: ''
 };
 
@@ -76,6 +83,7 @@ function snapshot() {
     stage: state.stage, archetype: state.archetype, group: state.group,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result,
+    pending: state.pending || null, firedAlert: state.firedAlert || null,
     trailAtGroupEntry: state.trailAtGroupEntry
   });
 }
@@ -160,16 +168,23 @@ function branchMatches(when, topo) {
   if (!when.captured_variable) return false;
   var have = state.captured[when.captured_variable];
   if (when.equals !== undefined) return String(have) === String(when.equals);
-  if (when.value !== undefined && when.operator) {
-    var a = Number(have), b = Number(when.value);
-    if (isNaN(a)) return false;
-    switch (when.operator) {
-      case '>=': return a >= b;  case '>': return a > b;
-      case '<=': return a <= b;  case '<': return a < b;
-      case '==': return a === b;
-    }
-  }
+  if (when.value !== undefined && when.operator) return numCompare(have, when.operator, when.value) === true;
   return false;
+}
+/* One operator table, shared by the router's dual-group branches and by an
+   entity boundary. It returns **null**, not false, when the value cannot be
+   read as a number: "undecidable" and "the comparison failed" are different
+   facts, and a caller that collapses them states more than the file supports.
+   An unknown operator throws rather than quietly failing every comparison. */
+function numCompare(have, op, want) {
+  var a = Number(have), b = Number(want);
+  if (have === null || have === undefined || have === '' || isNaN(a)) return null;
+  switch (op) {
+    case '>=': return a >= b;  case '>': return a > b;
+    case '<=': return a <= b;  case '<': return a < b;
+    case '==': return a === b; case '!=': return a !== b;
+  }
+  throw new Error('Unknown operator: ' + op);
 }
 function resolveGroup(code, topo) {
   var rules = (state.router && state.router.dual_group_rules) || {};
@@ -235,6 +250,7 @@ function renderTrailRows() {
 }
 function currentLabel() {
   if (state.result) return 'Output';
+  if (state.pending) return 'Behaviour';
   var n = node();
   if (n) return n.step_label || n.node_type.replace(/_/g, ' ');
   return state.stage.replace(/_/g, ' ');
@@ -252,6 +268,7 @@ function renderStage() {
     case 'group':     return renderGroupSelect();
     case 'handoff':   return renderHandoff();
     case 'node':      return renderLiveNode();
+    case 'behaviour': return renderBehaviour();
     case 'output':    return renderOutput();
     default: throw new Error('Unknown stage: ' + state.stage);
   }
@@ -308,7 +325,14 @@ function pick(act, items) {
   return '<div class="opts">' + items.map(function (it, i) {
     return '<button class="opt" data-act="' + esc(act) + '" data-i="' + i + '">' +
       '<span class="opt__label">' + esc(it.label) +
-      (it.meta ? '<span class="opt__meta">' + esc(it.meta) + '</span>' : '') +
+      (it.meta ? '<span class="opt__meta">' + rich(it.meta) + '</span>' : '') +
+      /* A CLINICAL ALERT AUTHORED ON A BRANCH IS CLERK-FACING (DT master §3E)
+         — the counterpart of coding_note, which is author-facing and stays
+         unrendered. On an option it must be visible BEFORE the option is
+         taken: "a normal karyotype does not exclude this code" is worthless
+         once the clerk has already picked "karyotype normal". Compact, not a
+         banner each — several can be on screen at once. */
+      (it.alert ? '<span class="opt__alert"><b>Clinical alert</b> ' + rich(it.alert) + '</span>' : '') +
       '</span></button>';
   }).join('') + '</div>';
 }
@@ -406,13 +430,49 @@ function renderLiveNode() {
   var n = node();
   if (!n) throw new Error('Unresolved node reference: ' + state.nodeId);
   if (NODE_TYPES.indexOf(n.node_type) === -1) throw new Error('Unknown node_type: ' + n.node_type);
+  /* The alert of the branch that routed here. A rule, band or override cannot
+     be seen before it fires, so its warning would otherwise vanish entirely;
+     it is shown on the screen the clerk acts on next. Shown once if the node
+     repeats the same string. */
+  var carried = state.firedAlert && state.firedAlert !== n.clinical_alert ? state.firedAlert : null;
   return panel(n.step_label || ('Step ' + (n.step_number === undefined ? '' : n.step_number)),
     n.question || '', n.hint,
     (n.clinical_alert ? banner('alert', 'Clinical alert', n.clinical_alert) : '') +
-    dispatchNode(n) + renderEscapes(n));
+    (carried ? banner('alert', 'Clinical alert', carried) : '') +
+    priorNote(n.prior_probability) + dispatchNode(n) + renderEscapes(n));
 }
 
+/* `prior_probability` is DISPLAY-ONLY. It changes no code and no destination
+   (§3.3). It is here because the same result means different things against
+   different priors — a marker expected in nearly every case of one entity and
+   in a handful of cases of another is not the same finding — and a clerk who
+   cannot see the prior cannot weigh the result. It renders beside the thing it
+   qualifies: the node's question, a marker group, or one option. */
+function priorText(p) {
+  if (!p) return '';
+  var head = [p.test, p.context ? 'in ' + p.context : null,
+    p.expected_positive_pct ? 'expected positive ' + p.expected_positive_pct + '%' : null]
+    .filter(function (x) { return x; }).join(' · ');
+  return head + (p.interpretation ? (head ? ' — ' : '') + p.interpretation : '');
+}
+function priorNote(p) {
+  return p ? '<p class="node__hint">' + rich(priorText(p)) + '</p>' : '';
+}
+
+/* A node may declare the result states of the test it is asking about (§3.4).
+   Those states AUGMENT the node's own control — they never replace it. The
+   construct exists so an author does not have to fake a result state with a
+   marker checkbox; it is one more captured fact, not the node's only answer.
+   Replacing the control instead of adding to it emptied the group's entry node
+   of its specimen ladder and left ten marker grids unrenderable, so no
+   `positive[]` rule could ever match — a whole tree that still looked like it
+   was working. The selectors render ABOVE the native control because an option
+   list advances on tap: the state has to be settable before the tap that
+   leaves the node. */
 function dispatchNode(n) {
+  return stateSelectors(n) + nodeControl(n);
+}
+function nodeControl(n) {
   switch (n.node_type) {
     case 'clinical_presentation':
     case 'site_capture':
@@ -431,6 +491,34 @@ function dispatchNode(n) {
   }
 }
 
+/* The declared states of one test. The list includes `not_assessable`, which
+   is why this exists at all: an unreadable test is not a negative one, and the
+   two have to be separately answerable before the JSON's branches can keep
+   them apart. Choosing one CAPTURES and re-renders without advancing, exactly
+   as tapping a marker chip does — so a `when` on the variable is already
+   satisfied by the time the node resolves, in either tap order. */
+function stateLabel(s) { return String(s).replace(/_/g, ' '); }
+/* One block, or several: a node may declare a state list per variable. */
+function stateBlocks(n) {
+  var t = n && n.test_result_states;
+  return !t ? [] : (Array.isArray(t) ? t : [t]);
+}
+function stateSelectors(n) {
+  return stateBlocks(n).map(function (b, bi) {
+    var have = state.captured[b.variable];
+    return '<div class="tag">' + esc(stateLabel(b.variable)) + '</div><div class="states">' +
+      arr(b.states).map(function (st, i) {
+        var on = have !== undefined && have !== null && String(have) === String(st);
+        return '<button class="state" data-act="state" data-b="' + bi + '" data-i="' + i + '"' +
+          ' aria-pressed="' + (on ? 'true' : 'false') + '"' +
+          ' aria-label="' + esc(stateLabel(b.variable)) + ': ' + esc(stateLabel(st)) + '"' +
+          (on ? ' data-on="1"' : '') + '>' +
+          (on ? '<span class="state__tick">&check;</span> ' : '') + esc(stateLabel(st)) +
+          '</button>';
+      }).join('') + '</div>';
+  }).join('');
+}
+
 /* An option names itself differently by node type — a finding, a descriptor,
    a site — but the engine only needs "whatever this option is called". */
 function optionLabel(o) { return o.label || o.finding || o.descriptor || o.site || ''; }
@@ -443,7 +531,8 @@ function optionList(n) {
       esc(n.accept_label || 'this result') + '</button></div>';
   }
   return pick('opt', opts.map(function (o) {
-    return { label: optionLabel(o) };
+    return { label: optionLabel(o), meta: priorText(o.prior_probability) || null,
+             alert: o.clinical_alert || null };
   }));
 }
 
@@ -456,10 +545,14 @@ function cytogeneticsSelect(n) {
   });
   h += '</select></label>';
   var chosen = state.draft.option !== undefined && state.draft.option !== '' ? opts[+state.draft.option] : null;
+  /* A native <option> cannot carry markup, so a dropdown option's alert shows
+     the moment it is selected — still before Continue commits it. */
+  if (chosen && chosen.clinical_alert) h += banner('alert', 'Clinical alert', chosen.clinical_alert);
   /* detection_method is why a normal result cannot silently close a branch. */
   if (chosen && chosen.detection_method) {
     h += banner('info', 'Detection method', String(chosen.detection_method).replace(/_/g, ' '));
   }
+  if (chosen) h += priorNote(chosen.prior_probability);
   h += '<div class="actions"><button class="btn" data-act="resolve"' + (chosen ? '' : ' disabled') + '>Continue</button></div>';
   return h;
 }
@@ -469,7 +562,8 @@ function cytogeneticsSelect(n) {
    marker names — a rule that names no intensity matches any positive state. */
 function markerGrid(n) {
   var h = arr(n.marker_groups).map(function (g) {
-    return '<div class="tag">' + esc(g.group_label) + '</div><div class="markers">' +
+    return '<div class="tag">' + esc(g.group_label) + '</div>' + priorNote(g.prior_probability) +
+      '<div class="markers">' +
       arr(g.markers).map(function (m) {
         var v = state.markers[m];
         var pressed = v && v !== 'neg' ? 'true' : 'false';
@@ -534,6 +628,46 @@ function renderEscapes(n) {
     '</div>';
 }
 
+/* ---------------------------------------------------------- §3.1 behaviour
+   The behaviour of the code — and with it whether the case belongs to this
+   ICCC-3 group at all — can turn on a clinical fact the pathology report
+   cannot supply. The engine stops and asks the criterion rather than guessing,
+   and every answer is an ordinary branch destination that goes straight back
+   through advance(). Nothing here knows what any behaviour means. */
+function behaviourLeaves(br) {
+  var out = [];
+  Object.keys((br && br.values) || {}).forEach(function (k) {
+    var leaf = br.values[k];
+    out.push({ key: k, leaf: leaf,
+      label: leaf.label || ANSWER_LABELS[String(leaf.when).toLowerCase()] || String(leaf.when) });
+  });
+  /* `unresolved` is required of the author and named the reportable half.
+     Defaulting an unestablished behaviour to the other half would silently
+     delete a reportable cancer, so it is offered as an explicit answer the
+     clerk chooses — the engine never takes it on its own. */
+  if (br && br.unresolved) {
+    out.push({ key: 'unresolved', leaf: br.unresolved,
+      label: br.unresolved.label || 'Not established from the file' });
+  }
+  return out;
+}
+function renderBehaviour() {
+  var br = state.pending, n = node();
+  return panel('Behaviour', br.criterion,
+    br.clinical_only
+      ? 'A clinical-history question. The pathology report cannot answer it — ask the notes or the clinician.'
+      : null,
+    priorNote(br.prior_probability) +
+    pick('behaviour', behaviourLeaves(br).map(function (l) {
+      return { label: l.label, meta: l.leaf.reason || null, alert: l.leaf.clinical_alert || null };
+    })) +
+    /* Deferrable means the answer arrives months later, so say so here as well
+       as on the output block. */
+    (br.deferrable ? banner('info', 'The answer may arrive later',
+      br.follow_up_review || 'This answer can change after today; the case will be flagged for review.') : '') +
+    renderEscapes(n || {}));
+}
+
 function banner(kind, label, text) {
   return '<div class="banner banner--' + esc(kind) + '"><span class="banner__label">' +
     esc(label) + '</span>' + rich(text) + '</div>';
@@ -544,8 +678,17 @@ function banner(kind, label, text) {
    conditional logic inside a rule is not allowed, because flatness is what
    keeps it validatable and testable (DT master §3C).
    ========================================================================= */
+/* Only a TRAILING ":strong" / ":weak" is an intensity suffix; every other
+   colon belongs to the marker name. Splitting on the first colon broke every
+   token naming a fusion gene — "::" is the current standard separator and is
+   used throughout this project — because it looked up the half before the
+   colons, found no such marker on the node, and the rule then SILENTLY never
+   fired. A rule that never fires is not a visible failure: the case simply
+   walks past the branch that was written to catch it and reaches a different
+   code, which is a mis-code wearing the face of a normal answer. */
 function markerOk(token) {
-  var bits = String(token).split(':'), name = bits[0], want = bits[1];
+  var m = /^([\s\S]*):(strong|weak)$/.exec(String(token));
+  var name = m ? m[1] : String(token), want = m ? m[2] : null;
   var have = state.markers[name];
   if (!have || have === 'neg') return false;
   if (want) return have === want;
@@ -617,11 +760,27 @@ function advance(target, label, value, before) {
   pushTrail(label, value, before);
   capture(target.captures);
   state.draft = {};
+  state.pending = null;
+  /* A branch may not be able to name its behaviour yet (§3.1). It parks here
+     and the engine asks the criterion; each answer comes back through this
+     same function, so captures, terminals, referrals and exclusions all
+     behave exactly as they do on any other branch. Routing new branch kinds
+     around advance() is how captures got silently dropped once already. */
+  if (target.behaviour_resolution) {
+    state.pending = target.behaviour_resolution;
+    state.stage = 'behaviour';
+    return;
+  }
+  /* A TERMINAL's alert travels on the target itself — finish()/refer()/
+     exclude() each read it from the branch that actually fired, so nothing has
+     to be remembered. Only an onward-routing branch needs the carry below. */
+  state.firedAlert = null;
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
-  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy');
+  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert);
   if (target.next_node) {
     if (!findNode(target.next_node)) throw new Error('Unresolved next_node: ' + target.next_node);
+    state.firedAlert = target.clinical_alert || null;
     state.nodeId = target.next_node;
     state.stage = 'node';
     return;
@@ -652,8 +811,13 @@ function basisFromTrail() {
 
 function finish(target, basis) {
   var code = String(target.morphology_code);
+  /* Resolved by (code, behaviour): a behaviour-overloaded code has one entry
+     per behaviour, and an entry lookup that ignored the behaviour would put
+     the other entity's name on the output block. */
   var entry = entryFor(code, target.behavior_code);
-  if (!entry) throw new Error('Terminal code not in morphology_entries: ' + code);
+  if (!entry) throw new Error('Terminal code not in morphology_entries: ' + code +
+    (target.behavior_code ? '/' + target.behavior_code : ''));
+  var pending = target.provisional_pending || null;
   /* `diagnostic_tests_required` has no OR semantics — an entry that names both
      "Cytogenetics/FISH" and "Molecular/PCR" means "either will do", but the
      list cannot say so. A branch therefore declares `satisfies_tests[]`: the
@@ -662,8 +826,33 @@ function finish(target, basis) {
      both invents an upgrade path and feeds a false pending-worklist entry.
      The engine holds no opinion on which test substitutes for which — that
      judgement stays in the JSON. */
-  var evidence = arr(state.captured.evidence_tests).concat(arr(target.satisfies_tests));
+  /* A branch cannot hold the same test both outstanding and discharged. Where
+     a provisional names the test that would resolve it, that test is struck
+     from what this branch claims to satisfy (§3.2). This can only ever move a
+     test from "done" to "outstanding" — it can never raise a confidence. */
+  var evidence = arr(state.captured.evidence_tests).concat(
+    arr(target.satisfies_tests).filter(function (t) {
+      return !pending || String(t) !== String(pending.resolving_test);
+    }));
   var missing = arr(entry.diagnostic_tests_required).filter(function (t) { return evidence.indexOf(t) === -1; });
+  /* A NAMED PROVISIONAL IS A DECLARATION THAT A SPECIFIC TEST IS OUTSTANDING,
+     whether or not the entry's required-test list happens to name it. Without
+     this, a code whose required tests are all present renders "Workup:
+     complete — no outstanding tests" and a HIGH badge directly above a
+     Provisional row saying the resolving test has not been done and two other
+     entities are not excluded. That is the one thing an advisory tool must
+     never do, and it is worse here than an ordinary missing test because the
+     panel positively asserts completeness.
+
+     This is NOT the provisional being collapsed into a confidence level — the
+     named row stays exactly as authored, alongside. The test simply joins the
+     workup list under its own name, with its own status dropdown, and
+     confidence falls to `medium` through the SAME rule that already governs
+     every outstanding test. Nothing here is silent: the clerk sees the test,
+     the reason and the alternatives. */
+  if (pending && pending.resolving_test && missing.indexOf(pending.resolving_test) === -1) {
+    missing = missing.concat([pending.resolving_test]);
+  }
   state.workup = missing.map(function (t) {
     var prior = state.workup.filter(function (w) { return w.test === t; })[0];
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };
@@ -682,6 +871,22 @@ function finish(target, basis) {
     upgrade: target.upgrade_path || entry.upgrade_path ||
       (missing.length ? missing.join(', ') + ' would yield a more specific code.' : ''),
     classification_system: target.classification_system || state.captured.classification_system_applied || null,
+    /* A NAMED, REVERSIBLE provisional — deliberately NOT a confidence level,
+       and deliberately absent from lowestConfidence() above (§3.2). Collapsing
+       "this specific test is outstanding, these specific entities are not
+       excluded" into the word "low" throws away everything actionable about
+       it. It renders on complete cases too; it is never suppressed. */
+    provisional: pending,
+    /* The branch's own sentence for why THIS code rather than its neighbour —
+       an entity boundary's reason_inside/reason_outside, or a behaviour leaf's
+       reason. `reason`, never `coding_note`: coding_note is author-facing and
+       is not rendered anywhere (registrar's ruling, Aug 2026). */
+    reason: target.reason || null,
+    /* The warning written on the branch that reached this code. Rendered in
+       the same treatment as the entry-level alert, and only once where both
+       carry the same string (several branches repeat their entry's alert). */
+    alert: target.clinical_alert || null,
+    followUp: state.captured.follow_up_review || null,
     routing: resolveGroup(code, state.captured.topography)
   };
   state.stage = 'output';
@@ -695,9 +900,10 @@ function finish(target, basis) {
    belongs. The engine holds no view on which case goes where; the branch
    declares it. */
 function refer(target) {
-  state.workup = [];
+  state.workup = []; state.pending = null;
   state.result = {
     referral: true,
+    alert: target.clinical_alert || null,
     group: target.refer_group,
     codeHint: target.refer_code || null,
     note: target.reason || null
@@ -707,9 +913,9 @@ function refer(target) {
 
 /* A clean terminal that emits NO malignant code. Marked "not a reportable
    malignancy" and removed from the malignant registry (nodes.md §4). */
-function exclude(reason) {
-  state.workup = [];
-  state.result = { excluded: true, reason: reason };
+function exclude(reason, alert) {
+  state.workup = []; state.pending = null;
+  state.result = { excluded: true, reason: reason, alert: alert || null };
   state.stage = 'output';
 }
 
@@ -722,6 +928,7 @@ function renderOutput() {
   if (r.referral) {
     var gname = ((state.router.groups || {})[String(r.group)] || {}).name;
     return '<div class="node--live">' +
+      (r.alert ? banner('alert', 'Clinical alert', r.alert) : '') +
       banner('warn', 'Belongs to another group',
         'This case is a malignancy, but not one this group codes. Record it under group ' +
         r.group + (gname ? ' — ' + gname : '') + '.') +
@@ -734,6 +941,7 @@ function renderOutput() {
   }
   if (r.excluded) {
     return '<div class="node--live">' +
+      (r.alert ? banner('alert', 'Clinical alert', r.alert) : '') +
       banner('info', 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
@@ -742,6 +950,7 @@ function renderOutput() {
   var e = r.entry, redcap = state.host === 'redcap';
   var h = '<div class="node--live">';
   if (e.clinical_alert) h += banner('alert', 'Clinical alert', e.clinical_alert);
+  if (r.alert && r.alert !== e.clinical_alert) h += banner('alert', 'Clinical alert', r.alert);
 
   /* Rows run in REDCap FIELD ORDER — morphology → subgroup → confidence →
      workup — so the clerk reads down this panel and down the REDCap form in
@@ -759,12 +968,32 @@ function renderOutput() {
     h += '<div class="headline"><div class="headline__code">' + esc(r.code) + '</div>' +
       '<div class="headline__name">' + esc(e.morphology_name) + '</div></div>';
   }
+  /* Behaviour is shown only where it is not the reportable /3 default: a case
+     whose code carries the other behaviour reads as an ordinary malignancy
+     otherwise, and under ?host=redcap the option string names the /3 disease. */
+  if (e.behavior_code && String(e.behavior_code) !== '3') {
+    h += orow('Behaviour', r.code + '/' + e.behavior_code);
+  }
 
   h += '<div class="out__head out__head--' + esc(r.confidence) + '">' +
     '<span class="out__subgroup">' + esc(e.iccc3_subgroup_name) + ' — ICCC-3 <b>' + esc(e.iccc3_subgroup_id) + '</b></span>' +
     '<span class="badge badge--' + esc(r.confidence) + '">Confidence ' + esc(r.confidence) + '</span></div>';
 
+  /* Not a confidence level — a specific claim with a specific resolving test
+     (§3.2). Rendered whether or not the case is otherwise complete. */
+  if (r.provisional) {
+    var pv = r.provisional, alts = arr(pv.alternative_entities), altc = arr(pv.alternative_codes);
+    h += orow('Provisional', String(pv.reason || '') +
+      (pv.resolving_test ? ' **Resolved by:** ' + pv.resolving_test + '.' : '') +
+      (alts.length ? ' **Not excluded:** ' + alts.join('; ') + '.' : '') +
+      (altc.length ? ' **Alternative codes:** ' + altc.join(', ') + '.' : ''), true, 'provisional');
+  }
+
   h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
+  /* A deferrable behaviour criterion is answered months later. The case has to
+     be re-opened, and a flag nobody can see will not make that happen — so it
+     is an explicit row, next to the outstanding tests it behaves like. */
+  if (r.followUp) h += orow('Follow-up', r.followUp, true, 'followup');
   /* Renders even when empty. If it vanishes on complete cases the clerk stops
      trusting it as a checklist (Design Spec §5, redcap.md §4). */
   h += '<div class="orow orow--upgrade"><b>Upgrade</b><span>' +
@@ -772,6 +1001,7 @@ function renderOutput() {
   h += orow('Topography', state.captured.topography || '—');
   if (redcap) h += orow('REDCap value', e.redcap_value);
   h += orow('Based on', r.basis || '—');
+  if (r.reason) h += orow('Why', r.reason, true);
   if (r.discordant) h += orow('Discordance', 'Subtype uncertain — recorded as a quality signal.');
   if (r.classification_system) h += orow('Classification', r.classification_system);
   if (e.who_version) h += orow('WHO version', e.who_version);
@@ -787,8 +1017,12 @@ function renderOutput() {
   h += outActions();
   return h + '</div>';
 }
-function orow(label, value) {
-  return '<div class="orow"><b>' + esc(label) + '</b><span>' + esc(value) + '</span></div>';
+/* `emphasise` runs the value through rich() so an authored **bold** lands on
+   the word that carries the warning; `mod` names an optional .orow--<mod>
+   variant, which degrades to the plain row if the stylesheet has none. */
+function orow(label, value, emphasise, mod) {
+  return '<div class="orow' + (mod ? ' orow--' + esc(mod) : '') + '"><b>' + esc(label) +
+    '</b><span>' + (emphasise ? rich(value) : esc(value)) + '</span></div>';
 }
 /* Per MISSING TEST, not per case. */
 function renderWorkup() {
@@ -860,6 +1094,34 @@ function handleOption(act, el) {
       return advance(o2, n.step_label || 'Answer', optionLabel(o2), before);
     }
     case 'direct': return advance(n, n.step_label || 'Answer', n.accept_label || n.question, before);
+    /* One declared result state, captured as a first-class answer (§3.4). It
+       does NOT advance: the node still resolves through its own options or its
+       own rules, and the state is simply one more fact those rules can read.
+       No trail entry either — like a marker chip, it is part of composing this
+       node's answer, and the trail records the answer. The engine attaches no
+       meaning to any state; keeping `not_assessable` off the `negative` branch
+       is the JSON's job, and the validator's. */
+    case 'state': {
+      var blocks = stateBlocks(n), sb = blocks[+(el.getAttribute('data-b') || 0)];
+      if (!sb) return;
+      var st = arr(sb.states)[i];
+      if (st === undefined) return;
+      state.captured[sb.variable] = st;
+      return;
+    }
+    case 'behaviour': {
+      var br = state.pending, leaf = behaviourLeaves(br)[i];
+      if (!leaf) return;
+      /* `unresolved` records that the fact was not established — not a value
+         the criterion never offered. */
+      state.captured[br.variable] = leaf.key === 'unresolved' ? null : leaf.leaf.when;
+      /* RATIFIED, 2026-09-04: recorded on EVERY leaf, not only `unresolved`. A
+         case coded today on a criterion that can still change in six months
+         needs the review just as much as an unanswered one; hiding the row on
+         the resolved leaves would be the quieter and the wronger choice. */
+      if (br.deferrable && br.follow_up_review) state.captured.follow_up_review = br.follow_up_review;
+      return advance(leaf.leaf, String(br.variable).replace(/_/g, ' '), leaf.label, before);
+    }
     case 'marker': {
       var m = el.getAttribute('data-m'), cur = state.markers[m];
       var next = MARKER_CYCLE[(MARKER_CYCLE.indexOf(cur) + 1) % MARKER_CYCLE.length];
@@ -898,7 +1160,64 @@ function handleOption(act, el) {
   }
 }
 
+/* Node types that take a scalar reading capture it BEFORE any node-level rule
+   runs, so a rule naming the node's own variable sees this case's value. Node-
+   TYPE knowledge, which the engine is allowed to hold; group knowledge, which
+   it is not, stays in the JSON. */
+function captureLive(n) {
+  if (n.node_type !== 'numeric_gate') return;
+  var undoc = state.draft.not_documented === true;
+  state.captured[n.variable] =
+    (undoc || state.draft.value === '' || state.draft.value === undefined) ? null : Number(state.draft.value);
+}
+
+/* §3.5. Crossing the line does not flip a behaviour, it moves the case to a
+   DIFFERENT CODE, so each side names its own (code, behaviour) pair and its
+   own clerk-facing reason. `operator`/`threshold` describe the OUTSIDE
+   condition; `also_outside_when` is a second, independent way out, so a match
+   there settles the case even when the reading is missing.
+
+   Returns null when neither test can be decided. Reading an undocumented value
+   as "inside" would hand back the narrower entity's code on no evidence at
+   all, which is the one failure this tool must never produce — the caller
+   sends that case to the node's fallback instead.
+
+   ⚠ RATIFIED, 2026-09-04. This is not an oversight waiting to be tidied into a
+   default. Do not "improve" it by treating a missing reading as inside, as
+   outside, or as any fixed side: an undecidable boundary is a case the file
+   cannot answer, and it must arrive at the clerk saying so. */
+function boundary(n) {
+  var b = n.entity_boundary, have = state.captured[b.variable];
+  var over = numCompare(have, b.operator || '>', b.threshold);
+  var also = !!(b.also_outside_when && whenOk(b.also_outside_when));
+  if (over === null && !also) return null;
+  var out = also || over === true;
+  return {
+    target: {
+      morphology_code: out ? b.outside_code : b.inside_code,
+      behavior_code: out ? b.outside_behavior_code : b.inside_behavior_code,
+      reason: out ? b.reason_outside : b.reason_inside
+    },
+    /* `over === null` is exactly "the reading could not be read", so it also
+       covers a blank and a non-numeric entry without a second test for each. */
+    value: (over === null ? 'reading not documented' : have + (n.unit || '')) +
+      ' → ' + (out ? 'outside' : 'inside') + ' the entity boundary'
+  };
+}
+
 function resolveNode(n, before) {
+  captureLive(n);
+  /* A node-level boundary is the node's resolution: it runs before the node
+     type's own branch selection, and routes through advance() like anything
+     else so captures, provisionals and terminals are handled once. */
+  if (n.entity_boundary) {
+    var eb = boundary(n);
+    if (!eb) {
+      return advance(fallbackTarget(n), n.step_label || 'Boundary',
+        String(n.entity_boundary.variable).replace(/_/g, ' ') + ' not documented — boundary undecidable', before);
+    }
+    return advance(eb.target, n.step_label || 'Boundary', eb.value, before);
+  }
   switch (n.node_type) {
     case 'ihc_checklist': {
       var rule = matchRules(n.resolution_logic);
@@ -910,9 +1229,7 @@ function resolveNode(n, before) {
       return advance(rule, n.step_label || 'Markers', summary, before);
     }
     case 'numeric_gate': {
-      var undoc = state.draft.not_documented === true;
-      var v = undoc || state.draft.value === '' || state.draft.value === undefined ? null : Number(state.draft.value);
-      state.captured[n.variable] = v;
+      var v = state.captured[n.variable];   /* captured by captureLive() above */
       /* Override is checked BEFORE the bands — a declared override outranks
          the threshold (Pathway §7.2). */
       var ov = arr(n.override_when).filter(function (o) {
@@ -995,7 +1312,8 @@ function enterGroup(group, treeId, entryNode) {
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
-  state.draft = {}; state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
+  state.draft = {}; state.pending = null; state.firedAlert = null;
+  state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
   state.error = null; state.query = '';
 }
 

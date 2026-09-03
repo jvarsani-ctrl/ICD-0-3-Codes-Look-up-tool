@@ -435,6 +435,31 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .opt__label { font-weight: var(--w-semi); font-size: var(--fs-body); }
 .opt__meta  { display: block; font-weight: var(--w-regular); font-size: var(--fs-micro); color: var(--color-muted); margin-top: 2px; }
 
+/* A clinical_alert authored on an OPTION, shown BEFORE the option is taken —
+   a warning that arrives after the choice has been made is not a warning.
+   Same coral + 4px-edge signature as .banner--alert so it reads as the same
+   class of thing, but compact: a list can have several at once and the panel
+   still has to be readable. Colour is not the only channel — the bold
+   "CLINICAL ALERT" word and the 4px edge carry it too (design.md §4). */
+.opt__alert {
+  display: block;
+  margin-top: var(--sp-1);
+  padding: var(--sp-1) var(--sp-2);
+  border-left: 4px solid var(--color-alert-edge);
+  border-radius: var(--radius-sm);
+  background: var(--color-alert-fill);
+  color: var(--ink-900);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-micro);
+}
+.opt__alert b {
+  display: block;
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* Marker chips — the IHC checklist. Tap cycles: off → positive → strong →
    weak → negative. Intensity tokens are a ratified Group 1 extension
    (Pathway §7.3 item 2) and are backward-compatible with plain markers. */
@@ -468,6 +493,32 @@ button, input, select, textarea { font: inherit; color: inherit; }
   color: var(--color-accent);
 }
 .marker__state { margin-left: var(--sp-1); font-size: var(--fs-over); font-weight: var(--w-bold); }
+
+/* Declared test-result states (§3.4). These sit ABOVE the node's own control
+   and add to it — they are not the node's answer, they are one captured fact
+   the node's rules can read. Deliberately a different affordance from the
+   marker chips directly below them: square-cornered segments that read as
+   "pick exactly one of these", against the markers' tri-state pills. The
+   chosen one is marked three ways — a tick glyph, a heavier ink border and the
+   accent fill — so the selection never rests on colour alone. */
+.states { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-bottom: var(--sp-3); }
+.state {
+  border: 2px solid var(--ink-300);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-1) var(--sp-3);
+  font-size: var(--fs-small);
+  font-weight: var(--w-semi);
+  color: var(--ink-800);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+.state:hover { border-color: var(--color-primary); background: var(--ink-050); }
+.state[data-on] {
+  border-color: var(--color-border-strong);
+  background: var(--color-accent);
+  color: var(--ink-900);
+}
+.state__tick { font-weight: var(--w-bold); }
 
 .field { display: block; margin-bottom: var(--sp-3); }
 .field__label { display: block; font-weight: var(--w-semi); font-size: var(--fs-small); margin-bottom: var(--sp-1); }
@@ -632,6 +683,30 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding-right: var(--sp-2);
 }
 .orow--excluded { background: var(--ink-100); }
+
+/* A NAMED, REVERSIBLE provisional — a specific claim with a specific resolving
+   test, not a confidence level. A caution, so marigold: coral stays reserved
+   for clinical_alert and a provisional is not a clinical emergency. Three
+   channels, never colour alone — marigold field, a 2px marigold rule, and the
+   row's own uppercase "PROVISIONAL" label. */
+.orow--provisional {
+  background: var(--color-warn-soft);
+  border-top: 2px solid var(--color-warn-edge);
+  padding-left: var(--sp-2);
+  padding-right: var(--sp-2);
+}
+/* A deferred behaviour criterion: the answer arrives months later and the
+   registry has to come back to the case. Same caution family as the
+   provisional and deliberately NOT coral, so the two are separated by border
+   TREATMENT rather than by hue — a 3px dashed rule reads as "not settled yet"
+   against the provisional's solid 2px and the upgrade panel's solid sky —
+   plus its own "FOLLOW-UP" label. */
+.orow--followup {
+  background: var(--color-warn-soft);
+  border-top: 3px dashed var(--color-warn-edge);
+  padding-left: var(--sp-2);
+  padding-right: var(--sp-2);
+}
 
 .workup { display: flex; flex-direction: column; gap: var(--sp-1); }
 .workup__row { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }

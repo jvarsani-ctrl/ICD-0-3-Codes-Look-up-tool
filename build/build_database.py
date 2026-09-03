@@ -131,6 +131,13 @@ DIAGNOSTIC_TESTS = {
     "Flow cytometry",
     "Cytogenetics/FISH",
     "Molecular/PCR",
+    # In-situ hybridisation. NOT a synonym for IHC: Pathway §4.3 makes EBER ISH on tissue
+    # the only entity-defining EBV test, says LMP1 IHC cannot substitute for it (LMP1 is
+    # absent in latency I and 0), and rules that serology cannot upgrade any code. Without
+    # its own member, an EBER-resolving provisional_pending cannot name its own test and
+    # EBER can never appear as an outstanding-workup row anywhere in Group II.
+    # DT master §2 documents this list; that file is owned elsewhere and is not edited here.
+    "ISH",
     # tolerated compound forms seen in the master's own worked example
     "IHC or flow cytometry",
 }
@@ -143,6 +150,168 @@ CONFIDENCE_CEILINGS = {"high", "medium", "low"}
 #   9910  AMKL NOS — the CBFA2T3::GLIS2 / NUP98-r / KMT2A-r AMKL fallback (RT-PCR / NGS)
 #   9911  AMKL with t(1;22) RBM15::MRTFA
 CRYPTIC_TERMINAL_CODES = {"9814", "9965", "9910", "9911"}
+
+# --------------------------------------------------------------------------------------
+# Group II extensions (Group II build contract §3). These are FIELDS on existing
+# structures, never new node types — Group II adds nothing to NODE_TYPES (contract §0.3).
+# --------------------------------------------------------------------------------------
+
+# Contract §3.4 — the closed test-result vocabulary.
+TEST_RESULT_STATES = {
+    "positive",
+    "negative",
+    "not_assessable",
+    "not_done",
+    "failed",
+    "not_available",
+    "not_indicated",
+    "adequate",
+    "inadequate",
+}
+
+# Tests whose failure mode is UNINTERPRETABLE rather than negative (contract §3.4;
+# Pathway §2.4, §4.3, §7.3 item 4). A node that branches on one of these must offer
+# `not_assessable`, and must not send it where it sends `negative`.
+UNINTERPRETABLE_TEST_VARIABLES = {"eber_status", "fish_status", "fna_adequacy"}
+
+# Contract §3.5 / Pathway §7.5 — 9709 has no /3 half. There is no such code.
+NO_SLASH3_CODES = {"9709"}
+
+# Contract §3.5 — the comparisons an entity_boundary threshold may use.
+ENTITY_BOUNDARY_OPERATORS = {">", ">=", "<", "<=", "==", "!="}
+
+# Viral-gate lint (contract §6; Pathway §5.5). These codes are DEFINITIONALLY viral —
+# the virus is part of the entity, not an association found alongside it.
+VIRAL_GATED_CODES = {
+    "9678": "hhv8_lana1",       # primary effusion lymphoma
+    "9738": "hhv8_lana1",       # large B-cell lymphoma arising in HHV8+ Castleman disease
+    "9827": "htlv1_serology",   # adult T-cell leukaemia/lymphoma
+    "9719": "eber_status",      # extranodal NK/T-cell lymphoma, nasal type
+    "9724": "eber_status",      # systemic EBV+ T-cell lymphoma of childhood
+    "9725": "eber_status",      # hydroa vacciniforme-like lymphoproliferative disorder
+    "9737": "alk_ihc",          # ALK-positive large B-cell lymphoma
+}
+
+# Spelling is not the clinical fact. Group 1 gates the very same 9827 terminal on
+# `htlv1_status` where the Group II vocabulary (contract §5) says `htlv1_serology`; a
+# correct file must never be failed over which of the two an author reached for.
+VIRAL_GATE_VARIABLES = {
+    "hhv8_lana1": {"hhv8_lana1", "hhv8_status", "hhv_8_status", "hhv8", "lana1_status",
+                   "lana_1_status"},
+    "htlv1_serology": {"htlv1_serology", "htlv1_status", "htlv_1_serology",
+                       "htlv_1_status", "htlv1"},
+    # `ebv_status` is deliberately NOT here. Every other entry names the TEST; that one
+    # names the virus, and it is exactly what an author reaches for when recording a
+    # serology result. Pathway §4.3 is explicit that serology cannot upgrade any code —
+    # VCA IgG+/IgM-/EBNA-1 IgG+ is the near-universal state in a high-EBV-burden
+    # population and supports nothing, EBNA-1 IgG is unreliable in HIV-positive patients,
+    # and viral load has no agreed threshold, unit or specimen. EBER ISH on tissue is the
+    # only entity-defining EBV test, so only names for that test may satisfy this gate.
+    "eber_status": {"eber_status", "eber", "eber_ish", "eber_ish_status",
+                    "ebv_eber_status"},
+    "alk_ihc": {"alk_ihc", "alk_status", "alk", "alk_ihc_status"},
+}
+
+# The same fact recorded as a marker token in a `positive[]` list (Pathway §6 reads
+# "LANA-1+ with effusion", "ALK+ / CD20- / CD30-"), intensity suffix stripped.
+VIRAL_GATE_MARKERS = {
+    "hhv8_lana1": {"HHV8", "HHV-8", "LANA", "LANA1", "LANA-1", "HHV8-LANA1",
+                   "HHV-8 LANA-1"},
+    "htlv1_serology": {"HTLV1", "HTLV-1"},
+    "eber_status": {"EBER", "EBER-ISH", "EBV", "EBV-EBER"},
+    "alk_ihc": {"ALK", "ALK1", "ALK-1", "ALK D5F3"},
+}
+
+VIRAL_GATE_LABELS = {
+    "hhv8_lana1": "HHV-8 LANA-1",
+    "htlv1_serology": "HTLV-1 serology",
+    "eber_status": "EBER ISH",
+    "alk_ihc": "ALK IHC",
+}
+
+# --------------------------------------------------------------------------------------
+# Under-determined-code lint (Pathway §4.2; contract §3.2, §6). Two entities that are
+# phenotypically INDISTINGUISHABLE from Burkitt lymphoma — high-grade/large B-cell
+# lymphoma with 11q aberration, and B-ALL with MYC rearrangement — are separated from it
+# only by FISH. Where FISH is unavailable they are absorbed into 9687 silently. In a
+# malaria-endemic, high-EBV setting Burkitt is the commonest childhood cancer, so this is
+# the highest-volume way this group can record something firmer than its evidence.
+# --------------------------------------------------------------------------------------
+
+# Variables that carry a CYTOGENETIC/MOLECULAR result. `myc_ihc_pct` is deliberately
+# absent: MYC IHC is not FISH, and Pathway §4.2/§5.1 keep an explicit 30-50% indeterminate
+# band precisely because the stain does not settle the question the FISH settles.
+FISH_EVIDENCE_VARIABLES = {
+    "fish_status", "fish_panel_performed", "fish_result", "fish_performed",
+    "fish_panel", "myc_fish", "myc_fish_status", "myc_status", "myc_rearrangement",
+    "cytogenetics_status", "cytogenetics_result", "karyotype_status", "molecular_result",
+}
+
+# A result that actually came back. Anything in UNRESOLVED_RESULT_TOKENS did not.
+# `fish_status` in Pathway §5.1 takes done / failed / not available / not indicated, and
+# `fish_panel_performed` takes panel names or "none", so the deny-list is the reliable
+# half; a value outside BOTH lists is accepted but reported, so a typo is visible rather
+# than a silent pass.
+RESOLVED_RESULT_TOKENS = {
+    "positive", "negative", "done", "performed", "completed", "detected",
+    "not_detected", "present", "absent", "rearranged", "not_rearranged",
+    "normal", "abnormal", "adequate", "y", "yes", "true",
+}
+UNRESOLVED_RESULT_TOKENS = {
+    "not_done", "none", "failed", "not_available", "not_indicated", "not_assessable",
+    "unknown", "pending", "inadequate", "n", "no", "false", "not_performed", "awaited",
+}
+
+# Variables whose values are PANEL NAMES, not result states — Pathway §5.1 gives
+# `fish_panel_performed` the values ETV6::RUNX1 / BCR::ABL1 / KMT2A / ploidy / none. Any
+# value but "none" is a panel that was run, so these are judged by the deny-list alone and
+# never reported as an unrecognised result token.
+FISH_PANEL_VARIABLES = {"fish_panel_performed", "fish_panel"}
+
+# satisfies_tests values and detection_method labels that discharge the FISH requirement.
+FISH_SATISFYING_TESTS = {"Cytogenetics/FISH", "Molecular/PCR"}
+FISH_DETECTION_METHODS = {"fish_or_rtpcr_only", "karyotype_or_fish", "karyotype_and_fish"}
+
+# The codes the policy covers, and what is absorbed into each when FISH never returns.
+# `context` is None for an arm that applies on every route; a non-None arm fires only
+# where the route establishes that clinical context.
+UNDERDETERMINED_CODES = {
+    "9687": {
+        "label": "Burkitt lymphoma",
+        "absorbed": "high-grade/large B-cell lymphoma with 11q aberration, and B-ALL with "
+                    "MYC rearrangement — both phenotypically indistinguishable from Burkitt",
+        "flag": "MYC status unknown; HG/LBCL-11q and HGBL-DH not excluded",
+        "context": None,
+        "reason_tokens": ("myc", "11q", "fish", "hgbl"),
+    },
+    "9680": {
+        "label": "Diffuse large B-cell lymphoma, NOS",
+        "absorbed": "large B-cell lymphoma with IRF4 rearrangement, a curable paediatric "
+                    "head-and-neck disease that is over-treated when it is absorbed here",
+        "flag": "possible LBCL-IRF4",
+        "context": "localised paediatric head-and-neck disease",
+        "reason_tokens": ("irf4", "mum1", "fish"),
+    },
+}
+
+# The context gate for the 9680 arm. Pathway §5.1 defines NO head-and-neck site variable,
+# so these names are anticipatory: if none of them is ever established in the file the arm
+# reports a NOTE saying it found nothing to test, rather than passing silently.
+HEAD_AND_NECK_CONTEXT_VARIABLES = {
+    "primary_site_region", "site_region", "primary_compartment", "anatomic_region",
+    "disease_region", "head_and_neck_site",
+}
+HEAD_AND_NECK_CONTEXT_VALUES = {
+    "head_and_neck", "head_neck", "headandneck", "waldeyer", "waldeyers_ring",
+    "cervical", "tonsil", "nasopharynx", "jaw", "maxillofacial",
+}
+
+# Values that record a test as POSITIVE. A variable merely listed as captured says the
+# question was asked, not that the answer was yes — that distinction is the whole lint.
+POSITIVE_RESULT_TOKENS = {
+    "positive", "pos", "detected", "reactive", "confirmed", "confirmed_positive",
+    "present", "y", "yes", "true",
+}
 
 # Raw-hex ban (data.md §5) — the three front-end files, wherever they land in the repo.
 HEX_SCANNED_FILENAMES = ["index.html", "app.js", "uccf-tool.css"]
@@ -323,6 +492,31 @@ def is_nos_fallback_object(holder, where) -> bool:
     return as_code(holder.get("code")) is not None and bool(holder.get("name"))
 
 
+def is_provisional_pending_object(holder, where) -> bool:
+    """
+    True when `holder` IS a `provisional_pending` object (Group II contract §3.2) rather
+    than a branch that forgot its destination.
+
+    It matters because §3.2 REQUIRES a clerk-facing `reason` on the block, and the
+    code-less-terminal shape check in check_non_reportable_terminals() reads "a `reason`
+    and no destination" as an unflagged terminal. A provisional is neither a terminal nor
+    a destination: it qualifies the code its own branch already emits, and that branch's
+    destination is checked on the branch.
+
+    Identified the same deliberately-narrow way as is_nos_fallback_object(): the key it
+    hangs off AND its shape. A block named provisional_pending without a `resolving_test`
+    is still a shape bug worth catching, and an unrelated dict carrying a `resolving_test`
+    under some other key is not exempted — so this can never absorb a real code-less
+    terminal.
+    """
+    if not isinstance(holder, dict):
+        return False
+    last_key = where.rsplit(".", 1)[-1] if where else ""
+    if last_key != "provisional_pending":
+        return False
+    return bool(holder.get("resolving_test"))
+
+
 def is_refer_branch(container) -> bool:
     """
     True when this branch is a CROSS-GROUP REFERRAL terminal — the fourth branch
@@ -359,14 +553,81 @@ def has_destination(container) -> bool:
 # Layer 1 — source of truth parsers (read-only)
 # --------------------------------------------------------------------------------------
 
+# A REDCap option header: "9811, 9811 - " — the code, a comma, the SAME code again, a
+# dash. Anchored to the start of the fenced block or to whitespace, so a code that is
+# embedded in something else is not mistaken for the start of a new option. That anchor
+# is load-bearing: the Group 3 file carries a bold-wrapped duplicate,
+# `**9381, 9381 - Gliomatosis cerebri, NOS**`, which is deliberately NOT an option header.
+OPTION_HEAD_RE = re.compile(r"(?:\A|(?<=\s))(\d+)\s*,\s*\1\s*-\s*")
+
+
+def _iter_fenced_blocks(text: str):
+    """Yield each ``` fenced block of a Layer 1 options file as ONE string."""
+    block: list[str] = []
+    in_fence = False
+    for raw in text.splitlines():
+        if raw.lstrip().startswith("```"):
+            if in_fence:
+                yield "\n".join(block)
+                block = []
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            block.append(raw)
+    if in_fence and block:          # unterminated fence — take what is there
+        yield "\n".join(block)
+
+
+def _parse_option_block(block: str):
+    """
+    Yield (code, name) for every option in one fenced block, parsed as a single text
+    rather than line by line.
+
+    These files are hand-maintained markdown, and the Group 2 file has drifted: three
+    option strings have run together onto one physical line or been split across two.
+
+        9814, 9814 - … TEL-AML1 (ETV6-RUNX1) 9815, 9815 - … with hyperdiploidy
+        9690, 9690 - Follicular lymphoma, NOS 9691, 9691 - Follicular lymphoma, grade 2
+        9732, 9732 - Multiple myeloma 9733,
+        9733 - Plasma cell leukemia
+
+    A per-line parser reads the first two as ONE option each with the next option's whole
+    text glued onto its name, and never sees 9815 or 9691 at all; the third it reads as an
+    option named "Multiple myeloma 9733," plus a stray line it discards. That cost Group 2
+    three of its 91 codes and corrupted three more names — and a code with no option string
+    is a code the exact-string rule (check_redcap_exact_names) cannot enforce at all, which
+    is the one thing this whole layer exists to do.
+
+    Reading the block as one text fixes both shapes at once: the header regex tolerates the
+    line break inside "9733,\n9733 - ", and every name simply runs to the next header.
+
+    Two deliberate limits:
+      * A name is truncated at the first newline. Only the HEADER may straddle a line
+        break; an option string itself is one line. Without this the option before the
+        Group 3 bold-wrapped duplicate would swallow it.
+      * Only ASCII horizontal whitespace is collapsed. A non-breaking space is part of the
+        string the clerk actually sees in REDCap — the Group 7 file has several — and
+        normalising it away would manufacture exactly the drift this parser exists to
+        detect.
+    """
+    matches = list(OPTION_HEAD_RE.finditer(block))
+    for i, match in enumerate(matches):
+        end = matches[i + 1].start() if i + 1 < len(matches) else len(block)
+        raw_name = block[match.end():end].split("\n", 1)[0]
+        name = re.sub(r"[ \t\r\f\v]+", " ", raw_name).strip(" \t\r\f\v")
+        if name:
+            yield match.group(1), name
+
+
 def parse_redcap_options(layer1: Path):
     """
     Parse RedCap Options/Group N- ….md into {group: {code: {"option": str, "name": str}}}.
 
     Filenames in that directory are irregular (double spaces, varying case, some groups
     split across two files) — so we glob and read the group number out of the filename.
-    Option lines live inside fenced blocks and are shaped:
+    Options live inside fenced blocks and are shaped:
         9811, 9811 - B lymphoblastic leukemia/lymphoma, NOS
+    but not reliably one per line — see _parse_option_block().
     """
     findings: list[tuple[str, str]] = []
     options: dict[int, dict[str, dict]] = {}
@@ -384,7 +645,6 @@ def parse_redcap_options(layer1: Path):
                                 "REDCap exact-string check skipped" % layer1)]
 
     name_re = re.compile(r"^\s*group\s*0*(\d{1,2})\b", re.IGNORECASE)
-    line_re = re.compile(r"^\s*(\d+)\s*,\s*(.+?)\s*$")
     files = 0
     for md in sorted(opt_dir.glob("*.md")):
         m = name_re.match(md.name)
@@ -402,26 +662,15 @@ def parse_redcap_options(layer1: Path):
         except OSError as exc:
             findings.append((WARN, "could not read %r: %s" % (md.name, exc)))
             continue
-        in_fence = False
-        for raw in text.splitlines():
-            if raw.lstrip().startswith("```"):
-                in_fence = not in_fence
-                continue
-            if not in_fence:
-                continue
-            lm = line_re.match(raw)
-            if not lm:
-                continue
-            code, rest = lm.group(1), lm.group(2)
-            # rest is normally "9811 - B lymphoblastic leukemia/lymphoma, NOS"
-            nm = re.match(r"^\s*(\d+)\s*-\s*(.+?)\s*$", rest)
-            name = nm.group(2) if nm else rest
-            rec = bucket.setdefault(code, {"option": rest, "name": name,
-                                           "names": [], "options": [],
-                                           "source": md.name})
-            if name not in rec["names"]:
-                rec["names"].append(name)
-                rec["options"].append(rest)
+        for block in _iter_fenced_blocks(text):
+            for code, name in _parse_option_block(block):
+                option = "%s - %s" % (code, name)
+                rec = bucket.setdefault(code, {"option": option, "name": name,
+                                               "names": [], "options": [],
+                                               "source": md.name})
+                if name not in rec["names"]:
+                    rec["names"].append(name)
+                    rec["options"].append(option)
     # A code legitimately appears under several subgroup blocks (e.g. 9380 in Group 3),
     # sometimes with a different name each time. That is a Layer 1 fact, not a build
     # problem — record it once per group and accept any variant when matching.
@@ -1161,6 +1410,11 @@ def check_non_reportable_terminals(ctx: DTContext):
                 # master §3C/§3D) — a reason with no next_node/morphology_code of its
                 # own is exactly its documented shape, not a code-less terminal.
                 continue
+            if is_provisional_pending_object(holder, where):
+                # A provisional_pending object is {"reason", "resolving_test", …} by
+                # design (Group II contract §3.2). Its `reason` is clerk-facing text
+                # ABOUT the code its branch emits; the branch carries the destination.
+                continue
             if not holder.get("reason"):
                 continue
             if is_refer_branch(holder):
@@ -1369,10 +1623,43 @@ def check_numeric_gate_shape(ctx: DTContext):
     return out
 
 
+def _marker_name(token: str):
+    """
+    Split a positive[]/negative[] token into (name, intensity).
+
+    A token is a marker NAME unless it ends in exactly ':strong' or ':weak', in which case
+    the name is everything before that suffix. It must not be split on the first colon:
+    '::' is the current fusion-gene separator and this project uses it throughout
+    (ETV6::RUNX1, BCR::ABL1, NPM1::ALK), and findings are written as prose
+    ('NPM1::ALK t(2;5) by FISH or RT-PCR'). Splitting on every colon read that as marker
+    'NPM1' with intensity ':ALK…', which made a permanent tax on correct authoring out of
+    a punctuation choice the whole project has already made.
+    """
+    for suffix in MARKER_INTENSITIES:
+        tail = ":" + suffix
+        if token.endswith(tail):
+            return token[:-len(tail)], suffix
+    return token, None
+
+
 def check_marker_intensity_tokens(ctx: DTContext):
-    """positive[] tokens are "MARKER" or "MARKER:strong" / "MARKER:weak" — nothing else."""
+    """
+    positive[]/negative[] tokens are "MARKER" or "MARKER:strong" / "MARKER:weak"
+    (Pathway §7.3 item 2).
+
+    This is now only a SHAPE check — tokens are strings, and a token that is nothing but
+    an intensity suffix has no marker at all. It deliberately does not police colons
+    anywhere else in a token, because a fusion name legitimately contains them.
+
+    That leaves a hole on its own: with the suffix rule relaxed, a typo like 'CD30:stong'
+    is simply read as a marker NAME, matches nothing, and the rule silently never fires —
+    a dead rule with no signal. check_marker_tokens_declared() closes it by requiring every
+    token to name a marker the node itself declares, which is a far stronger guard and
+    makes the typo loud instead of silent. The two are meant to be read together.
+    """
     out = []
     tokens = 0
+    intensities = 0
     for node_id, node in sorted(ctx.nodes.items()):
         for holder, where in walk_dicts(node):
             for field in ("positive", "negative"):
@@ -1385,17 +1672,95 @@ def check_marker_intensity_tokens(ctx: DTContext):
                                     % (node_id, where or "(node level)", field, token)))
                         continue
                     tokens += 1
-                    if ":" not in token:
-                        continue
-                    parts = token.split(":")
-                    if len(parts) != 2 or parts[1] not in MARKER_INTENSITIES:
-                        out.append((FAIL, "node %s (%s): %s[] token %r — the only allowed "
-                                          "suffixes are ':strong' and ':weak' "
-                                          "(Pathway §7.3 item 2)"
-                                    % (node_id, where or "(node level)", field, token)))
+                    name, intensity = _marker_name(token)
+                    if intensity is not None:
+                        intensities += 1
+                        if not name.strip():
+                            out.append((FAIL, "node %s (%s): %s[] token %r carries an "
+                                              "intensity suffix but names no marker "
+                                              "(Pathway §7.3 item 2)"
+                                        % (node_id, where or "(node level)", field, token)))
     if not out:
-        out.append((OK, "%d marker token(s) use only the allowed intensity suffixes"
-                    % tokens))
+        out.append((OK, "%d marker token(s) well formed; %d carry an intensity suffix, and "
+                        "a colon anywhere else in a token is a fusion name, not a suffix"
+                    % (tokens, intensities)))
+    return out
+
+
+def check_marker_tokens_declared(ctx: DTContext):
+    """
+    Every positive[]/negative[] token names a marker the node itself declares in
+    `marker_groups[].markers`.
+
+    This is the guard that makes a mistyped marker LOUD. app.js matches a token against
+    what the clerk ticked, so a token nothing can produce is not an error — it is a rule
+    that quietly never fires, with no warning, no wrong screen and no failed build. Once
+    the intensity-suffix rule is relaxed enough to allow fusion names (see
+    check_marker_intensity_tokens), a typo is indistinguishable from an unusual but valid
+    marker name UNLESS it is checked against the node's own declared panel. Then it is a
+    one-line FAIL naming the token.
+
+    Keyed off the node's own structure, never off a flag: the node declares the panel it
+    offers, and the rules on that node may only speak about that panel.
+
+    The real defect this caught on first run: `g2_tfh` carried "Only 1 TFH marker positive"
+    in a positive[] with no such marker declared, so the rule was dead — and it is the rule
+    that stops a single TFH marker being read as the ≥2 that re-routes a case out of 9702
+    into 9705.
+
+    A node carrying tokens but declaring NO marker_groups[] at all is a WARN rather than a
+    FAIL: every one of its tokens is unverifiable, which is the same hole, but it is a
+    different authoring shape and neither built file contains one. --strict promotes it.
+    """
+    out = []
+    checked = 0
+    undeclared_nodes = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        declared = set()
+        groups = node.get("marker_groups")
+        if isinstance(groups, list):
+            for group in groups:
+                if not isinstance(group, dict):
+                    continue
+                markers = group.get("markers")
+                if isinstance(markers, list):
+                    declared.update(m for m in markers if isinstance(m, str))
+
+        node_tokens = []
+        for holder, where in walk_dicts(node):
+            for field in ("positive", "negative"):
+                values = holder.get(field)
+                if not isinstance(values, list):
+                    continue
+                for token in values:
+                    if isinstance(token, str):
+                        node_tokens.append((token, field, where or "(node level)"))
+
+        if not node_tokens:
+            continue
+        if not declared:
+            undeclared_nodes += 1
+            out.append((WARN, "node %s carries %d marker token(s) but declares no "
+                              "marker_groups[].markers — there is nothing to check them "
+                              "against, so a typo in any of them is a rule that silently "
+                              "never fires" % (node_id, len(node_tokens))))
+            continue
+
+        for token, field, where in node_tokens:
+            checked += 1
+            name, _intensity = _marker_name(token)
+            if name not in declared:
+                out.append((FAIL, "node %s (%s): %s[] token %r names %r, which this node "
+                                  "does not declare in marker_groups[].markers. app.js "
+                                  "matches tokens against what the clerk ticked, so a "
+                                  "marker the node never offers can never match — the rule "
+                                  "is dead, and nothing on screen or in the build says so. "
+                                  "Either declare the marker or fix the token."
+                            % (node_id, where, field, token, name)))
+
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "%d marker token(s) all name a marker declared in their own node's "
+                        "marker_groups[]" % checked))
     return out
 
 
@@ -1821,43 +2186,1365 @@ def check_cryptic_genetics(ctx: DTContext):
 
 def check_mpal_rule_ordering(ctx: DTContext):
     """
-    NEW CHECK 4 — MPAL rule-ordering lint (Pathway §7.3 item 3, §7.5).
+    NEW CHECK 4 — resolution_logic dead-rule lint (Pathway §7.3 item 3, §7.5).
 
-    resolution_logic is flat and first-match-wins, so a rule with no `when` placed before a
-    conditioned rule silently swallows it — the MPAL genetics-first ordering (9806/9807
-    before 9808) would never fire. Within every resolution_logic[], every rule carrying a
-    `when` must precede every rule that has none.
+    `resolution_logic` is flat and first-match-wins, so an earlier rule can make a later
+    one unreachable. The MPAL case is the one this was written for: the genetics-first
+    ordering puts 9806/9807 (BCR::ABL1, KMT2A) ahead of the ungenotyped 9808/9809 on the
+    identical marker set, and reversing them means the genotyped codes can never fire.
+
+    The test is SUBSUMPTION, not position. Rule R at index j is dead when some earlier
+    rule E at index i < j satisfies all three of
+
+        E.positive ⊆ R.positive    E.negative ⊆ R.negative    E.when ⊆ R.when
+
+    (`when` compared as key/value pairs). E then asks for strictly less than R does, so
+    every case that matches R has already matched E, and R can never be reached.
+
+    The first version of this check compared only "carries a `when`" against "carries no
+    `when`", positionally. That was sound on Group 1, where the rules it governed shared
+    one marker set — there E was unconditioned with the same markers, so E.when = {} ⊆
+    R.when and the marker sets were equal, which is this rule's special case. It is wrong
+    anywhere the rules have disjoint marker sets: a Group II node routinely carries a dozen
+    rules distinguished only by their panels, and an unconditioned rule earlier in the list
+    swallows a later one only when it fires for every case the later one fires for. On
+    Group II that heuristic produced 48 FAILs on perfectly reachable rules — a false FAIL
+    at scale, which teaches the next author to work around the validator (data.md §5A).
+
+    Deliberate limit: tokens are compared as written, so `CD19` and `CD19:strong` are
+    different requirements. That is the safe direction — an intensity-qualified token is
+    genuinely narrower than the bare marker, so treating them as equal would report
+    reachable rules as dead.
     """
     out = []
     rulesets = 0
+    checked = 0
+
+    def token_set(rule, field):
+        values = rule.get(field)
+        if not isinstance(values, list):
+            return frozenset()
+        return frozenset(v for v in values if isinstance(v, str))
+
+    def when_pairs(rule):
+        when = rule.get("when")
+        if not isinstance(when, dict):
+            return frozenset()
+        pairs = set()
+        for key, value in when.items():
+            try:
+                pairs.add((key, json.dumps(value, sort_keys=True, ensure_ascii=False)))
+            except (TypeError, ValueError):
+                pairs.add((key, repr(value)))
+        return frozenset(pairs)
+
     for node_id, node in sorted(ctx.nodes.items()):
         rules = node.get("resolution_logic")
         if not isinstance(rules, list) or not rules:
             continue
         rulesets += 1
-        first_unconditioned = None
+        shapes = []
         for i, rule in enumerate(rules):
             if not isinstance(rule, dict):
                 out.append((FAIL, "node %s: resolution_logic[%d] is not an object"
                             % (node_id, i)))
+                shapes.append(None)
                 continue
-            has_when = isinstance(rule.get("when"), dict) and bool(rule["when"])
-            if not has_when and first_unconditioned is None:
-                first_unconditioned = i
-            elif has_when and first_unconditioned is not None:
-                out.append((FAIL, "node %s: resolution_logic[%d] carries a 'when' but "
-                                  "follows the unconditioned rule at index %d — "
-                                  "first match wins, so the conditioned rule can never "
-                                  "fire (Pathway §7.5)"
-                            % (node_id, i, first_unconditioned)))
+            shapes.append((token_set(rule, "positive"), token_set(rule, "negative"),
+                           when_pairs(rule)))
+        for j, later in enumerate(shapes):
+            if later is None:
+                continue
+            checked += 1
+            for i, earlier in enumerate(shapes[:j]):
+                if earlier is None:
+                    continue
+                if (earlier[0] <= later[0] and earlier[1] <= later[1]
+                        and earlier[2] <= later[2]):
+                    out.append((FAIL, "node %s: resolution_logic[%d] can never fire — "
+                                      "rule [%d] above it asks for strictly less "
+                                      "(positive %s, negative %s, when %s vs this rule's "
+                                      "positive %s, negative %s, when %s), so every case "
+                                      "that matches [%d] has already matched [%d] and "
+                                      "first-match-wins stops there (Pathway §7.5)"
+                                % (node_id, j, i,
+                                   sorted(earlier[0]) or "-", sorted(earlier[1]) or "-",
+                                   sorted(k for k, _v in earlier[2]) or "-",
+                                   sorted(later[0]) or "-", sorted(later[1]) or "-",
+                                   sorted(k for k, _v in later[2]) or "-", j, i)))
+                    break
+
     if not out:
-        out.append((OK, "rule ordering correct in %d resolution_logic ruleset(s)"
-                    % rulesets))
+        out.append((OK, "no dead rule in %d resolution_logic ruleset(s), %d rule(s) tested "
+                        "for subsumption by an earlier rule" % (rulesets, checked)))
     return out
 
 
 # --------------------------------------------------------------------------------------
-# B4. Against the source of truth
+# B4. Group II schema extensions (Group II build contract §3) and the viral-gate lint
+#
+# Five constructs and one path lint. Every one of them is a FIELD on an existing
+# structure — Group II invents no node types (contract §0 rule 3), so nothing in this
+# section touches NODE_TYPES.
+# --------------------------------------------------------------------------------------
+
+def _code_behavior_pairs(ctx: DTContext) -> set:
+    """{(morphology_code, behavior_code)} exactly as authored in morphology_entries[]."""
+    pairs = set()
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        beh = entry.get("behavior_code")
+        pairs.add((code, None if beh is None else str(beh).strip()))
+    return pairs
+
+
+def _declared_variables(node) -> set:
+    declared = node.get("captured_variables")
+    return set(declared) if isinstance(declared, list) else set()
+
+
+def destination_kinds(container) -> list:
+    """
+    Which of the four DT master §3F destinations a branch carries. Exactly one is legal:
+    zero is a dead end app.js throws on, two is an ambiguity it resolves by accident of
+    dispatch order rather than by anything anyone wrote down.
+    """
+    kinds = []
+    if isinstance(container, dict):
+        if as_code(container.get("morphology_code")):
+            kinds.append("morphology_code")
+        if is_refer_branch(container):
+            kinds.append("refer_group")
+        if is_non_reportable(container):
+            kinds.append("non_reportable")
+        if container.get("next_node"):
+            kinds.append("next_node")
+    return kinds
+
+
+def destination_signature(container):
+    """
+    WHERE a branch sends the case, as a comparable tuple — the thing two branches must not
+    share when one handles `not_assessable` and the other handles `negative` (§3.4).
+
+    Deliberately ignores the prose (`reason`, `coding_note`, `label`): two branches that
+    read differently on screen but land the clerk in the same place are the same
+    destination, and it is the landing place this rule is about.
+    """
+    if not isinstance(container, dict):
+        return None
+    nxt = container.get("next_node")
+    if isinstance(nxt, str) and nxt:
+        return ("next_node", nxt)
+    code = as_code(container.get("morphology_code"))
+    if code:
+        beh = container.get("behavior_code")
+        return ("code", code, None if beh is None else str(beh).strip())
+    if is_refer_branch(container):
+        return ("refer", container.get("refer_group"), as_code(container.get("refer_code")))
+    if is_non_reportable(container):
+        return ("non_reportable",)
+    return None
+
+
+def _destination_text(sig) -> str:
+    if sig is None:
+        return "(no destination)"
+    if sig[0] == "next_node":
+        return "next_node %s" % sig[1]
+    if sig[0] == "code":
+        return "code %s/%s" % (sig[1], sig[2])
+    if sig[0] == "refer":
+        return "referral to group %s" % (sig[1],)
+    return "a non-reportable terminal"
+
+
+def _canonical(value):
+    """A comparable form for an arbitrary JSON value, or None when there is nothing."""
+    if value is None:
+        return None
+    try:
+        return json.dumps(value, sort_keys=True, ensure_ascii=False)
+    except (TypeError, ValueError):
+        return repr(value)
+
+
+def _branch_containers(node):
+    """Yield (holder, where) for every BRANCH on a node — the things DT master §3F governs."""
+    for field in ("options", "resolution_logic", "bands", "override_when"):
+        seq = node.get(field)
+        if not isinstance(seq, list):
+            continue
+        for i, holder in enumerate(seq):
+            if isinstance(holder, dict):
+                yield holder, "%s[%d]" % (field, i)
+
+
+def check_behaviour_resolution(ctx: DTContext):
+    """
+    GROUP II CHECK 1 — `behaviour_resolution` (contract §3.1).
+
+    For 9718, 9725 and 9751 the behaviour — and with it whether the case is in ICCC-3
+    Group II at all — turns on a clinical fact the pathology report cannot supply: do the
+    individual lesions regress by themselves? The construct puts that question and both
+    answers into the JSON instead of leaving a coder to pick a behaviour off the slide.
+
+    The rule this check exists for is `unresolved`. It is REQUIRED and it must name the
+    `/3` half. An unresolved behaviour that quietly defaults to `/1` does not produce a
+    wrong code — it produces NO reportable case, and a reportable childhood cancer leaves
+    the registry with nothing on screen to say it ever arrived. There is no wording that
+    makes that a warning, so it is a FAIL.
+
+    Everything else here is shape: the required keys, the variable declared where the
+    engine can read it (contract §5), exactly the two behaviour keys, one destination per
+    leaf (DT master §3F), both (code, behaviour) pairs real, and — for the one deferrable
+    case, 9725 — something written down about what re-opens the case.
+    """
+    out = []
+    pairs = _code_behavior_pairs(ctx)
+    seen = 0
+
+    for node_id, node in sorted(ctx.nodes.items()):
+        declared = _declared_variables(node)
+        for holder, where in walk_dicts(node):
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+
+            # The US spelling is not a synonym — nothing reads it, so the block and its
+            # unresolved half would be silently inert. Catch it rather than find nothing.
+            if "behavior_resolution" in holder and "behaviour_resolution" not in holder:
+                out.append((FAIL, "%s: the key is spelled 'behavior_resolution'; the "
+                                  "contract spells it 'behaviour_resolution' (§3.1). "
+                                  "Nothing reads the US spelling, so the whole block — the "
+                                  "required 'unresolved' half included — is inert"
+                            % loc))
+            if "behaviour_resolution" not in holder:
+                continue
+
+            br = holder["behaviour_resolution"]
+            if not isinstance(br, dict):
+                out.append((FAIL, "%s: behaviour_resolution must be an object, got %r"
+                            % (loc, br)))
+                continue
+            seen += 1
+
+            for key in ("criterion", "variable"):
+                val = br.get(key)
+                if not isinstance(val, str) or not val.strip():
+                    out.append((FAIL, "%s: behaviour_resolution.%s is required and must be "
+                                      "a non-empty string (contract §3.1)" % (loc, key)))
+            for key in ("clinical_only", "deferrable"):
+                if not isinstance(br.get(key), bool):
+                    out.append((FAIL, "%s: behaviour_resolution.%s is required and must be "
+                                      "a boolean (contract §3.1)" % (loc, key)))
+
+            var = br.get("variable")
+            if isinstance(var, str) and var and var not in declared:
+                out.append((FAIL, "%s: behaviour_resolution.variable %r is not declared in "
+                                  "this node's captured_variables[] (contract §5) — the "
+                                  "engine has nowhere to read the answer from, so the "
+                                  "criterion is asked and then discarded"
+                            % (loc, var)))
+
+            values = br.get("values")
+            if not isinstance(values, dict):
+                out.append((FAIL, "%s: behaviour_resolution.values is required and must be "
+                                  "an object keyed \"1\" and \"3\" (contract §3.1)" % loc))
+                values = {}
+            elif set(values) != {"1", "3"}:
+                out.append((FAIL, "%s: behaviour_resolution.values is keyed %s — exactly "
+                                  "\"1\" and \"3\" are required (contract §3.1)"
+                            % (loc, ", ".join(repr(k) for k in sorted(values)) or "(empty)")))
+
+            def check_leaf(label, leaf, expected_beh):
+                if not isinstance(leaf, dict):
+                    out.append((FAIL, "%s: behaviour_resolution.%s must be an object, got %r"
+                                % (loc, label, leaf)))
+                    return
+                kinds = destination_kinds(leaf)
+                if len(kinds) != 1:
+                    out.append((FAIL, "%s: behaviour_resolution.%s resolves to %d "
+                                      "destination(s)%s — DT master §3F requires exactly one"
+                                % (loc, label, len(kinds),
+                                   " (%s)" % ", ".join(kinds) if kinds else "")))
+                code = as_code(leaf.get("morphology_code"))
+                beh = leaf.get("behavior_code")
+                beh = None if beh is None else str(beh).strip()
+                if code and (code, beh) not in pairs:
+                    out.append((FAIL, "%s: behaviour_resolution.%s emits %s/%s, which has no "
+                                      "morphology_entries[] object in this file "
+                                      "(contract §3.1)" % (loc, label, code, beh)))
+                if code and beh is not None and beh != expected_beh:
+                    out.append((FAIL, "%s: behaviour_resolution.%s emits behavior_code %r "
+                                      "where %r is required — under values[] the key IS the "
+                                      "behaviour, so a mismatch files the case under a "
+                                      "behaviour nobody chose (contract §3.1)"
+                                % (loc, label, beh, expected_beh)))
+
+            for key in ("1", "3"):
+                if key in values:
+                    check_leaf('values["%s"]' % key, values[key], key)
+                elif isinstance(br.get("values"), dict):
+                    out.append((FAIL, "%s: behaviour_resolution.values[%r] is missing"
+                                % (loc, key)))
+
+            unresolved = br.get("unresolved")
+            if unresolved is None:
+                out.append((FAIL, "%s: behaviour_resolution.unresolved is REQUIRED "
+                                  "(contract §3.1). Without it the engine has no answer for "
+                                  "a file that never states the behaviour, and the case "
+                                  "leaves the node with no code at all — a reportable "
+                                  "childhood cancer dropped from the registry rather than "
+                                  "coded" % loc))
+            else:
+                check_leaf("unresolved", unresolved, "3")
+                if isinstance(unresolved, dict):
+                    u_code = as_code(unresolved.get("morphology_code"))
+                    u_beh = unresolved.get("behavior_code")
+                    u_beh = None if u_beh is None else str(u_beh).strip()
+                    if not u_code:
+                        out.append((FAIL, "%s: behaviour_resolution.unresolved emits no "
+                                          "morphology_code. It must name the /3 half — "
+                                          "never \"no code\". An unstated behaviour is a "
+                                          "gap in the file, not evidence that the disease "
+                                          "is benign (contract §3.1)" % loc))
+                    elif u_beh != "3":
+                        out.append((FAIL, "%s: behaviour_resolution.unresolved names %s/%s. "
+                                          "It must name the /3 half. Defaulting an "
+                                          "unresolved behaviour to /1 does not mis-code the "
+                                          "case — it silently deletes a reportable cancer "
+                                          "from the registry, because /1 is outside ICCC-3 "
+                                          "Group II entirely. Code the reportable half and "
+                                          "let the clinical history downgrade it later "
+                                          "(contract §3.1)" % (loc, u_code, u_beh)))
+
+            if br.get("deferrable") is True:
+                follow_up = br.get("follow_up_review")
+                if not isinstance(follow_up, str) or not follow_up.strip():
+                    out.append((FAIL, "%s: behaviour_resolution.deferrable is true, so a "
+                                      "non-empty 'follow_up_review' saying what re-opens "
+                                      "the case is required — a deferral with no stated "
+                                      "trigger is an abandonment (contract §3.1)" % loc))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if seen:
+        out.append((OK, "%d behaviour_resolution block(s) well formed; every 'unresolved' "
+                        "names the /3 half (contract §3.1)" % seen))
+    else:
+        out.append((NOTE, "no behaviour_resolution block in this file — Group II construct, "
+                          "nothing to check here"))
+    return out
+
+
+def check_provisional_pending(ctx: DTContext):
+    """
+    GROUP II CHECK 2 — `provisional_pending` (contract §3.2).
+
+    A named, reversible provisional: this code stands, and this specific test is the one
+    that would overturn it. It is not a synonym for low confidence — `confidence` already
+    says that, and says it about the whole terminal rather than about one outstanding
+    result.
+
+    The rule this check exists for is the last one. A branch may not name a test as
+    `resolving_test` AND list that same test in `satisfies_tests`. `satisfies_tests`
+    removes the test from the outstanding-workup list, so nobody is asked for it;
+    `provisional_pending` says the code may be overturned by it. One of the two is false,
+    and the screen shows the flattering one: a case that reads fully worked up while the
+    file itself records the very test as outstanding. Neither field breaks a build alone,
+    which is why the pairing is checked here (contract §3.2, §6).
+    """
+    out = []
+    seen = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if "provisional_pending" not in holder:
+                continue
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            pp = holder["provisional_pending"]
+            if not isinstance(pp, dict):
+                out.append((FAIL, "%s: provisional_pending must be an object, got %r"
+                            % (loc, pp)))
+                continue
+            seen += 1
+
+            reason = pp.get("reason")
+            if not isinstance(reason, str) or not reason.strip():
+                out.append((FAIL, "%s: provisional_pending.reason is required and must be a "
+                                  "non-empty string — it is clerk-facing and it is what the "
+                                  "engine renders (contract §3.2)" % loc))
+
+            test = pp.get("resolving_test")
+            if not isinstance(test, str) or not test.strip():
+                out.append((FAIL, "%s: provisional_pending.resolving_test is required "
+                                  "(contract §3.2)" % loc))
+            elif test not in DIAGNOSTIC_TESTS:
+                out.append((FAIL, "%s: provisional_pending.resolving_test %r is not in the "
+                                  "closed diagnostic-test vocabulary (%s). A value nothing "
+                                  "can match names no real outstanding test, so the "
+                                  "provisional reads as specific and resolves to nothing"
+                            % (loc, test, ", ".join(sorted(DIAGNOSTIC_TESTS)))))
+
+            if not as_code(holder.get("morphology_code")):
+                out.append((FAIL, "%s: provisional_pending on a branch that emits no "
+                                  "morphology_code. A provisional QUALIFIES a code; with no "
+                                  "code there is nothing to overturn and nothing is rendered "
+                                  "(contract §3.2)" % loc))
+
+            alts = pp.get("alternative_codes")
+            if alts is not None:
+                if not isinstance(alts, list):
+                    out.append((FAIL, "%s: provisional_pending.alternative_codes must be an "
+                                      "array of code strings" % loc))
+                else:
+                    for alt in alts:
+                        alt_code = as_code(alt)
+                        if alt_code is None:
+                            out.append((FAIL, "%s: provisional_pending.alternative_codes "
+                                              "entry %r is not a code string" % (loc, alt)))
+                        elif alt_code not in ctx.codes:
+                            out.append((FAIL, "%s: provisional_pending.alternative_codes "
+                                              "names %s, which has no morphology_entries[] "
+                                              "object here — the alternative the clerk is "
+                                              "told to consider cannot be coded from this "
+                                              "file (contract §3.2)" % (loc, alt_code)))
+
+            ents = pp.get("alternative_entities")
+            if ents is not None and (not isinstance(ents, list)
+                                     or not all(isinstance(e, str) for e in ents)):
+                out.append((FAIL, "%s: provisional_pending.alternative_entities must be an "
+                                  "array of strings (free text — the uncoded WHO entities "
+                                  "of Pathway §5.2)" % loc))
+
+            satisfies = holder.get("satisfies_tests")
+            if isinstance(test, str) and isinstance(satisfies, list) and test in satisfies:
+                out.append((FAIL, "%s: this branch names %r as provisional_pending."
+                                  "resolving_test AND lists it in satisfies_tests. That "
+                                  "claims one test simultaneously outstanding and "
+                                  "discharged — the provisional says the code may be "
+                                  "overturned by it, satisfies_tests strikes it off the "
+                                  "outstanding-workup list so nobody is asked for it. The "
+                                  "case then reads better evidenced than the file itself "
+                                  "says it is. Drop one; they cannot both be true "
+                                  "(contract §3.2, §6)" % (loc, test)))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if seen:
+        out.append((OK, "%d provisional_pending block(s) well formed; none names a test it "
+                        "also discharges via satisfies_tests (contract §3.2)" % seen))
+    else:
+        out.append((NOTE, "no provisional_pending block in this file — Group II construct, "
+                          "nothing to check here"))
+    return out
+
+
+# Words that identify a modality rather than the analyte, so they cannot be what makes a
+# prior and a branch condition "about the same test".
+_TEST_STOPWORDS = {
+    "status", "ish", "ihc", "fish", "pcr", "result", "results", "pct", "percent",
+    "test", "testing", "stain", "staining", "by", "or", "and", "the", "a", "of", "on",
+    "in", "tissue", "assay", "panel", "study", "studies", "value", "level",
+}
+
+
+def _test_key(text: str) -> set:
+    """The analyte words in a test label or variable name — 'EBER ISH' -> {'eber'}."""
+    words = re.split(r"[^0-9A-Za-z]+", text.lower())
+    return {w for w in words if w and w not in _TEST_STOPWORDS}
+
+
+def _branch_decides_on_test(holder, test: str) -> bool:
+    """
+    True when this branch reaches its code BY the test a prior_probability names.
+
+    Read off the branch's own conditions — the variables it keys on and the marker tokens
+    it requires. A branch that emits a code on architecture while merely displaying an
+    EBER prior is not deciding on EBER; one whose `when` is {"eber_status": "positive"} is.
+    """
+    key = _test_key(test)
+    if not key:
+        return False
+    for field in ("when", "captures"):
+        blob = holder.get(field)
+        if isinstance(blob, dict):
+            for name in blob:
+                if key & _test_key(str(name)):
+                    return True
+    for field in ("positive", "negative"):
+        values = holder.get(field)
+        if isinstance(values, list):
+            for token in values:
+                if isinstance(token, str) and key & _test_key(token):
+                    return True
+    return False
+
+
+def check_prior_probability(ctx: DTContext):
+    """
+    GROUP II CHECK 3 — `prior_probability` (contract §3.3).
+
+    The prior against which a test result is informative. A positive EBER in
+    mixed-cellularity classic Hodgkin lymphoma is expected in 70-80% of cases and
+    therefore says almost nothing; the block exists so that a routine result is not read
+    as confirmation (Pathway §4.3).
+
+    It is DISPLAY-ONLY, and this check enforces that twice over, because a prior that
+    appears to carry a decision is worse than no prior at all:
+
+      * the block itself may hold no destination — a prior that routes is not a prior,
+        it is a rule wearing a prior's name;
+      * and it may not sit on a branch that BOTH emits a morphology_code AND decides that
+        code on the very test the prior is about. There the prior reads as the evidence
+        for the code, which inverts the one thing it was introduced to do (contract §6).
+
+    That second rule was first written as "not on any code-emitting branch", and real data
+    showed that to be wrong: contract §3.3's own canonical example — mixed-cellularity
+    classic Hodgkin lymphoma, EBER expected in 70-80% — belongs on exactly such a branch.
+    `g2_chl_subtype` options[4] emits 9652 on ARCHITECTURE, and carries the EBER prior to
+    say the expected positive result must not be allowed to refine the subtype. Failing
+    that is failing the best authoring in the file. What matters is not whether the branch
+    emits a code but whether it decides that code on the prior's own test, so the rule now
+    fires only when the branch's own conditions (`when`, `captures`, `positive[]`,
+    `negative[]`) name the test the prior names.
+
+    `expected_positive_pct` is a STRING on purpose — the sources give "70-80" and "<4",
+    not numbers — so a bare number is a FAIL rather than a silent coercion.
+    """
+    out = []
+    seen = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if "prior_probability" not in holder:
+                continue
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            pr = holder["prior_probability"]
+            if not isinstance(pr, dict):
+                out.append((FAIL, "%s: prior_probability must be an object, got %r"
+                            % (loc, pr)))
+                continue
+            seen += 1
+
+            for key in ("test", "interpretation"):
+                val = pr.get(key)
+                if not isinstance(val, str) or not val.strip():
+                    out.append((FAIL, "%s: prior_probability.%s is required and must be a "
+                                      "non-empty string (contract §3.3)" % (loc, key)))
+
+            if "expected_positive_pct" in pr and pr["expected_positive_pct"] is not None:
+                pct = pr["expected_positive_pct"]
+                if not isinstance(pct, str) or not pct.strip():
+                    out.append((FAIL, "%s: prior_probability.expected_positive_pct must be a "
+                                      "non-empty STRING (%r) — the sources give ranges and "
+                                      "bounds (\"70-80\", \"<4\"), and a number here "
+                                      "quietly asserts a precision nobody published "
+                                      "(contract §3.3)" % (loc, pct)))
+
+            if "context" in pr and pr["context"] is not None \
+                    and not isinstance(pr["context"], str):
+                out.append((FAIL, "%s: prior_probability.context must be a string" % loc))
+
+            stray = destination_kinds(pr)
+            if stray:
+                out.append((FAIL, "%s: prior_probability carries %s. It is display-only and "
+                                  "must change no destination — a prior that routes is a "
+                                  "rule, and moving a routing decision into a block nobody "
+                                  "reads as routing hides it (contract §3.3)"
+                            % (loc, ", ".join(stray))))
+
+            code = as_code(holder.get("morphology_code"))
+            test = pr.get("test")
+            if code and isinstance(test, str) and _branch_decides_on_test(holder, test):
+                out.append((FAIL, "%s: prior_probability about %r sits on a branch that "
+                                  "emits %s AND decides that code on %r itself. Rendered "
+                                  "beside a code the branch reached BY that test, the prior "
+                                  "reads as the evidence for the code — when its entire "
+                                  "purpose is the opposite: to say the result was expected "
+                                  "and is weakly informative. A prior belongs where the "
+                                  "test is being interpreted, not where its expected answer "
+                                  "picks the code (contract §3.3, §6)"
+                            % (loc, test, code, test)))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if seen:
+        out.append((OK, "%d prior_probability block(s) well formed, display-only, none on a "
+                        "code-emitting branch (contract §3.3)" % seen))
+    else:
+        out.append((NOTE, "no prior_probability block in this file — Group II construct, "
+                          "nothing to check here"))
+    return out
+
+
+def check_test_result_states(ctx: DTContext):
+    """
+    GROUP II CHECK 4 — `test_result_states` (contract §3.4).
+
+    Some tests fail in a way that is neither positive nor negative. An EBER ISH whose
+    internal control did not light up, a FISH that did not hybridise, an FNA with too few
+    cells: the answer is "we could not read it", and the node has to offer that.
+
+    The shape half is small — the declared variable exists in `captured_variables[]`, the
+    states come from the closed vocabulary, and any node branching on `eber_status`,
+    `fish_status` or `fna_adequacy` declares its states and includes `not_assessable`.
+
+    The LOAD-BEARING half is the last rule. Within one node, the branch that handles
+    `not_assessable` must be DISTINGUISHABLE from the branch that handles `negative` —
+    either by landing somewhere else, or by carrying a `provisional_pending` that the
+    negative branch does not.
+
+    They are different findings with different consequences. `negative` means the finding
+    is absent, the differential narrows and the workup is done; `not_assessable` means
+    nobody knows, and a repeat on a fresh section is owed. Report them identically and an
+    absent result silently becomes evidence of absence, on a screen that looks complete,
+    with nothing anywhere saying the test never actually returned (contract §3.4, §6;
+    Pathway §2.4, §4.3, §7.3 item 4).
+
+    The first version demanded a different DESTINATION, full stop, and that was too narrow.
+    Sometimes the same destination is the honest answer: 9719 requires EBER POSITIVITY, so
+    neither a negative nor an uninterpretable EBER unlocks anything and both correctly land
+    on 9702. Forcing them apart there would be false precision. What may not happen is that
+    they become indistinguishable — same code, same confidence, same follow-up — because
+    then the clerk cannot tell that a repeat is owed. `provisional_pending` is exactly the
+    field that says so, and naming it keeps the rule checkable rather than a judgement about
+    prose. (Pathway §4.3 has one node where the destinations genuinely must differ: a
+    genuine EBER-negative with a passing control is what separates the non-reportable
+    indolent NK-cell LPD of the GI tract from 9719, and an uninterpretable result must not
+    inherit that exit. That case is caught by the destination half of the same rule.)
+
+    `test_result_states` may be one object or an array of them, so a node that branches on
+    two such tests can declare both rather than being failed for the second.
+    """
+    out = []
+    blocks_seen = 0
+    compared = 0
+
+    for node_id, node in sorted(ctx.nodes.items()):
+        loc = "node %s" % node_id
+        declared = _declared_variables(node)
+        raw = node.get("test_result_states")
+        if raw is None:
+            blocks = []
+        elif isinstance(raw, list):
+            blocks = raw
+        else:
+            blocks = [raw]
+
+        declared_vars = set()
+        for i, block in enumerate(blocks):
+            label = ("test_result_states" if not isinstance(raw, list)
+                     else "test_result_states[%d]" % i)
+            if not isinstance(block, dict):
+                out.append((FAIL, "%s: %s must be an object with 'variable' and 'states[]'"
+                            % (loc, label)))
+                continue
+            blocks_seen += 1
+            var = block.get("variable")
+            if not isinstance(var, str) or not var.strip():
+                out.append((FAIL, "%s: %s.variable is required and must be a non-empty "
+                                  "string (contract §3.4)" % (loc, label)))
+                var = None
+            else:
+                declared_vars.add(var)
+                if var not in declared:
+                    out.append((FAIL, "%s: %s.variable %r is not declared in this node's "
+                                      "captured_variables[] (contract §5) — the states are "
+                                      "offered and the answer has nowhere to go"
+                                % (loc, label, var)))
+
+            states = block.get("states")
+            if not isinstance(states, list) or not states:
+                out.append((FAIL, "%s: %s.states[] is required and must be non-empty "
+                                  "(contract §3.4)" % (loc, label)))
+                states = []
+            for state in states:
+                if not isinstance(state, str) or state not in TEST_RESULT_STATES:
+                    out.append((FAIL, "%s: %s state %r is not in the closed vocabulary (%s) "
+                                      "(contract §3.4)"
+                                % (loc, label, state,
+                                   " · ".join(sorted(TEST_RESULT_STATES)))))
+            if var in UNINTERPRETABLE_TEST_VARIABLES and "not_assessable" not in states:
+                out.append((FAIL, "%s: %s for %r omits 'not_assessable'. This test fails in "
+                                  "a way that is neither positive nor negative, and with no "
+                                  "state for it the clerk has to file an unreadable result "
+                                  "as one of the two real answers (contract §3.4)"
+                            % (loc, label, var)))
+
+        # Which variables does this node actually branch on, and with which state?
+        #
+        # A `when` naming the variable is unambiguously a branch CONDITIONED on the test.
+        # A `captures` merely RECORDS the answer the clerk gave, so one option that
+        # happens to capture a variable is not the node branching on it — two or more
+        # branches recording DIFFERENT states of it are. Without that distinction a node
+        # with a single incidental capture would be failed for not declaring states it
+        # does not actually offer, which is the false-FAIL that teaches the next author
+        # to route around the validator.
+        branched: dict = {}
+        conditioned: set = set()
+        for holder, where in _branch_containers(node):
+            for source in ("when", "captures"):
+                blob = holder.get(source)
+                if isinstance(blob, dict):
+                    for name, val in blob.items():
+                        if isinstance(val, str):
+                            branched.setdefault(name, []).append((val, holder, where))
+                            if source == "when":
+                                conditioned.add(name)
+            # A node that declares ONE test variable may answer it with a per-branch
+            # token instead of repeating the variable name on every option.
+            for owner in declared_vars if len(declared_vars) == 1 else ():
+                for key in ("value", "result", "state", "result_state"):
+                    val = holder.get(key)
+                    if isinstance(val, str) and val in TEST_RESULT_STATES:
+                        branched.setdefault(owner, []).append((val, holder, where))
+                        break
+
+        def branches_on(name) -> bool:
+            if name in conditioned:
+                return True
+            return len({val for val, _h, _w in branched.get(name, [])}) >= 2
+
+        for var in sorted(UNINTERPRETABLE_TEST_VARIABLES & set(branched)):
+            if not branches_on(var):
+                continue
+            if var not in declared_vars:
+                out.append((FAIL, "%s branches on %r but declares no test_result_states for "
+                                  "it. Every branch on this test has to offer "
+                                  "'not_assessable', and the node has to say so where the "
+                                  "engine can see it (contract §3.4)" % (loc, var)))
+
+        for var in sorted(declared_vars | (UNINTERPRETABLE_TEST_VARIABLES & set(branched))):
+            by_state: dict = {}
+            for val, holder, where in branched.get(var, []):
+                by_state.setdefault(val, []).append((holder, where))
+            # One rule can record the same variable in BOTH a `when` and a `captures`,
+            # which would otherwise pair it against itself and report the finding twice.
+            def unique(entries):
+                seen_ids, kept = set(), []
+                for holder, where in entries:
+                    if id(holder) not in seen_ids:
+                        seen_ids.add(id(holder))
+                        kept.append((holder, where))
+                return kept
+
+            negatives = unique(by_state.get("negative") or [])
+            unreadables = unique(by_state.get("not_assessable") or [])
+            if not negatives or not unreadables:
+                continue
+            compared += 1
+            neg_by_sig: dict = {}
+            for holder, where in negatives:
+                sig = destination_signature(holder)
+                if sig is not None:
+                    neg_by_sig.setdefault(sig, []).append((holder, where))
+            for holder, where in unreadables:
+                sig = destination_signature(holder)
+                if sig is None or sig not in neg_by_sig:
+                    continue                       # different destination — distinguishable
+                # Compared by CONTENT, not by presence. Both branches carrying a
+                # provisional is the normal shape where one code has two open questions
+                # at once — g2_matureB names MYC on both halves and adds "EBER control
+                # failed, so EBV status is unestablished" on the not_assessable half.
+                # That is precisely the distinction being asked for, so presence alone
+                # would fail correct authoring; identical text on both halves would not
+                # distinguish them at all.
+                mine = _canonical(holder.get("provisional_pending"))
+                if mine is not None and all(_canonical(n.get("provisional_pending")) != mine
+                                            for n, _w in neg_by_sig[sig]):
+                    continue                       # says out loud that a repeat is owed
+                twin = neg_by_sig[sig][0][1]
+                out.append((FAIL, "%s: the not_assessable branch for %r (%s) is "
+                                  "indistinguishable from the negative branch (%s) — both "
+                                  "land on %s, and the not_assessable branch carries no "
+                                  "provisional_pending that says anything the negative "
+                                  "branch does not. The same destination can be right (a "
+                                  "code that needs POSITIVITY is unlocked by neither "
+                                  "answer), but the two must not read the same: a clean "
+                                  "negative means the workup is done, a failed control "
+                                  "means a repeat on a fresh section is owed. Reported "
+                                  "identically, the failed control is recorded as though "
+                                  "the test had returned — the case looks better evidenced "
+                                  "than it is. Either send not_assessable somewhere else, "
+                                  "or give it a provisional_pending naming the repeat "
+                                  "(contract §3.4, §6; Pathway §2.4, §4.3, §7.3 item 4)"
+                            % (loc, var, where, twin, _destination_text(sig))))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if blocks_seen:
+        out.append((OK, "%d test_result_states block(s) well formed; %d node/variable "
+                        "pair(s) route not_assessable away from negative (contract §3.4)"
+                    % (blocks_seen, compared)))
+    else:
+        out.append((NOTE, "no test_result_states block in this file — Group II construct, "
+                          "nothing to check here"))
+    return out
+
+
+def check_entity_boundary(ctx: DTContext):
+    """
+    GROUP II CHECK 5 — `entity_boundary`, and the 9709 `/3` ban (contract §3.5).
+
+    9709 only. Crossing this line does not flip a behaviour, it changes the entity and
+    therefore the code: primary cutaneous CD4+ small/medium T-cell lymphoproliferative
+    disorder (9709/1) on one side, peripheral T-cell lymphoma NOS (9702/3) on the other.
+    The construct keeps that judgement in the JSON — the variable, the threshold, the
+    operator, both codes and both reasons — instead of in a coding_note nobody renders.
+
+    The second half runs over the WHOLE file whether or not any entity_boundary was
+    authored: 9709 may never carry behavior_code "3" anywhere — branch, terminal,
+    behaviour_resolution leaf, entity_boundary side or morphology_entries object. There is
+    no 9709/3 in ICD-O-3. It is the single most likely invalid code this group can produce,
+    because /1 is the unfamiliar half and "it is a lymphoproliferative disorder, so /3" is
+    the reflex. Pathway §7.5 is explicit: 9709 must NOT get a /3 entry; out-of-boundary
+    cases become 9702/3, which is a different code and not a re-behavioured 9709.
+    """
+    out = []
+    pairs = _code_behavior_pairs(ctx)
+    seen = 0
+
+    for node_id, node in sorted(ctx.nodes.items()):
+        declared = _declared_variables(node)
+        for holder, where in walk_dicts(node):
+            if "entity_boundary" not in holder:
+                continue
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            eb = holder["entity_boundary"]
+            if not isinstance(eb, dict):
+                out.append((FAIL, "%s: entity_boundary must be an object, got %r"
+                            % (loc, eb)))
+                continue
+            seen += 1
+
+            for key in ("variable", "reason_inside", "reason_outside"):
+                val = eb.get(key)
+                if not isinstance(val, str) or not val.strip():
+                    out.append((FAIL, "%s: entity_boundary.%s is required and must be a "
+                                      "non-empty string (contract §3.5)" % (loc, key)))
+
+            var = eb.get("variable")
+            if isinstance(var, str) and var and var not in declared:
+                out.append((FAIL, "%s: entity_boundary.variable %r is not declared in this "
+                                  "node's captured_variables[] (contract §5) — the boundary "
+                                  "is authored but never actually tested"
+                            % (loc, var)))
+
+            threshold = eb.get("threshold")
+            if isinstance(threshold, bool) or not isinstance(threshold, (int, float)):
+                out.append((FAIL, "%s: entity_boundary.threshold is required and must be a "
+                                  "number, got %r (contract §3.5)" % (loc, threshold)))
+
+            operator = eb.get("operator")
+            if operator not in ENTITY_BOUNDARY_OPERATORS:
+                out.append((FAIL, "%s: entity_boundary.operator %r is not one of %s "
+                                  "(contract §3.5)"
+                            % (loc, operator,
+                               " ".join(sorted(ENTITY_BOUNDARY_OPERATORS)))))
+
+            also = eb.get("also_outside_when")
+            if also is not None and (not isinstance(also, dict) or not also):
+                out.append((FAIL, "%s: entity_boundary.also_outside_when, when present, must "
+                                  "be a non-empty object (contract §3.5)" % loc))
+
+            inside = as_code(eb.get("inside_code"))
+            outside = as_code(eb.get("outside_code"))
+            in_beh = eb.get("inside_behavior_code")
+            out_beh = eb.get("outside_behavior_code")
+            in_beh = None if in_beh is None else str(in_beh).strip()
+            out_beh = None if out_beh is None else str(out_beh).strip()
+
+            for side, code, beh in (("inside", inside, in_beh), ("outside", outside, out_beh)):
+                if not code:
+                    out.append((FAIL, "%s: entity_boundary.%s_code is required "
+                                      "(contract §3.5)" % (loc, side)))
+                    continue
+                if beh is None:
+                    out.append((FAIL, "%s: entity_boundary.%s_behavior_code is required — a "
+                                      "code without an explicit behaviour is half a "
+                                      "decision (contract §3.5)" % (loc, side)))
+                    continue
+                if (code, beh) not in pairs:
+                    out.append((FAIL, "%s: entity_boundary %s side emits %s/%s, which has no "
+                                      "morphology_entries[] object in this file "
+                                      "(contract §3.5)" % (loc, side, code, beh)))
+
+            if inside and outside and inside == outside:
+                out.append((FAIL, "%s: entity_boundary.outside_code equals inside_code (%s). "
+                                  "Crossing this boundary changes the ENTITY, not the "
+                                  "behaviour — if both sides carry the same code the node "
+                                  "asks a question whose answer cannot matter, and the "
+                                  "out-of-entity case is coded as the entity it is not "
+                                  "(contract §3.5)" % (loc, inside)))
+
+    # -- the standalone assertion: no 9709/3 anywhere in the file ---------------------
+    slash3 = []
+    for holder, where in walk_dicts(ctx.data):
+        for code_key, beh_key in (("morphology_code", "behavior_code"),
+                                  ("inside_code", "inside_behavior_code"),
+                                  ("outside_code", "outside_behavior_code"),
+                                  ("refer_code", "behavior_code")):
+            code = as_code(holder.get(code_key))
+            beh = holder.get(beh_key)
+            if code in NO_SLASH3_CODES and beh is not None and str(beh).strip() == "3":
+                slash3.append("%s (%s)" % (where or "(top level)", code_key))
+    for code in sorted(NO_SLASH3_CODES):
+        if slash3:
+            out.append((FAIL, "%s appears with behavior_code \"3\" at %d site(s): %s. There "
+                              "is no %s/3 — Pathway §7.5 says in terms that %s must NOT get "
+                              "a /3 entry, and contract §3.5 makes it the single most likely "
+                              "invalid code this group can produce. An out-of-entity case is "
+                              "9702/3 via entity_boundary, which is a DIFFERENT code, not a "
+                              "re-behavioured %s"
+                        % (code, len(slash3), ", ".join(sorted(set(slash3))), code, code,
+                           code)))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    banned = ", ".join(sorted(NO_SLASH3_CODES))
+    if seen:
+        out.append((OK, "%d entity_boundary block(s) well formed; no %s/3 anywhere in the "
+                        "file (contract §3.5)" % (seen, banned)))
+    else:
+        out.append((OK, "no entity_boundary block in this file (Group II construct); the "
+                        "standalone %s/3 ban holds across the whole file (contract §3.5)"
+                    % banned))
+    return out
+
+
+def _node_edges(node):
+    """
+    Yield (target_node_id, chain) for every `next_node` anywhere inside a node.
+
+    `chain` is the holder that carries the next_node plus all of its ancestors within the
+    node, outermost first. Both path lints need the ancestors, not just the holder: an
+    option that captures a result and then routes through a nested block would otherwise
+    look like an edge that established nothing.
+    """
+    def rec(obj, chain):
+        if isinstance(obj, dict):
+            chain = chain + [obj]
+            target = obj.get("next_node")
+            if isinstance(target, str) and target:
+                yield target, chain
+            for value in obj.values():
+                yield from rec(value, chain)
+        elif isinstance(obj, list):
+            for value in obj:
+                yield from rec(value, chain)
+    yield from rec(node, [])
+
+
+def _node_code_sites(node):
+    """Yield (code, chain, where) for every morphology_code emitted inside a node."""
+    def rec(obj, chain, where):
+        if isinstance(obj, dict):
+            chain = chain + [obj]
+            code = as_code(obj.get("morphology_code"))
+            if code:
+                yield code, chain, where or "(node level)"
+            for key, value in obj.items():
+                yield from rec(value, chain, "%s.%s" % (where, key) if where else key)
+        elif isinstance(obj, list):
+            for i, value in enumerate(obj):
+                yield from rec(value, chain, "%s[%d]" % (where, i))
+    yield from rec(node, [], "")
+
+
+def _unproven_reachable(ctx: DTContext, roots, established) -> set:
+    """
+    The set of nodes some route reaches with a fact NOT yet established.
+
+    `established(chain)` answers "does traversing this edge establish the fact?". Walk
+    forward from the roots following only edges that do not, and every node still reached
+    is a node reachable while the fact is still unproven. Shared by check_viral_gates()
+    and check_burkitt_provisional(), which differ only in what counts as established.
+    """
+    seen = set(roots)
+    stack = list(roots)
+    while stack:
+        current = stack.pop()
+        for target, chain in _node_edges(ctx.nodes[current]):
+            if target not in ctx.nodes or target in seen:
+                continue
+            if established(chain):
+                continue
+            seen.add(target)
+            stack.append(target)
+    return seen
+
+
+def check_viral_gates(ctx: DTContext):
+    """
+    GROUP II CHECK 6 — the viral-gate lint (contract §6; Pathway §5.5).
+
+    The Group II analogue of check_cryptic_genetics(), and the same class of defect: JSON
+    that validates perfectly and records a diagnosis the file cannot support.
+
+    Seven codes are DEFINITIONALLY viral — the virus is part of the entity, not an
+    association noticed alongside it:
+
+        9678, 9738        HHV-8 LANA-1 positive
+        9827              HTLV-1 serology positive
+        9719, 9724, 9725  EBER ISH positive
+        9737              ALK IHC positive
+
+    Reach one of them along a route where the virus result was never established positive
+    and the registry gains a confirmed-looking diagnosis nobody confirmed. That is the
+    evidence-overstatement class the contract puts above everything else (§6), and it is
+    not JSON-Schema-checkable: it is a property of every PATH to the terminal, not of any
+    one object, so it lives here as static analysis.
+
+    Method, mirroring check_cryptic_genetics(): once per gated variable, walk forward from
+    the tree entry nodes following only edges on which that variable is NOT established
+    positive. Any node still reached is a node some route reaches with the virus unproven.
+    A gated code emitted there, on a branch that does not itself establish the virus, is
+    reachable unproven — FAIL.
+
+    "Established positive" is read from the three places the contract allows the fact to
+    be recorded (§3F, §5): a node-level `captures`, a branch `captures` or `when`, or a
+    `positive[]` marker token naming the test — and from any ancestor of the branch within
+    the node, so that a captured option routing through a nested block still counts.
+    Variable-name aliases are accepted so that a correct file is never failed over
+    spelling: Group 1 gates this very same 9827 terminal on `htlv1_status` where the Group
+    II vocabulary says `htlv1_serology`, and they are one clinical fact.
+
+    A variable merely LISTED as captured is not a positive result. That distinction is the
+    whole lint: "we asked about EBV" and "EBV is present" are the two things this check
+    refuses to let collapse into each other.
+    """
+
+    def establishes(holder, var) -> bool:
+        if not isinstance(holder, dict):
+            return False
+        aliases = VIRAL_GATE_VARIABLES[var]
+        for key in ("captures", "when"):
+            blob = holder.get(key)
+            if isinstance(blob, dict):
+                for name, val in blob.items():
+                    if name in aliases and _is_positive_result(val):
+                        return True
+        tokens = holder.get("positive")
+        if isinstance(tokens, list):
+            markers = VIRAL_GATE_MARKERS[var]
+            for token in tokens:
+                if isinstance(token, str) \
+                        and token.split(":")[0].strip().upper() in markers:
+                    return True
+        return False
+
+    def establishes_chain(chain, var) -> bool:
+        return any(establishes(h, var) for h in chain)
+
+    emissions = []          # (code, var, chain, node_id, where)
+    for node_id, node in sorted(ctx.nodes.items()):
+        for code, chain, where in _node_code_sites(node):
+            var = VIRAL_GATED_CODES.get(code)
+            if var:
+                emissions.append((code, var, chain, node_id, where))
+        fallback = node.get("nos_fallback")
+        if isinstance(fallback, dict):
+            code = as_code(fallback.get("code"))
+            var = VIRAL_GATED_CODES.get(code)
+            if var:
+                emissions.append((code, var, [node, fallback], node_id, "nos_fallback"))
+
+    if not emissions:
+        return [(NOTE, "no viral-gated terminal (%s) emitted in this file — lint has "
+                 "nothing to check" % ", ".join(sorted(VIRAL_GATED_CODES)))]
+
+    roots = [e for e in ctx.entry_nodes() if e in ctx.nodes]
+    if not roots:
+        return [(NOTE, "no tree entry node resolves in this file — viral-gate lint skipped "
+                       "(check_orphan_nodes reports the real problem)")]
+
+    out = []
+    cache: dict = {}
+    proven = []
+    for code, var, chain, node_id, where in emissions:
+        if var not in cache:
+            cache[var] = _unproven_reachable(
+                ctx, roots, lambda chain, v=var: establishes_chain(chain, v))
+        if node_id in cache[var] and not establishes_chain(chain, var):
+            out.append((FAIL, "viral-gated terminal %s is emitted at %s (%s) on a route "
+                              "where %s was never established positive. %s is "
+                              "DEFINITIONALLY viral — the virus is part of the entity, not "
+                              "an association found beside it — so a case coded here "
+                              "without the result reads as a confirmed diagnosis that "
+                              "nothing in the file supports (contract §6; Pathway §5.5). "
+                              "Capture %s positive on every route that reaches it (a node "
+                              "or branch `captures`, a `when`, or a `positive[]` marker), or "
+                              "send the untested case to the NOS fallback instead."
+                        % (code, node_id, where, VIRAL_GATE_LABELS[var], code,
+                           VIRAL_GATE_LABELS[var])))
+        else:
+            proven.append(code)
+
+    if not out:
+        out.append((OK, "viral-gated terminal(s) %s reachable only where %s established "
+                        "positive (contract §6)"
+                    % (", ".join(sorted(set(proven))),
+                       "the gating test is" if len(set(proven)) == 1
+                       else "their gating tests are")))
+    return out
+
+
+def _is_positive_result(value) -> bool:
+    """A recorded test result that means POSITIVE — not merely 'this was captured'."""
+    if value is True:
+        return True
+    if isinstance(value, str):
+        return value.strip().lower().replace("-", "_") in POSITIVE_RESULT_TOKENS
+    return False
+
+
+
+
+def _resolved_result(value):
+    """
+    Classify a recorded test result: True = it came back, False = it did not, None =
+    neither list recognises it.
+
+    The three-way answer matters. A value in neither vocabulary is ACCEPTED as a result
+    (failing closed here would fail correct files over an unfamiliar but honest label) and
+    is reported as a NOTE naming the value, so a typo that silently discharges the
+    requirement is visible instead of invisible.
+    """
+    if value is True:
+        return True
+    if value is False or value is None:
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    if isinstance(value, list):
+        return any(_resolved_result(v) for v in value)
+    if not isinstance(value, str):
+        return None
+    token = value.strip().lower().replace("-", "_").replace(" ", "_")
+    if not token:
+        return False
+    if token in UNRESOLVED_RESULT_TOKENS:
+        return False
+    if token in RESOLVED_RESULT_TOKENS:
+        return True
+    return None
+
+
+def check_burkitt_provisional(ctx: DTContext):
+    """
+    GROUP II CHECK 7 — the under-determined-code lint (Pathway §4.2; contract §3.2, §6).
+
+    Pathway §4.2 states a POLICY, not a preference: "a 'morphology + IHC provisional, FISH
+    pending' tier with an explicit named flag, not silent absorption. Every 9687 assigned
+    without FISH carries 'MYC status unknown; HG/LBCL-11q and HGBL-DH not excluded'."
+
+    Two entities are phenotypically indistinguishable from Burkitt lymphoma and are
+    separated from it only by FISH — high-grade/large B-cell lymphoma with 11q aberration,
+    and B-ALL with MYC rearrangement. Where FISH is unavailable they are absorbed into
+    9687, and nothing on the screen says so. In a malaria-endemic, high-EBV setting Burkitt
+    is the commonest childhood cancer, which makes this the single highest-VOLUME way this
+    group can record a diagnosis firmer than its evidence. It is the same defect class as
+    check_viral_gates(), at perhaps a hundred times the case count.
+
+    The rule: 9687 may not be reachable by any route on which no FISH/molecular result was
+    established, UNLESS the emitting branch carries a `provisional_pending`. A branch that
+    carries one is compliant whatever its route — it has said out loud what it does not
+    know, which is the whole of what the policy asks for.
+
+    A result counts as ESTABLISHED when any of these appears on the route (the emitting
+    branch, an ancestor of it within the node, or any edge traversed to reach the node):
+      * a FISH_EVIDENCE_VARIABLES variable in a `captures` or a `when`, set to a value
+        that came back — `not_done`, `none`, `failed`, `not_available`, `not_indicated`
+        and `not_assessable` do NOT count, which is the point: a FISH that did not
+        hybridise established nothing;
+      * `satisfies_tests` naming Cytogenetics/FISH or Molecular/PCR;
+      * an evidence-tier capture — a captured LIST containing one of those test names;
+      * a cytogenetic `detection_method` that involves FISH.
+    MYC IHC is deliberately not evidence: Pathway §4.2 and §5.1 keep an explicit 30-50%
+    indeterminate band because the stain does not settle what the FISH settles.
+
+    The rule is generalised over UNDERDETERMINED_CODES rather than hard-coded to 9687, so
+    the same policy covers 9680, where LBCL-IRF4 is absorbed and the over-treatment of a
+    curable head-and-neck disease follows. That arm is CONTEXT-GATED — Pathway §4.2 asks
+    for the flag on "every 9680 in a child with localised head-and-neck disease", not on
+    every 9680, and 9680 is also the mature-B NOS fallback (contract §4.2), where an
+    unconditional rule would fire on every unresolved large-cell case. Pathway §5.1 defines
+    no head-and-neck site variable, so that arm is armed against anticipated names; when it
+    finds no such context anywhere in the file it says so as a NOTE rather than passing
+    quietly, because a rule that can never fire is a hole.
+
+    A `nos_fallback` object is covered too — contract §4.2 lets the FISH node fall back to
+    "the code that entered the node", which is exactly a FISH-less 9687 — but it has no
+    `provisional_pending` slot in its {code, name, reason} shape. There the named flag has
+    to live in the `reason`, which app.js does render, so the reason must at least name
+    what is unresolved.
+    """
+    out = []
+
+    roots = [e for e in ctx.entry_nodes() if e in ctx.nodes]
+    unknown_values: dict = {}
+
+    def evidence_in(holder) -> bool:
+        if not isinstance(holder, dict):
+            return False
+        for key in ("captures", "when"):
+            blob = holder.get(key)
+            if not isinstance(blob, dict):
+                continue
+            for name, value in blob.items():
+                # an evidence-tier capture: a list naming the modality outright
+                if isinstance(value, list) and any(
+                        isinstance(v, str) and v in FISH_SATISFYING_TESTS for v in value):
+                    return True
+                if name not in FISH_EVIDENCE_VARIABLES:
+                    continue
+                verdict = _resolved_result(value)
+                if verdict is None:
+                    if name in FISH_PANEL_VARIABLES:
+                        return True          # a panel name, not a result token
+                    unknown_values.setdefault(name, set()).add(str(value))
+                    return True
+                if verdict:
+                    return True
+        satisfies = holder.get("satisfies_tests")
+        if isinstance(satisfies, list) and any(v in FISH_SATISFYING_TESTS
+                                               for v in satisfies if isinstance(v, str)):
+            return True
+        if holder.get("detection_method") in FISH_DETECTION_METHODS:
+            return True
+        return False
+
+    def evidence_on(chain) -> bool:
+        return any(evidence_in(h) for h in chain)
+
+    def context_in(holder) -> bool:
+        if not isinstance(holder, dict):
+            return False
+        for key in ("captures", "when"):
+            blob = holder.get(key)
+            if not isinstance(blob, dict):
+                continue
+            for name, value in blob.items():
+                if name not in HEAD_AND_NECK_CONTEXT_VARIABLES:
+                    continue
+                values = value if isinstance(value, list) else [value]
+                for v in values:
+                    if isinstance(v, str) and v.strip().lower().replace("-", "_").replace(
+                            " ", "_") in HEAD_AND_NECK_CONTEXT_VALUES:
+                        return True
+        return False
+
+    def context_on(chain) -> bool:
+        return any(context_in(h) for h in chain)
+
+    # -- every site that emits one of the covered codes -------------------------------
+    sites = []          # (code, chain, node_id, where, is_fallback)
+    for node_id, node in sorted(ctx.nodes.items()):
+        for code, chain, where in _node_code_sites(node):
+            if code in UNDERDETERMINED_CODES:
+                sites.append((code, chain, node_id, where, False))
+        fallback = node.get("nos_fallback")
+        if isinstance(fallback, dict):
+            code = as_code(fallback.get("code"))
+            if code in UNDERDETERMINED_CODES:
+                sites.append((code, [node, fallback], node_id, "nos_fallback", True))
+
+    if not sites:
+        return [(NOTE, "no under-determined terminal (%s) emitted in this file — lint has "
+                 "nothing to check" % ", ".join(sorted(UNDERDETERMINED_CODES)))]
+    if not roots:
+        return [(NOTE, "no tree entry node resolves in this file — under-determined-code "
+                       "lint skipped (check_orphan_nodes reports the real problem)")]
+
+    unproven = _unproven_reachable(ctx, roots, evidence_on)
+    # Nodes some route reaches while the head-and-neck context HAS been established.
+    in_context = {n for n in ctx.nodes
+                  if n not in _unproven_reachable(ctx, roots, context_on)}
+
+    context_arms_tested = set()
+    compliant = []
+    for code, chain, node_id, where, is_fallback in sites:
+        rule = UNDERDETERMINED_CODES[code]
+        if rule["context"] is not None:
+            if node_id not in in_context and not context_on(chain):
+                continue                       # this arm does not apply on this route
+            context_arms_tested.add(code)
+
+        if evidence_on(chain) or node_id not in unproven:
+            compliant.append(code)
+            continue
+
+        if is_fallback:
+            reason = chain[-1].get("reason")
+            text = reason.lower() if isinstance(reason, str) else ""
+            if any(tok in text for tok in rule["reason_tokens"]):
+                compliant.append(code)
+                continue
+            out.append((FAIL, "node %s: the nos_fallback emits %s (%s) on a route where no "
+                              "FISH or molecular result was established, and its 'reason' "
+                              "does not name what is unresolved. %s absorbs %s when the "
+                              "test never returns, and Pathway §4.2 requires an explicit "
+                              "named flag rather than silent absorption. A nos_fallback has "
+                              "no provisional_pending slot, so its rendered 'reason' must "
+                              "carry the flag — say %r."
+                        % (node_id, code, rule["label"], code, rule["absorbed"],
+                           rule["flag"])))
+            continue
+
+        if isinstance(chain[-1].get("provisional_pending"), dict) or any(
+                isinstance(h.get("provisional_pending"), dict) for h in chain):
+            compliant.append(code)
+            continue
+
+        out.append((FAIL, "under-determined terminal %s (%s) is emitted at %s (%s) on a "
+                          "route where no FISH or molecular result was established, and the "
+                          "branch carries no provisional_pending. Without the test, %s "
+                          "absorbs %s, and the case is recorded as a settled diagnosis with "
+                          "nothing on screen saying what was never excluded — the "
+                          "highest-volume version of that defect in this group "
+                          "(Pathway §4.2; contract §3.2, §6). Either establish the result "
+                          "on the route, or add a provisional_pending whose reason is %r "
+                          "and whose resolving_test is 'Cytogenetics/FISH'."
+                    % (code, rule["label"], node_id, where, code, rule["absorbed"],
+                       rule["flag"])))
+
+    if unknown_values:
+        out.append((NOTE, "%d FISH-evidence value(s) are in neither the resolved nor the "
+                          "unresolved vocabulary and were ACCEPTED as a returned result. "
+                          "If any of these is a typo it is silently discharging the FISH "
+                          "requirement: %s"
+                    % (sum(len(v) for v in unknown_values.values()),
+                       "; ".join("%s=%s" % (k, "/".join(sorted(v)))
+                                 for k, v in sorted(unknown_values.items())))))
+
+    for code, rule in sorted(UNDERDETERMINED_CODES.items()):
+        if rule["context"] is None or code not in {c for c, *_ in sites}:
+            continue
+        if code not in context_arms_tested:
+            out.append((NOTE, "the %s arm is context-gated on %s and no route in this file "
+                              "establishes that context, so it tested nothing. Pathway §5.1 "
+                              "defines no head-and-neck site variable; if the tree records "
+                              "one under a name outside %s, add it to "
+                              "HEAD_AND_NECK_CONTEXT_VARIABLES or this rule stays inert."
+                        % (code, rule["context"],
+                           ", ".join(sorted(HEAD_AND_NECK_CONTEXT_VARIABLES)))))
+
+    if not [f for f in out if f[0] == FAIL]:
+        if compliant:
+            out.append((OK, "under-determined terminal(s) %s: every route either "
+                            "establishes a FISH/molecular result or carries the named "
+                            "provisional (Pathway §4.2)"
+                        % ", ".join(sorted(set(compliant)))))
+        else:
+            out.append((NOTE, "no route reaches an under-determined terminal under the "
+                              "conditions this lint governs — nothing to check"))
+    return out
+
+
+# --------------------------------------------------------------------------------------
+# B5. Against the source of truth
 # --------------------------------------------------------------------------------------
 
 def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
@@ -2153,9 +3840,18 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         # Group 1 schema extensions
         report.run(check_numeric_gate_shape, ctx)
         report.run(check_marker_intensity_tokens, ctx)
+        report.run(check_marker_tokens_declared, ctx)
         report.run(check_detection_method, ctx)
         report.run(check_classification_system, ctx)
         report.run(check_satisfies_tests, ctx)
+        # Group II schema extensions (Group II build contract §3) — fields, not node types
+        report.run(check_behaviour_resolution, ctx)
+        report.run(check_provisional_pending, ctx)
+        report.run(check_prior_probability, ctx)
+        report.run(check_test_result_states, ctx)
+        report.run(check_entity_boundary, ctx)
+        report.run(check_viral_gates, ctx)
+        report.run(check_burkitt_provisional, ctx)
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)
