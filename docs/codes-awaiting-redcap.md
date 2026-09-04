@@ -1,0 +1,150 @@
+# Codes the tree can reach that REDCap cannot record
+
+Registrar ruling 3, 4 Sep 2026: a code missing from the REDCap option list is still built into
+the decision tree. It is reported, and it goes on this list. The tree is allowed to run ahead of
+the dropdown; this file is what keeps the two reconcilable.
+
+The build reads this file. A code carrying `awaiting_layer1` in `group_NN_dt.json` and **not**
+listed here is a build failure, and so is a code listed here that no longer needs to be.
+
+Every term below is verified against the IARC ICD-O-3.2 morphology table, converted to
+`ICD coding/ICD-O-3.2/icdo32.sqlite`. Where a code is also outside the ICCC-2017 ranges, adding
+the REDCap option alone is not enough — `iccc_code` will fail to auto-populate and the case
+falls out of the group. Both jobs have to be done together.
+
+---
+
+## Group 2 — open
+
+### 9715/3 — Anaplastic large cell lymphoma, ALK negative
+
+| | |
+|---|---|
+| ICD-O-3.2 | `9715/3` Preferred. `Breast implant-associated anaplastic large cell lymphoma` is a Related term on the same code |
+| REDCap | **Absent** from `Group 2- Lymphomas And Reticuloendothelial Neoplasms.md` |
+| ICCC-2017 | **Out of range.** IIb3 runs `9700-9702, 9705, 9708, 9709, 9714, 9716-9719, 9724-9726, 9767, 9768`. 9715 falls in the gap between 9714 and 9716 |
+| Reached from | `g2_matureT` rule 4 (CD30 strong and homogeneous, ALK negative) and `g2cut_cd30_lpd` rule 4 (ALK negative with extracutaneous involvement) |
+| Carried by until now | 9714, whose ICD-O-3.1 name spans both the ALK-positive and ALK-negative diseases |
+
+**Paediatric.** ALCL is 10–30% of childhood non-Hodgkin lymphoma. Over 95% of paediatric cases
+are ALK-positive, so this code is uncommon in children — but the cases it names exist, and
+without it they are indistinguishable from ALK-positive disease in the registry.
+
+**One thing not to do.** `Changes Made/Aug 2026 Changes to be made.md` proposed relabelling 9714
+to "ALK-positive" at the same time. The IARC table does not support that: 9714/3 Preferred is
+still `Anaplastic large cell lymphoma, T-cell and Null-cell type`, with `Anaplastic large cell
+lymphoma, ALK positive` only a Related term. Add 9715; leave 9714's name alone.
+
+### 9749/3 — Erdheim-Chester disease
+
+| | |
+|---|---|
+| ICD-O-3.2 | `9749/3` Preferred, single row |
+| REDCap | **Absent** |
+| ICCC-2017 | **Out of range.** IId runs `9740-9742, 9750, 9751, 9754-9759`. 9749 sits below 9750 |
+| Reached from | `g2hist_ecd` rules 1–5 |
+| Carried by until now | 9750 Malignant histiocytosis, with a provisional naming Erdheim-Chester |
+
+**Paediatric, but only just.** Mean age at diagnosis is 49.6 years. About twenty paediatric cases
+are documented, mean age 9.6 years, the youngest 3.5 years, and there is a published proposal
+that some paediatric CNS juvenile xanthogranuloma carrying BRAF V600E is paediatric ECD. Built
+under ruling 1 — paediatric occurrence, not frequency, is the test.
+
+### 9819/3 — B lymphoblastic leukemia/lymphoma, BCR-ABL1-like
+
+| | |
+|---|---|
+| ICD-O-3.2 | `9819/3` Preferred. Note the hyphen form **BCR-ABL1-like**, not `BCR::ABL1-like` |
+| REDCap | **Absent from the Group 2 list.** Already present in the Group 1 list |
+| ICCC-2017 | **Out of range in both groups.** IIb1 runs `9811-9818, 9837`; Ia1 the same |
+| Reached from | `g2_molecular`, on a documented Ph-like signature |
+| Carried by until now | 9811 B lymphoblastic leukemia/lymphoma, NOS |
+
+**Paediatric.** About 15% of childhood acute lymphoblastic leukaemia, rising through adolescence.
+Ruling 4: one code, two groups. ICCC-2017 already separates 9811–9818 and 9837 by topography —
+Group I at `C42.0` blood, `C42.1` marrow, `C42.3` RES; Group II everywhere else — so the
+lymphoma presentation belongs here and the genetic layer sits beneath 9811.
+
+---
+
+## Group 1 — open
+
+Group I already carries the seven ICD-O-3.2 additions its own review called for, and the REDCap
+Group 1 option list has them. What none of them has is an **ICCC-2017 range**, so each one
+classifies to nothing:
+
+| Code | Name | Declared | ICCC-2017 range it needs |
+|---|---|---|---|
+| `9819/3` | B lymphoblastic leukemia/lymphoma, BCR-ABL1-like | Ia1 | `9811-9818, 9837` |
+| `9877/3` | Acute myeloid leukemia with mutated NPM1 | Ib | the Ib list |
+| `9878/3` | Acute myeloid leukemia with biallelic mutations of CEBPA | Ib | the Ib list |
+| `9879/3` | Acute myeloid leukemia with mutated RUNX1 | Ib | the Ib list |
+| `9912/3` | Acute myeloid leukemia with BCR-ABL1 | Ib | the Ib list |
+| `9968/3` | Myeloid/lymphoid neoplasm with PCM1-JAK2 | Ie | the Ie list |
+| `9993/3` | Myelodysplastic syndrome with ring sideroblasts and multilineage dysplasia | Id | the Id list |
+
+These entries do **not** carry `awaiting_layer1`, because Layer 1's REDCap half already has
+them. The gap is the classification table alone.
+
+### A broken row in the ICCC-2017 table
+
+`ICD coding/ICCC 2017 Cancer Classification.md`, the Group I row for subgroup **Ie**:
+
+```
+| Ie Unspecified and other specified leukemias | 9800,9801,9805-9C80.9,9860,9965-9967 |
+```
+
+`9805-9C80.9` is not a code range. `C80.9` is a topography code and belongs in the next column,
+so the range's upper bound has been overwritten during transcription. Until it is repaired,
+`9805` Acute biphenotypic leukemia and `9806`–`9809`, the mixed-phenotype acute leukaemia
+series, classify to nothing and the build reports them as out-of-range.
+
+**Do not guess the bound.** Repair it against the published ICCC-2017 tables.
+
+---
+
+## Remove from REDCap
+
+### 9754 — retire the option
+
+The Group 2 option list carries:
+
+```
+9751, 9751 - Langerhans cell histiocytosis, NOS
+9754, 9754 - Langerhans cell histiocytosis, NOS (replaces former 9751/1 through 9754/3 codes)
+```
+
+Two faults in one row. 9754's real ICD-O-3 term is **Langerhans' cell histiocytosis,
+disseminated**, and the parenthetical it carries is ICD-O-3's change note for **9751** — the code
+that absorbed the old 9751/1–9754/3 series. The name and the note both belong to 9751.
+
+ICD-O-3.2 does not list 9754 at all. It gives `9751/1 Langerhans cell histiocytosis, NOS` and
+`9751/3 Langerhans cell histiocytosis, disseminated`. SEER records 9754/3 as effective 2001–2009
+and reportable 1978–2009, directing 2010-forward cases to 9751/3.
+
+ICCC-2017 still lists 9754 in the IId range because its recode tables carry historic codes so
+pre-2010 records still classify. That is not a reason to keep it as a live dropdown option.
+
+**Ruling 8, 4 Sep 2026: take the latest option.** The tool now emits 9751 with the behaviour
+split and never 9754. Before removing the REDCap choice, query `i_morph` for existing records
+using 9754 — removing a choice orphans any record already on it.
+
+---
+
+## Also owed to Layer 1, from the same review
+
+These are name faults in the Group 2 option list rather than missing codes, so they do not block
+the tool, but they mislead whoever reads the dropdown.
+
+| Code | The list says | ICD-O-3.2 Preferred | Consequence |
+|---|---|---|---|
+| `9766` | Angiocentric immunoproliferative lesion | `9766/1` Angiocentric immunoproliferative lesion · `9766/3` **Lymphomatoid granulomatosis, grade 3** | The list gives the `/1` term to a `/3` option. Grades 1 and 2 are Related terms on `9766/1` and are no longer malignant, so a 9766 case must now carry a grade |
+| `9718` | Primary cutaneous CD30+ T-cell lymphoproliferative disorder | `9718/1` that term (Lymphomatoid papulosis a Synonym) · `9718/3` **Primary cutaneous anaplastic large cell lymphoma** | One option string for two diseases separated only by behaviour, and the distinction is clinical, not histological |
+| `9725` | Hydroa vacciniforme-like lymphoma | `9725/1` **Hydroa vacciniforme-like lymphoproliferative disorder** (the list's term is a Synonym) | ICD-O-3.2 has no `9725/3`. The `/1` reassignment takes the case out of Group II unless a local rule says otherwise |
+| `9740` | Mastocytoma, NOS | `9740/1` Mastocytoma, NOS · `9740/3` **Mast cell sarcoma** | One option for a harmless skin lump in a small child and for a sarcoma. Every ICCC Group II range is `/3`, so the benign lesion registers as sarcoma |
+| `9728`, `9729` | Precursor B-cell / T-cell lymphoblastic lymphoma | **Absent from ICD-O-3.2.** Both are Synonyms on `9811/3` and `9837/3` respectively | Retired. Query `i_morph` before removing the choices |
+| `9826` | Burkitt cell leukemia *(Group 1 list)* | **Absent from ICD-O-3.2.** A Synonym on `9687/3` | Retired, and it moves the case from Group I to Group II — a break in any trend series spanning the change |
+
+`9727` needs no action: ICD-O-3.2 Preferred is `Precursor cell lymphoblastic lymphoma, NOS`,
+exactly as the list has it. `Blastic plasmacytoid dendritic cell neoplasm` is a Related term on
+the same code, which is worth knowing but is not a relabelling.

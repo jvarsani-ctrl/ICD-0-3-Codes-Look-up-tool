@@ -3562,16 +3562,31 @@ def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
     if not redcap and not classif:
         return [(NOTE, "no Layer 1 code list available for group %d — source-of-truth "
                  "check skipped" % ctx.group)]
+    declared_awaiting = {}
+    for entry in ctx.data.get("morphology_entries") or []:
+        if isinstance(entry, dict) and isinstance(entry.get("awaiting_layer1"), dict):
+            needs = entry["awaiting_layer1"].get("needs") or []
+            declared_awaiting[str(entry.get("morphology_code"))] = ", ".join(needs) or "declared"
     no_option: list[str] = []
     for code in sorted(ctx.codes):
         in_redcap = code in redcap
         in_classif = code in classif
         if not in_redcap and not in_classif:
-            out.append((FAIL, "morphology_code %s is in neither the REDCap options file nor "
-                              "the ICCC classification table for group %d — never fabricate "
-                              "a code (Architecture §11 rule 1). If this is a ratified "
-                              "post-ICCC-2017 addition (e.g. an ICD-O-3.2 code), Layer 1 "
-                              "must be updated before the build can pass."
+            # Ruling 3, 4 Sep 2026: a code the option list lacks is built, reported and put
+            # on the to-do list rather than withheld — but only when the entry SAYS SO. An
+            # entry that just appeared with no declaration is still a fabricated code.
+            declared = declared_awaiting.get(code)
+            if declared:
+                out.append((WARN, "morphology_code %s is in neither Layer 1 list for group "
+                                  "%d and is declared awaiting_layer1: %s"
+                            % (code, ctx.group, declared)))
+            else:
+                out.append((FAIL, "morphology_code %s is in neither the REDCap options file "
+                                  "nor the ICCC classification table for group %d — never "
+                                  "fabricate a code (Architecture §11 rule 1). If it is a "
+                                  "ratified ICD-O-3.2 addition, give the entry an "
+                                  "`awaiting_layer1` object and list it in "
+                                  "docs/codes-awaiting-redcap.md (ruling 3)."
                         % (code, ctx.group)))
         elif not in_redcap:
             no_option.append(code)
@@ -3581,6 +3596,308 @@ def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
                     % (len(no_option), ", ".join(no_option))))
     if not out:
         out.append((OK, "all %d morphology_code(s) verified against Layer 1" % len(ctx.codes)))
+    return out
+
+
+# --------------------------------------------------------------------------------------
+# B4b. The 4 September 2026 registrar rulings
+#
+# `../memory/registrar-rulings.md` holds the binding text. Each check below names the
+# ruling it enforces so a future reader can tell a rule from a preference.
+# --------------------------------------------------------------------------------------
+
+def parse_classification_subgroups(layer1: Path):
+    """{group: {subgroup_id: set(codes)}} from the ICCC-2017 table.
+
+    parse_classification() above flattens the table to one code set per group, which is
+    all the source-of-truth check needs. Ruling 1 asks a finer question — is this code in
+    the range of the subgroup the entry CLAIMS — so the subgroup id has to survive.
+    A row with an empty first cell continues the subgroup above it.
+    """
+    out: dict = {"_malformed": {}}
+    if layer1 is None:
+        return out
+    path = layer1 / "ICCC 2017 Cancer Classification.md"
+    if not path.exists():
+        return out
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return out
+    head_re = re.compile(r"^##\s+([IVX]+)\s*:")
+    sub_re = re.compile(r"^([IVX]+[a-z]\d?)\b")
+    group, subgroup = None, None
+    for raw in text.splitlines():
+        hm = head_re.match(raw)
+        if hm:
+            group = ROMAN.get(hm.group(1).upper())
+            subgroup = None
+            continue
+        if group is None or not raw.lstrip().startswith("|"):
+            continue
+        cells = raw.split("|")
+        if len(cells) < 4:
+            continue
+        name_cell, code_cell = cells[1].strip(), cells[2].strip()
+        sm = sub_re.match(name_cell)
+        if sm:
+            subgroup = sm.group(1)
+        if not code_cell or code_cell.lower() == "code" or set(code_cell) <= set("- :"):
+            continue
+        if subgroup is None:
+            continue
+        for token in code_cell.split(","):
+            token = token.strip()
+            if re.fullmatch(r"\d+", token):
+                out.setdefault(group, {}).setdefault(subgroup, set()).add(token)
+                continue
+            rm = re.fullmatch(r"(\d+)\s*-\s*(\d+)", token)
+            if rm and len(rm.group(1)) == len(rm.group(2)):
+                lo, hi = int(rm.group(1)), int(rm.group(2))
+                if lo <= hi and hi - lo <= 2000:
+                    for n in range(lo, hi + 1):
+                        out.setdefault(group, {}).setdefault(subgroup, set()).add(
+                            str(n).zfill(len(rm.group(1))))
+                    continue
+            out["_malformed"].setdefault(group, []).append("%s (%s)" % (token, subgroup))
+    return out
+
+
+def check_iccc_subgroup_ranges(ctx: DTContext, subgroups: dict):
+    """Ruling 1 — report a code outside its ICCC-2017 range; never block on it.
+
+    The ruling that this replaced made the ICCC range the gate on whether a code could be
+    built. It no longer is: paediatric occurrence decides that. But a code outside the
+    range still fails to classify — the recode returns nothing and `iccc_code` does not
+    populate — so it is reported here and it has to be on the to-do list.
+
+    A code that IS in the group's ranges but filed under the WRONG subgroup is a
+    different animal and stays a FAIL: nobody decided that, it is a mistake.
+    """
+    malformed = (subgroups.get("_malformed") or {}).get(ctx.group) or []
+    table = subgroups.get(ctx.group) or {}
+    if not table:
+        return [(NOTE, "no ICCC-2017 subgroup table for group %d — range report skipped"
+                 % ctx.group)]
+    everything = set().union(*table.values())
+    outside, misfiled = [], []
+    for entry in ctx.data.get("morphology_entries") or []:
+        if not isinstance(entry, dict):
+            continue
+        code = str(entry.get("morphology_code"))
+        declared = entry.get("iccc3_subgroup_id")
+        if code not in everything:
+            outside.append((code, entry.get("morphology_name"), declared))
+        elif declared in table and code not in table[declared]:
+            actual = sorted(k for k, v in table.items() if code in v)
+            misfiled.append((code, declared, actual))
+    out = []
+    for token in malformed:
+        out.append((WARN, "the ICCC-2017 table's row for group %d carries a code range this "
+                          "build cannot read: %s. Codes that the row was meant to cover will "
+                          "be reported below as out-of-range, wrongly. Repairing the row is a "
+                          "Layer 1 job." % (ctx.group, token)))
+    for code, declared, actual in misfiled:
+        out.append((FAIL, "morphology_code %s declares ICCC-3 subgroup %s but the ICCC-2017 "
+                          "table puts it in %s — the recode will disagree with the tool"
+                    % (code, declared, "/".join(actual))))
+    for code, name, declared in outside:
+        out.append((WARN, "morphology_code %s (%s) is outside every ICCC-2017 range for "
+                          "group %d, so the recode returns nothing and iccc_code will not "
+                          "populate. Declared %s. Extending the range is on the to-do list "
+                          "(ruling 1)." % (code, name, ctx.group, declared)))
+    if not out:
+        out.append((OK, "all %d morphology_code(s) sit inside the ICCC-2017 range of the "
+                        "subgroup they declare" % len(ctx.codes)))
+    return out
+
+
+def check_awaiting_layer1(ctx: DTContext, repo: Path):
+    """Ruling 3 — a code REDCap cannot record is built, reported, and listed.
+
+    The tree is allowed to run ahead of the option list. What is not allowed is running
+    ahead of it silently, so the two facts have to agree: an entry carrying
+    `awaiting_layer1` must appear in docs/codes-awaiting-redcap.md, and a code named there
+    as open must still be carrying the flag.
+    """
+    todo = repo / "docs" / "codes-awaiting-redcap.md"
+    if not todo.exists():
+        return [(FAIL, "docs/codes-awaiting-redcap.md is missing — ruling 3 requires a "
+                       "code absent from REDCap to be on a to-do list")]
+    text = todo.read_text(encoding="utf-8")
+    # The file carries one "## Group N — open" section per group. Only this group's
+    # section governs this file, or Group I's entries answer for Group II's listings.
+    head = re.compile(r"^## Group %d — open\b" % ctx.group, re.M).search(text)
+    if not head:
+        open_section = ""
+    else:
+        rest = text[head.end():]
+        nxt = re.compile(r"^## ", re.M).search(rest)
+        open_section = rest[:nxt.start()] if nxt else rest
+    flagged, out = [], []
+    for entry in ctx.data.get("morphology_entries") or []:
+        if not isinstance(entry, dict) or not entry.get("awaiting_layer1"):
+            continue
+        code = str(entry.get("morphology_code"))
+        flagged.append(code)
+        aw = entry["awaiting_layer1"]
+        if not isinstance(aw, dict) or not aw.get("reason"):
+            out.append((FAIL, "entry %s: awaiting_layer1 must be an object carrying a "
+                              "`reason` saying what Layer 1 is missing" % code))
+        if entry.get("redcap_option_verified") is not False:
+            out.append((FAIL, "entry %s: awaiting_layer1 is set but redcap_option_verified "
+                              "is not False — the two cannot both be true" % code))
+        if code not in open_section:
+            out.append((FAIL, "entry %s carries awaiting_layer1 but is not listed under "
+                              "'## Group %d — open' in docs/codes-awaiting-redcap.md "
+                              "(ruling 3)" % (code, ctx.group)))
+    for m in re.finditer(r"^### (\d{4})/", open_section, re.M):
+        code = m.group(1)
+        if code in ctx.codes and code not in flagged:
+            out.append((FAIL, "docs/codes-awaiting-redcap.md still lists %s as open, but the "
+                              "entry no longer carries awaiting_layer1 — close the item"
+                        % code))
+    if not out:
+        out.append((OK, "%d code(s) awaiting a REDCap option are declared and listed: %s"
+                    % (len(flagged), ", ".join(sorted(flagged)) or "none")))
+    return out
+
+
+def check_no_clinical_alerts(ctx: DTContext):
+    """Ruling 9 — warnings live in docs/clinical-warnings.md, not in the tool."""
+    live = []
+    for holder, where in walk_dicts(ctx.data):
+        value = holder.get("clinical_alert")
+        if value:
+            live.append(where or "(root)")
+    if live:
+        return [(FAIL, "%d clinical_alert value(s) still carry text (%s%s). Ruling 9: lift "
+                       "them into docs/clinical-warnings.md — this is a coding tool"
+                 % (len(live), ", ".join(live[:3]), " …" if len(live) > 3 else ""))]
+    return [(OK, "no clinical_alert carries text; the warnings are in "
+                 "docs/clinical-warnings.md (ruling 9)")]
+
+
+def check_flow_charts(ctx: DTContext):
+    """Ruling 13 — every checklist is a flow chart and every rule in it can fire.
+
+    Two claims, proved rather than asserted. The order the engine walks has to be able to
+    ask every marker any rule turns on, or the rule needing the missing marker is
+    unreachable at runtime while looking fine in the file. And every rule has to have a
+    witness: an answer vector under which it, and no earlier rule, matches.
+    """
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import induce_flow
+    except Exception as exc:                       # pragma: no cover
+        return [(FAIL, "could not load build/induce_flow.py to verify the flow charts: %s"
+                 % exc)]
+    out, n_nodes, n_rules = [], 0, 0
+    for tree in ctx.data.get("decision_trees") or []:
+        for node in tree.get("nodes") or []:
+            if not isinstance(node, dict) or node.get("node_type") != "ihc_checklist":
+                continue
+            n_nodes += 1
+            n_rules += len(node.get("resolution_logic") or [])
+            bs = node.get("branch_sequence")
+            if not isinstance(bs, dict) or "order" not in bs:
+                out.append((FAIL, "node %s is an ihc_checklist with no branch_sequence — "
+                                  "run build/induce_flow.py (ruling 13)" % node["node_id"]))
+                continue
+            if not bs["order"]:
+                # Legitimate: a node whose rules branch only on captured state. The state
+                # selectors ARE its flow chart; there is no marker to ask.
+                reads_markers = any((r.get("positive") or r.get("negative"))
+                                    for r in node.get("resolution_logic") or [])
+                if reads_markers:
+                    out.append((FAIL, "node %s has an empty branch_sequence.order but its "
+                                      "rules read markers — rerun build/induce_flow.py"
+                                % node["node_id"]))
+                    continue
+            if bs.get("rule_count") != len(node.get("resolution_logic") or []):
+                out.append((FAIL, "node %s: branch_sequence.rule_count is %s but the node "
+                                  "holds %d rules — the flow chart is stale, rerun "
+                                  "build/induce_flow.py"
+                            % (node["node_id"], bs.get("rule_count"),
+                               len(node.get("resolution_logic") or []))))
+            out += [(FAIL, m) for m in induce_flow.check_order_covers(node, bs["order"])]
+            out += [(FAIL, m) for m in induce_flow.check_node(node)]
+    if not out:
+        out.append((OK, "%d flow chart(s) ask every marker their rules read, and all %d "
+                        "rule(s) have a witness that fires them (ruling 13)"
+                    % (n_nodes, n_rules)))
+    return out
+
+
+def check_marker_names_verbatim(ctx: DTContext):
+    """Ruling 10 — a gene or fusion name renders as written.
+
+    `CD30:strong` is a marker plus an intensity. `NPM1::ALK` is a marker whose NAME
+    contains colons. Splitting on the first colon turned the second into the first and
+    silently broke two rules. The engine now splits only on a trailing `:strong`/`:weak`,
+    so what has to be checked is that no marker NAME ends that way by accident.
+    """
+    bad = []
+    for tree in ctx.data.get("decision_trees") or []:
+        for node in tree.get("nodes") or []:
+            if not isinstance(node, dict):
+                continue
+            for grp in node.get("marker_groups") or []:
+                for marker in grp.get("markers") or []:
+                    if re.search(r":(strong|weak)$", str(marker)):
+                        bad.append("%s: %s" % (node.get("node_id"), marker))
+    if bad:
+        return [(FAIL, "%d marker name(s) end in an intensity suffix, so the engine will "
+                       "read part of the name as a grade: %s"
+                 % (len(bad), "; ".join(bad)))]
+    return [(OK, "no marker name collides with the :strong/:weak intensity suffix, so "
+                 "fusion names such as NPM1::ALK render verbatim (ruling 10)")]
+
+
+def check_declared_states_consumed(ctx: DTContext):
+    """Ruling 11 — a state the clerk can choose has to lead somewhere.
+
+    `not_assessable` exists so an unreadable test is answerable. If nothing reads it the
+    answer goes nowhere and the case falls to a NOS fallback with nothing on screen to say
+    a state was ignored, which is the failure this construct was added to prevent.
+
+    Two things stop this being noise. A state is captured at one node and often read
+    several nodes downstream, so the search is file-wide, not node-local. And a node
+    carrying a catch-all branch — a rule or option with no `when` — has somewhere for
+    every remaining state to go by construction.
+    """
+    consumed = set()
+    for holder, _ in walk_dicts(ctx.data):
+        when = holder.get("when")
+        if not isinstance(when, dict):
+            continue
+        for key, value in when.items():
+            for v in (value if isinstance(value, list) else [value]):
+                consumed.add((key, str(v)))
+    out, checked = [], 0
+    for tree in ctx.data.get("decision_trees") or []:
+        for node in tree.get("nodes") or []:
+            if not isinstance(node, dict):
+                continue
+            blocks = node.get("test_result_states")
+            if not blocks:
+                continue
+            blocks = blocks if isinstance(blocks, list) else [blocks]
+            branches = list(node.get("resolution_logic") or []) + list(node.get("options") or [])
+            catch_all = any(isinstance(b, dict) and not b.get("when") for b in branches)
+            for block in blocks:
+                var = block.get("variable")
+                for st in block.get("states") or []:
+                    checked += 1
+                    if (var, str(st)) in consumed or catch_all:
+                        continue
+                    out.append((FAIL, "node %s offers %s = %s and nothing in this file reads "
+                                      "it, and the node has no catch-all branch — the answer "
+                                      "goes nowhere (ruling 11)"
+                                % (node["node_id"], var, st)))
+    if not out:
+        out.append((OK, "%d declared test-result state(s) either steer a branch or fall to a "
+                        "catch-all; none is a dead end (ruling 11)" % checked))
     return out
 
 
@@ -3782,6 +4099,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
 
     # -- Layer 1 -------------------------------------------------------------------
     report.section("Layer 1 — source of truth")
+    classification_subgroups = parse_classification_subgroups(layer1)
     redcap_options, rc_findings = parse_redcap_options(layer1)
     report.checks_run += 1
     report.add(rc_findings)
@@ -3856,6 +4174,13 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)
         report.run(check_mpal_rule_ordering, ctx)
+        # the 4 Sep 2026 registrar rulings
+        report.run(check_iccc_subgroup_ranges, ctx, classification_subgroups)
+        report.run(check_awaiting_layer1, ctx, repo)
+        report.run(check_no_clinical_alerts, ctx)
+        report.run(check_flow_charts, ctx)
+        report.run(check_marker_names_verbatim, ctx)
+        report.run(check_declared_states_consumed, ctx)
         # source of truth
         report.run(check_codes_against_source_of_truth, ctx, redcap_options, classification)
 

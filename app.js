@@ -38,9 +38,17 @@ var WORKUP_STATES = ['pending', 'not done', 'unavailable', 'declined'];
 var ANSWER_LABELS = { y: 'Yes', n: 'No', yes: 'Yes', no: 'No', unknown: 'Not known' };
 
 var MARKER_CYCLE = [undefined, 'pos', 'strong', 'weak', 'neg'];
+/* `nd` — recorded, but the stain was not done or could not be read. Ruling 11:
+   an uninterpretable test drops the case to the nearest code rather than
+   dead-ending, so `nd` behaves exactly as an absent marker does when rules are
+   matched, and differs only in that the clerk said so and it reaches the
+   workup list. Anything that asks "is this marker positive" must therefore
+   treat `nd` the way it treats `neg`. */
+var MARKER_UNREAD = 'nd';
 /* Screen-reader wording for each marker state. The visible chip shows a short
    token; a marker read aloud needs the whole word. */
-var MARKER_LABELS = { pos: 'positive', strong: 'strongly positive', weak: 'weakly positive', neg: 'negative' };
+var MARKER_LABELS = { pos: 'positive', strong: 'strongly positive', weak: 'weakly positive',
+  neg: 'negative', nd: 'not done or not readable' };
 
 /* Cleared per case. No localStorage — the iframe reloads between patients
    (Architecture §4D, §7). */
@@ -430,15 +438,12 @@ function renderLiveNode() {
   var n = node();
   if (!n) throw new Error('Unresolved node reference: ' + state.nodeId);
   if (NODE_TYPES.indexOf(n.node_type) === -1) throw new Error('Unknown node_type: ' + n.node_type);
-  /* The alert of the branch that routed here. A rule, band or override cannot
-     be seen before it fires, so its warning would otherwise vanish entirely;
-     it is shown on the screen the clerk acts on next. Shown once if the node
-     repeats the same string. */
-  var carried = state.firedAlert && state.firedAlert !== n.clinical_alert ? state.firedAlert : null;
+  /* Ruling 9, 4 Sep 2026: clinical alerts do not render. This is a coding
+     tool, not a live clinical tool, and a warning costs the clerk attention
+     without changing the code that gets entered. Every alert string is kept in
+     `docs/clinical-warnings.md` against the day the tool becomes clinical. */
   return panel(n.step_label || ('Step ' + (n.step_number === undefined ? '' : n.step_number)),
     n.question || '', n.hint,
-    (n.clinical_alert ? banner('alert', 'Clinical alert', n.clinical_alert) : '') +
-    (carried ? banner('alert', 'Clinical alert', carried) : '') +
     priorNote(n.prior_probability) + dispatchNode(n) + renderEscapes(n));
 }
 
@@ -482,7 +487,8 @@ function nodeControl(n) {
     case 'site_resolution':
       return optionList(n);
     case 'cytogenetics_dropdown':  return cytogeneticsSelect(n);
-    case 'ihc_checklist':          return markerGrid(n);
+    case 'ihc_checklist':
+      return n.branch_sequence ? markerFlow(n) : markerGrid(n);
     case 'numeric_gate':           return numericGate(n);
     case 'molecular_freetext':     return freeText(n);
     case 'imaging_pathway':        return imagingPathway(n);
@@ -560,6 +566,237 @@ function cytogeneticsSelect(n) {
 /* Tap cycles a marker: off → positive → strong → weak → negative. The
    intensity tokens ("MARKER:strong") are backward-compatible with plain
    marker names — a rule that names no intensity matches any positive state. */
+/* ============================================================================
+   Ruling 13 — the checklist is a flow chart
+
+   The old shape put every marker the node knew about on one screen and ran an
+   ordered rule list against whatever was ticked. Two consequences, neither of
+   them visible: a rule whose conditions are a subset of an earlier rule's can
+   never fire, and the clerk sees every code the node can reach with nothing
+   saying which are still in play.
+
+   Now the node asks one marker at a time, in the order `branch_sequence.order`
+   fixes at build time, skipping any marker no live rule turns on, and stops
+   when one rule stands. The order is clinical content and comes from the JSON;
+   the narrowing below is arithmetic on rules the engine already evaluates.
+   ========================================================================= */
+
+/* Live during a PARTIAL walk. Differs from matchRules in one way that matters:
+   an unanswered `when` leaves the rule alive instead of killing it, because
+   the clerk may not have reached that question yet. */
+function whenLive(when) {
+  if (!when) return true;
+  return Object.keys(when).every(function (k) {
+    var have = state.captured[k];
+    return have === undefined || have === null || whenValueOk(have, when[k]);
+  });
+}
+function splitToken(token) {
+  var m = /^([\s\S]*):(strong|weak)$/.exec(String(token));
+  return m ? { name: m[1], want: m[2] } : { name: String(token), want: null };
+}
+function ruleLive(r) {
+  if (!whenLive(r.when)) return false;
+  var ok = true;
+  arr(r.positive).forEach(function (p) {
+    var t = splitToken(p), have = state.markers[t.name];
+    if (have === undefined) return;
+    if (have === 'neg' || have === MARKER_UNREAD) ok = false;
+    else if (t.want && have !== t.want) ok = false;
+  });
+  arr(r.negative).forEach(function (name) {
+    if (state.markers[name] !== undefined && !markerOff(name)) ok = false;
+  });
+  return ok;
+}
+function liveRules(n) { return arr(n.resolution_logic).filter(ruleLive); }
+
+/* What a rule asks of one marker, or null if it does not care. */
+function markerNeed(r, name) {
+  var need = null;
+  arr(r.positive).forEach(function (p) {
+    var t = splitToken(p);
+    if (t.name === name) need = t.want || 'pos';
+  });
+  if (need) return need;
+  return arr(r.negative).indexOf(name) === -1 ? null : 'neg';
+}
+
+/* Where a rule lands. Several rules often land in the same place, and it is the
+   number of PLACES still reachable that the clerk watches shrink — so that, not
+   the number of rules, is what a question is worth asking about. */
+function outcomeKey(r) {
+  if (r.morphology_code) return 'code:' + r.morphology_code + '/' + (r.behavior_code || '');
+  if (r.next_node) return 'node:' + r.next_node;
+  if (r.refer_group) return 'group:' + r.refer_group;
+  if (r.exclude) return 'exclude';
+  return 'continue';
+}
+function outcomeCount(rules) {
+  var seen = {}, n = 0;
+  rules.forEach(function (r) { var k = outcomeKey(r); if (!seen[k]) { seen[k] = 1; n++; } });
+  return n;
+}
+/* Is this rule already satisfied outright by the answers so far? Same test
+   matchRules() applies — factored out so the flow chart can ask it. */
+function ruleSatisfied(r) {
+  if (!whenOk(r.when)) return false;
+  if (arr(r.positive).length && !arr(r.positive).every(markerOk)) return false;
+  if (arr(r.negative).length && !arr(r.negative).every(markerOff)) return false;
+  return true;
+}
+
+/* What a marker is worth asking, as [outcomes removed, rules removed], each
+   averaged across the answers. Scored on the mean rather than the worst answer:
+   near the top of a node almost every rule is alive, so for every marker there
+   is some answer that eliminates nothing, and worst-case scoring makes every
+   question score zero and the tool ask all of them in file order.
+
+   Outcomes lead because the clerk is coding — a question that cannot change the
+   code is not worth asking. Rules break the tie, because a node where nine rules
+   emit one code and a tenth falls through never reduces its outcome count, and
+   scoring on outcomes alone would ask nothing at all there. */
+function markerWorth(m, live) {
+  var hereO = outcomeCount(live), hereR = live.length;
+  var opts = ['pos', 'neg'], totO = 0, totR = 0;
+  live.forEach(function (r) {
+    var need = markerNeed(r, m);
+    if ((need === 'strong' || need === 'weak') && opts.indexOf(need) === -1) opts.push(need);
+  });
+  opts.forEach(function (v) {
+    var keep = live.filter(function (r) {
+      var need = markerNeed(r, m);
+      if (!need) return true;
+      if (need === 'neg') return v === 'neg';
+      if (v === 'neg') return false;
+      return need === 'pos' || need === v;
+    });
+    totO += outcomeCount(keep);
+    totR += keep.length;
+  });
+  return [hereO - totO / opts.length, hereR - totR / opts.length];
+}
+
+/* The next question: the first marker in the authored order that is unanswered
+   and still narrows the answer set. The ORDER is clinical content and comes from
+   the JSON; deciding that a question would change nothing is arithmetic on rules
+   the engine already evaluates. */
+function nextMarker(n) {
+  var rules = arr(n.resolution_logic), live = liveRules(n);
+  /* Two ways the node is already decided, and asking on would be theatre: one
+     rule left, or every remaining rule emitting the same outcome. */
+  if (live.length <= 1 || outcomeCount(live) <= 1) return null;
+
+  /* Once a live rule is satisfied outright, only the rules ABOVE it can still
+     change the answer — first match wins, so anything below it is settled. Ask
+     about those rules and nothing else, and stop when none is left. Without this
+     the tail of a long node is spent on questions that cannot move the code:
+     a systemic ALCL took seventeen questions where nine decide it. */
+  var settled = -1;
+  for (var s = 0; s < rules.length; s++) {
+    if (!ruleLive(rules[s])) continue;
+    if (ruleSatisfied(rules[s])) { settled = s; break; }
+  }
+  var contenders = live;
+  if (settled >= 0) {
+    contenders = rules.slice(0, settled).filter(ruleLive);
+    if (!contenders.length) return null;
+  }
+
+  var order = arr(n.branch_sequence && n.branch_sequence.order);
+  for (var i = 0; i < order.length; i++) {
+    var m = order[i];
+    if (state.markers[m] !== undefined) continue;
+    var w = markerWorth(m, contenders);
+    if (w[0] <= 1e-9 && w[1] <= 1e-9) continue;
+    /* First in the authored order wins among the questions worth asking at all,
+       so the sequence stays the one the build wrote and the clerk can predict
+       it. The scores decide WHETHER to ask, not what to ask next. */
+    return m;
+  }
+  return null;
+}
+
+/* The answers worth offering for this marker. Intensity buttons appear only
+   where a live rule actually grades it — a clerk should not be asked to grade
+   a stain no rule reads that way. */
+function markerAnswers(n, m) {
+  var live = liveRules(n), wants = {};
+  live.forEach(function (r) { var w = markerNeed(r, m); if (w) wants[w] = true; });
+  var out = [{ v: 'pos', label: 'Positive' }];
+  if (wants.strong) out.push({ v: 'strong', label: 'Strongly positive' });
+  if (wants.weak) out.push({ v: 'weak', label: 'Weakly positive' });
+  out.push({ v: 'neg', label: 'Negative' });
+  out.push({ v: MARKER_UNREAD, label: 'Not done or not readable' });
+  return out;
+}
+
+/* Where each live rule would land. This is the "only these codes are loaded"
+   half of the ruling: the clerk watches the candidate set shrink instead of
+   reading a wall of codes the branch already excluded. */
+function outcomeOf(r) {
+  if (r.morphology_code) {
+    var e = entryFor(r.morphology_code, r.behavior_code);
+    return r.morphology_code + (e ? ' ' + e.morphology_name : '');
+  }
+  if (r.next_node) {
+    var nn = findNode(r.next_node);
+    return (nn && (nn.step_label || nn.node_id)) || r.next_node;
+  }
+  if (r.refer_group) return 'Group ' + r.refer_group;
+  if (r.exclude) return 'Not a reportable malignancy';
+  return 'Continue';
+}
+function candidateList(n) {
+  var seen = {}, out = [];
+  liveRules(n).forEach(function (r) {
+    var o = outcomeOf(r);
+    if (!seen[o]) { seen[o] = true; out.push(o); }
+  });
+  return out;
+}
+
+function answeredChips(n) {
+  var order = arr(n.branch_sequence && n.branch_sequence.order);
+  var done = order.filter(function (m) { return state.markers[m] !== undefined; });
+  if (!done.length) return '';
+  return '<div class="tag">Answered</div><div class="markers">' +
+    done.map(function (m) {
+      var v = state.markers[m];
+      return '<button class="marker" data-act="markerset" data-m="' + esc(m) + '" data-v="clear"' +
+        ' data-value="' + esc(v) + '" aria-pressed="' + (v === 'neg' || v === MARKER_UNREAD ? 'false' : 'true') + '"' +
+        ' aria-label="' + esc(m) + ': ' + esc(MARKER_LABELS[v]) + '. Activate to unanswer.">' +
+        esc(m) + '<span class="marker__state">' + esc(v === 'nd' ? 'not read' : MARKER_LABELS[v]) + '</span></button>';
+    }).join('') + '</div>';
+}
+
+function markerFlow(n) {
+  var live = liveRules(n), m = nextMarker(n);
+  var cands = candidateList(n);
+  var h = answeredChips(n);
+  h += '<div class="flow__count">' + esc(String(cands.length)) +
+    (cands.length === 1 ? ' outcome still in play' : ' outcomes still in play') + '</div>';
+  h += '<ul class="flow__cands">' + cands.slice(0, 8).map(function (c) {
+    return '<li>' + esc(c) + '</li>';
+  }).join('') + (cands.length > 8 ? '<li>and ' + (cands.length - 8) + ' more</li>' : '') + '</ul>';
+  if (m) {
+    h += '<div class="flow__ask"><div class="flow__marker">' + esc(m) + '</div>' +
+      '<div class="states">' + markerAnswers(n, m).map(function (a) {
+        return '<button class="state" data-act="markerset" data-m="' + esc(m) + '" data-v="' + esc(a.v) + '"' +
+          ' aria-label="' + esc(m) + ': ' + esc(a.label) + '">' + esc(a.label) + '</button>';
+      }).join('') + '</div></div>';
+    h += '<p class="node__hint">One marker at a time. Every answer removes the outcomes it rules out.</p>';
+  } else {
+    h += '<p class="node__hint">' + (outcomeCount(live) <= 1
+      ? 'One outcome remains. Continue to record it.'
+      : 'No remaining marker separates what is left — continue, and the first rule the '
+        + 'answers satisfy decides it.') + '</p>';
+  }
+  h += '<div class="actions"><button class="btn" data-act="resolve">' +
+    (m ? 'Skip the rest and resolve' : 'Continue') + '</button></div>';
+  return h;
+}
+
 function markerGrid(n) {
   var h = arr(n.marker_groups).map(function (g) {
     return '<div class="tag">' + esc(g.group_label) + '</div>' + priorNote(g.prior_probability) +
@@ -690,25 +927,35 @@ function markerOk(token) {
   var m = /^([\s\S]*):(strong|weak)$/.exec(String(token));
   var name = m ? m[1] : String(token), want = m ? m[2] : null;
   var have = state.markers[name];
-  if (!have || have === 'neg') return false;
+  if (!have || have === 'neg' || have === MARKER_UNREAD) return false;
   if (want) return have === want;
   return true;
+}
+/* A `negative` requirement is met by a marker that is off, never recorded, or
+   recorded as unreadable — the three are the same evidence. */
+function markerOff(name) {
+  var v = state.markers[name];
+  return !v || v === 'neg' || v === MARKER_UNREAD;
+}
+/* A `when` value may name one state or a list of states that behave alike.
+   The list form carries ruling 11 into the JSON: a test that could not be
+   interpreted routes with one that was never done, instead of falling through
+   to a definite call the evidence does not support. */
+function whenValueOk(have, want) {
+  if (Array.isArray(want)) {
+    return want.some(function (w) { return String(have) === String(w); });
+  }
+  return String(have) === String(want);
 }
 function whenOk(when) {
   if (!when) return true;
   return Object.keys(when).every(function (k) {
-    return String(state.captured[k]) === String(when[k]);
+    return whenValueOk(state.captured[k], when[k]);
   });
 }
 function matchRules(rules) {
   for (var i = 0; i < arr(rules).length; i++) {
-    var r = rules[i];
-    if (!whenOk(r.when)) continue;
-    if (arr(r.positive).length && !arr(r.positive).every(markerOk)) continue;
-    if (arr(r.negative).length && !arr(r.negative).every(function (m) {
-      var v = state.markers[m]; return !v || v === 'neg';
-    })) continue;
-    return r;
+    if (ruleSatisfied(rules[i])) return rules[i];
   }
   return null;
 }
@@ -928,7 +1175,6 @@ function renderOutput() {
   if (r.referral) {
     var gname = ((state.router.groups || {})[String(r.group)] || {}).name;
     return '<div class="node--live">' +
-      (r.alert ? banner('alert', 'Clinical alert', r.alert) : '') +
       banner('warn', 'Belongs to another group',
         'This case is a malignancy, but not one this group codes. Record it under group ' +
         r.group + (gname ? ' — ' + gname : '') + '.') +
@@ -941,7 +1187,6 @@ function renderOutput() {
   }
   if (r.excluded) {
     return '<div class="node--live">' +
-      (r.alert ? banner('alert', 'Clinical alert', r.alert) : '') +
       banner('info', 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
@@ -949,8 +1194,6 @@ function renderOutput() {
   }
   var e = r.entry, redcap = state.host === 'redcap';
   var h = '<div class="node--live">';
-  if (e.clinical_alert) h += banner('alert', 'Clinical alert', e.clinical_alert);
-  if (r.alert && r.alert !== e.clinical_alert) h += banner('alert', 'Clinical alert', r.alert);
 
   /* Rows run in REDCap FIELD ORDER — morphology → subgroup → confidence →
      workup — so the clerk reads down this panel and down the REDCap form in
@@ -961,12 +1204,20 @@ function renderOutput() {
        and it fails loudly when the tool and the options file drift apart. */
     h += '<div class="pickbox"><div class="pickbox__head">Select this option in REDCap</div>' +
       '<div class="pickbox__value">' + esc(e.redcap_value) + '&nbsp;&nbsp;' + esc(e.morphology_name) + '</div></div>';
-    if (e.redcap_option_verified === false) {
-      h += banner('warn', 'No REDCap option', 'This code has no dropdown option in the registry yet — it cannot be selected until one is added.');
-    }
   } else {
     h += '<div class="headline"><div class="headline__code">' + esc(r.code) + '</div>' +
       '<div class="headline__name">' + esc(e.morphology_name) + '</div></div>';
+  }
+  /* Ruling 3: the tree is allowed to run ahead of the REDCap option list, but
+     never silently. A clerk who cannot find the row has to be told why before
+     they go looking, and in BOTH views — the code is just as unselectable
+     outside the REDCap host as inside it. */
+  if (e.redcap_option_verified === false) {
+    var aw = e.awaiting_layer1;
+    h += banner('warn', 'Not yet a REDCap option',
+      'This code has no option in the registry dropdown, so it cannot be selected yet.' +
+      (aw && arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
+      ' Record the case against the nearest available option and flag it for re-coding.');
   }
   /* Behaviour is shown only where it is not the reportable /3 default: a case
      whose code carries the other behaviour reads as an ordinary malignancy
@@ -998,6 +1249,8 @@ function renderOutput() {
      trusting it as a checklist (Design Spec §5, redcap.md §4). */
   h += '<div class="orow orow--upgrade"><b>Upgrade</b><span>' +
     esc(r.upgrade || 'None — fully subtyped at this evidence tier.') + '</span></div>';
+  h += renderAliases(r.code);
+  h += renderUnread();
   h += orow('Topography', state.captured.topography || '—');
   if (redcap) h += orow('REDCap value', e.redcap_value);
   h += orow('Based on', r.basis || '—');
@@ -1017,6 +1270,41 @@ function renderOutput() {
   h += outActions();
   return h + '</div>';
 }
+/* Ruling 6, 4 Sep 2026: whatever path the clerk took, the answer names the
+   code's aliases. The abstractor is matching what a report actually says
+   against what REDCap calls it, and the alias file already holds both. Alias
+   plus every `also_known_as` on it, de-duplicated, in file order. */
+function aliasesFor(code) {
+  var seen = {}, out = [];
+  arr(state.aliases).forEach(function (a) {
+    if (arr(a.maps_to_morphology_codes).indexOf(String(code)) === -1) return;
+    [a.alias].concat(arr(a.also_known_as)).forEach(function (t) {
+      if (t && !seen[t.toLowerCase()]) { seen[t.toLowerCase()] = true; out.push(t); }
+    });
+  });
+  return out;
+}
+function renderAliases(code) {
+  var list = aliasesFor(code);
+  if (!list.length) {
+    return '<div class="orow"><b>Also called</b><span>No alias recorded for this code.</span></div>';
+  }
+  return '<div class="orow"><b>Also called</b><span class="aliases">' +
+    list.map(function (t) { return '<span class="qualifier">' + esc(t) + '</span>'; }).join('') +
+    '</span></div>';
+}
+
+/* Ruling 11: a stain the clerk marked not done or not readable is named on the
+   answer. The case still resolves to the nearest code the evidence supports —
+   it is not a dead end — but the reader can see what was missing. */
+function renderUnread() {
+  var out = Object.keys(state.markers).filter(function (m) {
+    return state.markers[m] === MARKER_UNREAD;
+  });
+  if (!out.length) return '';
+  return '<div class="orow"><b>Not read</b><span>' + esc(out.join(' · ')) + '</span></div>';
+}
+
 /* `emphasise` runs the value through rich() so an authored **bold** lands on
    the word that carries the warning; `mod` names an optional .orow--<mod>
    variant, which degrades to the plain row if the stylesheet has none. */
@@ -1121,6 +1409,15 @@ function handleOption(act, el) {
          the resolved leaves would be the quieter and the wronger choice. */
       if (br.deferrable && br.follow_up_review) state.captured.follow_up_review = br.follow_up_review;
       return advance(leaf.leaf, String(br.variable).replace(/_/g, ' '), leaf.label, before);
+    }
+    /* One answer to one marker in the flow chart. Like a marker chip it
+       CAPTURES and re-renders without advancing: the node still resolves
+       through its own rules. `clear` unanswers, which is how the clerk goes
+       back one question without rewinding the whole node. */
+    case 'markerset': {
+      var mk = el.getAttribute('data-m'), mv = el.getAttribute('data-v');
+      if (mv === 'clear') delete state.markers[mk]; else state.markers[mk] = mv;
+      return;
     }
     case 'marker': {
       var m = el.getAttribute('data-m'), cur = state.markers[m];
@@ -1271,7 +1568,10 @@ function resolveNode(n, before) {
 function fallbackTarget(n) {
   if (n.insufficient_next_node) return { next_node: n.insufficient_next_node };
   if (n.nos_fallback) {
-    return { morphology_code: n.nos_fallback.code, upgrade_path: n.nos_fallback.reason, confidence: 'low' };
+    /* A behaviour-overloaded fallback has to name which half it means, or
+       entryFor() takes whichever entry happens to be written first. */
+    return { morphology_code: n.nos_fallback.code, behavior_code: n.nos_fallback.behavior_code,
+      upgrade_path: n.nos_fallback.reason, confidence: 'low' };
   }
   throw new Error('Node has no fallback and did not resolve: ' + n.node_id);
 }

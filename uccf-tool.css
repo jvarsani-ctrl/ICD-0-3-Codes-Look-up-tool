@@ -520,6 +520,55 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .state__tick { font-weight: var(--w-bold); }
 
+/* The flow chart (registrar ruling 13). A checklist node asks one marker at a
+   time and shows what is still reachable, so the clerk can see the answer set
+   shrink rather than reading every code the node could ever emit.
+
+   The candidate list is deliberately quiet — muted ink, no border, no fill. It
+   is orientation, not an instruction, and it must not compete with the single
+   question underneath it. The question itself is the loudest thing on the
+   screen: there is exactly one, and the whole node is waiting on it. */
+.flow__count {
+  font-size: var(--fs-over);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--sp-1);
+}
+.flow__cands {
+  list-style: none;
+  margin: 0 0 var(--sp-3);
+  padding: 0 0 0 var(--sp-3);
+  border-left: 2px solid var(--ink-200);
+  font-size: var(--fs-small);
+  color: var(--color-muted);
+}
+.flow__cands li { padding: 1px 0; }
+.flow__ask {
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3);
+  margin-bottom: var(--sp-2);
+  background: var(--color-surface);
+}
+.flow__marker {
+  font-size: var(--fs-h);
+  font-weight: var(--w-bold);
+  color: var(--ink-900);
+  margin-bottom: var(--sp-2);
+}
+.flow__ask .states { margin-bottom: 0; }
+/* A marker answered `not done or not readable` is neither struck through like
+   a negative nor filled like a positive: the case still resolves, but on less
+   evidence, and the chip should say exactly that. */
+.marker[data-value="nd"] {
+  border-style: dashed;
+  border-color: var(--ink-300);
+  background: var(--ink-050);
+  color: var(--color-muted);
+}
+
 .field { display: block; margin-bottom: var(--sp-3); }
 .field__label { display: block; font-weight: var(--w-semi); font-size: var(--fs-small); margin-bottom: var(--sp-1); }
 .field input[type="number"],
@@ -714,6 +763,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .workup__row select { padding: 2px var(--sp-1); border: 2px solid var(--ink-300); border-radius: var(--radius-sm); }
 
 .qualifiers { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+/* Alias chips carry whole disease names, not one-word tokens. Without nowrap
+   the flex row hands each chip the narrowest column it can and every name
+   breaks down the middle, which is unreadable and looks broken. */
+.aliases { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.aliases .qualifier { white-space: nowrap; font-weight: var(--w-medium); }
 .qualifier {
   font-size: var(--fs-micro);
   font-weight: var(--w-semi);

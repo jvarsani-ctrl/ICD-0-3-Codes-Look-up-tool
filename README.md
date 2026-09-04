@@ -113,3 +113,49 @@ Burkitt currently lands nowhere — building Group II clears that debt.
 
 See `../CLAUDE.md` for the project map and `../memory/` for the ratified decisions behind
 every choice in this repository.
+
+## The 4 September 2026 registrar rulings
+
+Jay ruled on the twenty problems in the Group II review. The binding text is in
+`../memory/registrar-rulings.md`; what follows is what changed in this repository.
+
+**The checklist is a flow chart (ruling 13).** A node of type `ihc_checklist` used to show
+every marker it knew about and evaluate an ordered rule list against whatever was ticked.
+Two consequences followed from that shape and neither was visible on screen: a rule whose
+conditions are a subset of an earlier rule's could never fire, and the clerk saw every code
+the node could reach with nothing saying which were still in play.
+
+`build/induce_flow.py` now induces, per node, the order its markers should be asked in, and
+writes it into the node as `branch_sequence`. The engine asks one marker at a time in that
+order, skips any question that can no longer change the answer, and stops as soon as the
+first still-live rule is satisfied outright. The order is clinical content and lives in the
+JSON; the narrowing is arithmetic on rules the engine already evaluates.
+
+The same script proves every rule is reachable by constructing a witness — an answer vector
+under which that rule, and no earlier one, matches. A rule with no witness is a build
+failure. Three real dead rules turned up on the first run and are fixed:
+
+- `g2hist_lch_confirm`: the "langerin not done" provisional sat *below* the rule that reads an
+  absent langerin as a negative, so a case where the stain was never done was being called an
+  indeterminate dendritic cell tumour — a definite diagnosis from a missing test.
+- `mds_rcc_aplastic_ihc` and `g2hist_lch_confirm`: a bare catch-all below a rule that already
+  covered every remaining case. Merged.
+
+**A marker can now be answered "not done or not readable"** (ruling 11). It matches exactly as
+an absent marker does, so no rule changes meaning; the difference is that the clerk said so,
+and the answer block names it.
+
+**Warnings left the tool** (ruling 9). `app.js` no longer renders `clinical_alert` and neither
+group file carries the text. All 302 strings are in `docs/clinical-warnings.md` with the exact
+place each came from.
+
+**The answer always names the code's aliases** (ruling 6), on every path.
+
+**Three ICD-O-3.2 codes are built ahead of REDCap** (rulings 1-3): `9715` ALCL ALK negative,
+`9749` Erdheim-Chester disease, `9819` B lymphoblastic leukemia/lymphoma BCR-ABL1-like. Each
+carries `awaiting_layer1` and is listed in `docs/codes-awaiting-redcap.md`; the build fails if
+those two facts disagree. Every term is verified against the IARC ICD-O-3.2 table, converted
+to `../../ICD coding/ICD-O-3.2/icdo32.sqlite`.
+
+**9754 is retired** (ruling 8). ICD-O-3.2 does not list it; the REDCap row for it carries
+9751's name and 9751's change note. LCH resolves to 9751 with the behaviour split.

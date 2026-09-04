@@ -936,14 +936,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9811"
+      "9819"
     ],
     "maps_to_iccc3_subgroup_id": "IIb1",
     "confidence": "high",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "Single-hyphen fusion notation, the form used in the Group I alias file. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9819 for BCR::ABL1-like B-ALL. 9819 is not built for Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion."
+    "notes": "Single-hyphen fusion notation, the form used in the Group I alias file. Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion. Retargeted 4 Sep 2026: 9819 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "BCR::ABL1-like B-ALL",
@@ -956,14 +956,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9811"
+      "9819"
     ],
     "maps_to_iccc3_subgroup_id": "IIb1",
     "confidence": "high",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "Current WHO double-colon fusion notation. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9819 for BCR::ABL1-like B-ALL. 9819 is not built for Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion."
+    "notes": "Current WHO double-colon fusion notation. Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion. Retargeted 4 Sep 2026: 9819 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "ETV6-RUNX1 B lymphoblastic lymphoma",
@@ -1172,14 +1172,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9811"
+      "9819"
     ],
     "maps_to_iccc3_subgroup_id": "IIb1",
     "confidence": "high",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "Ph-like signature: CRLF2 rearrangement, an ABL-class lesion or a JAK-STAT lesion by FISH or RNA-seq, without BCR::ABL1 itself. Enriched in Down-syndrome B-ALL. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9819 for BCR::ABL1-like B-ALL. 9819 is not built for Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion. nci_concept_id null — molecular notation is not queried against NCIt (Master 4D)."
+    "notes": "Ph-like signature: CRLF2 rearrangement, an ABL-class lesion or a JAK-STAT lesion by FISH or RNA-seq, without BCR::ABL1 itself. Enriched in Down-syndrome B-ALL. Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion. nci_concept_id null — molecular notation is not queried against NCIt (Master 4D). Retargeted 4 Sep 2026: 9819 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "Philadelphia-like ALL",
@@ -1193,14 +1193,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9811"
+      "9819"
     ],
     "maps_to_iccc3_subgroup_id": "IIb1",
     "confidence": "high",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "Spelled-out variant. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9819 for BCR::ABL1-like B-ALL. 9819 is not built for Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Do not confuse with Philadelphia-POSITIVE disease, which carries BCR::ABL1 itself and codes 9812. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion."
+    "notes": "Spelled-out variant. Group II, so this alias targets 9811 with a documented upgrade path (Pathway 3.2). Re-code when 9819 is added. Do not confuse with Philadelphia-POSITIVE disease, which carries BCR::ABL1 itself and codes 9812. Dual-group code: Group I (Ia1) if blood/marrow C42.x; Group II (IIb1) if the presentation is nodal/extranodal lymphoma. Topography is the routing criterion. Retargeted 4 Sep 2026: 9819 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "Precursor B lymphoblastic lymphoma",
@@ -3631,14 +3631,14 @@
     "nci_concept_id": "NCIT:C3720",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9714"
+      "9715"
     ],
     "maps_to_iccc3_subgroup_id": "IIb3",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "Abbreviated form. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9715 for ALK-negative ALCL, splitting 9714. 9715 is not in Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added."
+    "notes": "Abbreviated form. Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added. Retargeted 4 Sep 2026: 9715 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "ALK-negative anaplastic large cell lymphoma",
@@ -3652,14 +3652,14 @@
     "nci_concept_id": "NCIT:C3720",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9714"
+      "9715"
     ],
     "maps_to_iccc3_subgroup_id": "IIb3",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9715 for ALK-negative ALCL, splitting 9714. 9715 is not in Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added. In a child an ALK-negative result is a re-review trigger, not a default, because over 95% of paediatric ALCL is ALK-positive. DUSP22-R (45% of ALK-negative cases) and TP63-R (2%) have no codes — record them as variables."
+    "notes": "Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added. In a child an ALK-negative result is a re-review trigger, not a default, because over 95% of paediatric ALCL is ALK-positive. DUSP22-R (45% of ALK-negative cases) and TP63-R (2%) have no codes — record them as variables. Retargeted 4 Sep 2026: 9715 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "ALK-positive anaplastic large cell lymphoma",
@@ -3819,14 +3819,14 @@
     "nci_concept_id": "NCIT:C3720",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9714"
+      "9715"
     ],
     "maps_to_iccc3_subgroup_id": "IIb3",
     "confidence": "low",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
-    "notes": "A definite (no longer provisional) WHO-HAEM5 entity, ALK-negative by definition and arising in the seroma or capsule around a textured breast implant. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9715 for ALK-negative ALCL, splitting 9714. 9715 is not in Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added. Not a paediatric entity; carried so the term resolves rather than failing."
+    "notes": "A definite (no longer provisional) WHO-HAEM5 entity, ALK-negative by definition and arising in the seroma or capsule around a textured breast implant. Layer 1 tonight and is not built, so this alias targets 9714, whose Layer 1 name 'Anaplastic large cell lymphoma, T cell and Null cell type' is the pre-split ICD-O-3.1 term that spans both. Capture alk_ihc = negative so the case can be re-coded when 9715 is added. Not a paediatric entity; carried so the term resolves rather than failing. Retargeted 4 Sep 2026: 9715 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "C-ALCL",
@@ -5863,14 +5863,14 @@
     "nci_concept_id": "NCIT:C150703",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Code 9754 — whose Layer 1 / REDCap option string reads 'Langerhans cell histiocytosis, NOS (replaces former 9751/1 through 9754/3 codes)', which is confusing on the page and is why this alias exists. Multisystem disease is the reportable /3 half. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II."
+    "notes": "Code 9754 — whose Layer 1 / REDCap option string reads 'Langerhans cell histiocytosis, NOS (replaces former 9751/1 through 9754/3 codes)', which is confusing on the page and is why this alias exists. Multisystem disease is the reportable /3 half. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "EBV-positive inflammatory follicular dendritic cell sarcoma",
@@ -5903,14 +5903,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9750"
+      "9749"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "low",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Abbreviation. REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9749 for Erdheim-Chester disease. 9749 is not in Layer 1 tonight and is not built, so this alias targets 9750 and the terminal carries a visible provisional naming ECD. Re-code when 9749 is added. nci_concept_id null."
+    "notes": "Abbreviation. Erdheim-Chester disease. 9749 is not in Layer 1 tonight and is not built, so this alias targets 9750 and the terminal carries a visible provisional naming ECD. Re-code when 9749 is added. nci_concept_id null. Retargeted 4 Sep 2026: 9749 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "Eosinophilic granuloma",
@@ -5944,14 +5944,14 @@
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9750"
+      "9749"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "low",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "REGISTRAR ACTION PENDING: ICD-O-3.2 adds 9749 for Erdheim-Chester disease. 9749 is not in Layer 1 tonight and is not built, so this alias targets 9750 and the terminal carries a visible provisional naming ECD. Re-code when 9749 is added. Criteria, in the relaxed current form: histiocytic markers plus factor XIIIa and fascin, with compatible clinico-radiology. The older requirement for bilateral leg osteosclerosis is superseded (5-10% have no bone lesions); foamy histiocytes and Touton cells are not required; S100 is weakly positive in 20-30%. PLAIN RADIOGRAPHS OF THE TIBIAE AND FEMORA ARE AN ACCEPTED MODALITY — the one ECD criterion executable without cross-sectional imaging. BRAF V600E in about 50-69% and treatment-changing, but VE1 IHC alone is not sufficiently sensitive or specific. nci_concept_id null — no NCIt ID was recorded for ECD in the Group II lookup session."
+    "notes": "Erdheim-Chester disease. 9749 is not in Layer 1 tonight and is not built, so this alias targets 9750 and the terminal carries a visible provisional naming ECD. Re-code when 9749 is added. Criteria, in the relaxed current form: histiocytic markers plus factor XIIIa and fascin, with compatible clinico-radiology. The older requirement for bilateral leg osteosclerosis is superseded (5-10% have no bone lesions); foamy histiocytes and Touton cells are not required; S100 is weakly positive in 20-30%. PLAIN RADIOGRAPHS OF THE TIBIAE AND FEMORA ARE AN ACCEPTED MODALITY — the one ECD criterion executable without cross-sectional imaging. BRAF V600E in about 50-69% and treatment-changing, but VE1 IHC alone is not sufficiently sensitive or specific. nci_concept_id null — no NCIt ID was recorded for ECD in the Group II lookup session. Retargeted 4 Sep 2026: 9749 is built (registrar rulings 1-3) and the alias now points at it. The REDCap option is still outstanding — docs/codes-awaiting-redcap.md."
   },
   {
     "alias": "FDCS",
@@ -6046,14 +6046,14 @@
     "nci_concept_id": "NCIT:C150703",
     "who_version_current": "historical",
     "maps_to_morphology_codes": [
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Historical eponym for MULTIFOCAL Langerhans cell histiocytosis — the classic triad of lytic skull lesions, exophthalmos and diabetes insipidus. Maps to 9754, the code replacing the former disseminated LCH codes. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. Clinical alert: diabetes insipidus needs hormone replacement regardless of focality."
+    "notes": "Historical eponym for MULTIFOCAL Langerhans cell histiocytosis — the classic triad of lytic skull lesions, exophthalmos and diabetes insipidus. Maps to 9754, the code replacing the former disseminated LCH codes. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. Clinical alert: diabetes insipidus needs hormone replacement regardless of focality. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "Hashimoto-Pritzker disease",
@@ -6229,15 +6229,14 @@
     "nci_concept_id": "NCIT:C3107",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9751",
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Clonal proliferation of Langerhans cells and a significant paediatric entity. Presentation ranges from a single bone lesion to multisystem disease. Code 9751 for NOS; 9754 is the code that replaces the former disseminated codes. Required panel on every suspected histiocytic case: CD163, CD1a, CD207/langerin and S100, with at least two lineage-specific markers expressed on the malignant cells. LCH is S100+, CD1a+, CD207+ with DIFFUSE staining, grooved reniform nuclei and a CD68 Golgi dot. CD1a ALONE IS INSUFFICIENT — it mistakes an indeterminate dendritic cell tumour for LCH. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. MAPK-pathway mutations, most often BRAF V600E, are found in most cases and are treatment-changing; VE1 IHC alone is not sufficiently sensitive or specific, so record the assay used. Clinical alert: LCH with diabetes insipidus needs hormone replacement regardless of focality."
+    "notes": "Clonal proliferation of Langerhans cells and a significant paediatric entity. Presentation ranges from a single bone lesion to multisystem disease. Code 9751 for NOS; 9754 is the code that replaces the former disseminated codes. Required panel on every suspected histiocytic case: CD163, CD1a, CD207/langerin and S100, with at least two lineage-specific markers expressed on the malignant cells. LCH is S100+, CD1a+, CD207+ with DIFFUSE staining, grooved reniform nuclei and a CD68 Golgi dot. CD1a ALONE IS INSUFFICIENT — it mistakes an indeterminate dendritic cell tumour for LCH. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. MAPK-pathway mutations, most often BRAF V600E, are found in most cases and are treatment-changing; VE1 IHC alone is not sufficiently sensitive or specific, so record the assay used. Clinical alert: LCH with diabetes insipidus needs hormone replacement regardless of focality. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "Langerhans cell histiocytosis, NOS",
@@ -6288,15 +6287,14 @@
     "nci_concept_id": "NCIT:C3107",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9751",
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "High-frequency paediatric-oncology abbreviation. Codes 9751 (NOS) or 9754 (the code replacing the former disseminated codes). Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II."
+    "notes": "High-frequency paediatric-oncology abbreviation. Codes 9751 (NOS) or 9754 (the code replacing the former disseminated codes). Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "Letterer-Siwe disease",
@@ -6310,14 +6308,14 @@
     "nci_concept_id": "NCIT:C150703",
     "who_version_current": "historical",
     "maps_to_morphology_codes": [
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Historical eponym for acute DISSEMINATED Langerhans cell histiocytosis of infancy, with skin, liver, spleen and marrow involvement. Maps to 9754. Multisystem disease is the /3 half and IS reportable in Group II."
+    "notes": "Historical eponym for acute DISSEMINATED Langerhans cell histiocytosis of infancy, with skin, liver, spleen and marrow involvement. Maps to 9754. Multisystem disease is the /3 half and IS reportable in Group II. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "Malignant histiocytic neoplasm",
@@ -6512,14 +6510,14 @@
     "nci_concept_id": "NCIT:C150703",
     "who_version_current": "WHO 2022",
     "maps_to_morphology_codes": [
-      "9754"
+      "9751"
     ],
     "maps_to_iccc3_subgroup_id": "IId",
     "confidence": "medium",
     "needs_ihc_tree": true,
     "ihc_tree_id": "g2_histiocytic",
     "tree_entry_node": "g2hist_document_inventory",
-    "notes": "Two or more organs or organ systems involved. Codes 9754. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II."
+    "notes": "Two or more organs or organ systems involved. Codes 9754. Under ICD-O-3.2 the behaviour of 9751 turns on EXTENT: unifocal, single-system multifocal or single-system pulmonary disease is /1 — outside ICCC-3 Group II — and multisystem disease (two or more organs or organ systems) is /3. That call is established by vertex-to-toes FDG-PET/CT; a skull-to-mid-thigh scan is explicitly inadequate. Without PET-CT the tool defaults to 9751 with an extent_unknown flag rather than guessing, and records what imaging was actually done — the realistic substitute (skeletal survey plus abdominal ultrasound plus chest X-ray) will UNDER-CALL multisystem disease and bias cases out of Group II. 9754 retired 4 Sep 2026 (registrar ruling 8); ICD-O-3.2 does not list it. Remapped to 9751, whose /3 behaviour is Langerhans cell histiocytosis, disseminated."
   },
   {
     "alias": "SM-AHN",
@@ -7383,5 +7381,25 @@
     "ihc_tree_id": "g2_lymphoid_main",
     "tree_entry_node": "g2_document_inventory",
     "notes": "The single most important non-malignant exit in this group. The tree reaches a 'not a reportable malignancy' terminal for this term (Pathway 4.5). maps_to_morphology_codes is deliberately EMPTY: forcing a malignant NOS code here would record a cancer that does not exist. Xpert MTB/RIF Ultra on FNA is the first investigation in any node over 20 mm (sensitivity 70%, SPECIFICITY 100%). Three cautions: an Ultra-negative result does NOT exclude TB (NPV 83-87%) — proceed to core biopsy; a trace-positive result is suspect; and DUAL TB AND LYMPHOMA OCCURS, so a positive Ultra does not close the case if the morphology is malignant. A granulomatous node is neither a TB diagnosis nor an exclusion of lymphoma. nci_concept_id null."
+  },
+  {
+    "alias": "BIA-ALCL",
+    "full_form": "Breast implant-associated anaplastic large cell lymphoma -> Anaplastic large cell lymphoma, ALK negative (9715)",
+    "also_known_as": [
+      "Breast implant-associated anaplastic large cell lymphoma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9715"
+    ],
+    "maps_to_iccc3_subgroup_id": "IIb3",
+    "confidence": "high",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g2_lymphoid_main",
+    "tree_entry_node": "g2_document_inventory",
+    "notes": "An ICD-O-3.2 Related term on 9715/3. Not a paediatric entity; carried because the alias file maps report wording to codes, and a report using this term must land somewhere rather than nowhere."
   }
 ]
