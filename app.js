@@ -57,6 +57,8 @@ var state = {
   shell: 'auto', host: null,
   router: null, topography: null, aliasIndex: null,
   archetype: null, group: null, treeId: null, nodeId: null,
+  organSystem: null,     /* the crosswalk row picked at Stage 1, before the region */
+  candidates: [],        /* groups still possible — narrowed, never asked for blind */
   dt: null, aliases: null,
   captured: {},          /* every resolution_logic[].when variable reads here */
   markers: {},
@@ -89,6 +91,7 @@ function arr(v) { return Array.isArray(v) ? v : []; }
 function snapshot() {
   return JSON.stringify({
     stage: state.stage, archetype: state.archetype, group: state.group,
+    organSystem: state.organSystem, candidates: state.candidates,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
@@ -272,6 +275,7 @@ function renderStage() {
     case 'landing':   return renderLanding();
     case 'archetype': return renderArchetype();
     case 'site':      return renderSite();
+    case 'site_region': return renderSiteRegion();
     case 'discriminator': return renderDiscriminator();
     case 'group':     return renderGroupSelect();
     case 'handoff':   return renderHandoff();
@@ -353,40 +357,62 @@ function renderArchetype() {
     })));
 }
 
-/* Site options come from the shared topography crosswalk, so site is expressed
-   in ONE vocabulary that site_capture, site_to_group and the output block all
-   consult (Architecture §4C). For an auto-topography archetype this is a
-   one-tap confirmation across that organ's codes — a dual-group rule can turn
-   on exactly which sub-code was picked, so they are never lumped together. */
-function siteOptions() {
+/* Site is asked in two taps, organ SYSTEM then REGION, and both come from the
+   shared topography crosswalk so site is expressed in ONE vocabulary that
+   site_capture, the narrowing below and the output block all consult
+   (Architecture §4C).
+
+   It used to be one tap that returned `codes[0]` for whichever row was picked,
+   so "bone" always recorded C40.9 and the other six bone codes were
+   unreachable — and "soft tissue" always recorded C47.9, which is the
+   autonomic nervous system, for a rhabdomyosarcoma of the thigh. Layer 1 has
+   twenty-one soft-tissue codes; the crosswalk carried two. */
+function systemRows() {
   var a = state.archetype, cross = arr(state.topography.coarse_organ_crosswalk);
-  var look = state.topography.topography_lookup || {}, codes = [];
   if (a.auto_topography) {
     var stem = String(a.auto_topography).replace(/x$/, '');
-    cross.forEach(function (c) {
-      arr(c.codes).forEach(function (code) { if (code.indexOf(stem) === 0) codes.push(code); });
+    var only = cross.filter(function (c) {
+      return arr(c.codes).some(function (code) { return code.indexOf(stem) === 0; });
     });
+    if (only.length) return only;
   }
-  if (codes.length) {
-    return codes.map(function (code) {
-      return { topography: code, label: (look[code] || {}).label || code };
-    });
-  }
-  return cross.map(function (c) {
-    var code = arr(c.codes)[0], t = look[code] || {};
-    return {
-      topography: code, meta: c.topography_range,
-      label: String(c.organ).replace(/_/g, ' ') + (t.label ? ' — ' + t.label : '')
-    };
+  /* A declared tissue origin does not HIDE the other systems — an abdominal
+     mass is soft tissue and may still be renal or hepatic — it puts the
+     systems that match the answer at the top of the list. */
+  var origin = state.captured.tumour_origin;
+  if (!origin) return cross;
+  return cross.slice().sort(function (x, y) {
+    return (x.tissue_origin === origin ? 0 : 1) - (y.tissue_origin === origin ? 0 : 1);
+  });
+}
+function systemLabel(c) {
+  return c.label || String(c.organ).replace(/_/g, ' ');
+}
+function regionOptions(row) {
+  var look = state.topography.topography_lookup || {};
+  return arr(row && row.codes).map(function (code) {
+    var t = look[code] || {};
+    return { topography: code, label: t.region_label || t.label || code, meta: code };
   });
 }
 function renderSite() {
-  return panel('Stage 1 · site', 'Which topography does this case record?',
+  var origin = state.captured.tumour_origin;
+  return panel('Stage 1 · organ system', 'Which organ system does the tumour arise in?',
     state.archetype.site_capture === false
-      ? 'Site is fixed for this presentation — one tap confirms which code to record.'
-      : 'Capture the organ of origin, not the region. Code the primary, not the biopsy site.',
-    pick('site', siteOptions().map(function (o) {
-      return { label: o.label, meta: o.topography + (o.meta ? ' · ' + o.meta : '') };
+      ? 'Site is fixed for this presentation — one tap confirms which system to record.'
+      : (origin
+          ? 'Systems matching the origin you recorded are listed first. The others are still here — an abdominal mass is soft tissue and may still be renal or hepatic.'
+          : 'The organ of origin, not the region of the swelling. Code the primary, not the biopsy site.'),
+    pick('site', systemRows().map(function (c) {
+      return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes' };
+    })));
+}
+function renderSiteRegion() {
+  var row = state.organSystem;
+  return panel('Stage 1 · region', 'Where in ' + systemLabel(row).toLowerCase() + '?',
+    'This is the topography code the registry records. Pick the one the report supports; NOS is a legitimate answer where it does not say.',
+    pick('site_region', regionOptions(row).map(function (o) {
+      return { label: o.label, meta: o.topography };
     })));
 }
 
@@ -398,17 +424,41 @@ function discriminator() {
 }
 function renderDiscriminator() {
   var d = discriminator();
-  return panel('Stage 1 · disambiguation', d.question, d.settles,
+  /* `hint` is clerk-facing. `settles` / `authoring_note` explains the fork to
+     whoever maintains the router and must never reach this screen — it names
+     ICCC subgroups and JSON keys the abstractor has no use for. */
+  return panel('Stage 1 · ' + String(d.variable).replace(/_/g, ' '), d.question, d.hint || null,
     pick('discriminator', arr(d.options).map(function (o) {
-      return { label: String(typeof o === 'string' ? o : o.label).replace(/_/g, ' ') };
+      return { label: typeof o === 'string' ? String(o).replace(/_/g, ' ') : o.label };
     })));
 }
 
-/* One question when site leaves more than one candidate group. */
+/* Asked ONLY when the presentation, the tissue origin and the topography
+   together still leave more than one family — and never when none of the
+   survivors is built, because then the only tappable row is the wrong answer.
+
+   Until 4 Sep 2026 this fired for six of the seven presentations, because
+   nothing narrowed: the archetype's advisory list went straight to the screen.
+   A soft-tissue mass of the thigh was offered seven families with Group II the
+   only one marked Available. */
+function groupMeta(g) { return (state.router.groups || {})[String(g)] || {}; }
 function renderGroupSelect() {
-  return panel('Stage 1 · group', 'Which family does this case belong to?', null,
-    pick('group', arr(state.archetype.candidate_groups).map(function (g) {
-      var m = (state.router.groups || {})[String(g)] || {};
+  var cands = arr(state.candidates);
+  var built = cands.filter(function (g) { return groupMeta(g).built; });
+  if (!built.length) {
+    return banner('info', 'Not yet available',
+        'The site and origin narrow this case to ' +
+        cands.map(function (g) { return 'Group ' + g + ' — ' + (groupMeta(g).name || ''); }).join('; ') +
+        '. No decision tree for ' + (cands.length > 1 ? 'either' : 'that') +
+        ' group is in this build yet, so the tool cannot take the case further. ' +
+        'Record the topography and refer the morphology to the registrar.') +
+      '<div class="actions"><button class="btn btn--ghost" data-act="restart">Start again</button></div>';
+  }
+  return panel('Stage 1 · family',
+    'The site narrows this to ' + cands.length + ' families. Which does the pathology report support?',
+    'The tool cannot separate these from presentation and site alone. If the report does not say, stop here and refer it — do not guess.',
+    pick('group', cands.map(function (g) {
+      var m = groupMeta(g);
       return { label: m.name || ('Group ' + g), meta: m.built ? 'Available' : 'Not yet available in this build' };
     })));
 }
@@ -419,7 +469,14 @@ function renderGroupSelect() {
 function renderHandoff() {
   var meta = (state.router.groups || {})[String(state.group)] || {};
   if (!meta.built) {
-    return banner('info', 'Not yet available', 'This group has no decision tree in this build yet.') +
+    /* Name the group. "Not yet available" on its own tells the clerk nothing
+       they can write down; the group and the topography are the two facts the
+       case can still be registered on while the tree is missing. */
+    return banner('info', 'Group ' + state.group + ' — ' + (meta.name || ''),
+        'The presentation, origin and site place this case in Group ' + state.group +
+        (meta.name ? ', ' + meta.name : '') + '. No decision tree for that group is in this ' +
+        'build yet, so the tool cannot reach a morphology code. Record the topography (' +
+        esc(state.captured.topography || 'not captured') + ') and refer the morphology to the registrar.') +
       '<div class="actions"><button class="btn btn--ghost" data-act="restart">Start again</button></div>';
   }
   var sel = meta.tree_selection;
@@ -1349,12 +1406,19 @@ function handleOption(act, el) {
       var a = state.router.archetypes[i];
       state.archetype = a;
       pushTrail('Presentation', a.label, before);
-      state.stage = 'site'; break;
+      return afterArchetype();
     }
     case 'site': {
-      var s = siteOptions()[i];
-      state.captured.topography = s.topography;
-      pushTrail('Topography', s.topography + ' — ' + s.label, before);
+      var row = systemRows()[i];
+      state.organSystem = row;
+      state.captured.organ_system = row.organ;
+      pushTrail('Organ system', systemLabel(row), before);
+      return afterSystem();
+    }
+    case 'site_region': {
+      var reg = regionOptions(state.organSystem)[i];
+      state.captured.topography = reg.topography;
+      pushTrail('Topography', reg.topography + ' — ' + reg.label, before);
       return afterSite();
     }
     case 'discriminator': {
@@ -1362,10 +1426,12 @@ function handleOption(act, el) {
       var val = typeof o === 'string' ? o : o.value;
       state.captured[d.variable] = val;
       pushTrail(d.variable.replace(/_/g, ' '), String(val).replace(/_/g, ' '), before);
-      return afterDiscriminator();
+      if (d.ask_before_site) return afterDiscriminator();
+      narrowByDiscriminator();
+      return afterSite();
     }
     case 'group': {
-      state.group = arr(state.archetype.candidate_groups)[i];
+      state.group = arr(state.candidates)[i];
       var gmeta = (state.router.groups || {})[String(state.group)] || {};
       pushTrail('Group', gmeta.name || ('Group ' + state.group), before);
       return afterGroup();
@@ -1576,15 +1642,75 @@ function fallbackTarget(n) {
   throw new Error('Node has no fallback and did not resolve: ' + n.node_id);
 }
 
-function afterSite() {
+/* ---------------------------------------------------------------------------
+   Moment 1 narrowing (Architecture §6, router._comment)
+
+   Three facts narrow the family, in the order the clerk can answer them:
+   the presentation gives an advisory list, the tissue origin drops what it
+   excludes, and the topography intersects what is left. Only what survives all
+   three is offered, and if one group survives the tool enters it without
+   asking. None of this is clinical judgement held in the engine — every fact
+   comes from presentation_router.json and topography_codes.json.
+
+   Before 4 Sep 2026 none of it ran. `afterDiscriminator` read the archetype's
+   advisory list and went straight to "Which family does this case belong to?",
+   which is the question the tool exists to answer.
+   ------------------------------------------------------------------------ */
+function startCandidates() {
+  var cg = state.archetype && state.archetype.candidate_groups;
+  state.candidates = arr(cg).slice();
+}
+/* A discriminator declares, per answer, which groups that answer rules out. */
+function narrowByDiscriminator() {
   var d = discriminator();
-  if (d && state.captured[d.variable] === undefined) { state.stage = 'discriminator'; return; }
+  if (!d || !d.narrows) return;
+  var rule = d.narrows[String(state.captured[d.variable])];
+  if (!rule) return;
+  var drop = arr(rule.drop);
+  var keep = state.candidates.filter(function (g) { return drop.indexOf(g) === -1; });
+  if (keep.length) state.candidates = keep;
+}
+/* The topography carries its own candidate list. Intersect; and if the
+   intersection is empty, take the site's list rather than none — an empty
+   candidate set is a dead end, and the site is the more specific fact. */
+function narrowBySite() {
+  var t = (state.topography.topography_lookup || {})[state.captured.topography];
+  var site = t && t.candidate_groups;
+  if (!site || !Array.isArray(site)) return;
+  var keep = state.candidates.filter(function (g) { return site.indexOf(g) !== -1; });
+  state.candidates = keep.length ? keep : site.slice();
+}
+
+function afterArchetype() {
+  startCandidates();
+  /* Origin before organ system: the answer decides which systems are worth
+     listing first, and asking it after the site would be asking a question the
+     site has already answered. */
+  var d = discriminator();
+  if (d && d.ask_before_site && state.captured[d.variable] === undefined) {
+    state.stage = 'discriminator'; return;
+  }
   return afterDiscriminator();
 }
 function afterDiscriminator() {
-  var cands = arr(state.archetype.candidate_groups);
+  narrowByDiscriminator();
+  state.stage = 'site';
+}
+function afterSystem() {
+  var codes = arr(state.organSystem && state.organSystem.codes);
+  if (codes.length > 1) { state.stage = 'site_region'; return; }
+  state.captured.topography = codes[0];
+  return afterSite();
+}
+function afterSite() {
+  narrowBySite();
+  var d = discriminator();
+  if (d && !d.ask_before_site && state.captured[d.variable] === undefined) {
+    state.stage = 'discriminator'; return;
+  }
+  var cands = arr(state.candidates);
   if (cands.length === 1) { state.group = cands[0]; return afterGroup(); }
-  if (!cands.length) { state.error = 'No candidate group for this presentation.'; return; }
+  if (!cands.length) { state.error = 'No candidate group survives this presentation, origin and site.'; return; }
   state.stage = 'group';
 }
 function afterGroup() {
@@ -1611,6 +1737,7 @@ function enterGroup(group, treeId, entryNode) {
 
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
+  state.organSystem = null; state.candidates = [];
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;

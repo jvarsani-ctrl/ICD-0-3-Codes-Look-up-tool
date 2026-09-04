@@ -159,3 +159,48 @@ to `../../ICD coding/ICD-O-3.2/icdo32.sqlite`.
 
 **9754 is retired** (ruling 8). ICD-O-3.2 does not list it; the REDCap row for it carries
 9751's name and 9751's change note. LCH resolves to 9751 with the behaviour split.
+
+## Routing: the tool narrows to a family, it does not ask for one
+
+Until 4 September 2026 the presentation stage ended with **"Which family does this case belong
+to?"** — the question the tool exists to answer, put to a clerk who cannot answer it. It fired
+for six of the seven presentations, because nothing narrowed the candidates: `afterDiscriminator`
+read the archetype's advisory list and rendered it.
+
+Three facts were already in the data and none was consulted. `site_to_group` appeared in
+`app.js` only inside a comment. `dual_group_rules` ran once, at a terminal, though the router's
+own note says it belongs at "Moment 1, before any tree loads". And `candidate_groups` on two
+archetypes was the string `"all"`, which `arr()` reads as an empty list — so *Incidental imaging
+finding* and *Not sure / mixed presentation* failed outright with "No candidate group for this
+presentation."
+
+The stage is now **origin → organ system → region → family**, and the family is derived:
+
+- The presentation gives an advisory candidate list.
+- The tissue-origin question is asked **first**, and each answer declares what it rules out
+  (`discriminators[…].narrows`) — bone origin drops Group IX, soft tissue drops Group VIII.
+- The organ system is asked next, with the systems matching that origin listed first and the
+  rest still available: an abdominal mass is soft tissue and may still be renal or hepatic.
+- The region is a second tap, and it records the actual topography code. It used to record
+  `codes[0]` for the whole row — so "bone" always recorded `C40.9`, and "soft tissue" always
+  recorded `C47.9`, the autonomic nervous system, for a rhabdomyosarcoma of the thigh.
+- The topography's own `candidate_groups` intersects what is left. One survivor and the tool
+  enters that group without asking.
+
+Seven of eight test paths now derive a single group. The one that does not is a paravertebral
+abdominal mass at `C47.4`, which is genuinely Group IV or Group IX — presentation and site
+cannot separate neuroblastoma from a nerve sheath sarcoma, and the tool says so instead of
+guessing.
+
+**Layer 1 has twenty-one soft-tissue topography codes; the crosswalk carried two.** All of
+C47, C48 and C49 are now in `topography_codes.json`, grouped into three systems — peripheral
+nerves and autonomic nervous system, connective and subcutaneous soft tissues, retroperitoneum
+and peritoneum — each with its nine or three regions. `C48` was absent entirely, so a
+retroperitoneal mass had nowhere to go.
+
+`check_routing_narrows` in the validator holds this together: no `candidate_groups` may be
+anything but a non-empty list of real groups, every crosswalk code must resolve in the lookup,
+every organ system needs a clerk-facing label, and every discriminator needs a clerk-facing
+question, hint and option labels. The discriminator screen used to print `settles` — "Group
+VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules." — at the
+abstractor.

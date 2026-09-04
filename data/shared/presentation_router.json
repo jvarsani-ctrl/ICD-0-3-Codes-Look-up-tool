@@ -1,5 +1,5 @@
 {
-  "_comment": "Shared cross-group front door. See Architecture & File System §4C/§5/§6 and Decision Tree JSON Build master §3A-§3C/§6. Router-tier only: clinical_presentation (Stage 0) and site_capture (Stage 1) live here, never in a group_XX_dt.json.",
+  "_comment": "Shared cross-group front door. See Architecture & File System §4C/§5/§6 and Decision Tree JSON Build master §3A-§3C/§6. Router-tier only: clinical_presentation (Stage 0) and site_capture (Stage 1) live here, never in a group_XX_dt.json. Moment 1 narrowing implemented 4 Sep 2026: the presentation gives an advisory candidate list, the discriminator drops what its answer excludes, and the topography intersects what is left. The family question is asked only when more than one group survives all three, and never when none of the survivors is built.",
   "archetypes": [
     {
       "archetype_id": "blood_marrow",
@@ -97,48 +97,128 @@
       "label": "Incidental imaging finding",
       "typical_groups": "all",
       "site_capture": true,
-      "candidate_groups": "all",
+      "candidate_groups": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
       "candidate_groups_advisory": true,
-      "scaffold": "site → imaging → tissue gate"
+      "scaffold": "site → imaging → tissue gate",
+      "notes": "candidate_groups was the string \"all\" until 4 Sep 2026; the engine read it as an empty list and this presentation could not be used at all."
     },
     {
       "archetype_id": "unsure",
       "label": "Not sure / mixed presentation",
       "typical_groups": "all",
       "site_capture": true,
-      "candidate_groups": "all",
+      "candidate_groups": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
       "candidate_groups_advisory": true,
       "scaffold": "skip the archetype scaffold → straight to site capture",
-      "notes": "Ambiguous or blurred presentations (leukaemia/lymphoma overlap, a mass with cytopenias) degrade gracefully to site-first entry rather than a silent wrong guess."
+      "notes": "Ambiguous or blurred presentations (leukaemia/lymphoma overlap, a mass with cytopenias) degrade gracefully to site-first entry rather than a silent wrong guess. candidate_groups was the string \"all\" until 4 Sep 2026; the engine read it as an empty list and this presentation could not be used at all."
     }
   ],
   "discriminators": {
     "primary_compartment": {
       "variable": "primary_compartment",
-      "question": "Is the disease marrow-based, nodal, or extranodal?",
+      "question": "Where is the disease centred?",
       "options": [
-        "marrow",
-        "nodal",
-        "extranodal"
+        {
+          "value": "marrow",
+          "label": "Blood and bone marrow"
+        },
+        {
+          "value": "nodal",
+          "label": "Lymph nodes"
+        },
+        {
+          "value": "extranodal",
+          "label": "An organ or tissue outside nodes and marrow"
+        }
       ],
       "asked_by": [
         "blood_marrow",
         "lymphadenopathy",
         "unsure"
       ],
-      "settles": "Group I vs Group II split for 9811-9819 (B-ALL family), 9823 (SLL/CLL), 9827 (ATLL) when the compartment (not topography alone) determines the group. See dual_group_rules."
+      "narrows": {
+        "marrow": {
+          "drop": [
+            2
+          ],
+          "because": "Marrow-based disease is Group I, not a lymphoma."
+        },
+        "nodal": {
+          "drop": [
+            1
+          ],
+          "because": "Nodal disease is Group II, not a leukaemia."
+        },
+        "extranodal": {
+          "drop": [
+            1
+          ],
+          "because": "Extranodal disease is Group II, not a leukaemia."
+        }
+      },
+      "ask_before_site": true,
+      "hint": "Marrow means the blood and bone marrow are the main site. Nodal means lymph nodes. Extranodal means a solid organ or tissue outside nodes and marrow. This is the split between a leukaemia and a lymphoma.",
+      "authoring_note": "Group I vs Group II split for 9811-9819 (B-ALL family), 9823 (SLL/CLL), 9827 (ATLL) when the compartment (not topography alone) determines the group. See dual_group_rules."
     },
     "tumour_origin": {
       "variable": "tumour_origin",
-      "question": "Does the tumour arise in bone (cortical destruction on imaging) or soft tissue (bone intact)?",
+      "question": "Does the tumour arise in bone, or in the soft tissue around it?",
       "options": [
-        "bone",
-        "soft_tissue"
+        {
+          "value": "bone",
+          "label": "Bone — the lesion is centred in bone, cortex destroyed"
+        },
+        {
+          "value": "soft_tissue",
+          "label": "Soft tissue — the mass is outside bone, cortex intact"
+        }
       ],
       "asked_by": [
         "solid_mass"
       ],
-      "settles": "Group VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules."
+      "narrows": {
+        "bone": {
+          "drop": [
+            9
+          ],
+          "because": "Bone origin excludes the extraosseous sarcoma group."
+        },
+        "soft_tissue": {
+          "drop": [
+            8
+          ],
+          "because": "Soft tissue origin excludes the malignant bone tumour group."
+        }
+      },
+      "ask_before_site": true,
+      "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass in muscle, fat or connective tissue with the bone intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
+      "authoring_note": "Group VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules."
     }
   },
   "site_to_group": {

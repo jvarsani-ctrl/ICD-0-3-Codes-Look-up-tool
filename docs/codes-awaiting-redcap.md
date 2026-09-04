@@ -131,6 +131,21 @@ using 9754 — removing a choice orphans any record already on it.
 
 ---
 
+## Topography — one option string to repair
+
+`ICD coding/RedCap Options/Topography Redcap.md`, line 185:
+
+```
+472, Peripheral nerves and autonomic nervous system of lower limband hip
+```
+
+A missing space: **limband**. The `Topography/C47 …md` source file has it right, so the fault
+is in the REDCap option list alone. The tool carries the string verbatim in `redcap_label`,
+because the clerk has to match what the dropdown actually says, and the clean form in `label`
+for display.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block

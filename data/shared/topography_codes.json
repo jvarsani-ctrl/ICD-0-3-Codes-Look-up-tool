@@ -15,7 +15,8 @@
         1,
         2
       ],
-      "note": "Group 1's Ia4 dual-group rule for 9591 turns on exactly the C42.2-vs-rest distinction, so these four codes are individually addressable below, never lumped as C42.x."
+      "note": "Group 1's Ia4 dual-group rule for 9591 turns on exactly the C42.2-vs-rest distinction, so these four codes are individually addressable below, never lumped as C42.x.",
+      "label": "Blood, bone marrow and haematopoietic system"
     },
     {
       "organ": "kidney",
@@ -25,7 +26,8 @@
       ],
       "candidate_groups": [
         6
-      ]
+      ],
+      "label": "Kidney"
     },
     {
       "organ": "bone",
@@ -41,17 +43,53 @@
       ],
       "candidate_groups": [
         8
+      ],
+      "tissue_origin": "bone",
+      "label": "Bone and joints"
+    },
+    {
+      "organ": "soft_tissue_peripheral_nerve",
+      "topography_range": "C47",
+      "label": "Peripheral nerves and autonomic nervous system",
+      "tissue_origin": "soft_tissue",
+      "codes": [
+        "C47.0",
+        "C47.1",
+        "C47.2",
+        "C47.3",
+        "C47.4",
+        "C47.5",
+        "C47.6",
+        "C47.8",
+        "C47.9"
       ]
     },
     {
-      "organ": "soft_tissue",
-      "topography_range": "C47-C49",
+      "organ": "soft_tissue_connective",
+      "topography_range": "C49",
+      "label": "Connective, subcutaneous and other soft tissues",
+      "tissue_origin": "soft_tissue",
       "codes": [
-        "C47.9",
+        "C49.0",
+        "C49.1",
+        "C49.2",
+        "C49.3",
+        "C49.4",
+        "C49.5",
+        "C49.6",
+        "C49.8",
         "C49.9"
-      ],
-      "candidate_groups": [
-        9
+      ]
+    },
+    {
+      "organ": "soft_tissue_retroperitoneum_peritoneum",
+      "topography_range": "C48",
+      "label": "Retroperitoneum and peritoneum",
+      "tissue_origin": "soft_tissue",
+      "codes": [
+        "C48.0",
+        "C48.2",
+        "C48.8"
       ]
     },
     {
@@ -64,7 +102,8 @@
       ],
       "candidate_groups": [
         4
-      ]
+      ],
+      "label": "Adrenal gland and paraspinal sympathetic chain"
     },
     {
       "organ": "liver",
@@ -75,7 +114,8 @@
       ],
       "candidate_groups": [
         7
-      ]
+      ],
+      "label": "Liver and intrahepatic bile duct"
     },
     {
       "organ": "gonad_sacrococcygeal_midline",
@@ -86,7 +126,8 @@
       ],
       "candidate_groups": [
         10
-      ]
+      ],
+      "label": "Ovary and testis"
     },
     {
       "organ": "brain_cns",
@@ -98,7 +139,8 @@
       ],
       "candidate_groups": [
         3
-      ]
+      ],
+      "label": "Brain, meninges and central nervous system"
     },
     {
       "organ": "pituitary",
@@ -109,7 +151,8 @@
       "candidate_groups": [
         3,
         11
-      ]
+      ],
+      "label": "Pituitary gland"
     },
     {
       "organ": "eye",
@@ -119,7 +162,8 @@
       ],
       "candidate_groups": [
         5
-      ]
+      ],
+      "label": "Eye"
     },
     {
       "organ": "lymph_node",
@@ -129,7 +173,8 @@
       ],
       "candidate_groups": [
         2
-      ]
+      ],
+      "label": "Lymph nodes"
     },
     {
       "organ": "midline_cns_extension",
@@ -141,7 +186,8 @@
       "candidate_groups": [
         3
       ],
-      "note": "Craniopharyngeal duct and pineal gland -- consulted by the 8000-8005 (NOS) dual-group rule (DT master §6) alongside C70-C72 and C75.1."
+      "note": "Craniopharyngeal duct and pineal gland -- consulted by the 8000-8005 (NOS) dual-group rule (DT master §6) alongside C70-C72 and C75.1.",
+      "label": "Craniopharyngeal duct and pineal gland"
     }
   ],
   "topography_lookup": {
@@ -271,21 +317,32 @@
     "C47.9": {
       "code": "C47.9",
       "label": "Autonomic nervous system, NOS",
+      "redcap_label": "Autonomic nervous system, NOS",
       "redcap_code": "479",
-      "coarse_organ": "soft_tissue",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "nos",
+      "region_label": "Not otherwise specified",
       "candidate_groups": [
+        4,
         9
       ],
-      "note": "Peripheral nerve sheath tumours (e.g. MPNST) are coded as soft tissue sarcomas (Group IX); ICD-O-3 topography files them separately from C49 but the clinical crosswalk treats C47 and C49 as one 'soft tissue' bucket."
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
     },
     "C49.9": {
       "code": "C49.9",
       "label": "Connective, subcutaneous and other soft tissues, NOS",
+      "redcap_label": "Connective, subcutaneous and other soft tissues, NOS",
       "redcap_code": "499",
-      "coarse_organ": "soft_tissue",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "nos",
+      "region_label": "Not otherwise specified",
       "candidate_groups": [
         9
-      ]
+      ],
+      "candidate_groups_advisory": true
     },
     "C74.0": {
       "code": "C74.0",
@@ -440,6 +497,295 @@
       "candidate_groups": [
         3
       ]
+    },
+    "C47.0": {
+      "code": "C47.0",
+      "label": "Peripheral nerves and autonomic nervous system of head, face, and neck",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of head, face, and neck",
+      "redcap_code": "470",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "head_neck",
+      "region_label": "Head, face and neck",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.1": {
+      "code": "C47.1",
+      "label": "Peripheral nerves and autonomic nervous system of upper limb and shoulder",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of upper limb and shoulder",
+      "redcap_code": "471",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "upper_limb",
+      "region_label": "Upper limb and shoulder",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.2": {
+      "code": "C47.2",
+      "label": "Peripheral nerves and autonomic nervous system of lower limband hip",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of lower limband hip",
+      "redcap_code": "472",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "lower_limb",
+      "region_label": "Lower limb and hip",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.3": {
+      "code": "C47.3",
+      "label": "Peripheral nerves and autonomic nervous system of thorax",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of thorax",
+      "redcap_code": "473",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "thorax",
+      "region_label": "Thorax",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.4": {
+      "code": "C47.4",
+      "label": "Peripheral nerves and autonomic nervous system of abdomen",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of abdomen",
+      "redcap_code": "474",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "abdomen",
+      "region_label": "Abdomen",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.5": {
+      "code": "C47.5",
+      "label": "Peripheral nerves and autonomic nervous system of pelvis",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of pelvis",
+      "redcap_code": "475",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "pelvis",
+      "region_label": "Pelvis",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.6": {
+      "code": "C47.6",
+      "label": "Peripheral nerves and autonomic nervous system of trunk, NOS",
+      "redcap_label": "Peripheral nerves and autonomic nervous system of trunk, NOS",
+      "redcap_code": "476",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "trunk_nos",
+      "region_label": "Trunk, NOS",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C47.8": {
+      "code": "C47.8",
+      "label": "Overlapping lesion of peripheral nerves and autonomic nervous system",
+      "redcap_label": "Overlapping lesion of peripheral nerves and autonomic nervous system",
+      "redcap_code": "478",
+      "coarse_organ": "soft_tissue_peripheral_nerve",
+      "tissue_origin": "soft_tissue",
+      "region": "overlapping",
+      "region_label": "Overlapping lesion",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peripheral nerve and autonomic nervous system. Two families: the sympathetic chain is where neuroblastoma and ganglioneuroblastoma arise (ICCC IVa is site-unrestricted, so morphology decides), and nerve sheath tumours are soft tissue sarcomas (IXb2). Lymphoma is NOT coded here — abdominal lymphoma is C48.2 or bowel."
+    },
+    "C48.0": {
+      "code": "C48.0",
+      "label": "Retroperitoneum",
+      "redcap_label": "Retroperitoneum",
+      "redcap_code": "480",
+      "coarse_organ": "soft_tissue_retroperitoneum_peritoneum",
+      "tissue_origin": "soft_tissue",
+      "region": "retroperitoneum",
+      "region_label": "Retroperitoneum",
+      "candidate_groups": [
+        2,
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Retroperitoneum carries three families in a child: neuroblastoma of the sympathetic chain (IV), soft tissue sarcoma (IX), and lymphoma presenting as a retroperitoneal nodal mass (II)."
+    },
+    "C48.2": {
+      "code": "C48.2",
+      "label": "Peritoneum, NOS (Peritoneal cavity)",
+      "redcap_label": "Peritoneum, NOS (Peritoneal cavity)",
+      "redcap_code": "482",
+      "coarse_organ": "soft_tissue_retroperitoneum_peritoneum",
+      "tissue_origin": "soft_tissue",
+      "region": "peritoneum",
+      "region_label": "Peritoneum",
+      "candidate_groups": [
+        2,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Peritoneum is where abdominal Burkitt lymphoma is coded when it presents as a mesenteric or peritoneal mass — the commonest abdominal malignancy in a child at UCI. Desmoplastic small round cell tumour (IX) presents here too."
+    },
+    "C48.8": {
+      "code": "C48.8",
+      "label": "Overlapping lesion of retroperitoneum and peritoneum",
+      "redcap_label": "Overlapping lesion of retroperitoneum and peritoneum",
+      "redcap_code": "488",
+      "coarse_organ": "soft_tissue_retroperitoneum_peritoneum",
+      "tissue_origin": "soft_tissue",
+      "region": "overlapping",
+      "region_label": "Overlapping lesion",
+      "candidate_groups": [
+        2,
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.0": {
+      "code": "C49.0",
+      "label": "Connective, subcutaneous and other soft tissues of head, face, and neck",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of head, face, and neck",
+      "redcap_code": "490",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "head_neck",
+      "region_label": "Head, face and neck",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.1": {
+      "code": "C49.1",
+      "label": "Connective, subcutaneous and other soft tissues of upper limb and shoulder",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of upper limb and shoulder",
+      "redcap_code": "491",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "upper_limb",
+      "region_label": "Upper limb and shoulder",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.2": {
+      "code": "C49.2",
+      "label": "Connective, subcutaneous and other soft tissues of lower limb and hip",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of lower limb and hip",
+      "redcap_code": "492",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "lower_limb",
+      "region_label": "Lower limb and hip",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.3": {
+      "code": "C49.3",
+      "label": "Connective, subcutaneous and other soft tissues of thorax",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of thorax",
+      "redcap_code": "493",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "thorax",
+      "region_label": "Thorax",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.4": {
+      "code": "C49.4",
+      "label": "Connective, subcutaneous and other soft tissues of abdomen",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of abdomen",
+      "redcap_code": "494",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "abdomen",
+      "region_label": "Abdomen",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.5": {
+      "code": "C49.5",
+      "label": "Connective, subcutaneous and other soft tissues of pelvis",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of pelvis",
+      "redcap_code": "495",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "pelvis",
+      "region_label": "Pelvis",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.6": {
+      "code": "C49.6",
+      "label": "Connective, subcutaneous and other soft tissues of trunk NOS",
+      "redcap_label": "Connective, subcutaneous and other soft tissues of trunk NOS",
+      "redcap_code": "496",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "trunk_nos",
+      "region_label": "Trunk, NOS",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C49.8": {
+      "code": "C49.8",
+      "label": "Overlapping lesion of connective, subcutaneous and other soft tissues",
+      "redcap_label": "Overlapping lesion of connective, subcutaneous and other soft tissues",
+      "redcap_code": "498",
+      "coarse_organ": "soft_tissue_connective",
+      "tissue_origin": "soft_tissue",
+      "region": "overlapping",
+      "region_label": "Overlapping lesion",
+      "candidate_groups": [
+        9
+      ],
+      "candidate_groups_advisory": true
     }
   }
 }

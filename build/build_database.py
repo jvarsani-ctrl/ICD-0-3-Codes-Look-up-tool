@@ -3905,6 +3905,103 @@ def check_declared_states_consumed(ctx: DTContext):
 # B5. Cross-layer checks
 # --------------------------------------------------------------------------------------
 
+def check_routing_narrows(repo: Path, contexts: dict):
+    """The presentation stage must NARROW to a family, not ask for one.
+
+    Three facts do the narrowing — the presentation's advisory list, the
+    discriminator's `narrows` map, and the topography's own `candidate_groups`.
+    Each has a way of failing silently that this checks for:
+
+      * `candidate_groups` written as the string "all" rather than a list. The
+        engine read it as an empty list and two of the seven presentations could
+        not be used at all.
+      * a crosswalk row naming a code that has no entry in topography_lookup, so
+        picking that region records a code nothing knows anything about.
+      * a topography entry with no candidate_groups, which narrows to nothing and
+        dead-ends the case.
+      * a discriminator whose answers drop every candidate, or drop nothing.
+    """
+    out = []
+    rp = repo / "data" / "shared" / "presentation_router.json"
+    tp = repo / "data" / "shared" / "topography_codes.json"
+    router, f1 = load_json(rp)
+    topo, f2 = load_json(tp)
+    out += list(f1) + list(f2)
+    if router is None or topo is None:
+        return out
+    lookup = topo.get("topography_lookup") or {}
+    cross = topo.get("coarse_organ_crosswalk") or []
+
+    for a in router.get("archetypes") or []:
+        cg = a.get("candidate_groups")
+        who = a.get("archetype_id") or a.get("label")
+        if not isinstance(cg, list) or not cg:
+            out.append((FAIL, "archetype %s: candidate_groups must be a non-empty list of "
+                              "group numbers, not %r — the engine reads anything else as no "
+                              "candidates and the presentation becomes unusable" % (who, cg)))
+            continue
+        bad = [g for g in cg if not (isinstance(g, int) and 1 <= g <= 12)]
+        if bad:
+            out.append((FAIL, "archetype %s: candidate_groups holds %r, which is not a group "
+                              "number 1-12" % (who, bad)))
+
+    for row in cross:
+        if not row.get("label"):
+            out.append((FAIL, "crosswalk row %s has no `label` — the engine falls back to the "
+                              "key with underscores stripped, and the clerk reads "
+                              "\"gonad sacrococcygeal midline\"" % row.get("organ")))
+        for code in row.get("codes") or []:
+            if code not in lookup:
+                out.append((FAIL, "crosswalk row %s offers %s, which has no topography_lookup "
+                                  "entry — picking that region records a code the engine knows "
+                                  "nothing about" % (row.get("organ"), code)))
+
+    for code, entry in sorted(lookup.items()):
+        cg = entry.get("candidate_groups")
+        if cg == "route_by_morphology":
+            continue
+        if not isinstance(cg, list) or not cg:
+            out.append((FAIL, "topography %s: candidate_groups is %r — a site that narrows to "
+                              "nothing dead-ends the case" % (code, cg)))
+            continue
+        bad = [g for g in cg if not (isinstance(g, int) and 1 <= g <= 12)]
+        if bad:
+            out.append((FAIL, "topography %s: candidate_groups holds %r" % (code, bad)))
+
+    for key, d in (router.get("discriminators") or {}).items():
+        narrows = d.get("narrows")
+        if not narrows:
+            out.append((NOTE, "discriminator %s declares no `narrows` map, so answering it "
+                              "cannot reduce the candidate families — it is captured and "
+                              "nothing more" % key))
+            continue
+        if not d.get("question") or not d.get("hint"):
+            out.append((FAIL, "discriminator %s needs a clerk-facing `question` and `hint`; "
+                              "`authoring_note` explains the fork to whoever maintains the "
+                              "router and must not be what the abstractor reads" % key))
+        for opt in d.get("options") or []:
+            if isinstance(opt, dict) and not opt.get("label"):
+                out.append((FAIL, "discriminator %s: option %r has no clerk-facing label"
+                            % (key, opt.get("value"))))
+            name = opt if isinstance(opt, str) else opt.get("value")
+            if str(name) not in narrows:
+                out.append((FAIL, "discriminator %s: option %r has no entry in `narrows`, so "
+                                  "that answer narrows nothing" % (key, name)))
+        for answer, rule in narrows.items():
+            if not isinstance(rule, dict) or not isinstance(rule.get("drop"), list):
+                out.append((FAIL, "discriminator %s, answer %r: `narrows` entry needs a "
+                                  "`drop` list" % (key, answer)))
+
+    n_soft = sum(1 for c in lookup if c[:3] in ("C47", "C48", "C49"))
+    if not out:
+        out.append((OK, "routing narrows: %d archetype(s), %d topography code(s) (%d soft "
+                        "tissue), %d discriminator(s) — every candidate list is a non-empty "
+                        "list of real groups and every crosswalk code resolves"
+                    % (len(router.get("archetypes") or []), len(lookup), n_soft,
+                       len(router.get("discriminators") or {}))))
+    return out
+
+
 def check_presentation_router(repo: Path, contexts: dict):
     """
     Router integrity (Architecture §8).
@@ -4187,6 +4284,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     # -- C. cross-layer ------------------------------------------------------------
     report.section("C. cross-layer — presentation_router.json")
     report.run(check_presentation_router, repo, contexts)
+    report.run(check_routing_narrows, repo, contexts)
 
     report.section("C. cross-layer — alias files")
     report.run(check_alias_cross_references, repo, contexts)
