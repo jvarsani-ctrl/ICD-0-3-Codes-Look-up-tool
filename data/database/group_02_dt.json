@@ -4116,7 +4116,7 @@
           "step_number": 3,
           "step_label": "Lineage markers",
           "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
-          "hint": "Lineage first, entity second. TdT separates precursor from mature; CD30 with dim PAX5 and absent CD45 separates classic Hodgkin from everything else. Tick the clinical-context items too — several branches below turn on them.",
+          "hint": "Lineage first, entity second. TdT separates precursor from mature; CD30 with dim PAX5 and absent CD45 separates classic Hodgkin from everything else.",
           "clinical_alert": null,
           "coding_note": "Lineage assignment thresholds (Pathway §4.4): B = strong CD19 plus ≥1 strong CD10/CD22/CD79a, or weak CD19 plus ≥2 of those; T = cCD3 or sCD3 with intensity in part exceeding 50% of mature T cells; myeloid = MPO intensity in part exceeding 50% of mature neutrophils, or ≥2 of NSE/CD11c/CD14/CD64/lysozyme. TCR and IGH clonality must NEVER be used for lineage assignment (Duffield 2022). CD3 is absent in more than 75% of ALCL — CD3-negativity does not exclude a T-cell lymphoma.",
           "marker_groups": [
