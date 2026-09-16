@@ -359,4 +359,99 @@ Families in use: `ependymal`, `embryonal`, `diffuse_glial`, `glioneuronal`, `men
 
 ---
 
-*Last updated 14 September 2026, on the Group 3 build.*
+## 9. REDCap changes owed — every group, one place
+
+**Added 16 September 2026 at the registrar's instruction: every change that has to be made in
+REDCap is tracked here.** This section is the index; the detail lives in the per-group repair
+package named against each row. Nothing below has been applied to the live form.
+
+The three safe operations never change: **relabel in place**, **retire in place** (prefix
+`[RETIRED]`, the `_code` formula returns blank), **append at the end**. `_morph` fields store a
+pick number, not a diagnosis, so **a pick is never deleted** — deleting one renumbers every pick
+after it and silently invalidates stored data with nothing that trips a Data Quality rule.
+
+| Group | Field | Relabel | Retire | Append | Status | Detail |
+|---|---|---|---|---|---|---|
+| **III** | `iii_morph` | 35 labels disagreeing with ICD-O-3.2 | — | `9476/3` | Ready to apply, not applied | `ICD Look Up tool/Group 3 — Layer 1 Repair Package (REDCap iii_morph).md` |
+| **III** | `topo_code` | — | — | `710, Cerebrum` | Open — §3.1 above | same |
+| **IV** | `iv_morph` | **3** — picks 10, 12, 20 | **8** — picks 1, 4, 6, 9, 14, 16, 17, 19 | **0** | Ready to review, not applied | `ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` |
+| **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
+| **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
+
+### 9.1 Group IV — `iv_morph`, 11 of 26 options are invalid
+
+**11 of the 26 `iv_morph` options carry a term the code does not have in ICD-O-3.2, or a
+behaviour ICCC-3 Group IV does not admit.** `ICCC-3 declares behaviour `3`, and only `3`, for
+every Group IV range` — that one fact drives six of the eleven.
+
+This does **not** contradict `Registry Data/data dictionary/Group IV Verification.md`, which
+found the field clean. That audit asked *does pick N return the code its label says?* and the
+answer is still yes for all 26. This asks *does that code actually carry that term, at a
+behaviour the group admits?* A pick-to-code audit cannot see a label defect, because the label
+is what it trusts. The same blind spot left 35 of 234 `iii_morph` labels wrong while `iii_code`
+was formula-correct.
+
+**Retire — 8 picks:** `9490 Ganglioneuroma` (that string is `9490/0`, benign) · `8680
+Paraganglioma, benign` and `8680 Paraganglioma, malignant` (neither string exists; `8680/3`
+carries one term, `Paraganglioma, NOS`) · `8683 Gangliocytic paraganglioma` (**not a usable
+Group IV code at all** — see below) · `8693 Extra-adrenal paraganglioma, malignant` · `8700
+Pheochromocytoma, malignant` · `9501 Medulloepithelioma, benign` · `9502 Teratoid
+medulloepithelioma, benign`.
+
+**Relabel — 3 picks, no code changes so `iv_code` is untouched:** `8690 Glomus jugulare tumor,
+NOS` → **`Middle ear paraganglioma`** · `8692 Carotid body tumor` → **`Carotid body
+paraganglioma`** · `9502 Teratoid medulloepithelioma` → **`Teratoid medulloepithelioma, NOS`**.
+In all three the current string is a **Synonym** on the same code and the replacement is the
+**Preferred** term. Same entity, current wording.
+
+**`8683` is the one that is not a labelling defect.** ICD-O-3.2 carries it at `/0` only —
+`Gangliocytic paraganglioma`, `(C17.0)`, duodenum — and WHO 2022 renamed the entity *composite
+gangliocytoma/neuroma and neuroendocrine tumor* (CoGNET), moving it out of the paraganglioma
+family rather than changing its behaviour (Mete O, et al. *Overview of the 2022 WHO
+Classification of Paragangliomas and Pheochromocytomas*, Endocrine Pathology 2022;33(1):90–114,
+abstract). Both legs of the two-source test remove it. A record sitting on pick 9 has **no
+automatic destination** and is re-coded from the source pathology report.
+
+**After the repair, `iv_morph` has 18 live options for 18 usable codes** — one each, exactly.
+
+**Open and needing a paywalled full text:** whether WHO 2022 states an ICD-O code for CoGNET.
+Only Mete's abstract was retrievable (no PMCID, not open access). Until that is answered a CoGNET
+case has no settled code in this registry and is a registrar decision.
+
+### 9.2 Pre-flight before any of it is applied
+
+Export `record_id`, `iv_morph`, `iv_code` and count records on picks **1, 4, 6, 9, 14, 16, 17,
+19**. Picks 4, 6, 14 and 16 move to the NOS pick on the same code (5, 5, 13, 15) with no recode.
+Picks 1, 17 and 19 are **benign tumours outside ICCC-3 Group IV** — out of scope, not miscoded,
+and the registrar decides whether the record stays in the registry. Pick 9 is re-coded from the
+report. If all eight return zero records the repair is label-and-formula only, which is likely:
+the registry began operating in 2025 and Group IV is small.
+
+---
+
+## 10. Pre-existing defects found during the Group 4 build, outside Group 4
+
+### 10.1 The router's `9260` dual-group rule routes a code ICD-O-3.2 no longer carries
+
+`data/shared/presentation_router.json → dual_group_rules → "9260"` routes Ewing sarcoma to
+`VIIIc1` at bone and `IXd1` at soft tissue. **ICD-O-3.2 carries `9260` at `/0` only —
+`Aneurysmal bone cyst`.** Ewing sarcoma is `9364/3`, which also carries `Peripheral
+neuroectodermal tumor`, `PPNET` and `Peripheral primitive neuroectodermal tumor` as its own
+synonyms. Verified 2026-09-16 against both the 2019 draft and the 9 October 2020 final workbook,
+so it is neither a conversion artefact nor a draft-stage edit.
+
+A Group VIII/IX defect, not a Group IV one, and deliberately **not** touched by the Group 4
+build. Closing it means re-pointing the rule to `9364` and re-checking the `VIIIc1`/`VIIIc2` and
+`IXd1`/`IXd2` subgroup labels, which change with the code.
+
+### 10.2 The `9501-9504` dual-group rule is stale and misroutes CNS cases — **fixed in Group 4**
+
+Recorded for the audit trail. The rule matched only `C70.9`, `C71.9` and `C72.9` and carried its
+own note: *"Extend both files together when Group III is authored."* Group III was authored on
+16 September 2026, so a medulloepithelioma at `C71.6` fell through to Group IV, which is wrong —
+ICCC-3 gives `9501`–`9504` to Group III across the whole of `C70.0`–`C72.9`. Extended as part of
+this build.
+
+---
+
+*Last updated 16 September 2026, on the Group 4 build. Previously 14 September 2026, Group 3.*
