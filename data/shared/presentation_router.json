@@ -411,9 +411,117 @@
     },
     "3": {
       "name": "CNS and Miscellaneous Intracranial and Intraspinal Neoplasms",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g3_posterior_fossa",
+          "entry_node": "pf_document_inventory"
+        },
+        {
+          "tree_id": "g3_supratentorial",
+          "entry_node": "st_document_inventory"
+        },
+        {
+          "tree_id": "g3_midline",
+          "entry_node": "md_document_inventory"
+        },
+        {
+          "tree_id": "g3_spinal",
+          "entry_node": "sp_document_inventory"
+        },
+        {
+          "tree_id": "g3_meninges",
+          "entry_node": "mn_document_inventory"
+        },
+        {
+          "tree_id": "g3_unspecified",
+          "entry_node": "un_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 3,
+        "tree_id": "g3_unspecified",
+        "entry_node": "un_document_inventory"
+      },
+      "tree_routing": {
+        "_comment": "Group III keys its trees to anatomical COMPARTMENT, not to histological family: CNS5 defines ependymoma by compartment, ICCC-3 splits 9380 and gates 8158/8290/9501-9504/8000-8005 by topography, and the paediatric posterior fossa differential is a compartment differential before it is a histological one (Pathway Revision 2 §6.3). The compartment is already known from the Stage 1 topography, so NO extra question is asked of the clerk — unlike Group 2, whose four families diverge before any marker is read and which therefore needs tree_selection. The map below is total and disjoint over all 25 topography codes the group can carry; build_database.py rule 12 sweeps it.",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C71.6",
+              "C71.7"
+            ],
+            "tree_id": "g3_posterior_fossa",
+            "entry_node": "pf_document_inventory",
+            "label": "Posterior fossa — cerebellum, 4th ventricle, brainstem"
+          },
+          {
+            "topography_in": [
+              "C71.0",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.8"
+            ],
+            "tree_id": "g3_supratentorial",
+            "entry_node": "st_document_inventory",
+            "label": "Supratentorial hemisphere or ventricle"
+          },
+          {
+            "topography_in": [
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C75.1",
+              "C75.2",
+              "C75.3"
+            ],
+            "tree_id": "g3_midline",
+            "entry_node": "md_document_inventory",
+            "label": "Midline — sellar, suprasellar, pineal, optic pathway, cranial nerve"
+          },
+          {
+            "topography_in": [
+              "C72.0",
+              "C72.1"
+            ],
+            "tree_id": "g3_spinal",
+            "entry_node": "sp_document_inventory",
+            "label": "Spinal cord or cauda equina"
+          },
+          {
+            "topography_in": [
+              "C70.0",
+              "C70.1",
+              "C70.9"
+            ],
+            "tree_id": "g3_meninges",
+            "entry_node": "mn_document_inventory",
+            "label": "Meninges"
+          },
+          {
+            "topography_in": [
+              "C71.9",
+              "C72.8",
+              "C72.9",
+              "C80.9"
+            ],
+            "tree_id": "g3_unspecified",
+            "entry_node": "un_document_inventory",
+            "label": "Site not established, overlapping, or nervous system NOS"
+          }
+        ],
+        "default": {
+          "tree_id": "g3_unspecified",
+          "entry_node": "un_document_inventory",
+          "label": "Site not established",
+          "reason": "A Group III case whose topography resolves to no compartment cannot be routed on site. g3_unspecified carries the IIIf five-point flag and the ENCR basis-of-diagnosis computation, which is exactly what such a case needs."
+        }
+      }
     },
     "4": {
       "name": "Neuroblastoma and Other Peripheral Nervous Cell Tumours",

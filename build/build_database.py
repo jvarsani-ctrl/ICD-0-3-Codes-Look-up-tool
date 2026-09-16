@@ -35,6 +35,7 @@ import argparse
 import json
 import os
 import re
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -313,6 +314,220 @@ POSITIVE_RESULT_TOKENS = {
     "present", "y", "yes", "true",
 }
 
+# --------------------------------------------------------------------------------------
+# Group III extensions (docs/group_03_build_contract.md, which reconciles Revision 2 of
+# the Group 3 pathway with the DT master file).
+#
+# SEVEN FIELDS on existing structures. Contract §2 opens no new node type, so nothing in
+# this block touches NODE_TYPES — the same discipline Groups 1 and 2 kept.
+#
+# Every constant below is TRANSCRIBED from the contract, section by section. Nothing here
+# is recalled: rule 5 and rule 8 both say that a name or an entity string checked against
+# memory is not checked at all, and the two databases (icdo32.sqlite, ICCC-2017.sqlite)
+# are the anchors for everything that can be anchored.
+# --------------------------------------------------------------------------------------
+
+GROUP3 = 3
+
+# -- §2(1) diagnosis_rendering — the two-track output -----------------------------------
+CNS5_TRACKS = {"who_cns5", "adaptr_descriptive"}
+DIAGNOSIS_SUFFIXES = {"nos", "nec", "none"}
+GRADE_SYSTEMS = {"arabic", "roman"}
+
+# Rule 1, the numeral invariant: track == "who_cns5"  <=>  grade_system == "arabic".
+# Written as a map so both directions come off one table and cannot drift apart.
+TRACK_GRADE_SYSTEM = {"who_cns5": "arabic", "adaptr_descriptive": "roman"}
+
+# §2(1): "Arabic set includes 1 (CNS5 Table 3 grades MVNT, PLNTY, meningioma and diffuse
+# astrocytoma MYB/MYBL1-altered at 1). Roman set is II, III, IV only."
+ARABIC_GRADES = {"1", "2", "3", "4"}
+ROMAN_GRADES = {"II", "III", "IV"}
+
+# §2(1): the per-track shape. (required non-null, required null).
+TRACK_FIELD_SHAPE = {
+    "who_cns5": (("who_diagnosis",), ("descriptive_diagnosis", "comment")),
+    "adaptr_descriptive": (("descriptive_diagnosis", "comment"), ("who_diagnosis",)),
+}
+
+# §2(1) / rule 9: a grade is a string or null. These two are the shapes that LOOK like a
+# grade on screen and carry none — "NA" renders as a grade nobody assigned.
+GRADE_NON_VALUES = {"NA", "N/A", "", "null", "None", "-", "—", "unknown", "not applicable"}
+
+# -- §2(2) resource_level_gate — availability as reachability ---------------------------
+RL_FAMILIES = {
+    "ependymal", "embryonal", "diffuse_glial", "glioneuronal", "meningothelial",
+    "sellar", "pineal", "choroid_plexus", "pituitary", "unspecified",
+}
+RL_LEVELS = {"I", "II", "III", "IV", "V"}
+RL_TIERS = {"can_be_considered", "highly_recommended", "obligatory"}
+
+# Rule 3, the tier enum BY FAMILY. Satgunaseelan's ependymoma tables use only the first
+# two tiers, so a three-value enum mis-renders every ependymal node. The map is keyed by
+# family and holds the tiers that family may carry; a family absent from it may use all
+# three.
+RL_TIERS_BY_FAMILY = {
+    "ependymal": {"can_be_considered", "highly_recommended"},
+}
+
+# §2(2) last bullet — the families with no ADAPTR paper behind them. A node in one of
+# these MUST carry `"rl_assignment": "by_analogy"`: presenting a borrowed resource level
+# as a sourced one is the overstatement this whole field exists to prevent.
+# `diffuse_glial` is deliberately ABSENT: the contract exempts only "the paediatric-type
+# diffuse gliomas", and the family vocabulary has no way to say paediatric-type, so a
+# blanket rule here would produce false FAILs on the adult-type nodes ADAPTR does cover.
+RL_FAMILIES_WITHOUT_ADAPTR = {
+    "meningothelial", "sellar", "pineal", "choroid_plexus", "pituitary", "glioneuronal",
+}
+RL_ASSIGNMENT_VALUES = {"by_analogy", "sourced"}
+
+# -- §2(3) entity_annotation — the WHO CNS5 entity, recorded without a code -------------
+ENTITY_CODE_STATUS = {"shares_code", "no_code", "awaiting_layer1"}
+# How firmly the entity is claimed. Added 2026-09-14 on the registrar’s ruling, after
+# two trees handled the same situation differently: an MYCN IHC with no published
+# sensitivity, and a DLGNT with 1p untested. Without this, a `who_cns5_entity` rendered
+# beside a code reads as established however weak the evidence — the one thing an
+# advisory tool must never do. `suggested` REQUIRES a provisional_pending on the same
+# branch naming the test that would establish it.
+ENTITY_STATUS = {"established", "suggested"}
+
+# §2(3): "The string `(provisional type)` is an extraction artefact of the source's
+# italics. It must never appear inside an entity name." Matched case-insensitively and
+# with flexible inner whitespace, because the artefact arrives however the extractor left
+# it and an author copying it in will not normalise it first.
+ENTITY_NAME_ARTEFACT_RE = r"\(\s*provisional\s+type\s*\)"
+
+# Rule 5 — the entity strings must be checked against a TRANSCRIBED CNS5 Table 1, not
+# against recall. Revision 2 §9 records that the full transcription (144 rows,
+# round-trip verified) lives outside the vault and is regenerable but is NOT in this
+# repo. So this constant holds only the rows Revision 2 itself prints in a Table 1
+# context — §6.2(3)'s worked `entity_annotation` example and its `shared_with[]` list,
+# plus the one divergence §6.2(3) pins explicitly — and the check below says so out
+# loud rather than implying it validated 144 rows.
+#
+# Drop a full transcription at one of CNS5_TABLE1_REFERENCE_FILES and the check upgrades
+# itself from "WARN, unverified" to "FAIL, not in Table 1" with no code change.
+CNS5_TABLE1_ENTITIES = {
+    # Revision 2 §6.2(3), the worked example and its shared_with[] list
+    "Posterior fossa ependymoma, group PFA",
+    "Posterior fossa ependymoma, group PFB",
+    "Supratentorial ependymoma, ZFTA fusion-positive",
+    "Supratentorial ependymoma, YAP1 fusion-positive",
+    "Spinal ependymoma, MYCN-amplified",
+    # Revision 2 §6.2(3), the divergence note: "Table 1 prints
+    # `Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype`"
+    "Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype",
+}
+
+CNS5_TABLE1_REFERENCE_FILES = (
+    # The transcription this repo actually carries: Louis 2021 (Neuro-Oncology 23(8)),
+    # Table 1, 109 type rows of the 144 printed (the other 35 are family headings), with
+    # a `provisional` flag per row. It is Layer 1 for rule 5 — the same status
+    # icdo32.sqlite has for rule 13.
+    "data/shared/who_cns5_table1.json",
+    "docs/cns5_table1_entities.txt",
+    "data/shared/cns5_table1_entities.json",
+)
+
+# The divergences Revision 2 §6.2(3) records, as wrong -> right. "Table 1 wins."
+# The FET-CREB pair is deliberately NOT here: §6.2(3) records what Table 7 and the prose
+# print and does NOT say which spelling Table 1 uses, so encoding either one would be the
+# recall rule 5 forbids.
+CNS5_TABLE1_DIVERGENCES = {
+    # CNS5 Table 2's spelling of the same entity — a comma before "and".
+    "Diffuse pediatric-type high-grade glioma, H3-wildtype, and IDH-wildtype":
+        "Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype",
+}
+
+# -- §2(5) basis_of_diagnosis — computed, ENCR ------------------------------------------
+BASIS_OF_DIAGNOSIS_VALID = {0, 1, 2, 4, 5, 7, 8, 9}
+BASIS_OF_DIAGNOSIS_ABSENT = {3, 6}          # "Codes 3 and 6 do not exist."
+BASIS_OF_DIAGNOSIS_OVERRIDE = {0, 9}        # not part of the highest-of-1-8 computation
+# §2(5): "Two gaps ENCR leaves, declared rather than inferred."
+BASIS_DECLARED_GAPS = {"ihc_counts_as": 7, "methylation_counts_as": 8}
+# §2(5): "No Group III terminal may emit basis code 1 — every CNS row in ENCR Table 3
+# is basis 2."
+BASIS_FORBIDDEN_IN_GROUP3 = 1
+
+# -- §2(7) numeric_gate.bands[].unit ----------------------------------------------------
+NUMERIC_GATE_UNITS = {
+    # Density and extent — the mitotic and marker thresholds §2(7) was written for.
+    "per_mm2", "per_10_hpf", "per_hpf", "percent",
+    # Concentration — added 2026-09-14. §3.2 requires the AFP / β-hCG VALUE, not a
+    # yes/no, because one control craniopharyngioma reached CSF β-hCG 8.0 against a
+    # cut-off of 8.2. A serum marker is not a mitotic density and cannot be expressed
+    # in any of the four units above.
+    "ng_per_ml", "iu_per_l",
+}
+
+# -- §1.2 — the eighteen behaviour-overloaded codes -------------------------------------
+GROUP3_BEHAVIOUR_SPLIT_CODES = [
+    "9390", "9391", "9442", "9501", "9502", "9505", "9530", "9538", "9539",
+    "8000", "8001", "8005", "8270", "8272", "8280", "8281", "8290", "8300",
+]
+# §1.1 — "Behaviour declaration `0-1,3` — exactly one across every Group III range."
+GROUP3_BEHAVIOURS_DECLARED = {"0", "1", "3"}
+
+# -- §1.1 / rule 7 — the codes that do not exist in ICD-O-3.2 ---------------------------
+GROUP3_ABSENT_CODES = (
+    [str(n) for n in range(9402, 9410)] + ["9422"]
+    + [str(n) for n in range(8274, 8280)] + ["9536"]
+)
+# §1.1: "They are alias *inputs* only." These two alias keys are what a clerk TYPES; the
+# prohibition is on what the tool EMITS, so they are not scanned.
+ALIAS_INPUT_KEYS = {"alias", "also_known_as"}
+# Text a clerk reads. A banned code printed here is a code the clerk can copy.
+CLERK_FACING_TEXT_KEYS = {
+    "reason", "hint", "label", "question", "name", "morphology_name", "nos_fallback_name",
+    "descriptive_diagnosis", "who_diagnosis", "comment", "full_form", "upgrade_path",
+    "criterion", "feature", "who_cns5_entity", "iccc3_subgroup_name", "notes",
+}
+# Author-facing per memory `uccf-lookup-tool-clerk-facing-text` — not displayed, so a
+# banned code here is reported but does not block.
+AUTHOR_FACING_TEXT_KEYS = {"coding_note", "topography_routing_note"}
+
+# -- §3 — the six trees, the topography each owns, and the sweep ------------------------
+GROUP3_TREE_TOPOGRAPHY = {
+    "g3_posterior_fossa": ["C71.6", "C71.7"],
+    "g3_supratentorial": ["C71.0", "C71.1", "C71.2", "C71.3", "C71.4", "C71.5", "C71.8"],
+    "g3_midline": ["C72.2", "C72.3", "C72.4", "C72.5", "C75.1", "C75.2", "C75.3"],
+    "g3_spinal": ["C72.0", "C72.1"],
+    "g3_meninges": ["C70.0", "C70.1", "C70.9"],
+    "g3_unspecified": ["C71.9", "C72.8", "C72.9", "C80.9"],
+}
+# The keys a tree may declare its topography under. Several spellings, because this field
+# is being authored in parallel with this check and a correct file must never be failed
+# over which synonym its author reached for — the same reason VIRAL_GATE_VARIABLES
+# accepts `htlv1_status` and `htlv1_serology`.
+TREE_TOPOGRAPHY_KEYS = ("topography", "topography_codes", "owns_topography",
+                        "topography_owned", "topography_range", "topography_owns")
+
+# Rule 12 — the sweep. C70.0–C70.9, C71.0–C71.9, C72.0–C72.9, C75.1–C75.3, C80.9.
+GROUP3_TOPOGRAPHY_SWEEP = (
+    ["C70.%d" % d for d in range(10)]
+    + ["C71.%d" % d for d in range(10)]
+    + ["C72.%d" % d for d in range(10)]
+    + ["C75.1", "C75.2", "C75.3"]
+    + ["C80.9"]
+)
+
+# -- §5.3 — name exemptions, and the anchors they rest on --------------------------------
+# An exemption lets an entry display a name that is not verbatim in icdo32.sqlite. Each one
+# names the source string it rests on, so it COLLAPSES the moment the anchor drifts: if the
+# database stops carrying that exact string — because a typo was fixed upstream, or the
+# database was replaced — the exemption fails rather than quietly continuing to excuse a
+# name nothing verifies.
+#
+# 2026-09-14: the dict is EMPTY, and that is the point. Group 3 carried one exemption, for
+# 9475/3, because the 2019 draft workbook (ICD-O-3.2_MFin_17042019_web.xls) printed
+# 'Medullobloastoma, WNT-activated, NOS'. IARC's final workbook
+# (ICD-O-3.2_final_update09102020.xls, 9 October 2020) spells it correctly. Rebuilding
+# Layer 1 against the final file collapsed the exemption exactly as designed — the build
+# FAILed on it rather than passing — and it was then retired, along with the entry's
+# source_term anchor. Every Group 3 name now round-trips unaided.
+ICDO32_SOURCE_TERM_EXEMPTIONS = {
+}
+
+
 # Raw-hex ban (data.md §5) — the three front-end files, wherever they land in the repo.
 HEX_SCANNED_FILENAMES = ["index.html", "app.js", "uccf-tool.css"]
 HEX_RE = re.compile(r"#(?:[0-9a-fA-F]{3,8})(?![0-9A-Za-z_-])")
@@ -515,6 +730,56 @@ def is_provisional_pending_object(holder, where) -> bool:
     if last_key != "provisional_pending":
         return False
     return bool(holder.get("resolving_test"))
+
+
+def is_diversion_criterion_object(holder, where) -> bool:
+    """
+    True when `holder` IS a `diversion_criteria[]` entry — {"feature", "reason"} per the
+    Group 3 build contract §2(6) — rather than a branch that forgot its destination.
+
+    It matters for the same reason is_provisional_pending_object() does. §2(6) REQUIRES a
+    clerk-facing `reason` on every diversion criterion, and the code-less-terminal shape
+    check in check_non_reportable_terminals() reads "a `reason` and no destination" as an
+    unflagged terminal. A diversion criterion is neither: it is a FEATURE that, when
+    ticked, forces the case off the imaging branch and onto the tissue branch. The
+    destination belongs to the branch it diverts to, not to the criterion.
+
+    Identified the same deliberately-narrow way as the two predicates below it: the key it
+    hangs off AND its shape. A block under `diversion_criteria` with no `feature` is still
+    a shape bug worth catching (and check_imaging_terminals() catches it), and an
+    unrelated dict carrying a `feature` under some other key is not exempted.
+    """
+    if not isinstance(holder, dict):
+        return False
+    last_key = where.rsplit(".", 1)[-1] if where else ""
+    last_key = re.sub(r"\[\d+\]$", "", last_key)
+    if last_key != "diversion_criteria":
+        return False
+    return bool(holder.get("feature"))
+
+
+def is_grade_resolution_leaf(holder, where) -> bool:
+    """
+    True when `holder` IS a `grade_resolution` outcome — a `values[...]` entry or the
+    `unresolved` half (Group 3 build contract §2(4)) — rather than a code-less terminal.
+
+    Contract §2(4) requires every null-grade outcome to carry a `reason` saying why no
+    grade was established, which is the whole point of the construct: cIMPACT-NOW update 8
+    forbids grading an untested brain-invasive meningioma, and the reason is what stops
+    the omission reading as an oversight. A grade outcome resolves a GRADE, not a case, so
+    it has no destination and never needed one.
+
+    Narrow in the same two ways: the path it hangs off (grade_resolution.values.* or
+    grade_resolution.unresolved) AND its shape (it declares a `grade`).
+    """
+    if not isinstance(holder, dict) or "grade" not in holder:
+        return False
+    parts = where.split(".") if where else []
+    if len(parts) >= 2 and parts[-1] == "unresolved" and parts[-2] == "grade_resolution":
+        return True
+    if len(parts) >= 3 and parts[-2] == "values" and parts[-3] == "grade_resolution":
+        return True
+    return False
 
 
 def is_refer_branch(container) -> bool:
@@ -1415,6 +1680,15 @@ def check_non_reportable_terminals(ctx: DTContext):
                 # design (Group II contract §3.2). Its `reason` is clerk-facing text
                 # ABOUT the code its branch emits; the branch carries the destination.
                 continue
+            if is_diversion_criterion_object(holder, where):
+                # A diversion criterion is a FEATURE that forces the tissue branch, not a
+                # terminal (Group 3 contract §2(6)). Its `reason` explains the diversion;
+                # the branch it diverts to carries the destination.
+                continue
+            if is_grade_resolution_leaf(holder, where):
+                # A grade_resolution outcome resolves a GRADE, not a case (Group 3
+                # contract §2(4)). Its `reason` says why no grade was established.
+                continue
             if not holder.get("reason"):
                 continue
             if is_refer_branch(holder):
@@ -1916,8 +2190,30 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
         * that sibling's morphology_name IS character-identical to the option.
     i.e. the option is demonstrably spoken for by the sibling. Anything less than all
     three and the mismatch is a FAIL — the exemption can never absorb ordinary drift.
+
+    GROUP 3 IS OUT OF SCOPE, and is validated by something stronger (Group 3 build
+    contract §5.2). For that group Layer 1 for code identity is ICD-O-3.2, not the REDCap
+    option file: check_icdo32_round_trip() requires every (code, name, behaviour) triple
+    the engine can emit to exist verbatim in icdo32.sqlite. That is a superset of this
+    check's question, because the option list itself carries 28 (code, term) pairs the
+    database does not — matching them would inherit the errors rather than catch them. The
+    option strings are not dropped; they move to the alias file and are checked the other
+    way round (every alias resolves to a valid triple; no alias is ever emitted).
+
+    Nothing about Groups 1 and 2 changes. Their Layer 1 is still the option file, the
+    sibling exemption still works exactly as described above, and the scoping below is a
+    single equality on the group number — which comes from the FILENAME and is
+    cross-checked against metadata.group_id by check_top_level_keys(), so it is not a
+    flag in the file exempting itself (rule 8).
     """
     out = []
+    if ctx.group == GROUP3:
+        return [(NOTE, "group 3: morphology_name is checked by check_icdo32_round_trip() "
+                       "against icdo32.sqlite instead of against the REDCap option file "
+                       "(contract §5.2). That is the stronger question — it rejects the 28 "
+                       "(code, term) pairs the option list carries that ICD-O-3.2 does not, "
+                       "where this check would have inherited them. Groups 1 and 2 are "
+                       "unaffected.")]
     options = redcap_options.get(ctx.group)
     if not options:
         return [(NOTE, "no REDCap options parsed for group %d — exact-string check skipped"
@@ -2454,9 +2750,18 @@ def check_behaviour_resolution(ctx: DTContext):
                 out.append((FAIL, "%s: behaviour_resolution.values is required and must be "
                                   "an object keyed \"1\" and \"3\" (contract §3.1)" % loc))
                 values = {}
-            elif set(values) != {"1", "3"}:
-                out.append((FAIL, "%s: behaviour_resolution.values is keyed %s — exactly "
-                                  "\"1\" and \"3\" are required (contract §3.1)"
+            elif not (len(values) == 2 and set(values) <= {"0", "1", "3"}):
+                # Ratified 2026-09-14. Group II required exactly {"1","3"} because there a
+                # /1 puts the case OUTSIDE the group, so defaulting to it deletes a
+                # reportable cancer. Group III declares 0-1,3 on every range, so /0 stays
+                # in the group and on the registry — the asymmetry inverts. The pituitary
+                # pairs are /0 <-> /3, and forcing a /3 default there would manufacture a
+                # pituitary carcinoma out of a missing staging report, since malignancy in
+                # the pituitary requires a demonstrated metastasis and no histological
+                # feature qualifies (Pathway Revision 2 §4.11).
+                out.append((FAIL, "%s: behaviour_resolution.values is keyed %s — exactly two "
+                                  "of \"0\", \"1\", \"3\" are required, and they must be the two "
+                                  "behaviours the code actually carries (contract §3.1)"
                             % (loc, ", ".join(repr(k) for k in sorted(values)) or "(empty)")))
 
             def check_leaf(label, leaf, expected_beh):
@@ -2484,12 +2789,8 @@ def check_behaviour_resolution(ctx: DTContext):
                                       "behaviour nobody chose (contract §3.1)"
                                 % (loc, label, beh, expected_beh)))
 
-            for key in ("1", "3"):
-                if key in values:
-                    check_leaf('values["%s"]' % key, values[key], key)
-                elif isinstance(br.get("values"), dict):
-                    out.append((FAIL, "%s: behaviour_resolution.values[%r] is missing"
-                                % (loc, key)))
+            for key in sorted(values):
+                check_leaf('values["%s"]' % key, values[key], key)
 
             unresolved = br.get("unresolved")
             if unresolved is None:
@@ -2500,7 +2801,9 @@ def check_behaviour_resolution(ctx: DTContext):
                                   "childhood cancer dropped from the registry rather than "
                                   "coded" % loc))
             else:
-                check_leaf("unresolved", unresolved, "3")
+                u_named = str(unresolved.get("behavior_code") or "").strip() \
+                    if isinstance(unresolved, dict) else ""
+                check_leaf("unresolved", unresolved, u_named or "3")
                 if isinstance(unresolved, dict):
                     u_code = as_code(unresolved.get("morphology_code"))
                     u_beh = unresolved.get("behavior_code")
@@ -2511,6 +2814,18 @@ def check_behaviour_resolution(ctx: DTContext):
                                           "never \"no code\". An unstated behaviour is a "
                                           "gap in the file, not evidence that the disease "
                                           "is benign (contract §3.1)" % loc))
+                    elif u_beh != "3" and u_beh in {k for k in values} and \
+                            (u_code, u_beh) in pairs and str(unresolved.get("reason") or "").strip():
+                        # Ratified 2026-09-14. The /3 requirement exists because in Group II
+                        # the other half is OUTSIDE the group, so defaulting there deletes a
+                        # reportable cancer. Where both halves are carried as entries in this
+                        # file they are both inside the group by construction, and nothing is
+                        # deleted either way. What replaces the rule is that the choice must
+                        # be argued in writing on the branch: pituitary malignancy requires a
+                        # demonstrated metastasis and no histological feature qualifies, so a
+                        # /3 default there manufactures a carcinoma out of a missing staging
+                        # report (Pathway Revision 2 §4.11).
+                        pass
                     elif u_beh != "3":
                         out.append((FAIL, "%s: behaviour_resolution.unresolved names %s/%s. "
                                           "It must name the /3 half. Defaulting an "
@@ -3544,6 +3859,1957 @@ def check_burkitt_provisional(ctx: DTContext):
 
 
 # --------------------------------------------------------------------------------------
+# B4c. Group III schema extensions (docs/group_03_build_contract.md §2, §5, §6).
+#
+# Fourteen validation rules. Each check below names the rule it enforces.
+#
+# SCOPE. Every check here is a no-op on a file that does not use the field it is about:
+# it returns NOTHING at all rather than an OK or a NOTE, so Groups 1 and 2 report exactly
+# what they reported before this block existed. The rules that are Group III AMENDMENTS
+# to an existing construct — band-level `unit` (rule 4), the behaviour split (rule 6), the
+# topography map (rule 12), the ICD-O-3.2 round-trip (rule 13) — are gated on
+# `ctx.group == GROUP3`, read off the FILENAME and cross-checked against metadata.group_id
+# by check_top_level_keys(). That is a structural fact about which file is being read, not
+# a flag inside it (rule 8).
+# --------------------------------------------------------------------------------------
+
+_ICDO32_CACHE: dict = {}
+_ICCC3_CACHE: dict = {}
+
+
+def _icdo32_path(layer1):
+    env = os.environ.get("ICDO_DB")
+    if env:
+        return Path(env)
+    if layer1 is None:
+        return None
+    return Path(layer1) / "ICD-O-3.2" / "icdo32.sqlite"
+
+
+def _iccc_path(layer1):
+    env = os.environ.get("ICCC_DB")
+    if env:
+        return Path(env)
+    if layer1 is None:
+        return None
+    # ICCC-2017.sqlite sits beside the Layer 1 directory, not inside it.
+    return Path(layer1).parent / "ICCC-2017.sqlite"
+
+
+def load_icdo32(layer1):
+    """
+    ICD-O-3.2 as the tool must see it: {(code4, behaviour): {term: level}}.
+
+    Read-only, cached per path. This is the ANCHOR for rule 8 — every name check keys
+    off this and off nothing in the file being checked. Returns (index, error_or_None).
+    """
+    path = _icdo32_path(layer1)
+    if path is None:
+        return {}, "no Layer 1 directory, so icdo32.sqlite cannot be located"
+    key = str(path)
+    if key in _ICDO32_CACHE:
+        return _ICDO32_CACHE[key]
+    if not path.exists():
+        result = ({}, "icdo32.sqlite not found at %s" % path)
+        _ICDO32_CACHE[key] = result
+        return result
+    index: dict = {}
+    try:
+        con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
+        try:
+            for code4, behaviour, level, term, obs in con.execute(
+                    "SELECT code4, behaviour, level, term, obs FROM icd_o_3_2_morphology "
+                    "WHERE code4 IS NOT NULL AND behaviour IS NOT NULL AND term IS NOT NULL"):
+                index.setdefault((str(code4), str(behaviour)), {})[str(term)] = (
+                    str(level or ""), str(obs or ""))
+        finally:
+            con.close()
+    except sqlite3.Error as exc:
+        result = ({}, "icdo32.sqlite could not be read: %s" % exc)
+        _ICDO32_CACHE[key] = result
+        return result
+    result = (index, None)
+    _ICDO32_CACHE[key] = result
+    return result
+
+
+def _topo_from_raw(raw):
+    """'723' -> 'C72.3'. The ICCC table stores topography as three digits."""
+    n = int(raw)
+    return "C%02d.%d" % (n // 10, n % 10)
+
+
+def load_iccc_group3(layer1):
+    """
+    {code: {subgroup_id: (subgroup_name, set(topography codes))}} for ICCC main group III,
+    restricted to the topography this group can carry. Returns (index, error_or_None).
+
+    This is the anchor for `iccc3_subgroup_by_topography[]` (contract §1.3): ICCC-2017
+    itself says which subgroup a (code, topography) pair belongs to, so a routing rule is
+    checked against the recode table rather than against the author's intention.
+    """
+    path = _iccc_path(layer1)
+    if path is None:
+        return {}, "no Layer 1 directory, so ICCC-2017.sqlite cannot be located"
+    key = str(path)
+    if key in _ICCC3_CACHE:
+        return _ICCC3_CACHE[key]
+    if not path.exists():
+        result = ({}, "ICCC-2017.sqlite not found at %s" % path)
+        _ICCC3_CACHE[key] = result
+        return result
+    sweep = set(GROUP3_TOPOGRAPHY_SWEEP)
+    index: dict = {}
+    try:
+        con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
+        try:
+            rows = con.execute(
+                "SELECT mc.code, g.group_code, g.group_label, cr.range_id "
+                "FROM morphology_codes mc "
+                "JOIN groups g ON g.group_id = mc.group_id "
+                "JOIN code_ranges cr ON cr.range_id = mc.range_id "
+                "WHERE g.main_group = 'III'").fetchall()
+            segs: dict = {}
+            for range_id, start_raw, end_raw in con.execute(
+                    "SELECT range_id, start_raw, end_raw FROM topography_segments"):
+                covered = segs.setdefault(range_id, set())
+                for n in range(int(start_raw), int(end_raw) + 1):
+                    topo = _topo_from_raw(n)
+                    if topo in sweep:
+                        covered.add(topo)
+        finally:
+            con.close()
+    except (sqlite3.Error, ValueError) as exc:
+        result = ({}, "ICCC-2017.sqlite could not be read: %s" % exc)
+        _ICCC3_CACHE[key] = result
+        return result
+    for code, subgroup_id, subgroup_label, range_id in rows:
+        name, covered = index.setdefault(str(code), {}).setdefault(
+            str(subgroup_id), (str(subgroup_label), set()))
+        covered |= segs.get(range_id, set())
+    result = (index, None)
+    _ICCC3_CACHE[key] = result
+    return result
+
+
+def _g3_holders(ctx: DTContext):
+    """
+    Yield (holder, location, node) for every dict in the file that a Group III field can
+    hang off — inside a node, or inside a morphology_entries[] object. `node` is the
+    enclosing node or None, so a check can look at its captured_variables[].
+    """
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            yield holder, "node %s (%s)" % (node_id, where or "(node level)"), node
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        label = as_code(entry.get("morphology_code")) or "index %d" % i
+        for holder, where in walk_dicts(entry):
+            yield holder, "entry %s (%s)" % (label, where or "(entry level)"), None
+
+
+def _loose(text) -> str:
+    """Case-, whitespace- and punctuation-insensitive form, for NEAR-MISS reporting only.
+
+    Never for deciding whether a name matches: the whole point of rules 8 and 13 is that
+    a trailing space, a hyphen written as a space and `tumour` for `tumor` are all real
+    defects. This exists so that when one of them FAILs, the message can say which string
+    the author almost certainly meant.
+    """
+    if not isinstance(text, str):
+        return ""
+    t = text.lower().replace("tumour", "tumor")
+    t = re.sub(r"[^a-z0-9]+", " ", t)
+    return " ".join(t.split())
+
+
+def _nearest(target, candidates):
+    """The candidate whose loose form equals the target's, or None."""
+    want = _loose(target)
+    if not want:
+        return None
+    for cand in candidates:
+        if _loose(cand) == want:
+            return cand
+    return None
+
+
+# -- rule 1, rule 2 — diagnosis_rendering ------------------------------------------------
+
+def _result_tokens(holder):
+    """Every result-ish token a branch records, lowercased and underscored."""
+    tokens = set()
+
+    def take(value):
+        if isinstance(value, str):
+            tokens.add(value.strip().lower().replace(" ", "_").replace("-", "_"))
+        elif isinstance(value, bool):
+            tokens.add("true" if value else "false")
+
+    for field in ("when", "captures"):
+        block = holder.get(field)
+        if isinstance(block, dict):
+            for value in block.values():
+                if isinstance(value, list):
+                    for v in value:
+                        take(v)
+                else:
+                    take(value)
+    for field in ("specimen_adequacy", "result", "test_result", "adequacy"):
+        take(holder.get(field))
+    return tokens
+
+
+def _asserts_adequate_result(holder):
+    """
+    (asserts, disqualifier). Rule 2: a branch may emit `suffix: "nec"` only where it also
+    asserts that an adequate result was OBTAINED. cIMPACT-NOW update 1 makes NEC a
+    statement that the test was done and the tumour did not fit any WHO type — so a
+    registry that could not do the test can never legitimately reach it, and a branch
+    reached BECAUSE the test failed reaches it wrongly.
+    """
+    if not isinstance(holder, dict):
+        return False, None
+    tokens = _result_tokens(holder)
+    blocked = sorted(tokens & UNRESOLVED_RESULT_TOKENS)
+    if blocked:
+        return False, blocked[0]
+    if holder.get("adequate_result") is True or holder.get("result_adequate") is True:
+        return True, None
+    if tokens & RESOLVED_RESULT_TOKENS:
+        return True, None
+    for field in ("positive", "negative"):
+        if isinstance(holder.get(field), list) and holder[field]:
+            return True, None
+    st = holder.get("satisfies_tests")
+    if isinstance(st, list) and st:
+        return True, None
+    return False, None
+
+
+def check_diagnosis_rendering(ctx: DTContext):
+    """
+    RULES 1 and 2 — `diagnosis_rendering` (contract §2(1), §6 rules 1-2).
+
+    Rule 1 is the numeral invariant: `track == "who_cns5"` iff `grade_system == "arabic"`.
+    It is not cosmetic. The two tracks are two different CLAIMS — a WHO CNS5 diagnosis and
+    an ADAPTR descriptive diagnosis — and the numeral system is the only thing on the
+    printed line that distinguishes them. A Roman numeral against a `who_cns5` track, or an
+    Arabic one against `adaptr_descriptive`, tells the reader the registry reached a
+    diagnosis it did not reach. Contract §2(4) records where this goes wrong in practice:
+    the numeral follows the TRACK, never the evidence type, and CNS5 grades meningioma and
+    subependymoma on histology alone — so the two commonest histology-only branches in the
+    group are exactly the ones an author will get backwards.
+
+    Rule 2 is the NEC gate, and it is the same failure in a different field. NEC means the
+    test was done and the tumour fitted no WHO type. A branch reached because the test was
+    not done, failed, or was unavailable has no standing to say that.
+    """
+    out, seen = [], 0
+    for holder, loc, node in _g3_holders(ctx):
+        if "diagnosis_rendering" not in holder:
+            continue
+        dr = holder["diagnosis_rendering"]
+        if not isinstance(dr, dict):
+            out.append((FAIL, "%s: diagnosis_rendering must be an object, got %r"
+                        % (loc, dr)))
+            continue
+        seen += 1
+
+        track = dr.get("track")
+        if track not in CNS5_TRACKS:
+            out.append((FAIL, "%s: diagnosis_rendering.track is %r — required, and one of "
+                              "%s (contract §2(1))"
+                        % (loc, track, ", ".join(sorted(CNS5_TRACKS)))))
+
+        gs = dr.get("grade_system")
+        if gs is not None and gs not in GRADE_SYSTEMS:
+            out.append((FAIL, "%s: diagnosis_rendering.grade_system is %r — one of %s"
+                        % (loc, gs, ", ".join(sorted(GRADE_SYSTEMS)))))
+
+        # RULE 1, both directions off one table.
+        if track in TRACK_GRADE_SYSTEM:
+            want = TRACK_GRADE_SYSTEM[track]
+            if gs != want:
+                out.append((FAIL, "%s: RULE 1 — track %r requires grade_system %r, got %r. "
+                                  "The numeral system follows the TRACK, never the "
+                                  "evidence type (contract §2(4)): a grade reached on "
+                                  "histology alone is still Arabic when the diagnosis is a "
+                                  "WHO CNS5 diagnosis. Printed the other way round, the "
+                                  "line claims a diagnosis the registry did not reach"
+                            % (loc, track, want, gs)))
+        elif gs in ("arabic", "roman"):
+            other = [t for t, g in TRACK_GRADE_SYSTEM.items() if g == gs]
+            out.append((FAIL, "%s: RULE 1 — grade_system %r with no valid track; %s is the "
+                              "only track that may carry it" % (loc, gs, other[0])))
+
+        # §2(1) — the per-track shape.
+        if track in TRACK_FIELD_SHAPE:
+            required, forbidden = TRACK_FIELD_SHAPE[track]
+            for field in required:
+                if dr.get(field) in (None, ""):
+                    out.append((FAIL, "%s: track %r requires a non-null %r (contract §2(1))"
+                                % (loc, track, field)))
+            for field in forbidden:
+                if dr.get(field) not in (None,):
+                    out.append((FAIL, "%s: track %r requires %r to be null, got %r — a "
+                                      "branch that fills both halves prints two different "
+                                      "diagnoses for one case (contract §2(1))"
+                                % (loc, track, field, dr.get(field))))
+
+        # §2(1) / rule 9 — grade is a string or null, never a placeholder.
+        if "grade" in dr:
+            grade = dr["grade"]
+            if grade is None:
+                pass
+            elif not isinstance(grade, str):
+                out.append((FAIL, "%s: diagnosis_rendering.grade must be a string or null, "
+                                  "got %r (contract §2(1))" % (loc, grade)))
+            elif grade.strip() in GRADE_NON_VALUES or grade != grade.strip():
+                out.append((FAIL, "%s: diagnosis_rendering.grade is %r. A grade is a string "
+                                  "or null — never \"NA\", never \"\". A placeholder "
+                                  "renders as a grade nobody assigned (contract §2(1))"
+                            % (loc, grade)))
+            elif gs == "arabic" and grade not in ARABIC_GRADES:
+                out.append((FAIL, "%s: grade %r is not in the Arabic set %s (contract §2(1) "
+                                  "— CNS5 Table 3 grades MVNT, PLNTY, meningioma and "
+                                  "diffuse astrocytoma MYB/MYBL1-altered at 1, so 1 is in "
+                                  "the set)" % (loc, grade, sorted(ARABIC_GRADES))))
+            elif gs == "roman" and grade not in ROMAN_GRADES:
+                out.append((FAIL, "%s: grade %r is not in the Roman set %s — the ADAPTR "
+                                  "descriptive scale runs II-IV only (contract §2(1))"
+                            % (loc, grade, sorted(ROMAN_GRADES))))
+
+        # RULE 2 — the NEC gate.
+        suffix = dr.get("suffix")
+        if suffix is not None and suffix not in DIAGNOSIS_SUFFIXES:
+            out.append((FAIL, "%s: diagnosis_rendering.suffix is %r — one of %s"
+                        % (loc, suffix, ", ".join(sorted(DIAGNOSIS_SUFFIXES)))))
+        elif suffix == "nec":
+            asserts, blocker = _asserts_adequate_result(holder)
+            if not asserts and node is not None and holder is node:
+                asserts, blocker = _asserts_adequate_result(node)
+            if blocker:
+                out.append((FAIL, "%s: RULE 2 — suffix \"nec\" on a branch reached on %r. "
+                                  "NEC says the test WAS done and the tumour fitted no WHO "
+                                  "type (cIMPACT-NOW update 1). A branch reached because "
+                                  "the test did not return cannot say that — it is a NOS, "
+                                  "and a registry that cannot do the test can never "
+                                  "legitimately emit NEC (contract §2(1), §6 rule 2)"
+                            % (loc, blocker)))
+            elif not asserts:
+                out.append((FAIL, "%s: RULE 2 — suffix \"nec\" on a branch that asserts no "
+                                  "adequate result. NEC is a positive claim that the test "
+                                  "was done and returned; the branch must record the "
+                                  "result it rests on (a `when`/`captures` naming a "
+                                  "resolved state, an `adequate_result: true`, a marker "
+                                  "list, or a satisfies_tests). Without it the label is "
+                                  "unearned (contract §2(1), §6 rule 2)"
+                            % loc))
+
+    # `and not out` is load-bearing. Without it a check that has found something but not
+    # yet incremented its counter throws the finding away — which is how a check comes to
+    # confirm the very error it exists to catch (data.md §5A). Two of the rules here fire
+    # precisely when the construct is ABSENT.
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d diagnosis_rendering block(s): every track carries its own numeral "
+                    "system (rule 1) and every \"nec\" suffix rests on an asserted adequate "
+                    "result (rule 2)" % seen))
+    return out
+
+
+# -- rule 3 — resource_level_gate --------------------------------------------------------
+
+def check_resource_level_gate(ctx: DTContext):
+    """
+    RULE 3 — `resource_level_gate` (contract §2(2), §6 rule 3).
+
+    `family` is required because a resource level is computed PER TUMOUR FAMILY, never per
+    site: a laboratory with GFAP, synaptophysin and INI1 is RL III for AT/RT and RL II for
+    ependymoma, and a site-level RL reads one of those two as the other.
+
+    The rule the check is named for is the tier enum. Satgunaseelan's ependymoma tables use
+    only `can_be_considered` and `highly_recommended`; `obligatory` on an ependymal node is
+    a third value the source does not have, and it mis-renders every node in the family.
+
+    `rl_assignment: "by_analogy"` is the overstatement guard. Where the family has no
+    ADAPTR paper the resource level is borrowed, and a borrowed level presented as a
+    sourced one is the class of defect this tool exists to keep out.
+    """
+    out, seen = [], 0
+    for holder, loc, _node in _g3_holders(ctx):
+        if "resource_level_gate" not in holder:
+            continue
+        gate = holder["resource_level_gate"]
+        if not isinstance(gate, dict):
+            out.append((FAIL, "%s: resource_level_gate must be an object, got %r"
+                        % (loc, gate)))
+            continue
+        seen += 1
+
+        family = gate.get("family")
+        if not isinstance(family, str) or not family.strip():
+            out.append((FAIL, "%s: resource_level_gate.family is REQUIRED — a resource "
+                              "level is computed per tumour family, never per site "
+                              "(contract §2(2))" % loc))
+            family = None
+        elif family not in RL_FAMILIES:
+            out.append((FAIL, "%s: resource_level_gate.family %r is not in the closed "
+                              "vocabulary %s (contract §2(2))"
+                        % (loc, family, ", ".join(sorted(RL_FAMILIES)))))
+            family = None
+
+        rl = gate.get("required_rl")
+        if rl not in RL_LEVELS:
+            out.append((FAIL, "%s: resource_level_gate.required_rl is %r — one of %s "
+                              "(contract §2(2))"
+                        % (loc, rl, ", ".join(sorted(RL_LEVELS, key=len)))))
+
+        for key in ("tier", "referral_tier"):
+            if key not in gate:
+                continue
+            tier = gate.get(key)
+            if tier not in RL_TIERS:
+                out.append((FAIL, "%s: resource_level_gate.%s is %r — one of %s "
+                                  "(contract §2(2))"
+                            % (loc, key, tier, ", ".join(sorted(RL_TIERS)))))
+                continue
+            allowed = RL_TIERS_BY_FAMILY.get(family)
+            if allowed is not None and tier not in allowed:
+                out.append((FAIL, "%s: RULE 3 — %s %r on a node in the %s family. "
+                                  "Satgunaseelan "
+                                  "uses only %s for this family, so a third value has no "
+                                  "source behind it and a three-value enum mis-renders "
+                                  "every %s node (contract §2(2), §6 rule 3)"
+                            % (loc, key, tier, family, " and ".join(sorted(allowed)),
+                               family)))
+
+        assignment = gate.get("rl_assignment")
+        if assignment is not None and assignment not in RL_ASSIGNMENT_VALUES:
+            out.append((FAIL, "%s: resource_level_gate.rl_assignment is %r — one of %s"
+                        % (loc, assignment, ", ".join(sorted(RL_ASSIGNMENT_VALUES)))))
+        elif family in RL_FAMILIES_WITHOUT_ADAPTR and assignment != "by_analogy":
+            out.append((FAIL, "%s: the %s family has no ADAPTR paper behind it, so the "
+                              "node must carry \"rl_assignment\": \"by_analogy\" (it is "
+                              "%r). Presenting a borrowed resource level as a sourced one "
+                              "makes the case look better evidenced than it is "
+                              "(contract §2(2))" % (loc, family, assignment)))
+
+        dest = gate.get("unreachable_destination")
+        if dest is not None:
+            if not isinstance(dest, dict):
+                out.append((FAIL, "%s: resource_level_gate.unreachable_destination must be "
+                                  "an object, got %r" % (loc, dest)))
+            else:
+                code = as_code(dest.get("morphology_code"))
+                beh = dest.get("behavior_code")
+                beh = None if beh is None else str(beh).strip()
+                if code and (code, beh) not in _code_behavior_pairs(ctx):
+                    out.append((FAIL, "%s: resource_level_gate.unreachable_destination "
+                                      "emits %s/%s, which has no morphology_entries[] "
+                                      "object in this file — the branch the clerk is sent "
+                                      "to when the test is unavailable does not exist"
+                                % (loc, code, beh)))
+
+        # Unavailability is a property of a DECLARED site profile, never of the
+        # required level on its own. A site declared resource level V meets a
+        # requirement of resource level V, so "required_rl is V" is not evidence
+        # that any laboratory cannot run the test — and this tool is used by
+        # registries anywhere, not built around one site's inventory. The old
+        # rule here asserted the opposite and forced the engine to print "the
+        # test is unavailable" at every RL V branch regardless of the site.
+        # Corrected 14 September 2026; the flag it policed is now banned outright.
+        if "upgrade_line_says_unavailable" in gate:
+            out.append((FAIL, "%s: resource_level_gate carries "
+                              "\"upgrade_line_says_unavailable\", which asserts a laboratory "
+                              "cannot run a test from the required level alone. Unavailability "
+                              "follows from a declared site_profile level BELOW the requirement "
+                              "and from nothing else; with no profile the honest output is "
+                              "\"not established\". Remove the key" % loc))
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d resource_level_gate(s): every one names its family, no ependymal "
+                    "node carries tier \"obligatory\" (rule 3), and every family without "
+                    "an ADAPTR paper declares rl_assignment \"by_analogy\"" % seen))
+    return out
+
+
+# -- rule 5 — entity_annotation ----------------------------------------------------------
+
+def _cns5_reference_list(repo: Path):
+    """
+    (entities, provisional_flags, source). The transcribed CNS5 Table 1 this repo carries.
+
+    `provisional_flags` is {entity: bool} where the transcription records it, so §2(3)'s
+    `provisional` field can be checked against Table 1 rather than against the author's
+    reading of the italics that produced the "(provisional type)" artefact in the first
+    place.
+    """
+    for rel in CNS5_TABLE1_REFERENCE_FILES:
+        path = Path(repo) / rel
+        if not path.exists():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        if path.suffix != ".json":
+            lines = [ln.rstrip("\n") for ln in text.splitlines()]
+            names = {ln for ln in lines if ln.strip() and not ln.lstrip().startswith("#")}
+            return names, {}, rel
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            continue
+        names, flags = set(), {}
+        if isinstance(data, dict):
+            for family in data.get("families") or []:
+                if not isinstance(family, dict):
+                    continue
+                for typ in family.get("types") or []:
+                    if isinstance(typ, dict) and isinstance(typ.get("name"), str):
+                        names.add(typ["name"])
+                        if isinstance(typ.get("provisional"), bool):
+                            flags[typ["name"]] = typ["provisional"]
+                    elif isinstance(typ, str):
+                        names.add(typ)
+            for key in ("all_names", "entities", "table1"):
+                for item in data.get(key) or []:
+                    if isinstance(item, str):
+                        names.add(item)
+        elif isinstance(data, list):
+            names = {x for x in data if isinstance(x, str)}
+        if names:
+            return names, flags, rel
+    return set(), {}, None
+
+
+def check_entity_annotation(ctx: DTContext, repo: Path):
+    """
+    RULE 5 — `entity_annotation` (contract §2(3), §6 rule 5).
+
+    What this check CAN prove, and what it cannot, stated up front because rule 5 asks for
+    something this repository does not yet carry.
+
+    PROVES: the `(provisional type)` extraction artefact never reaches an entity name; no
+    entity string carries leading, trailing or doubled whitespace; neither of the two
+    CNS5-internal divergences Revision 2 records is the one authored; `code_status` is in
+    the closed set; `provisional` is a boolean and not a string smuggled into the name;
+    `shared_with[]` is a list of non-empty strings and never contains the entity itself.
+
+    DOES NOT PROVE, unless this repo carries a transcription: that an entity string matches
+    CNS5 Table 1. Revision 2 §9 records the 144-row transcription as living outside the
+    vault. Where it is absent, an unrecognised entity is a WARN that SAYS it is unverified,
+    because the alternative — silence — is what rule 5 exists to prevent. Drop the
+    transcription at docs/cns5_table1_entities.txt and every unrecognised string becomes a
+    FAIL, with no change to this code.
+
+    No spelling rule is imposed on `who_cns5_entity`. ICD-O-3.2 uses `tumor` (contract
+    §5.4) and that is enforced by the round-trip on `morphology_name`; the WHO Blue Books
+    do not, and inventing a spelling rule for entity names here would be exactly the recall
+    rule 5 forbids.
+    """
+    out, seen = [], 0
+    reference, table1_provisional, ref_source = _cns5_reference_list(repo)
+    known = reference or CNS5_TABLE1_ENTITIES
+    artefact = re.compile(ENTITY_NAME_ARTEFACT_RE, re.I)
+    unverified = []
+
+    for holder, loc, _node in _g3_holders(ctx):
+        if "entity_annotation" not in holder:
+            continue
+        ea = holder["entity_annotation"]
+        if not isinstance(ea, dict):
+            out.append((FAIL, "%s: entity_annotation must be an object, got %r" % (loc, ea)))
+            continue
+        seen += 1
+
+        name = ea.get("who_cns5_entity")
+        if not isinstance(name, str) or not name.strip():
+            out.append((FAIL, "%s: entity_annotation.who_cns5_entity is required and must "
+                              "be a non-empty string (contract §2(3))" % loc))
+            name = None
+
+        if name is not None:
+            if artefact.search(name):
+                out.append((FAIL, "%s: entity_annotation.who_cns5_entity %r carries the "
+                                  "string \"(provisional type)\". That is an extraction "
+                                  "artefact of the source's italics, not part of the "
+                                  "entity's name — use \"provisional\": true instead "
+                                  "(contract §2(3))" % (loc, name)))
+            if name != name.strip() or "  " in name:
+                out.append((FAIL, "%s: entity_annotation.who_cns5_entity %r carries "
+                                  "leading, trailing or doubled whitespace. An entity "
+                                  "string is compared character-for-character; a space "
+                                  "nobody can see is a string nothing matches "
+                                  "(contract §2(3))" % (loc, name)))
+            elif name in CNS5_TABLE1_DIVERGENCES:
+                out.append((FAIL, "%s: entity_annotation.who_cns5_entity %r is CNS5's OTHER "
+                                  "spelling of this entity. CNS5 is internally "
+                                  "inconsistent and Table 1 wins (Revision 2 §6.2). "
+                                  "Table 1 prints %r"
+                            % (loc, name, CNS5_TABLE1_DIVERGENCES[name])))
+            elif name not in known:
+                near = _nearest(name, known)
+                if near:
+                    out.append((FAIL, "%s: entity_annotation.who_cns5_entity %r is a "
+                                      "near-miss on the transcribed CNS5 Table 1 string "
+                                      "%r — they differ only in case, punctuation or "
+                                      "spacing, which is exactly the drift rule 5 exists "
+                                      "to catch" % (loc, name, near)))
+                elif name.endswith(", NEC") and ea.get("code_status") == "no_code":
+                    # cIMPACT-NOW update 1: NEC means the testing WAS done and its result
+                    # does not map to a WHO-defined diagnosis. Such a label therefore has
+                    # no WHO type and cannot be in Table 1 — update 11 creates exactly
+                    # three of them (Pathway Revision 2 §2.5). The narrow exemption is
+                    # earned by the two declarations together: a name ending ", NEC" AND
+                    # code_status "no_code". Either alone still FAILs.
+                    pass
+                elif reference:
+                    out.append((FAIL, "%s: entity_annotation.who_cns5_entity %r is not in "
+                                      "the transcribed CNS5 Table 1 at %s (rule 5). A "
+                                      "cIMPACT-NOW NEC label is exempt only when it both "
+                                      "ends \", NEC\" and declares code_status \"no_code\""
+                                % (loc, name, ref_source)))
+                else:
+                    unverified.append("%s: %r" % (loc, name))
+
+        status = ea.get("code_status")
+        if status not in ENTITY_CODE_STATUS:
+            out.append((FAIL, "%s: entity_annotation.code_status is %r — one of %s "
+                              "(contract §2(3))"
+                        % (loc, status, ", ".join(sorted(ENTITY_CODE_STATUS)))))
+
+        # --- entity_annotation.status (added 2026-09-14) -------------------------------
+        # `code_status` says whether the ENTITY has a code. `status` says how firmly it is
+        # being CLAIMED, which is a different question and was previously unaskable. Two
+        # trees hit the same situation and handled it oppositely: an MYCN IHC with no
+        # published sensitivity or specificity, and a DLGNT with 1p untested. Rendered
+        # without it, both read as an established WHO CNS5 diagnosis.
+        est = ea.get("status", "established")
+        if est not in ENTITY_STATUS:
+            out.append((FAIL, "%s: entity_annotation.status is %r — one of %s. Omit it for "
+                              "an established entity; it defaults to \"established\"."
+                        % (loc, est, ", ".join(sorted(ENTITY_STATUS)))))
+        elif est == "suggested":
+            # A suggestion the clerk cannot act on is worse than no suggestion: it reads
+            # as evidence. The branch must name the test that would settle it.
+            if not isinstance(holder.get("provisional_pending"), dict):
+                out.append((FAIL, "%s: entity_annotation.status \"suggested\" requires a "
+                                  "provisional_pending on the same branch naming the test "
+                                  "that would establish %r. Without one the entity renders "
+                                  "beside a code with nothing saying it is unconfirmed, "
+                                  "which makes the case look better evidenced than it is"
+                            % (loc, name)))
+            if not str(ea.get("evidence") or "").strip():
+                out.append((FAIL, "%s: entity_annotation.status \"suggested\" requires a "
+                                  "non-empty evidence string saying what the suggestion "
+                                  "rests on" % loc))
+
+        if "provisional" in ea and not isinstance(ea["provisional"], bool):
+            out.append((FAIL, "%s: entity_annotation.provisional must be a boolean, got %r "
+                              "— it is the field that replaces the \"(provisional type)\" "
+                              "artefact, so a string here reintroduces the problem in a "
+                              "new place (contract §2(3))" % (loc, ea["provisional"])))
+        elif name in table1_provisional and isinstance(ea.get("provisional"), bool) \
+                and ea["provisional"] != table1_provisional[name]:
+            out.append((FAIL, "%s: entity_annotation.provisional is %r; CNS5 Table 1 marks "
+                              "%r as %s a provisional type (%s). `provisional` is the field "
+                              "that replaced the \"(provisional type)\" artefact, so it has "
+                              "to carry what the artefact carried"
+                        % (loc, ea["provisional"], name,
+                           "" if table1_provisional[name] else "NOT", ref_source)))
+
+        shared = ea.get("shared_with")
+        if status == "shares_code" and not (isinstance(shared, list) and shared):
+            out.append((FAIL, "%s: code_status \"shares_code\" requires a non-empty "
+                              "shared_with[] naming the entities it shares the code with — "
+                              "that list is the whole reason the annotation exists "
+                              "(contract §2(3))" % loc))
+        if isinstance(shared, list):
+            for j, other in enumerate(shared):
+                if not isinstance(other, str) or not other.strip():
+                    out.append((FAIL, "%s: entity_annotation.shared_with[%d] must be a "
+                                      "non-empty string, got %r" % (loc, j, other)))
+                elif artefact.search(other):
+                    out.append((FAIL, "%s: entity_annotation.shared_with[%d] %r carries the "
+                                      "\"(provisional type)\" extraction artefact "
+                                      "(contract §2(3))" % (loc, j, other)))
+                elif name is not None and other == name:
+                    out.append((FAIL, "%s: entity_annotation.shared_with[%d] repeats the "
+                                      "entity itself — the list names the OTHER entities "
+                                      "on the code" % (loc, j)))
+
+    if not seen and not out:
+        return []
+    if unverified:
+        out.append((WARN, "%d entity string(s) could not be verified against CNS5 Table 1: "
+                          "this repo carries no transcription at %s, so the check proved "
+                          "only the artefact, whitespace and divergence rules on them. "
+                          "Rule 5 asks for a transcribed list; until one lands, Table 1 "
+                          "conformance is UNVERIFIED, not verified:\n        %s"
+                    % (len(unverified), " or ".join(CNS5_TABLE1_REFERENCE_FILES),
+                       "\n        ".join(unverified))))
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d entity_annotation(s): no \"(provisional type)\" artefact, no "
+                    "whitespace drift, no Table 2 spelling%s"
+                % (seen, ", all matched against %s" % ref_source if reference else "")))
+    return out
+
+
+# -- rule 9 — grade_resolution -----------------------------------------------------------
+
+def check_grade_resolution(ctx: DTContext):
+    """
+    RULE 9 — `grade_resolution` (contract §2(4), §6 rule 9).
+
+    Modelled on Group II's `behaviour_resolution` and failing the same way if it is got
+    wrong: `unresolved` is the half that runs when the evidence never arrived, and an
+    `unresolved` that invents a grade puts a number on the report that no test produced.
+    cIMPACT-NOW update 8 is explicit for the commonest instance — an untested
+    brain-invasive meningioma has NO established grade, and the tool must omit it rather
+    than guess.
+
+    Every `values` entry is then one of exactly two shapes: a grade WITH its
+    `grade_system`, or `null` WITH a `reason`. A grade with no system is a numeral whose
+    scale the reader has to guess, which is rule 1's problem arriving by another route;
+    and a null with no reason is a silent omission that reads as an oversight.
+    """
+    out, seen = [], 0
+    for holder, loc, node in _g3_holders(ctx):
+        if "grade_resolution" not in holder:
+            continue
+        gr = holder["grade_resolution"]
+        if not isinstance(gr, dict):
+            out.append((FAIL, "%s: grade_resolution must be an object, got %r" % (loc, gr)))
+            continue
+        seen += 1
+
+        for key in ("criterion", "variable"):
+            val = gr.get(key)
+            if not isinstance(val, str) or not val.strip():
+                out.append((FAIL, "%s: grade_resolution.%s is required and must be a "
+                                  "non-empty string (contract §2(4))" % (loc, key)))
+
+        var = gr.get("variable")
+        declared = _declared_variables(node) if node is not None else set()
+        if isinstance(var, str) and var and node is not None and var not in declared:
+            out.append((FAIL, "%s: grade_resolution.variable %r is not declared in this "
+                              "node's captured_variables[] — the engine has nowhere to read "
+                              "the answer from, so the criterion is asked and then "
+                              "discarded" % (loc, var)))
+
+        dmr = gr.get("detection_method_required")
+        if dmr is not None:
+            if not isinstance(dmr, list) or not dmr:
+                out.append((FAIL, "%s: grade_resolution.detection_method_required must be "
+                                  "a non-empty list, got %r" % (loc, dmr)))
+            else:
+                for value in dmr:
+                    if value not in DIAGNOSTIC_TESTS:
+                        out.append((FAIL, "%s: grade_resolution.detection_method_required "
+                                          "%r is not in the closed diagnostic-test "
+                                          "vocabulary, so it can never be matched"
+                                    % (loc, value)))
+
+        def check_grade_leaf(label, leaf, allow_grade=True):
+            if not isinstance(leaf, dict):
+                out.append((FAIL, "%s: grade_resolution.%s must be an object, got %r"
+                            % (loc, label, leaf)))
+                return
+            if "grade" not in leaf:
+                out.append((FAIL, "%s: grade_resolution.%s has no 'grade' key. Every "
+                                  "outcome names either a grade or an explicit null — an "
+                                  "absent key is neither (contract §2(4))" % (loc, label)))
+                return
+            grade = leaf["grade"]
+            if grade is None:
+                if not (isinstance(leaf.get("reason"), str) and leaf["reason"].strip()) \
+                        and not (isinstance(leaf.get("defer_to"), str)
+                                 and leaf["defer_to"].strip()):
+                    out.append((FAIL, "%s: grade_resolution.%s has grade null and no "
+                                      "`reason` (or, on `unresolved`, a `defer_to`). A "
+                                      "null with nothing said about it reads as an "
+                                      "oversight rather than a finding (contract §2(4))"
+                                % (loc, label)))
+                return
+            if not allow_grade:
+                out.append((FAIL, "%s: RULE 9 — grade_resolution.unresolved carries grade "
+                                  "%r. `unresolved` must NEVER invent a grade: where the "
+                                  "grade cannot be established it is omitted, which is "
+                                  "what cIMPACT-NOW update 8 requires for an untested "
+                                  "brain-invasive meningioma. A number here is one no test "
+                                  "produced (contract §2(4), §6 rule 9)" % (loc, grade)))
+                return
+            if not isinstance(grade, str):
+                out.append((FAIL, "%s: grade_resolution.%s grade must be a string or null, "
+                                  "got %r" % (loc, label, grade)))
+                return
+            if grade.strip() in GRADE_NON_VALUES or grade != grade.strip():
+                out.append((FAIL, "%s: RULE 9 — grade_resolution.%s grade is %r. \"NA\" and "
+                                  "\"\" are errors, not grades: they render as a grade "
+                                  "nobody assigned. Use null with a reason "
+                                  "(contract §2(4), §6 rule 9)" % (loc, label, grade)))
+                return
+            system = leaf.get("grade_system")
+            if system not in GRADE_SYSTEMS:
+                out.append((FAIL, "%s: RULE 9 — grade_resolution.%s names grade %r with "
+                                  "grade_system %r. A grade must name its system: a bare "
+                                  "numeral leaves the reader to guess the scale, which is "
+                                  "rule 1's failure reached by another route "
+                                  "(contract §2(4), §6 rule 9)" % (loc, label, grade, system)))
+            elif system == "arabic" and grade not in ARABIC_GRADES:
+                out.append((FAIL, "%s: grade_resolution.%s grade %r is not in the Arabic "
+                                  "set %s" % (loc, label, grade, sorted(ARABIC_GRADES))))
+            elif system == "roman" and grade not in ROMAN_GRADES:
+                out.append((FAIL, "%s: grade_resolution.%s grade %r is not in the Roman set "
+                                  "%s" % (loc, label, grade, sorted(ROMAN_GRADES))))
+
+        values = gr.get("values")
+        if not isinstance(values, dict) or not values:
+            out.append((FAIL, "%s: grade_resolution.values is required and must be a "
+                              "non-empty object (contract §2(4))" % loc))
+        else:
+            for key in sorted(values):
+                check_grade_leaf("values[%r]" % key, values[key], allow_grade=True)
+
+        if "unresolved" not in gr:
+            out.append((FAIL, "%s: grade_resolution.unresolved is REQUIRED. Without it the "
+                              "engine has no answer for a case the test never resolved, "
+                              "and the branch falls through to whatever the renderer does "
+                              "by default (contract §2(4))" % loc))
+        else:
+            check_grade_leaf("unresolved", gr["unresolved"], allow_grade=False)
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d grade_resolution block(s): no `unresolved` invents a grade, and "
+                    "every outcome names a grade with its system or a null with a reason "
+                    "(rule 9)" % seen))
+    return out
+
+
+# -- rule 10 — basis_of_diagnosis --------------------------------------------------------
+
+def check_basis_of_diagnosis(ctx: DTContext):
+    """
+    RULE 10 — `basis_of_diagnosis` (contract §2(5), §6 rule 10).
+
+    ENCR's scale has no 3 and no 6. They are not reserved and they are not deprecated —
+    they do not exist, so a 3 in this field is a value the receiving registry will read as
+    something else entirely.
+
+    Code 1 is banned outright in this group: every CNS row in ENCR Table 3 is basis 2, so a
+    Group III terminal claiming "clinical, physical examination only" is claiming a basis
+    the classification does not give any tumour in the group.
+
+    The two ENCR gaps are declared rather than inferred (`ihc_counts_as: 7`,
+    `methylation_counts_as: 8`), and where a holder writes down the component codes it
+    derived from, the declared value must be the HIGHEST of them — with 0 and 9 overriding,
+    which is the only way those two can be reached at all.
+    """
+    out, seen = [], 0
+    for holder, loc, _node in _g3_holders(ctx):
+        for key, want in BASIS_DECLARED_GAPS.items():
+            if key in holder and holder[key] != want:
+                out.append((FAIL, "%s: %s is %r; ENCR leaves this gap and contract §2(5) "
+                                  "closes it at %d. Declaring it differently silently "
+                                  "re-scales every case that reaches it"
+                            % (loc, key, holder[key], want)))
+
+        if "basis_of_diagnosis" not in holder:
+            continue
+        value = holder["basis_of_diagnosis"]
+        seen += 1
+        if isinstance(value, bool) or not isinstance(value, int):
+            if isinstance(value, str) and value.strip().isdigit():
+                out.append((FAIL, "%s: basis_of_diagnosis is the string %r — ENCR basis is "
+                                  "an integer, and a string sorts and compares differently "
+                                  "from the number it looks like" % (loc, value)))
+            else:
+                out.append((FAIL, "%s: basis_of_diagnosis must be an integer, got %r"
+                            % (loc, value)))
+            continue
+        if value in BASIS_OF_DIAGNOSIS_ABSENT:
+            out.append((FAIL, "%s: RULE 10 — basis_of_diagnosis %d does not exist. The ENCR "
+                              "scale is %s; 3 and 6 are not values in it, so a receiving "
+                              "registry reads this as something else entirely "
+                              "(contract §2(5), §6 rule 10)"
+                        % (loc, value, sorted(BASIS_OF_DIAGNOSIS_VALID))))
+            continue
+        if value not in BASIS_OF_DIAGNOSIS_VALID:
+            out.append((FAIL, "%s: RULE 10 — basis_of_diagnosis %d is outside the ENCR set "
+                              "%s (contract §2(5))"
+                        % (loc, value, sorted(BASIS_OF_DIAGNOSIS_VALID))))
+            continue
+        if ctx.group == GROUP3 and value == BASIS_FORBIDDEN_IN_GROUP3:
+            out.append((FAIL, "%s: RULE 10 — no Group III terminal may emit basis code 1 "
+                              "(clinical, physical examination only). Every CNS row in ENCR "
+                              "Table 3 is basis 2: an intracranial tumour is not diagnosed "
+                              "by physical examination (contract §2(5), §6 rule 10)" % loc))
+
+        components = None
+        for key in ("basis_components", "basis_of_diagnosis_components",
+                    "basis_derived_from"):
+            if isinstance(holder.get(key), list):
+                components = [c for c in holder[key] if isinstance(c, int)
+                              and not isinstance(c, bool)]
+                break
+        if components and value not in BASIS_OF_DIAGNOSIS_OVERRIDE:
+            highest = max(components)
+            graded = [c for c in components if c not in BASIS_OF_DIAGNOSIS_OVERRIDE]
+            if graded:
+                highest = max(graded)
+            if value != highest:
+                out.append((FAIL, "%s: basis_of_diagnosis is %d but the components it "
+                                  "declares (%s) make the highest %d. §2(5) computes the "
+                                  "basis as the highest of codes 1-8, with 0 and 9 "
+                                  "overriding — a lower value understates and a higher one "
+                                  "overstates the evidence on the case"
+                            % (loc, value, ", ".join(str(c) for c in components), highest)))
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d basis_of_diagnosis value(s) in the ENCR set %s; none is 3, 6 or "
+                    "(in Group III) 1 (rule 10)"
+                % (seen, sorted(BASIS_OF_DIAGNOSIS_VALID))))
+    return out
+
+
+# -- rule 11 — imaging terminals ---------------------------------------------------------
+
+def check_imaging_terminals(ctx: DTContext):
+    """
+    RULE 11 — the imaging-only endpoints (contract §2(6), §3.5, §6 rule 11).
+
+    Two endpoints in this group are reached with no tissue at all: NF1 optic pathway
+    glioma, and DIPG. The second has κ = 0.297 interobserver agreement and an explicit
+    finding that imaging-only diagnosis "does not reach the appropriate threshold to be
+    considered a standard of care" — so every terminal behind an `imaging_pathway` that
+    never reaches histology has to SAY so in all four of the fields that carry that fact:
+    `no_tissue`, `endpoint_verification`, `basis_of_diagnosis` and `diversion_criteria[]`.
+
+    The empty list is the one the contract calls out as a build error, and it is the
+    interesting one. `"diversion_criteria": []` is not "no diversions apply" — it is an
+    imaging endpoint with every safety catch removed, rendering identically to one that was
+    never gated. An absent list at least reads as unfinished; an empty one reads as
+    considered and cleared. Both FAIL here.
+    """
+    out, seen = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        if node.get("node_type") != "imaging_pathway":
+            continue
+        seen += 1
+        holders = [(node, "(node level)")]
+        for holder, where in _branch_containers(node):
+            holders.append((holder, where))
+
+        # A branch inherits what its node declares and vice versa. Both placements are
+        # legitimate and the trees use both: one node may carry several endpoints that
+        # differ per option, while a single shared diversion list belongs on the node.
+        # Rule 11 is about whether the FACT is recorded, not about which object records it.
+        def eff(holder, key):
+            v = holder.get(key)
+            return node.get(key) if v is None else v
+
+        for holder, where in holders:
+            loc = "imaging_pathway %s (%s)" % (node_id, where)
+            # A branch that continues to a histology node is not an imaging-only terminal.
+            if holder is not node and holder.get("next_node"):
+                continue
+            emits = as_code(holder.get("morphology_code"))
+            declares = any(k in holder for k in
+                           ("no_tissue", "endpoint_verification", "diversion_criteria",
+                            "basis_of_diagnosis"))
+            # A node that declares ONLY diversion_criteria is publishing a shared list for
+            # its own branches, not being a terminal itself. The terminal fields then live
+            # on the branches, which is where the endpoints differ. Treating the node as a
+            # terminal here would demand no_tissue/basis on an object that emits nothing.
+            node_is_terminal = as_code(node.get("morphology_code")) is not None or any(
+                k in node for k in ("no_tissue", "endpoint_verification", "basis_of_diagnosis"))
+            if holder is node and not node_is_terminal:
+                continue
+            if holder is not node and not emits and not declares:
+                continue
+
+            if eff(holder, "no_tissue") is not True:
+                out.append((FAIL, "%s: RULE 11 — an imaging terminal reached without "
+                                  "histology must carry \"no_tissue\": true (it is %r). "
+                                  "The field is what stops the case being counted as "
+                                  "microscopically verified (contract §6 rule 11)"
+                            % (loc, eff(holder, "no_tissue"))))
+            if eff(holder, "endpoint_verification") != "not_verified":
+                out.append((FAIL, "%s: RULE 11 — endpoint_verification must be "
+                                  "\"not_verified\" on an imaging-only terminal, got %r "
+                                  "(contract §6 rule 11)"
+                            % (loc, eff(holder, "endpoint_verification"))))
+            basis = eff(holder, "basis_of_diagnosis")
+            # 2 is clinical investigation without tissue. 4 is specific tumour markers,
+            # which also records no tissue and which ENCR ranks ABOVE 2 under its own
+            # "take the highest of 1-8" rule — the two pituitary marker routes of ENCR
+            # Table 4 are basis 4 and forcing them to 2 would understate them.
+            if basis not in (2, 4):
+                out.append((FAIL, "%s: RULE 11 — basis_of_diagnosis must be 2 (clinical "
+                                  "investigation without tissue) on an imaging-only "
+                                  "terminal, got %r. 4 (specific tumour markers) is also "
+                                  "permitted; anything else records tissue that was never "
+                                  "taken (contract §2(5), §6 rule 11)"
+                            % (loc, basis)))
+
+            if "diversion_criteria" not in holder and "diversion_criteria" not in node:
+                out.append((FAIL, "%s: RULE 11 — an imaging-only terminal carries no "
+                                  "diversion_criteria[]. These are the features that force "
+                                  "the tissue branch even when the imaging constellation is "
+                                  "met; without them the endpoint is ungated "
+                                  "(contract §2(6), §6 rule 11)" % loc))
+            else:
+                dc = eff(holder, "diversion_criteria")
+                if not isinstance(dc, list):
+                    out.append((FAIL, "%s: diversion_criteria must be an array, got %r"
+                                % (loc, dc)))
+                elif not dc:
+                    out.append((FAIL, "%s: RULE 11 — diversion_criteria[] is EMPTY. An "
+                                      "empty list is a build error, not \"no diversions "
+                                      "apply\": it renders exactly like a terminal that "
+                                      "was never gated, while reading to the next author "
+                                      "as considered and cleared. DIPG's imaging-only "
+                                      "endpoint has κ = 0.297 agreement and is explicitly "
+                                      "below standard of care — the six diversion criteria "
+                                      "are what make it safe to offer at all "
+                                      "(contract §2(6), §6 rule 11)" % loc))
+                else:
+                    for j, crit in enumerate(dc):
+                        if not isinstance(crit, dict):
+                            out.append((FAIL, "%s: diversion_criteria[%d] is not an object"
+                                        % (loc, j)))
+                            continue
+                        for key in ("feature", "reason"):
+                            val = crit.get(key)
+                            if not isinstance(val, str) or not val.strip():
+                                out.append((FAIL, "%s: diversion_criteria[%d] has no "
+                                                  "non-empty %r — a diversion the clerk "
+                                                  "cannot read is a diversion nobody takes "
+                                                  "(contract §2(6))" % (loc, j, key)))
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d imaging_pathway node(s): every imaging-only terminal carries "
+                    "no_tissue, endpoint_verification \"not_verified\", basis 2 and a "
+                    "NON-EMPTY diversion_criteria[] (rule 11)" % seen))
+    return out
+
+
+# -- rule 4 — numeric_gate band units and the per-unit domain sweep ----------------------
+
+_BAND_POINT_RE = re.compile(r"^\s*(>=|<=|=>|=<|>|<|=)?\s*(-?\d+(?:\.\d+)?)\s*$")
+_BAND_SPAN_RE = re.compile(r"^\s*(-?\d+(?:\.\d+)?)\s*[-–—]\s*(-?\d+(?:\.\d+)?)\s*$")
+_INF = float("inf")
+
+
+def _band_step(token: str) -> float:
+    """The precision a band was authored at. '19' -> 1; '19.5' -> 0.1; '0.99' -> 0.01."""
+    if "." in token:
+        return 10.0 ** -len(token.split(".", 1)[1])
+    return 1.0
+
+
+def _band_interval(raw):
+    """
+    A band's half-open [lo, hi) interval, or None when the range is not numeric.
+
+    DT master §4: a range is INCLUSIVE at the precision written, so "10-19" covers
+    [10, 20) and ">=20" covers [20, inf). Sweeping at one decimal finer than the finest
+    band is what turns "no gap" into something a machine can answer.
+    """
+    if not isinstance(raw, str):
+        return None
+    span = _BAND_SPAN_RE.match(raw)
+    if span:
+        lo, hi = float(span.group(1)), float(span.group(2))
+        return (lo, hi + _band_step(span.group(2)))
+    point = _BAND_POINT_RE.match(raw)
+    if not point:
+        return None
+    op, num = point.group(1) or "=", point.group(2)
+    value, step = float(num), _band_step(num)
+    if op in (">=", "=>"):
+        return (value, _INF)
+    if op == ">":
+        return (value + step, _INF)
+    if op in ("<=", "=<"):
+        return (-_INF, value + step)
+    if op == "<":
+        return (-_INF, value)
+    return (value, value + step)
+
+
+def check_numeric_gate_units(ctx: DTContext):
+    """
+    RULE 4 — `unit` on every `numeric_gate.bands[]`, and the domain sweep PER UNIT
+    (contract §2(7), §6 rule 4).
+
+    This group states mitotic thresholds in five incompatible units — 4 per 10 HPF of
+    0.16 mm², 2.5/mm², 2 per 10 HPF of 0.23 mm², 3 per 2.4 mm², under 1 per 20 HPF. An HPF
+    is not a fixed area, so a band list with no denominator is not a threshold, it is a
+    number. That is why the unit is required on the BAND rather than on the node: one gate
+    can legitimately carry bands in two units, and the moment it does, a single node-level
+    unit is wrong for at least one of them.
+
+    The sweep then runs per unit, because comparing a `per_mm2` band to a `per_10_hpf` band
+    manufactures both gaps and overlaps that are not there. A gap is the dangerous half: an
+    uncovered value falls silently to NOS and reads as a clinical decision rather than a
+    hole in the file.
+
+    Band-level `unit` is a GROUP III amendment. Groups 1 and 2 carry a node-level `unit` in
+    free text (`%`, `months`, `×10⁹/L`) and are untouched here — check_numeric_gate_shape()
+    still validates them exactly as before.
+    """
+    if ctx.group != GROUP3:
+        return []
+    out, gates, swept = [], 0, 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        if node.get("node_type") != "numeric_gate":
+            continue
+        gates += 1
+        bands = node.get("bands")
+        if not isinstance(bands, list) or not bands:
+            continue                       # check_numeric_gate_shape() owns this
+        by_unit: dict = {}
+        for i, band in enumerate(bands):
+            if not isinstance(band, dict):
+                continue
+            unit = band.get("unit")
+            rng = str(band.get("range") or "")
+            # A sentinel band ("not_documented") carries no number, so a denominator on it
+            # would be meaningless. Rule 4 exists because the same COUNT means different
+            # things under different denominators; "not documented" is not a count.
+            if unit is None and not any(ch.isdigit() for ch in rng):
+                continue
+            if unit is None:
+                out.append((FAIL, "numeric_gate %s: bands[%d] (%r) has no `unit`. RULE 4 — "
+                                  "this group states thresholds in five incompatible units "
+                                  "and an HPF is not a fixed area, so a band list without a "
+                                  "denominator is a build error (contract §2(7), §6 rule 4)"
+                            % (node_id, i, band.get("range"))))
+                continue
+            if unit not in NUMERIC_GATE_UNITS:
+                out.append((FAIL, "numeric_gate %s: bands[%d] unit %r is not in the closed "
+                                  "set %s (contract §2(7))"
+                            % (node_id, i, unit, ", ".join(sorted(NUMERIC_GATE_UNITS)))))
+                continue
+            if unit in ("per_10_hpf", "per_hpf") and band.get("hpf_area_mm2") is None \
+                    and node.get("hpf_area_mm2") is None \
+                    and _band_interval(band.get("range")) is not None:
+                out.append((WARN, "numeric_gate %s: bands[%d] is stated per HPF with no "
+                                  "`hpf_area_mm2`. An HPF is not a fixed area — without "
+                                  "the denominator this threshold cannot be compared with "
+                                  "any other in the group (contract §2(7))"
+                            % (node_id, i)))
+            by_unit.setdefault(unit, []).append((i, band))
+
+        for unit, items in sorted(by_unit.items()):
+            intervals, sentinels = [], []
+            for i, band in items:
+                span = _band_interval(band.get("range"))
+                if span is None:
+                    sentinels.append((i, band.get("range")))
+                else:
+                    intervals.append((span, i, band.get("range")))
+            if not intervals:
+                continue
+            swept += 1
+            intervals.sort()
+            floor = 0.0 if unit == "percent" else 0.0
+            ceiling = 100.0 if unit == "percent" else _INF
+            cursor = floor
+            for (lo, hi), i, raw in intervals:
+                # A band may legitimately reach below the floor ("<2.5" on a count that
+                # cannot be negative). Clamp before comparing, or every such band reads as
+                # an overlap with a region the domain does not contain — a false FAIL, and
+                # the corrosive kind: it teaches the next author to write "0-2.4" instead
+                # of the threshold the paper actually states.
+                lo = max(lo, floor)
+                if lo > cursor:
+                    out.append((FAIL, "numeric_gate %s [%s]: no band covers %g to %g — the "
+                                      "next band is bands[%d] (%r). DT master §4: bands "
+                                      "cover their domain with no gap at the authored "
+                                      "precision. An uncovered value falls silently to NOS "
+                                      "and reads as a clinical decision rather than a hole "
+                                      "in the file" % (node_id, unit, cursor, lo, i, raw)))
+                elif hi > cursor and lo < cursor:
+                    out.append((FAIL, "numeric_gate %s [%s]: bands[%d] (%r) overlaps the "
+                                      "band before it below %g — two bands claiming one "
+                                      "value leave the answer to whichever the engine reads "
+                                      "first" % (node_id, unit, i, raw, cursor)))
+                cursor = max(cursor, hi)
+            if cursor < ceiling:
+                out.append((FAIL, "numeric_gate %s [%s]: the bands stop at %g and the "
+                                  "domain runs to %s — every value above the last band "
+                                  "falls through uncovered"
+                            % (node_id, unit, cursor, "100" if ceiling == 100.0 else "∞")))
+            for i, raw in sentinels:
+                out.append((NOTE, "numeric_gate %s [%s]: bands[%d] (%r) is a non-numeric "
+                                  "sentinel and is outside the domain sweep"
+                            % (node_id, unit, i, raw)))
+
+    if not gates and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d numeric_gate node(s): every band names a unit from the closed set, "
+                    "and %d unit-partition(s) cover their domain with no gap and no overlap "
+                    "(rule 4)" % (gates, swept)))
+    return out
+
+
+# -- rule 6 — the behaviour split --------------------------------------------------------
+
+def check_group3_behaviour_split(ctx: DTContext, layer1: Path):
+    """
+    RULE 6 — the eighteen behaviour-overloaded codes (contract §1.2, §6 rule 6).
+
+    One `morphology_entries[]` object per behaviour, each with its own explicit
+    `behavior_code` and its own ICD-O-3.2 preferred term. Most of the eighteen carry a
+    benign term at /0-/1 against a carcinoma at /3, so a table printing only the lowest
+    behaviour reads "adenoma" where the data says "carcinoma".
+
+    WHICH behaviours each code needs is not transcribed here — it is COMPUTED, as the
+    behaviours ICD-O-3.2 actually carries for the code intersected with the group's one
+    behaviour declaration, `0-1,3`. That is rule 8 applied to a count: the expected set
+    comes from the source of truth, so it cannot be got wrong from memory and it moves on
+    its own if ICD-O-3.2 does. It also settles `8000` without a special case — ICD-O-3.2
+    carries /0, /1, /3, /6 and /9, the declaration admits three of them, and /6 and /9
+    correctly fall outside the group.
+    """
+    if ctx.group != GROUP3:
+        return []
+    out = []
+    index, err = load_icdo32(layer1)
+    by_code: dict = {}
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        beh = entry.get("behavior_code")
+        by_code.setdefault(code, []).append(None if beh is None else str(beh).strip())
+
+    if err:
+        out.append((WARN, "RULE 6 is running WITHOUT its anchor: %s. The expected behaviour "
+                          "set per code is computed from ICD-O-3.2, so with the database "
+                          "absent this check falls back to 'at least two distinct explicit "
+                          "behaviours', which is weaker than the rule" % err))
+
+    divergent = 0
+    for code in GROUP3_BEHAVIOUR_SPLIT_CODES:
+        authored = by_code.get(code)
+        if authored is None:
+            out.append((FAIL, "RULE 6 — code %s is one of the eighteen behaviour-overloaded "
+                              "codes of contract §1.2 and has no morphology_entries[] "
+                              "object at all (§6 rule 6)" % code))
+            continue
+        if any(b in (None, "") for b in authored):
+            out.append((FAIL, "RULE 6 — code %s has an entry with no explicit "
+                              "behavior_code. On an overloaded code the behaviour is the "
+                              "whole difference between a benign term and a carcinoma "
+                              "(contract §1.2, §6 rule 6)" % code))
+        present = {b for b in authored if b}
+        if len(authored) != len(present):
+            out.append((FAIL, "RULE 6 — code %s has %d entries across %d distinct "
+                              "behaviour(s) (%s): one object PER BEHAVIOUR, no duplicates "
+                              "(contract §1.2)"
+                        % (code, len(authored), len(present), ", ".join(sorted(present)))))
+        if index:
+            expected = {b for (c, b) in index if c == code} & GROUP3_BEHAVIOURS_DECLARED
+            if expected and present != expected:
+                missing = sorted(expected - present)
+                extra = sorted(present - expected)
+                out.append((FAIL, "RULE 6 — code %s is authored at %s; ICD-O-3.2 carries it "
+                                  "at %s within the group's \"0-1,3\" declaration.%s%s "
+                                  "(contract §1.2, §6 rule 6)"
+                            % (code, "/" + ", /".join(sorted(present)) if present else "no "
+                               "behaviour", "/" + ", /".join(sorted(expected)),
+                               "  Missing: /%s." % ", /".join(missing) if missing else "",
+                               "  Not in ICD-O-3.2 for this code (or outside the "
+                               "declaration): /%s." % ", /".join(extra) if extra else "")))
+        elif len(present) < 2:
+            out.append((FAIL, "RULE 6 — code %s is authored at a single behaviour (/%s). "
+                              "Contract §1.2 lists it as behaviour-overloaded: it needs one "
+                              "entry per behaviour (§6 rule 6)"
+                        % (code, ", /".join(sorted(present)) or "none")))
+
+    if index:
+        listed = set(GROUP3_BEHAVIOUR_SPLIT_CODES)
+        for code, authored in sorted(by_code.items()):
+            if code in listed:
+                continue
+            expected = {b for (c, b) in index if c == code} & GROUP3_BEHAVIOURS_DECLARED
+            if expected and {b for b in authored if b} != expected:
+                divergent += 1
+        if divergent:
+            out.append((NOTE, "%d code(s) outside the eighteen carry a behaviour set that "
+                              "differs from ICD-O-3.2 ∩ \"0-1,3\". That is legal — §1.2 "
+                              "names only eighteen as overloaded — but it is where the "
+                              "108-entry target of §1.1 will diverge if it does" % divergent))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "all %d behaviour-overloaded codes of contract §1.2 are authored one "
+                    "entry per behaviour, each with an explicit behavior_code, against the "
+                    "behaviour set ICD-O-3.2 carries (rule 6)"
+                % len(GROUP3_BEHAVIOUR_SPLIT_CODES)))
+    return out
+
+
+# -- rule 7 — the codes that do not exist ------------------------------------------------
+
+def _code_token_re(code):
+    return re.compile(r"(?<![0-9])%s(?![0-9])" % re.escape(code))
+
+
+def check_group3_absent_codes(ctx: DTContext, repo: Path):
+    """
+    RULE 7 — `9402`-`9409`, `9422`, `8274`-`8279`, `9536` appear NOWHERE (contract §1.1,
+    §6 rule 7).
+
+    Sixteen of the codes ICCC-3's Group III ranges name do not exist in ICD-O-3.2. Seven of
+    those sixteen are nevertheless offered by the REDCap option list, which is how they get
+    into circulation: an author reading the option list rather than the database picks one
+    up, and the tool then tells a clerk to enter a code the registry's own coding standard
+    does not have.
+
+    Checked in three places, because the code reaches the screen from three: the decision
+    tree itself, an alias TARGET (`maps_to_morphology_codes`, and the code an alias prints
+    in its `full_form`), and free text. `alias` and `also_known_as` are deliberately NOT
+    scanned — those are what the clerk TYPES, and §1.1 keeps them as alias inputs.
+
+    A banned code in clerk-facing text FAILs: it is a code the clerk can read and copy. In
+    author-facing text (`coding_note`, `topography_routing_note` — never displayed) it is a
+    WARN, because a note explaining that a code does not exist is useful work, and the
+    honest fix is to name the range rather than print the digits.
+    """
+    patterns = [(code, _code_token_re(code)) for code in GROUP3_ABSENT_CODES]
+    out, hits = [], 0
+
+    def scan(container, where, source):
+        nonlocal hits
+        for holder, path in walk_dicts(container):
+            for key, value in holder.items():
+                if key in ALIAS_INPUT_KEYS:
+                    continue
+                loc = "%s%s.%s" % (where, ("." + path) if path else "", key)
+                if key in ("morphology_code", "nos_fallback_code", "code", "refer_code",
+                           "maps_to_morphology_codes"):
+                    candidates = value if isinstance(value, list) else [value]
+                    for cand in candidates:
+                        cs = as_code(cand)
+                        if cs and any(cs == code for code, _rx in patterns):
+                            hits += 1
+                            out.append((FAIL, "RULE 7 — %s carries code %s, which does not "
+                                              "exist in ICD-O-3.2. Contract §1.1 lists the "
+                                              "sixteen; seven of them are offered by the "
+                                              "REDCap option list anyway, which is exactly "
+                                              "how they get into circulation (§6 rule 7)"
+                                        % (loc, cs)))
+                    continue
+                if not isinstance(value, str):
+                    continue
+                for code, rx in patterns:
+                    if not rx.search(value):
+                        continue
+                    hits += 1
+                    if key in AUTHOR_FACING_TEXT_KEYS:
+                        out.append((WARN, "RULE 7 — %s mentions %s, a code that does not "
+                                          "exist in ICD-O-3.2. This field is author-facing "
+                                          "and is not displayed, so it does not reach a "
+                                          "clerk — but §6 rule 7 says nowhere. Name the "
+                                          "range, not the digits" % (loc, code)))
+                    else:
+                        out.append((FAIL, "RULE 7 — %s prints %s, a code that does not exist "
+                                          "in ICD-O-3.2, in text a clerk reads. A code on "
+                                          "screen is a code that gets entered "
+                                          "(contract §1.1, §6 rule 7)" % (loc, code)))
+                    break
+
+    scan(ctx.data, ctx.name, "dt")
+    alias_path = Path(repo) / "data" / "aliases" / ("aliases_group_%02d.json" % ctx.group)
+    if alias_path.exists():
+        data, findings = load_json(alias_path)
+        out.extend(findings)
+        if data is not None:
+            entries = data.get("aliases") if isinstance(data, dict) else data
+            if isinstance(entries, list):
+                for i, entry in enumerate(entries):
+                    if isinstance(entry, dict):
+                        scan(entry, "%s[%d]" % (alias_path.name, i), "alias")
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if ctx.group != GROUP3 and not hits:
+        return []
+    out.append((OK, "none of the %d codes that ICCC-3 names but ICD-O-3.2 does not carry "
+                    "(%s) appears as a code, a fallback, an alias target or in clerk-facing "
+                    "text (rule 7)"
+                % (len(GROUP3_ABSENT_CODES),
+                   "9402-9409, 9422, 8274-8279, 9536")))
+    return out
+
+
+# -- rule 12 — the topography map is total and disjoint ----------------------------------
+
+_TOPO_RE = re.compile(r"^C\d{2}\.\d$")
+
+
+def _topo_index(code):
+    return int(code[1:3]) * 10 + int(code[4])
+
+
+def _topo_from_index(n):
+    return "C%02d.%d" % (n // 10, n % 10)
+
+
+def _expand_topography(tokens):
+    """['C71.0-C71.5', 'C71.8'] -> ['C71.0', ..., 'C71.5', 'C71.8']. (codes, bad_tokens)."""
+    if isinstance(tokens, str):
+        tokens = [t for t in re.split(r"[,;]", tokens) if t.strip()]
+    codes, bad = [], []
+    for token in tokens or []:
+        if not isinstance(token, str):
+            bad.append(repr(token))
+            continue
+        token = token.strip()
+        parts = [p.strip() for p in re.split(r"[-–—]", token) if p.strip()]
+        if len(parts) == 1 and _TOPO_RE.match(parts[0]):
+            codes.append(parts[0])
+        elif len(parts) == 2 and _TOPO_RE.match(parts[0]) and _TOPO_RE.match(parts[1]):
+            lo, hi = _topo_index(parts[0]), _topo_index(parts[1])
+            if lo > hi:
+                bad.append(token)
+                continue
+            codes.extend(_topo_from_index(n) for n in range(lo, hi + 1))
+        else:
+            bad.append(token)
+    return codes, bad
+
+
+def _existing_topography(layer1):
+    """
+    The topography codes Layer 1 can actually RECORD, from the REDCap topography option
+    list. (codes, source_or_None).
+
+    Rule 12's sweep is written as four ranges — C70.0-C70.9, C71.0-C71.9, C72.0-C72.9,
+    C75.1-C75.3 and C80.9 — and read literally that is 34 codes, nine of which do not
+    exist in ICD-O-3 topography at all (C70.2-C70.8, C72.6, C72.7). Demanding a tree for
+    a code no case can carry is a false FAIL, and the corrosive kind: the only way to
+    clear it is to invent an assignment, after which the check has taught the author to
+    write something untrue.
+
+    So existence is read off Layer 1 rather than asserted here. Every code the sweep drops
+    is REPORTED, so the reduction is visible rather than silent.
+    """
+    if layer1 is None:
+        return set(), None
+    path = Path(layer1) / "RedCap Options" / "Topography Redcap.md"
+    if not path.exists():
+        return set(), None
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError:
+        return set(), None
+    codes = set()
+    for m in re.finditer(r"^(\d{3}),\s", text, re.M):
+        try:
+            codes.add(_topo_from_raw(m.group(1)))
+        except ValueError:
+            continue
+    return codes, "RedCap Options/Topography Redcap.md"
+
+
+def check_group3_topography_map(ctx: DTContext, layer1: Path):
+    """
+    RULE 12 — the topography map is TOTAL and DISJOINT (contract §3, §6 rule 12).
+
+    Group III keys its six trees to anatomical compartment, and the router picks the tree
+    from the topography already captured at Stage 1 — so this map, and nothing else,
+    decides which tree a case enters. Both ways of getting it wrong are invisible until a
+    case hits them, and Revision 2 records that the FIRST DRAFT of this table had both:
+    C72.9 assigned to two trees, and C72.2, C72.4 and C72.5 assigned to none. An unrouted
+    code dead-ends a real case; a duplicated one silently picks whichever row the engine
+    reads first, which is not a decision anybody made.
+
+    So the check is a sweep, not an inspection: every one of the 34 topography codes this
+    group can carry is looked up, and the answer must be exactly one tree.
+    """
+    if ctx.group != GROUP3:
+        return []
+    out = []
+    declared: dict = {}
+    sources: dict = {}
+
+    def take(tree_id, holder, origin):
+        for key in TREE_TOPOGRAPHY_KEYS:
+            if key not in holder:
+                continue
+            codes, bad = _expand_topography(holder[key])
+            for token in bad:
+                out.append((FAIL, "tree %r: %s carries %s, which is not a topography code "
+                                  "or an ascending range of them (expected e.g. \"C71.6\" "
+                                  "or \"C71.0-C71.5\")" % (tree_id, key, token)))
+            if codes:
+                declared.setdefault(tree_id, set()).update(codes)
+                sources[tree_id] = "%s.%s" % (origin, key)
+            return
+
+    for item in ctx.metadata.get("decision_trees") or []:
+        if isinstance(item, dict):
+            tid = item.get("tree_id") or item.get("id")
+            if isinstance(tid, str):
+                take(tid, item, "metadata.decision_trees")
+    for tree in ctx.trees:
+        raw = None
+        for candidate in ctx.data.get("decision_trees") or []:
+            if isinstance(candidate, dict) and \
+                    (candidate.get("tree_id") or candidate.get("id")) == tree["tree_id"]:
+                raw = candidate
+                break
+        if isinstance(raw, dict) and tree["tree_id"] not in declared:
+            take(tree["tree_id"], raw, "decision_trees[]")
+
+    if not declared:
+        return [(FAIL, "RULE 12 — no tree in this file declares the topography it owns, so "
+                       "the map cannot be swept. The router picks the Group III tree from "
+                       "the topography captured at Stage 1 and from nothing else; with no "
+                       "map, every case enters whichever tree the engine reads first. "
+                       "Declare it on metadata.decision_trees[] or on the tree object, "
+                       "under one of: %s (contract §3, §6 rule 12)"
+                 % ", ".join(TREE_TOPOGRAPHY_KEYS))]
+
+    owners: dict = {}
+    for tree_id, codes in declared.items():
+        for code in codes:
+            owners.setdefault(code, []).append(tree_id)
+
+    existing, topo_source = _existing_topography(layer1)
+    contract_union = set().union(*GROUP3_TREE_TOPOGRAPHY.values())
+    if existing:
+        sweep = [c for c in GROUP3_TOPOGRAPHY_SWEEP
+                 if c in existing or c in contract_union]
+        only_contract = sorted(c for c in sweep if c not in existing)
+    else:
+        sweep = [c for c in GROUP3_TOPOGRAPHY_SWEEP if c in contract_union]
+        only_contract = []
+        out.append((WARN, "the REDCap topography option list could not be read, so the "
+                          "rule 12 sweep falls back to the codes contract §3 itself "
+                          "assigns. A real topography code that NO tree owns and the "
+                          "contract table also omits would not be caught"))
+    dropped = [c for c in GROUP3_TOPOGRAPHY_SWEEP if c not in sweep]
+    if dropped:
+        out.append((NOTE, "%d code(s) in rule 12's literal sweep are not in Layer 1's "
+                          "topography option list and are not assigned by contract §3, so "
+                          "no case can carry them and no tree is required to own them: %s"
+                    % (len(dropped), ", ".join(dropped))))
+    if only_contract:
+        out.append((WARN, "%d topography code(s) are assigned a tree by contract §3 but are "
+                          "MISSING from %s: %s. That is a Layer 1 gap, not a tool one — a "
+                          "case at one of these cannot be recorded in REDCap at all"
+                    % (len(only_contract), topo_source, ", ".join(only_contract))))
+
+    unrouted = [c for c in sweep if not owners.get(c)]
+    duplicated = [(c, owners[c]) for c in sweep if len(owners.get(c, [])) > 1]
+    outside = sorted(set(owners) - set(sweep))
+
+    if unrouted:
+        out.append((FAIL, "RULE 12 — %d topography code(s) in the Group III sweep resolve to "
+                          "NO tree: %s. A case at one of these reaches the router, finds no "
+                          "handoff and dead-ends (contract §3, §6 rule 12)"
+                    % (len(unrouted), ", ".join(unrouted))))
+    for code, trees in duplicated:
+        out.append((FAIL, "RULE 12 — topography %s resolves to %d trees (%s). The map must "
+                          "be disjoint: a duplicate does not fail, it silently picks "
+                          "whichever row the engine reads first — which is not a decision "
+                          "anybody made (contract §3, §6 rule 12)"
+                    % (code, len(trees), ", ".join(sorted(trees)))))
+    if outside:
+        out.append((WARN, "%d topography code(s) are owned by a tree but are outside the "
+                          "Group III sweep: %s" % (len(outside), ", ".join(outside))))
+
+    for tree_id, expected in sorted(GROUP3_TREE_TOPOGRAPHY.items()):
+        got = declared.get(tree_id)
+        if got is None:
+            out.append((WARN, "contract §3 names tree %r, which declares no topography in "
+                              "this file" % tree_id))
+            continue
+        if got != set(expected):
+            out.append((WARN, "tree %r owns %s; contract §3 gives it %s. The sweep above is "
+                              "the binding rule, but a divergence from the contract table "
+                              "means one of the two documents is now wrong"
+                        % (tree_id, ", ".join(sorted(got)) or "nothing",
+                           ", ".join(expected))))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "topography map is total and disjoint: all %d recordable code(s) in "
+                    "the Group III sweep (C70.0-C70.9, C71.0-C71.9, C72.0-C72.9, "
+                    "C75.1-C75.3, C80.9, less the %d that Layer 1 does not carry) resolve "
+                    "to exactly one of %d tree(s) (rule 12)"
+                % (len(sweep), len(dropped), len(declared))))
+    return out
+
+
+# -- rule 13 / rule 8 — the ICD-O-3.2 round-trip -----------------------------------------
+
+def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
+    """
+    RULES 13 and 8 — every (morphology_code, morphology_name, behavior_code) triple the
+    engine can emit exists VERBATIM in icdo32.sqlite (contract §5.2, §6 rules 8 and 13).
+
+    This SUPERSEDES check_redcap_exact_names() for Group 3, and it is strictly stronger.
+    The REDCap check asks "does this name match the option string" and therefore inherits
+    whatever the option list carries — including the 28 (code, term) pairs in circulation
+    that ICD-O-3.2 does not have. This one asks "is this a real ICD-O-3.2 term for this
+    code at this behaviour", which the option list cannot answer for itself. Groups 1 and 2
+    keep the REDCap check exactly as it was; nothing here runs on them.
+
+    Rule 8: the comparison keys off the database and off NOTHING in the file. No flag
+    exempts a name. `redcap_option_verified`, whatever it says, is not read here — that
+    flag was authored to mean "not yet checked" and was read as "exempt from checking",
+    and six drifted names passed a green build on the strength of it.
+
+    THE ONE EXEMPTION, and how it collapses. ICD-O-3.2 misspells 9475/3's preferred term
+    ("Medullobloastoma"). The entry displays the corrected spelling and carries the source
+    string in `source_term`; the round-trip runs against `source_term`. That exemption
+    rests on three things, all re-checked on every build:
+        * only the (code, behaviour) pairs named in ICDO32_SOURCE_TERM_EXEMPTIONS may carry
+          a `source_term` at all — otherwise it is a general escape hatch, which is a hole;
+        * the `source_term` must be the exact string the contract names AND must still
+          exist in icdo32.sqlite for that pair;
+        * the corrected `morphology_name` must still be ABSENT from icdo32.sqlite.
+    Fix the typo upstream and the third condition fails, so the exemption FAILS rather than
+    quietly outliving its reason. An exemption that cannot collapse is a hole (data.md §5A).
+    """
+    if ctx.group != GROUP3:
+        return []
+    index, err = load_icdo32(layer1)
+    if err:
+        return [(WARN, "RULE 13 could not run: %s. morphology_name is NOT validated for "
+                       "this group — check_redcap_exact_names() steps aside for Group 3 "
+                       "(contract §5.2) on the understanding that this check replaces it, "
+                       "so with the database absent nothing is checking the names at all"
+                 % err)]
+
+    out, checked, matched = [], 0, 0
+    exempt_pairs = set(ICDO32_SOURCE_TERM_EXEMPTIONS)
+
+    def verify(code, beh, name, what, extra_terms=None):
+        nonlocal checked, matched
+        if code is None or name is None:
+            return
+        checked += 1
+        terms = index.get((code, str(beh).strip() if beh is not None else None))
+        if terms is None and beh is None:
+            terms = {}
+            for (c, b), bucket in index.items():
+                if c == code:
+                    terms.update(bucket)
+        if not terms:
+            out.append((FAIL, "%s: ICD-O-3.2 carries no term at all for %s/%s — the triple "
+                              "cannot round-trip because the pair does not exist "
+                              "(contract §6 rule 13)" % (what, code, beh)))
+            return
+        if name in terms:
+            matched += 1
+            level, obs = terms[name]
+            if obs:
+                out.append((WARN, "%s: %r is an OBSOLETE ICD-O-3.2 term for %s/%s (marked "
+                                  "%s, level %s). It round-trips, but it is not what the "
+                                  "tool should be putting on screen"
+                            % (what, name, code, beh, obs, level or "?")))
+            return
+        near = _nearest(name, terms)
+        detail = ""
+        if near:
+            detail = ("\n               ICD-O-3.2 has  : %r\n"
+                      "               the two differ only in case, punctuation, spacing or "
+                      "tumour/tumor" % near)
+        out.append((FAIL, "%s: the triple (%s, %r, %s) does not exist in ICD-O-3.2. RULE 13 "
+                          "— every name the engine can emit must be a real term for that "
+                          "code at that behaviour, checked against the database and not "
+                          "against the REDCap option list, which carries 28 (code, term) "
+                          "pairs ICD-O-3.2 does not (contract §5.2, §6 rule 13).%s"
+                    % (what, code, name, beh, detail)))
+
+    # code -> {name: behaviour} as THIS FILE authors it. A nos_fallback names a code and
+    # a name but carries no behaviour of its own, and guessing one — taking the first
+    # entry on the code, say — invents a triple nobody wrote and then fails it. The
+    # behaviour comes from the entry the fallback's own name identifies; a name that
+    # matches no entry on that code is the real defect, because the fallback would print
+    # a name this file does not carry.
+    entry_names: dict = {}
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        c = as_code(entry.get("morphology_code"))
+        n = entry.get("morphology_name")
+        b = entry.get("behavior_code")
+        if c and isinstance(n, str) and b is not None:
+            entry_names.setdefault(c, {})[n] = str(b).strip()
+
+    def verify_fallback(code, name, declared_beh, what):
+        if code is None or not isinstance(name, str):
+            return
+        if declared_beh is not None:
+            verify(code, str(declared_beh).strip(), name, what)
+            return
+        known = entry_names.get(code) or {}
+        if name in known:
+            verify(code, known[name], name, what)
+            return
+        out.append((FAIL, "%s: names %s %r, which is not the morphology_name of any "
+                          "morphology_entries[] object on that code in this file (this "
+                          "file carries %s). A fallback that prints a name the file does "
+                          "not itself carry cannot round-trip, and the clerk is shown a "
+                          "string that appears nowhere else (contract §6 rule 13)"
+                    % (what, code, name,
+                       ", ".join("%r at /%s" % (n, b) for n, b in sorted(known.items()))
+                       or "no entry")))
+
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        beh = entry.get("behavior_code")
+        beh = None if beh is None else str(beh).strip()
+        name = entry.get("morphology_name")
+        label = "entry %s/%s" % (code or "index %d" % i, beh)
+
+        source_term = entry.get("source_term")
+        pair = (code, beh)
+        if source_term is not None:
+            if pair not in exempt_pairs:
+                out.append((FAIL, "%s: carries a `source_term`, but %s/%s is not the one "
+                                  "declared name exemption (contract §5.3 exempts only %s). "
+                                  "A `source_term` that any entry may add is a general "
+                                  "escape hatch from rule 13 — and a flag that exempts a "
+                                  "name is exactly what rule 8 forbids"
+                            % (label, code, beh,
+                               ", ".join("%s/%s" % p for p in sorted(exempt_pairs)))))
+            else:
+                spec = ICDO32_SOURCE_TERM_EXEMPTIONS[pair]
+                if source_term != spec["source_term"]:
+                    out.append((FAIL, "%s: source_term is %r; the exemption is declared "
+                                      "against %r (contract §5.3). %s"
+                                % (label, source_term, spec["source_term"], spec["why"])))
+                if name != spec["morphology_name"]:
+                    out.append((WARN, "%s: the §5.3 exemption exists so this entry can "
+                                      "display %r; it displays %r"
+                                % (label, spec["morphology_name"], name)))
+                terms = index.get(pair) or {}
+                if spec["source_term"] not in terms:
+                    out.append((FAIL, "%s: THE EXEMPTION HAS COLLAPSED — its anchor is that "
+                                      "ICD-O-3.2 carries %r for %s/%s, and it does not. "
+                                      "Re-read the database and either drop the exemption "
+                                      "or re-declare it against what is actually there "
+                                      "(contract §5.3, §6 rule 8)"
+                                % (label, spec["source_term"], code, beh)))
+                elif isinstance(name, str) and name in terms:
+                    out.append((FAIL, "%s: THE EXEMPTION IS NO LONGER NEEDED — ICD-O-3.2 now "
+                                      "carries %r for %s/%s, so the misspelling it works "
+                                      "around has been fixed upstream. Drop `source_term` "
+                                      "and let the name round-trip on its own "
+                                      "(contract §5.3)" % (label, name, code, beh)))
+                else:
+                    checked += 1
+                    matched += 1
+            continue
+
+        verify(code, beh, name, label)
+
+        fb_code = as_code(entry.get("nos_fallback_code"))
+        fb_name = entry.get("nos_fallback_name")
+        if fb_code and isinstance(fb_name, str):
+            verify_fallback(fb_code, fb_name, entry.get("nos_fallback_behavior_code"),
+                            "%s nos_fallback_name" % label)
+
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if not is_nos_fallback_object(holder, where):
+                continue
+            verify_fallback(as_code(holder.get("code")), holder.get("name"),
+                            holder.get("behavior_code"),
+                            "node %s (%s) nos_fallback" % (node_id, where))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d/%d (code, name, behaviour) triple(s) exist verbatim in "
+                    "icdo32.sqlite; %d declared name exemption(s), each still anchored to a "
+                    "string the database actually carries (rules 8 and 13)"
+                % (matched, checked, len(exempt_pairs))))
+    return out
+
+
+# -- contract §1.3 — iccc3_subgroup_by_topography[] --------------------------------------
+
+def check_iccc3_subgroup_by_topography(ctx: DTContext, layer1: Path):
+    """
+    Contract §1.3 — the one intra-group topography split, checked against ICCC-2017.
+
+    ICCC-3 puts `9380/3` in IIIb at C72.3 and in IIId2 everywhere else. That is one
+    (code, behaviour) pair with two subgroups, and the schema allows one entry per pair, so
+    the subgroup moves into an ordered, first-match-wins rule list with the entry's own
+    `iccc3_subgroup_id` as the default.
+
+    The check is a sweep against ICCC-2017.sqlite, for the same reason rule 12 is a sweep:
+    the alternative — pinning 9380 to IIId2 and accepting that an optic nerve glioma
+    reports the wrong subgroup — is silently wrong for exactly the cases IIIb exists to
+    catch. So for every code in the file, at every one of the 34 topography codes the group
+    can carry, the subgroup the rules resolve to must be the subgroup ICCC-2017 assigns.
+    That catches the missing rule as well as the wrong one.
+    """
+    if ctx.group != GROUP3:
+        return []
+    out, seen = [], 0
+    index, err = load_iccc_group3(layer1)
+
+    entries_with_rules = [e for e in ctx.entries
+                          if isinstance(e, dict) and "iccc3_subgroup_by_topography" in e]
+    if err:
+        if entries_with_rules:
+            return [(WARN, "iccc3_subgroup_by_topography[] could not be checked against the "
+                           "recode table: %s. Shape is validated below, but whether a rule "
+                           "names the subgroup ICCC-2017 actually assigns is UNVERIFIED"
+                     % err)]
+        return [(WARN, "iccc3_subgroup_by_topography[] could not be checked: %s" % err)]
+
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        label = "entry %s/%s" % (code or "index %d" % i, entry.get("behavior_code"))
+        default_id = entry.get("iccc3_subgroup_id")
+        rules = entry.get("iccc3_subgroup_by_topography")
+        assigned = index.get(code) or {}
+
+        if rules is None:
+            if len(assigned) > 1:
+                where = {sid: sorted(t)[:3] for sid, (_n, t) in assigned.items()}
+                out.append((FAIL, "%s: ICCC-2017 assigns this code to %d subgroups by "
+                                  "topography (%s) and the entry carries no "
+                                  "iccc3_subgroup_by_topography[]. One of them is being "
+                                  "reported for every case, and it is wrong for exactly the "
+                                  "cases the other subgroup exists to catch "
+                                  "(contract §1.3)"
+                            % (label, len(assigned),
+                               "; ".join("%s at %s…" % (sid, ", ".join(t))
+                                         for sid, t in sorted(where.items())))))
+            continue
+
+        seen += 1
+        if not isinstance(rules, list) or not rules:
+            out.append((FAIL, "%s: iccc3_subgroup_by_topography must be a non-empty array "
+                              "of ordered rules (contract §1.3)" % label))
+            continue
+        if entry.get("topography_dependent") is not True:
+            out.append((FAIL, "%s: carries iccc3_subgroup_by_topography[] but "
+                              "topography_dependent is %r. The two say the same thing and "
+                              "the renderer reads the flag"
+                        % (label, entry.get("topography_dependent"))))
+        note = entry.get("topography_routing_note")
+        if not isinstance(note, str) or not note.strip():
+            out.append((FAIL, "%s: topography_dependent routing requires a "
+                              "topography_routing_note saying which way the split runs "
+                              "(DT master §6)" % label))
+
+        claimed: dict = {}
+        for j, rule in enumerate(rules):
+            if not isinstance(rule, dict):
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d] is not an object"
+                            % (label, j)))
+                continue
+            codes, bad = _expand_topography(rule.get("topography_in"))
+            if bad:
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d].topography_in "
+                                  "carries %s, which is not a topography code or range"
+                            % (label, j, ", ".join(bad))))
+            if not codes:
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d] has an empty "
+                                  "topography_in[] — a rule that matches nothing is inert "
+                                  "and reads as live" % (label, j)))
+            sid = rule.get("iccc3_subgroup_id")
+            sname = rule.get("iccc3_subgroup_name")
+            if not isinstance(sid, str) or not sid.strip():
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d] has no "
+                                  "iccc3_subgroup_id" % (label, j)))
+            if not isinstance(sname, str) or not sname.strip():
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d] has no "
+                                  "iccc3_subgroup_name" % (label, j)))
+            elif isinstance(sid, str) and sid in assigned and assigned[sid][0] != sname:
+                out.append((FAIL, "%s: iccc3_subgroup_by_topography[%d] names subgroup %s "
+                                  "%r; ICCC-2017 labels %s %r"
+                            % (label, j, sid, sname, sid, assigned[sid][0])))
+            for topo in codes:
+                if topo in claimed:
+                    out.append((FAIL, "%s: topography %s is claimed by rules[%d] and "
+                                      "rules[%d]. The list is first-match-wins, so a "
+                                      "duplicate makes rule ORDER decide a subgroup — which "
+                                      "is not a decision anybody wrote down "
+                                      "(contract §1.3)" % (label, topo, claimed[topo], j)))
+                else:
+                    claimed[topo] = j
+
+        if not assigned:
+            out.append((WARN, "%s: ICCC-2017 has no Group III assignment for this code, so "
+                              "the routing rules cannot be checked against the recode table"
+                        % label))
+            continue
+
+        for topo in GROUP3_TOPOGRAPHY_SWEEP:
+            expected = {sid for sid, (_n, covered) in assigned.items() if topo in covered}
+            if not expected:
+                continue
+            resolved = default_id
+            for j, rule in enumerate(rules):
+                if not isinstance(rule, dict):
+                    continue
+                codes, _bad = _expand_topography(rule.get("topography_in"))
+                if topo in codes:
+                    resolved = rule.get("iccc3_subgroup_id")
+                    break
+            if resolved not in expected:
+                which = ("rule %d" % claimed[topo]) if topo in claimed else "the entry's "\
+                    "own default"
+                out.append((FAIL, "%s at %s resolves to subgroup %r via %s; ICCC-2017 "
+                                  "assigns it to %s. A subgroup the recode table does not "
+                                  "agree with does not classify — `iccc_code` never "
+                                  "populates (contract §1.3)"
+                            % (label, topo, resolved, which, "/".join(sorted(expected)))))
+                break
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d iccc3_subgroup_by_topography[] rule list(s): every rule names a "
+                    "subgroup ICCC-2017 assigns to that code at that topography, and so "
+                    "does every entry's own default (contract §1.3)" % seen))
+    return out
+
+
+# --------------------------------------------------------------------------------------
 # B5. Against the source of truth
 # --------------------------------------------------------------------------------------
 
@@ -4267,6 +6533,20 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_entity_boundary, ctx)
         report.run(check_viral_gates, ctx)
         report.run(check_burkitt_provisional, ctx)
+        # Group III schema extensions (Group 3 build contract §2, §5, §6) — fields, not
+        # node types. Each is a no-op on a file that does not use the field it is about.
+        report.run(check_diagnosis_rendering, ctx)              # rules 1, 2
+        report.run(check_resource_level_gate, ctx)              # rule 3
+        report.run(check_numeric_gate_units, ctx)               # rule 4
+        report.run(check_entity_annotation, ctx, repo)          # rule 5
+        report.run(check_group3_behaviour_split, ctx, layer1)   # rule 6
+        report.run(check_group3_absent_codes, ctx, repo)        # rule 7
+        report.run(check_grade_resolution, ctx)                 # rule 9
+        report.run(check_basis_of_diagnosis, ctx)               # rule 10
+        report.run(check_imaging_terminals, ctx)                # rule 11
+        report.run(check_group3_topography_map, ctx, layer1)    # rule 12
+        report.run(check_icdo32_round_trip, ctx, layer1)        # rules 8, 13
+        report.run(check_iccc3_subgroup_by_topography, ctx, layer1)   # contract §1.3
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)

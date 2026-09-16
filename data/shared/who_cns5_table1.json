@@ -1,0 +1,833 @@
+{
+  "_source": {
+    "paper": "Louis DN, et al. The 2021 WHO Classification of Tumors of the Central Nervous System: a summary. Neuro-Oncology 2021;23(8):1231-1251.",
+    "doi": "10.1093/neuonc/noab106",
+    "table": "Table 1",
+    "transcribed": "2026-09-14",
+    "row_count": 109,
+    "table1_printed_rows": 144,
+    "heading_rows": 35,
+    "pdf_pages": "1233-1235 (PDF pages 3-5)"
+  },
+  "families": [
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Adult-type diffuse gliomas",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Adult-type diffuse gliomas"
+      ],
+      "types": [
+        {
+          "name": "Astrocytoma, IDH-mutant",
+          "provisional": false
+        },
+        {
+          "name": "Oligodendroglioma, IDH-mutant, and 1p/19q-codeleted",
+          "provisional": false
+        },
+        {
+          "name": "Glioblastoma, IDH-wildtype",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Pediatric-type diffuse low-grade gliomas",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Pediatric-type diffuse low-grade gliomas"
+      ],
+      "types": [
+        {
+          "name": "Diffuse astrocytoma, MYB- or MYBL1-altered",
+          "provisional": false
+        },
+        {
+          "name": "Angiocentric glioma",
+          "provisional": false
+        },
+        {
+          "name": "Polymorphous low-grade neuroepithelial tumor of the young",
+          "provisional": false
+        },
+        {
+          "name": "Diffuse low-grade glioma, MAPK pathway-altered",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Pediatric-type diffuse high-grade gliomas",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Pediatric-type diffuse high-grade gliomas"
+      ],
+      "types": [
+        {
+          "name": "Diffuse midline glioma, H3 K27-altered",
+          "provisional": false
+        },
+        {
+          "name": "Diffuse hemispheric glioma, H3 G34-mutant",
+          "provisional": false
+        },
+        {
+          "name": "Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype",
+          "provisional": false
+        },
+        {
+          "name": "Infant-type hemispheric glioma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Circumscribed astrocytic gliomas",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Circumscribed astrocytic gliomas"
+      ],
+      "types": [
+        {
+          "name": "Pilocytic astrocytoma",
+          "provisional": false
+        },
+        {
+          "name": "High-grade astrocytoma with piloid features",
+          "provisional": false
+        },
+        {
+          "name": "Pleomorphic xanthoastrocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Subependymal giant cell astrocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Chordoid glioma",
+          "provisional": false
+        },
+        {
+          "name": "Astroblastoma, MN1-altered",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Glioneuronal and neuronal tumors",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Glioneuronal and neuronal tumors"
+      ],
+      "types": [
+        {
+          "name": "Ganglioglioma",
+          "provisional": false
+        },
+        {
+          "name": "Desmoplastic infantile ganglioglioma / desmoplastic infantile astrocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Dysembryoplastic neuroepithelial tumor",
+          "provisional": false
+        },
+        {
+          "name": "Diffuse glioneuronal tumor with oligodendroglioma-like features and nuclear clusters",
+          "provisional": true
+        },
+        {
+          "name": "Papillary glioneuronal tumor",
+          "provisional": false
+        },
+        {
+          "name": "Rosette-forming glioneuronal tumor",
+          "provisional": false
+        },
+        {
+          "name": "Myxoid glioneuronal tumor",
+          "provisional": false
+        },
+        {
+          "name": "Diffuse leptomeningeal glioneuronal tumor",
+          "provisional": false
+        },
+        {
+          "name": "Gangliocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Multinodular and vacuolating neuronal tumor",
+          "provisional": false
+        },
+        {
+          "name": "Dysplastic cerebellar gangliocytoma (Lhermitte-Duclos disease)",
+          "provisional": false
+        },
+        {
+          "name": "Central neurocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Extraventricular neurocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Cerebellar liponeurocytoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Gliomas, glioneuronal tumors, and neuronal tumors",
+      "subfamily": "Ependymal tumors",
+      "heading_path": [
+        "Gliomas, glioneuronal tumors, and neuronal tumors",
+        "Ependymal tumors"
+      ],
+      "types": [
+        {
+          "name": "Supratentorial ependymoma",
+          "provisional": false
+        },
+        {
+          "name": "Supratentorial ependymoma, ZFTA fusion-positive",
+          "provisional": false
+        },
+        {
+          "name": "Supratentorial ependymoma, YAP1 fusion-positive",
+          "provisional": false
+        },
+        {
+          "name": "Posterior fossa ependymoma",
+          "provisional": false
+        },
+        {
+          "name": "Posterior fossa ependymoma, group PFA",
+          "provisional": false
+        },
+        {
+          "name": "Posterior fossa ependymoma, group PFB",
+          "provisional": false
+        },
+        {
+          "name": "Spinal ependymoma",
+          "provisional": false
+        },
+        {
+          "name": "Spinal ependymoma, MYCN-amplified",
+          "provisional": false
+        },
+        {
+          "name": "Myxopapillary ependymoma",
+          "provisional": false
+        },
+        {
+          "name": "Subependymoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Choroid plexus tumors",
+      "subfamily": null,
+      "heading_path": [
+        "Choroid plexus tumors"
+      ],
+      "types": [
+        {
+          "name": "Choroid plexus papilloma",
+          "provisional": false
+        },
+        {
+          "name": "Atypical choroid plexus papilloma",
+          "provisional": false
+        },
+        {
+          "name": "Choroid plexus carcinoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Embryonal tumors",
+      "subfamily": "Medulloblastoma > Medulloblastomas, molecularly defined",
+      "heading_path": [
+        "Embryonal tumors",
+        "Medulloblastoma",
+        "Medulloblastomas, molecularly defined"
+      ],
+      "types": [
+        {
+          "name": "Medulloblastoma, WNT-activated",
+          "provisional": false
+        },
+        {
+          "name": "Medulloblastoma, SHH-activated and TP53-wildtype",
+          "provisional": false
+        },
+        {
+          "name": "Medulloblastoma, SHH-activated and TP53-mutant",
+          "provisional": false
+        },
+        {
+          "name": "Medulloblastoma, non-WNT/non-SHH",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Embryonal tumors",
+      "subfamily": "Medulloblastoma",
+      "heading_path": [
+        "Embryonal tumors",
+        "Medulloblastoma"
+      ],
+      "types": [
+        {
+          "name": "Medulloblastomas, histologically defined",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Embryonal tumors",
+      "subfamily": "Other CNS embryonal tumors",
+      "heading_path": [
+        "Embryonal tumors",
+        "Other CNS embryonal tumors"
+      ],
+      "types": [
+        {
+          "name": "Atypical teratoid/rhabdoid tumor",
+          "provisional": false
+        },
+        {
+          "name": "Cribriform neuroepithelial tumor",
+          "provisional": true
+        },
+        {
+          "name": "Embryonal tumor with multilayered rosettes",
+          "provisional": false
+        },
+        {
+          "name": "CNS neuroblastoma, FOXR2-activated",
+          "provisional": false
+        },
+        {
+          "name": "CNS tumor with BCOR internal tandem duplication",
+          "provisional": false
+        },
+        {
+          "name": "CNS embryonal tumor",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Pineal tumors",
+      "subfamily": null,
+      "heading_path": [
+        "Pineal tumors"
+      ],
+      "types": [
+        {
+          "name": "Pineocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Pineal parenchymal tumor of intermediate differentiation",
+          "provisional": false
+        },
+        {
+          "name": "Pineoblastoma",
+          "provisional": false
+        },
+        {
+          "name": "Papillary tumor of the pineal region",
+          "provisional": false
+        },
+        {
+          "name": "Desmoplastic myxoid tumor of the pineal region, SMARCB1-mutant",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Cranial and paraspinal nerve tumors",
+      "subfamily": null,
+      "heading_path": [
+        "Cranial and paraspinal nerve tumors"
+      ],
+      "types": [
+        {
+          "name": "Schwannoma",
+          "provisional": false
+        },
+        {
+          "name": "Neurofibroma",
+          "provisional": false
+        },
+        {
+          "name": "Perineurioma",
+          "provisional": false
+        },
+        {
+          "name": "Hybrid nerve sheath tumor",
+          "provisional": false
+        },
+        {
+          "name": "Malignant melanotic nerve sheath tumor",
+          "provisional": false
+        },
+        {
+          "name": "Malignant peripheral nerve sheath tumor",
+          "provisional": false
+        },
+        {
+          "name": "Paraganglioma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Meningiomas",
+      "subfamily": null,
+      "heading_path": [
+        "Meningiomas"
+      ],
+      "types": [
+        {
+          "name": "Meningioma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Soft tissue tumors > Fibroblastic and myofibroblastic tumors",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Soft tissue tumors",
+        "Fibroblastic and myofibroblastic tumors"
+      ],
+      "types": [
+        {
+          "name": "Solitary fibrous tumor",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Soft tissue tumors > Vascular tumors",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Soft tissue tumors",
+        "Vascular tumors"
+      ],
+      "types": [
+        {
+          "name": "Hemangiomas and vascular malformations",
+          "provisional": false
+        },
+        {
+          "name": "Hemangioblastoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Soft tissue tumors > Skeletal muscle tumors",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Soft tissue tumors",
+        "Skeletal muscle tumors"
+      ],
+      "types": [
+        {
+          "name": "Rhabdomyosarcoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Soft tissue tumors > Uncertain differentiation",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Soft tissue tumors",
+        "Uncertain differentiation"
+      ],
+      "types": [
+        {
+          "name": "Intracranial mesenchymal tumor, FET-CREB fusion-positive",
+          "provisional": true
+        },
+        {
+          "name": "CIC-rearranged sarcoma",
+          "provisional": false
+        },
+        {
+          "name": "Primary intracranial sarcoma, DICER1-mutant",
+          "provisional": false
+        },
+        {
+          "name": "Ewing sarcoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Chondro-osseous tumors > Chondrogenic tumors",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Chondro-osseous tumors",
+        "Chondrogenic tumors"
+      ],
+      "types": [
+        {
+          "name": "Mesenchymal chondrosarcoma",
+          "provisional": false
+        },
+        {
+          "name": "Chondrosarcoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Mesenchymal, non-meningothelial tumors",
+      "subfamily": "Chondro-osseous tumors > Notochordal tumors",
+      "heading_path": [
+        "Mesenchymal, non-meningothelial tumors",
+        "Chondro-osseous tumors",
+        "Notochordal tumors"
+      ],
+      "types": [
+        {
+          "name": "Chordoma (including poorly differentiated chordoma)",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Melanocytic tumors",
+      "subfamily": "Diffuse meningeal melanocytic neoplasms",
+      "heading_path": [
+        "Melanocytic tumors",
+        "Diffuse meningeal melanocytic neoplasms"
+      ],
+      "types": [
+        {
+          "name": "Meningeal melanocytosis and meningeal melanomatosis",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Melanocytic tumors",
+      "subfamily": "Circumscribed meningeal melanocytic neoplasms",
+      "heading_path": [
+        "Melanocytic tumors",
+        "Circumscribed meningeal melanocytic neoplasms"
+      ],
+      "types": [
+        {
+          "name": "Meningeal melanocytoma and meningeal melanoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Hematolymphoid tumors",
+      "subfamily": "Lymphomas > CNS lymphomas",
+      "heading_path": [
+        "Hematolymphoid tumors",
+        "Lymphomas",
+        "CNS lymphomas"
+      ],
+      "types": [
+        {
+          "name": "Primary diffuse large B-cell lymphoma of the CNS",
+          "provisional": false
+        },
+        {
+          "name": "Immunodeficiency-associated CNS lymphoma",
+          "provisional": false
+        },
+        {
+          "name": "Lymphomatoid granulomatosis",
+          "provisional": false
+        },
+        {
+          "name": "Intravascular large B-cell lymphoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Hematolymphoid tumors",
+      "subfamily": "Lymphomas > Miscellaneous rare lymphomas in the CNS",
+      "heading_path": [
+        "Hematolymphoid tumors",
+        "Lymphomas",
+        "Miscellaneous rare lymphomas in the CNS"
+      ],
+      "types": [
+        {
+          "name": "MALT lymphoma of the dura",
+          "provisional": false
+        },
+        {
+          "name": "Other low-grade B-cell lymphomas of the CNS",
+          "provisional": false
+        },
+        {
+          "name": "Anaplastic large cell lymphoma (ALK+/ALK−)",
+          "provisional": false
+        },
+        {
+          "name": "T-cell and NK/T-cell lymphomas",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Hematolymphoid tumors",
+      "subfamily": "Histiocytic tumors",
+      "heading_path": [
+        "Hematolymphoid tumors",
+        "Histiocytic tumors"
+      ],
+      "types": [
+        {
+          "name": "Erdheim-Chester disease",
+          "provisional": false
+        },
+        {
+          "name": "Rosai-Dorfman disease",
+          "provisional": false
+        },
+        {
+          "name": "Juvenile xanthogranuloma",
+          "provisional": false
+        },
+        {
+          "name": "Langerhans cell histiocytosis",
+          "provisional": false
+        },
+        {
+          "name": "Histiocytic sarcoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Germ cell tumors",
+      "subfamily": null,
+      "heading_path": [
+        "Germ cell tumors"
+      ],
+      "types": [
+        {
+          "name": "Mature teratoma",
+          "provisional": false
+        },
+        {
+          "name": "Immature teratoma",
+          "provisional": false
+        },
+        {
+          "name": "Teratoma with somatic-type malignancy",
+          "provisional": false
+        },
+        {
+          "name": "Germinoma",
+          "provisional": false
+        },
+        {
+          "name": "Embryonal carcinoma",
+          "provisional": false
+        },
+        {
+          "name": "Yolk sac tumor",
+          "provisional": false
+        },
+        {
+          "name": "Choriocarcinoma",
+          "provisional": false
+        },
+        {
+          "name": "Mixed germ cell tumor",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Tumors of the sellar region",
+      "subfamily": null,
+      "heading_path": [
+        "Tumors of the sellar region"
+      ],
+      "types": [
+        {
+          "name": "Adamantinomatous craniopharyngioma",
+          "provisional": false
+        },
+        {
+          "name": "Papillary craniopharyngioma",
+          "provisional": false
+        },
+        {
+          "name": "Pituicytoma, granular cell tumor of the sellar region, and spindle cell oncocytoma",
+          "provisional": false
+        },
+        {
+          "name": "Pituitary adenoma/PitNET",
+          "provisional": false
+        },
+        {
+          "name": "Pituitary blastoma",
+          "provisional": false
+        }
+      ]
+    },
+    {
+      "family": "Metastases to the CNS",
+      "subfamily": null,
+      "heading_path": [
+        "Metastases to the CNS"
+      ],
+      "types": [
+        {
+          "name": "Metastases to the brain and spinal cord parenchyma",
+          "provisional": false
+        },
+        {
+          "name": "Metastases to the meninges",
+          "provisional": false
+        }
+      ]
+    }
+  ],
+  "all_names": [
+    "Astrocytoma, IDH-mutant",
+    "Oligodendroglioma, IDH-mutant, and 1p/19q-codeleted",
+    "Glioblastoma, IDH-wildtype",
+    "Diffuse astrocytoma, MYB- or MYBL1-altered",
+    "Angiocentric glioma",
+    "Polymorphous low-grade neuroepithelial tumor of the young",
+    "Diffuse low-grade glioma, MAPK pathway-altered",
+    "Diffuse midline glioma, H3 K27-altered",
+    "Diffuse hemispheric glioma, H3 G34-mutant",
+    "Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype",
+    "Infant-type hemispheric glioma",
+    "Pilocytic astrocytoma",
+    "High-grade astrocytoma with piloid features",
+    "Pleomorphic xanthoastrocytoma",
+    "Subependymal giant cell astrocytoma",
+    "Chordoid glioma",
+    "Astroblastoma, MN1-altered",
+    "Ganglioglioma",
+    "Desmoplastic infantile ganglioglioma / desmoplastic infantile astrocytoma",
+    "Dysembryoplastic neuroepithelial tumor",
+    "Diffuse glioneuronal tumor with oligodendroglioma-like features and nuclear clusters",
+    "Papillary glioneuronal tumor",
+    "Rosette-forming glioneuronal tumor",
+    "Myxoid glioneuronal tumor",
+    "Diffuse leptomeningeal glioneuronal tumor",
+    "Gangliocytoma",
+    "Multinodular and vacuolating neuronal tumor",
+    "Dysplastic cerebellar gangliocytoma (Lhermitte-Duclos disease)",
+    "Central neurocytoma",
+    "Extraventricular neurocytoma",
+    "Cerebellar liponeurocytoma",
+    "Supratentorial ependymoma",
+    "Supratentorial ependymoma, ZFTA fusion-positive",
+    "Supratentorial ependymoma, YAP1 fusion-positive",
+    "Posterior fossa ependymoma",
+    "Posterior fossa ependymoma, group PFA",
+    "Posterior fossa ependymoma, group PFB",
+    "Spinal ependymoma",
+    "Spinal ependymoma, MYCN-amplified",
+    "Myxopapillary ependymoma",
+    "Subependymoma",
+    "Choroid plexus papilloma",
+    "Atypical choroid plexus papilloma",
+    "Choroid plexus carcinoma",
+    "Medulloblastoma, WNT-activated",
+    "Medulloblastoma, SHH-activated and TP53-wildtype",
+    "Medulloblastoma, SHH-activated and TP53-mutant",
+    "Medulloblastoma, non-WNT/non-SHH",
+    "Medulloblastomas, histologically defined",
+    "Atypical teratoid/rhabdoid tumor",
+    "Cribriform neuroepithelial tumor",
+    "Embryonal tumor with multilayered rosettes",
+    "CNS neuroblastoma, FOXR2-activated",
+    "CNS tumor with BCOR internal tandem duplication",
+    "CNS embryonal tumor",
+    "Pineocytoma",
+    "Pineal parenchymal tumor of intermediate differentiation",
+    "Pineoblastoma",
+    "Papillary tumor of the pineal region",
+    "Desmoplastic myxoid tumor of the pineal region, SMARCB1-mutant",
+    "Schwannoma",
+    "Neurofibroma",
+    "Perineurioma",
+    "Hybrid nerve sheath tumor",
+    "Malignant melanotic nerve sheath tumor",
+    "Malignant peripheral nerve sheath tumor",
+    "Paraganglioma",
+    "Meningioma",
+    "Solitary fibrous tumor",
+    "Hemangiomas and vascular malformations",
+    "Hemangioblastoma",
+    "Rhabdomyosarcoma",
+    "Intracranial mesenchymal tumor, FET-CREB fusion-positive",
+    "CIC-rearranged sarcoma",
+    "Primary intracranial sarcoma, DICER1-mutant",
+    "Ewing sarcoma",
+    "Mesenchymal chondrosarcoma",
+    "Chondrosarcoma",
+    "Chordoma (including poorly differentiated chordoma)",
+    "Meningeal melanocytosis and meningeal melanomatosis",
+    "Meningeal melanocytoma and meningeal melanoma",
+    "Primary diffuse large B-cell lymphoma of the CNS",
+    "Immunodeficiency-associated CNS lymphoma",
+    "Lymphomatoid granulomatosis",
+    "Intravascular large B-cell lymphoma",
+    "MALT lymphoma of the dura",
+    "Other low-grade B-cell lymphomas of the CNS",
+    "Anaplastic large cell lymphoma (ALK+/ALK−)",
+    "T-cell and NK/T-cell lymphomas",
+    "Erdheim-Chester disease",
+    "Rosai-Dorfman disease",
+    "Juvenile xanthogranuloma",
+    "Langerhans cell histiocytosis",
+    "Histiocytic sarcoma",
+    "Mature teratoma",
+    "Immature teratoma",
+    "Teratoma with somatic-type malignancy",
+    "Germinoma",
+    "Embryonal carcinoma",
+    "Yolk sac tumor",
+    "Choriocarcinoma",
+    "Mixed germ cell tumor",
+    "Adamantinomatous craniopharyngioma",
+    "Papillary craniopharyngioma",
+    "Pituicytoma, granular cell tumor of the sellar region, and spindle cell oncocytoma",
+    "Pituitary adenoma/PitNET",
+    "Pituitary blastoma",
+    "Metastases to the brain and spinal cord parenchyma",
+    "Metastases to the meninges"
+  ]
+}

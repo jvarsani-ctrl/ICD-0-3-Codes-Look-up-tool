@@ -133,14 +133,33 @@
       "organ": "brain_cns",
       "topography_range": "C70-C72",
       "codes": [
+        "C70.0",
+        "C70.1",
         "C70.9",
+        "C71.0",
+        "C71.1",
+        "C71.2",
+        "C71.3",
+        "C71.4",
+        "C71.5",
+        "C71.6",
+        "C71.7",
+        "C71.8",
         "C71.9",
+        "C72.0",
+        "C72.1",
+        "C72.2",
+        "C72.3",
+        "C72.4",
+        "C72.5",
+        "C72.8",
         "C72.9"
       ],
       "candidate_groups": [
         3
       ],
-      "label": "Brain, meninges and central nervous system"
+      "label": "Brain, meninges and central nervous system",
+      "note": "Group III keys its decision trees to anatomical COMPARTMENT, so this list must be the full C70-C72 set, not three NOS codes. The router picks the tree from the code chosen here and asks no further question, which makes region capture load-bearing for this group in a way it is not for the others. Expanded 2026-09-14 with the Group 3 build. C71.0 has no REDCap topography option (the dropdown jumps 709 to 711) — see docs/TODO.md."
     },
     {
       "organ": "pituitary",
@@ -786,6 +805,160 @@
         9
       ],
       "candidate_groups_advisory": true
+    },
+    "C70.0": {
+      "code": "C70.0",
+      "label": "Cerebral meninges",
+      "redcap_code": "700",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C70.1": {
+      "code": "C70.1",
+      "label": "Spinal meninges",
+      "redcap_code": "701",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.1": {
+      "code": "C71.1",
+      "label": "Frontal lobe (Frontal pole)",
+      "redcap_code": "711",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.2": {
+      "code": "C71.2",
+      "label": "Temporal lobe (Hippocampus, Uncus)",
+      "redcap_code": "712",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.3": {
+      "code": "C71.3",
+      "label": "Parietal lobe",
+      "redcap_code": "713",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.4": {
+      "code": "C71.4",
+      "label": "Occipital lobe (Occipital pole)",
+      "redcap_code": "714",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.5": {
+      "code": "C71.5",
+      "label": "Ventricle, NOS",
+      "redcap_code": "715",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.6": {
+      "code": "C71.6",
+      "label": "Cerebellum, NOS",
+      "redcap_code": "716",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.7": {
+      "code": "C71.7",
+      "label": "Brain stem",
+      "redcap_code": "717",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.8": {
+      "code": "C71.8",
+      "label": "Overlapping lesion of brain",
+      "redcap_code": "718",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.0": {
+      "code": "C72.0",
+      "label": "Spinal cord",
+      "redcap_code": "720",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.1": {
+      "code": "C72.1",
+      "label": "Cauda equina",
+      "redcap_code": "721",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.2": {
+      "code": "C72.2",
+      "label": "Olfactory nerve",
+      "redcap_code": "722",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.4": {
+      "code": "C72.4",
+      "label": "Acoustic nerve",
+      "redcap_code": "724",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.5": {
+      "code": "C72.5",
+      "label": "Cranial nerve, NOS",
+      "redcap_code": "725",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C72.8": {
+      "code": "C72.8",
+      "label": "Overlapping lesion of brain and central nervous system",
+      "redcap_code": "728",
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ]
+    },
+    "C71.0": {
+      "code": "C71.0",
+      "label": "Cerebrum (Supratentorial NOS, Basal ganglia, Cerebral cortex, Corpus striatum, Globus pallidus, Hypothalamus, Thalamus)",
+      "redcap_code": null,
+      "coarse_organ": "brain_cns",
+      "candidate_groups": [
+        3
+      ],
+      "note": "NO REDCap topography option exists for this code — the `topo_code` dropdown jumps 709 to 711. Verified against ICD coding/RedCap Options/Topography Redcap.md, 2026-09-14. The tool carries C71.0 because Group III keys its decision trees to anatomical compartment and a thalamic diffuse midline glioma lands here. Until the option is added the clerk has no dropdown value to record. See docs/TODO.md."
     }
   }
 }

@@ -805,3 +805,668 @@ flag in the file being checked — no `redcap_option_verified`, no `terminal_rea
 `verified: true`. The one data-driven exemption anywhere near this work is the pre-existing
 behaviour-split exemption in `check_redcap_exact_names`, anchored to a sibling entry that must
 itself match Layer 1 exactly, so it collapses the moment the anchor drifts.
+
+
+---
+---
+
+# Group III checks — negative controls
+
+Evidence that the twelve checks added to `build/build_database.py` for Group III catch what
+they claim to, and that they fire on nothing else. Same method as the Group II section
+above, per `memory/data.md` §5A: break the data deliberately, confirm the check FAILs,
+restore, confirm it passes — and separately confirm it does **not** fire on correct data,
+because a false FAIL is the more corrosive failure.
+
+**92 controls. All 92 behaved as designed** — 73 expected to FAIL and did, 19 expected to
+PASS and did — and all 92 restored to a clean build.
+
+## The fixture
+
+`scratchpad/fixture/` — a synthetic Group III repo. `data/database/group_03_dt.json` was
+**not** on disk when this work was done and still is not: it is being authored in parallel
+by other tasks, so there was no real data to validate against and every control here runs
+against a fixture instead. That is contract §6 rule 14's requirement anyway.
+
+The fixture is **generated, not transcribed** (`scratchpad/make_fixture.py`). Every code,
+every term string and every subgroup in it is pulled from `icdo32.sqlite` and
+`ICCC-2017.sqlite` at generation time, so the fixture cannot drift from Layer 1 and a
+control that breaks a name is breaking a string the database actually carries. It holds:
+
+- **50 morphology entries** — all eighteen behaviour-overloaded codes of contract §1.2 at
+  every behaviour ICD-O-3.2 carries within the group's `0-1,3` declaration, plus `9380`
+  (the intra-group topography split), `9475` (the one `source_term` exemption), `9476` (the
+  one `awaiting_layer1`), `9471/3` carrying the §5.4 string `Medulloblastoma, SHH activated,
+  NOS` verbatim, and the codes the trees emit.
+- **Six trees, 14 nodes**, node-prefixed `pf_ st_ md_ sp_ mn_ un_`, with the contract §3
+  topography map declared on both `metadata.decision_trees[]` and the tree objects.
+- **At least one live instance of every one of the seven §2 fields**: two-track
+  `diagnosis_rendering` on four branches, three `resource_level_gate`s (ependymal,
+  embryonal, meningothelial-by-analogy), three `entity_annotation`s, one
+  `grade_resolution`, `basis_of_diagnosis` on fourteen branches, two `imaging_pathway`
+  endpoints with `diversion_criteria[]` (the DIPG six and the NF1 two), and a
+  `numeric_gate` whose bands are stated in **two different units**.
+
+Runs are:
+
+```
+python3 build/build_database.py --repo <scratchpad>/fixture \
+        --layer1 "/Users/jay/Ai Environment/Cancer Registry/ICD coding"
+```
+
+## The false-FAIL control (correct data)
+
+On the unmodified fixture the group_03 section reports **0 FAIL**, and each of the twelve
+checks reports OK against real content rather than an empty NOTE:
+
+```
+OK  4 diagnosis_rendering block(s): every track carries its own numeral system (rule 1) and every "nec" suffix rests on an asserted adequate result (rule 2)
+OK  3 resource_level_gate(s): every one names its family, no ependymal node carries tier "obligatory" (rule 3), and every family without an ADAPTR paper declares rl_assignment "by_analogy"
+OK  1 numeric_gate node(s): every band names a unit from the closed set, and 2 unit-partition(s) cover their domain with no gap and no overlap (rule 4)
+OK  3 entity_annotation(s): no "(provisional type)" artefact, no whitespace drift, no Table 2 spelling, all matched against data/shared/who_cns5_table1.json
+OK  all 18 behaviour-overloaded codes of contract §1.2 are authored one entry per behaviour, each with an explicit behavior_code, against the behaviour set ICD-O-3.2 carries (rule 6)
+OK  none of the 16 codes that ICCC-3 names but ICD-O-3.2 does not carry (9402-9409, 9422, 8274-8279, 9536) appears as a code, a fallback, an alias target or in clerk-facing text (rule 7)
+OK  1 grade_resolution block(s): no `unresolved` invents a grade, and every outcome names a grade with its system or a null with a reason (rule 9)
+OK  14 basis_of_diagnosis value(s) in the ENCR set [0, 1, 2, 4, 5, 7, 8, 9]; none is 3, 6 or (in Group III) 1 (rule 10)
+OK  2 imaging_pathway node(s): every imaging-only terminal carries no_tissue, endpoint_verification "not_verified", basis 2 and a NON-EMPTY diversion_criteria[] (rule 11)
+OK  topography map is total and disjoint: all 25 recordable code(s) in the Group III sweep resolve to exactly one of 6 tree(s) (rule 12)
+OK  50/50 (code, name, behaviour) triple(s) exist verbatim in icdo32.sqlite; 1 declared name exemption(s), each still anchored to a string the database actually carries (rules 8 and 13)
+OK  1 iccc3_subgroup_by_topography[] rule list(s): every rule names a subgroup ICCC-2017 assigns to that code at that topography, and so does every entry's own default (contract §1.3)
+```
+
+## Regression — Groups 1 and 2 are byte-identical
+
+Ran the pre-change `build_database.py` and the post-change one over the real repo (which
+holds `group_01_dt.json` and `group_02_dt.json` and no Group 3 file) and diffed the whole
+report. **One line differs, and it is the check count:**
+
+```
+153c153
+<   checks run : 87
+---
+>   checks run : 111
+```
+
+`OK 82 · NOTE 17 · WARN 21 · FAIL 0 · BUILD PASSED` before and after. Not one new finding
+on either group. Every Group III check returns **nothing at all** — not an OK, not a NOTE —
+on a file that does not use the field it is about, which is what makes that diff possible.
+
+## Four defects the fixture exposed, all in the checks rather than the data
+
+Recorded because §5A's point is that this is where the defects are.
+
+1. **`check_non_reportable_terminals` false-FAILed on every `diversion_criteria[]` entry
+   and every `grade_resolution` outcome** — nine FAILs on correct data. Both constructs
+   require a clerk-facing `reason` and neither has a destination, and that check reads "a
+   `reason` and no destination" as a terminal that forgot to flag itself. This is the third
+   time that shape has bitten: `nos_fallback` and `provisional_pending` were the first two.
+   Fixed the same way, with `is_diversion_criterion_object()` and
+   `is_grade_resolution_leaf()` scoped to the key they hang off **and** their shape —
+   controls X.2 and X.3 prove the narrowing did not absorb a real code-less terminal.
+
+2. **My own domain sweep false-FAILed on `"<2.5"`.** A band that reaches below the floor of
+   its domain was read as overlapping a region the domain does not contain. Clamped. This
+   is the corrosive kind: the only way for an author to clear it would have been to write
+   `"0-2.49"` in place of the threshold the source actually states.
+
+3. **Every Group III check discarded its own FAIL when its "seen" counter was zero.** The
+   early return was `if not seen: return []`, so a finding produced *before* the counter
+   incremented was thrown away — including the two rules that fire precisely when the
+   construct is ABSENT (a `9380` with two ICCC-2017 subgroups and no routing rules; an
+   `ihc_counts_as` on a file with no `basis_of_diagnosis`). Control §1.3.2 caught it: it
+   expected FAIL and got PASS. Now `if not seen and not out`. This is exactly the failure
+   §5A names — a check that confirms the error it exists to catch.
+
+4. **Rule 12's sweep, read literally, demanded a tree for nine topography codes that do not
+   exist.** C70.2–C70.8, C72.6 and C72.7 are inside the contract's ranges and are in no
+   topography list; demanding an assignment for them is a false FAIL whose only fix is to
+   invent one. Existence is now read off Layer 1's topography option list, and **every code
+   the sweep drops is reported** so the reduction is visible rather than silent.
+
+---
+
+## `check_diagnosis_rendering` — rules 1 and 2 (contract §2(1))
+
+**What it catches.** The numeral invariant in both directions, the per-track field shape
+(`who_cns5` fills `who_diagnosis` and nothing else; `adaptr_descriptive` fills
+`descriptive_diagnosis` and `comment`), a grade that is a placeholder rather than a grade,
+a grade outside its own system's set — and the NEC gate: a `suffix: "nec"` on a branch that
+does not assert an adequate result was obtained.
+
+### Control 1.1 — Arabic grade_system on an ADAPTR descriptive track
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node st_ependymoma_gate (resolution_logic[0]): RULE 1 — track 'adaptr_descriptive' requires grade_system 'roman', got 'arabic'. The numeral system follows the TRACK, never the evidence type (contract §2(4)): a grade reached on histology alone is still Arabic when the diagnosis is a WHO CNS5 diagnosis. Printed the other way round, the line claims a diagnosis the registry did not reach
+```
+
+### Control 2.1 — the NEC branch re-gated on `specimen_adequacy: "inadequate"`
+
+The branch still says NEC. It is now reached *because the specimen was inadequate*.
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node pf_medulloblastoma_molecular (resolution_logic[1]): RULE 2 — suffix "nec" on a branch reached on 'inadequate'. NEC says the test WAS done and the tumour fitted no WHO type (cIMPACT-NOW update 1). A branch reached because the test did not return cannot say that — it is a NOS, and a registry that cannot do the test can never legitimately emit NEC (contract §2(1), §6 rule 2)
+```
+
+### Control 2.4 — the same branch relabelled `suffix: "nos"`, still on a not-done test
+
+Expected **PASS**, got **PASS** — as designed. NOS is exactly what an unresolved test
+produces; only NEC is a positive claim about a result.
+
+---
+
+## `check_resource_level_gate` — rule 3 (contract §2(2))
+
+**What it catches.** A missing or invented `family` (RL is per family, never per site), an
+`obligatory` tier on an ependymal node, and a family with no ADAPTR paper behind it that
+does not declare `rl_assignment: "by_analogy"`.
+
+### Control 3.1 — `tier: "obligatory"` on the ependymal node
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node st_ependymoma_gate (resolution_logic[0]): RULE 3 — tier 'obligatory' on a node in the ependymal family. Satgunaseelan uses only can_be_considered and highly_recommended for this family, so a third value has no source behind it and a three-value enum mis-renders every ependymal node (contract §2(2), §6 rule 3)
+```
+
+### Control 3.3 — the same `obligatory` tier on the EMBRYONAL node
+
+Expected **PASS**, got **PASS** — as designed. The restriction is per family; a
+three-value enum is legal everywhere Satgunaseelan's ependymoma tables are not the source.
+
+---
+
+## `check_numeric_gate_units` — rule 4 (contract §2(7))
+
+**What it catches.** A band with no `unit`, a unit outside the closed set, a per-HPF band
+with no `hpf_area_mm2`, and — the reason the rule exists — a gap or an overlap in the band
+domain, swept **per unit** so that a `per_mm2` band is never compared with a `per_10_hpf`
+one.
+
+### Control 4.3 — one band re-labelled `per_mm2`, opening a gap in the `per_10_hpf` partition
+
+The node's bands are `0-3`, `4-19`, `>=20` per 10 HPF and `<2.5`, `>=2.5` per mm². Moving
+`4-19` into the per-mm² partition leaves 4 to 19 uncovered in the first and overlapping in
+the second.
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  numeric_gate mn_mitotic_gate [per_10_hpf]: no band covers 4 to 20 — the next band is bands[2] ('>=20'). DT master §4: bands cover their domain with no gap at the authored precision. An uncovered value falls silently to NOS and reads as a clinical decision rather than a hole in the file
+```
+
+### Control 4.7 — the two units left as authored
+
+Expected **PASS**, got **PASS** — as designed. Swept together rather than per unit, these
+five bands manufacture both a gap and an overlap that are not there.
+
+---
+
+## `check_entity_annotation` — rule 5 (contract §2(3))
+
+**Its anchor.** `data/shared/who_cns5_table1.json` — Louis 2021 Table 1, 109 type rows
+transcribed with a `provisional` flag per row. Rule 5 says the entity strings are checked
+against a transcribed list "not against recall", and that file is the list. Where it is
+absent the check says so in a WARN and proves only the artefact, whitespace and divergence
+rules; it does not imply it checked Table 1.
+
+No spelling rule is imposed on an entity name. Table 1 uses `tumor`, and the check knows
+that because the transcription says so, not because anyone remembered it.
+
+### Control 5.1 — `ZFTA fusion positive`, the hyphen written as a space
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node st_ependymoma_gate (resolution_logic[0]): entity_annotation.who_cns5_entity 'Supratentorial ependymoma, ZFTA fusion positive' is a near-miss on the transcribed CNS5 Table 1 string 'Supratentorial ependymoma, ZFTA fusion-positive' — they differ only in case, punctuation or spacing, which is exactly the drift rule 5 exists to catch
+```
+
+Controls 5.2 (trailing space), 5.3 (`tumour` for `tumor`), 5.4 (`(provisional type)` inside
+the name), 5.5 (the artefact inside `shared_with[]`), 5.6 (CNS5 Table 2's comma-before-and
+spelling of the Table 1 entity) and 5.7 (`provisional: false` on an entity Table 1 marks
+provisional) all behaved as designed.
+
+---
+
+## `check_group3_behaviour_split` — rule 6 (contract §1.2)
+
+**What it catches.** Any of the eighteen overloaded codes missing, missing a behaviour,
+carrying a behaviour ICD-O-3.2 does not have for it, or carrying an entry with no explicit
+`behavior_code`. The expected behaviour set is **computed** — ICD-O-3.2's behaviours for
+the code intersected with the group's `0-1,3` declaration — so it cannot be got wrong from
+memory, and `8000`'s `/6` and `/9` fall outside the group without a special case.
+
+### Control 6.1 — the `8000/0` entry deleted
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  RULE 6 — code 8000 is authored at /1, /3; ICD-O-3.2 carries it at /0, /1, /3 within the group's "0-1,3" declaration.  Missing: /0. (contract §1.2, §6 rule 6)
+```
+
+### Control 6.3 — an `8000/6` entry added
+
+Expected **FAIL**, got **FAIL** — as designed. `/6` exists in ICD-O-3.2 and is outside the
+group; metastatic disease is handled at Stage 1.
+
+---
+
+## `check_group3_absent_codes` — rule 7 (contract §1.1)
+
+**What it catches.** `9402`–`9409`, `9422`, `8274`–`8279` and `9536` as a code, a fallback
+code, an alias target, or in clerk-facing text. `alias` and `also_known_as` are deliberately
+not scanned — §1.1 keeps those codes as alias *inputs*, which is what a clerk types.
+
+### Control 7.2 — `9422` printed in a clerk-facing `reason`
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  RULE 7 — group_03_dt.json.decision_trees[4].nodes[1].nos_fallback.reason prints 9422, a code that does not exist in ICD-O-3.2, in text a clerk reads. A code on screen is a code that gets entered (contract §1.1, §6 rule 7)
+```
+
+### Control 7.3 — the same `9422` in an author-facing `coding_note`
+
+Expected **PASS** (a WARN, not a FAIL), got **PASS** — as designed. `coding_note` is never
+displayed, so no clerk can copy the digits out of it; the WARN still asks for the range to
+be named rather than the code.
+
+### Control 7.5 — `9536` left in `also_known_as`
+
+Expected **PASS**, got **PASS** — as designed. That is the one place the code belongs.
+
+---
+
+## `check_grade_resolution` — rule 9 (contract §2(4))
+
+### Control 9.1 — `unresolved` given a grade
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node mn_mitotic_gate (bands[0]): RULE 9 — grade_resolution.unresolved carries grade '1'. `unresolved` must NEVER invent a grade: where the grade cannot be established it is omitted, which is what cIMPACT-NOW update 8 requires for an untested brain-invasive meningioma. A number here is one no test produced (contract §2(4), §6 rule 9)
+```
+
+Controls 9.2 (a grade with no `grade_system`), 9.3 (a null grade with no `reason`), 9.4
+(`"NA"`), 9.5 (`""`), 9.6 (`unresolved` removed) and 9.7 (a `variable` not declared in
+`captured_variables[]`) all behaved as designed.
+
+---
+
+## `check_basis_of_diagnosis` — rule 10 (contract §2(5))
+
+### Control 10.1 — basis code 6
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  node pf_medulloblastoma_molecular (resolution_logic[0]): RULE 10 — basis_of_diagnosis 6 does not exist. The ENCR scale is [0, 1, 2, 4, 5, 7, 8, 9]; 3 and 6 are not values in it, so a receiving registry reads this as something else entirely (contract §2(5), §6 rule 10)
+```
+
+Control 10.3 (basis 1 on a Group III terminal — every CNS row in ENCR Table 3 is basis 2),
+10.5 (`ihc_counts_as: 8` where §2(5) closes the gap at 7) and 10.7 (a declared basis lower
+than the components it says it derived from) behaved as designed. Control 10.6 (basis 5,
+cytology) expected PASS and passed.
+
+---
+
+## `check_imaging_terminals` — rule 11 (contract §2(6), §3.5)
+
+### Control 11.1 — `diversion_criteria[]` emptied on the DIPG terminal
+
+The list is the only thing standing between a κ = 0.297 imaging endpoint and a case coded
+without tissue. Empty, it renders exactly like a terminal that was never gated.
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  imaging_pathway pf_dipg_imaging ((node level)): RULE 11 — diversion_criteria[] is EMPTY. An empty list is a build error, not "no diversions apply": it renders exactly like a terminal that was never gated, while reading to the next author as considered and cleared. DIPG's imaging-only endpoint has κ = 0.297 agreement and is explicitly below standard of care — the six diversion criteria are what make it safe to offer at all (contract §2(6), §6 rule 11)
+```
+
+Controls 11.2 (the list removed), 11.3 (basis 7 on an imaging-only terminal), 11.4
+(`no_tissue` dropped), 11.5 (`endpoint_verification: "verified"`) and 11.6 (a criterion
+with a feature and no reason) behaved as designed. Control 11.7 — the NF1 terminal's two
+criteria against DIPG's six — expected PASS and passed: the rule is non-empty, not a count.
+
+---
+
+## `check_group3_topography_map` — rule 12 (contract §3)
+
+Revision 2 records that the first draft of the §3 table assigned C72.9 to two trees and
+left C72.2, C72.4 and C72.5 unrouted. Both controls reproduce those faults exactly.
+
+### Control 12.1 — C72.9 given to `g3_midline` as well as `g3_unspecified`
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  RULE 12 — topography C72.9 resolves to 2 trees (g3_midline, g3_unspecified). The map must be disjoint: a duplicate does not fail, it silently picks whichever row the engine reads first — which is not a decision anybody made (contract §3, §6 rule 12)
+```
+
+### Control 12.2 — C72.4 removed from `g3_midline`
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  RULE 12 — 1 topography code(s) in the Group III sweep resolve to NO tree: C72.4. A case at one of these reaches the router, finds no handoff and dead-ends (contract §3, §6 rule 12)
+```
+
+### Control 12.5 — C70.2–C70.8, C72.6 and C72.7 owned by nobody
+
+Expected **PASS**, got **PASS** — as designed, and reported as a NOTE naming all nine. They
+are inside rule 12's literal ranges, they are in no topography list, and no case can carry
+them. See defect 4 above.
+
+### Control 12.4 — every topography declaration removed
+
+Expected **FAIL**, got **FAIL** — as designed. A missing map is not an empty map: the router
+picks the Group III tree from topography and nothing else.
+
+---
+
+## `check_icdo32_round_trip` — rules 8 and 13 (contract §5.2, §5.3)
+
+**What it catches.** Any `(morphology_code, morphology_name, behavior_code)` triple the
+engine can emit that ICD-O-3.2 does not carry — including a `nos_fallback` naming a string
+no entry on that code carries. Where a name fails, the message prints the near-miss, so the
+author sees which string they meant.
+
+**This replaces `check_redcap_exact_names` for Group 3 and for Group 3 only** (contract
+§5.2). That check now returns a single NOTE for group 3 saying so, and is otherwise
+untouched: Groups 1 and 2 keep the Layer 1 keying, the sibling behaviour-overload exemption
+and every message they had.
+
+### Control 13.2 — `Medulloblastoma, SHH activated, NOS` hyphenated to `SHH-activated`
+
+The sibling Related term on the same code, `Medulloblastoma, SHH-activated and
+TP53-wildtype`, *does* have the hyphen. This is the single most likely name defect in the
+group.
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  entry 9471/3: the triple (9471, 'Medulloblastoma, SHH-activated, NOS', 3) does not exist in ICD-O-3.2. RULE 13 — every name the engine can emit must be a real term for that code at that behaviour, checked against the database and not against the REDCap option list, which carries 28 (code, term) pairs ICD-O-3.2 does not (contract §5.2, §6 rule 13).
+```
+
+### Control 13.3 — `tumor` spelled `tumour`
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  entry 9473/3: the triple (9473, 'CNS embryonal tumour, NOS', 3) does not exist in ICD-O-3.2. RULE 13 — every name the engine can emit must be a real term for that code at that behaviour, checked against the database and not against the REDCap option list, which carries 28 (code, term) pairs ICD-O-3.2 does not (contract §5.2, §6 rule 13).
+```
+
+### Control 13.4 — the same drifted name flagged `redcap_option_verified: true`
+
+Rule 8: no flag exempts a name.
+
+Expected **FAIL**, got **FAIL** — as designed, with the identical message. The flag is not
+read.
+
+```
+FAIL  entry 9473/3: the triple (9473, 'CNS embryonal tumour, NOS', 3) does not exist in ICD-O-3.2. RULE 13 — every name the engine can emit must be a real term for that code at that behaviour, checked against the database and not against the REDCap option list, which carries 28 (code, term) pairs ICD-O-3.2 does not (contract §5.2, §6 rule 13).
+```
+
+### Control 13.1 — a trailing space on a `morphology_name`
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+### The `9475` exemption, and proof that it collapses
+
+`9475/3`'s ICD-O-3.2 preferred term is misspelt `Medullobloastoma`. The entry displays the
+corrected spelling and carries the source string in `source_term`; the round-trip runs
+against `source_term`. The exemption rests on three conditions, re-checked on every build.
+
+#### Control 13.6 — `source_term` corrupted to the corrected spelling, so the anchor goes
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  entry 9475/3: source_term is 'Medulloblastoma, WNT-activated, NOS'; the exemption is declared against 'Medullobloastoma, WNT-activated, NOS' (contract §5.3). ICD-O-3.2 prints 'Medullobloastoma' (contract §5.3, Revision 2 §8.2 decision 3). The entry displays the corrected spelling.
+```
+
+#### Control 13.7 — `source_term` added to an entry that is not the declared exemption
+
+Expected **FAIL**, got **FAIL** — as designed. A `source_term` any entry may add is a
+general escape hatch from rule 13.
+
+```
+FAIL  entry 9440/3: carries a `source_term`, but 9440/3 is not the one declared name exemption (contract §5.3 exempts only 9475/3). A `source_term` that any entry may add is a general escape hatch from rule 13 — and a flag that exempts a name is exactly what rule 8 forbids
+```
+
+#### Control 13.9 — `9475` as authored
+
+Expected **PASS**, got **PASS** — as designed.
+
+The third condition has no control here because it cannot be staged without editing
+`icdo32.sqlite`, which is read-only Layer 1: if ICD-O-3.2 ever carries the corrected
+spelling for `9475/3`, the check FAILs with "THE EXEMPTION IS NO LONGER NEEDED". It is a
+two-line branch in `check_icdo32_round_trip()` and it is the reason the exemption cannot
+outlive its cause.
+
+---
+
+## `check_iccc3_subgroup_by_topography` — contract §1.3
+
+**Its anchor.** `ICCC-2017.sqlite`. For every code in the file, at every topography code the
+group can carry, the subgroup the ordered rules resolve to must be the subgroup ICCC-2017
+assigns — which catches the missing rule as well as the wrong one.
+
+### Control §1.3.2 — the `9380` rule list removed
+
+Expected **FAIL**, got **FAIL** — as designed. *This is the control that caught defect 3:
+on its first run it expected FAIL and got PASS.*
+
+```
+FAIL  entry 9380/3: ICCC-2017 assigns this code to 2 subgroups by topography (IIIb at C72.3…; IIId2 at C70.0, C70.1, C70.2…) and the entry carries no iccc3_subgroup_by_topography[]. One of them is being reported for every case, and it is wrong for exactly the cases the other subgroup exists to catch (contract §1.3)
+```
+
+Controls §1.3.1 (the C72.3 rule re-pointed at IIId2), §1.3.3 (the rule's topography changed
+to C72.2, so C72.3 falls through to the IIId2 default), §1.3.4 (`topography_dependent`
+flipped to false), §1.3.5 (two rules claiming C72.3, so rule order decides a subgroup) and
+§1.3.6 (the rule naming IIIb with a label ICCC-2017 does not use) all behaved as designed.
+
+---
+
+## Contract §5.5 — `check_awaiting_layer1` already covers `9476`
+
+Confirmed rather than written. The existing check requires an entry carrying
+`awaiting_layer1` to have a `reason`, to carry `redcap_option_verified: false`, and to be
+listed under `## Group 3 — open` in `docs/codes-awaiting-redcap.md`; and it requires a code
+listed there as open to still carry the flag. All three directions fire.
+
+### Control §5.5.1 — the `## Group 3 — open` section removed from the doc
+
+Expected **FAIL**, got **FAIL** — as designed.
+
+```
+FAIL  entry 9476 carries awaiting_layer1 but is not listed under '## Group 3 — open' in docs/codes-awaiting-redcap.md (ruling 3)
+```
+
+Controls §5.5.2 (`awaiting_layer1` removed while the doc still lists 9476) and §5.5.3
+(`awaiting_layer1` set with `redcap_option_verified: true`) behaved as designed. **No change
+to `check_awaiting_layer1` was needed.** `docs/codes-awaiting-redcap.md` does not yet have a
+`## Group 3 — open` section; it needs one before `group_03_dt.json` lands.
+
+---
+
+## When an anchor is missing, the check says so
+
+Every anchored check was run with its anchor removed. None passes silently.
+
+| Anchor removed | Result |
+|---|---|
+| `icdo32.sqlite` (`ICDO_DB=/nonexistent`) | WARN ×2 — rule 13 "morphology_name is NOT validated for this group … nothing is checking the names at all"; rule 6 falls back to the weaker form and says so |
+| `ICCC-2017.sqlite` (`ICCC_DB=/nonexistent`) | WARN — "whether a rule names the subgroup ICCC-2017 actually assigns is UNVERIFIED" |
+| `data/shared/who_cns5_table1.json` | WARN naming each unverified entity — "Table 1 conformance is UNVERIFIED, not verified" |
+| `RedCap Options/Topography Redcap.md` | WARN — the rule 12 sweep falls back to the contract §3 union and says what that no longer catches |
+
+---
+
+## All 92 controls
+
+| # | Control | Expected | Actual | As designed |
+|---|---|---|---|---|
+| 1 | 1.1 Arabic grade_system on an ADAPTR descriptive track | FAIL | FAIL | yes |
+| 2 | 1.2 Roman grade_system on a who_cns5 track | FAIL | FAIL | yes |
+| 3 | 1.3 who_cns5 branch also filling descriptive_diagnosis | FAIL | FAIL | yes |
+| 4 | 1.4 adaptr_descriptive branch with comment nulled | FAIL | FAIL | yes |
+| 5 | 1.5 grade "NA" on a diagnosis_rendering | FAIL | FAIL | yes |
+| 6 | 1.6 grade "" on a diagnosis_rendering | FAIL | FAIL | yes |
+| 7 | 1.7 grade "4 " — a trailing space on a valid grade | FAIL | FAIL | yes |
+| 8 | 1.8 Roman numeral III on the Arabic (who_cns5) track | FAIL | FAIL | yes |
+| 9 | 1.9 grade 1 on a who_cns5 track — CNS5 Table 3 grades MVNT/PLNTY at 1 | PASS | PASS | yes |
+| 10 | 2.1 NEC branch reached on specimen_adequacy "inadequate" | FAIL | FAIL | yes |
+| 11 | 2.2 NEC branch reached on a test that was not done | FAIL | FAIL | yes |
+| 12 | 2.3 NEC branch with no asserted result at all | FAIL | FAIL | yes |
+| 13 | 2.4 the same branch relabelled suffix "nos" — NOS needs no adequate result | PASS | PASS | yes |
+| 14 | 3.1 tier "obligatory" on the ependymal node | FAIL | FAIL | yes |
+| 15 | 3.2 referral_tier "obligatory" on the ependymal node | FAIL | FAIL | yes |
+| 16 | 3.3 tier "obligatory" on the EMBRYONAL node — legal, must not fire | PASS | PASS | yes |
+| 17 | 3.4 resource_level_gate.family removed | FAIL | FAIL | yes |
+| 18 | 3.5 family "ependymoma" — a plausible near-miss on "ependymal" | FAIL | FAIL | yes |
+| 19 | 3.6 rl_assignment dropped from the meningothelial gate | FAIL | FAIL | yes |
+| 20 | 4.1 `unit` dropped from one band | FAIL | FAIL | yes |
+| 21 | 4.2 unit "per_10hpf" — a plausible near-miss on "per_10_hpf" | FAIL | FAIL | yes |
+| 22 | 4.3 one band re-labelled per_mm2, opening a gap in the per_10_hpf partition | FAIL | FAIL | yes |
+| 23 | 4.4 "4-19" widened to "4-25", overlapping ">=20" | FAIL | FAIL | yes |
+| 24 | 4.5 "0-3" narrowed to "1-3", leaving 0 uncovered | FAIL | FAIL | yes |
+| 25 | 4.6 ">=20" changed to "20-40", leaving everything above 40 uncovered | FAIL | FAIL | yes |
+| 26 | 4.7 the two units swept SEPARATELY — per_mm2 "<2.5"/">=2.5" beside per_10_hpf "0-3"/"4-19"/">=20" | PASS | PASS | yes |
+| 27 | 5.1 entity "…ZFTA fusion positive" — hyphen written as a space | FAIL | FAIL | yes |
+| 28 | 5.2 entity with a trailing space | FAIL | FAIL | yes |
+| 29 | 5.3 entity spelled "tumour" where CNS5 Table 1 prints "tumor" | FAIL | FAIL | yes |
+| 30 | 5.4 the "(provisional type)" extraction artefact inside an entity name | FAIL | FAIL | yes |
+| 31 | 5.5 the artefact inside a shared_with[] entry | FAIL | FAIL | yes |
+| 32 | 5.6 CNS5 Table 2's spelling (comma before "and") of the Table 1 entity | FAIL | FAIL | yes |
+| 33 | 5.7 provisional: false on an entity CNS5 Table 1 marks provisional | FAIL | FAIL | yes |
+| 34 | 5.8 code_status "shares_code" with an empty shared_with[] | FAIL | FAIL | yes |
+| 35 | 5.9 code_status "no_code" left as-is on a real Table 1 no-code entity | PASS | PASS | yes |
+| 36 | 6.1 the 8000/0 entry deleted | FAIL | FAIL | yes |
+| 37 | 6.2 behavior_code nulled on the 9391/1 entry | FAIL | FAIL | yes |
+| 38 | 6.3 an 8000/6 entry added — /6 is outside the group's "0-1,3" declaration | FAIL | FAIL | yes |
+| 39 | 7.1 9536 as an alias TARGET in maps_to_morphology_codes | FAIL | FAIL | yes |
+| 40 | 7.2 9422 printed in a clerk-facing `reason` | FAIL | FAIL | yes |
+| 41 | 7.3 9422 mentioned in an author-facing `coding_note` — WARN, not FAIL | PASS | PASS | yes |
+| 42 | 7.4 8274 as a nos_fallback_code | FAIL | FAIL | yes |
+| 43 | 7.5 9536 left where it belongs — an alias INPUT in also_known_as | PASS | PASS | yes |
+| 44 | 9.1 grade_resolution.unresolved given a grade | FAIL | FAIL | yes |
+| 45 | 9.2 a values entry with a grade and no grade_system | FAIL | FAIL | yes |
+| 46 | 9.3 a values entry with grade null and no reason | FAIL | FAIL | yes |
+| 47 | 9.4 a values entry with grade "NA" | FAIL | FAIL | yes |
+| 48 | 9.5 a values entry with grade "" | FAIL | FAIL | yes |
+| 49 | 9.6 grade_resolution.unresolved removed entirely | FAIL | FAIL | yes |
+| 50 | 9.7 grade_resolution.variable not declared in captured_variables[] | FAIL | FAIL | yes |
+| 51 | 9.8 unresolved with grade null and a defer_to — the contract's own shape | PASS | PASS | yes |
+| 52 | 10.1 basis_of_diagnosis 6 | FAIL | FAIL | yes |
+| 53 | 10.2 basis_of_diagnosis 3 | FAIL | FAIL | yes |
+| 54 | 10.3 basis_of_diagnosis 1 on a Group III terminal | FAIL | FAIL | yes |
+| 55 | 10.4 basis_of_diagnosis "7" as a string | FAIL | FAIL | yes |
+| 56 | 10.5 ihc_counts_as declared as 8 | FAIL | FAIL | yes |
+| 57 | 10.6 basis_of_diagnosis 5 (cytology) — a real ENCR value | PASS | PASS | yes |
+| 58 | 10.7 basis 5 declared against components [7, 8] | FAIL | FAIL | yes |
+| 59 | 11.1 diversion_criteria[] emptied on the DIPG terminal | FAIL | FAIL | yes |
+| 60 | 11.2 diversion_criteria removed entirely | FAIL | FAIL | yes |
+| 61 | 11.3 basis_of_diagnosis 7 on an imaging-only terminal | FAIL | FAIL | yes |
+| 62 | 11.4 no_tissue dropped | FAIL | FAIL | yes |
+| 63 | 11.5 endpoint_verification "verified" | FAIL | FAIL | yes |
+| 64 | 11.6 a diversion criterion with a feature and no reason | FAIL | FAIL | yes |
+| 65 | 11.7 the NF1 terminal's two criteria left intact — fewer than DIPG's six is legal | PASS | PASS | yes |
+| 66 | 12.1 C72.9 given to g3_midline as well as g3_unspecified | FAIL | FAIL | yes |
+| 67 | 12.2 C72.4 removed from g3_midline, leaving it routed to no tree | FAIL | FAIL | yes |
+| 68 | 12.3 g3_supratentorial's range written C71.5-C71.0 (descending) | FAIL | FAIL | yes |
+| 69 | 12.4 every tree's topography declaration removed | FAIL | FAIL | yes |
+| 70 | 12.5 C70.2-C70.8, C72.6 and C72.7 owned by nobody — codes Layer 1 does not carry | PASS | PASS | yes |
+| 71 | 13.1 a trailing space on a morphology_name | FAIL | FAIL | yes |
+| 72 | 13.2 "Medulloblastoma, SHH activated, NOS" hyphenated to "SHH-activated" | FAIL | FAIL | yes |
+| 73 | 13.3 "tumor" spelled "tumour" in a morphology_name | FAIL | FAIL | yes |
+| 74 | 13.4 the same drifted name flagged redcap_option_verified: true | FAIL | FAIL | yes |
+| 75 | 13.5 a name that is right for a DIFFERENT behaviour of the same code | FAIL | FAIL | yes |
+| 76 | 13.6 9475's source_term corrupted to the corrected spelling — the anchor goes | FAIL | FAIL | yes |
+| 77 | 13.7 source_term added to an entry that is not the one declared exemption | FAIL | FAIL | yes |
+| 78 | 13.8 a nos_fallback naming a string no entry on that code carries | FAIL | FAIL | yes |
+| 79 | 13.9 9475 displaying the corrected spelling behind its source_term — the one legal exemption | PASS | PASS | yes |
+| 80 | §1.3.1 the 9380 C72.3 rule re-pointed at IIId2 | FAIL | FAIL | yes |
+| 81 | §1.3.2 the 9380 rule list removed — one pair, two ICCC subgroups | FAIL | FAIL | yes |
+| 82 | §1.3.3 the rule's topography_in changed from C72.3 to C72.2 | FAIL | FAIL | yes |
+| 83 | §1.3.4 topography_dependent flipped to false with the rules left in place | FAIL | FAIL | yes |
+| 84 | §1.3.5 a second rule also claiming C72.3 | FAIL | FAIL | yes |
+| 85 | §1.3.6 the rule naming IIIb with the wrong ICCC-2017 label | FAIL | FAIL | yes |
+| 86 | §5.5.1 the "## Group 3 — open" section removed from docs/codes-awaiting-redcap.md | FAIL | FAIL | yes |
+| 87 | §5.5.2 awaiting_layer1 removed from 9476 while the doc still lists it | FAIL | FAIL | yes |
+| 88 | §5.5.3 awaiting_layer1 present with redcap_option_verified true | FAIL | FAIL | yes |
+| 89 | X.1 diversion_criteria[] and grade_resolution outcomes on correct data — check_non_reportable_terminals must NOT read them as code-less terminals | PASS | PASS | yes |
+| 90 | X.2 a genuine code-less terminal with a `reason` added beside them — the narrowing must not have absorbed it | FAIL | FAIL | yes |
+| 91 | X.3 a dict carrying `grade` and `reason` under some OTHER key than grade_resolution — the predicate is path-scoped, so this is still a terminal | FAIL | FAIL | yes |
+| 92 | X.4 topography declared under the synonym `owns_topography` | PASS | PASS | yes |
+
+---
+
+## Two Layer 1 findings the checks turned up
+
+Not defects in the tool. Reported here because they are owed to Layer 1.
+
+1. **`C71.0` (Cerebrum) is missing from `ICD coding/RedCap Options/Topography Redcap.md`.**
+   The list runs `700, 701, 709, 711, 712 …` — there is no `710`. Contract §3 gives C71.0 to
+   `g3_supratentorial`, so a supratentorial hemispheric tumour has a tree and no REDCap
+   topography option. `check_group3_topography_map` reports it as a WARN on every build.
+
+2. **`8280`, `8281` and `8300` have no non-obsolete term in ICD-O-3.2.** Every row for all
+   three, Preferred included, is marked `[obs]` — `Acidophil adenoma`, `Acidophil carcinoma`,
+   `Mixed acidophil-basophil adenoma`, `Mixed acidophil-basophil carcinoma`, `Basophil
+   adenoma`, `Basophil carcinoma`. They round-trip, so rule 13 passes, but the round-trip
+   WARNs: these are six of the group's 108 entries and whatever they display will be an
+   obsolete pituitary term. That is a decision for the registrar, not for the validator.
+
+---
+
+## What could not be checked statically
+
+Stated plainly rather than covered by a check that looks like it covers it.
+
+- **Contract §2(2), `required_rl: "V"` must produce an upgrade line that says the test is
+  *unavailable*, not one that dangles it as a next step.** That is a rendering rule. The
+  validator can see the field; it cannot see the sentence `app.js` builds from it. There is
+  a narrow guard (an explicit `upgrade_line_says_unavailable: false` FAILs) but the real
+  rule needs the browser pass of contract §7 step 9.
+
+- **Contract §2(2), `rl_assignment: "by_analogy"` on the paediatric-type diffuse gliomas.**
+  The contract exempts "the paediatric-type diffuse gliomas" from ADAPTR sourcing, and the
+  `family` vocabulary has one value, `diffuse_glial`, covering both those and the adult-type
+  gliomas ADAPTR does cover. A blanket rule on `diffuse_glial` would false-FAIL the
+  adult-type nodes, so the check enforces the six families the contract names
+  unambiguously and leaves `diffuse_glial` alone. Either the vocabulary needs a
+  `paediatric_diffuse_glial` member or this stays a reading job.
+
+- **Contract §2(5), "0 and 9 override".** Enforced only where a holder writes down the
+  component codes it derived from (`basis_components[]`). Where the basis is a bare number
+  the validator has nothing to compare it against — it can prove the value is in the ENCR
+  set, is not 3, 6 or 1, and is 2 on an imaging-only terminal, and that is all.
+
+- **Contract §2(3), the `FET-CREB fusion positive` / `fusion-positive` divergence.**
+  Revision 2 records what Table 7 and the prose print and does **not** say which Table 1
+  uses. `data/shared/who_cns5_table1.json` prints `Intracranial mesenchymal tumor, FET-CREB
+  fusion-positive`, and the check enforces that string because the transcription says so —
+  but it is worth a second reading against the source, because it is the one divergence
+  Revision 2 flagged and did not resolve.
+
+- **Contract §4, the AFP / β-hCG rule, specimen adequacy, and intraoperative diagnosis.**
+  These are process steps expressed through existing constructs (`test_result_states`,
+  `numeric_gate`, node wiring). No Group III-specific check was written for them; the
+  existing `check_test_result_states` rule that `not_assessable` may not share a destination
+  with `negative` is what carries the adequacy rule, and it already runs on Group 3.
+
+- **Contract §6 rule 14 itself** is this document.
+
+- **Rule 5 against the full 144 rows.** `who_cns5_table1.json` carries 109 type rows; the
+  other 35 printed rows are family headings and are not entity names. The check validates
+  against the 109. If a Group III entity annotation ever needs a string that is a heading
+  rather than a type, it will FAIL and the transcription is what needs extending.
+
+- **A green build is still not a working tool.** Every check here tests the data. Group 2
+  passed 74 checks with 15 of its 61 nodes not rendering at all, because the fault was in
+  the seam between the data and the renderer. Contract §7 step 9's browser pass is not
+  optional and nothing in this document substitutes for it.

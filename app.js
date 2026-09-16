@@ -50,6 +50,27 @@ var MARKER_UNREAD = 'nd';
 var MARKER_LABELS = { pos: 'positive', strong: 'strongly positive', weak: 'weakly positive',
   neg: 'negative', nd: 'not done or not readable' };
 
+/* ---------------------------------------------------------------------------
+   Closed schema vocabularies, and the wording each token is shown in.
+
+   These sit beside NODE_TYPES, WORKUP_STATES, ANSWER_LABELS and MARKER_LABELS
+   above and obey the same rule: the TOKENS are fixed by the schema, so the
+   engine may hold them; the CONTENT they describe stays in the JSON. No
+   morphology code, marker, entity or group name appears here, and a group that
+   declares none of these fields never reaches any of it.
+
+   RL_SCALE is ORDERED, and that order is the whole mechanism of the resource
+   gate: a required level is compared against the level this site has for the
+   family in question, never against a hard-coded expectation about any
+   laboratory. */
+var TRACK_LABELS = { who_cns5: 'WHO CNS5', adaptr_descriptive: 'ADAPTR descriptive' };
+var GRADE_SYSTEM_LABELS = { roman: 'Roman numerals', arabic: 'Arabic numerals' };
+var UNIT_LABELS = { per_mm2: 'per mm²', per_10_hpf: 'per 10 HPF',
+  per_hpf: 'per HPF', percent: 'percent' };
+var CODE_STATUS_LABELS = { shares_code: 'Shares its code with other entities',
+  no_code: 'No code exists for this entity', awaiting_layer1: 'Awaiting a Layer 1 option' };
+var RL_SCALE = ['I', 'II', 'III', 'IV', 'V'];
+
 /* Cleared per case. No localStorage — the iframe reloads between patients
    (Architecture §4D, §7). */
 var state = {
@@ -65,6 +86,10 @@ var state = {
   draft: {},             /* in-progress input for the live node only */
   pending: null,         /* a branch parked mid-flight waiting on one answer */
   firedAlert: null,      /* alert of the branch that routed here, one hop only */
+  pendingGrade: null,    /* a branch parked waiting on its grade criterion */
+  grade: null,           /* the grade decision, once the criterion is answered */
+  entity: null,          /* the entity annotation, carried to the output block */
+  basisCodes: [],        /* ENCR basis-of-diagnosis codes asserted along the path */
   trail: [], trailAtGroupEntry: 0, workup: [], result: null, error: null, query: ''
 };
 
@@ -85,6 +110,13 @@ function esc(v) {
 function rich(v) {
   return esc(v).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 }
+/* One closed-vocabulary token, rendered for a human. A known token gets its
+   wording from the table; an unknown one still reads as words rather than as
+   JSON, so a vocabulary the schema grows later degrades instead of breaking. */
+function tokenLabel(map, v) {
+  if (v === undefined || v === null || v === '') return '';
+  return map[v] || String(v).replace(/_/g, ' ');
+}
 function byId(id) { return document.getElementById(id); }
 function arr(v) { return Array.isArray(v) ? v : []; }
 
@@ -95,6 +127,8 @@ function snapshot() {
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
+    pendingGrade: state.pendingGrade || null, grade: state.grade || null,
+    entity: state.entity || null, basisCodes: state.basisCodes,
     trailAtGroupEntry: state.trailAtGroupEntry
   });
 }
@@ -167,6 +201,35 @@ function entryFor(code, behavior) {
     hit = list[i]; break;
   }
   return hit;
+}
+
+/* --------------------------------------------- ordered topography rules
+   ONE matcher, three callers. The router's `tree_routing` picks a decision
+   tree from the topography captured at Stage 1; a morphology entry's
+   `iccc3_subgroup_by_topography` picks the ICCC-3 subgroup at output time;
+   `dual_group_rules` already uses the same shape. All three are an ordered
+   list where the first match wins and a default catches the rest. Growing a
+   second matcher for the second caller is how two rules that have to agree
+   start disagreeing. */
+function firstTopographyMatch(rules, topo) {
+  var list = arr(rules), i;
+  for (i = 0; i < list.length; i++) {
+    if (arr(list[i].topography_in).indexOf(topo) !== -1) return list[i];
+  }
+  return null;
+}
+/* An entry's own subgroup is the DEFAULT, not the answer. One (code,
+   behaviour) pair can sit in two ICCC-3 subgroups depending on where the
+   tumour is, and the schema allows only one entry per pair — so the split is
+   authored as rules on the entry and resolved against the captured
+   topography here. Resolved at OUTPUT time, so rewinding to the site question
+   and answering it differently re-resolves the subgroup with it. */
+function subgroupFor(e, topo) {
+  var hit = firstTopographyMatch(e && e.iccc3_subgroup_by_topography, topo);
+  return {
+    id: (hit && hit.iccc3_subgroup_id) || (e && e.iccc3_subgroup_id),
+    name: (hit && hit.iccc3_subgroup_name) || (e && e.iccc3_subgroup_name)
+  };
 }
 
 /* ----------------------------------------------------- dual-group routing */
@@ -261,6 +324,7 @@ function renderTrailRows() {
 }
 function currentLabel() {
   if (state.result) return 'Output';
+  if (state.pendingGrade) return 'Grade';
   if (state.pending) return 'Behaviour';
   var n = node();
   if (n) return n.step_label || n.node_type.replace(/_/g, ' ');
@@ -281,6 +345,7 @@ function renderStage() {
     case 'handoff':   return renderHandoff();
     case 'node':      return renderLiveNode();
     case 'behaviour': return renderBehaviour();
+    case 'grade':     return renderGrade();
     case 'output':    return renderOutput();
     default: throw new Error('Unknown stage: ' + state.stage);
   }
@@ -480,6 +545,15 @@ function renderHandoff() {
       '<div class="actions"><button class="btn btn--ghost" data-act="restart">Start again</button></div>';
   }
   var sel = meta.tree_selection;
+  /* Reached only for a built group that asks its tree. A group that ROUTES its
+     tree never arrives here (afterGroup enters the tree directly), and a
+     single-tree group never arrives here either — so a missing selector at
+     this point is a router defect, and it is named rather than thrown as an
+     undefined-property error three lines further down. */
+  if (!sel) {
+    throw new Error('Group ' + state.group + ' is built but declares neither ' +
+      'tree_selection nor tree_routing nor a single tree in the router.');
+  }
   return panel('Stage 1 · tree selection', sel.question, sel.default_rationale,
     pick('handoff', arr(sel.options).map(function (o) {
       return { label: o.label, meta: o.is_default ? 'Default when this is not documented' : null };
@@ -499,9 +573,13 @@ function renderLiveNode() {
      tool, not a live clinical tool, and a warning costs the clerk attention
      without changing the code that gets entered. Every alert string is kept in
      `docs/clinical-warnings.md` against the day the tool becomes clinical. */
+  /* A gate on the node says whether this question is answerable HERE, so it
+     is read before the question, not after it. A node the site cannot answer
+     at all never renders: advance() diverts the branch routing into it. */
   return panel(n.step_label || ('Step ' + (n.step_number === undefined ? '' : n.step_number)),
     n.question || '', n.hint,
-    priorNote(n.prior_probability) + dispatchNode(n) + renderEscapes(n));
+    gateNote(n.resource_level_gate) + priorNote(n.prior_probability) +
+    dispatchNode(n) + renderEscapes(n));
 }
 
 /* `prior_probability` is DISPLAY-ONLY. It changes no code and no destination
@@ -594,7 +672,12 @@ function optionList(n) {
       esc(n.accept_label || 'this result') + '</button></div>';
   }
   return pick('opt', opts.map(function (o) {
-    return { label: optionLabel(o), meta: priorText(o.prior_probability) || null,
+    /* An option carrying a gate says, before it is tapped, whether the test
+       behind it can be done here — the same reason an option's clinical alert
+       shows before it is taken rather than after. */
+    var rl = o.resource_level_gate ? gateText(gateStatus(o.resource_level_gate)) : '';
+    return { label: optionLabel(o),
+             meta: [priorText(o.prior_probability), rl].filter(Boolean).join(' · ') || null,
              alert: o.clinical_alert || null };
   }));
 }
@@ -877,12 +960,36 @@ function markerGrid(n) {
 
 /* A continuous threshold with a genetic override — the ratified `numeric_gate`
    (Pathway §7.3 item 1). Reusable for any continuous diagnostic gate. */
+/* A BAND'S UNIT IS ITS DENOMINATOR, and a count read against the wrong one is
+   a different number: four mitoses per 10 HPF and four per mm² are not the
+   same finding, and the same threshold answered against the wrong denominator
+   is wrong in whichever direction the areas differ. So the unit reaches the
+   clerk before the reading is typed, and the trail after it. Bands authored
+   without a unit (every band in the groups built before this) render and
+   resolve exactly as they did — the node's own `unit` still labels the field. */
+function bandUnitText(b) {
+  if (!b || !b.unit) return '';
+  return tokenLabel(UNIT_LABELS, b.unit) +
+    (b.hpf_area_mm2 ? ' (' + b.hpf_area_mm2 + ' mm²)' : '');
+}
+function bandUnits(n) {
+  var seen = {}, out = [];
+  arr(n.bands).forEach(function (b) {
+    var t = bandUnitText(b);
+    if (t && !seen[t]) { seen[t] = true; out.push(t); }
+  });
+  return out;
+}
 function numericGate(n) {
   var undoc = state.draft.not_documented === true;
+  var units = bandUnits(n), label = n.unit || (units.length === 1 ? units[0] : '');
   return '<label class="field"><span class="field__label">' + esc(n.variable_label || n.variable) +
-    (n.unit ? ' (' + esc(n.unit) + ')' : '') + '</span>' +
+    (label ? ' (' + esc(label) + ')' : '') + '</span>' +
     '<input type="number" step="any" data-act="draft" data-k="value" value="' +
     esc(state.draft.value === undefined ? '' : state.draft.value) + '"' + (undoc ? ' disabled' : '') + '></label>' +
+    (units.length ? '<p class="node__hint">Thresholds on this question are read ' +
+      esc(units.join(', and ')) + '. Check the report states the same denominator before ' +
+      'entering the count.</p>' : '') +
     '<div class="checks"><label class="check"><input type="checkbox" data-act="draft" data-k="not_documented"' +
     (undoc ? ' checked' : '') + '> Not documented in the file</label></div>' +
     '<div class="actions"><button class="btn" data-act="resolve">Continue</button></div>';
@@ -905,6 +1012,19 @@ function imagingPathway(n) {
       (state.draft['b' + i] ? ' checked' : '') + '> ' + esc(q.question) +
       ' <span class="opt__meta">(required: ' + esc(q.required_answer) + ')</span></label></div>';
   }).join('');
+  /* The diversion criteria sit in the same control as the constellation they
+     override, because the clerk reads them together and one of them beats all
+     the others: ANY of these ticked sends the case to tissue whatever the
+     imaging shows. They are rendered last so the override is the last thing
+     read before Continue. */
+  if (arr(n.diversion_criteria).length) {
+    h += '<div class="tag">Features that require tissue whatever the imaging shows</div>';
+    h += arr(n.diversion_criteria).map(function (d, i) {
+      return '<div class="checks"><label class="check"><input type="checkbox" data-act="diversion" data-i="' + i + '"' +
+        (state.draft['d' + i] ? ' checked' : '') + '> ' + esc(d.feature) +
+        (d.reason ? ' <span class="opt__meta">' + rich(d.reason) + '</span>' : '') + '</label></div>';
+    }).join('');
+  }
   h += '<div class="actions"><button class="btn" data-act="resolve">Continue</button></div>';
   return h;
 }
@@ -960,6 +1080,66 @@ function renderBehaviour() {
     (br.deferrable ? banner('info', 'The answer may arrive later',
       br.follow_up_review || 'This answer can change after today; the case will be flagged for review.') : '') +
     renderEscapes(n || {}));
+}
+
+/* ------------------------------------------------------------- §2.4 grade
+   Grade is its own decision, on exactly the model behaviour_resolution
+   already set. A molecular finding can set a grade with no histological
+   change, and the grade is not derivable from the code — so the engine stops
+   and asks the criterion rather than guessing, and every answer goes straight
+   back through advance(), where captures, gates, terminals and referrals
+   behave as they do on any other branch.
+
+   ONE difference from a behaviour leaf, and it is in the schema, not here: a
+   behaviour leaf REPLACES the branch, because the behaviour decides which code
+   is emitted. A grade leaf ANNOTATES it — the code is the same either way — so
+   a leaf that names no destination resumes the branch that parked. */
+function gradeLeafMeta(leaf) {
+  var bits = [];
+  if (leaf.grade !== undefined && leaf.grade !== null && leaf.grade !== '') {
+    bits.push('Grade ' + leaf.grade +
+      (leaf.grade_system ? ' · ' + tokenLabel(GRADE_SYSTEM_LABELS, leaf.grade_system) : ''));
+  } else if (leaf.defer_to) {
+    bits.push('No grade — deferred to ' + String(leaf.defer_to).replace(/_/g, ' '));
+  } else {
+    bits.push('No grade recorded');
+  }
+  if (leaf.reason) bits.push(leaf.reason);
+  return bits.join(' — ');
+}
+function gradeLeaves(gr) {
+  var out = [];
+  Object.keys((gr && gr.values) || {}).forEach(function (k) {
+    var leaf = gr.values[k];
+    out.push({ key: k, leaf: leaf, unresolved: false,
+      label: leaf.label || String(k).replace(/_/g, ' '), meta: gradeLeafMeta(leaf) });
+  });
+  /* Offered as an explicit answer the clerk CHOOSES, and never taken by the
+     engine on its own — exactly as behaviourLeaves() does for behaviour. A
+     grade that cannot be established is omitted, never invented, and this is
+     the answer that says so. */
+  if (gr && gr.unresolved) {
+    out.push({ key: 'unresolved', leaf: gr.unresolved, unresolved: true,
+      label: gr.unresolved.label || 'Not established from the file',
+      meta: gradeLeafMeta(gr.unresolved) });
+  }
+  return out;
+}
+function renderGrade() {
+  var gr = state.pendingGrade.rule, n = node(), methods = arr(gr.detection_method_required);
+  return panel('Grade', gr.criterion,
+    methods.length ? 'Answerable from: ' + methods.join(' or ') + '.' : null,
+    priorNote(gr.prior_probability) +
+    pick('grade', gradeLeaves(gr).map(function (l) {
+      return { label: l.label, meta: l.meta || null, alert: l.leaf.clinical_alert || null };
+    })) + renderEscapes(n || {}));
+}
+/* The parked branch, minus the criterion it has now answered, so resuming it
+   cannot ask the same question a second time. */
+function withoutGradeResolution(t) {
+  var out = {};
+  Object.keys(t).forEach(function (k) { if (k !== 'grade_resolution') out[k] = t[k]; });
+  return out;
 }
 
 function banner(kind, label, text) {
@@ -1052,6 +1232,209 @@ function capture(map) {
   Object.keys(map).forEach(function (k) { state.captured[k] = map[k]; });
 }
 
+/* ======================================================================
+   Availability as reachability — `resource_level_gate`
+
+   A test's availability is a property of the LABORATORY AND THE TUMOUR
+   FAMILY, not of the site as a whole: one laboratory can be resource level IV
+   for one family and II for another, because the antibodies and assays that
+   decide one family say nothing about the next. The gate therefore names its
+   family, and the engine compares the level the branch requires against the
+   level this site has FOR THAT FAMILY.
+
+   Where the site cannot meet it the branch is not askable. It resolves to the
+   gate's `unreachable_destination`, and the upgrade line says the test is
+   unavailable instead of dangling it as a next step. An upgrade line that
+   offers a test the laboratory cannot run reads as a plan; it is a dead end,
+   and it makes the case look one step away from better evidence when it is
+   not — the same failure as reporting a confidence the evidence does not
+   support, in the one row the clerk reads as a worklist.
+
+   The site's own level is read from captured state first (a tree may ask it,
+   the router may capture it), then from a `site_profile` block on the router.
+   NO NEW FILE IS FETCHED: site_profile.json is undeclared, and its template
+   says in terms that it is not read by app.js until it is wired in
+   deliberately. That wiring is a deployment decision, not an engine one.
+   ====================================================================== */
+function siteProfile() { return (state.router && state.router.site_profile) || {}; }
+function siteResourceLevel(family) {
+  var c = state.captured, p = siteProfile(), levels = p.resource_levels || {};
+  var lv = c['resource_level_' + family] || c.resource_level ||
+    levels[family] || levels['default'] || p.resource_level || null;
+  lv = lv ? String(lv).toUpperCase() : null;
+  return lv && RL_SCALE.indexOf(lv) !== -1 ? lv : null;
+}
+/* THREE states, deliberately: blocked, available, and NEITHER. A site with no
+   declared level is not evidence that the test can be done and not evidence
+   that it cannot, and collapsing "not recorded" into either one states more
+   than the file supports — the same line boundary() holds for an undecidable
+   reading. The clerk is told which of the three it is.
+
+   There is NO exception for a requirement at the top of the scale. A site
+   declared resource level V MEETS a requirement of resource level V — reaching
+   the last rung is not sitting above it — so an undeclared site tells us
+   nothing there either, and treating it as unavailable would be exactly the
+   inference the paragraph above forbids. It would also build the tool around
+   one kind of laboratory: this tool is used by registries anywhere, and a site
+   at the top of the scale is as ordinary a case as one at the bottom. Until a
+   site profile says otherwise, a resource level V test is NOT ESTABLISHED, not
+   unavailable. (Corrected 14 September 2026: the old rule diverted all 14
+   resource level V branches in Group 3 to their unreachable destination, which
+   dropped the WHO CNS5 diagnosis the clerk had just evidenced and printed "the
+   test is unavailable" over the top of it.) */
+function gateStatus(g) {
+  if (!g) return null;
+  var need = RL_SCALE.indexOf(String(g.required_rl || '').toUpperCase());
+  if (need === -1) throw new Error('Unknown required_rl: ' + g.required_rl);
+  var site = siteResourceLevel(g.family), have = site ? RL_SCALE.indexOf(site) : -1;
+  return { rule: g, site: site, known: have !== -1,
+    blocked: have !== -1 && need > have };
+}
+function gateText(st) {
+  var g = st.rule, fam = String(g.family || 'unspecified').replace(/_/g, ' ');
+  var head = 'Resource level ' + g.required_rl + ' is required for the ' + fam + ' family';
+  var body, tail = [];
+  if (st.blocked) {
+    /* `blocked` now implies `known`: only a DECLARED level below the requirement
+       blocks a branch. The unknown case falls through to the third state. */
+    body = head + ', and this laboratory is resource level ' + st.site +
+      ' for it. The test is **unavailable** here, and is not an upgrade path.';
+  } else if (st.known) {
+    body = head + ', and this laboratory is resource level ' + st.site + ' for it, so the test can be done here.';
+  } else {
+    body = head + '. This site has no recorded resource level for that family, so whether the test can be done here is **not established** — confirm it before recording it as a next step.';
+  }
+  if (g.tier) tail.push('Tier: ' + String(g.tier).replace(/_/g, ' ') + '.');
+  if (g.referral_tier) tail.push('If referred out: ' + String(g.referral_tier).replace(/_/g, ' ') + '.');
+  /* `by_analogy` means no published tier covers this family. Saying so is the
+     entire point of the flag — presenting it as sourced is the failure it
+     exists to prevent. */
+  if (g.rl_assignment) {
+    tail.push('Level assigned ' + String(g.rl_assignment).replace(/_/g, ' ') +
+      ', not from a published tier for this family.');
+  }
+  return [body].concat(tail).join(' ');
+}
+function gateNote(g) {
+  var st = gateStatus(g);
+  return st ? banner(st.known && !st.blocked ? 'info' : 'warn', 'Laboratory capability', gateText(st)) : '';
+}
+/* The branch the clerk cannot take. It carries the gate forward so the output
+   block can write the unavailability line, and it deliberately inherits
+   NOTHING else from the branch it replaces — above all not `satisfies_tests`,
+   which would discharge a requirement using a test that by definition was not
+   done, and not `basis_of_diagnosis`, which would claim evidence nobody
+   obtained. */
+function unreachableTarget(from, st) {
+  var d = (st.rule && st.rule.unreachable_destination) || null;
+  if (!d) {
+    throw new Error('resource_level_gate is blocked but declares no unreachable_destination' +
+      (from && from.next_node ? ' (routing to ' + from.next_node + ')' : ''));
+  }
+  /* The destination is an ORDINARY BRANCH and is honoured in full: whatever
+     the author wrote on it — a code, a next_node, a provisional, a rendered
+     diagnosis, a basis — applies, because they wrote it about this outcome.
+     Nothing is copied from the branch that was blocked. The gate itself is
+     attached (overriding any the destination declares, so it cannot re-gate
+     itself) and supplies the default reason. */
+  var out = {};
+  Object.keys(d).forEach(function (k) { out[k] = d[k]; });
+  out.reason = d.reason || gateText(st);
+  out.resource_level_gate = st.rule;
+  return out;
+}
+
+/* ======================================================================
+   Basis of diagnosis (ENCR) — a REGISTRY DATA ITEM, not a confidence
+
+   The two must never be run together. ENCR says a registry may register a
+   case on imaging; it does not say the tool may then call that answer firm.
+   `confidence` stays the tool's claim about its own answer; this is the
+   registry's record of what the diagnosis rests on, and a case can carry a
+   solid basis with low confidence or the reverse.
+
+   Computed, never authored on the output: the highest code 1-8 that any
+   branch on the path asserted, with 0 and 9 overriding — 0 before 9, because
+   "death certificate only" is a positive statement about the record and
+   "unknown" is the absence of one. CODES 3 AND 6 DO NOT EXIST in the scheme;
+   one in the data is a defect and is refused here rather than written into a
+   registry field.
+   ====================================================================== */
+var BASIS_CODES = [0, 1, 2, 4, 5, 7, 8, 9];
+var BASIS_LABELS = {
+  0: 'Death certificate only', 1: 'Clinical \u2014 physical examination only',
+  2: 'Clinical investigation without tissue', 4: 'Specific tumour markers',
+  5: 'Cytology', 7: 'Histology', 8: 'Cytogenetic or molecular', 9: 'Unknown'
+};
+function basisCode(v) {
+  var n = Number(v);
+  if (v === '' || v === null || v === undefined || isNaN(n) || BASIS_CODES.indexOf(n) === -1) {
+    throw new Error('Invalid basis of diagnosis: ' + v + '. Valid codes are ' +
+      BASIS_CODES.join(', ') + ' \u2014 3 and 6 do not exist.');
+  }
+  return n;
+}
+function assertBasis(v) {
+  if (v === undefined || v === null) return;
+  if (!Array.isArray(v) && typeof v === 'object') {
+    if (v.code === undefined) throw new Error('basis_of_diagnosis object carries no code');
+    v = v.code;
+  }
+  (Array.isArray(v) ? v : [v]).forEach(function (c) {
+    var n = basisCode(c);
+    if (state.basisCodes.indexOf(n) === -1) state.basisCodes.push(n);
+  });
+}
+/* The two gaps ENCR leaves, DECLARED in the file rather than inferred here:
+   which code immunohistochemistry counts as, and which one methylation counts
+   as. The engine asserts a declared default only where the evidence for it is
+   actually on this case — a stain that was READ (node-TYPE knowledge, which
+   the engine may hold), or a test the evidence gate recorded by name. A
+   default that fired on a test the case merely REQUIRES would put a basis in
+   the registry that nobody performed. */
+function basisDefaults() {
+  var meta = (state.dt && state.dt.metadata) || {};
+  var tree = trees().filter(function (t) { return t.tree_id === state.treeId; })[0] || {};
+  var out = {};
+  [meta.basis_of_diagnosis_defaults, tree.basis_of_diagnosis_defaults].forEach(function (src) {
+    Object.keys(src || {}).forEach(function (k) { out[k] = src[k]; });
+  });
+  return out;
+}
+/* A stain was actually read on this case. `nd` is "not done or not readable",
+   which is precisely not a stain that was read. */
+function ihcRead() {
+  return Object.keys(state.markers).some(function (m) {
+    return state.markers[m] && state.markers[m] !== MARKER_UNREAD;
+  });
+}
+function evidenceMentions(kind) {
+  if (state.captured[kind] === true) return true;
+  var needle = String(kind).toLowerCase().replace(/_/g, ' ');
+  return arr(state.captured.evidence_tests).some(function (t) {
+    return String(t).toLowerCase().indexOf(needle) !== -1;
+  });
+}
+function declaredBasis() {
+  var d = basisDefaults(), out = [];
+  Object.keys(d).forEach(function (k) {
+    var m = /^(.+)_counts_as$/.exec(k);
+    if (!m) return;
+    if (m[1] === 'ihc' ? ihcRead() : evidenceMentions(m[1])) out.push(basisCode(d[k]));
+  });
+  return out;
+}
+/* Nothing asserted means NO ROW. Defaulting to 9 would write a registry value
+   onto the panel that no branch ever claimed, and would grow a row on every
+   group that does not use this field at all. */
+function basisOfDiagnosis() {
+  var codes = state.basisCodes.concat(declaredBasis());
+  if (!codes.length) return null;
+  if (codes.indexOf(0) !== -1) return 0;
+  if (codes.indexOf(9) !== -1) return 9;
+  return codes.reduce(function (hi, c) { return c > hi ? c : hi; }, codes[0]);
+}
+
 /* Every branch ends here: another node, or a terminal. Captures are applied
    HERE rather than at each call site, so a `captures` block works identically
    on an option, an ihc_checklist rule, a numeric_gate band, an override, or a
@@ -1061,10 +1444,46 @@ function capture(map) {
    the worst shape a bug can take here. Applied before finish() so the output
    block sees them. */
 function advance(target, label, value, before) {
-  pushTrail(label, value, before);
+  /* THE GATE RUNS FIRST, before the trail entry and before captures. A branch
+     whose test this laboratory cannot run is not a branch the clerk can be
+     asked to take, so it resolves to the gate's `unreachable_destination`
+     instead — and so does a branch routing INTO a node that is gated shut,
+     which is the same fact one hop later. Running it here rather than after
+     the captures means the unreachable branch's own captures never land: they
+     describe a finding the test would have produced, and the test was not
+     done. The trail says the branch was not takeable, so an automatic
+     diversion is never silent. Bounded, because a chain of gated destinations
+     is a data defect, not a loop to follow. */
+  var st = gateStatus(target.resource_level_gate), diverted = false, hop = 0, dest, dst;
+  if (st && st.blocked) { target = unreachableTarget(target, st); diverted = true; }
+  while (target.next_node && hop++ < 8) {
+    dest = findNode(target.next_node);
+    dst = dest && gateStatus(dest.resource_level_gate);
+    if (!dst || !dst.blocked) break;
+    target = unreachableTarget(target, dst);
+    diverted = true;
+  }
+  pushTrail(label, value + (diverted ? ' — unavailable at this laboratory' : ''), before);
   capture(target.captures);
   state.draft = {};
   state.pending = null;
+  state.pendingGrade = null;
+  /* Code-neutral by definition: it never changes the code. Persisted here
+     rather than read off the terminal, so an entity named halfway down the
+     tree still reaches the output block instead of being lost at the next hop
+     — the same rule `genotype_annotation` already earns its keep by. */
+  if (target.entity_annotation) state.entity = target.entity_annotation;
+  assertBasis(target.basis_of_diagnosis);
+  /* GRADE BEFORE BEHAVIOUR. Both park here; a behaviour leaf REPLACES the
+     branch it answers for, so asking behaviour first would throw away a grade
+     criterion authored on the same branch. A grade leaf annotates instead, so
+     the parked branch resumes to its own destination where the leaf names
+     none. */
+  if (target.grade_resolution) {
+    state.pendingGrade = { rule: target.grade_resolution, target: target };
+    state.stage = 'grade';
+    return;
+  }
   /* A branch may not be able to name its behaviour yet (§3.1). It parks here
      and the engine asks the criterion; each answer comes back through this
      same function, so captures, terminals, referrals and exclusions all
@@ -1167,13 +1586,42 @@ function finish(target, basis) {
      morphology-only result reporting "high" next to an outstanding flow
      cytometry row tells the clerk the answer is firmer than the evidence
      supports, which is the one thing an advisory tool must never do. */
+  /* THE UPGRADE LINE MUST NOT DANGLE A TEST THIS LABORATORY CANNOT RUN. The
+     sentence the engine writes itself — "X would yield a more specific code"
+     — is exactly that dangle, so a blocked gate replaces it with the reason
+     the test is unavailable. Anything the author wrote stays either way, and
+     where the gate is satisfied its line is appended so the clerk can see the
+     branch was askable here. */
+  var gate = gateStatus(target.resource_level_gate);
+  var authored = target.upgrade_path || entry.upgrade_path || '';
+  var auto = missing.length ? missing.join(', ') + ' would yield a more specific code.' : '';
+  var upgrade = (gate && gate.blocked)
+    ? [gateText(gate), authored].filter(Boolean).join(' ')
+    : [authored || auto, gate ? gateText(gate) : ''].filter(Boolean).join(' ');
   state.result = {
     code: code, entry: entry, basis: basisFromTrail() || basis,
+    /* Confidence is the FLOOR of every constraint, never the entry's ceiling.
+       A `diagnosis_rendering` or a `resource_level_gate` that carries a
+       confidence joins the list; neither overrides it. A gate that BLOCKED is
+       a floor in its own right by the rule that already governs every
+       fallback route — the code was reached because a branch could not be
+       taken, not because a rule matched. */
     confidence: lowestConfidence([entry.confidence_ceiling, target.confidence,
-      missing.length ? 'medium' : null, discordant ? 'low' : null]),
+      missing.length ? 'medium' : null, discordant ? 'low' : null,
+      target.diagnosis_rendering && target.diagnosis_rendering.confidence,
+      gate && gate.rule.confidence, gate && gate.blocked ? 'low' : null]),
     discordant: discordant,
-    upgrade: target.upgrade_path || entry.upgrade_path ||
-      (missing.length ? missing.join(', ') + ' would yield a more specific code.' : ''),
+    upgrade: upgrade,
+    /* The two-track output: the code and the diagnosis the report states are
+       separate outputs, and both are recorded (§2.1). The entity annotation is
+       the third, and changes no code (§2.3). */
+    diagnosis: target.diagnosis_rendering || null,
+    entity: target.entity_annotation || state.entity || null,
+    gradeDecision: state.grade || null,
+    /* A registry data item, computed from what the path asserted, and kept
+       strictly apart from `confidence` above (§2.5). */
+    basisOfDiagnosis: basisOfDiagnosis(),
+    gate: gate,
     classification_system: target.classification_system || state.captured.classification_system_applied || null,
     /* A NAMED, REVERSIBLE provisional — deliberately NOT a confidence level,
        and deliberately absent from lowestConfidence() above (§3.2). Collapsing
@@ -1227,6 +1675,72 @@ function exclude(reason, alert) {
    Output block — rows in REDCap field order so the clerk reads down both
    panels in lockstep (redcap.md §2).
    ========================================================================= */
+/* §2.1, §2.3, §2.4 — the two-track output, the entity, and the grade.
+
+   THE CODE AND THE DIAGNOSIS ARE SEPARATE OUTPUTS. Where the code cannot name
+   what the report says, the code is still the code and the diagnosis is still
+   recorded; a panel carrying only one of them is wrong in whichever direction
+   it drops. The entity annotation is the third row of the same idea: a named
+   entity that shares its code with others, or has no code at all, is recorded
+   WITHOUT ever changing the code. */
+function renderDiagnosisRows(r) {
+  var d = r.diagnosis, g = r.gradeDecision, h = '';
+  if (d) {
+    var meta = [tokenLabel(TRACK_LABELS, d.track),
+      (d.suffix && String(d.suffix) !== 'none') ? String(d.suffix).toUpperCase() : ''
+    ].filter(Boolean).join(' · ');
+    h += orow('Diagnosis', (d.who_diagnosis || d.descriptive_diagnosis || '') +
+      (meta ? ' (' + meta + ')' : ''));
+  }
+  h += renderGradeRow(d, g);
+  if (d && d.comment) h += orow('Diagnosis comment', d.comment, true);
+  if (r.entity) h += orow('WHO CNS5 entity', entityText(r.entity), true);
+  return h;
+}
+/* A NULL GRADE IS OMITTED — never "NA", never "". Where the criterion recorded
+   why it could not be established, that sentence is the row: a grade that was
+   asked for and not answered is a different fact from a grade nobody looked
+   for, and both are different from a grade the tool made up. */
+function renderGradeRow(d, g) {
+  var live = function (v) { return v !== null && v !== undefined && v !== '' ? v : null; };
+  var value = (g && live(g.grade)) || (d && live(d.grade)) || null;
+  /* THE NUMERAL SYSTEM FOLLOWS THE TRACK, NEVER THE EVIDENCE TYPE: a grade
+     reached on histology alone is still Arabic where the diagnosis is a CNS5
+     diagnosis, so the track's system wins wherever one is declared. */
+  var sys = (d && d.grade_system) || (g && g.grade_system) || null;
+  if (value !== null) {
+    return orow('Grade', String(value) +
+      (sys ? ' (' + tokenLabel(GRADE_SYSTEM_LABELS, sys) + ')' : ''));
+  }
+  if (!g) return '';
+  var why = [];
+  if (g.reason) why.push(g.reason);
+  if (g.defer_to) why.push('Deferred to ' + String(g.defer_to).replace(/_/g, ' ') + '.');
+  if (!why.length) why.push(g.unresolved ? 'Not established from the file.' : 'No grade recorded.');
+  return orow('Grade', 'Not established. ' + why.join(' '), true);
+}
+/* `(provisional type)` is an extraction artefact of the source's italics and
+   must never sit inside an entity name. The flag is rendered as its own
+   sentence instead, which is what the flag is for. */
+/* `status` says how firmly the entity is CLAIMED; `code_status` says whether it
+   has a code. They are different questions. A suggested entity rendered like an
+   established one is the failure mode this field exists to stop: an MYCN IHC with
+   no published sensitivity would otherwise print beside a code and read as a
+   settled WHO CNS5 diagnosis. The qualifier leads, so it cannot be missed if the
+   row is truncated, and the JSON must also carry a provisional_pending naming the
+   test that would settle it (the build enforces both). */
+function entityText(a) {
+  var suggested = a.status === 'suggested';
+  var bits = [];
+  if (suggested) bits.push('**Suggested, not established** \u2014');
+  bits.push(a.who_cns5_entity || '');
+  if (a.provisional) bits.push('Provisional type.');
+  if (a.code_status) bits.push(tokenLabel(CODE_STATUS_LABELS, a.code_status) + '.');
+  if (arr(a.shared_with).length) bits.push('Shared with: ' + arr(a.shared_with).join('; ') + '.');
+  if (a.evidence) bits.push((suggested ? 'Rests on: ' : 'Evidence: ') + a.evidence + '.');
+  return bits.filter(Boolean).join(' ');
+}
+
 function renderOutput() {
   var r = state.result;
   if (r.referral) {
@@ -1283,9 +1797,19 @@ function renderOutput() {
     h += orow('Behaviour', r.code + '/' + e.behavior_code);
   }
 
+  /* The subgroup is RESOLVED, not read off the entry: one (code, behaviour)
+     pair can belong to two ICCC-3 subgroups depending on the topography, and
+     the entry's own is only the default (§2.7). */
+  var sub = subgroupFor(e, state.captured.topography);
   h += '<div class="out__head out__head--' + esc(r.confidence) + '">' +
-    '<span class="out__subgroup">' + esc(e.iccc3_subgroup_name) + ' — ICCC-3 <b>' + esc(e.iccc3_subgroup_id) + '</b></span>' +
+    '<span class="out__subgroup">' + esc(sub.name) + ' — ICCC-3 <b>' + esc(sub.id) + '</b></span>' +
     '<span class="badge badge--' + esc(r.confidence) + '">Confidence ' + esc(r.confidence) + '</span></div>';
+
+  /* The second track. It sits next to the code it accompanies, because for
+     much of a group like this there is no code for the diagnosis the
+     pathologist actually reached, and a panel that shows only the code would
+     report the case as less specific than the report is. */
+  h += renderDiagnosisRows(r);
 
   /* Not a confidence level — a specific claim with a specific resolving test
      (§3.2). Rendered whether or not the case is otherwise complete. */
@@ -1298,14 +1822,24 @@ function renderOutput() {
   }
 
   h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
+  /* A registry data item in its own right, next to the workup it is derived
+     from and well away from the confidence badge: what the diagnosis RESTS ON
+     is not how sure the tool is of its own answer (§2.5). */
+  if (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined) {
+    h += orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' +
+      (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'));
+  }
   /* A deferrable behaviour criterion is answered months later. The case has to
      be re-opened, and a flag nobody can see will not make that happen — so it
      is an explicit row, next to the outstanding tests it behaves like. */
   if (r.followUp) h += orow('Follow-up', r.followUp, true, 'followup');
   /* Renders even when empty. If it vanishes on complete cases the clerk stops
      trusting it as a checklist (Design Spec §5, redcap.md §4). */
+  /* rich(), not esc(): an unavailable test is the one upgrade line that must
+     not be skim-read as a next step, and the word carrying that is emphasised.
+     rich() escapes first, so the input is already inert HTML. */
   h += '<div class="orow orow--upgrade"><b>Upgrade</b><span>' +
-    esc(r.upgrade || 'None — fully subtyped at this evidence tier.') + '</span></div>';
+    rich(r.upgrade || 'None — fully subtyped at this evidence tier.') + '</span></div>';
   h += renderAliases(r.code);
   h += renderUnread();
   h += orow('Topography', state.captured.topography || '—');
@@ -1476,6 +2010,36 @@ function handleOption(act, el) {
       if (br.deferrable && br.follow_up_review) state.captured.follow_up_review = br.follow_up_review;
       return advance(leaf.leaf, String(br.variable).replace(/_/g, ' '), leaf.label, before);
     }
+    /* One answer to the grade criterion. The criterion's own variable is
+       captured as an ordinary fact so a later rule can read it, and the grade
+       itself is held on the case until the output block. */
+    case 'grade': {
+      var pg = state.pendingGrade, gl = gradeLeaves(pg.rule)[i], grr = pg.rule;
+      if (!gl) return;
+      /* `unresolved` records that the fact was NOT established. It is not a
+         value the criterion ever offered, so it is captured as null. */
+      state.captured[grr.variable] = gl.unresolved ? null
+        : (gl.leaf.when !== undefined ? gl.leaf.when : gl.key);
+      state.grade = {
+        criterion: grr.criterion,
+        /* UNRESOLVED NEVER INVENTS A GRADE — not even one authored on it. A
+           grade that cannot be established is omitted, which is exactly what
+           an untested criterion requires; printing one would be the tool
+           stating a finding nobody made. */
+        grade: (gl.unresolved || gl.leaf.grade === undefined || gl.leaf.grade === '')
+          ? null : gl.leaf.grade,
+        grade_system: gl.unresolved ? null : (gl.leaf.grade_system || null),
+        reason: gl.leaf.reason || null,
+        defer_to: gl.leaf.defer_to || null,
+        unresolved: !!gl.unresolved
+      };
+      /* A leaf that names its own destination is an ordinary branch and takes
+         over; one that names none hands the parked branch back its own. */
+      var named = gl.leaf.morphology_code || gl.leaf.next_node ||
+        gl.leaf.refer_group || gl.leaf.non_reportable;
+      return advance(named ? gl.leaf : withoutGradeResolution(pg.target),
+        String(grr.variable).replace(/_/g, ' '), gl.label, before);
+    }
     /* One answer to one marker in the flow chart. Like a marker chip it
        CAPTURES and re-renders without advancing: the node still resolves
        through its own rules. `clear` unanswers, which is how the clerk goes
@@ -1497,6 +2061,7 @@ function handleOption(act, el) {
       return;
     }
     case 'feature': state.draft['f' + i] = el.checked; return;
+    case 'diversion': state.draft['d' + i] = el.checked; return;
     case 'biochem': state.draft['b' + i] = el.checked; return;
     case 'workup': state.workup[i].status = el.value; return;
     case 'resolve': return resolveNode(n, before);
@@ -1603,7 +2168,13 @@ function resolveNode(n, before) {
       if (band.band_variable) state.captured[band.band_variable] = band.range;
       if (n.band_variable) state.captured[n.band_variable] = band.range;
       if (band.classification_system) state.captured.classification_system_applied = band.classification_system;
-      return advance(band, n.step_label || 'Value', (v === null ? 'not documented' : v + (n.unit || '')) + ' → ' + band.range, before);
+      /* The unit travels with the value AND with the threshold it was read
+         against, so the trail can never be read back against the wrong
+         denominator. A band with no unit keeps the node's own, unchanged. */
+      var bu = bandUnitText(band);
+      return advance(band, n.step_label || 'Value',
+        (v === null ? 'not documented' : v + (bu ? ' ' + bu : (n.unit || ''))) +
+        ' → ' + band.range + (bu ? ' ' + bu : ''), before);
     }
     case 'cytogenetics_dropdown': {
       var o = arr(n.options)[+state.draft.option];
@@ -1618,6 +2189,17 @@ function resolveNode(n, before) {
       return advance(rule2 || fallbackTarget(n), n.step_label || 'Molecular', t || 'not recorded', before);
     }
     case 'imaging_pathway': {
+      /* ANY DIVERSION FEATURE TICKED FORCES THE TISSUE BRANCH, whatever the
+         imaging constellation says — so it is tested BEFORE the constellation
+         and there is no path on which a complete constellation outranks it.
+         An imaging-only endpoint is the weakest evidence this tool will emit;
+         a feature that says "this does not behave like the thing you are
+         about to code" has to be able to stop it. */
+      var diverted = arr(n.diversion_criteria).filter(function (_, i) { return !!state.draft['d' + i]; });
+      if (diverted.length) {
+        return advance(fallbackTarget(n), n.step_label || 'Imaging',
+          'Tissue required — ' + diverted.map(function (d) { return d.feature; }).join('; '), before);
+      }
       var okF = arr(n.imaging_features).every(function (_, i) { return state.draft['f' + i]; });
       var okB = arr(n.biochemical_questions).every(function (q, i) {
         return String(q.required_answer) === 'yes' ? !!state.draft['b' + i] : !state.draft['b' + i];
@@ -1713,9 +2295,45 @@ function afterSite() {
   if (!cands.length) { state.error = 'No candidate group survives this presentation, origin and site.'; return; }
   state.stage = 'group';
 }
+/* A group whose trees are keyed to a fact the router has ALREADY captured
+   does not ask the clerk to pick one. Asking would be redundant, and worse
+   than redundant: it invites an answer that contradicts the topography
+   already recorded on the case, and then two fields disagree with nothing to
+   say which is right.
+
+   The mapping from topography to tree is clinical content and lives in the
+   router; this only matches it, through the same ordered-rules matcher the
+   subgroup split and the dual-group rules use. `default` is REQUIRED, because
+   a topography no rule names would otherwise route nowhere at all — so a
+   missing one is refused by name rather than discovered by a clerk. */
+function routedTree(meta) {
+  var tr = meta.tree_routing;
+  if (!tr.default) {
+    throw new Error('tree_routing for group ' + state.group + ' declares no default tree. ' +
+      'A topography the rules do not name would route nowhere.');
+  }
+  var topo = state.captured[tr.variable || 'topography'];
+  var hit = firstTopographyMatch(tr.rules, topo) || tr.default;
+  if (!hit.tree_id) {
+    throw new Error('tree_routing for group ' + state.group + ' resolved a rule with no tree_id' +
+      ' (topography ' + (topo || 'not captured') + ')');
+  }
+  return hit;
+}
 function afterGroup() {
   var meta = (state.router.groups || {})[String(state.group)] || {};
   if (!meta.built) { state.stage = 'handoff'; return; }
+  /* Routed, not asked — and RECORDED, as an ordinary trail entry that is
+     clickable like every other one. An automatic route is precisely where a
+     wrong topography would otherwise mis-route a case in silence, so the
+     clerk has to be able to see which tree the case went down and go back and
+     change it. */
+  if (meta.tree_routing) {
+    var before = snapshot();
+    var hit = routedTree(meta);
+    pushTrail('Tree', hit.label || String(hit.tree_id).replace(/_/g, ' '), before);
+    return enterGroup(state.group, hit.tree_id, hit.entry_node);
+  }
   if (meta.tree_selection) { state.stage = 'handoff'; return; }
   var only = arr(meta.trees)[0];
   if (!only) { state.error = 'Group has no tree declared in the router.'; return; }
@@ -1740,6 +2358,7 @@ function reset() {
   state.organSystem = null; state.candidates = [];
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
+  state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
   state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
   state.error = null; state.query = '';
 }

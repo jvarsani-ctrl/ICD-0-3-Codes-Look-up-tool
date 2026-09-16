@@ -1791,3 +1791,43 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 
 > ⚠️ **Do not code 9741 from here.** 9741 requires a bone marrow meeting **1 major + 1 minor, or ≥3 minor** harmonized criteria. Nothing on this node meets that.
 
+---
+
+# Group III — CNS and Miscellaneous Intracranial and Intraspinal Neoplasms
+
+**Added 2026-09-14 with the Group 3 build.** Unlike Groups I and II, these were never written
+into `group_03_dt.json` — registrar ruling 9 was already in force when the group was authored,
+so every `clinical_alert` in that file is `null` from the start and the build check confirms it.
+They are transcribed here from **Pathway Revision 2 §6.4**, which replaced the master
+instruction file's single CNS row.
+
+Where an alert carries information the clerk needs **in order to code correctly**, that
+information was put into the node's `question`, `hint` or the branch's own `label` / `reason`
+instead — not into `coding_note`, which is author-facing and never displayed. What is left here
+is the clinical half: what a clinician should do, which is not what this tool is for.
+
+Eighteen alerts. Six name a heritable cancer syndrome and are the ones most worth restoring
+first if the tool ever takes on a clinical role — Li-Fraumeni on choroid plexus carcinoma,
+DICER1 on pituitary blastoma, rhabdoid tumour predisposition on AT/RT, PTEN/Cowden on
+Lhermitte-Duclos, NF1 on optic pathway glioma, and NF2 / prior radiation / Li-Fraumeni on a
+paediatric meningioma.
+
+| Trigger | Alert text |
+|---|---|
+| Any pineal, suprasellar or third-ventricular mass, before coding | ⚠️ Midline tumour — order serum **and CSF** AFP and β-hCG before surgery. Elevated → Group X, not Group III. **A normal result excludes nothing** — marker-negative intracranial germ cell tumours are well documented (34.4% in one historical sub-cohort of 32, part of that a detection-limit artefact). Record the values, not a yes/no. |
+| `9508` ATRT | ⚠️ ATRT — SMARCB1 (INI1) loss required; do not code without IHC. If INI1 is retained, test BRG1/SMARCA4. Loss implies rhabdoid tumour predisposition syndrome — refer to genetics. |
+| Infant under 3, posterior fossa mass, INI1 unavailable | ⚠️ Do not code as medulloblastoma. Emit `9473/3` CNS embryonal tumor, NOS with INI1 as the pending test. |
+| `9390/3` choroid plexus carcinoma | ⚠️ 40–50% association with Li-Fraumeni syndrome. Germline TP53 testing or a documented genetics referral is required. |
+| `8273/3` pituitary blastoma | ⚠️ Infant DICER1 tumour (median age 11 months; 16/17 DICER1-altered). Refer for germline DICER1 testing. |
+| Any paediatric case where "glioblastoma" is the reported diagnosis | ⚠️ CNS5: the term glioblastoma is no longer used for a paediatric-type neoplasm. The code `9440/3` may be correct; the diagnosis string is not. Consider the paediatric-type diffuse high-grade gliomas. |
+| "Congenital glioblastoma" in the file | ⚠️ Entity abolished. These are infant-type hemispheric glioma or DIG/DIA, and histology cannot separate them. Emit `IHG–DIG spectrum, NOS`. |
+| "Anaplastic pilocytic astrocytoma" in a child | ⚠️ The adult criteria do not apply below adulthood — 77% of such cases are plain pilocytic astrocytoma. Report pilocytic astrocytoma or refer for methylation profiling. |
+| Spinal piloid tumour | ⚠️ 25% of paediatric spinal "pilocytic astrocytomas" are DLGNT. Do not default to `9421`; 1p deletion is the discriminator. |
+| Patient under 18, H3-wildtype high-grade glioma | ⚠️ cIMPACT-NOW update 11: MMR immunohistochemistry (MSH2, MSH6, MLH1, PMS2) **should be considered** — the lowest recommendation tier, not an obligation. IHC-only, so reachable at RL II and above. |
+| Meningioma, brain-invasive, otherwise benign, no molecular data | ⚠️ cIMPACT-NOW update 8: report as meningioma, NOS **with the grade omitted**. Brain invasion alone no longer confers grade 2. |
+| Meningioma, patient ≤21 | ⚠️ Adult grading does not stratify outcome below 21 years. Rank extent of resection first, then SMARCE1 / BAP1 / NF2. |
+| Any 1p or 22q call made by FISH | ⚠️ FISH–CMA concordance for 1p is 45.8% (κ = 0.16, n = 11) and for 22q 62.5% (κ = 0.21, n = 24). Small denominators — flag as low confidence, not as a settled effect. |
+| Pineal region mass reported as pineoblastoma | ⚠️ 22.6% of institutional pineoblastoma diagnoses were other entities, commonest germ cell tumour. Confirm markers and INI1. |
+| LIN28A-positive, C19MC-negative ciliary body tumour | ⚠️ Intraocular medulloepithelioma, not ETMR — **C19MC amplification was present in 0 of 20 such tumours**. Route out of Group III. |
+| TTF-1-positive meningeal tumour | ⚠️ Clone-dependent aberrant expression in solitary fibrous tumour (34.3% with SPT24 vs 2/23 with 8G7D3/1). Record the antibody clone before calling a metastasis. |
+| `9445` recorded for a paediatric case | ⚠️ `9445/3` is Glioblastoma, IDH-mutant — an entity CNS5 abolished. Historical entries may be mis-coded pleomorphic xanthoastrocytoma (`9424/3`). Flag for review. |

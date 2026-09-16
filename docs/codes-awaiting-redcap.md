@@ -146,6 +146,41 @@ for display.
 
 ---
 
+## Group 3 — open
+
+### 9476/3 — Medulloblastoma, SHH-activated and TP53-mutant
+
+| | |
+|---|---|
+| ICD-O-3.2 | `9476/3` Preferred, and the code's only term |
+| REDCap | **Absent** from `Group 3 - Cns And Miscellaneous Intracranial And Intraspinal Neoplasms.md`. Verified against the live `iii_morph` export of 2026-09-14: of the 87 usable Group III codes this is the **only** one with no option |
+| ICCC-2017 | In range. IIIc1 Medulloblastomas, topography `C00.0-C80.9`, behaviour `0-1,3` |
+| Reached from | `pf_mb_tp53` option 0 — TP53 **sequencing** performed and a pathogenic or likely pathogenic variant demonstrated |
+| Carried by until now | Nothing. The previous pathway revision had the whole medulloblastoma block shifted by one and `9476` was absent from it altogether |
+
+**Why the tree runs ahead of the dropdown here.** `9476/3` is the only route out of a
+TP53-mutant SHH medulloblastoma, and it is the one medulloblastoma branch that changes
+management: Orr 2020 recommends germline testing and genetic counselling in all SHH
+medulloblastoma with large-cell/anaplastic histology or a mutant p53 IHC pattern,
+particularly at ages 3–18. Registrar ruling 3 of 4 Sep 2026 allows the tree to carry a code
+the option list lacks, provided it is reported here.
+
+**What it must never be.** `9476/3` is reachable **only** from demonstrated TP53 sequencing.
+p53 immunohistochemistry cannot establish TP53 status — TP53 has two IHC patterns, diffuse
+overexpression and complete absence from null variants, and Ranade 2025 found p53
+indeterminate in 11–13% of SHH medulloblastomas with four cases completely negative, which is
+the null-variant signature. Every IHC-only route in the tree terminates at `9471/3`
+(`Medulloblastoma, SHH activated, NOS`) instead. Adding the REDCap option does not change
+that; it only gives the sequenced cases somewhere to go.
+
+**To close it:** append `9476, 9476 - Medulloblastoma, SHH-activated and TP53-mutant` to
+`iii_morph`, and add `9476` to the **IIIc1: Medulloblastomas** branch of both the
+`iii_extended` and `iii_subgroup` formulas — it is the one code the repair package's F5 notes
+neither formula currently handles. Full detail in
+`ICD Look Up tool/Group 3 — Layer 1 Repair Package (REDCap iii_morph).md` §F5.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block
