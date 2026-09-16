@@ -725,13 +725,79 @@ read (§10.1), which also settled the edition question. Both are struck from thi
    PMID 1495347 — the TNM alternative, whose abstract reports it *"predicted disease-free status
    better than the other staging systems"*, Kadish among them.
 
-4. **WHO Head and Neck Tumours, 5th edition — the only document that can settle D3.** One
-   candidate identified but not yet retrieved: **Bradová M, Laco J, Skálová A.** *News in the 5th
-   edition of the WHO Classification of Tumours of the Head and Neck: Tumours of the Sinonasal
-   Tract and Skull Base Tumors.* Československá patologie 2026;62(2):87–95, PMID 42472341 (PubMed
-   returns no DOI). Its abstract notes that the 5th edition **relocated neuroectodermal tumours
-   into a separate chapter** — olfactory neuroblastoma is one, so it may no longer sit in the
-   sinonasal chapter, which changes where to look.
+4. **D3 is settled — see below. The Hyams table is held. Nothing in this group now waits on a
+   paywall.**
+
+### 10.2b D3, settled on evidence
+
+> **Rooper LM.** *Proceedings of the 2023 North American Society of Head and Neck Pathology
+> Companion Meeting… Navigating New Developments in High Grade Sinonasal Neuroendocrine and
+> Neuroectodermal Neoplasms.* Head and Neck Pathology 2023;17(2):299–312. PMID 37184733 ·
+> PMC10293143 · 10.1007/s12105-023-01548-8
+
+Read in full from PubMed Central on 16 September 2026. The PubMed full-text tool returned an empty
+body for this PMCID; the article was read directly from the PubMed Central website. Extraction:
+`Group 4 Papers/Rooper-2023-who5-sinonasal-neuroectodermal-key-points.md`.
+
+It is the closest retrievable source to the WHO *Head and Neck Tumours* 5th edition sinonasal
+chapter, written explicitly about what that edition does and does not change for sinonasal
+**neuroectodermal** neoplasms — which is exactly the category olfactory neuroblastoma sits in.
+
+Across 57,027 characters:
+
+| Term | Occurrences |
+|---|---|
+| `neurocytoma` | **0** |
+| `neurogenic` | **0** |
+| `neuroepithelioma` | 5, **none as a current entity** — two are reference titles from the 20th-century literature, the rest concern hybrid olfactory-neuroblastoma-and-carcinoma tumours |
+| `ICD-O` | **0** |
+
+And, from the introduction: *"In the 5th edition WHO, there are no substantive alterations to the
+definition of olfactory neuroblastoma (ONB)—a neuroectodermal neoplasm that is still regarded as
+unique to the sinonasal tract"*. The paper's section heading is **"Olfactory Neuroblastoma"**,
+singular.
+
+**WHO's 5th edition recognises one entity here.** *Olfactory neurocytoma* and *olfactory neurogenic
+tumour* are not mentioned at all; *olfactory neuroepithelioma* survives only as a paper title in the
+reference list.
+
+This does **not** retire the codes — that is IARC's to do, and ICD-O-3.2 still prints all three as
+live Preferred terms with no `[obs]`. It shows that **no current WHO entity has been demonstrated on
+those three stems**, which is precisely the Group 3 test. **Ruling D3 stands unchanged and is now
+evidenced rather than defaulted:** all four built, only `9522` resolvable, the other three reachable
+only on the report's exact wording at `confidence_ceiling: "low"`.
+
+**Two things to carry into the sinonasal tree from the same paper.** Its immunohistochemistry panel
+for olfactory neuroblastoma is synaptophysin, chromogranin and INSM1 positive, **pankeratin
+negative**, S100 and SOX10 on sustentacular cells, and **calretinin positive — offered as the marker
+separating it from the other small round blue cell tumours.** The Group IV pathway document does not
+mention calretinin at all. **PHOX2B is not on this panel**, consistent with Manethova 2023 finding
+it positive in only 1 of 6 olfactory neuroblastomas.
+
+And two entities proposed *since* the 5th edition, recorded so no later builder mistakes them for
+Group IV codes — **olfactory carcinoma** and **IDH2-mutant sinonasal carcinoma**. Both are
+carcinomas and would route to Group XI.
+
+### 10.2c The Hyams criteria, held and transcribed
+
+> **Gargano SM, et al.** *Refinement of Hyams Grading Criteria for Olfactory Neuroblastoma in an
+> Endoscopic Sinus Surgery Predominant Cohort with Extended Follow-up: Worth the Effort?* Head and
+> Neck Pathology 2025;19(1):92. PMID 40728590 · PMC12307849 · 10.1007/s12105-025-01804-z
+
+Table 1's original-grade columns are transcribed in
+`Group 4 Papers/Gargano-2025-hyams-grading-TABLE-key-points.md`. **The modified-grade columns are
+not** — they span unevenly in the source HTML and cannot be read flat.
+
+**And the transcription argues against using them.** Five of the seven original criteria are
+subjective ordinal words — *prominent*, *present*, *may be present*, *marked*, *absent to slight* —
+with no count, percentage or area. A tree cannot ask an abstractor whether pleomorphism is
+"prominent" or "marked". The paper's own multivariable analysis found original Hyams grade **not**
+significantly associated with overall, disease-specific or disease-free survival, and it concludes
+that grades I and IV are *"rare and likely unnecessary"*.
+
+**So the sinonasal tree records the grade the report states, as a string, and asserts nothing about
+what it means.** That was already the contract's position on the ground that no source was held; it
+is now the position on the ground that the source says so.
 
 **Staging and grading are not coding inputs.** Neither Kadish nor Hyams changes the ICD-O
 morphology code: `9522/3` is `9522/3` at every stage and every grade. They belong to the record,
