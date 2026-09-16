@@ -1266,7 +1266,7 @@ def check_morphology_entry_fields(ctx: DTContext):
             if entry.get(field) in (None, ""):
                 out.append((FAIL, "entry %s: %r must not be null" % (label, field)))
         # No longer a required field (registrar ruling, 16 Sep 2026) — Group 4
-        # on carries none. Where a legacy Group 1-3 entry still has it, it
+        # onward carries none. Where a legacy Group 1-3 entry still has it, it
         # must still be a real value; that is the only thing checked here.
         conf = entry.get("confidence_ceiling")
         if conf is not None and conf not in CONFIDENCE_CEILINGS:
