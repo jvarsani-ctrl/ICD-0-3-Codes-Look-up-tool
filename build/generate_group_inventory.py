@@ -16,8 +16,13 @@ carries, restricted to the behaviours ICCC-3 declares for the group.
 
     python3 build/generate_group_inventory.py --group IV --out /tmp/g4_inventory.json
 
-`build/generate_group03_inventory.py` remains as a thin shim over this module (`--group III`,
-forwarding every other argument) so nothing that already invokes it by name breaks.
+`build/generate_group03_inventory.py` remains as a thin shim over this module. It does not
+take `--group` on its own command line at all — it calls `build_inventory()` below directly
+with `group="III"` hard-coded in Python, not passed through argv. That is deliberate: an
+argument forwarded through a wrapper's argv can be overridden by a same-named flag the caller
+supplies (argparse keeps the last occurrence), which would silently swap the group and stamp
+the wrong data with the shim's own provenance string. Building by construction — no `--group`
+flag for the shim to receive — makes that impossible rather than merely unlikely.
 """
 from __future__ import annotations
 
@@ -32,6 +37,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 DEFAULT_LAYER1 = REPO.parents[1] / "ICD coding"
 DEFAULT_ICCC = REPO.parents[1] / "ICCC-2017.sqlite"
+DEFAULT_ICDO = DEFAULT_LAYER1 / "ICD-O-3.2" / "icdo32.sqlite"
 
 ROMAN_GROUPS = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
@@ -111,27 +117,15 @@ def load_icdo(path: Path) -> dict:
     return terms
 
 
-def main(argv=None) -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--group", required=True, choices=ROMAN_GROUPS,
-                     help="ICCC-3 main group, as a Roman numeral (I .. XII).")
-    ap.add_argument("--iccc", default=os.environ.get("ICCC_DB", str(DEFAULT_ICCC)))
-    ap.add_argument("--icdo", default=os.environ.get(
-        "ICDO_DB", str(DEFAULT_LAYER1 / "ICD-O-3.2" / "icdo32.sqlite")))
-    ap.add_argument("--out", default=None)
-    # Internal: lets a thin per-group shim (generate_group03_inventory.py) declare itself as
-    # the provenance string, so its output stays byte-identical to before this module existed.
-    # Not part of the documented CLI for a new group's build.
-    ap.add_argument("--generated-by", default=None, help=argparse.SUPPRESS)
-    args = ap.parse_args(argv)
+def build_inventory(iccc_path: Path, icdo_path: Path, group: str, generated_by: str | None = None) -> dict:
+    """Join the two databases for `group` (a Roman numeral) and return the inventory payload.
 
-    iccc_path, icdo_path = Path(args.iccc), Path(args.icdo)
-    for p in (iccc_path, icdo_path):
-        if not p.exists():
-            print("missing database: %s" % p, file=sys.stderr)
-            return 2
-
-    iccc_rows = load_iccc(iccc_path, args.group)
+    Pure function: no argv, no I/O beyond the two read-only database connections. `main()`
+    below is the only thing that touches sys.argv, stdout or the filesystem, so a caller who
+    wants a fixed, non-overridable group (the Group III shim) gets there by calling this
+    function directly instead of by tunnelling `--group` through another parser's argv.
+    """
+    iccc_rows = load_iccc(iccc_path, group)
     icdo_terms = load_icdo(icdo_path)
 
     records = []
@@ -172,9 +166,8 @@ def main(argv=None) -> int:
             )
 
     distinct_codes = sorted({r["morphology_code"] for r in records})
-    generated_by = args.generated_by or ("build/generate_group_inventory.py --group %s" % args.group)
-    payload = {
-        "_generated_by": generated_by,
+    return {
+        "_generated_by": generated_by or ("build/generate_group_inventory.py --group %s" % group),
         "_sources": {
             "iccc": str(iccc_path),
             "icdo": str(icdo_path),
@@ -190,10 +183,13 @@ def main(argv=None) -> int:
         "records": records,
     }
 
+
+def emit(payload: dict, out: str | None) -> None:
+    """Write `payload` to `out` (or stdout) and print the one-line summary to stderr."""
     text = json.dumps(payload, indent=2, ensure_ascii=False)
-    if args.out:
-        Path(args.out).write_text(text + "\n", encoding="utf-8")
-        print("wrote %s" % args.out, file=sys.stderr)
+    if out:
+        Path(out).write_text(text + "\n", encoding="utf-8")
+        print("wrote %s" % out, file=sys.stderr)
     else:
         print(text)
 
@@ -210,6 +206,25 @@ def main(argv=None) -> int:
         ),
         file=sys.stderr,
     )
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--group", required=True, choices=ROMAN_GROUPS,
+                     help="ICCC-3 main group, as a Roman numeral (I .. XII).")
+    ap.add_argument("--iccc", default=os.environ.get("ICCC_DB", str(DEFAULT_ICCC)))
+    ap.add_argument("--icdo", default=os.environ.get("ICDO_DB", str(DEFAULT_ICDO)))
+    ap.add_argument("--out", default=None)
+    args = ap.parse_args(argv)
+
+    iccc_path, icdo_path = Path(args.iccc), Path(args.icdo)
+    for p in (iccc_path, icdo_path):
+        if not p.exists():
+            print("missing database: %s" % p, file=sys.stderr)
+            return 2
+
+    payload = build_inventory(iccc_path, icdo_path, args.group)
+    emit(payload, args.out)
     return 0
 
 

@@ -1125,7 +1125,7 @@
         9
       ],
       "candidate_groups_advisory": true,
-      "_comment": "Topography Redcap.md pick 755 (C75.5, Aortic body and other paraganglia) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma. So a reported glomus jugulare tumour can plausibly be sited at either C30.1 or C75.5. Recorded, not resolved -- Group 4 build contract §7.1."
+      "note": "Topography Redcap.md pick 755 (C75.5, Aortic body and other paraganglia) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma. So a reported glomus jugulare tumour can plausibly be sited at either C30.1 or C75.5. Recorded, not resolved -- Group 4 build contract §7.1."
     },
     "C31.0": {
       "code": "C31.0",
@@ -1243,7 +1243,7 @@
       "candidate_groups": [
         4
       ],
-      "_comment": "REDCap's label for this pick (755) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma (topography C30.1). So a reported glomus jugulare tumour can plausibly be sited at either C75.5 or C30.1. Recorded, not resolved -- Group 4 build contract §7.1."
+      "note": "REDCap's label for this pick (755) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma (topography C30.1). So a reported glomus jugulare tumour can plausibly be sited at either C75.5 or C30.1. Recorded, not resolved -- Group 4 build contract §7.1."
     }
   }
 }
