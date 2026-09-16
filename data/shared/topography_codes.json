@@ -207,6 +207,83 @@
       ],
       "note": "Craniopharyngeal duct and pineal gland -- consulted by the 8000-8005 (NOS) dual-group rule (DT master §6) alongside C70-C72 and C75.1.",
       "label": "Craniopharyngeal duct and pineal gland"
+    },
+    {
+      "organ": "nasopharynx",
+      "topography_range": "C11",
+      "codes": [
+        "C11.0",
+        "C11.1",
+        "C11.2",
+        "C11.3",
+        "C11.8",
+        "C11.9"
+      ],
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "label": "Nasopharynx",
+      "note": "Group 4's sinonasal tree (g4_sinonasal) claims this block for the olfactory-neuroblastoma / sinonasal differential (Group 4 build contract §5). Nasopharyngeal carcinoma (ICCC-3 XId) is the dominant paediatric malignancy at this site in older children, so group 11 is listed too."
+    },
+    {
+      "organ": "nasal_cavity_middle_ear",
+      "topography_range": "C30",
+      "codes": [
+        "C30.0",
+        "C30.1"
+      ],
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "label": "Nasal cavity and middle ear",
+      "note": "C30.0 is the site ICD-O-3.2 itself prints against 9522/3 Olfactory neuroblastoma; C30.1 is 8690's own site (Middle ear paraganglioma). Both are also classic parameningeal sites for embryonal rhabdomyosarcoma (group 9)."
+    },
+    {
+      "organ": "accessory_sinuses",
+      "topography_range": "C31",
+      "codes": [
+        "C31.0",
+        "C31.1",
+        "C31.2",
+        "C31.3",
+        "C31.8",
+        "C31.9"
+      ],
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "label": "Accessory sinuses",
+      "note": "Kadish B/C olfactory neuroblastoma extends into the paranasal sinuses (group 4); the sinuses are also a classic parameningeal rhabdomyosarcoma site (group 9)."
+    },
+    {
+      "organ": "mediastinum",
+      "topography_range": "C38.1-C38.3",
+      "codes": [
+        "C38.1",
+        "C38.2",
+        "C38.3"
+      ],
+      "candidate_groups": [
+        2,
+        4
+      ],
+      "label": "Mediastinum",
+      "note": "Group 4's sympathoadrenal tree (g4_sympathoadrenal) includes the mediastinum for posterior mediastinal/paraspinal neuroblastoma; an anterior mediastinal mass in a child is more commonly lymphoma (group 2). The compartment alone does not decide, so both groups are listed."
+    },
+    {
+      "organ": "head_neck_paraganglia",
+      "topography_range": "C75.4-C75.5",
+      "codes": [
+        "C75.4",
+        "C75.5"
+      ],
+      "candidate_groups": [
+        4
+      ],
+      "label": "Carotid body and other paraganglia"
     }
   ],
   "topography_lookup": {
@@ -959,6 +1036,214 @@
         3
       ],
       "note": "NO REDCap topography option exists for this code — the `topo_code` dropdown jumps 709 to 711. Verified against ICD coding/RedCap Options/Topography Redcap.md, 2026-09-14. The tool carries C71.0 because Group III keys its decision trees to anatomical compartment and a thalamic diffuse midline glioma lands here. Until the option is added the clerk has no dropdown value to record. See docs/TODO.md."
+    },
+    "C11.0": {
+      "code": "C11.0",
+      "label": "Superior wall of nasopharynx",
+      "redcap_code": "110",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C11.1": {
+      "code": "C11.1",
+      "label": "Posterior wall of nasopharynx",
+      "redcap_code": "111",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C11.2": {
+      "code": "C11.2",
+      "label": "Lateral wall of nasopharynx",
+      "redcap_code": "112",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C11.3": {
+      "code": "C11.3",
+      "label": "Anterior wall of nasopharynx",
+      "redcap_code": "113",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Topography Redcap.md line 56 (pick 113) carries ligature damage in its parenthetical synonym list -- \"so! palate\" for \"soft palate\". Not reproduced here: the label above is REDCap's wording trimmed of that parenthetical, per Group 4 build contract §7.1. The REDCap source file itself was not edited."
+    },
+    "C11.8": {
+      "code": "C11.8",
+      "label": "Overlapping lesion of nasopharynx",
+      "redcap_code": "118",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C11.9": {
+      "code": "C11.9",
+      "label": "Nasopharyngeal wall, NOS",
+      "redcap_code": "119",
+      "coarse_organ": "nasopharynx",
+      "candidate_groups": [
+        4,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C30.0": {
+      "code": "C30.0",
+      "label": "Nasal cavity",
+      "redcap_code": "300",
+      "coarse_organ": "nasal_cavity_middle_ear",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C30.1": {
+      "code": "C30.1",
+      "label": "Middle ear",
+      "redcap_code": "301",
+      "coarse_organ": "nasal_cavity_middle_ear",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true,
+      "_comment": "Topography Redcap.md pick 755 (C75.5, Aortic body and other paraganglia) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma. So a reported glomus jugulare tumour can plausibly be sited at either C30.1 or C75.5. Recorded, not resolved -- Group 4 build contract §7.1."
+    },
+    "C31.0": {
+      "code": "C31.0",
+      "label": "Maxillary sinus",
+      "redcap_code": "310",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C31.1": {
+      "code": "C31.1",
+      "label": "Ethmoid sinus",
+      "redcap_code": "311",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C31.2": {
+      "code": "C31.2",
+      "label": "Frontal sinus",
+      "redcap_code": "312",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C31.3": {
+      "code": "C31.3",
+      "label": "Sphenoid sinus",
+      "redcap_code": "313",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C31.8": {
+      "code": "C31.8",
+      "label": "Overlapping lesion of accessory sinuses",
+      "redcap_code": "318",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C31.9": {
+      "code": "C31.9",
+      "label": "Accessory sinus, NOS",
+      "redcap_code": "319",
+      "coarse_organ": "accessory_sinuses",
+      "candidate_groups": [
+        4,
+        9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.1": {
+      "code": "C38.1",
+      "label": "Anterior mediastinum",
+      "redcap_code": "381",
+      "coarse_organ": "mediastinum",
+      "candidate_groups": [
+        2,
+        4
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.2": {
+      "code": "C38.2",
+      "label": "Posterior mediastinum",
+      "redcap_code": "382",
+      "coarse_organ": "mediastinum",
+      "candidate_groups": [
+        2,
+        4
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.3": {
+      "code": "C38.3",
+      "label": "Mediastinum, NOS",
+      "redcap_code": "383",
+      "coarse_organ": "mediastinum",
+      "candidate_groups": [
+        2,
+        4
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C75.4": {
+      "code": "C75.4",
+      "label": "Carotid body",
+      "redcap_code": "754",
+      "coarse_organ": "head_neck_paraganglia",
+      "candidate_groups": [
+        4
+      ]
+    },
+    "C75.5": {
+      "code": "C75.5",
+      "label": "Aortic body and other paraganglia",
+      "redcap_code": "755",
+      "coarse_organ": "head_neck_paraganglia",
+      "candidate_groups": [
+        4
+      ],
+      "_comment": "REDCap's label for this pick (755) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma (topography C30.1). So a reported glomus jugulare tumour can plausibly be sited at either C75.5 or C30.1. Recorded, not resolved -- Group 4 build contract §7.1."
     }
   }
 }
