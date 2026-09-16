@@ -583,7 +583,7 @@ Parts are built **in full** before anything is validated. Validating between tre
 produced 132, then 88, then 4 failures that were all "a later tree does not exist yet" and cleared
 on their own.
 
-1. `build/generate_group04_inventory.py` — and the `topography_codes.json` extension (§7.1).
+1. `build/generate_group_inventory.py --group IV` — the Group III script was **generalised, not forked**, and `build/generate_group03_inventory.py` is now a shim that pins `--group III` and keeps its output byte-identical. Plus the `topography_codes.json` extension (§7.1).
 2. This contract — done.
 3. `morphology_entries[]` — all 18, one pass.
 4. Engine + validator support for `behaviour_exclusion`, and the nine checks of §8.
@@ -626,28 +626,119 @@ stated plainly so no reader mistakes it for more.
 | Family | Evidence held | Strength |
 |---|---|---|
 | Neuroblastic (9490, 9500) | Shimada 1999 · Peuchmaur 2003 · Okamatsu 2009 · Ambros 2005 · Ma 2021 · Verly 2017 · Monclair 2009 · Ambros 2009 · Nakagawara 2018 — all on disk | **Strong, and stronger than the nominal baseline.** The INPC (Shimada, Peuchmaur) and the INRG (Monclair, Ambros) are international consensus documents covering exactly what a coder needs: the four INPC categories, the Schwannian-stroma criterion that separates 9490 from 9500, the age-linked favourable/unfavourable assignment, and the staging system. This family is better evidenced than Group III's was. |
-| Paraganglionic (8680–8700) | Manethova 2023 · Maignan 2017 · Bausch 2017 · Testa 2013 · Di Stasio 2022 on disk. **Mete 2022 retrieved 16 Sep 2026 — abstract only.** | **Medium.** The IHC panel is well sourced and Mete's abstract corroborates it (INSM1, synaptophysin, chromogranins; GATA3, tyrosine hydroxylase, dopamine β-hydroxylase, phenylethanolamine *N*-methyltransferase; SOX10/S100 sustentacular; keratins negative). Two things the abstract settles: **CoGNET** (§0.2), and that pheochromocytoma is *"used specifically for intra-adrenal paragangliomas"*. One thing it unsettles: it attributes the abolition of the benign/malignant split to **the 4th edition**, not the 5th. The full entity list is not confirmed from source. |
+| Paraganglionic (8680–8700) | Manethova 2023 · Maignan 2017 · Bausch 2017 · Testa 2013 · Di Stasio 2022 on disk. **Mete 2022 full text supplied by the registrar and read 16 Sep 2026** — `Group 4 Papers/s12022-022-09704-6.pdf`, 25 pages. | **Medium, and now precisely bounded — see §10.3.** The WHO entity list, the renames and the IHC panel are all source-verified with page citations. **No ICD-O code appears anywhere in the paper**, so it corroborates ICD-O-3.2 and never confirms it. |
 | Olfactory (9520–9523) | Manethova 2023 for the negative PHOX2B finding. **Veyrat 2020 retrieved 16 Sep 2026 — abstract only.** | **Weak.** Veyrat confirms that Kadish (clinical-radiological) and Hyams (histological) are the two systems and that Kadish C–D and Hyams III–IV mark poor prognosis, but **reproduces neither set of criteria** and is silent on 9520, 9521 and 9523. It is also a chapter in the Karger monograph series *Advances in Oto-Rhino-Laryngology* vol. 84, pp. 154–167 — not the standalone journal review the pathway's reference list implies. The Hyams and Kadish tables in the pathway document are from recall and are **not** source-verified. Decision **D3** is therefore unresolved by literature and is settled on the ICD-O-3.2 test alone. |
 | Medulloepithelioma / neuroepithelioma at peripheral sites (9501–9504) | Shuangshoti 1986 — one case report | **Very weak, and honestly so.** Pfister 2022 does not discuss peripheral medulloepithelioma or neuroepithelioma at all. No pathway is built. §2.3, §2.4. |
 
-### 10.1 What is still missing, recorded rather than glossed
+### 10.1 What Mete 2022's full text settles, and what it does not
 
-1. **Pfister 2022 Supplementary Table S3** — the only place the baseline states its neuroblastic
-   entity list. Not retrievable through the full-text tool.
-2. **Mete 2022 full text** — needed for the WHO 2022 paraganglioma entity list, for any ICD-O code
-   WHO states for CoGNET, and for what the paper says about neuroblastic tumours (its abstract
-   claims it summarises them).
-3. **Veyrat 2020 full text** — the actual Kadish A–D and Hyams I–IV criteria. Until it is held, the
-   sinonasal tree must not present grading criteria as sourced.
-4. **WHO Head and Neck Tumours, 5th edition** — the only document that can settle **D3**.
-5. **The exact WHO edition that abolished the paraganglioma benign/malignant split.** Mete's
-   abstract says the 4th. Immaterial to the coding (ICD-O-3.2 carries /3 only either way), but the
-   build report must not assert 2022 when the source says 2017.
+Read 16 September 2026 from the registrar's copy. Page numbers are the journal's own, 90–114.
+Extraction: `Group 4 Papers/Mete-2022-paraganglioma-pheochromocytoma-who2022-FULLTEXT-key-points.md`.
 
-Items 2 and 3 are behind paywalls with no PMCID. They need an institutional route, not another
-PubMed attempt.
+**It is not a code source, and cannot be made into one.** An exhaustive search of the body, the
+table, every figure legend and the references found **no ICD-O code for any entity** — no `ICD`
+string, no `NNNN/N` pattern. It is a companion overview, not a Blue Book reproduction. So for
+every paraganglioma and pheochromocytoma code in §1, the two-source test resolves as
+**ICD-O-3.2 decides, Mete corroborates** — the WHO leg confirms that a current entity lives on the
+stem, and never confirms the number.
 
-### 10.2 The rule this section exists to enforce
+**Settled:**
+
+| | |
+|---|---|
+| **The edition** | The full text agrees with the abstract and the hedge in §3.1 of the repair package can be dropped: *"Prior to the 2017 WHO classification (also known the 4th edition), PPGLs… were accompanied by the adjectives 'benign' or 'malignant'.… As a result, all PPGLs have been considered as malignant neoplasms with variable metastatic potential."* (p. 100). **The 4th edition, 2017.** Not 2022. The paper never writes `/3` — its language is descriptive, so it supports the behaviour but does not state the code. |
+| **CoGNET** | *"The entity previously known as gangliocytic para-ganglioma has been renamed composite gangliocytoma/neuroma and neuroendocrine tumor (CoGNET)."* (p. 94). Confirms §0.2 from the full text. |
+| **The INPC table** | Mete **reproduces the full International Neuroblastoma Pathology Committee classification as its Table 1** (p. 108), attributed to Shimada 1999, with the subtypes the Tree A `histology_subclassification` node needs — undifferentiated, poorly differentiated, differentiating; intermixed, nodular; maturing, mature. A second, independent, WHO-published witness for the 9490-versus-9500 split. Unexpected, and the most useful thing in the paper for this build. |
+| **Two further renames** | *Cauda equina paraganglioma* → **cauda equina neuroendocrine tumor**, moved out of the PPGL family entirely (p. 93). *Nodular and diffuse adrenal medullary hyperplasia* → **micro-pheochromocytoma**, adopted 2022 (pp. 95–96). Neither has a stated ICD-O code. |
+| **Composite PPGL** | Shares the components of two entities; **pheochromocytoma with ganglioneuroma is about 75% of composite cases** (p. 106), and pheochromocytoma with neuroblastoma or ganglioneuroblastoma about 10% each. ICD-O-3.2 carries `Composite pheochromocytoma` as a Related term on `8700/3` and `Composite paraganglioma` on `8693/3`, so the code exists; the tree must not let a composite's ganglioneuroma component reach the D1 `behaviour_exclusion` branch. |
+
+**The finding that changes a node the build has not written yet.**
+
+> **Mete 2022 never discusses PHOX2B as a paraganglioma or pheochromocytoma marker.** The string
+> appears twice in 25 pages, both under the *neuroblastoma* differential: *"if necessary further
+> supported by PHOX2B, tyrosine hydroxylase, and NB84"* to separate neuroblastoma from
+> rhabdomyosarcoma, Wilms tumour, Ewing sarcoma and lymphoblastic lymphoma (p. 108).
+
+The WHO panel is INSM1, synaptophysin and chromogranin as general neuroendocrine markers;
+**keratins negative**; then GATA3, tyrosine hydroxylase, dopamine β-hydroxylase and choline
+acetyltransferase as the specific ones; SOX10 and S100 for sustentacular cells; SDHB, SDHA,
+FH/2SC, CAIX, α-inhibin, MAX, menin, BAP1 and Ki-67 for the genetic and prognostic layer
+(pp. 96–106).
+
+So the claim that PHOX2B is positive in 97.2% of paragangliomas rests on **Manethova 2023 alone**,
+and WHO's own recommended panel omits it. §5.1 already says PHOX2B does not separate
+neuroblastoma from pheochromocytoma and that GATA3 and the sustentacular pattern do. That
+stands, and is now the WHO position rather than an inference. **Any Tree B branch citing PHOX2B
+must cite Manethova 2023 and must not imply WHO recommends it.**
+
+**Still not answered, and not answerable from this paper:** CoGNET's ICD-O code; which WHO volume
+owns CoGNET; what becomes of the number `8683`; any paediatric age-of-onset or gene-timing data
+beyond *"a rate of germline mutations approaching 40% in adult… and 85% pediatric series"*
+(p. 103, citing Pamporaki 2017); and whether any entity in the family is paediatric-specific.
+Composite pheochromocytoma-with-neuroblastoma is described as presenting in the *"fourth to fifth
+decade"* (p. 106) — adult.
+
+> One inconsistency inside the paper, recorded so nobody reconciles it silently: the abstract
+> writes *composite paraganglioma*, the body always writes *composite PPGL* or *composite
+> pheochromocytoma*.
+
+---
+
+### 10.2 What is still missing, recorded rather than glossed
+
+**Closed since this section was written:** Mete 2022's full text was supplied by the registrar and
+read (§10.1), which also settled the edition question. Both are struck from this list.
+
+1. **Pfister 2022 Supplementary Table S3** — the only place the nominal baseline states its
+   neuroblastic entity list. Not retrievable through the full-text tool. Its loss matters less
+   than it did, because **Mete 2022 Table 1 reproduces the INPC classification in full** (§10.1)
+   and that is what the Tree A node actually needs.
+
+2. **The Hyams grading criteria have no citable primary source, and this is worse than a paywall.**
+   Checked against PubMed on 16 September 2026. The citation the pathway document implies resolves
+   to **Wenig BM, Hyams VJ, Heffner DK.** *Moderately differentiated neuroendocrine carcinoma of
+   the larynx.* Cancer 1988;62(12):2658–76, PMID 3056608 — a **larynx** paper on which Hyams is
+   second author. Wrong tumour, wrong organ.
+
+   The grading scheme is **Hyams VJ, "Olfactory neuroblastoma", in *Tumors of the Upper
+   Respiratory Tract and Ear*, Atlas of Tumor Pathology, 2nd series, Fascicle 25, Armed Forces
+   Institute of Pathology, 1988** — a book fascicle. **PubMed does not index it: no PMID, no DOI.**
+   Every paper that says "Hyams grade" is citing a book most registries do not hold.
+
+   The four grades in the pathway document came from a language model's recall and **no source in
+   this repository supports them.** Until a retrievable source reproducing the criteria table is
+   held, **the sinonasal tree states no Hyams grade and asks for none.** It may record the grade
+   the pathology report states, as a string, without asserting what the grades mean.
+
+3. **Kadish staging — settled, and the pathway document has it wrong.** **Kadish S, Goodman M,
+   Wang CC.** *Olfactory neuroblastoma. A clinical analysis of 17 cases.* Cancer 1976;37(3):1571–6,
+   PMID 1260676. The criteria are in the abstract, so no paywall applies: *"for Group A, the tumor
+   is limited to the nasal cavity; in group B, the tumor is localized to the nasal acvity and
+   paranasal sinuses; and in group C, the tumor extends beyond the nasal cavity and paranasal
+   sinuses"* (typographical error in the source). **Three groups, A to C.** Stage D is not Kadish's
+   — it comes from **Morita A, et al.** *Esthesioneuroblastoma: prognosis and management.*
+   Neurosurgery 1993;32(5):706–14, PMID 8492845. The pathway document prints a four-row table under
+   Kadish's name alone. Correct the attribution wherever the tree or its documentation names it.
+
+   Also on record, and not in the pathway document at all: **Dulguerov P, Calcaterra T.**
+   *Esthesioneuroblastoma: the UCLA experience 1970–1990.* Laryngoscope 1992;102(8):843–9,
+   PMID 1495347 — the TNM alternative, whose abstract reports it *"predicted disease-free status
+   better than the other staging systems"*, Kadish among them.
+
+4. **WHO Head and Neck Tumours, 5th edition — the only document that can settle D3.** One
+   candidate identified but not yet retrieved: **Bradová M, Laco J, Skálová A.** *News in the 5th
+   edition of the WHO Classification of Tumours of the Head and Neck: Tumours of the Sinonasal
+   Tract and Skull Base Tumors.* Československá patologie 2026;62(2):87–95, PMID 42472341 (PubMed
+   returns no DOI). Its abstract notes that the 5th edition **relocated neuroectodermal tumours
+   into a separate chapter** — olfactory neuroblastoma is one, so it may no longer sit in the
+   sinonasal chapter, which changes where to look.
+
+**Staging and grading are not coding inputs.** Neither Kadish nor Hyams changes the ICD-O
+morphology code: `9522/3` is `9522/3` at every stage and every grade. They belong to the record,
+not to the decision tree, and nothing above blocks the build. What they would change is how much
+the sinonasal tree is entitled to say — which, on the evidence held, is very little.
+
+### 10.3 The rule this section exists to enforce
 
 Where the evidence is weak the tool says **less**, not the same amount with less warrant. A
 `confidence_ceiling` of `low`, an outstanding-workup row and a `provisional_pending` are all
