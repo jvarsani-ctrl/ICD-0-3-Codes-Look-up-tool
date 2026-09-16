@@ -111,7 +111,6 @@ MORPHOLOGY_FIELDS = [
     "imaging_features",
     "nos_fallback_code",
     "nos_fallback_name",
-    "confidence_ceiling",
     "clinical_alert",
     "coding_note",
     "code_neutral_molecular",
@@ -143,6 +142,12 @@ DIAGNOSTIC_TESTS = {
     "IHC or flow cytometry",
 }
 
+# Registrar ruling, 16 Sep 2026 — `confidence` is removed from the engine and
+# `confidence_ceiling` is no longer written by any group from Group 4 on. It
+# survives here only as legacy data on Groups 1-3, which the engine now
+# ignores; stripping it from their files is a later migration. Where an entry
+# still carries the field it must still be a real ceiling value, so the check
+# stays, conditional on presence rather than required.
 CONFIDENCE_CEILINGS = {"high", "medium", "low"}
 
 # Cryptic-genetics lint (Group 1 Pathway §4.4 and §7.5).
@@ -1260,6 +1265,9 @@ def check_morphology_entry_fields(ctx: DTContext):
         for field in MORPHOLOGY_NOT_NULL:
             if entry.get(field) in (None, ""):
                 out.append((FAIL, "entry %s: %r must not be null" % (label, field)))
+        # No longer a required field (registrar ruling, 16 Sep 2026) — Group 4
+        # on carries none. Where a legacy Group 1-3 entry still has it, it
+        # must still be a real value; that is the only thing checked here.
         conf = entry.get("confidence_ceiling")
         if conf is not None and conf not in CONFIDENCE_CEILINGS:
             out.append((FAIL, "entry %s: confidence_ceiling %r is not high/medium/low"
@@ -2860,9 +2868,8 @@ def check_provisional_pending(ctx: DTContext):
     GROUP II CHECK 2 — `provisional_pending` (contract §3.2).
 
     A named, reversible provisional: this code stands, and this specific test is the one
-    that would overturn it. It is not a synonym for low confidence — `confidence` already
-    says that, and says it about the whole terminal rather than about one outstanding
-    result.
+    that would overturn it. It is a claim about one outstanding result, not a general
+    statement about the whole terminal.
 
     The rule this check exists for is the last one. A branch may not name a test as
     `resolving_test` AND list that same test in `satisfies_tests`. `satisfies_tests`
@@ -3122,7 +3129,7 @@ def check_test_result_states(ctx: DTContext):
     Sometimes the same destination is the honest answer: 9719 requires EBER POSITIVITY, so
     neither a negative nor an uninterpretable EBER unlocks anything and both correctly land
     on 9702. Forcing them apart there would be false precision. What may not happen is that
-    they become indistinguishable — same code, same confidence, same follow-up — because
+    they become indistinguishable — same code, same follow-up — because
     then the clerk cannot tell that a repeat is owed. `provisional_pending` is exactly the
     field that says so, and naming it keeps the rule checkable rather than a judgement about
     prose. (Pathway §4.3 has one node where the destinations genuinely must differ: a

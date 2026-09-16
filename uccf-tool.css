@@ -225,9 +225,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .btn--sm { padding: var(--sp-1) var(--sp-3); font-size: var(--fs-micro); }
 
-/* Badge — confidence and status. Never colour alone: every badge carries an
-   explicit word (design.md §4, "second channel is mandatory"). Phosphor icons
-   are deferred; when they arrive the labels stay. */
+/* Badge — status. Never colour alone: every badge carries an explicit word
+   (design.md §4, "second channel is mandatory"). Phosphor icons are
+   deferred; when they arrive the labels stay. */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -240,9 +240,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   text-transform: uppercase;
   border: 2px solid transparent;
 }
-.badge--high   { background: var(--color-success);   color: var(--color-surface); }
-.badge--medium { background: var(--ink-200);         color: var(--ink-900); border-color: var(--ink-400); }
-.badge--low    { background: var(--color-warn-fill); color: var(--ink-900); border-color: var(--color-warn-edge); }
 .badge--none   { background: var(--ink-100);         color: var(--ink-700); border-color: var(--ink-300); }
 
 /* Tag — the overline label used above every question and on every output row */
@@ -661,8 +658,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   border-radius: var(--radius-sm);
   margin-bottom: var(--sp-3);
 }
-.out__head--medium { background: var(--ink-100); }
-.out__head--low    { background: var(--color-warn-soft); }
 .out__subgroup { flex: 1; min-width: 160px; font-size: var(--fs-small); font-weight: var(--w-semi); }
 
 /* ?host=redcap only. Sunshine is brand/wayfinding — NEVER a warning
@@ -734,8 +729,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .orow--excluded { background: var(--ink-100); }
 
 /* A NAMED, REVERSIBLE provisional — a specific claim with a specific resolving
-   test, not a confidence level. A caution, so marigold: coral stays reserved
-   for clinical_alert and a provisional is not a clinical emergency. Three
+   test. A caution, so marigold: coral stays reserved for clinical_alert and a
+   provisional is not a clinical emergency. Three
    channels, never colour alone — marigold field, a 2px marigold rule, and the
    row's own uppercase "PROVISIONAL" label. */
 .orow--provisional {

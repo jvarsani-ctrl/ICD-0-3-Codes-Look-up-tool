@@ -1036,7 +1036,7 @@ function renderEscapes(n) {
   var nos = n.nos_fallback;
   return '<div class="escapes">' +
     (nos ? '<button class="escape escape--nos" data-act="escape-nos">Uncertain subtype — still a malignancy' +
-      '<small>Falls back to ' + esc(nos.name) + ', flagged as discordant, confidence low.</small></button>' : '') +
+      '<small>Falls back to ' + esc(nos.name) + ', flagged as discordant.</small></button>' : '') +
     '<button class="escape escape--excluded" data-act="escape-excluded">Malignancy excluded / benign / revised' +
     '<small>Clean terminal. Emits no morphology code and leaves the malignant registry.</small></button>' +
     '</div>';
@@ -1247,8 +1247,8 @@ function capture(map) {
    unavailable instead of dangling it as a next step. An upgrade line that
    offers a test the laboratory cannot run reads as a plan; it is a dead end,
    and it makes the case look one step away from better evidence when it is
-   not — the same failure as reporting a confidence the evidence does not
-   support, in the one row the clerk reads as a worklist.
+   not — the one thing an advisory tool must never do, in the one row the
+   clerk reads as a worklist.
 
    The site's own level is read from captured state first (a tree may ask it,
    the router may capture it), then from a `site_profile` block on the router.
@@ -1345,13 +1345,12 @@ function unreachableTarget(from, st) {
 }
 
 /* ======================================================================
-   Basis of diagnosis (ENCR) — a REGISTRY DATA ITEM, not a confidence
+   Basis of diagnosis (ENCR) — a REGISTRY DATA ITEM
 
-   The two must never be run together. ENCR says a registry may register a
-   case on imaging; it does not say the tool may then call that answer firm.
-   `confidence` stays the tool's claim about its own answer; this is the
-   registry's record of what the diagnosis rests on, and a case can carry a
-   solid basis with low confidence or the reverse.
+   ENCR says a registry may register a case on imaging; it does not say the
+   tool may then call that answer firm. This is the registry's record of
+   what the diagnosis rests on — a fact about the evidence path, not a claim
+   about how sure the tool is of its own answer.
 
    Computed, never authored on the output: the highest code 1-8 that any
    branch on the path asserted, with 0 and 9 overriding — 0 before 9, because
@@ -1511,21 +1510,6 @@ function advance(target, label, value, before) {
   throw new Error('Branch resolves to neither a code nor a next_node');
 }
 
-/* confidence_ceiling is the MAXIMUM achievable with all required tests
-   present (Design Spec §6) — not the answer. The reported confidence is the
-   lowest of the ceiling, whatever the reaching branch declared, and `low`
-   whenever the code was reached by a fallback or an escape hatch rather than
-   by a rule that actually matched. Reporting the ceiling on a fallback route
-   would overstate every incomplete case in the registry. */
-var CONFIDENCE_ORDER = ['low', 'medium', 'high'];
-function lowestConfidence(list) {
-  var best = 'high';
-  list.forEach(function (c) {
-    if (!c) return;
-    if (CONFIDENCE_ORDER.indexOf(c) < CONFIDENCE_ORDER.indexOf(best)) best = c;
-  });
-  return best;
-}
 /* "Based on" is the evidence chain since the case entered the group — the
    clerk has to be able to justify the code at the output block. */
 function basisFromTrail() {
@@ -1552,7 +1536,7 @@ function finish(target, basis) {
   /* A branch cannot hold the same test both outstanding and discharged. Where
      a provisional names the test that would resolve it, that test is struck
      from what this branch claims to satisfy (§3.2). This can only ever move a
-     test from "done" to "outstanding" — it can never raise a confidence. */
+     test from "done" to "outstanding" — never the reverse. */
   var evidence = arr(state.captured.evidence_tests).concat(
     arr(target.satisfies_tests).filter(function (t) {
       return !pending || String(t) !== String(pending.resolving_test);
@@ -1561,18 +1545,17 @@ function finish(target, basis) {
   /* A NAMED PROVISIONAL IS A DECLARATION THAT A SPECIFIC TEST IS OUTSTANDING,
      whether or not the entry's required-test list happens to name it. Without
      this, a code whose required tests are all present renders "Workup:
-     complete — no outstanding tests" and a HIGH badge directly above a
-     Provisional row saying the resolving test has not been done and two other
-     entities are not excluded. That is the one thing an advisory tool must
-     never do, and it is worse here than an ordinary missing test because the
-     panel positively asserts completeness.
+     complete — no outstanding tests" directly above a Provisional row saying
+     the resolving test has not been done and two other entities are not
+     excluded. That is the one thing an advisory tool must never do, and it is
+     worse here than an ordinary missing test because the panel positively
+     asserts completeness.
 
-     This is NOT the provisional being collapsed into a confidence level — the
-     named row stays exactly as authored, alongside. The test simply joins the
-     workup list under its own name, with its own status dropdown, and
-     confidence falls to `medium` through the SAME rule that already governs
-     every outstanding test. Nothing here is silent: the clerk sees the test,
-     the reason and the alternatives. */
+     This is not the provisional being merged into the workup list — the
+     named row stays exactly as authored, alongside. The test simply joins
+     the workup list under its own name, with its own status dropdown.
+     Nothing here is silent: the clerk sees the test, the reason and the
+     alternatives. */
   if (pending && pending.resolving_test && missing.indexOf(pending.resolving_test) === -1) {
     missing = missing.concat([pending.resolving_test]);
   }
@@ -1581,11 +1564,6 @@ function finish(target, basis) {
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };
   });
   var discordant = !!target.discordant;
-  /* The ceiling is what is achievable WITH ALL REQUIRED TESTS PRESENT (Design
-     Spec §6). While one is still outstanding the case cannot claim it — a
-     morphology-only result reporting "high" next to an outstanding flow
-     cytometry row tells the clerk the answer is firmer than the evidence
-     supports, which is the one thing an advisory tool must never do. */
   /* THE UPGRADE LINE MUST NOT DANGLE A TEST THIS LABORATORY CANNOT RUN. The
      sentence the engine writes itself — "X would yield a more specific code"
      — is exactly that dangle, so a blocked gate replaces it with the reason
@@ -1600,16 +1578,6 @@ function finish(target, basis) {
     : [authored || auto, gate ? gateText(gate) : ''].filter(Boolean).join(' ');
   state.result = {
     code: code, entry: entry, basis: basisFromTrail() || basis,
-    /* Confidence is the FLOOR of every constraint, never the entry's ceiling.
-       A `diagnosis_rendering` or a `resource_level_gate` that carries a
-       confidence joins the list; neither overrides it. A gate that BLOCKED is
-       a floor in its own right by the rule that already governs every
-       fallback route — the code was reached because a branch could not be
-       taken, not because a rule matched. */
-    confidence: lowestConfidence([entry.confidence_ceiling, target.confidence,
-      missing.length ? 'medium' : null, discordant ? 'low' : null,
-      target.diagnosis_rendering && target.diagnosis_rendering.confidence,
-      gate && gate.rule.confidence, gate && gate.blocked ? 'low' : null]),
     discordant: discordant,
     upgrade: upgrade,
     /* The two-track output: the code and the diagnosis the report states are
@@ -1618,16 +1586,17 @@ function finish(target, basis) {
     diagnosis: target.diagnosis_rendering || null,
     entity: target.entity_annotation || state.entity || null,
     gradeDecision: state.grade || null,
-    /* A registry data item, computed from what the path asserted, and kept
-       strictly apart from `confidence` above (§2.5). */
+    /* A registry data item, computed from what the path asserted: what the
+       diagnosis rests on, not a claim about how sure the tool is of its own
+       answer (§2.5). */
     basisOfDiagnosis: basisOfDiagnosis(),
     gate: gate,
     classification_system: target.classification_system || state.captured.classification_system_applied || null,
-    /* A NAMED, REVERSIBLE provisional — deliberately NOT a confidence level,
-       and deliberately absent from lowestConfidence() above (§3.2). Collapsing
-       "this specific test is outstanding, these specific entities are not
-       excluded" into the word "low" throws away everything actionable about
-       it. It renders on complete cases too; it is never suppressed. */
+    /* A NAMED, REVERSIBLE provisional with its own resolving test (§3.2).
+       Collapsing "this specific test is outstanding, these specific entities
+       are not excluded" into a single summary word would throw away
+       everything actionable about it. It renders on complete cases too; it
+       is never suppressed. */
     provisional: pending,
     /* The branch's own sentence for why THIS code rather than its neighbour —
        an entity boundary's reason_inside/reason_outside, or a behaviour leaf's
@@ -1766,9 +1735,9 @@ function renderOutput() {
   var e = r.entry, redcap = state.host === 'redcap';
   var h = '<div class="node--live">';
 
-  /* Rows run in REDCap FIELD ORDER — morphology → subgroup → confidence →
-     workup — so the clerk reads down this panel and down the REDCap form in
-     lockstep (redcap.md §2). Everything advisory follows underneath. */
+  /* Rows run in REDCap FIELD ORDER — morphology → subgroup → workup — so the
+     clerk reads down this panel and down the REDCap form in lockstep
+     (redcap.md §2). Everything advisory follows underneath. */
   if (redcap) {
     /* The headline is the FULL option string, verbatim — not the bare code.
        Matching a whole string is self-checking; matching four digits is not,
@@ -1801,9 +1770,8 @@ function renderOutput() {
      pair can belong to two ICCC-3 subgroups depending on the topography, and
      the entry's own is only the default (§2.7). */
   var sub = subgroupFor(e, state.captured.topography);
-  h += '<div class="out__head out__head--' + esc(r.confidence) + '">' +
-    '<span class="out__subgroup">' + esc(sub.name) + ' — ICCC-3 <b>' + esc(sub.id) + '</b></span>' +
-    '<span class="badge badge--' + esc(r.confidence) + '">Confidence ' + esc(r.confidence) + '</span></div>';
+  h += '<div class="out__head">' +
+    '<span class="out__subgroup">' + esc(sub.name) + ' — ICCC-3 <b>' + esc(sub.id) + '</b></span></div>';
 
   /* The second track. It sits next to the code it accompanies, because for
      much of a group like this there is no code for the diagnosis the
@@ -1811,8 +1779,8 @@ function renderOutput() {
      report the case as less specific than the report is. */
   h += renderDiagnosisRows(r);
 
-  /* Not a confidence level — a specific claim with a specific resolving test
-     (§3.2). Rendered whether or not the case is otherwise complete. */
+  /* A specific claim with a specific resolving test (§3.2). Rendered whether
+     or not the case is otherwise complete. */
   if (r.provisional) {
     var pv = r.provisional, alts = arr(pv.alternative_entities), altc = arr(pv.alternative_codes);
     h += orow('Provisional', String(pv.reason || '') +
@@ -1823,8 +1791,8 @@ function renderOutput() {
 
   h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
   /* A registry data item in its own right, next to the workup it is derived
-     from and well away from the confidence badge: what the diagnosis RESTS ON
-     is not how sure the tool is of its own answer (§2.5). */
+     from: what the diagnosis RESTS ON is not a claim about how sure the tool
+     is of its own answer (§2.5). */
   if (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined) {
     h += orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' +
       (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'));
@@ -2079,7 +2047,7 @@ function handleOption(act, el) {
       var reason = window.prompt('Reason for the override (recorded as a quality signal):') || 'No reason given';
       if (!entryFor(code)) { state.error = 'Override code not in this group: ' + code; return; }
       pushTrail('Override', code + ' — ' + reason, before);
-      return finish({ morphology_code: code, confidence: 'low', upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
+      return finish({ morphology_code: code, upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
     }
     case 'rewind': return restore(state.trail[i].before, i);
     case 'restart': return reset();
@@ -2219,7 +2187,7 @@ function fallbackTarget(n) {
     /* A behaviour-overloaded fallback has to name which half it means, or
        entryFor() takes whichever entry happens to be written first. */
     return { morphology_code: n.nos_fallback.code, behavior_code: n.nos_fallback.behavior_code,
-      upgrade_path: n.nos_fallback.reason, confidence: 'low' };
+      upgrade_path: n.nos_fallback.reason };
   }
   throw new Error('Node has no fallback and did not resolve: ' + n.node_id);
 }
