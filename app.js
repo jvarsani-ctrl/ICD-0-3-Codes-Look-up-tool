@@ -1940,10 +1940,43 @@ function renderWorkup() {
       }).join('') + '</select></span>';
   }).join('') + '</span>';
 }
-/* Override sits VISIBLY beside the primary action, never hidden. */
+/* DOES THIS TERMINAL CARRY A CODE? Asked of the RESOLVED OUTCOME, never of a
+   flag on the branch. `state.result.code` is set in exactly one place —
+   finish(), from the branch's own morphology_code, and only after entryFor()
+   has proved the code is real. The other three terminal builders never set it:
+   refer() builds {referral, group, codeHint}, exclude() builds {excluded,
+   reason}, excludeBehaviour() builds {behaviourExcluded, icdoCode} — and
+   icdoCode is deliberately a DIFFERENT key, because the code a benign tumour
+   sits at is not a code this group emitted.
+
+   So `code` is the one value that distinguishes the terminals that emitted a
+   morphology code from the terminals that emitted none, and it is the same
+   value the headline renders and the same value an override would replace.
+   Adding a fourth no-code terminal kind in a later group needs nothing here:
+   if it does not run through finish(), it carries no code, and it is covered.
+
+   Do NOT reintroduce a test on `referral`/`excluded`/`behaviourExcluded`. That
+   is a list somebody has to remember to extend, and the first kind left off it
+   gets the affordance back. */
+function resultCarriesCode(r) {
+  return !!(r && r.code);
+}
+
+/* Override sits VISIBLY beside the primary action, never hidden — but ONLY on a
+   terminal that actually emitted a code. On a terminal that emitted none it was
+   worse than useless: the handler validates the typed code with entryFor(),
+   which accepts only codes from THIS group, so the single thing the button
+   could do on a cross-group referral ("Emitting a code from this group would
+   put the case in the wrong ICCC-3 group") was force the case into this group —
+   the exact error the terminal exists to prevent. Observed in a browser on the
+   Group XI referral out of hn_ihc_checklist and on the 9490/0 ganglioneuroma
+   behaviour_exclusion, 18 Sep 2026. */
 function outActions() {
-  return '<div class="out__actions"><button class="btn" data-act="restart">Start new case</button>' +
-    '<button class="btn btn--ghost" data-act="override">Override this code</button></div>';
+  var acts = '<button class="btn" data-act="restart">Start new case</button>';
+  if (resultCarriesCode(state.result)) {
+    acts += '<button class="btn btn--ghost" data-act="override">Override this code</button>';
+  }
+  return '<div class="out__actions">' + acts + '</div>';
 }
 
 /* ============================================================================
@@ -2100,6 +2133,19 @@ function handleOption(act, el) {
       pushTrail(n ? (n.step_label || 'Answer') : 'Case', 'Malignancy excluded', before);
       return exclude('The abstractor recorded that this case is not a reportable malignancy.');
     case 'override': {
+      /* THE SAME GATE, INDEPENDENTLY OF WHAT RENDERED. outActions() no longer
+         offers this button on a code-less terminal, but the handler must refuse
+         the action on its own: a delegated listener acts on whatever markup
+         carries data-act, so a renderer regression, a stale panel or a hand-
+         dispatched action must not be able to turn a referral or a behaviour
+         exclusion into a code from this group. Refused BEFORE the prompt, so
+         the clerk is never asked for a code that would be discarded. */
+      if (!resultCarriesCode(state.result)) {
+        state.error = 'This terminal emits no morphology code, so there is no code to ' +
+          'override. Overriding here would emit a code from this group — which is the ' +
+          'one thing this terminal exists to prevent.';
+        return;
+      }
       var code = window.prompt('Enter the morphology code you judge correct:');
       if (!code) return;
       var reason = window.prompt('Reason for the override (recorded as a quality signal):') || 'No reason given';

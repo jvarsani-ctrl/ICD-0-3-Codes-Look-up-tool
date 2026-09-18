@@ -7363,6 +7363,275 @@ def check_declared_states_consumed(ctx: DTContext):
 
 
 # --------------------------------------------------------------------------------------
+# B4b. The override affordance — offered on exactly the terminals that emitted a code
+# --------------------------------------------------------------------------------------
+
+# The flag names a gate must NOT be keyed off. Three of them are the `state.result`
+# discriminators the no-code terminal builders set (refer() -> referral, exclude() ->
+# excluded, excludeBehaviour() -> behaviourExcluded); three are the branch-level JSON
+# fields advance() dispatches on. Either kind is a list somebody has to remember to
+# extend, and the first terminal kind left off it silently gets the affordance back —
+# which is how this defect would return. The gate is keyed off the RESOLVED OUTCOME
+# instead: `state.result.code`, set in exactly one place.
+OVERRIDE_GATE_FLAG_TOKENS = ("referral", "excluded", "behaviourExcluded",
+                             "refer_group", "non_reportable", "behaviour_exclusion",
+                             "icdoCode")
+
+_APP_JS_CACHE: dict = {}
+
+
+def _app_js_source(repo: Path):
+    """Read app.js once per build. Returns (text, findings)."""
+    key = str(repo)
+    if key not in _APP_JS_CACHE:
+        path = repo / "app.js"
+        try:
+            _APP_JS_CACHE[key] = (path.read_text(encoding="utf-8"), [])
+        except OSError as exc:
+            _APP_JS_CACHE[key] = (None, [(FAIL, "cannot read app.js (%s) — the engine "
+                                                "half of this check cannot run" % exc)])
+    return _APP_JS_CACHE[key]
+
+
+def _terminal_outcomes(ctx: DTContext):
+    """
+    Every terminal this file declares, classified by the OUTCOME app.js resolves it to
+    — not by which key happens to be present, and not by any flag naming the kind.
+
+    advance() dispatches in a fixed order: morphology_code, refer_group,
+    non_reportable, behaviour_exclusion, next_node. Only the first of those runs
+    finish(), and finish() is the only function that sets `state.result.code`. So the
+    classification here is exactly the question the renderer asks at runtime: did this
+    terminal put a code on the resolved outcome, or not?
+
+    Returns [(label, kind)] with kind in {"code", "referral", "non_reportable",
+    "behaviour_exclusion"}. The three code-emitting shapes that do NOT carry a literal
+    `morphology_code` key are included by name, because each still reaches finish():
+
+      * `nos_fallback` — handleOption('escape-nos') calls
+        advance({morphology_code: f.code, …}), so the escape hatch is a coded terminal;
+      * `entity_boundary.inside_code` / `.outside_code` — boundary() builds a target
+        carrying whichever side won, and both sides are codes;
+
+    and the block objects that merely DESCRIBE a terminal (`behaviour_exclusion`
+    itself, `provisional_pending`) carry no destination of their own, so they are
+    classified through their owning branch, never twice.
+    """
+    out = []
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            label = "%s (%s)" % (node_id, where or "(node level)")
+            if is_nos_fallback_object(holder, where):
+                out.append((label, "code"))
+                continue
+            if is_behaviour_exclusion_object(holder, where):
+                continue                      # classified through its owning branch
+            if as_code(holder.get("inside_code")) and as_code(holder.get("outside_code")):
+                out.append((label + " inside", "code"))
+                out.append((label + " outside", "code"))
+                continue
+            if as_code(holder.get("morphology_code")):
+                out.append((label, "code"))
+            elif is_refer_branch(holder):
+                out.append((label, "referral"))
+            elif is_non_reportable(holder):
+                out.append((label, "non_reportable"))
+            elif isinstance(holder.get("behaviour_exclusion"), dict):
+                out.append((label, "behaviour_exclusion"))
+    return out
+
+
+def _name_some(labels, limit=4):
+    labels = sorted(labels)
+    head = "; ".join(labels[:limit])
+    return head + ("; and %d more" % (len(labels) - limit) if len(labels) > limit else "")
+
+
+def check_override_affordance(ctx: DTContext, repo: Path):
+    """
+    "Override this code" must be offered on exactly the terminals that emitted one.
+
+    THE DEFECT THIS CHECK EXISTS FOR (observed in a browser, 18 Sep 2026). outActions()
+    rendered `Start new case | Override this code` unconditionally, on every terminal.
+    Two of this tool's four terminal kinds emit no morphology code at all — a
+    cross-group referral ("CODE HERE: None. Emitting a code from this group would put
+    the case in the wrong ICCC-3 group") and a Group 4 behaviour exclusion
+    ("MORPHOLOGY: No code emitted here") — and a third, the non-reportable exclusion,
+    emits none either. On all three the button offered to override a code that does not
+    exist, and the handler validated the typed code with entryFor(), which accepts only
+    codes from THIS group. So the one thing a clerk could do with that button, on a
+    screen that had just told them the case belongs elsewhere, was force it into this
+    group: driven in a browser, the Group XI referral out of hn_ihc_checklist became
+    9490 Ganglioneuroblastoma, ICCC-3 IVa. That is the exact error the terminal exists
+    to prevent.
+
+    KEYED OFF THE RESOLVED OUTCOME, NOT A FLAG. `state.result.code` is set in exactly
+    one place — finish(), from the branch's own morphology_code, after entryFor() has
+    proved the code is real. refer(), exclude() and excludeBehaviour() never set it
+    (excludeBehaviour deliberately uses a different key, `icdoCode`: the code a benign
+    tumour sits at is not a code this group emitted). So `code` is the one value that
+    separates the terminals that emitted a code from those that emitted none, it is the
+    same value the headline renders and the same value an override would replace, and a
+    fifth terminal kind added in a later group is covered without touching anything —
+    if it does not run through finish(), it carries no code.
+
+    Both halves have to hold, and the check is two-sided:
+
+      ENGINE — app.js must define `resultCarriesCode(r)` as a test on the resolved
+      outcome's `code` (naming any terminal-kind flag instead is a FAIL, however
+      correct that flag list happens to be today); `data-act="override"` must occur
+      exactly ONCE in the whole file; that occurrence must sit inside outActions()
+      under `if (resultCarriesCode(state.result))` — present and POSITIVE, so a gate
+      that suppressed the button on coded terminals fails just as loudly as one that
+      offered it on code-less ones; and handleOption's `case 'override'` must refuse on
+      a code-less outcome BEFORE it prompts, so the behaviour is right regardless of
+      what rendered.
+
+      DATA — every terminal in this file is classified by the outcome advance() sends
+      it to, so each FAIL names the actual terminals in this group that would gain or
+      lose the button, and the OK line reports both tallies rather than asserting the
+      rule in the abstract.
+    """
+    out = []
+    src, read_findings = _app_js_source(repo)
+    out += list(read_findings)
+
+    terminals = _terminal_outcomes(ctx)
+    coded = [t for t, k in terminals if k == "code"]
+    referral = [t for t, k in terminals if k == "referral"]
+    nonrep = [t for t, k in terminals if k == "non_reportable"]
+    behex = [t for t, k in terminals if k == "behaviour_exclusion"]
+    codeless = referral + nonrep + behex
+
+    if src is None:
+        return out
+
+    # -- ENGINE half -------------------------------------------------------------------
+    gate_ok = True
+
+    m = re.search(r"\nfunction resultCarriesCode\(\s*(\w+)\s*\)\s*\{(.*?)\n\}", src, re.S)
+    if not m:
+        gate_ok = False
+        out.append((FAIL, "app.js declares no resultCarriesCode() — the override "
+                          "affordance has no gate keyed off the resolved outcome, so "
+                          "every code-less terminal in %s offers \"Override this code\" "
+                          "and the handler will emit a code from this group: %s"
+                    % (ctx.name, _name_some(codeless) or "(none in this file)")))
+    else:
+        arg, body = m.group(1), m.group(2)
+        flags = [t for t in OVERRIDE_GATE_FLAG_TOKENS if re.search(r"\b%s\b" % t, body)]
+        if flags:
+            gate_ok = False
+            out.append((FAIL, "resultCarriesCode() is keyed off the terminal-kind flag(s) "
+                              "%s instead of the resolved outcome's own code — that is a "
+                              "list someone must remember to extend, and the first "
+                              "terminal kind left off it gets \"Override this code\" back. "
+                              "Test %s.code, which only finish() ever sets"
+                        % (", ".join(flags), arg)))
+        if not re.search(r"return\s+!!\(\s*%s\s*&&\s*%s\.code\s*\)\s*;" % (arg, arg), body):
+            gate_ok = False
+            out.append((FAIL, "resultCarriesCode() does not read the resolved outcome's "
+                              "code — its body must be `return !!(%s && %s.code);`, the "
+                              "value finish() sets and refer()/exclude()/"
+                              "excludeBehaviour() never do. Body is: %s"
+                        % (arg, arg, " ".join(body.split()))))
+
+    occurrences = src.count('data-act="override"')
+    if occurrences != 1:
+        gate_ok = False
+        out.append((FAIL, "app.js renders data-act=\"override\" in %d place(s); it must be "
+                          "rendered in exactly one, inside outActions(), so there is a "
+                          "single gate to hold. %d coded terminal(s) in %s depend on that "
+                          "button and %d code-less terminal(s) depend on its absence"
+                    % (occurrences, len(coded), ctx.name, len(codeless))))
+
+    ma = re.search(r"\nfunction outActions\(\)\s*\{(.*?)\n\}", src, re.S)
+    if not ma:
+        gate_ok = False
+        out.append((FAIL, "app.js declares no outActions() — the terminal action bar "
+                          "cannot be checked"))
+    else:
+        body = ma.group(1)
+        guarded = re.search(r"if\s*\(\s*resultCarriesCode\(\s*state\.result\s*\)\s*\)\s*\{"
+                            r"(?:(?!\}).)*?data-act=\"override\"", body, re.S)
+        if 'data-act="override"' not in body:
+            gate_ok = False
+            out.append((FAIL, "outActions() renders no override button at all, so the %d "
+                              "coded terminal(s) in %s LOSE \"Override this code\" — the "
+                              "affordance is removed from terminals that did emit a code, "
+                              "not just from the ones that did not: %s"
+                        % (len(coded), ctx.name, _name_some(coded) or "(none in this file)")))
+        elif re.search(r"if\s*\(\s*!\s*resultCarriesCode\(\s*state\.result\s*\)\s*\)\s*\{"
+                       r"(?:(?!\}).)*?data-act=\"override\"", body, re.S):
+            gate_ok = False
+            out.append((FAIL, "outActions() guards \"Override this code\" on "
+                              "`if (!resultCarriesCode(state.result))` — the gate is "
+                              "INVERTED. In %s that offers it on all %d code-less "
+                              "terminal(s), where the handler can only emit a code from "
+                              "THIS group, and removes it from all %d coded terminal(s), "
+                              "which are the only ones that have a code to override"
+                        % (ctx.name, len(codeless), len(coded))))
+        elif not guarded:
+            gate_ok = False
+            out.append((FAIL, "outActions() renders \"Override this code\" without "
+                              "`if (resultCarriesCode(state.result))` around it, so it is "
+                              "offered on terminals that emitted no code. In %s that is %d "
+                              "terminal(s) — %d cross-group referral, %d non-reportable, %d "
+                              "behaviour-exclusion — where the handler can only emit a code "
+                              "from THIS group: %s"
+                        % (ctx.name, len(codeless), len(referral), len(nonrep), len(behex),
+                           _name_some(codeless) or "(none in this file)")))
+
+    mh = re.search(r"\n    case 'override':(.*?)(?=\n    case ')", src, re.S)
+    if not mh:
+        gate_ok = False
+        out.append((FAIL, "app.js has no `case 'override':` in handleOption() — the "
+                          "handler half of this gate cannot be checked"))
+    else:
+        hbody = mh.group(1)
+        guard = re.search(r"if\s*\(\s*!\s*resultCarriesCode\(\s*state\.result\s*\)\s*\)",
+                          hbody)
+        prompt = re.search(r"window\.prompt\(", hbody)
+        if not guard:
+            gate_ok = False
+            out.append((FAIL, "handleOption()'s `case 'override'` does not refuse on a "
+                              "code-less outcome — it must return early on "
+                              "`if (!resultCarriesCode(state.result))`, so a renderer "
+                              "regression or a hand-dispatched action cannot turn one of "
+                              "%s's %d code-less terminal(s) into a code from this group: %s"
+                        % (ctx.name, len(codeless),
+                           _name_some(codeless) or "(none in this file)")))
+        elif prompt and guard.start() > prompt.start():
+            gate_ok = False
+            out.append((FAIL, "handleOption()'s `case 'override'` tests "
+                              "resultCarriesCode() only AFTER window.prompt() — the clerk "
+                              "is asked for a code on a terminal that emits none before "
+                              "the refusal. Move the guard above the prompt"))
+        elif guard and not re.search(r"return\s*;", hbody[guard.end():
+                                                          (prompt.start() if prompt
+                                                           else len(hbody))]):
+            gate_ok = False
+            out.append((FAIL, "handleOption()'s `case 'override'` tests "
+                              "resultCarriesCode() but does not return before proceeding "
+                              "— the refusal has no effect"))
+
+    if not gate_ok:
+        return out
+
+    if not terminals:
+        out.append((NOTE, "no terminal declared in this file — nothing to check"))
+        return out
+    out.append((OK, "\"Override this code\" is offered on exactly the terminals that "
+                    "emitted one: %d coded terminal(s) keep it, %d code-less terminal(s) "
+                    "suppress it (%d cross-group referral, %d non-reportable, %d "
+                    "behaviour-exclusion). app.js gates both outActions() and "
+                    "handleOption('override') on resultCarriesCode(state.result), and "
+                    "state.result.code is set only by finish()"
+                % (len(coded), len(codeless), len(referral), len(nonrep), len(behex))))
+    return out
+
+
+# --------------------------------------------------------------------------------------
 # B5. Cross-layer checks
 # --------------------------------------------------------------------------------------
 
@@ -7766,6 +8035,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_no_internal_identifier_leaks, ctx)
         report.run(check_marker_names_verbatim, ctx)
         report.run(check_declared_states_consumed, ctx)
+        # the override affordance (18 Sep 2026) — one per group's file
+        report.run(check_override_affordance, ctx, repo)
         # source of truth
         report.run(check_codes_against_source_of_truth, ctx, redcap_options, classification)
 

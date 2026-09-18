@@ -2653,3 +2653,258 @@ Restored: **0 FAIL** on this check.
 * `git diff --quiet main -- data/database/group_01_dt.json` — exit 0, identical.
 * `git diff --quiet main -- data/database/group_02_dt.json` — exit 0, identical.
 * `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.
+
+---
+
+# `check_override_affordance` — "Override this code" on terminals that emit no code (2026-09-18)
+
+## The defect
+
+`outActions()` (app.js) rendered the terminal action bar unconditionally, on every
+terminal:
+
+```js
+function outActions() {
+  return '<div class="out__actions"><button class="btn" data-act="restart">Start new case</button>' +
+    '<button class="btn btn--ghost" data-act="override">Override this code</button></div>';
+}
+```
+
+Three of the tool's four terminal kinds emit no morphology code at all — a cross-group
+referral (`refer()`: "CODE HERE — None. Emitting a code from this group would put the case
+in the wrong ICCC-3 group"), a Group 4 behaviour exclusion (`excludeBehaviour()`:
+"MORPHOLOGY — No code emitted here") and a non-reportable exclusion (`exclude()`). On all
+three the button offered to override a code that does not exist, and the handler
+(`case 'override':`) validates the typed code with `entryFor(code)`, which resolves only
+against THIS group's `morphology_entries`. So the single thing the button could do on a
+screen that had just said the case belongs elsewhere was force it into this group.
+
+Driven in a real browser before any fix — Group XI referral terminal out of
+`hn_ihc_checklist` (guided entry → Mass / swelling → Soft tissue → Carotid body and other
+paraganglia → Carotid body → Tissue with a definitive pathology report → `keratin status:
+positive` → Continue), with `window.prompt` stubbed to answer `9490` because the harness
+does not support it:
+
+```
+before: {referral: true, group: 11, note: "Paragangliomas are consistently keratin-negative. …"}
+after : {code: "9490", name: "Ganglioneuroblastoma", upgrade: "Abstractor override: testing the defect"}
+```
+
+A cross-group referral to ICCC-3 Group XI became a Group IV code, on one click of an
+affordance the terminal should never have offered. That is the exact error the terminal
+exists to prevent.
+
+## The fix, and what it keys off
+
+`state.result.code` — the RESOLVED OUTCOME, not a flag on the branch and not the rendered
+text. `finish()` is the only function in app.js that sets it, from the branch's own
+`morphology_code`, and only after `entryFor()` has proved the code is real. The other
+three terminal builders never set it: `refer()` builds `{referral, group, codeHint}`,
+`exclude()` builds `{excluded, reason}`, `excludeBehaviour()` builds `{behaviourExcluded,
+icdoCode}` — and `icdoCode` is deliberately a DIFFERENT key, because the code a benign
+tumour sits at is not a code this group emitted. So `code` is the one value that separates
+the terminals that emitted a code from the terminals that emitted none; it is the same
+value the headline renders and the same value an override would replace; and a fifth
+terminal kind added in a later group is covered without touching anything, because
+anything that does not run through `finish()` carries no code.
+
+`resultCarriesCode(r) { return !!(r && r.code); }` gates both `outActions()` (the button)
+and `handleOption()`'s `case 'override'` (the action, refused BEFORE `window.prompt`, so
+the clerk is never asked for a code that would be discarded). The handler guard is not
+redundant with the renderer: a delegated listener acts on whatever markup carries
+`data-act`, so a renderer regression or a hand-dispatched action must not be able to turn a
+referral into a code from this group.
+
+## Method
+
+Same as the sections above: `build_database` imported directly, `DTContext` built from a
+`copy.deepcopy()` of each loaded real file, never through `run_build()`. The engine half is
+exercised by seeding `_APP_JS_CACHE` with a mutated copy of the real `app.js` under a
+fixture key — the real `app.js` on disk is never modified by the harness. Harnesses are
+`nc_override.py` / `nc_override2.py`, kept in the session scratchpad. All controls are run
+against the real, unmodified `group_04_dt.json` (the only file carrying all three code-less
+terminal kinds), and the two-sided controls also against `group_01_dt.json`.
+
+## The false-FAIL control (real `app.js`, all four real files)
+
+The check must not fire on the fixed engine, and its OK line must report real content —
+both tallies — rather than asserting the rule in the abstract:
+
+```
+OK    "Override this code" is offered on exactly the terminals that emitted one: 241 coded terminal(s) keep it, 64 code-less terminal(s) suppress it (15 cross-group referral, 49 non-reportable, 0 behaviour-exclusion). app.js gates both outActions() and handleOption('override') on resultCarriesCode(state.result), and state.result.code is set only by finish()
+OK    "Override this code" is offered on exactly the terminals that emitted one: 306 coded terminal(s) keep it, 77 code-less terminal(s) suppress it (14 cross-group referral, 63 non-reportable, 0 behaviour-exclusion). app.js gates both outActions() and handleOption('override') on resultCarriesCode(state.result), and state.result.code is set only by finish()
+OK    "Override this code" is offered on exactly the terminals that emitted one: 629 coded terminal(s) keep it, 85 code-less terminal(s) suppress it (55 cross-group referral, 30 non-reportable, 0 behaviour-exclusion). app.js gates both outActions() and handleOption('override') on resultCarriesCode(state.result), and state.result.code is set only by finish()
+OK    "Override this code" is offered on exactly the terminals that emitted one: 50 coded terminal(s) keep it, 31 code-less terminal(s) suppress it (27 cross-group referral, 1 non-reportable, 3 behaviour-exclusion). app.js gates both outActions() and handleOption('override') on resultCarriesCode(state.result), and state.result.code is set only by finish()
+```
+
+(group_01, group_02, group_03, group_04 in that order. Groups 1-3 carry referral and
+non-reportable terminals but no behaviour exclusions — that field is new in Group 4 — so
+they get the same fix for the same reason, which is intended.)
+
+### Control A — `outActions()` reverted to the pre-fix unconditional version — FAILS, exact message
+
+The defect itself, reintroduced verbatim. Expected **FAIL**, got:
+
+```
+FAIL  outActions() renders "Override this code" without `if (resultCarriesCode(state.result))` around it, so it is offered on terminals that emitted no code. In group_04_dt.json that is 31 terminal(s) — 27 cross-group referral, 1 non-reportable, 3 behaviour-exclusion — where the handler can only emit a code from THIS group: hn_clinical_alias (options[0]); hn_clinical_alias (options[1]); hn_clinical_alias (options[2]); hn_document_inventory (options[1]); and 27 more
+```
+
+Restored (real, unmodified `app.js`): **0 FAIL** on this check.
+
+### Control B — the handler guard deleted, button gate left in place — FAILS, exact message
+
+Proves the two halves are checked independently: a correct renderer does not excuse an
+unguarded handler, because the handler is what actually emits the code.
+
+```
+FAIL  handleOption()'s `case 'override'` does not refuse on a code-less outcome — it must return early on `if (!resultCarriesCode(state.result))`, so a renderer regression or a hand-dispatched action cannot turn one of group_04_dt.json's 31 code-less terminal(s) into a code from this group: hn_clinical_alias (options[0]); hn_clinical_alias (options[1]); hn_clinical_alias (options[2]); hn_document_inventory (options[1]); and 27 more
+```
+
+Restored: **0 FAIL** on this check.
+
+### Control C — the override button removed outright — FAILS, exact message
+
+**This is the control proving a CODED terminal still keeps the button.** Suppressing the
+affordance everywhere would silence Controls A, B and G while destroying a feature the
+registrar uses on every coded case, so the check has to be two-sided: it fails on a coded
+terminal that LOSES the button exactly as loudly as on a code-less one that gains it.
+
+```
+FAIL  app.js renders data-act="override" in 0 place(s); it must be rendered in exactly one, inside outActions(), so there is a single gate to hold. 50 coded terminal(s) in group_04_dt.json depend on that button and 31 code-less terminal(s) depend on its absence
+FAIL  outActions() renders no override button at all, so the 50 coded terminal(s) in group_04_dt.json LOSE "Override this code" — the affordance is removed from terminals that did emit a code, not just from the ones that did not: hn_genetics (nos_fallback); hn_ihc_checklist (nos_fallback); hn_ihc_checklist (resolution_logic[2]); hn_ihc_checklist (resolution_logic[3]); and 46 more
+```
+
+Restored: **0 FAIL** on this check.
+
+### Control G — the gate inverted, `if (!resultCarriesCode(state.result))` — FAILS, exact message
+
+The same two-sidedness on a subtler regression: the button is still rendered exactly once,
+still inside `outActions()`, still under a `resultCarriesCode` gate — only the polarity is
+wrong. A check that merely looked for "a conditional" would pass this. Run against
+`group_04_dt.json` and `group_01_dt.json`:
+
+```
+FAIL  outActions() guards "Override this code" on `if (!resultCarriesCode(state.result))` — the gate is INVERTED. In group_04_dt.json that offers it on all 31 code-less terminal(s), where the handler can only emit a code from THIS group, and removes it from all 50 coded terminal(s), which are the only ones that have a code to override
+FAIL  outActions() guards "Override this code" on `if (!resultCarriesCode(state.result))` — the gate is INVERTED. In group_01_dt.json that offers it on all 64 code-less terminal(s), where the handler can only emit a code from THIS group, and removes it from all 241 coded terminal(s), which are the only ones that have a code to override
+```
+
+Restored: **0 FAIL** on this check.
+
+### Control D — the gate keyed off the terminal-kind flags instead of the outcome — FAILS, exact message
+
+`resultCarriesCode` rewritten to `return !!(r && !r.referral && !r.excluded &&
+!r.behaviourExcluded);`. This is **behaviourally correct today** — it suppresses the button
+on exactly the same three terminals — and the check still FAILs it, on purpose. It is a
+list someone has to remember to extend, and the first terminal kind left off it gets the
+affordance back silently. Keying off a flag is the defect one release later.
+
+```
+FAIL  resultCarriesCode() is keyed off the terminal-kind flag(s) referral, excluded, behaviourExcluded instead of the resolved outcome's own code — that is a list someone must remember to extend, and the first terminal kind left off it gets "Override this code" back. Test r.code, which only finish() ever sets
+FAIL  resultCarriesCode() does not read the resolved outcome's code — its body must be `return !!(r && r.code);`, the value finish() sets and refer()/exclude()/excludeBehaviour() never do. Body is: return !!(r && !r.referral && !r.excluded && !r.behaviourExcluded);
+```
+
+Restored: **0 FAIL** on this check.
+
+### Control F — the handler guard present but placed after the prompt — FAILS, exact message
+
+The refusal has to land before the clerk is asked for a code that will be thrown away.
+
+```
+FAIL  handleOption()'s `case 'override'` tests resultCarriesCode() only AFTER window.prompt() — the clerk is asked for a code on a terminal that emits none before the refusal. Move the guard above the prompt
+```
+
+Restored: **0 FAIL** on this check.
+
+## Browser confirmation (real DOM, real handlers, `http://localhost:8811`)
+
+The browser pane cannot be displayed in this environment, so every step was driven through
+the real DOM with `.click()` on real elements and read back from `state` and
+`document.body.innerText`. `window.prompt()` is unsupported there and was stubbed for the
+override probes only.
+
+**(a) Cross-group referral — Group XI, out of `hn_ihc_checklist`.** Guided entry → Mass /
+swelling → Soft tissue → Carotid body and other paraganglia → Carotid body → Tissue with a
+definitive pathology report → `keratin status: positive` → Continue.
+
+```
+BELONGS TO ANOTHER GROUP
+This case is a malignancy, but not one this group codes. Record it under group 11 — Other Malignant Epithelial Neoplasms and Malignant Melanomas.
+CODE HERE   None. Emitting a code from this group would put the case in the wrong ICCC-3 group.
+…
+Start new case
+```
+
+`.out__actions` holds one button, `restart`. `document.querySelector('[data-act="override"]')`
+is `null`. Before the fix this same screen ended `Start new case  Override this code`.
+
+The hardened handler, on that same terminal, with the button injected by hand to dispatch
+the action anyway:
+
+```
+promptsShown : 0
+state.result : {referral: true, group: 11, …}   (unchanged — no code emitted)
+state.error  : "This terminal emits no morphology code, so there is no code to override. Overriding here would emit a code from this group — which is the one thing this terminal exists to prevent."
+```
+
+**(b) Behaviour exclusion — 9490/0 ganglioneuroma, `sa_histology_subclassification` in the
+`g4_sympathoadrenal` tree.** Guided entry → Mass / swelling → Soft tissue → Adrenal gland
+and paraspinal sympathetic chain → Medulla of adrenal gland → Definitive histology report →
+fully mature / maturing ganglioneuroma.
+
+```
+BENIGN — OUTSIDE THIS GROUP’S DECLARED BEHAVIOUR
+MORPHOLOGY        No code emitted here.
+ICD-O-3.2         9490/0 — Ganglioneuroma
+GROUP DECLARES    Behaviour 3 only
+REGISTRAR DECISION REQUIRED …
+…
+Start new case
+```
+
+`.out__actions` holds one button, `restart`; no `[data-act="override"]` in the DOM.
+
+**(c) A terminal that DOES emit a code — 8680/3.** Same head-and-neck route with
+`keratin status: not done`.
+
+```
+8680  Paraganglioma, NOS
+Other peripheral nervous cell tumors — ICCC-3 IVb
+…
+Start new case      Override this code
+```
+
+`.out__actions` holds `restart` **and** `override`, unchanged from before the fix. Taking
+the override on it still works end to end: two prompts shown, `state.result.code` moves to
+the entered code with `upgrade: "Abstractor override: …"` and `state.error` null.
+
+**(d) A Group 1 coded terminal, to confirm a merged group is untouched.** Guided entry →
+Blood / marrow signs → Blood and bone marrow → Blood, bone marrow and haematopoietic system
+→ Bone marrow → Chronic myeloid proliferation → Morphology + cytogenetics / FISH → no prior
+cytotoxic therapy → Philadelphia chromosome positive → blasts under 10%:
+
+```
+9875  Chronic myelogenous leukemia, BCR/ABL positive
+Chronic myeloproliferative diseases — ICCC-3 Ic
+…
+Start new case      Override this code
+```
+
+Both buttons present.
+
+## Full-build confirmation (real repo)
+
+* `python3 build/induce_flow.py` — unchanged, clean: `group_01 7 / group_02 25 /
+  group_03 31 / group_04 4 checklist nodes OK`, `Every rule in every checklist has a
+  witness. Flow charts written.`
+* Baseline, measured by running **HEAD's** `build_database.py` against the current working
+  tree (the doc's earlier 251 / OK 181 / WARN 51 had already drifted to WARN 53 through
+  another agent's concurrent work before this branch touched anything): **251 checks run,
+  OK 183, NOTE 36, WARN 53, FAIL 0, BUILD PASSED.**
+* After the app.js fix and registering `check_override_affordance`: **255 checks run, OK
+  187, NOTE 36, WARN 53, FAIL 0, BUILD PASSED** — 4 more checks run (one per group's
+  file), 4 more OK lines, 0 new WARN, 0 new FAIL.
+* `git diff --quiet main -- data/database/group_01_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_02_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.
+* No `group_0*_dt.json` was edited by this branch; the fix is entirely in `app.js` and the
+  check entirely in `build/build_database.py`.
