@@ -1,0 +1,1507 @@
+[
+  {
+    "alias": "Adrenal tumour",
+    "full_form": "Adrenal tumour -> Neuroblastoma, NOS (9500) or Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Adrenal tumor",
+      "Adrenal mass"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9500",
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "A referral description, not a diagnosis. Both neuroblastoma and pheochromocytoma arise in the adrenal medulla. Age, the catecholamine profile and the immunohistochemistry separate them: urinary vanillylmandelic acid and homovanillic acid point to 9500 Neuroblastoma, NOS; plasma free metanephrines or 24-hour urinary fractionated metanephrines point to 8700 Pheochromocytoma, NOS. PHOX2B is positive in both and separates neither; GATA3 and S100/SOX10-positive sustentacular cells in a zellballen pattern are what separate them. An adrenal cortical tumour is not in this group at all.",
+    "coding_note": "Resolves the alias-instruction placeholder 'PENDING_adrenal_nb_vs_pheo' to the built tree g4_sympathoadrenal, whose immunohistochemistry step carries the separation. GATA3 and the sustentacular pattern per Mete 2022 pp. 96-106; the PHOX2B caution per contract Sec.5.1."
+  },
+  {
+    "alias": "Ganglioneuroblastoma",
+    "full_form": "Ganglioneuroblastoma -> Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Ganglioneuroblastoma, intermixed",
+      "Ganglioneuroblastoma, nodular"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Paediatric Tumours 2022",
+    "nci_concept_id": "NCIT:C3790",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9490 Ganglioneuroblastoma. The intermediate step of the neuroblastic spectrum: Schwannian stroma-rich tissue containing ganglion cells. The distinction from neuroblastoma is histological and needs the pathology report, not the referral wording.",
+    "coding_note": null
+  },
+  {
+    "alias": "Ganglioneuroblastoma, intermixed",
+    "full_form": "Ganglioneuroblastoma, intermixed -> Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Ganglioneuroblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "International Neuroblastoma Pathology Committee classification",
+    "nci_concept_id": "NCIT:C3790",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9490 Ganglioneuroblastoma. The International Neuroblastoma Pathology Committee category for Schwannian stroma-rich tissue with ganglion cells intermixed throughout and no separate nodule. The subtype is recorded alongside the code; it does not change the number.",
+    "coding_note": "INPC categories per Shimada 1999, reproduced as Table 1 of Mete O, et al., Endocr Pathol 2022;33(1):90-114, p. 108 - a second, WHO-published witness for the 9490/9500 split (contract Sec.10.1)."
+  },
+  {
+    "alias": "Ganglioneuroblastoma, nodular",
+    "full_form": "Ganglioneuroblastoma, nodular -> Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Ganglioneuroblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "International Neuroblastoma Pathology Committee classification",
+    "nci_concept_id": "NCIT:C3790",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9490 Ganglioneuroblastoma. The International Neuroblastoma Pathology Committee category for one or more distinct neuroblastic nodules inside a ganglioneuroma or intermixed background. A nodule within a ganglioneuroma is this entity, not a ganglioneuroma.",
+    "coding_note": "INPC categories per Shimada 1999, reproduced as Table 1 of Mete O, et al., Endocr Pathol 2022;33(1):90-114, p. 108 (contract Sec.10.1)."
+  },
+  {
+    "alias": "Ganglioneuroma",
+    "full_form": "Ganglioneuroma -> benign; no ICCC-3 Group IV code is assigned",
+    "also_known_as": [
+      "Ganglioneuroma (Schwannian Stroma-Dominant)"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Paediatric Tumours 2022",
+    "nci_concept_id": "NCIT:C3049",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "A fully matured ganglioneuroma is benign. ICD-O-3.2 codes it 9490 Ganglioneuroma at behaviour /0, and ICCC-3 Group IV registers behaviour /3 only, so no Group IV code is assigned and the case is referred to the registrar. Do not reach for 9490 Ganglioneuroblastoma, which is the malignant tumour on the same four-digit stem. Read the report before deciding: a specimen containing ganglioneuroma tissue is a ganglioneuroma only if the report states there is no neuroblastic component anywhere and no separate paraganglioma or pheochromocytoma component. A neuroblastic nodule inside it is 9490 Ganglioneuroblastoma, nodular, and a pheochromocytoma component makes it a composite tumour.",
+    "coding_note": "RULING D1 (contract Sec.2.1, Sec.3, Sec.6). No alias target is carried here: listing 9490 would make 'Ganglioneuroma' display as a synonym of 9490/3 Ganglioneuroblastoma, which is the exact trap D1 exists to close. The tree states the exclusion on the histology step, which carries the six-key exclusion object naming 9490/0 Ganglioneuroma. This overrides alias-instruction entry 6, which mapped the string to 9490."
+  },
+  {
+    "alias": "GNB",
+    "full_form": "Ganglioneuroblastoma -> Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Ganglioneuroblastoma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C3790",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "Abbreviation for ganglioneuroblastoma: 9490 Ganglioneuroblastoma. The intermediate step of the neuroblastic spectrum: Schwannian stroma-rich tissue containing ganglion cells. The distinction from neuroblastoma is histological and needs the pathology report, not the referral wording.",
+    "coding_note": null
+  },
+  {
+    "alias": "MYCN-amplified neuroblastoma",
+    "full_form": "MYCN-amplified neuroblastoma -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma, NOS"
+    ],
+    "alias_type": "molecular",
+    "origin_system": "Molecular annotation",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9500 Neuroblastoma, NOS. MYCN amplification is the principal risk marker in neuroblastoma but it does not change the morphology code; record the amplification status in its own field.",
+    "coding_note": null
+  },
+  {
+    "alias": "NB",
+    "full_form": "Neuroblastoma -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma",
+      "Neuroblastoma, NOS",
+      "Neuroblastoma (NBL)"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "Standard clinical abbreviation for neuroblastoma: 9500 Neuroblastoma, NOS. Read it in context - in a head and neck or sinonasal file the intended entity may be 9522 Olfactory neuroblastoma instead.",
+    "coding_note": null
+  },
+  {
+    "alias": "Neuroblastoma",
+    "full_form": "Neuroblastoma -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma, NOS",
+      "Neuroblastoma (Schwannian Stroma-poor)",
+      "Neural Crest Tumor, Malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Paediatric Tumours 2022",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9500 Neuroblastoma, NOS. The most common extracranial solid tumour of childhood; most cases present in the adrenal medulla or along the sympathetic chain. A referral naming neuroblastoma is not by itself evidence that it is one - the tree asks for the imaging and the urinary catecholamine metabolites before any code is assigned.",
+    "coding_note": null
+  },
+  {
+    "alias": "Neuroblastoma, MYCN non-amplified",
+    "full_form": "Neuroblastoma, MYCN non-amplified -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma, NOS"
+    ],
+    "alias_type": "molecular",
+    "origin_system": "Molecular annotation",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "9500 Neuroblastoma, NOS. A non-amplified MYCN result is recorded in its own field and does not change the morphology code.",
+    "coding_note": null
+  },
+  {
+    "alias": "Neuroblastoma, NOS",
+    "full_form": "Neuroblastoma, NOS -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma",
+      "Neuroblastoma (Schwannian Stroma-poor)"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 9500 at behaviour /3. The most common extracranial solid tumour of childhood; most cases present in the adrenal medulla or along the sympathetic chain. A referral naming neuroblastoma is not by itself evidence that it is one - the tree asks for the imaging and the urinary catecholamine metabolites before any code is assigned.",
+    "coding_note": null
+  },
+  {
+    "alias": "Peripheral neuroblastic tumour",
+    "full_form": "Peripheral neuroblastic tumour -> Neuroblastoma, NOS (9500) or Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Peripheral neuroblastic tumor"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9500",
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "The umbrella term for the neuroblastoma - ganglioneuroblastoma - ganglioneuroma spectrum. It does not settle the code on its own: Schwannian stroma-poor tissue is 9500 Neuroblastoma, NOS, stroma-rich tissue with ganglion cells is 9490 Ganglioneuroblastoma, and a fully matured ganglioneuroma is benign and carries no code in this group. The histology step separates them.",
+    "coding_note": null
+  },
+  {
+    "alias": "Sympathetic nervous system tumour",
+    "full_form": "Sympathetic nervous system tumour -> Neuroblastoma, NOS (9500) or Ganglioneuroblastoma (9490)",
+    "also_known_as": [
+      "Sympathetic nervous system tumor"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9500",
+      "9490"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "A site description used in referral letters, not a diagnosis. Neuroblastic tumours arise from sympathetic neural crest; the histology decides between 9500 Neuroblastoma, NOS and 9490 Ganglioneuroblastoma. A sympathetic paraganglioma (8681) arises from the same chain and is a different tumour.",
+    "coding_note": null
+  },
+  {
+    "alias": "Sympathicoblastoma",
+    "full_form": "Sympathicoblastoma -> Neuroblastoma, NOS (9500)",
+    "also_known_as": [
+      "Neuroblastoma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3270",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9500"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVa",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "An old name for neuroblastoma: 9500 Neuroblastoma, NOS. ICD-O-3.2 still carries the string on that code but marks it obsolete, so record a new case as neuroblastoma and keep this wording only where an older file uses it.",
+    "coding_note": "icdo32.sqlite: 9500/3 Synonym 'Sympathicoblastoma', obs = [obs]. Retained as an alias input only; the emitted term is always the Preferred 'Neuroblastoma, NOS' (contract Sec.1.1, ruling D5)."
+  },
+  {
+    "alias": "Adrenal medullary paraganglioma",
+    "full_form": "Adrenal medullary paraganglioma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma, NOS",
+      "Intraadrenal Paraganglioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. A pheochromocytoma is an intra-adrenal paraganglioma; the extra-adrenal ones take a paraganglioma code instead.",
+    "coding_note": null
+  },
+  {
+    "alias": "Aesthesioneuroblastoma",
+    "full_form": "Aesthesioneuroblastoma -> Olfactory neuroblastoma (9522)",
+    "also_known_as": [
+      "Esthesioneuroblastoma",
+      "Olfactory neuroblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C3789",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9522"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The British spelling of esthesioneuroblastoma: 9522 Olfactory neuroblastoma.",
+    "coding_note": "Spelling variant, not a separate entity. ICD-O-3.2 carries only the 'Esthesio-' spelling; the 'Aesthesio-' form is an alias input for Commonwealth reports, on the same footing as Phaeochromocytoma."
+  },
+  {
+    "alias": "Aortic body paraganglioma",
+    "full_form": "Aortic body paraganglioma -> Aortic body tumor (8691)",
+    "also_known_as": [
+      "Aortic body tumor",
+      "Aorticopulmonary paraganglioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C4218",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8691"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8691 Aortic body tumor is the term recorded on this code.",
+    "coding_note": null
+  },
+  {
+    "alias": "Aortic body tumor",
+    "full_form": "Aortic body tumor -> Aortic body tumor (8691)",
+    "also_known_as": [
+      "Aortic body paraganglioma",
+      "Aorticopulmonary paraganglioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C4218",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8691"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8691 Aortic body tumor - a paraganglioma of the aorticopulmonary body. Very rare in childhood.",
+    "coding_note": null
+  },
+  {
+    "alias": "Aorticopulmonary paraganglioma",
+    "full_form": "Aorticopulmonary paraganglioma -> Aortic body tumor (8691)",
+    "also_known_as": [
+      "Aortic body tumor",
+      "Aortic body paraganglioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C4218",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8691"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8691 Aortic body tumor is the term recorded on this code. This is the name NCI Thesaurus uses for the entity.",
+    "coding_note": null
+  },
+  {
+    "alias": "Carotid body paraganglioma",
+    "full_form": "Carotid body paraganglioma -> Carotid body paraganglioma (8692)",
+    "also_known_as": [
+      "Carotid body tumor"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C2932",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8692"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8692 Carotid body paraganglioma - a painless, slowly enlarging mass at the carotid bifurcation. Rare in childhood but well recognised, and over-represented at altitude.",
+    "coding_note": null
+  },
+  {
+    "alias": "Carotid body tumor",
+    "full_form": "Carotid body tumor -> Carotid body paraganglioma (8692)",
+    "also_known_as": [
+      "Carotid body paraganglioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C2932",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8692"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8692 Carotid body paraganglioma is the term recorded on this code; carotid body tumour is the surgical wording for the same thing.",
+    "coding_note": "Contract Sec.0.3 - 'Carotid body tumor' is the REDCap option string and an ICD-O-3.2 Synonym; the emitted term is the Preferred 'Carotid body paraganglioma' (ruling D5)."
+  },
+  {
+    "alias": "Chemodectoma",
+    "full_form": "Chemodectoma -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C2932",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS. A historical name for a paraganglioma of chemoreceptor tissue, still seen in older surgical notes; ICD-O-3.2 carries the string on this code and marks it obsolete. The site decides the code that is finally recorded: at the carotid bifurcation it is 8692 Carotid body paraganglioma and at the aorticopulmonary body it is 8691 Aortic body tumor.",
+    "coding_note": "icdo32.sqlite: 8693/3 Related 'Chemodectoma', obs = [obs] - the only place the string appears in ICD-O-3.2. NCIt C2932 lists it under Carotid Body Paraganglioma instead. Layer 1 governs the target (ruling D5), so this maps to 8693 alone and names the site-resolved codes in words. This narrows alias-instruction entry 22, which mapped it to 8692 and 8693."
+  },
+  {
+    "alias": "Chromaffin cell tumour",
+    "full_form": "Chromaffin cell tumour -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Chromaffin tumor",
+      "Chromaffinoma",
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "Historical clinical nomenclature",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. A descriptive name from the chromaffin reaction, still found in older textbooks and referral letters.",
+    "coding_note": null
+  },
+  {
+    "alias": "Chromaffin tumor",
+    "full_form": "Chromaffin tumor -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Chromaffinoma",
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. ICD-O-3.2 carries this string on that code. Record the modern term.",
+    "coding_note": null
+  },
+  {
+    "alias": "Chromaffinoma",
+    "full_form": "Chromaffinoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Chromaffin tumor",
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. ICD-O-3.2 carries this string on that code. Record the modern term.",
+    "coding_note": null
+  },
+  {
+    "alias": "Composite paraganglioma",
+    "full_form": "Composite paraganglioma -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS. A composite tumour carries a paraganglioma component together with a second, separately distinguishable tumour - most often a ganglioneuroma. Code the composite entity, not the ganglioneuroma component on its own.",
+    "coding_note": "Mete O, et al., Endocr Pathol 2022;33(1):90-114, p. 106: pheochromocytoma with ganglioneuroma is about 75% of composite cases. Contract Sec.10.1 requires that a composite's ganglioneuroma component must not reach the D1 exclusion branch; the tree's composite step handles that."
+  },
+  {
+    "alias": "Composite pheochromocytoma",
+    "full_form": "Composite pheochromocytoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. A pheochromocytoma with a second, separately distinguishable component - usually a ganglioneuroma, sometimes a neuroblastoma or ganglioneuroblastoma. Code the composite tumour, not the ganglioneuroma component on its own.",
+    "coding_note": "Mete O, et al., Endocr Pathol 2022;33(1):90-114, p. 106: pheochromocytoma with ganglioneuroma about 75% of composite cases, with neuroblastoma or ganglioneuroblastoma about 10% each, presenting in the fourth to fifth decade. Contract Sec.10.1."
+  },
+  {
+    "alias": "Diktyoma, malignant",
+    "full_form": "Diktyoma, malignant -> Medulloepithelioma, NOS (9501)",
+    "also_known_as": [
+      "Medulloepithelioma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C66808",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9501"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "9501 Medulloepithelioma, NOS. An old name for a medulloepithelioma, usually of the ciliary body. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else.",
+    "coding_note": null
+  },
+  {
+    "alias": "Esthesioneuroblastoma",
+    "full_form": "Esthesioneuroblastoma -> Olfactory neuroblastoma (9522)",
+    "also_known_as": [
+      "Olfactory neuroblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3789",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9522"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_document_inventory",
+    "clinical_alert": null,
+    "notes": "9522 Olfactory neuroblastoma is the term recorded on this code. Esthesioneuroblastoma is the wording much of the head and neck surgical literature still uses for the same tumour. It is a different tumour from adrenal or sympathetic neuroblastoma. Its immunohistochemistry is synaptophysin, chromogranin and INSM1 positive with pankeratin negative, S100 and SOX10 on sustentacular cells, and calretinin positive, which is what separates it from the other small round blue cell tumours of the sinonasal tract. A Hyams grade or a Kadish stage in the report is recorded as the report states it; neither changes the code.",
+    "coding_note": "The alias instructions class this as an eponym; it is not - the name is from Greek aisthesis, sensation, not a person, so it is recorded as a descriptive ICD-O-3.2 synonym. icdo32.sqlite: 9522/3 Synonym 'Esthesioneuroblastoma' (C30.0)."
+  },
+  {
+    "alias": "Esthesioneurocytoma",
+    "full_form": "Esthesioneurocytoma -> Olfactory neurocytoma (9521)",
+    "also_known_as": [
+      "Olfactory neurocytoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C67156",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9521"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_report_wording",
+    "clinical_alert": null,
+    "notes": "9521 Olfactory neurocytoma is the term recorded on this code, and only where the pathology report uses that wording or esthesioneurocytoma. Record it because the pathology report uses it, and flag the case for the registrar before the code is finalised. Only olfactory neuroblastoma and esthesioneuroblastoma - 9522 - have a current WHO entity confirmed behind them; a report that does not use one of these exact terms should not be translated into one.",
+    "coding_note": "RULING D3 (contract Sec.6, Sec.10.2b). ICD-O-3.2 prints this as a live Preferred term with no [obs] marker, so the Group 3 test retains the code - but no current WHO entity has been confirmed on the stem. Rooper LM, Head Neck Pathol 2023;17(2):299-312 and Agarwal A, et al., AJNR 2023;44(10):1116-1125, both on the WHO 5th-edition sinonasal classification and both read in full, are silent: 'neurocytoma' 0 occurrences in each, 'neurogenic' 0 in each, 'neuroepithelioma' 0 in Agarwal and 5 in Rooper, none as a current entity. Reachable only through the pathology report's own exact wording, never from a histological or molecular branch. who_version_current is 'N/A' rather than 'historical' because no WHO edition is known to have carried the term at all - 'historical' would assert more than the evidence does. Settling it needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold. The contract's wording for this ruling also asks for a low confidence ceiling; that concept was removed from the engine by the registrar on 16 Sep 2026, and Group 4 data carries no confidence field of any kind. The constraint is followed; the conflict is recorded in the build report. icdo32.sqlite: 9521/3 Synonym 'Esthesioneurocytoma' (C30.0)."
+  },
+  {
+    "alias": "Esthesioneuroepithelioma",
+    "full_form": "Esthesioneuroepithelioma -> Olfactory neuroepithelioma (9523)",
+    "also_known_as": [
+      "Olfactory neuroepithelioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9523"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_report_wording",
+    "clinical_alert": null,
+    "notes": "9523 Olfactory neuroepithelioma is the term recorded on this code, and only where the pathology report uses that wording or esthesioneuroepithelioma. Record it because the pathology report uses it, and flag the case for the registrar before the code is finalised. Only olfactory neuroblastoma and esthesioneuroblastoma - 9522 - have a current WHO entity confirmed behind them; a report that does not use one of these exact terms should not be translated into one.",
+    "coding_note": "RULING D3 (contract Sec.6, Sec.10.2b). ICD-O-3.2 prints this as a live Preferred term with no [obs] marker, so the Group 3 test retains the code - but no current WHO entity has been confirmed on the stem. Rooper LM, Head Neck Pathol 2023;17(2):299-312 and Agarwal A, et al., AJNR 2023;44(10):1116-1125, both on the WHO 5th-edition sinonasal classification and both read in full, are silent: 'neurocytoma' 0 occurrences in each, 'neurogenic' 0 in each, 'neuroepithelioma' 0 in Agarwal and 5 in Rooper, none as a current entity. Reachable only through the pathology report's own exact wording, never from a histological or molecular branch. who_version_current is 'N/A' rather than 'historical' because no WHO edition is known to have carried the term at all - 'historical' would assert more than the evidence does. Settling it needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold. The contract's wording for this ruling also asks for a low confidence ceiling; that concept was removed from the engine by the registrar on 16 Sep 2026, and Group 4 data carries no confidence field of any kind. The constraint is followed; the conflict is recorded in the build report. nci_concept_id null - see the Olfactory neuroepithelioma entry. icdo32.sqlite: 9523/3 Synonym 'Esthesioneuroepithelioma' (C30.0)."
+  },
+  {
+    "alias": "Extra-adrenal paraganglioma",
+    "full_form": "Extra-adrenal paraganglioma, NOS -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS",
+      "Extraadrenal Paraganglioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Endocrine and Neuroendocrine Tumours 2022",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS - a paraganglioma arising outside the adrenal gland where the paraganglion is not more precisely named. The distinction from 8700 Pheochromocytoma, NOS is anatomical: a pheochromocytoma is intra-adrenal.",
+    "coding_note": null
+  },
+  {
+    "alias": "Extra-adrenal paraganglioma, NOS",
+    "full_form": "Extra-adrenal paraganglioma, NOS -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma",
+      "Extraadrenal Paraganglioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 8693 at behaviour /3. Use it for an extra-adrenal paraganglioma whose paraganglion of origin is not named; a named site gives a more specific code.",
+    "coding_note": null
+  },
+  {
+    "alias": "Gangliocytic paraganglioma",
+    "full_form": "Gangliocytic paraganglioma -> renamed composite gangliocytoma/neuroma and neuroendocrine tumour (CoGNET); no ICCC-3 Group IV code is assigned",
+    "also_known_as": [
+      "Composite gangliocytoma/neuroma and neuroendocrine tumor",
+      "CoGNET"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C188229",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": null,
+    "clinical_alert": null,
+    "notes": "This entity has no ICCC-3 Group IV code and the tool does not assign one. ICD-O-3.2 carries 8683 Gangliocytic paraganglioma at behaviour /0 only, and ICCC-3 Group IV registers behaviour /3 only, so the two do not meet. WHO 2022 has also renamed the entity composite gangliocytoma/neuroma and neuroendocrine tumour (CoGNET) and no longer classifies it as a paraganglioma. It is almost always duodenal. Record the diagnosis as the report states it and refer the case to the registrar for the coding decision.",
+    "coding_note": "RULE 3 (contract Sec.0.2, Sec.8 rule 3) - 8683 is never an alias target, only an alias input, so no code is carried here. Two-source: IARC, 3.1 to 3.2 Summary of main changes, Neuroendocrine tumours - 'In the 3-digit group 868-870 the only remaining non-malignant term is under 8683/0'; and Mete O, et al., Endocr Pathol 2022;33(1):90-114, p. 94 - 'The entity previously known as gangliocytic para-ganglioma has been renamed composite gangliocytoma/neuroma and neuroendocrine tumor (CoGNET).' NCIt C188229 is the CoGNET concept and carries 'Gangliocytic Paraganglioma' as a synonym; the alias-instruction entry 16 set this to null on a label-mismatch reading that contract Sec.0.2 has since settled the other way. No Group IV tree reaches a terminal for this string - reported to the build owner rather than authored here."
+  },
+  {
+    "alias": "Glomus jugulare tumor",
+    "full_form": "Glomus jugulare tumor, NOS -> Middle ear paraganglioma (8690)",
+    "also_known_as": [
+      "Glomus jugulare tumor, NOS",
+      "Middle ear paraganglioma",
+      "Jugulotympanic paraganglioma"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3061",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8690"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8690 Middle ear paraganglioma. The older surgical name for the same tumour; ICD-O-3.2 still carries the string on this code but the term the tool records is Middle ear paraganglioma. A glomus tumour of the skin or soft tissue is an entirely different tumour and is not in this group.",
+    "coding_note": null
+  },
+  {
+    "alias": "Jugular paraganglioma",
+    "full_form": "Jugular paraganglioma -> Middle ear paraganglioma (8690)",
+    "also_known_as": [
+      "Middle ear paraganglioma",
+      "Jugulotympanic paraganglioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3061",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8690"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8690 Middle ear paraganglioma - the stem that carries jugular, jugulotympanic and glomus jugulare wordings.",
+    "coding_note": null
+  },
+  {
+    "alias": "Jugulotympanic paraganglioma",
+    "full_form": "Jugulotympanic paraganglioma -> Middle ear paraganglioma (8690)",
+    "also_known_as": [
+      "Middle ear paraganglioma",
+      "Jugular paraganglioma",
+      "Glomus jugulare tumor, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3061",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8690"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8690 Middle ear paraganglioma. The modern name for a glomus jugulare tumour, and the one newer pathology reports tend to use.",
+    "coding_note": null
+  },
+  {
+    "alias": "Laryngeal paraganglioma",
+    "full_form": "Laryngeal paraganglioma -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS. ICD-O-3.2 has no separate code for a laryngeal paraganglioma; it is carried on this stem.",
+    "coding_note": null
+  },
+  {
+    "alias": "Medulloepithelioma",
+    "full_form": "Medulloepithelioma, NOS -> Medulloepithelioma, NOS (9501)",
+    "also_known_as": [
+      "Medulloepithelioma, NOS",
+      "Diktyoma, malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66808",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9501"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "9501 Medulloepithelioma, NOS at a peripheral, non-central-nervous-system site. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else. There is no diagnostic pathway to run at a peripheral site: the code rests on the pathology report alone. An intraocular medulloepithelioma of the ciliary body belongs to the eye group, not here.",
+    "coding_note": "Contract Sec.10 - Pfister 2022 does not discuss peripheral medulloepithelioma; its Supplementary Table S3 places medulloepithelioma under retinal and neuroepithelial tumours, which is Group V. The only evidence held for a peripheral non-ocular primary is Shuangshoti S, et al., Br J Ophthalmol 1986;70(7):543-548, one case report. who_version_current is 'N/A' because no WHO edition describes this entity at a peripheral non-ocular site; the tree records who_version 'ICD-O-3.2' on the same code for the same reason."
+  },
+  {
+    "alias": "Medulloepithelioma, NOS",
+    "full_form": "Medulloepithelioma, NOS -> Medulloepithelioma, NOS (9501)",
+    "also_known_as": [
+      "Medulloepithelioma",
+      "Diktyoma, malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66808",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9501"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 9501 at behaviour /3. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else. ICD-O-3.2 also carries 9501 Medulloepithelioma, benign at behaviour /0, which this group does not register.",
+    "coding_note": null
+  },
+  {
+    "alias": "Middle ear paraganglioma",
+    "full_form": "Middle ear paraganglioma -> Middle ear paraganglioma (8690)",
+    "also_known_as": [
+      "Jugulotympanic paraganglioma",
+      "Jugular paraganglioma",
+      "Glomus jugulare tumor, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C3061",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8690"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8690 Middle ear paraganglioma is the ICD-O-3.2 preferred term on this code; the same stem carries jugulotympanic paraganglioma and glomus jugulare tumour. Presents with pulsatile tinnitus, hearing loss or lower cranial nerve deficits.",
+    "coding_note": "Contract Sec.0.3 - the REDCap option string is 'Glomus jugulare tumor, NOS', which ICD-O-3.2 carries as a Synonym; the emitted term is the Preferred 'Middle ear paraganglioma' (ruling D5). ICD-O-3.2's code reference on this stem is still (C75.5) while the renamed entity implies C30.1."
+  },
+  {
+    "alias": "Neuroepithelioma",
+    "full_form": "Neuroepithelioma, NOS -> Neuroepithelioma, NOS (9503)",
+    "also_known_as": [
+      "Neuroepithelioma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9503"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "9503 Neuroepithelioma, NOS. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else. A report using the word neuroepithelioma is not enough on its own: the immunohistochemistry already in the file decides. CD99 positive with PHOX2B negative and synaptophysin negative is an Ewing-family tumour, which is coded from the bone group at a bony primary and the soft tissue group at a soft-tissue primary. Anything else, or a panel that was not done, stays on 9503 Neuroepithelioma, NOS with CD99, PHOX2B and synaptophysin recorded as outstanding.",
+    "coding_note": "RULING D4 (contract Sec.2.4, Sec.6) - alias-instruction entry 29 stands: Neuroepithelioma alone remains on 9503. icdo32.sqlite carries exactly one term on 9503/3, the Preferred 'Neuroepithelioma, NOS', with no PNET synonym, in both the 2019 draft and the 9 Oct 2020 final. nci_concept_id is null, not the NCIT:C3716 the alias instructions pre-recorded: that concept is 'Primitive Neuroectodermal Tumor', whose synonyms include 'PNET, NOS' and 'Primitive neuroectodermal tumor, NOS' - strings ICD-O-3.2 places on 9473/3, ICCC-3 Group III. Carrying it here would re-create exactly the conflation D4 removes."
+  },
+  {
+    "alias": "Neuroepithelioma, NOS",
+    "full_form": "Neuroepithelioma, NOS -> Neuroepithelioma, NOS (9503)",
+    "also_known_as": [
+      "Neuroepithelioma"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9503"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "The only term ICD-O-3.2 carries on 9503, at behaviour /3. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else. A report using the word neuroepithelioma is not enough on its own: the immunohistochemistry already in the file decides. CD99 positive with PHOX2B negative and synaptophysin negative is an Ewing-family tumour, which is coded from the bone group at a bony primary and the soft tissue group at a soft-tissue primary. Anything else, or a panel that was not done, stays on 9503 Neuroepithelioma, NOS with CD99, PHOX2B and synaptophysin recorded as outstanding.",
+    "coding_note": "RULING D4. nci_concept_id null - see the Neuroepithelioma entry."
+  },
+  {
+    "alias": "Nonchromaffin paraganglioma, NOS",
+    "full_form": "Nonchromaffin paraganglioma, NOS -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS. An older term resting on the chromaffin stain, which is no longer how these tumours are classified. Record the modern term.",
+    "coding_note": null
+  },
+  {
+    "alias": "Olfactory neuroblastoma",
+    "full_form": "Olfactory neuroblastoma -> Olfactory neuroblastoma (9522)",
+    "also_known_as": [
+      "Esthesioneuroblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Head and Neck Tumours 2022",
+    "nci_concept_id": "NCIT:C3789",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9522"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_document_inventory",
+    "clinical_alert": null,
+    "notes": "9522 Olfactory neuroblastoma. A neuroectodermal tumour of the olfactory epithelium of the nasal cavity, and the only olfactory entity the WHO 5th edition recognises. It is a different tumour from adrenal or sympathetic neuroblastoma. Its immunohistochemistry is synaptophysin, chromogranin and INSM1 positive with pankeratin negative, S100 and SOX10 on sustentacular cells, and calretinin positive, which is what separates it from the other small round blue cell tumours of the sinonasal tract. A Hyams grade or a Kadish stage in the report is recorded as the report states it; neither changes the code.",
+    "coding_note": "Rooper LM, Head Neck Pathol 2023;17(2):299-312, introduction: 'In the 5th edition WHO, there are no substantive alterations to the definition of olfactory neuroblastoma (ONB) - a neuroectodermal neoplasm that is still regarded as unique to the sinonasal tract.' Immunohistochemistry panel and the calretinin finding from the same paper; Agarwal A, et al., AJNR 2023;44(10):1116-1125, p. 1117, lists olfactory neuroblastoma as the single entity in the 5th edition's 'other' sinonasal category. Contract Sec.10.2b, Sec.10.2c."
+  },
+  {
+    "alias": "Olfactory neurocytoma",
+    "full_form": "Olfactory neurocytoma -> Olfactory neurocytoma (9521)",
+    "also_known_as": [
+      "Esthesioneurocytoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C67156",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9521"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_report_wording",
+    "clinical_alert": null,
+    "notes": "9521 Olfactory neurocytoma, and only where the pathology report uses that exact wording or esthesioneurocytoma. Record it because the pathology report uses it, and flag the case for the registrar before the code is finalised. Only olfactory neuroblastoma and esthesioneuroblastoma - 9522 - have a current WHO entity confirmed behind them; a report that does not use one of these exact terms should not be translated into one.",
+    "coding_note": "RULING D3 (contract Sec.6, Sec.10.2b). ICD-O-3.2 prints this as a live Preferred term with no [obs] marker, so the Group 3 test retains the code - but no current WHO entity has been confirmed on the stem. Rooper LM, Head Neck Pathol 2023;17(2):299-312 and Agarwal A, et al., AJNR 2023;44(10):1116-1125, both on the WHO 5th-edition sinonasal classification and both read in full, are silent: 'neurocytoma' 0 occurrences in each, 'neurogenic' 0 in each, 'neuroepithelioma' 0 in Agarwal and 5 in Rooper, none as a current entity. Reachable only through the pathology report's own exact wording, never from a histological or molecular branch. who_version_current is 'N/A' rather than 'historical' because no WHO edition is known to have carried the term at all - 'historical' would assert more than the evidence does. Settling it needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold. The contract's wording for this ruling also asks for a low confidence ceiling; that concept was removed from the engine by the registrar on 16 Sep 2026, and Group 4 data carries no confidence field of any kind. The constraint is followed; the conflict is recorded in the build report."
+  },
+  {
+    "alias": "Olfactory neuroepithelioma",
+    "full_form": "Olfactory neuroepithelioma -> Olfactory neuroepithelioma (9523)",
+    "also_known_as": [
+      "Esthesioneuroepithelioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9523"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_report_wording",
+    "clinical_alert": null,
+    "notes": "9523 Olfactory neuroepithelioma, and only where the pathology report uses that exact wording or esthesioneuroepithelioma. Record it because the pathology report uses it, and flag the case for the registrar before the code is finalised. Only olfactory neuroblastoma and esthesioneuroblastoma - 9522 - have a current WHO entity confirmed behind them; a report that does not use one of these exact terms should not be translated into one.",
+    "coding_note": "RULING D3 (contract Sec.6, Sec.10.2b). ICD-O-3.2 prints this as a live Preferred term with no [obs] marker, so the Group 3 test retains the code - but no current WHO entity has been confirmed on the stem. Rooper LM, Head Neck Pathol 2023;17(2):299-312 and Agarwal A, et al., AJNR 2023;44(10):1116-1125, both on the WHO 5th-edition sinonasal classification and both read in full, are silent: 'neurocytoma' 0 occurrences in each, 'neurogenic' 0 in each, 'neuroepithelioma' 0 in Agarwal and 5 in Rooper, none as a current entity. Reachable only through the pathology report's own exact wording, never from a histological or molecular branch. who_version_current is 'N/A' rather than 'historical' because no WHO edition is known to have carried the term at all - 'historical' would assert more than the evidence does. Settling it needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold. The contract's wording for this ruling also asks for a low confidence ceiling; that concept was removed from the engine by the registrar on 16 Sep 2026, and Group 4 data carries no confidence field of any kind. The constraint is followed; the conflict is recorded in the build report. nci_concept_id is null: NCIt's only olfactory neuroepithelioma concept is the mouse one, NCIT:C21978, and its human concept NCIT:C3789 lists 'Olfactory neuroepithelioma' and 'Esthesioneuroepithelioma' as synonyms of olfactory NEUROBLASTOMA, which conflates 9523 with 9522. ICD-O-3.2 keeps them on separate stems and Layer 1 governs (ruling D5)."
+  },
+  {
+    "alias": "Olfactory neurogenic tumor",
+    "full_form": "Olfactory neurogenic tumor -> Olfactory neurogenic tumor (9520)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C67155",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9520"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_report_wording",
+    "clinical_alert": null,
+    "notes": "9520 Olfactory neurogenic tumor, and only where the pathology report uses that exact wording. Record it because the pathology report uses it, and flag the case for the registrar before the code is finalised. Only olfactory neuroblastoma and esthesioneuroblastoma - 9522 - have a current WHO entity confirmed behind them; a report that does not use one of these exact terms should not be translated into one.",
+    "coding_note": "RULING D3 (contract Sec.6, Sec.10.2b). ICD-O-3.2 prints this as a live Preferred term with no [obs] marker, so the Group 3 test retains the code - but no current WHO entity has been confirmed on the stem. Rooper LM, Head Neck Pathol 2023;17(2):299-312 and Agarwal A, et al., AJNR 2023;44(10):1116-1125, both on the WHO 5th-edition sinonasal classification and both read in full, are silent: 'neurocytoma' 0 occurrences in each, 'neurogenic' 0 in each, 'neuroepithelioma' 0 in Agarwal and 5 in Rooper, none as a current entity. Reachable only through the pathology report's own exact wording, never from a histological or molecular branch. who_version_current is 'N/A' rather than 'historical' because no WHO edition is known to have carried the term at all - 'historical' would assert more than the evidence does. Settling it needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold. The contract's wording for this ruling also asks for a low confidence ceiling; that concept was removed from the engine by the registrar on 16 Sep 2026, and Group 4 data carries no confidence field of any kind. The constraint is followed; the conflict is recorded in the build report."
+  },
+  {
+    "alias": "ONB",
+    "full_form": "Olfactory neuroblastoma -> Olfactory neuroblastoma (9522)",
+    "also_known_as": [
+      "Olfactory neuroblastoma",
+      "Esthesioneuroblastoma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C3789",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9522"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sinonasal",
+    "tree_entry_node": "sn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Abbreviation for olfactory neuroblastoma: 9522 Olfactory neuroblastoma. Used in ear, nose and throat and skull base practice.",
+    "coding_note": null
+  },
+  {
+    "alias": "Paraganglioma",
+    "full_form": "Paraganglioma -> Paraganglioma, NOS (8680)",
+    "also_known_as": [
+      "Paraganglioma, NOS",
+      "Paraganglion Tumor",
+      "Paraganglionic Neoplasm"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Endocrine and Neuroendocrine Tumours 2022",
+    "nci_concept_id": "NCIT:C3308",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8680"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8680 Paraganglioma, NOS is the fallback for the whole paraganglioma family and is used when the site is not established. Where the site is documented, a specific code applies: carotid body is 8692 Carotid body paraganglioma, middle ear or jugulotympanic is 8690 Middle ear paraganglioma, aortic body is 8691 Aortic body tumor, another head and neck paraganglion is 8693 Extra-adrenal paraganglioma, NOS, and a sympathetic-chain site is 8681 Sympathetic paraganglioma. ICD-O-3.2 carries every paraganglioma at behaviour /3 only - there is no benign paraganglioma code to choose.",
+    "coding_note": null
+  },
+  {
+    "alias": "Paraganglioma, NOS",
+    "full_form": "Paraganglioma, NOS -> Paraganglioma, NOS (8680)",
+    "also_known_as": [
+      "Paraganglioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C3308",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8680"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 8680 at behaviour /3, and this group's paraganglionic fallback. Use it when the paraganglion of origin is not documented; a documented site gives a more specific code.",
+    "coding_note": null
+  },
+  {
+    "alias": "Parasympathetic paraganglioma",
+    "full_form": "Parasympathetic paraganglioma -> Parasympathetic paraganglioma (8682)",
+    "also_known_as": [
+      "Parasympathetic Extra-Adrenal Paraganglioma",
+      "Parasympathetic Paraganglionic Neoplasm"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C4217",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8682"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8682 Parasympathetic paraganglioma - typically a head and neck tumour and usually non-functional. Use this code when the report says parasympathetic but names no site; a named site gives a more specific code - carotid body is 8692 Carotid body paraganglioma and middle ear or jugulotympanic is 8690 Middle ear paraganglioma.",
+    "coding_note": null
+  },
+  {
+    "alias": "Peripheral neuroectodermal tumor",
+    "full_form": "Peripheral neuroectodermal tumor -> Ewing sarcoma (9364); ICCC-3 Group VIII at bone, Group IX at soft tissue",
+    "also_known_as": [
+      "Peripheral primitive neuroectodermal tumor",
+      "PPNET",
+      "Ewing sarcoma"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_ewing_site",
+    "clinical_alert": null,
+    "notes": "This is not a Group IV tumour. ICD-O-3.2 moved Ewing sarcoma onto 9364 and made it the code for peripheral neuroectodermal tumour at the same time, so this wording is 9364 Ewing sarcoma. Code the case from the ICCC-3 Group VIII tree (bone tumours) at a bony primary and from the Group IX tree (soft tissue sarcomas) at a soft-tissue primary. The site is the only question left to answer. Note the difference from the unqualified wording: primitive neuroectodermal tumour, NOS and PNET, NOS without 'peripheral' are 9473 CNS embryonal tumor, NOS, which is ICCC-3 Group III.",
+    "coding_note": "RULING D4 (contract Sec.2.4, Sec.6, Sec.8 rule 8). Overrides alias-instruction entries 30, 31 and 33, which sent this wording to 9503. icdo32.sqlite, checked against both the 2019 draft and the 9 Oct 2020 final: 9364/3 Preferred 'Ewing sarcoma'; Synonym 'Ewing tumor', 'Peripheral neuroectodermal tumor', 'PPNET'; Related 'Peripheral primitive neuroectodermal tumor', 'Neuroectodermal tumor, NOS'. IARC, 3.1 to 3.2 Summary of main changes, Ewing sarcoma: 'Ewing sarcoma (9260/3) has moved to, and is now the preferred term for, 9364/3 (peripheral neuroectodermal tumour).' No Group IV morphology target is carried, because 9364 is not a Group IV code (rule 8) and the case leaves the group; the destination is named in the referral fields instead, which is D4's design. nci_concept_id is null - the concept the alias instructions pre-recorded, NCIT:C3716, is the CNS 'Primitive Neuroectodermal Tumor', not the Ewing family.",
+    "refer_group": [
+      8,
+      9
+    ],
+    "refer_code": "9364"
+  },
+  {
+    "alias": "Peripheral neuroepithelioma",
+    "full_form": "Peripheral neuroepithelioma -> Neuroepithelioma, NOS (9503)",
+    "also_known_as": [
+      "Neuroepithelioma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9503"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_ihc_cd99",
+    "clinical_alert": null,
+    "notes": "This wording is not a defined pathology term and the tool does not read it as one. What happens next is decided by the immunohistochemistry already in the file, not by the words in the report. CD99 positive with PHOX2B negative and synaptophysin negative is an Ewing-family tumour, which is coded from the bone group at a bony primary and the soft tissue group at a soft-tissue primary. Anything else, or a panel that was not done, is 9503 Neuroepithelioma, NOS, with CD99, PHOX2B and synaptophysin recorded as outstanding work-up. Do not order new testing to answer this - answer from what is already in the file.",
+    "coding_note": "RULING D6 (contract Sec.6). The exact phrase 'peripheral neuroepithelioma' appears NOWHERE in ICD-O-3.2 - not as a term, a synonym, a see-also, an inclusion or an exclusion. Verified by full-text query of icdo32.sqlite across term, see_also, includes, excludes and other_text on 18 Sep 2026; the only 'neuroepithelioma' strings in the workbook are 9503/3 Neuroepithelioma, NOS, 9523/3 Olfactory neuroepithelioma and its synonym Esthesioneuroepithelioma, and the level-2 heading Neuroepitheliomatous neoplasms. Layer 1 is silent, so 9503 is the only plausible home and nothing in Layer 1 says so. Entry node is the CD99 step rather than the tree's own first step, as D6 directs; the word 'peripheral' already excludes the C70.0-C72.9 range that the first step gates on, so no dual-group check is skipped by entering there."
+  },
+  {
+    "alias": "Peripheral PNET",
+    "full_form": "Peripheral primitive neuroectodermal tumor -> Ewing sarcoma (9364); ICCC-3 Group VIII at bone, Group IX at soft tissue",
+    "also_known_as": [
+      "PPNET",
+      "Peripheral neuroectodermal tumor",
+      "Ewing sarcoma"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_ewing_site",
+    "clinical_alert": null,
+    "notes": "This is not a Group IV tumour. ICD-O-3.2 moved Ewing sarcoma onto 9364 and made it the code for peripheral neuroectodermal tumour at the same time, so this wording is 9364 Ewing sarcoma. Code the case from the ICCC-3 Group VIII tree (bone tumours) at a bony primary and from the Group IX tree (soft tissue sarcomas) at a soft-tissue primary. The site is the only question left to answer. Note the difference from the unqualified wording: primitive neuroectodermal tumour, NOS and PNET, NOS without 'peripheral' are 9473 CNS embryonal tumor, NOS, which is ICCC-3 Group III.",
+    "coding_note": "RULING D4 (contract Sec.2.4, Sec.6, Sec.8 rule 8). Overrides alias-instruction entries 30, 31 and 33, which sent this wording to 9503. icdo32.sqlite, checked against both the 2019 draft and the 9 Oct 2020 final: 9364/3 Preferred 'Ewing sarcoma'; Synonym 'Ewing tumor', 'Peripheral neuroectodermal tumor', 'PPNET'; Related 'Peripheral primitive neuroectodermal tumor', 'Neuroectodermal tumor, NOS'. IARC, 3.1 to 3.2 Summary of main changes, Ewing sarcoma: 'Ewing sarcoma (9260/3) has moved to, and is now the preferred term for, 9364/3 (peripheral neuroectodermal tumour).' No Group IV morphology target is carried, because 9364 is not a Group IV code (rule 8) and the case leaves the group; the destination is named in the referral fields instead, which is D4's design. nci_concept_id is null - the concept the alias instructions pre-recorded, NCIT:C3716, is the CNS 'Primitive Neuroectodermal Tumor', not the Ewing family.",
+    "refer_group": [
+      8,
+      9
+    ],
+    "refer_code": "9364"
+  },
+  {
+    "alias": "Peripheral primitive neuroectodermal tumor",
+    "full_form": "Peripheral primitive neuroectodermal tumor -> Ewing sarcoma (9364); ICCC-3 Group VIII at bone, Group IX at soft tissue",
+    "also_known_as": [
+      "Peripheral neuroectodermal tumor",
+      "PPNET",
+      "Ewing sarcoma"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_ewing_site",
+    "clinical_alert": null,
+    "notes": "This is not a Group IV tumour. ICD-O-3.2 moved Ewing sarcoma onto 9364 and made it the code for peripheral neuroectodermal tumour at the same time, so this wording is 9364 Ewing sarcoma. Code the case from the ICCC-3 Group VIII tree (bone tumours) at a bony primary and from the Group IX tree (soft tissue sarcomas) at a soft-tissue primary. The site is the only question left to answer. Note the difference from the unqualified wording: primitive neuroectodermal tumour, NOS and PNET, NOS without 'peripheral' are 9473 CNS embryonal tumor, NOS, which is ICCC-3 Group III.",
+    "coding_note": "RULING D4 (contract Sec.2.4, Sec.6, Sec.8 rule 8). Overrides alias-instruction entries 30, 31 and 33, which sent this wording to 9503. icdo32.sqlite, checked against both the 2019 draft and the 9 Oct 2020 final: 9364/3 Preferred 'Ewing sarcoma'; Synonym 'Ewing tumor', 'Peripheral neuroectodermal tumor', 'PPNET'; Related 'Peripheral primitive neuroectodermal tumor', 'Neuroectodermal tumor, NOS'. IARC, 3.1 to 3.2 Summary of main changes, Ewing sarcoma: 'Ewing sarcoma (9260/3) has moved to, and is now the preferred term for, 9364/3 (peripheral neuroectodermal tumour).' No Group IV morphology target is carried, because 9364 is not a Group IV code (rule 8) and the case leaves the group; the destination is named in the referral fields instead, which is D4's design. nci_concept_id is null - the concept the alias instructions pre-recorded, NCIT:C3716, is the CNS 'Primitive Neuroectodermal Tumor', not the Ewing family.",
+    "refer_group": [
+      8,
+      9
+    ],
+    "refer_code": "9364"
+  },
+  {
+    "alias": "PGL",
+    "full_form": "Paraganglioma -> Paraganglioma, NOS (8680)",
+    "also_known_as": [
+      "Paraganglioma",
+      "Paraganglioma, NOS"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C3308",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8680"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Standard clinical abbreviation for paraganglioma: 8680 Paraganglioma, NOS until the site is documented.",
+    "coding_note": null
+  },
+  {
+    "alias": "Phaeochromocytoma",
+    "full_form": "Phaeochromocytoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma",
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "The British spelling of pheochromocytoma: 8700 Pheochromocytoma, NOS. Common in pathology reports wherever medical training follows British conventions.",
+    "coding_note": null
+  },
+  {
+    "alias": "Pheo",
+    "full_form": "Pheochromocytoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma",
+      "Pheochromocytoma, NOS",
+      "PCC"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "Ward shorthand for pheochromocytoma: 8700 Pheochromocytoma, NOS.",
+    "coding_note": null
+  },
+  {
+    "alias": "Pheochromoblastoma",
+    "full_form": "Pheochromoblastoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma, NOS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS. An old name implying a malignant pheochromocytoma; ICD-O-3.2 carries it on the same code, which has one behaviour only.",
+    "coding_note": null
+  },
+  {
+    "alias": "Pheochromocytoma",
+    "full_form": "Pheochromocytoma -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma, NOS",
+      "Phaeochromocytoma",
+      "PCC"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "WHO Classification of Endocrine and Neuroendocrine Tumours 2022",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8700 Pheochromocytoma, NOS - a catecholamine-producing tumour of the adrenal medulla. Diagnosis rests on plasma free metanephrines or 24-hour urinary fractionated metanephrines with imaging. ICD-O-3.2 carries 8700 at behaviour /3 only: there is no benign and no malignant pheochromocytoma code to choose between.",
+    "coding_note": null
+  },
+  {
+    "alias": "Pheochromocytoma, NOS",
+    "full_form": "Pheochromocytoma, NOS -> Pheochromocytoma, NOS (8700)",
+    "also_known_as": [
+      "Pheochromocytoma",
+      "Phaeochromocytoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C3326",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 8700 at behaviour /3, and the only term the tool records on this code. The ICD-O-3.1 strings 'Pheochromocytoma, malignant' and 'Pheochromocytoma, benign' no longer exist.",
+    "coding_note": "Contract Sec.0.4 and Sec.10.1b. IARC's Deleted codes and their terms records 8700/0 deleted and the /1 terms moved to /3 across 868-870; WHO abolished the benign and malignant adjectives in the 4th edition, 2017 (Mete 2022, p. 100). ICD-O behaviour /3 is 'malignant, primary site', not a prognosis - a low observed metastatic rate is not an argument for a lower behaviour."
+  },
+  {
+    "alias": "PPGL",
+    "full_form": "Pheochromocytoma and paraganglioma -> Pheochromocytoma, NOS (8700) or Paraganglioma, NOS (8680)",
+    "also_known_as": [
+      "Pheochromocytoma and paraganglioma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8700",
+      "8680"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "The abbreviation the WHO literature uses for the pheochromocytoma and paraganglioma family as a whole. It names a family, not a diagnosis: an adrenal medullary primary is 8700 Pheochromocytoma, NOS, and an extra-adrenal primary takes a paraganglioma code chosen by site, falling back to 8680 Paraganglioma, NOS.",
+    "coding_note": "No NCIt concept was queried for the family abbreviation; the two entity concepts are carried on the Pheochromocytoma and Paraganglioma entries. Abbreviation in general use throughout Mete O, et al., Endocr Pathol 2022;33(1):90-114."
+  },
+  {
+    "alias": "PPNET",
+    "full_form": "Peripheral primitive neuroectodermal tumor -> Ewing sarcoma (9364); ICCC-3 Group VIII at bone, Group IX at soft tissue",
+    "also_known_as": [
+      "pPNET",
+      "Peripheral neuroectodermal tumor",
+      "Peripheral primitive neuroectodermal tumor",
+      "Ewing sarcoma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_ewing_site",
+    "clinical_alert": null,
+    "notes": "This is not a Group IV tumour. ICD-O-3.2 moved Ewing sarcoma onto 9364 and made it the code for peripheral neuroectodermal tumour at the same time, so this wording is 9364 Ewing sarcoma. Code the case from the ICCC-3 Group VIII tree (bone tumours) at a bony primary and from the Group IX tree (soft tissue sarcomas) at a soft-tissue primary. The site is the only question left to answer. Note the difference from the unqualified wording: primitive neuroectodermal tumour, NOS and PNET, NOS without 'peripheral' are 9473 CNS embryonal tumor, NOS, which is ICCC-3 Group III.",
+    "coding_note": "RULING D4 (contract Sec.2.4, Sec.6, Sec.8 rule 8). Overrides alias-instruction entries 30, 31 and 33, which sent this wording to 9503. icdo32.sqlite, checked against both the 2019 draft and the 9 Oct 2020 final: 9364/3 Preferred 'Ewing sarcoma'; Synonym 'Ewing tumor', 'Peripheral neuroectodermal tumor', 'PPNET'; Related 'Peripheral primitive neuroectodermal tumor', 'Neuroectodermal tumor, NOS'. IARC, 3.1 to 3.2 Summary of main changes, Ewing sarcoma: 'Ewing sarcoma (9260/3) has moved to, and is now the preferred term for, 9364/3 (peripheral neuroectodermal tumour).' No Group IV morphology target is carried, because 9364 is not a Group IV code (rule 8) and the case leaves the group; the destination is named in the referral fields instead, which is D4's design. nci_concept_id is null - the concept the alias instructions pre-recorded, NCIT:C3716, is the CNS 'Primitive Neuroectodermal Tumor', not the Ewing family.",
+    "refer_group": [
+      8,
+      9
+    ],
+    "refer_code": "9364"
+  },
+  {
+    "alias": "Spongioneuroblastoma",
+    "full_form": "Spongioneuroblastoma -> Spongioneuroblastoma (9504)",
+    "also_known_as": [],
+    "alias_type": "who_historical",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66811",
+    "who_version_current": "historical",
+    "maps_to_morphology_codes": [
+      "9504"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": null,
+    "clinical_alert": null,
+    "notes": "9504 Spongioneuroblastoma. A 1948 term with no modern diagnostic criteria and no current WHO entity behind it. No step of this group's decision trees leads to it. It is kept so that an older record already carrying the code can be found and read; do not assign it to a new case - take the diagnosis to the registrar instead. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else.",
+    "coding_note": "RULING D2 (contract Sec.2.3, Sec.6, Sec.8 rule 4). icdo32.sqlite prints 'Spongioneuroblastoma' on 9504/3 as a plain Preferred term with no [obs] marker, so the Group 3 [obs] test does not remove it; it is retained in this group's code list and flagged, and reachable from no tree. This entry is the alias D2 provides for, so it deliberately carries no tree and no entry step - it resolves the code and nothing else. Group 3's alias file carries the same string against 9504 for the C70.0-C72.9 range."
+  },
+  {
+    "alias": "Sympathetic paraganglioma",
+    "full_form": "Sympathetic paraganglioma -> Sympathetic paraganglioma (8681)",
+    "also_known_as": [
+      "Sympathetic Paraganglionic Neoplasm"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C4216",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8681"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_sympathoadrenal",
+    "tree_entry_node": "sa_document_inventory",
+    "clinical_alert": null,
+    "notes": "8681 Sympathetic paraganglioma - a paraganglioma of the sympathetic chain, typically retroperitoneal, paraspinal or posterior mediastinal, and usually catecholamine-producing. Where the site is extra-adrenal but the report does not say which paraganglion, use 8693 Extra-adrenal paraganglioma, NOS.",
+    "coding_note": "NCIt C4216 also lists 'Chromaffin tumor' and 'Chromaffinoma' as synonyms of sympathetic paraganglioma. ICD-O-3.2 carries both strings on 8700/3 instead, so they are aliased there and are deliberately kept out of this entry's synonym list (ruling D5 - Layer 1 governs term placement)."
+  },
+  {
+    "alias": "Teratoid medulloepithelioma",
+    "full_form": "Teratoid medulloepithelioma, NOS -> Teratoid medulloepithelioma, NOS (9502)",
+    "also_known_as": [
+      "Teratoid medulloepithelioma, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66810",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9502"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "9502 Teratoid medulloepithelioma, NOS at a peripheral, non-central-nervous-system site - a medulloepithelioma containing heterologous elements such as cartilage, muscle or bone. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else.",
+    "coding_note": "Contract Sec.0.3 - the REDCap option string is 'Teratoid medulloepithelioma' without the ', NOS'; the emitted term is the ICD-O-3.2 Preferred 'Teratoid medulloepithelioma, NOS' (ruling D5). NCIt C66810 is the site-specific 'Ciliary Body Teratoid Medulloepithelioma' concept, the closest available and accepted with that caveat by the alias instructions."
+  },
+  {
+    "alias": "Teratoid medulloepithelioma, NOS",
+    "full_form": "Teratoid medulloepithelioma, NOS -> Teratoid medulloepithelioma, NOS (9502)",
+    "also_known_as": [
+      "Teratoid medulloepithelioma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66810",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9502"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_other_peripheral",
+    "tree_entry_node": "op_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 preferred term on 9502 at behaviour /3. Topography decides the group: 9501 to 9504 belong to ICCC-3 Group III everywhere in C70.0 to C72.9 - meninges, brain and spinal cord - and to Group IV only outside that range. Record the topography before anything else. ICD-O-3.2 also carries 9502 Teratoid medulloepithelioma, benign at behaviour /0, which this group does not register.",
+    "coding_note": null
+  },
+  {
+    "alias": "Vagal paraganglioma",
+    "full_form": "Vagal paraganglioma -> Extra-adrenal paraganglioma, NOS (8693)",
+    "also_known_as": [
+      "Extra-adrenal paraganglioma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": "NCIT:C3309",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8693"
+    ],
+    "maps_to_iccc3_subgroup_id": "IVb",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g4_head_neck_paraganglia",
+    "tree_entry_node": "hn_document_inventory",
+    "clinical_alert": null,
+    "notes": "8693 Extra-adrenal paraganglioma, NOS. ICD-O-3.2 has no separate code for a vagal paraganglioma; it is carried on this stem.",
+    "coding_note": null
+  }
+]
