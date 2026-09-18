@@ -571,5 +571,742 @@
       "topography_routing_note": null
     }
   ],
-  "decision_trees": []
+  "decision_trees": [
+    {
+      "tree_id": "g4_sympathoadrenal",
+      "tree_label": "Sympathoadrenal axis — adrenal gland, peripheral nerve and autonomic nervous system, retroperitoneum and mediastinum (C74.0, C74.1, C74.9, C47.0–C47.9, C48.0, C48.2, C48.8, C38.1–C38.3)",
+      "entry_node": "sa_document_inventory",
+      "basis_of_diagnosis_defaults": {
+        "ihc_counts_as": 7,
+        "methylation_counts_as": 8
+      },
+      "nodes": [
+        {
+          "node_id": "sa_document_inventory",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Evidence in file",
+          "question": "Sympathoadrenal-region mass — adrenal gland (C74.0, C74.1, C74.9), peripheral nerve or autonomic nervous system (C47.0–C47.9), retroperitoneum (C48.0, C48.2, C48.8), or mediastinum (C38.1–C38.3). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
+          "hint": "Pick the highest evidence tier present. This compartment holds two biologically distinct tumour families — the neuroblastic spectrum (neuroblastoma, ganglioneuroblastoma, ganglioneuroma) and the paraganglioma/pheochromocytoma family — plus, at the adrenal gland specifically, an epithelial differential (adrenocortical carcinoma). Record adequacy honestly: an uninterpretable specimen is not a negative one.",
+          "clinical_alert": null,
+          "coding_note": "ENCR basis of diagnosis is computed as the highest of codes 1-8 (0 and 9 override). ihc_counts_as 7, methylation_counts_as 8 are declared on the tree object (build contract §4.2). Only 9500/3 and 8700/3 may be assigned on imaging alone, at basis 4, and only with a biochemical marker AND the imaging finding together (Visser Rule 6, p.05) — never on imaging alone. Every other code in this tree requires tissue.",
+          "captured_variables": [
+            "specimen_adequacy",
+            "evidence_tests",
+            "workup_status"
+          ],
+          "options": [
+            {
+              "label": "Referral letter or clinical note only — no imaging report, no laboratory result and no pathology report",
+              "next_node": "sa_clinical_alias",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "specimen_adequacy": "not_done",
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Imaging report (CT/MRI) with a biochemical or catecholamine work-up documented — no tissue and no cytology",
+              "next_node": "sa_imaging_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Imaging"
+                ],
+                "specimen_adequacy": "not_done",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Fine-needle aspiration or core-needle cytology only — no excisional or incisional biopsy report is in the file",
+              "next_node": "sa_cytology_only",
+              "captures": {
+                "evidence_tests": [],
+                "specimen_adequacy": "adequate",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Definitive histology report — no immunohistochemistry performed or reported",
+              "next_node": "sa_histology_subclassification",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "specimen_adequacy": "adequate",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Definitive histology WITH immunohistochemistry — any of PHOX2B, synaptophysin, chromogranin A, GATA3 or cytokeratin reported",
+              "next_node": "sa_ihc_checklist",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ],
+                "specimen_adequacy": "adequate",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Histology and immunohistochemistry PLUS cytogenetic or molecular testing — MYCN FISH, ALK testing, germline susceptibility gene testing, or another molecular result",
+              "next_node": "sa_ihc_checklist",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "specimen_adequacy": "adequate",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "A specimen was taken but the report says it is inadequate, non-diagnostic, or crush artefact only",
+              "next_node": "sa_inadequate_specimen",
+              "captures": {
+                "specimen_adequacy": "inadequate",
+                "evidence_tests": [],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Reviewed and NOT a neoplasm — adrenal haemorrhage, extramedullary haematopoiesis, or another non-neoplastic mass at this site",
+              "non_reportable": true,
+              "reason": "The lesion was reviewed and is not a neoplasm. Adrenal haemorrhage in a neonate, extramedullary haematopoiesis, and other non-neoplastic causes of a sympathoadrenal-region mass are real and recurring findings at this site. No morphology code is emitted and the case leaves the registry."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_clinical_alias",
+          "node_type": "clinical_alias",
+          "step_number": 2,
+          "step_label": "Referral wording",
+          "question": "What exactly does the referral or clinical note say?",
+          "hint": "A referral naming neuroblastoma, ganglioneuroblastoma, ganglioneuroma, paraganglioma or pheochromocytoma is not evidence that it is that entity — these are exactly the differential a referring clinician guesses between. None of this tree's six codes may be assigned without at least a biochemical marker and imaging together.",
+          "clinical_alert": null,
+          "coding_note": "Visser Rule 5 (p.03): everything without pathology is 8000/3, which is not a Group IV code at a Group IV topography — it routes to Group XII (build contract §4.2 point 3). A referral alone, with no imaging and no laboratory result in the file, does not even reach the imaging_pathway tier, so it refers out rather than falling back to a Group IV NOS.",
+          "captured_variables": [
+            "evidence_tests",
+            "workup_status"
+          ],
+          "options": [
+            {
+              "label": "The note names a specific tumour (neuroblastoma, ganglioneuroblastoma, ganglioneuroma, paraganglioma, or pheochromocytoma), but no imaging report and no laboratory result are in the file",
+              "refer_group": 12,
+              "refer_code": "8000",
+              "reason": "The referral names an entity, and it is recorded verbatim on the case, but it cannot be coded from a note alone: no imaging and no biochemical marker are in the file to support even the imaging-only route. Obtain the imaging report and the catecholamine or metanephrine work-up before this case can be coded.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "The note describes a mass or a suspected tumour at this site without naming a specific entity, and no imaging report and no laboratory result are in the file",
+              "refer_group": 12,
+              "refer_code": "8000",
+              "reason": "Nothing beyond a clinical note is in the file. Obtain the imaging report and the catecholamine or metanephrine work-up before this case can be coded.",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done"
+              }
+            },
+            {
+              "label": "Further review of the file locates an imaging report or a laboratory result (urinary catecholamine metabolites, plasma or urinary metanephrines, or chromogranin A) not accounted for above",
+              "next_node": "sa_imaging_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only",
+                  "Imaging"
+                ],
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_imaging_gate",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "No tissue — which work-up",
+          "question": "No tissue exists. Which biochemical work-up does the file describe?",
+          "hint": "Only two entities in this tree can be coded from imaging and biochemistry alone, and each needs its own marker set: neuroblastoma needs urinary HVA and VMA; pheochromocytoma needs plasma or urinary metanephrines, or chromogranin A. Neither marker set substitutes for the other, and a case with neither documented cannot be coded here at all.",
+          "clinical_alert": null,
+          "coding_note": "Visser MJ et al. key-points summary Table 4 (p.06) names these as the ONLY two Group IV entities codeable with no pathology, both at ENCR basis 4. Rule 6 (p.05): basis 4 never stands alone — routed onward to the imaging_pathway node, which requires the imaging constellation AND the biochemistry together.",
+          "captured_variables": [
+            "evidence_tests",
+            "workup_status"
+          ],
+          "options": [
+            {
+              "label": "Urinary homovanillic acid (HVA) and/or vanillylmandelic acid (VMA) sent — a neuroblastoma work-up",
+              "next_node": "sa_imaging_neuroblastoma",
+              "captures": {
+                "evidence_tests": [
+                  "Imaging"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Plasma free metanephrines, 24-hour urinary fractionated metanephrines, or chromogranin A sent — a pheochromocytoma work-up",
+              "next_node": "sa_imaging_pheo",
+              "captures": {
+                "evidence_tests": [
+                  "Imaging"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "No biochemical marker was sent, or none of the above results are in the file",
+              "next_node": "sa_no_tissue_referral",
+              "captures": {
+                "evidence_tests": [
+                  "Imaging"
+                ],
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_no_tissue_referral",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "No tissue, no marker",
+          "question": "No tissue and no diagnostic biochemical marker are in the file.",
+          "hint": "ENCR Rule 5 (p.03): a malignancy without pathology and without one of the two Table 4 marker sets is coded 8000/3, which is not a code this group carries. The case is referred to Group XII pending further work-up.",
+          "clinical_alert": null,
+          "coding_note": "Visser Rule 5. 8000 at a Group IV topography routes to Group XII under the existing 8000-8005 dual-group rule (build contract §4.2 point 3).",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "Refer this case to Group XII pending tissue diagnosis or a diagnostic biochemical marker",
+              "refer_group": 12,
+              "refer_code": "8000",
+              "reason": "No tissue diagnosis and no diagnostic biochemical marker (urinary HVA/VMA, or plasma/urinary metanephrines, or chromogranin A) are in the file. This cannot be coded to a specific Group IV entity. Record it provisionally under Group XII (8000/3, malignant neoplasm, NOS) pending biopsy or a completed biochemical work-up."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_imaging_neuroblastoma",
+          "node_type": "imaging_pathway",
+          "step_number": 2,
+          "step_label": "Imaging — neuroblastoma, no tissue",
+          "question": "No tissue exists. Tick every imaging feature the report actually states, and answer the biochemical and diversion questions below.",
+          "hint": "This is the weakest evidence this tool will emit for neuroblastoma. Both the imaging picture and the biochemistry are needed together — neither alone resolves the case (Visser Rule 6, p.05).",
+          "clinical_alert": null,
+          "coding_note": "Visser Table 4 (p.06): urinary HVA and VMA, together with a compatible imaging finding, is sufficient for 9500/3 at ENCR basis 4, with no tissue diagnosis. This is a Table 4 row, not a Table 3 row — the constellation is coded at basis 4, not basis 2 (build contract §4.2 point 1).",
+          "imaging_features": [
+            "Suprarenal, paraspinal, retroperitoneal, or posterior mediastinal mass on CT/MRI",
+            "Calcification within the mass on CT",
+            "The mass encases adjacent vessels rather than simply displacing them",
+            "No radiographic feature suggests a benign adrenal or extra-adrenal lesion"
+          ],
+          "biochemical_questions": [
+            {
+              "question": "Urinary homovanillic acid (HVA) elevated for age",
+              "required_answer": "yes"
+            },
+            {
+              "question": "Urinary vanillylmandelic acid (VMA) elevated for age",
+              "required_answer": "yes"
+            }
+          ],
+          "diversion_criteria": [
+            {
+              "feature": "Age 5 years or older at presentation",
+              "reason": "Ninety percent of neuroblastoma presents under age 5. An older child needs tissue to exclude other causes of a retroperitoneal or mediastinal mass rather than being coded on imaging and biochemistry alone."
+            },
+            {
+              "feature": "Predominantly cystic mass, or a well-encapsulated mass with no calcification",
+              "reason": "Atypical for neuroblastoma; favours a different adrenal or retroperitoneal lesion, and tissue is required."
+            },
+            {
+              "feature": "Plasma free metanephrines or 24-hour urinary fractionated metanephrines are also elevated",
+              "reason": "A biochemical picture overlapping with pheochromocytoma at the same site. Tissue is required to settle which entity is present rather than coding on the stronger-looking result alone."
+            }
+          ],
+          "captured_variables": [
+            "evidence_tests",
+            "workup_status"
+          ],
+          "morphology_code": "9500",
+          "behavior_code": "3",
+          "basis_of_diagnosis": 4,
+          "no_tissue": true,
+          "endpoint_verification": "not_verified",
+          "insufficient_next_node": "sa_no_tissue_referral",
+          "upgrade_path": "A biopsy would confirm neuroblastoma, establish the INPC subtype (undifferentiated/poorly differentiated/differentiating, or exclude a ganglioneuroblastoma or ganglioneuroma component), and allow MYCN and ALK testing.",
+          "captures": {
+            "evidence_tests": [
+              "Imaging"
+            ],
+            "workup_status": "incomplete"
+          },
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_imaging_pheo",
+          "node_type": "imaging_pathway",
+          "step_number": 2,
+          "step_label": "Imaging — pheochromocytoma, no tissue",
+          "question": "No tissue exists. Tick every imaging feature the report actually states, and answer the biochemical and diversion questions below.",
+          "hint": "This is the weakest evidence this tool will emit for pheochromocytoma. Both the imaging picture and the biochemistry are needed together — neither alone resolves the case (Visser Rule 6, p.05).",
+          "clinical_alert": null,
+          "coding_note": "Visser Table 4 (p.06): catecholamines and chromogranin A, together with a compatible imaging finding, is sufficient for 8700/3 at ENCR basis 4, with no tissue diagnosis (build contract §4.2). DIVERGENCE recorded not acted on: Visser's own Table 4 places pheochromocytoma in Group XI; ICCC-2017 is Layer 1 and places it in IVb, and ICCC-2017 governs.",
+          "imaging_features": [
+            "Adrenal mass on CT/MRI, or for an extra-adrenal presentation, a paraspinal, retroperitoneal, or organ-of-Zuckerkandl mass",
+            "T2 hyperintense ('light bulb') signal on MRI, or an intense contrast washout pattern atypical for an adrenal cortical adenoma",
+            "No radiographic feature suggests a benign adrenal cortical adenoma"
+          ],
+          "biochemical_questions": [
+            {
+              "question": "Plasma free metanephrines elevated, OR 24-hour urinary fractionated metanephrines elevated",
+              "required_answer": "yes"
+            },
+            {
+              "question": "Serum or plasma chromogranin A elevated",
+              "required_answer": "yes"
+            }
+          ],
+          "diversion_criteria": [
+            {
+              "feature": "Age under 10 years",
+              "reason": "Paediatric pheochromocytoma is rare under age 10. An adrenal mass with catecholamine excess in a young child more often proves to be neuroblastoma, and tissue is required to be sure which it is."
+            },
+            {
+              "feature": "Urinary HVA or VMA is also elevated",
+              "reason": "A biochemical picture overlapping with neuroblastoma at the same site. Tissue is required to settle which entity is present."
+            },
+            {
+              "feature": "No hereditary paraganglioma-pheochromocytoma syndrome is documented and the mass was found incidentally, with no episodic hypertension, palpitations, headache or sweating recorded",
+              "reason": "An asymptomatic incidental finding with no syndromic context and no catecholamine-excess symptoms is weaker support for coding on imaging and biochemistry alone. Tissue is required."
+            }
+          ],
+          "captured_variables": [
+            "evidence_tests",
+            "workup_status"
+          ],
+          "morphology_code": "8700",
+          "behavior_code": "3",
+          "basis_of_diagnosis": 4,
+          "no_tissue": true,
+          "endpoint_verification": "not_verified",
+          "insufficient_next_node": "sa_no_tissue_referral",
+          "upgrade_path": "A biopsy would confirm pheochromocytoma and allow germline susceptibility gene testing (SDHB, SDHD, VHL, RET, NF1, MAX, TMEM127) to be recorded.",
+          "captures": {
+            "evidence_tests": [
+              "Imaging"
+            ],
+            "workup_status": "incomplete"
+          },
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_inadequate_specimen",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "Inadequate specimen",
+          "question": "A specimen was obtained but is reported as inadequate, non-diagnostic, or crush artefact only. What is the plan?",
+          "hint": "Inadequate resolves to the tree's own NOS with a note that the case is incompletely worked up — it is not a negative result and must not be coded as though a diagnosis was reached.",
+          "clinical_alert": null,
+          "coding_note": "Mirrors the Group 3 un_inadequate_specimen precedent: family NOS at basis 2, not basis 7 — the tissue did not yield a diagnosis.",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "A repeat biopsy is already planned or pending",
+              "morphology_code": "9500",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 2,
+              "upgrade_path": "Await the repeat biopsy. A diagnostic specimen would place this case in the correct family and, if paraganglionic, the correct site-specific code.",
+              "captures": {
+                "specimen_adequacy": "inadequate",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "A repeat biopsy is not feasible, or the patient is lost to follow-up",
+              "morphology_code": "9500",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 2,
+              "upgrade_path": "No further tissue is expected. This case remains coded to the tree's default pending any later specimen.",
+              "captures": {
+                "specimen_adequacy": "inadequate",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Residual tissue exists for further sectioning or additional stains, even though the original report was non-diagnostic",
+              "next_node": "sa_ihc_checklist",
+              "captures": {
+                "specimen_adequacy": "adequate",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_cytology_only",
+          "node_type": "morphology_only",
+          "step_number": 2,
+          "step_label": "Cytology only",
+          "question": "Only fine-needle aspiration or core-needle cytology exists — no excisional or incisional histology report is in the file. What does the cytology, with any immunocytochemistry performed, show?",
+          "hint": "Cytology can support a family but cannot assess the Schwannian stroma architecture that separates neuroblastoma from ganglioneuroblastoma, nor the anatomic detail full histology gives. Code to the more general stem and say why.",
+          "clinical_alert": null,
+          "coding_note": "ENCR basis 5 (cytology). Both outcomes here are deliberately capped at the family/NOS stem: neither the INPC subtype (9490 vs 9500) nor the site-specific paraganglioma code (8700/8681/8693) can be read off cytology alone.",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "Small round cell / neuroblastic pattern, with immunocytochemistry showing PHOX2B, synaptophysin and chromogranin A positive and GATA3 negative or not done",
+              "morphology_code": "9500",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 5,
+              "upgrade_path": "An excisional biopsy would establish the INPC subtype (ganglioneuroma, intermixed ganglioneuroblastoma, or nodular/composite ganglioneuroblastoma) and allow MYCN and ALK testing, none of which cytology can assess.",
+              "captures": {
+                "evidence_tests": [],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Paraganglioma/pheochromocytoma pattern, with immunocytochemistry showing GATA3 positive",
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 5,
+              "upgrade_path": "An excisional or core biopsy would confirm the anatomic detail needed to assign the site-specific code (adrenal pheochromocytoma versus extra-adrenal sympathetic paraganglioma) and allow germline susceptibility gene testing.",
+              "captures": {
+                "evidence_tests": [],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Cytology is non-diagnostic, discordant, or immunocytochemistry was not performed",
+              "next_node": "sa_inadequate_specimen",
+              "captures": {
+                "specimen_adequacy": "inadequate",
+                "evidence_tests": [],
+                "workup_status": "incomplete"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_ihc_checklist",
+          "node_type": "ihc_checklist",
+          "step_number": 2,
+          "step_label": "Immunohistochemistry",
+          "question": "Tick each marker's result as the report states it.",
+          "hint": "GATA3 is the marker that separates the paraganglioma/pheochromocytoma family from the neuroblastic family. PHOX2B, synaptophysin and chromogranin A are positive in BOTH families and do not by themselves separate them. Cytokeratin is negative in both — a positive result points away from this tree's differential entirely.",
+          "clinical_alert": null,
+          "coding_note": "Build contract §5.1, §10.1: PHOX2B does not separate neuroblastoma from pheochromocytoma/paraganglioma; both are PHOX2B positive (Ma Y et al., J Neuropathol Exp Neurol 2021;80(12):1108-16, for the neuroblastoma side; Manethova M et al., Virchows Arch 2023;482(4):679-86, for the paraganglioma side). Mete O et al. 2022 (pp.96-106) states the WHO paraganglioma/pheochromocytoma panel as INSM1, synaptophysin, chromogranin, keratins negative, then GATA3, tyrosine hydroxylase, dopamine beta-hydroxylase, choline acetyltransferase, with SOX10/S100 for sustentacular cells — PHOX2B is not on it. The first rule below routes an adrenal, cytokeratin-positive, GATA3-negative result to the adrenocortical carcinoma differential (ICCC-2017 subgroup XIa, ICD-O-3.2 8370/3, verified against ICCC-2017.sqlite groups.group_id 92), never to a code in this file.",
+          "marker_groups": [
+            {
+              "group_label": "Sympathoadrenal panel",
+              "markers": [
+                "GATA3",
+                "Cytokeratin",
+                "PHOX2B",
+                "Synaptophysin",
+                "Chromogranin A"
+              ]
+            }
+          ],
+          "branch_sequence": {
+            "order": [
+              "GATA3",
+              "Cytokeratin",
+              "PHOX2B",
+              "Synaptophysin",
+              "Chromogranin A"
+            ],
+            "rule_count": 3
+          },
+          "captured_variables": [
+            "topography",
+            "ihc_family"
+          ],
+          "resolution_logic": [
+            {
+              "when": {
+                "topography": [
+                  "C74.0",
+                  "C74.1",
+                  "C74.9"
+                ]
+              },
+              "positive": [
+                "Cytokeratin"
+              ],
+              "negative": [
+                "GATA3"
+              ],
+              "refer_group": 11,
+              "refer_code": "8370",
+              "reason": "Cytokeratin-positive and GATA3-negative in an adrenal mass points away from a neuroblastic or paraganglionic tumour of this group and towards adrenocortical carcinoma. Refer to Group XI and to the registrar to confirm cortical versus medullary origin."
+            },
+            {
+              "positive": [
+                "GATA3"
+              ],
+              "next_node": "sa_genetics_pheo",
+              "captures": {
+                "ihc_family": "paraganglionic"
+              }
+            },
+            {
+              "negative": [
+                "GATA3"
+              ],
+              "positive": [
+                "PHOX2B",
+                "Synaptophysin",
+                "Chromogranin A"
+              ],
+              "next_node": "sa_staging_neuroblastic",
+              "captures": {
+                "ihc_family": "neuroblastic"
+              }
+            }
+          ],
+          "nos_fallback": {
+            "code": "9500",
+            "behavior_code": "3",
+            "reason": "Neither the paraganglioma/pheochromocytoma marker (GATA3 positive) nor the confirmatory neuroblastic panel (PHOX2B, synaptophysin and chromogranin A positive with GATA3 negative) was demonstrated. Coded to the tree's default, Neuroblastoma, NOS, pending a fuller immunohistochemical panel or expert pathology review."
+          }
+        },
+        {
+          "node_id": "sa_genetics_pheo",
+          "node_type": "molecular_freetext",
+          "step_number": 2,
+          "step_label": "Genetics — paraganglioma/pheochromocytoma",
+          "question": "What does the file say about germline or somatic genetic testing for this pheochromocytoma or paraganglioma?",
+          "hint": "This does not change the morphology code. Record it for the case file.",
+          "capture_label": "Germline susceptibility gene testing (SDHB, SDHD, VHL, RET, NF1, MAX, TMEM127) and any somatic molecular result — record as stated. Germline results are constitutional and determine surveillance; they do not change the morphology code.",
+          "clinical_alert": null,
+          "coding_note": "Build contract §0.1 challenge 7, §5.1/§E: germline testing is constitutional, not somatic, and determines surveillance, not the code. molecular_freetext per the contract's explicit instruction; no new node type.",
+          "captured_variables": [],
+          "resolution_logic": [
+            {
+              "next_node": "sa_site_resolution"
+            }
+          ],
+          "nos_fallback": {
+            "code": "8680",
+            "behavior_code": "3",
+            "reason": "Genetics capture step; this fallback is not expected to fire since the single resolution rule always advances to site resolution."
+          }
+        },
+        {
+          "node_id": "sa_site_resolution",
+          "node_type": "site_resolution",
+          "step_number": 2,
+          "step_label": "Site — paraganglioma family",
+          "question": "The histology and immunohistochemistry confirm the paraganglioma/pheochromocytoma family. Where does the tumour arise?",
+          "hint": "8700 Pheochromocytoma is the adrenal-medullary member of this family; 8681 Sympathetic paraganglioma is its extra-adrenal counterpart at a sympathetic-chain site. Every site this tree owns outside the adrenal gland (peripheral nerve/autonomic nervous system, retroperitoneum, mediastinum) is a sympathetic-chain location, not a parasympathetic one — parasympathetic sites (carotid body, vagal, jugulotympanic) belong to a different tree entirely.",
+          "clinical_alert": null,
+          "coding_note": "icdo32.sqlite: 8700/3 Pheochromocytoma, NOS (adrenal); 8681/3 Sympathetic paraganglioma; 8693/3 Extra-adrenal paraganglioma, NOS (Related terms Nonchromaffin paraganglioma NOS, Laryngeal/Vagal paraganglioma, Composite paraganglioma belong to parasympathetic head-and-neck sites, not this tree); 8680/3 Paraganglioma, NOS is the fully NOS chain terminator. Build contract §5, §5.1.",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "Adrenal medulla (C74.0, C74.1, or C74.9)",
+              "morphology_code": "8700",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7
+            },
+            {
+              "label": "Extra-adrenal sympathetic-chain site — retroperitoneal or paraspinal (C48.0, C48.2, C48.8), posterior mediastinal (C38.1-C38.3), or a peripheral nerve/autonomic nervous system site (C47.0-C47.9) consistent with a sympathetic paraganglion",
+              "morphology_code": "8681",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7
+            },
+            {
+              "label": "An extra-adrenal site as above, but the report does not state whether the paraganglion is sympathetic or another type",
+              "morphology_code": "8693",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7
+            },
+            {
+              "label": "The site is not clearly documented as either the adrenal medulla or a specific paraganglion",
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_staging_neuroblastic",
+          "node_type": "molecular_freetext",
+          "step_number": 2,
+          "step_label": "Staging — neuroblastic family",
+          "question": "What INRG stage is recorded in the file — L1, L2, M, or MS?",
+          "hint": "This does not change the morphology code. Record it for the case file.",
+          "capture_label": "INRG stage (L1, L2, M or MS) as stated in the file",
+          "clinical_alert": null,
+          "coding_note": "Monclair T et al., J Clin Oncol 2009;27(2):298-303 (INRG staging). Build contract §E: capture only, never a coding input.",
+          "captured_variables": [],
+          "resolution_logic": [
+            {
+              "next_node": "sa_molecular_neuroblastic"
+            }
+          ],
+          "nos_fallback": {
+            "code": "9500",
+            "behavior_code": "3",
+            "reason": "Staging capture step; this fallback is not expected to fire since the single resolution rule always advances to molecular capture."
+          }
+        },
+        {
+          "node_id": "sa_molecular_neuroblastic",
+          "node_type": "molecular_freetext",
+          "step_number": 2,
+          "step_label": "Molecular — neuroblastic family",
+          "question": "What does the file say about MYCN amplification status, ALK mutation status (germline or somatic), or any other molecular or cytogenetic result?",
+          "hint": "None of this changes the morphology code. Record it for the case file.",
+          "capture_label": "MYCN amplification status, ALK status, and any other molecular result — record as stated",
+          "clinical_alert": null,
+          "coding_note": "Build contract §E: MYCN amplification (~20% of neuroblastomas, the major prognostic marker) and ALK (germline and somatic) both change no code; molecular_freetext per the master schema, no new node type.",
+          "captured_variables": [],
+          "resolution_logic": [
+            {
+              "next_node": "sa_histology_subclassification"
+            }
+          ],
+          "nos_fallback": {
+            "code": "9500",
+            "behavior_code": "3",
+            "reason": "Molecular capture step; this fallback is not expected to fire since the single resolution rule always advances to histology subclassification."
+          }
+        },
+        {
+          "node_id": "sa_histology_subclassification",
+          "node_type": "histology_subclassification",
+          "step_number": 2,
+          "step_label": "Histology — Schwannian stroma content",
+          "question": "What does the histology report describe about ganglion cell differentiation and Schwannian stromal content?",
+          "hint": "This is the International Neuroblastoma Pathology Committee (INPC) classification. Stroma-poor tissue composed of neuroblasts is neuroblastoma; stroma-rich tissue with ganglion cells intermixed throughout is ganglioneuroblastoma, intermixed; a distinct neuroblastic nodule within a ganglioneuroma or intermixed background is ganglioneuroblastoma, nodular; a uniformly mature, stroma-dominant tumour with no neuroblastic component anywhere is ganglioneuroma, which is benign and outside this group. Answer from what the report states, not from grade or differentiation detail the code does not need.",
+          "clinical_alert": null,
+          "coding_note": "Shimada 1999; Peuchmaur 2003 (INPC); Mete O et al. 2022 Table 1 (p.108), an independent second WHO-published reproduction of the same INPC classification (build contract §10.1); WHO Paediatric Tumours Supplementary Table S3 (Pfister 2022, per build contract table): Ganglioneuroma (maturing/mature) = 9490/0; Ganglioneuroblastoma, intermixed = 9490/3; Neuroblastoma (undifferentiated/poorly differentiated/differentiating) = 9500/3; Ganglioneuroblastoma, nodular (and other composite neuroblastic tumors) = 9490/3. Option D is the D1 behaviour_exclusion branch (build contract §2.1, §3, ratified registrar ruling D1); its wording requires the report to exclude BOTH a neuroblastic component AND a paraganglioma/pheochromocytoma component, so a composite case is directed to option E and can never reach the exclusion (build contract 'THE TRAP').",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "A single, uniform pattern throughout — Schwannian stroma-poor, composed of neuroblasts at any level of differentiation (undifferentiated, poorly differentiated, or differentiating) — with no ganglion cells and no Schwannian stroma-rich or mature component described anywhere",
+              "morphology_code": "9500",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "upgrade_path": "MYCN and ALK testing, where performed, are recorded but do not change this code."
+            },
+            {
+              "label": "Schwannian stroma-rich tissue with ganglion cells intermixed throughout, and no separate nodule or composite component described",
+              "morphology_code": "9490",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "upgrade_path": "Recorded as Ganglioneuroblastoma, intermixed."
+            },
+            {
+              "label": "One or more distinct neuroblastic nodules within a ganglioneuroma or intermixed-ganglioneuroblastoma background (ganglioneuroblastoma, nodular), or another composite neuroblastic tumour, all within a single specimen",
+              "morphology_code": "9490",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "upgrade_path": "Recorded as Ganglioneuroblastoma, nodular."
+            },
+            {
+              "label": "A fully mature or maturing ganglioneuroma — Schwannian stroma-dominant, uniformly matured ganglion cells throughout — and the report explicitly states there is NO neuroblastic component anywhere (no undifferentiated, poorly differentiated, or differentiating foci) and NO separate paraganglioma or pheochromocytoma component",
+              "behaviour_exclusion": {
+                "icdo_code": "9490",
+                "icdo_behaviour": "0",
+                "icdo_term": "Ganglioneuroma",
+                "group_declares": "3",
+                "reason": "A fully matured ganglioneuroma is a benign tumour. It has no code in this Group IV list, which only covers cancers. Record the diagnosis as ganglioneuroma and refer this case to the registrar for a coding decision.",
+                "registrar_decision_required": true
+              }
+            },
+            {
+              "label": "The report describes more than one distinct tumour type in this specimen — for example, ganglioneuroma tissue together with a separate paraganglioma or pheochromocytoma component, or with a separately distinguishable neuroblastoma/ganglioneuroblastoma component that is not simply a nodule within the same lesion",
+              "next_node": "sa_composite_component"
+            },
+            {
+              "label": "Schwannian stroma content or ganglion cell maturation is not described, or the pattern does not clearly match any of the above from the report as written",
+              "next_node": "sa_ihc_checklist",
+              "captures": {
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "sa_composite_component",
+          "node_type": "histology_subclassification",
+          "step_number": 2,
+          "step_label": "Composite tumour — second component",
+          "question": "The report describes more than one distinct tumour type in this specimen, together with ganglioneuroma tissue. What is the second, separately distinguishable component?",
+          "hint": "This question exists because a specimen containing ganglioneuroma tissue is not necessarily a ganglioneuroma: WHO recognises composite phaeochromocytoma-ganglioneuroma and composite phaeochromocytoma-ganglioneuroblastoma as their own entities, and a nodular neuroblastic component within a ganglioneuroma is a ganglioneuroblastoma, nodular, not a ganglioneuroma. Code to the composite entity, not to the ganglioneuroma component alone.",
+          "clinical_alert": null,
+          "coding_note": "WHO Paediatric Tumours Supplementary Table S3 (Pfister 2022, per build contract table): 'Ganglioneuroblastoma, nodular (and other composite neuroblastic tumors)' is 9490/3. Mete 2022 p.106: composite PPGL is ~75% pheochromocytoma-with-ganglioneuroma and ~10% each with neuroblastoma/ganglioneuroblastoma; icdo32.sqlite carries 'Composite pheochromocytoma' as a Related term on 8700/3 and 'Composite paraganglioma' as a Related term on 8693/3. This node is the trap-prevention gate required by build contract §B: it is reached ONLY from sa_histology_subclassification's composite option, so a composite case can never reach the D1 behaviour_exclusion branch.",
+          "captured_variables": [],
+          "options": [
+            {
+              "label": "The second component is a paraganglioma or pheochromocytoma",
+              "next_node": "sa_site_resolution"
+            },
+            {
+              "label": "The second component is a neuroblastoma or a ganglioneuroblastoma",
+              "morphology_code": "9490",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "upgrade_path": "Recorded as Ganglioneuroblastoma per the WHO composite/nodular neuroblastic tumour category. MYCN and ALK testing, where performed, are recorded but do not change this code."
+            },
+            {
+              "label": "The report describes more than one component but does not specify what the second component is",
+              "morphology_code": "9500",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "upgrade_path": "A fuller pathology description of both components would allow this composite tumour to be coded to its specific entity rather than to the tree's default."
+            }
+          ],
+          "nos_fallback": null
+        }
+      ],
+      "topography": [
+        "C74.0",
+        "C74.1",
+        "C74.9",
+        "C47.0",
+        "C47.1",
+        "C47.2",
+        "C47.3",
+        "C47.4",
+        "C47.5",
+        "C47.6",
+        "C47.8",
+        "C47.9",
+        "C48.0",
+        "C48.2",
+        "C48.8",
+        "C38.1",
+        "C38.2",
+        "C38.3"
+      ]
+    }
+  ]
 }
