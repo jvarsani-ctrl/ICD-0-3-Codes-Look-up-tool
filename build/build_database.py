@@ -490,6 +490,141 @@ CLERK_FACING_TEXT_KEYS = {
 # banned code here is reported but does not block.
 AUTHOR_FACING_TEXT_KEYS = {"coding_note", "topography_routing_note"}
 
+# ----------------------------------------------------------------------------------
+# Fix dated 18 Sep 2026 (branch group-04-neuroblastoma, review of commit 65444ab) — a
+# clerk-facing string must never leak an internal JSON/engine identifier: neither the
+# NAME of a schema field (`refer_group`, `next_node`, ...) nor the VALUE of a
+# `node_id`/`tree_id` this file itself declares. See check_no_internal_identifier_leaks().
+#
+# CLERK_FACING_PROSE_KEYS names every key app.js renders as text or a label the clerk
+# reads — verified by reading app.js directly, not inferred from the schema. This is a
+# SEPARATE, larger set from CLERK_FACING_TEXT_KEYS above on purpose: that one is scoped
+# to what the RULE 3/8 banned-code scanner needs, and widening it would change those
+# checks' own output; this set is scoped to what THIS check needs. Citations are app.js
+# line numbers as of this commit:
+#   reason               target.reason in banners/orow (~1533, 1764, 1778, 1860);
+#                         diversion_criteria[].reason (~1025); a grade leaf's own
+#                         reason (~1718) — already in CLERK_FACING_TEXT_KEYS
+#   hint, question        dispatchNode()'s node header (~397-399);
+#                         biochemical_questions[].question (~1010)
+#   label                 optionLabel()/pick() (~401-404, 663)
+#   finding, descriptor, site   optionLabel() fallbacks when `.label` is absent (663)
+#   name                  nos_fallback.name, renderEscapes() (~1036)
+#   accept_label          direct-terminal button text, optionList() (~672)
+#   group_label           marker group tag, markerGrid() (~942)
+#   capture_label         molecular_freetext field label, freeText() (~999)
+#   variable_label        numeric_gate field label, numericGate() (~986)
+#   step_label            the panel heading itself — panel()/pushTrail() call sites
+#                         (~579, 2008-2234) — the single most prominent clerk-facing
+#                         string in the whole UI, and the "outcomes still in play"
+#                         list's own label for a destination node (~884)
+#   required_answer       biochemical_questions[].required_answer (~1013)
+#   feature               imaging_features[] item / diversion_criteria[].feature
+#                         (~1006, 1024) — already in CLERK_FACING_TEXT_KEYS
+#   comment, who_diagnosis, descriptive_diagnosis   renderDiagnosisRows() (~1689-1699)
+#   who_cns5_entity, evidence, shared_with   entityText() (~1734-1742)
+#   defer_to              renderGradeRow(), "Deferred to X" (~1721)
+#   resolving_test        provisional_pending.resolving_test, the Provisional row (~1836)
+#   alternative_entities, alternative_codes   same Provisional row (~1837-1838)
+#   interpretation, context   prior_probability, priorText() (~591-594)
+#   upgrade_path          entry/target upgrade_path, the Upgrade row (~1863-1868)
+# `iccc3_subgroup_name`, `morphology_name`, `nos_fallback_name`, `full_form`,
+# `criterion`, `notes` are already in CLERK_FACING_TEXT_KEYS and carried over below.
+CLERK_FACING_PROSE_KEYS = CLERK_FACING_TEXT_KEYS | {
+    "finding", "descriptor", "site", "accept_label", "group_label", "capture_label",
+    "variable_label", "step_label", "required_answer", "defer_to", "resolving_test",
+    "alternative_entities", "shared_with", "evidence", "interpretation", "context",
+    "imaging_features",
+}
+
+# The engine's OWN vocabulary — a schema field name, never a clinical fact — appearing
+# in text a clerk reads. `coding_note`/`topography_routing_note` are exempt by design
+# (author-facing, never displayed — memory `uccf-lookup-tool-clerk-facing-text`), same
+# as AUTHOR_FACING_TEXT_KEYS above.
+INTERNAL_IDENTIFIER_TOKENS = [
+    "refer_group", "next_node", "nos_fallback", "resolution_logic", "morphology_code",
+    "behavior_code", "captured_variables", "branch_sequence", "test_result_states",
+    "node_id", "tree_id",
+]
+
+
+def check_no_internal_identifier_leaks(ctx: DTContext):
+    """
+    A clerk-facing string must never contain an internal identifier: not the NAME of a
+    schema field (`INTERNAL_IDENTIFIER_TOKENS`), and not the VALUE of a `node_id` or
+    `tree_id` this file itself declares.
+
+    Found 18 September 2026 reviewing commit 65444ab: `(refer_group 11)` printed
+    literally inside a `provisional_pending.reason` a clerk reads in the rendered
+    Provisional panel, and bare node ids (`hn_site_resolution`, `sn_grading_staging`,
+    `hn_ihc_checklist`, ...) printed inside `reason` strings that pointed a clerk at
+    "the next step" by its JSON key rather than by what that step asks. A clerk cannot
+    see a field name or a node id anywhere in the rendered interface — a `reason`
+    string IS the field's entire content in that panel — so either leak hands them a
+    token from a system they have no way to query.
+
+    `CLERK_FACING_PROSE_KEYS` names every key app.js renders as text or a label,
+    verified against app.js directly (see the citations above this function, and
+    contrast `marker_groups[]` in `check_ihc_checklist_renders_a_control`'s own
+    docstring — a key can document the tree for the BUILD without app.js ever
+    rendering it to the CLERK, and the two must not be confused).
+    `coding_note`/`topography_routing_note` are excluded on purpose: author-facing
+    only, never reaching the rendered page (memory `uccf-lookup-tool-clerk-facing-text`)
+    — the engine's own vocabulary is exactly where a field name belongs.
+
+    No exemption, no group scoping: every group's file is held to this, including
+    Groups 1-3, which pass at zero (verified 18 Sep 2026, before this branch's fixes
+    were committed).
+    """
+    out = []
+
+    node_ids, tree_ids = set(), set()
+    for tree in ctx.data.get("decision_trees") or []:
+        if isinstance(tree, dict) and isinstance(tree.get("tree_id"), str):
+            tree_ids.add(tree["tree_id"])
+        for node in tree.get("nodes") or []:
+            if isinstance(node, dict) and isinstance(node.get("node_id"), str):
+                node_ids.add(node["node_id"])
+    # entry_node/next_node values are not tracked separately: a valid one must equal a
+    # declared node_id (check_next_node_resolution, check_orphan_nodes), so the node_id
+    # set already covers them.
+    id_patterns = [(v, re.compile(r"\b" + re.escape(v) + r"\b"))
+                   for v in sorted(node_ids | tree_ids)]
+
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            for key, value in holder.items():
+                if key not in CLERK_FACING_PROSE_KEYS:
+                    continue
+                loc = "node %s (%s).%s" % (node_id, where or "(node level)", key)
+                for v in (value if isinstance(value, list) else [value]):
+                    if not isinstance(v, str):
+                        continue
+                    for tok in INTERNAL_IDENTIFIER_TOKENS:
+                        if tok in v:
+                            out.append((FAIL, "%s contains the internal identifier "
+                                              "%r — a clerk cannot see JSON field "
+                                              "names anywhere in the interface, so "
+                                              "this leaks the engine's own vocabulary "
+                                              "instead of a clinical fact: %r"
+                                        % (loc, tok, v)))
+                    for idv, rx in id_patterns:
+                        if rx.search(v):
+                            out.append((FAIL, "%s contains %r, a node_id/tree_id this "
+                                              "file declares — a clerk cannot see "
+                                              "node or tree ids anywhere in the "
+                                              "interface. Name the step in words (its "
+                                              "own step_label/question), or drop the "
+                                              "pointer where the sentence works "
+                                              "without it: %r" % (loc, idv, v)))
+
+    if out:
+        return out
+    return [(OK, "no clerk-facing string names an internal schema field (%d checked) "
+                "or a declared node_id/tree_id (%d checked)"
+             % (len(INTERNAL_IDENTIFIER_TOKENS), len(node_ids | tree_ids)))]
+
+
 # -- §3 — the six trees, the topography each owns, and the sweep ------------------------
 GROUP3_TREE_TOPOGRAPHY = {
     "g3_posterior_fossa": ["C71.6", "C71.7"],
@@ -7091,6 +7226,7 @@ def check_ihc_checklist_renders_a_control(ctx: DTContext):
     """
     out = []
     checked = 0
+    rendered = 0
     for node_id, node in sorted(ctx.nodes.items()):
         if node.get("node_type") != "ihc_checklist":
             continue
@@ -7099,6 +7235,7 @@ def check_ihc_checklist_renders_a_control(ctx: DTContext):
         order = bs.get("order") if isinstance(bs, dict) else None
         has_control = bool(order) or bool(node.get("test_result_states"))
         if has_control:
+            rendered += 1
             continue
         msg = ("node %s is an ihc_checklist with an empty branch_sequence.order and no "
                "test_result_states — app.js's markerFlow() asks only from "
@@ -7133,12 +7270,23 @@ def check_ihc_checklist_renders_a_control(ctx: DTContext):
 
     if [f for f in out if f[0] == FAIL]:
         return out
-    if checked:
+    # Every no-control node still standing at this point is a WARN (a FAIL would have
+    # returned above), so `checked - rendered` is exactly the exempted count. The OK
+    # line must never claim more nodes render a control than actually do — a summary
+    # that contradicts the WARN(s) printed immediately above it is the exact failure
+    # this check exists to catch, and printing one anyway would be self-defeating.
+    exempted = checked - rendered
+    if not checked:
+        out.append((NOTE, "no ihc_checklist node in this file — nothing to check"))
+    elif exempted:
+        out.append((OK, "%d of %d ihc_checklist node(s) render at least one input control "
+                        "— a non-empty branch_sequence.order or test_result_states "
+                        "(contract §3.4); %d exempted (see WARN above)"
+                    % (rendered, checked, exempted)))
+    else:
         out.append((OK, "%d ihc_checklist node(s) all render at least one input control "
                         "— a non-empty branch_sequence.order or test_result_states "
                         "(contract §3.4)" % checked))
-    else:
-        out.append((NOTE, "no ihc_checklist node in this file — nothing to check"))
     return out
 
 
@@ -7615,6 +7763,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_no_clinical_alerts, ctx)
         report.run(check_flow_charts, ctx)
         report.run(check_ihc_checklist_renders_a_control, ctx)
+        report.run(check_no_internal_identifier_leaks, ctx)
         report.run(check_marker_names_verbatim, ctx)
         report.run(check_declared_states_consumed, ctx)
         # source of truth

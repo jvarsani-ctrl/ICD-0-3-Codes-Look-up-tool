@@ -2454,8 +2454,37 @@ WARN  node pf_mb_molecular_gate is an ihc_checklist with an empty branch_sequenc
 ```
 
 Confirmed against the REAL, unmodified `group_03_dt.json` too (loaded read-only): identical
-two WARNs, plus `OK 31 ihc_checklist node(s) all render at least one input control …` for
-the other 29 Group 3 checklist nodes that do not have the defect.
+two WARNs, plus `OK 29 of 31 ihc_checklist node(s) render at least one input control … 2
+exempted (see WARN above)` for the other 29 Group 3 checklist nodes that do not have the
+defect.
+
+**Correction, 18 September 2026 (review of commit 65444ab).** The OK line originally read
+`OK 31 ihc_checklist node(s) all render at least one input control` — FALSE: it counted every
+`ihc_checklist` node in the file (`checked`), not the ones that actually render a control
+(`rendered`), so on a file with any WARN it claimed more nodes were answerable than the WARN
+lines immediately above it said were. A summary that contradicts the findings above it is the
+exact failure mode this check exists to prevent. Fixed by tracking `rendered` separately from
+`checked` and, whenever `checked != rendered` (i.e. the check raised at least one WARN and no
+FAIL), printing `"%d of %d … %d exempted (see WARN above)"` instead of the unconditional
+`"all render"` line. Control, before/after, on the real unmodified `group_03_dt.json`:
+
+```
+BEFORE (defect): OK    31 ihc_checklist node(s) all render at least one input control — a non-empty branch_sequence.order or test_result_states (contract §3.4)
+AFTER  (fixed):  OK    29 of 31 ihc_checklist node(s) render at least one input control — a non-empty branch_sequence.order or test_result_states (contract §3.4); 2 exempted (see WARN above)
+```
+
+A second, synthetic control proves the branch generalises past the specific 29/31 numbers:
+three `ihc_checklist` nodes (two healthy, one named `pf_mb_molecular_gate` and left broken,
+`ctx.group = 3` so it is exempted rather than failed) produce:
+
+```
+WARN  node pf_mb_molecular_gate is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow()) — known Group 3 defect (pf_mb_molecular_gate, mn_grade_assembly), tracked in docs/TODO.md, out of scope for this branch
+OK    2 of 3 ihc_checklist node(s) render at least one input control — a non-empty branch_sequence.order or test_result_states (contract §3.4); 1 exempted (see WARN above)
+```
+
+The all-OK case (no WARN, no FAIL) is unchanged — Groups 1, 2 and 4 above still print the
+original `"%d ihc_checklist node(s) all render…"` sentence, because there `checked == rendered`
+and the unqualified claim is true.
 
 ### Control 5 — the exemption's own collapse test: one named node repaired
 
@@ -2502,6 +2531,125 @@ in `python3 build/build_database.py`'s output ever named the defect. After both:
   2 more WARN (`pf_mb_molecular_gate`, `mn_grade_assembly`, Group 3 only), 4 more OK lines
   (one per group, each reporting every `ihc_checklist` node in that file renders a
   control), 0 new FAIL.
+* `git diff --quiet main -- data/database/group_01_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_02_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.
+
+---
+
+# `check_no_internal_identifier_leaks` — review of commit 65444ab (2026-09-18)
+
+An independent review of `65444ab` (browser-drive plus an independent negative-control
+reproduction) found two defects in that commit's own work, on top of the OK-line defect
+already corrected above:
+
+1. **A JSON field name printed in text a clerk reads.** Twelve strings this commit added to
+   `hn_ihc_checklist`/`sn_ihc_checklist` (`reason` and `provisional_pending.reason`, both
+   rendered — `orow('Provisional', …)`, app.js ~1836) contained the literal substring
+   `refer_group 11`, e.g. "...route the case to the neuroendocrine/carcinoma pathway
+   (refer_group 11) instead of leaving it here." A clerk has no way to know what
+   `refer_group` is; it names nothing they can see anywhere in the interface.
+2. **A bare node id printed in text a clerk reads.** Nine occurrences, across seven strings,
+   of a real `node_id` this file declares — e.g. "...move the case on to grading and staging
+   at `sn_grading_staging`." Two were this commit's own (`hn_ihc_checklist`/
+   `sn_ihc_checklist` `resolution_logic` `reason` text); the other five were pre-existing,
+   written by the tree-authoring agents, and equally invisible to a clerk (a node id is not
+   displayed anywhere in the rendered UI).
+
+Both are the SAME underlying defect — an internal identifier crossing into clerk-facing
+prose — so one check, `check_no_internal_identifier_leaks`, covers both: a fixed list of
+eleven schema-field-name tokens (`INTERNAL_IDENTIFIER_TOKENS`), and a per-file, dynamically
+built set of every declared `node_id`/`tree_id`, both scanned as whole words against every
+key in `CLERK_FACING_PROSE_KEYS` — a list built by reading `app.js` directly (every call site
+cited in the constant's own comment), not guessed from the schema.
+
+## Data fix
+
+All twelve `refer_group 11` occurrences rewritten to name the destination in words, matching
+the house style already committed in `group_02_dt.json` and `group_03_dt.json` (Roman
+numeral plus the group's own name in parentheses — see `check_no_internal_identifier_leaks`'s
+sibling checks for precedent): `"...into ICCC-3 Group XI (other malignant epithelial
+neoplasms and malignant melanomas)..."`. All nine node-id occurrences rewritten to name the
+step in words (its own `step_label`/`question`) or drop the pointer where the sentence works
+without it — for example "...a completed panel would allow a site-specific code to be
+assigned once the site is documented" (`hn_site_resolution`'s own step is literally "Site
+sets the code"), and "...move the case on to grading and staging" with the bare
+`at sn_grading_staging` dropped, since the preceding words already say what that step is.
+
+## Method
+
+Same as the "Group IV validator false-FAILs" and `check_ihc_checklist_renders_a_control`
+sections above: `build_database` imported directly, `DTContext` built from an in-memory
+`copy.deepcopy()` of the loaded real file, never through `run_build()`. A companion
+standalone scan script (not the check itself — a second, independent implementation of the
+same idea) was run first against all four groups' real, unmodified files, to find every real
+hit before any fix and to confirm Groups 1-3 are clean, exactly as the reviewer's own
+independent scan reported. The harness is `nc_harness2.py`, kept in the session scratchpad.
+
+## The false-FAIL control (real files, unmodified, before any fix in this section)
+
+Independent scan, all four groups, `CLERK_FACING_PROSE_KEYS` × (`INTERNAL_IDENTIFIER_TOKENS`
+∪ every declared `node_id`/`tree_id`):
+
+```
+group_01_dt.json -> internal-identifier-token hits: 0   node/tree id leak hits: 0
+group_02_dt.json -> internal-identifier-token hits: 0   node/tree id leak hits: 0
+group_03_dt.json -> internal-identifier-token hits: 0   node/tree id leak hits: 0
+group_04_dt.json -> internal-identifier-token hits: 0   node/tree id leak hits: 9
+```
+
+Groups 1-3 at zero, confirmed independently rather than trusted from the reviewer's report.
+The nine Group 4 hits are exactly the nine cited above; fixed as described under "Data fix".
+After the fix, the same scan and the real check both report zero across all four groups
+(see "Full-build confirmation" below).
+
+**Boundary control — `coding_note` is correctly NOT scanned.** `group_04_dt.json` carries 14
+occurrences of an internal-identifier token or a declared node id inside `coding_note`
+(author-facing per memory `uccf-lookup-tool-clerk-facing-text` — never rendered, e.g.
+`decision_trees[1].nodes[1].options[1].coding_note`: "Do not code 8692/8690/8691/8693/8682/
+8680 from a referral, however specific its wording. hn_site_resolution..."). None of the 14
+is reported by `check_no_internal_identifier_leaks`, because `coding_note`/
+`topography_routing_note` are excluded from `CLERK_FACING_PROSE_KEYS` by construction. A
+check that scanned every string field regardless of key would false-FAIL on all 14 of these
+legitimate author notes; confirming they do NOT fire is as important as confirming the real
+leaks DO.
+
+### Control A — a JSON field name planted back into a `reason` — FAILS, exact message
+
+`(refer_group 11)` appended in memory to `hn_ihc_checklist`'s `keratin_status: not_done`
+branch `reason` (the exact defect this section fixes, reintroduced to prove the check would
+have caught it). Expected **FAIL**, got:
+
+```
+FAIL  node hn_ihc_checklist (resolution_logic[3]).reason contains the internal identifier 'refer_group' — a clerk cannot see JSON field names anywhere in the interface, so this leaks the engine's own vocabulary instead of a clinical fact: 'Keratin has not been performed, so a well-differentiated neuroendocrine tumour cannot yet be excluded. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here. (refer_group 11)'
+```
+
+Restored (real, unmodified `group_04_dt.json`): **0 FAIL** on this check.
+
+### Control B — a bare node id planted into a `reason` — FAILS, exact message
+
+`" See sn_grading_staging for details."` appended in memory to `sn_ihc_checklist`'s
+`pankeratin_status: not_done` branch `reason`. Expected **FAIL**, got:
+
+```
+FAIL  node sn_ihc_checklist (resolution_logic[3]).reason contains 'sn_grading_staging', a node_id/tree_id this file declares — a clerk cannot see node or tree ids anywhere in the interface. Name the step in words (its own step_label/question), or drop the pointer where the sentence works without it: 'Pankeratin has not been performed, so the carcinoma differential (olfactory carcinoma, IDH2-mutant sinonasal carcinoma) cannot yet be excluded. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here. See sn_grading_staging for details.'
+```
+
+Restored: **0 FAIL** on this check.
+
+## Full-build confirmation (real repo)
+
+* `python3 build/induce_flow.py` — unchanged, clean, all four Group 4 checklist nodes OK.
+* `python3 build/build_database.py`, before this section's two fixes (Deliverable 1/2 of the
+  original task already applied): **247 checks run, OK 177, WARN 51, FAIL 0, BUILD PASSED**,
+  but the OK line at Group 3 read the false `"31 ... all render"` sentence and Group 4 still
+  carried the twelve `refer_group 11` / nine node-id leaks (not yet checked for, so not yet
+  counted as FAIL).
+* After both fixes and registering `check_no_internal_identifier_leaks`: **251 checks run, OK
+  181, WARN 51, FAIL 0, BUILD PASSED** — 4 more checks run (one per group), each reporting
+  `OK no clerk-facing string names an internal schema field (11 checked) or a declared
+  node_id/tree_id (N checked)`, 0 new FAIL, 0 new WARN, the Group 3 OK line now reads
+  `29 of 31 … 2 exempted (see WARN above)`.
 * `git diff --quiet main -- data/database/group_01_dt.json` — exit 0, identical.
 * `git diff --quiet main -- data/database/group_02_dt.json` — exit 0, identical.
 * `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.

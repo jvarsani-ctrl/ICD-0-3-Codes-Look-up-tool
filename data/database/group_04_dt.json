@@ -1387,7 +1387,7 @@
             {
               "label": "Specimen INADEQUATE or non-diagnostic — insufficient tissue, crush artefact, no lesional tissue identified",
               "refer_group": 12,
-              "reason": "Tissue was obtained but did not yield a diagnosis, so there is no tissue-based (basis 5, 7 or 8) diagnosis in the file. Group IV has no Visser Table 3 entries permitting registration below that basis, so the case is not coded 8680 here — it is coded 8000/3, Group XII, pending re-biopsy. A diagnostic re-biopsy, read with immunohistochemistry, would allow entry at hn_ihc_checklist and site-specific coding from hn_site_resolution.",
+              "reason": "Tissue was obtained but did not yield a diagnosis, so there is no tissue-based (basis 5, 7 or 8) diagnosis in the file. Group IV has no Visser Table 3 entries permitting registration below that basis, so the case is not coded 8680 here — it is coded 8000/3, Group XII, pending re-biopsy. A diagnostic re-biopsy, read with immunohistochemistry, would allow the panel confirming paraganglioma to be answered and a site-specific code assigned once the site is documented.",
               "captures": {
                 "evidence_tests": [],
                 "specimen_adequacy": "inadequate",
@@ -1399,7 +1399,7 @@
             {
               "label": "Specimen technically UNINTERPRETABLE — processing or stain failure, no opinion could be given on the cells present",
               "refer_group": 12,
-              "reason": "Distinct from a negative result: the stain or processing failed, so no tissue-based diagnosis exists in the file. Group IV has no Visser Table 3 entries permitting registration below basis 5/7/8, so the case is coded 8000/3, Group XII, pending a repeat stain or re-cut, not 8680 here. A successful repeat, read with immunohistochemistry, would allow entry at hn_ihc_checklist.",
+              "reason": "Distinct from a negative result: the stain or processing failed, so no tissue-based diagnosis exists in the file. Group IV has no Visser Table 3 entries permitting registration below basis 5/7/8, so the case is coded 8000/3, Group XII, pending a repeat stain or re-cut, not 8680 here. A successful repeat, read with immunohistochemistry, would allow the panel confirming paraganglioma to be answered.",
               "captures": {
                 "evidence_tests": [],
                 "specimen_adequacy": "not_assessable",
@@ -1572,7 +1572,7 @@
               "morphology_code": "8680",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Keratin is negative, excluding a well-differentiated neuroendocrine tumour, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to genetics and a site-specific code from hn_site_resolution.",
+              "reason": "Keratin is negative, excluding a well-differentiated neuroendocrine tumour, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to genetics and a site-specific code once the site is documented.",
               "captures": {
                 "keratin_status": "negative",
                 "basis_of_diagnosis": 7,
@@ -1586,12 +1586,12 @@
               "morphology_code": "8680",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Keratin has not been performed, so a well-differentiated neuroendocrine tumour cannot yet be excluded. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Keratin has not been performed, so a well-differentiated neuroendocrine tumour cannot yet be excluded. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Keratin has not been performed. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Keratin has not been performed. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
@@ -1607,12 +1607,12 @@
               "morphology_code": "8680",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Keratin has been ordered but the result is not yet available. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Keratin has been ordered but the result is not yet available. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Keratin has been ordered but the result has not come back. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Keratin has been ordered but the result has not come back. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
@@ -1628,12 +1628,12 @@
               "morphology_code": "8680",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Keratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning keratin-positive would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Keratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning keratin-positive would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Keratin could not be interpreted and needs repeating on a fresh section. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Keratin could not be interpreted and needs repeating on a fresh section. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
@@ -1647,7 +1647,7 @@
             "code": "8680",
             "behavior_code": "3",
             "name": "Paraganglioma, NOS",
-            "reason": "Histology is consistent with a paraganglioma but the immunohistochemical panel confirming it, and separating it from a well-differentiated neuroendocrine tumour, was not completed or was equivocal. Tissue exists, so this is recorded at the family level (basis 7) rather than referred out; a completed panel would allow the site-specific code to be assigned from hn_site_resolution."
+            "reason": "Histology is consistent with a paraganglioma but the immunohistochemical panel confirming it, and separating it from a well-differentiated neuroendocrine tumour, was not completed or was equivocal. Tissue exists, so this is recorded at the family level (basis 7) rather than referred out; a completed panel would allow a site-specific code to be assigned once the site is documented."
           },
           "branch_sequence": {
             "order": [],
@@ -1883,7 +1883,7 @@
             {
               "label": "Specimen INADEQUATE or non-diagnostic — insufficient tissue, crush artefact, no lesional tissue identified",
               "refer_group": 12,
-              "reason": "Tissue was obtained but did not yield a diagnosis, so there is no tissue-based (basis 5, 7 or 8) diagnosis in the file. Group IV has no Visser Table 3 entries permitting registration below that basis, so the case is not coded 9522 here — it is coded 8000/3, Group XII, pending re-biopsy. A diagnostic re-biopsy would allow entry at sn_report_wording and sn_ihc_checklist.",
+              "reason": "Tissue was obtained but did not yield a diagnosis, so there is no tissue-based (basis 5, 7 or 8) diagnosis in the file. Group IV has no Visser Table 3 entries permitting registration below that basis, so the case is not coded 9522 here — it is coded 8000/3, Group XII, pending re-biopsy. A diagnostic re-biopsy would allow the report's own wording to be checked and the immunohistochemistry panel to be answered.",
               "captures": {
                 "evidence_tests": [],
                 "specimen_adequacy": "inadequate",
@@ -1895,7 +1895,7 @@
             {
               "label": "Specimen technically UNINTERPRETABLE — processing or stain failure, no opinion could be given on the cells present",
               "refer_group": 12,
-              "reason": "Distinct from a negative result: the stain or processing failed, so no tissue-based diagnosis exists in the file. Group IV has no Visser Table 3 entries permitting registration below basis 5/7/8, so the case is coded 8000/3, Group XII, pending a repeat stain or re-cut, not 9522 here. A successful repeat would allow entry at sn_report_wording.",
+              "reason": "Distinct from a negative result: the stain or processing failed, so no tissue-based diagnosis exists in the file. Group IV has no Visser Table 3 entries permitting registration below basis 5/7/8, so the case is coded 8000/3, Group XII, pending a repeat stain or re-cut, not 9522 here. A successful repeat would allow the report's own wording to be checked.",
               "captures": {
                 "evidence_tests": [],
                 "specimen_adequacy": "not_assessable",
@@ -2116,7 +2116,7 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Pankeratin is negative, excluding the carcinoma differential, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to grading and staging at sn_grading_staging.",
+              "reason": "Pankeratin is negative, excluding the carcinoma differential, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to grading and staging.",
               "captures": {
                 "pankeratin_status": "negative",
                 "basis_of_diagnosis": 7,
@@ -2130,12 +2130,12 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Pankeratin has not been performed, so the carcinoma differential (olfactory carcinoma, IDH2-mutant sinonasal carcinoma) cannot yet be excluded. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Pankeratin has not been performed, so the carcinoma differential (olfactory carcinoma, IDH2-mutant sinonasal carcinoma) cannot yet be excluded. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Pankeratin has not been performed. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Pankeratin has not been performed. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
@@ -2151,12 +2151,12 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Pankeratin has been ordered but the result is not yet available. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Pankeratin has been ordered but the result is not yet available. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Pankeratin has been ordered but the result has not come back. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Pankeratin has been ordered but the result has not come back. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
@@ -2172,12 +2172,12 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Pankeratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning pankeratin-positive would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "reason": "Pankeratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning pankeratin-positive would move this case out of Group IV entirely and into ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas), not to a more specific code here.",
               "diagnostic_tests_required": [
                 "pankeratin"
               ],
               "provisional_pending": {
-                "reason": "Pankeratin could not be interpreted and needs repeating on a fresh section. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "reason": "Pankeratin could not be interpreted and needs repeating on a fresh section. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to ICCC-3 Group XI (other malignant epithelial neoplasms and malignant melanomas) instead of leaving it here.",
                 "resolving_test": "IHC"
               },
               "captures": {
