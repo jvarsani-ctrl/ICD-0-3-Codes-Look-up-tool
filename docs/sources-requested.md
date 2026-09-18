@@ -9,6 +9,44 @@ that the tool says less, or that a note reads "not established" where it could r
 
 ---
 
+> ## ✅ Update, 18 September 2026 — the registrar supplied most of this
+>
+> **Closed:** the **IARC ICD-O-3.2 change documents** (item 1, the highest-value item and
+> cross-cutting for all twelve groups) are now at `ICD coding/ICD-O-3.2/` — *Deleted codes and
+> their terms*, *New codes and their terms*, *Terms that are changing behaviour*, *Summary of main
+> changes*, plus the ICD-O-3.2 multiple-primaries workbook. **Pfister Supplementary Table S3**
+> (item 2) is at `Group 4 Papers/6549397/cd-21-1094_supp3.xlsx`, with the full paper at `331.pdf`.
+> **Agarwal 2023** (item 4) and **Di Stasio 2022** (item 6) are both held.
+>
+> **Substituted:** WHO Blue Book volume 10 (item 3) is not freely available. The registrar supplied
+> **Juhlin CC.** *The road ahead: a brief guide to navigating the 2022 WHO classification of
+> endocrine and neuroendocrine tumours.* Journal of Clinical Pathology 2025;78:1–10.
+> [10.1136/jcp-2023-209060](https://doi.org/10.1136/jcp-2023-209060) — `1.full.pdf` — in its place.
+>
+> **Ruled out by the registrar, do not pursue:** the **Hyams AFIP fascicle** (item 5) and
+> **Bradová 2026** (item 7). **Veyrat 2020** (item 8) was already demoted.
+>
+> **What the new documents settled immediately**, before any of the papers were read:
+>
+> - IARC's *Summary of main changes*: *"In the 3-digit group 868–870 the only remaining
+>   non-malignant term is under 8683/0."* `8683/0` is IARC's **deliberate** single survivor of that
+>   block — third confirmation for build contract §0.2.
+> - IARC's *Summary of main changes*: *"Ewing sarcoma (9260/3) has moved to, and is now the
+>   preferred term for, 9364/3 (peripheral neuroectodermal tumour)."* Ruling **D4** in IARC's own
+>   words.
+> - IARC's *Deleted codes and their terms* carries the whole paraganglioma block —
+>   `8680/0 Paraganglioma, benign  Deleted`, `8680/1 … Moved to /3`, and the same for `8681`,
+>   `8682`, `8690`, `8691`, `8692`, `8693`, `8700`. The REDCap repair package now cites deletions
+>   rather than inferring from absent strings.
+> - **Supplementary Table S3** gives the WHO entity list for both halves of Group IV, reproducing
+>   the International Neuroblastoma Pathology Committee's four categories unaltered. Extracted at
+>   `Group 4 Papers/Pfister-2022-supplementary-table-S3-key-points.md`.
+>
+> **What is still open:** CoGNET's ICD-O code and the fate of the number `8683` — pending the
+> Juhlin 2025 read.
+
+---
+
 ## Tier 1 — would change the build
 
 ### 1. The IARC ICD-O-3.2 change documents · **no DOI — IARC/IACR website** · ★ highest value

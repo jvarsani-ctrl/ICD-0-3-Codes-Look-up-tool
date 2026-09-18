@@ -51,6 +51,15 @@ ICD-O-3.2 carries `8683` **only at behaviour /0** — `Gangliocytic paragangliom
 There is no `8683/3`, so there is no Group IV entry for it. It drops out exactly as the sixteen
 absent codes dropped out of Group 3.
 
+**IARC says so in its own words, and deliberately.** The *Summary of main changes* accompanying
+ICD-O-3.2 (Mark Short, Cancer Data and Monitoring Unit, Australian Institute of Health and Welfare,
+with the Australasian Association of Cancer Registries), under the heading *Neuroendocrine
+tumours*: *"Nearly all neuroendocrine tumours are now behaviour 3. … In the 3-digit group 868–870
+the only remaining non-malignant term is under 8683/0."* The `/0` is not an omission or an
+oversight — IARC names `8683/0` as the **single deliberate survivor** across the whole `868`–`870`
+block. Held at `ICD coding/ICD-O-3.2/3.1 to 3.2 - Summary of main changes.pdf`, supplied by the
+registrar 18 September 2026.
+
 **The WHO classification agrees, independently.** Mete O, et al. *Overview of the 2022 WHO
 Classification of Paragangliomas and Pheochromocytomas.* Endocrine Pathology 2022;33(1):90–114,
 PMID 35285002, abstract: *"in the 2022 WHO classification, ... the lesion known as gangliocytic
@@ -224,6 +233,17 @@ to 9364.** Verified 2026-09-16:
 9503/3  Preferred  Neuroepithelioma, NOS          <- and nothing else
 9260/0  Preferred  Aneurysmal bone cyst           <- 9260/3 Ewing sarcoma no longer exists
 ```
+
+**And IARC states it outright, which is stronger than the inference.** The *Summary of main
+changes*, under the heading *Ewing sarcoma*: *"Ewing sarcoma (9260/3) has moved to, and is now the
+preferred term for, 9364/3 (peripheral neuroectodermal tumour). Note, though, that the 4-digit code
+9260 has not been deleted because a new term has been introduced under 9260/0."* And *Deleted codes
+and their terms* lists `9260/3 Ewing sarcoma` among the deletions.
+
+That is the primary registry-facing artefact saying, in one sentence, both halves of D4: Ewing
+sarcoma is now `9364/3`, and `9364` **is** the peripheral neuroectodermal tumour code. It also
+explains the oddity that `9260` still exists — a new `/0` term, aneurysmal bone cyst, was put under
+it.
 
 So ICD-O-3.2 has already made the call the pathway describes as pending: **peripheral PNET,
 pPNET and peripheral neuroectodermal tumour are Ewing sarcoma, `9364/3`** — Group VIII at bone,
