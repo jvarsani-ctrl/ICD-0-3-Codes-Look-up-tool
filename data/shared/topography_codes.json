@@ -750,10 +750,11 @@
       "region_label": "Peritoneum",
       "candidate_groups": [
         2,
+        4,
         9
       ],
       "candidate_groups_advisory": true,
-      "note": "Peritoneum is where abdominal Burkitt lymphoma is coded when it presents as a mesenteric or peritoneal mass — the commonest abdominal malignancy in a child at UCI. Desmoplastic small round cell tumour (IX) presents here too."
+      "note": "Group 4 added 18 September 2026. C48.0 and C48.8 both carried [2, 4, 9] and C48.2 alone carried [2, 9], inside one crosswalk row -- an oversight, not a decision. The Group 4 build contract §5 assigns C48.2 to g4_sympathoadrenal, and narrowBySite() intersects the site's list with the archetype's: [2, 9] against solid_mass's [2, 4, 6, 7, 8, 9, 10] is non-empty, so the empty-intersection fallback never fires and Group 4 was dropped before its tree could be chosen. A retroperitoneal neuroblastoma extending into the peritoneum would have left the group silently."
     },
     "C48.8": {
       "code": "C48.8",
