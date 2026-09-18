@@ -2012,3 +2012,327 @@ scoped to Group 4 only, matching every other group-specific check already in thi
 - **A green build is still not a working tool.** Everything above tests the data and the
   validator. Contract §9 step 9's browser pass — driving the real tool once all four trees
   exist — is not optional and nothing here substitutes for it.
+
+---
+
+# Group IV validator false-FAILs — three fixes (2026-09-18)
+
+The real `group_04_dt.json` now exists (four trees, 34 nodes, all committed) — the gap the
+previous section's "What this could not check" named first. A full `python3
+build/build_database.py` run against it surfaced three checks FAILing on data that was
+correct: `check_non_reportable_terminals` misreading a `nos_fallback` object and a
+`behaviour_exclusion` object as code-less terminals (7 FAIL), `check_group4_topography_map`
+sweeping the whole registry's topography space instead of Group IV's own (1 FAIL, 292 codes
+named), and `check_group4_absent_codes`/`check_group4_not_a_group_code` (RULE 3/8) failing on
+`8683`/`9364` appearing in clerk-facing PROSE rather than as an emitted code (3 FAIL). This
+section is evidence that the fix in each case made the check MORE correct — tightened where
+it was too loose (RULE 5 now reads Group IV's real candidate universe instead of assuming
+one), loosened only where the old shape test demanded something the schema never required
+(`nos_fallback.name`) or the contract never banned (a code named in a `reason`) — and that
+none of the three now fires on nothing, or on the wrong thing.
+
+## Method
+
+`data/database/group_04_dt.json` is fully built and committed on this branch, so — unlike
+the Group IV section above, written before it existed — every control here runs the check
+functions **directly against the REAL file**, imported as a module the way a unit test
+would (`build_database` loaded via `importlib`, never through `run_build()`/`main()`).
+Every mutation is made on an in-memory `copy.deepcopy()` of the loaded dict fed to a fresh
+`DTContext`; the real file is never written. `git status` after every run in this section
+showed `build/build_database.py` as the only modified file. The one control that needs a
+mutated `presentation_router.json` (2c, below) builds a throwaway temp directory holding an
+unmodified **copy** of the real `data/shared/topography_codes.json` and a mutated copy of
+`presentation_router.json`, and points the check's `repo` argument at that temp directory —
+the real repo tree is untouched. The harness is `g4_validator_bugfix_controls.py`, kept in
+the session scratchpad, not the repo.
+
+## The false-FAIL control (correct data, unmodified)
+
+Baseline run of all five touched checks against the real, unmodified file: **0 FAIL** on
+every one.
+
+```
+OK    1 non-reportable terminal(s) emit no morphology code; no unflagged code-less terminals
+OK    3 behaviour_exclusion block(s) well formed: all six keys present, icdo_code/icdo_behaviour/icdo_term
+      round-trip to the Preferred ICD-O-3.2 term, the named behaviour is outside the group's own
+      declaration, no branch also carries morphology_code, and reason is non-empty (rule 1)
+WARN  1 topography code(s) are owned by a tree but are outside the sweep: C80.9
+OK    topography map is total and disjoint: all 34 Group IV candidate topography code(s) resolve to
+      exactly one of 4 tree(s), the router's default catch-all resolves to a tree this file declares,
+      and no tree declaring C70.0-C72.9 emits 9501-9504 (rule 5)
+OK    RULE 3 — 8683 appears nowhere as a morphology_code, a nos_fallback_code or an alias target in
+      group_04_dt.json or its alias file (contract §0.2, §8 rule 3)
+OK    RULE 8 — 9364 appears nowhere as a morphology_code in group_04_dt.json (contract §2.4, §8 rule 8)
+```
+
+(The `C80.9` WARN is expected and correct, not a residual defect: `C80.9`/Unknown Primary
+Site is `"route_by_morphology"` in `topography_codes.json`, not a member of Group IV's
+candidate-group-4 list, so it sits outside the 34-code positive sweep even though
+`g4_other_peripheral` legitimately declares it as the router's own catch-all target. See
+`_group4_candidate_topography()`'s docstring.)
+
+A full `python3 build/build_database.py` run before and after the fix, diffed line for
+line: **Groups 1, 2 and 3's sections are byte-identical** (see "Regression" below) and the
+summary moved from `FAIL: 11` / `BUILD FAILED` to `FAIL: 0` / `BUILD PASSED`, with every one
+of the 11 cleared FAILs matching one of the three bugs below and no new FAIL or WARN
+appearing anywhere else.
+
+---
+
+## `check_non_reportable_terminals` / `is_nos_fallback_object()` — the `nos_fallback.name` false-FAIL
+
+**What changed.** `is_nos_fallback_object()` required BOTH `code` and `name` on the object
+hanging off a `nos_fallback` key before treating it as the DT-master `nos_fallback`
+construct and exempting it from the code-less-terminal sweep. Nothing in the schema
+requires `name`: `app.js`'s `fallbackTarget()` reads only `.code`/`.behavior_code`/`.reason`
+off it, and `check_terminal_codes_exist()` only ever demanded `.code`. Groups 1–3 happened
+to always author a `name` alongside it; Group 4's own fallbacks correctly do not
+(`{"code": "9500", "behavior_code": "3", "reason": "…"}` on `sa_ihc_checklist` and three
+siblings). Requiring `name` made the predicate miss exactly these four, so each fell through
+to the near-miss net and was reported as an unflagged code-less terminal. **Fixed by
+dropping the `name` requirement — `code` alone is now the shape test**, alongside the
+existing path test (`where` ends in `"nos_fallback"`). This is strictly a loosening of an
+over-strict shape test to match the actual, load-bearing schema; the path test still means
+the predicate can only ever match an object that IS hung off a `nos_fallback` key, and
+`check_terminal_codes_exist()` still independently demands and validates `.code`, so a
+`nos_fallback` block with no `code` at all is still caught (control 1b, below) — the
+loosening cannot mask a genuinely broken fallback.
+
+### Control 1a — a real code-less terminal (reason, no destination) still FAILs
+
+`op_medulloepithelioma` `options[0]` (`morphology_code: "9501"`, a `reason`, no `next_node`)
+had its `morphology_code` deleted in memory. Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  op_medulloepithelioma (options[0]) carries a 'reason' but no destination and no recognised
+      non-reportable flag — if this is the clean 'not a reportable malignancy' terminal it must say
+      so with "non_reportable": true; if it belongs to another ICCC-3 group it must say so with
+      "refer_group"; otherwise its emit-no-code rule is never checked
+```
+
+Restored (pristine data): **0 FAIL** — `OK 1 non-reportable terminal(s) emit no morphology
+code; no unflagged code-less terminals`.
+
+### Control 1b — a `nos_fallback` with no `code` at all still FAILs (the loosened predicate stays narrow)
+
+`sa_ihc_checklist.nos_fallback` (`{"code", "behavior_code", "reason"}`) had `.code` deleted
+in memory, leaving exactly the broken shape the dropped `name` requirement must NOT start
+waving through. Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  sa_ihc_checklist (nos_fallback) carries a 'reason' but no destination and no recognised
+      non-reportable flag — if this is the clean 'not a reportable malignancy' terminal it must say
+      so with "non_reportable": true; if it belongs to another ICCC-3 group it must say so with
+      "refer_group"; otherwise its emit-no-code rule is never checked
+```
+
+Restored: **0 FAIL.**
+
+---
+
+## `check_non_reportable_terminals` / new `is_behaviour_exclusion_object()` — the `behaviour_exclusion` false-FAIL
+
+**What changed.** A `behaviour_exclusion` block (contract §3, ruling D1) is, by design, a
+terminal that carries a clerk-facing `reason` and emits no code — the same documented shape
+as `non_reportable: true` and `refer_group`, for the case where a real WHO entity's ICD-O-3.2
+behaviour sits outside what the group admits. `check_non_reportable_terminals` had no
+predicate recognising it, so its own `reason` (nested one level down, inside the
+`behaviour_exclusion` object itself) read as a terminal that forgot to declare its
+destination. **Fixed by adding `is_behaviour_exclusion_object()`**, identified the same
+deliberately narrow way as the file's other shape predicates (`is_nos_fallback_object()`,
+`is_provisional_pending_object()`, `is_diversion_criterion_object()`,
+`is_grade_resolution_leaf()`): the key it hangs off (`where` ends in `"behaviour_exclusion"`)
+AND its shape (`icdo_code` present) — and wiring the new predicate into the near-miss loop
+alongside the others. This cannot mask a real code-less terminal: a branch carrying BOTH
+`behaviour_exclusion` and `morphology_code` is already its own FAIL under
+`check_behaviour_exclusion()`'s pre-existing rule 4 (control 1c proves that rule is still
+live).
+
+### Control 1c — a `behaviour_exclusion` branch that ALSO carries `morphology_code` still FAILs
+
+`op_medulloepithelioma options[2]` (a real `behaviour_exclusion`, the benign
+"Medulloepithelioma, benign" 9501/0 case) was given `morphology_code: "9501"` alongside it
+in memory. Expected **FAIL** (from `check_behaviour_exclusion`, the check that owns this
+rule), got **FAIL**; `check_non_reportable_terminals` correctly stays silent on the same
+mutation, because the field it inspects for a destination lives on the OUTER option and
+was never in its scope:
+
+```
+FAIL  node op_medulloepithelioma (options[2]) behaviour_exclusion: this branch ALSO carries
+      morphology_code '9501'. behaviour_exclusion and morphology_code are mutually exclusive
+      destinations — app.js's advance() checks morphology_code first, so this exclusion would never
+      fire at runtime (contract §3, §8 rule 1)
+```
+
+Restored: **0 FAIL** on both checks.
+
+---
+
+## `check_group4_topography_map` (RULE 5) — the whole-registry sweep
+
+**What changed.** RULE 5 generated every `C00.0`–`C80.9` slot and swept it against Layer 1's
+REDCap topography option list — the whole REGISTRY's topography universe (every code any
+group can carry), not Group IV's. `C50.x` breast, `C34.x` lung, `C61.9` prostate and 289
+others came back "resolve to NO tree" — real, existing codes that no Group IV tree was ever
+supposed to claim. **Fixed in two parts**, both read mechanically from
+`data/shared/topography_codes.json` rather than hand-transcribed, for the same reason
+`GROUP3_TREE_TOPOGRAPHY` has no Group IV analogue:
+
+1. The **positive** sweep universe is now the 34 codes whose `topography_lookup` entry
+   names group 4 in `candidate_groups` (`_group4_candidate_topography()`), checked TOTAL
+   and DISJOINT exactly as before — just over the right 34, not the wrong ~330.
+2. A **new assertion**: `presentation_router.json`'s `groups["4"].tree_routing.default`
+   must exist and must name a `tree_id` this file actually declares — the mechanism
+   `app.js`'s own `routedTree()` requires at runtime for "everything else Group IV can
+   carry" (contract §5), now checked at build time instead of discovered by a clerk.
+3. A **new validity assertion**, incidental to fixing the universe but implied by "every
+   code claimed by a tree exists in `topography_codes.json`": a tree declaring a code
+   absent from the full `topography_lookup` (a typo, not merely outside Group IV's 34)
+   still FAILs.
+
+### Control 2a — a topography claimed by two Group IV trees still FAILs (disjoint)
+
+`C74.0` (already `g4_sympathoadrenal`'s) added in memory to `g4_head_neck_paraganglia`'s
+declared topography. Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 5 — topography C74.0 resolves to 2 trees (g4_head_neck_paraganglia, g4_sympathoadrenal).
+      The map must be disjoint: a duplicate does not fail, it silently picks whichever row the
+      engine reads first — which is not a decision anybody made (contract §5, §8 rule 5)
+```
+
+Restored: **0 FAIL.**
+
+### Control 2b — a tree claiming a code absent from `topography_codes.json` still FAILs
+
+`C99.9` (not a real ICD-O-3 topography code at all) added in memory to
+`g4_other_peripheral`'s declared topography. Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 5 — tree(s) g4_other_peripheral declare topography C99.9, which is not in
+      data/shared/topography_codes.json at all — a case can never actually carry it, so the code
+      that would route it there is untested and probably wrong (contract §5, §8 rule 5)
+```
+
+Restored: **0 FAIL.**
+
+### Control 2c — a group with neither full coverage nor a declared default still FAILs
+
+Both mutated at once, in memory / in the throwaway repo copy described under Method:
+`g4_head_neck_paraganglia`'s declared topography reduced from `["C75.4", "C75.5", "C30.1"]`
+to `["C30.1"]` (a coverage gap), AND `presentation_router.json`'s
+`groups["4"].tree_routing.default` deleted. Expected **two independent FAILs**, got both:
+
+```
+FAIL  RULE 5 — 2 topography code(s) resolve to NO tree: C75.4, C75.5. A case at one of these reaches
+      the router, finds no handoff and dead-ends (contract §5, §8 rule 5)
+FAIL  RULE 5 — presentation_router.json groups["4"].tree_routing declares no usable 'default'. Group
+      IV's trees claim only 34 of the topography codes it can carry (contract §5: "C00.0-C80.9 for
+      fourteen of its eighteen codes") — without a declared catch-all, a case whose topography is not
+      one of those 34 reaches the router, finds no handoff and dead-ends, exactly as app.js's own
+      routedTree() refuses to run without one (contract §5, §8 rule 5)
+```
+
+Restored (pristine data, real repo): **0 FAIL** — the same OK line quoted in the false-FAIL
+control above.
+
+---
+
+## `check_group4_absent_codes` (RULE 3, `8683`) and `check_group4_not_a_group_code` (RULE 8, `9364`) — the clerk-facing-prose false-FAIL
+
+**What changed.** Both rules' shared scanner, `_scan_group4_banned_code()`, treated a banned
+code appearing in ANY clerk-facing text field (`reason`, `hint`, `label`, …) as a FAIL, on
+the reasoning that a code the clerk can read is a code that gets entered. But neither
+contract §0.2 (`8683`) nor §2.4/ruling D4 (`9364`) bans the code from PROSE — each rule's own
+text says the code must not appear as a `morphology_code` (RULE 3 also: `nos_fallback_code`
+or an alias target), and both codes are real, valid ICD-O-3.2 codes this group legitimately
+talks ABOUT: `9364` is exactly what a `refer_group` branch's `reason` should name, because
+Group IV's own pPNET aliases refer OUT to Group VIII/IX and the clerk needs to be told what
+they will find there. Group 3 already sets this precedent, naming its own referral targets'
+codes in `refer_group` `reason` text. **Fixed by making a clerk-facing-text hit a WARN
+instead of a FAIL** — recorded, reviewable, never blocking the build — while a hit in an
+actual EMITTING field (`morphology_code`, and for RULE 3 also `nos_fallback_code`/alias
+target) is still an unconditional FAIL. This is deliberately narrower than
+`check_group3_absent_codes()` (RULE 7), which still FAILs clerk-facing text and is
+UNCHANGED: RULE 7's codes do not exist in ICD-O-3.2 at all, so naming one in prose can only
+be a mistake, where `8683`/`9364` are real codes with a real, correct reason to be named.
+
+### Control 3a — `9364` as a `morphology_code` still FAILs (RULE 8)
+
+`op_medulloepithelioma options[0].morphology_code` set to `"9364"` in memory. Expected
+**FAIL**, got **FAIL** (alongside the pre-existing, unaffected author-facing-text WARNs):
+
+```
+FAIL  RULE 8 — group_04_dt.json.decision_trees[3].nodes[3].options[0].morphology_code carries code
+      9364. ICD-O-3.2 moved Ewing sarcoma to 9364/3 and made it the peripheral neuroectodermal
+      tumour / pPNET code too (ruling D4); Group IV's pPNET aliases refer OUT to Group VIII/IX rather
+      than emitting it here (contract §2.4, §8 rule 8)
+```
+
+Restored: **0 FAIL** — `OK RULE 8 — 9364 appears nowhere as a morphology_code in
+group_04_dt.json (contract §2.4, §8 rule 8)`.
+
+### Control 3b — `8683` as a `morphology_code` still FAILs (RULE 3)
+
+`op_medulloepithelioma options[1].morphology_code` set to `"8683"` in memory. Expected
+**FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 3 — group_04_dt.json.decision_trees[3].nodes[3].options[1].morphology_code carries code
+      8683. ICD-O-3.2 carries 8683 only at /0 (Gangliocytic paraganglioma); ICCC-3 Group IV admits
+      behaviour 3 only, so there is no Group IV entry for it (contract §0.2, §8 rule 3)
+```
+
+Restored: **0 FAIL** — `OK RULE 3 — 8683 appears nowhere as a morphology_code, a
+nos_fallback_code or an alias target in group_04_dt.json or its alias file (contract §0.2,
+§8 rule 3)`.
+
+### Control 3c (bonus) — `8683` named in a clerk-facing `reason` is now WARN, not FAIL
+
+The real file only ever exercised this WARN path for RULE 8/`9364` (three occurrences, all
+in `nodes[6]`'s `hint`/`reason`, all now WARN — see the false-FAIL control above). To prove
+the identical treatment applied to RULE 3/`8683` actually fires, `"(see also 8683, which
+this group does not code)"` was appended in memory to `op_medulloepithelioma
+options[0].reason`. Expected **0 FAIL, 1 new WARN**, got exactly that:
+
+```
+WARN  RULE 3 — group_04_dt.json.decision_trees[3].nodes[3].options[0].reason prints 8683 in text a
+      clerk reads. That is fine and expected — RULE 3 bans 8683 only as a morphology_code, a
+      nos_fallback_code or an alias target, never in prose, and naming the destination code in a
+      `reason`/`hint` is how a referral or an exclusion tells the clerk what to expect (contract
+      §0.2, §8 rule 3)
+OK    RULE 3 — 8683 appears nowhere as a morphology_code, a nos_fallback_code or an alias target in
+      group_04_dt.json or its alias file (contract §0.2, §8 rule 3)
+```
+
+Restored: **0 FAIL**, and this WARN is gone.
+
+---
+
+## Regression — Groups 1, 2 and 3 do not regress
+
+Two of the three fixes touch shared, all-group code paths
+(`is_nos_fallback_object()`/`is_behaviour_exclusion_object()` inside
+`check_non_reportable_terminals()`, which runs for every group's file). Verified by running
+the full `python3 build/build_database.py` against the real repo **before** the fix
+(`git stash` on `build/build_database.py` alone, leaving every data file untouched) and
+**after**, and diffing the two complete outputs line for line: **the `-- B.
+data/database/group_01_dt.json` through `group_03_dt.json` sections are byte-identical**,
+every difference is confined to `group_04_dt.json`'s own section (the 11 FAILs this task
+was scoped to clear) and the run summary. `is_behaviour_exclusion_object()` and the RULE
+5/8/3 changes are additionally scoped (`if ctx.group != GROUP4: return []`, or bound to
+fields `_scan_group4_banned_code()` already only ever ran for Group 4), so they are a
+structural no-op on Groups 1–3 regardless — the byte-identical diff confirms it rather than
+assuming it.
+
+## FAIL count
+
+Before this task's three fixes (data agent's four defects already committed; only this
+task's three bugs remaining): **11 FAIL** — 7 from Bug 1 (`nos_fallback`/
+`behaviour_exclusion`), 1 from Bug 2 (RULE 5, naming 292 topography codes), 3 from Bug 3
+(RULE 8). After: **0 FAIL**, `BUILD PASSED`, 243 checks run. Every FAIL this task was told
+NOT to touch (the four "NOT YOURS" data defects — `adaptr_descriptive`/`roman` (11),
+bare-string `nos_fallback` (2), `test_result_states` closed vocabulary (2),
+`provisional_pending` on a codeless branch (3)) was already cleared by the data agent's own
+commit (`798a3ec Fix four Group IV data defects in group_04_dt.json`) before this task's
+fixes were even written, and is confirmed absent from the final 0-FAIL, 243-check run.

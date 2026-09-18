@@ -584,16 +584,33 @@ GROUP4_G3_OVERLAP_TOPOGRAPHY = (
 )
 
 # §5 — "the map must be TOTAL and DISJOINT over every topography Group IV can carry."
-# Unlike GROUP3_TOPOGRAPHY_SWEEP (four hand-named C7x/C8x ranges), Group IV's own scope
-# is C00.0-C80.9 for fourteen of its eighteen codes (contract §5) — effectively the
-# whole ICD-O topography space rather than one anatomical compartment. Hand-transcribing
-# every C10/C11/C30-C32/C38/C47/C48/C74/C75/C77 subcode from memory to build a Group-IV
-# equivalent of GROUP3_TREE_TOPOGRAPHY risks getting exactly the subcodes wrong that this
-# whole file exists to stop being recalled rather than checked — so the candidate sweep
-# below is generated mechanically (every C00.0-C80.9 slot) and, like Group III's sweep,
-# is then filtered down to what Layer 1's own topography option list actually enumerates
-# by _existing_topography() before anything is asserted about it.
-GROUP4_TOPOGRAPHY_SWEEP = ["C%02d.%d" % (n, d) for n in range(0, 81) for d in range(10)]
+#
+# The ORIGINAL sweep here (retired 2026-09-18, a false-FAIL bug) generated every
+# C00.0-C80.9 slot and swept it against Layer 1's REDCap topography list — which is
+# the whole REGISTRY's topography universe (every code any group can carry), not
+# Group IV's. C50.x breast, C34.x lung and C61.9 prostate are real, existing
+# topography codes, so they came back "resolve to NO tree" — 292 of them, none a
+# Group IV defect, because no Group IV tree was ever supposed to claim them.
+#
+# "Every topography Group IV can carry" is recorded once already, in
+# data/shared/topography_codes.json's `topography_lookup`: the codes whose
+# `candidate_groups` list names group 4 (34 of them, 2026-09-18).
+# _group4_candidate_topography() reads that file rather than re-deriving or
+# hand-transcribing the list — the same reason a Group-IV analogue of
+# GROUP3_TREE_TOPOGRAPHY is not hand-built here (see check_group4_topography_map()):
+# transcribing C10/C11/C30-C32/C38/C47/C48/C74/C75/C77's own subcodes from memory
+# risks getting exactly the subcodes wrong that reading the shared file avoids.
+#
+# That 34-code universe is still not the WHOLE of what a Group IV case can carry.
+# Contract §5's own table makes `g4_other_peripheral` the catch-all for "everything
+# else Group IV can carry" — reached through presentation_router.json's
+# groups["4"].tree_routing.default, never through an enumerated list (an unknown
+# primary, C80.9, is the one member of that "everything else" the router names
+# explicitly, and topography_lookup marks it `"route_by_morphology"` rather than
+# handing it to group 4 by name — it is not one of the 34). So the map is swept in
+# two parts: the 34 codes are checked TOTAL and DISJOINT the way Group III's sweep
+# checks its own compartment, and the router's default is separately checked to
+# exist and to resolve to a real tree in THIS file — see check_group4_topography_map().
 
 
 # Raw-hex ban (data.md §5) — the three front-end files, wherever they land in the repo.
@@ -756,23 +773,34 @@ def is_non_reportable(container) -> bool:
 
 def is_nos_fallback_object(holder, where) -> bool:
     """
-    True when `holder` IS a `nos_fallback` object — {"code", "name", "reason"} per DT
-    master §3C/§3D, consumed by app.js's fallbackTarget() — rather than some other
-    dict that merely happens to carry a 'reason'.
+    True when `holder` IS a `nos_fallback` object — {"code", "reason"}, "name" and
+    "behavior_code" optional, per DT master §3C/§3D, consumed by app.js's
+    fallbackTarget() — rather than some other dict that merely happens to carry a
+    'reason'.
+
+    Only 'code' is load-bearing: fallbackTarget() (app.js) reads
+    `n.nos_fallback.code`/`.behavior_code`/`.reason` and never touches `.name`, and
+    check_terminal_codes_exist() likewise only demands 'code'. Groups 1-3 happened to
+    always author a 'name' alongside it, but that is a convention, not the schema —
+    Group IV's own fallbacks (e.g. `{"code": "9500", "behavior_code": "3", "reason":
+    "…"}` on `sa_ihc_checklist`) correctly omit it, and requiring it here made this
+    predicate miss them, which sent every one of them into the code-less-terminal FAIL
+    below (Group 4 build contract §3, §8 bug fix 2026-09-18).
 
     Identified by two things at once, deliberately narrow: the key it hangs off (its
-    walk_dicts path ends in "nos_fallback") AND its shape (both 'code' and 'name'
-    present). Neither alone is enough — a holder could be named nos_fallback without
-    yet having code/name (still a shape bug worth catching), or could carry an
-    unrelated 'code'/'name' pair under some other key. Requiring both keeps this from
-    ever masking a real code-less-terminal violation.
+    walk_dicts path ends in "nos_fallback") AND its shape ('code' present). Neither
+    alone is enough — a holder could be named nos_fallback without yet having a code
+    (still a shape bug worth catching, and check_terminal_codes_exist() catches it),
+    or could carry an unrelated 'code' under some other key. Requiring the key AND the
+    code keeps this from ever masking a real code-less-terminal violation: a
+    `nos_fallback` block with no `code` at all still falls through to that check.
     """
     if not isinstance(holder, dict):
         return False
     last_key = where.rsplit(".", 1)[-1] if where else ""
     if last_key != "nos_fallback":
         return False
-    return as_code(holder.get("code")) is not None and bool(holder.get("name"))
+    return as_code(holder.get("code")) is not None
 
 
 def is_provisional_pending_object(holder, where) -> bool:
@@ -848,6 +876,41 @@ def is_grade_resolution_leaf(holder, where) -> bool:
     if len(parts) >= 3 and parts[-2] == "values" and parts[-3] == "grade_resolution":
         return True
     return False
+
+
+def is_behaviour_exclusion_object(holder, where) -> bool:
+    """
+    True when `holder` IS a `behaviour_exclusion` object (Group 4 build contract §3,
+    §8 rule 1, ruling D1) — {"icdo_code", "icdo_behaviour", "icdo_term",
+    "group_declares", "reason", "registrar_decision_required"} — rather than a branch
+    that forgot its destination.
+
+    A `behaviour_exclusion` IS one of the tool's recognised terminal declarations —
+    alongside `non_reportable: true` and `refer_group` — for the case where a real,
+    WHO-recognised entity exists but its ICD-O-3.2 behaviour sits outside what this
+    ICCC-3 group admits (a ganglioneuroma is 9490/0; Group IV admits behaviour 3 only),
+    so there is no code to emit here and no other group to refer it to either (§2.1).
+    Its `reason` is clerk-facing by design (app.js excludeBehaviour()/renderOutput()
+    renders it), which is exactly the shape check_non_reportable_terminals()'s near-miss
+    net is built to catch — "a `reason` and no destination" — so without this predicate
+    every `behaviour_exclusion` block in the file reads as a code-less terminal that
+    forgot to flag itself.
+
+    This does not weaken anything: a branch carrying BOTH `behaviour_exclusion` and a
+    `morphology_code` is already its own FAIL under check_behaviour_exclusion() (the two
+    are mutually exclusive destinations there), so exempting the shape here can never
+    mask a real code-less terminal. check_behaviour_exclusion() validates the block's
+    full six-key shape; this predicate only needs to recognise it well enough not to
+    double-flag it — the same deliberately narrow test as the other predicates here: the
+    key it hangs off (walk_dicts path ends in "behaviour_exclusion") AND its shape (it
+    declares `icdo_code`, the field that anchors it to a real ICD-O-3.2 entity).
+    """
+    if not isinstance(holder, dict):
+        return False
+    last_key = where.rsplit(".", 1)[-1] if where else ""
+    if last_key != "behaviour_exclusion":
+        return False
+    return bool(holder.get("icdo_code"))
 
 
 def is_refer_branch(container) -> bool:
@@ -1742,9 +1805,11 @@ def check_non_reportable_terminals(ctx: DTContext):
             if is_non_reportable(holder) or not isinstance(holder, dict):
                 continue
             if is_nos_fallback_object(holder, where):
-                # A nos_fallback object is {"code", "name", "reason"} by design (DT
-                # master §3C/§3D) — a reason with no next_node/morphology_code of its
-                # own is exactly its documented shape, not a code-less terminal.
+                # A nos_fallback object is {"code", "reason"} by design (DT master
+                # §3C/§3D; "name" is a Groups 1-3 convention, not part of the schema —
+                # see is_nos_fallback_object()) — a reason with no next_node/
+                # morphology_code of its own is exactly its documented shape, not a
+                # code-less terminal.
                 continue
             if is_provisional_pending_object(holder, where):
                 # A provisional_pending object is {"reason", "resolving_test", …} by
@@ -1759,6 +1824,17 @@ def check_non_reportable_terminals(ctx: DTContext):
             if is_grade_resolution_leaf(holder, where):
                 # A grade_resolution outcome resolves a GRADE, not a case (Group 3
                 # contract §2(4)). Its `reason` says why no grade was established.
+                continue
+            if is_behaviour_exclusion_object(holder, where):
+                # A behaviour_exclusion block IS the recognised declaration that this
+                # branch emits no code (Group 4 contract §3, ruling D1) — a real,
+                # WHO-recognised entity whose behaviour sits outside what this group
+                # admits, alongside non_reportable and refer_group. Its `reason` is
+                # clerk-facing BY DESIGN (app.js excludeBehaviour()/renderOutput());
+                # its own six-key shape is validated in full by
+                # check_behaviour_exclusion(), including that it never also carries a
+                # morphology_code, so this exemption can never mask a real code-less
+                # terminal.
                 continue
             if not holder.get("reason"):
                 continue
@@ -5414,6 +5490,46 @@ def _existing_topography(layer1):
     return codes, "RedCap Options/Topography Redcap.md"
 
 
+def _load_topography_lookup(repo: Path):
+    """(topography_lookup dict, findings) from data/shared/topography_codes.json."""
+    path = Path(repo) / "data" / "shared" / "topography_codes.json"
+    data, findings = load_json(path)
+    if data is None:
+        return {}, findings
+    lookup = data.get("topography_lookup") if isinstance(data, dict) else None
+    if not isinstance(lookup, dict):
+        return {}, findings + [(FAIL, "%s: no 'topography_lookup' object" % path.name)]
+    return lookup, findings
+
+
+def _group4_candidate_topography(repo: Path):
+    """
+    (group4_codes, all_topography_codes, findings) — the topography codes GROUP IV can
+    actually carry, and the full universe of real topography codes, both read from
+    `data/shared/topography_codes.json` rather than hand-transcribed or swept from the
+    whole registry's topography list (see the retired GROUP4_TOPOGRAPHY_SWEEP comment,
+    above check_group4_topography_map()).
+
+    A code is Group IV's when its own `topography_lookup` entry's `candidate_groups`
+    list names group 4 (34 of them, 2026-09-18). The special value
+    `"route_by_morphology"` (currently only C80.9, Unknown Primary Site) is NOT a
+    member of this set on purpose: it is not a site Group IV owns by candidacy, it is a
+    site every group can reach depending on morphology, and it is the router's declared
+    catch-all target — the "everything else" half of rule 5 checks for that separately,
+    by reading presentation_router.json's own `tree_routing.default`, not by folding it
+    into this universe.
+    """
+    lookup, findings = _load_topography_lookup(repo)
+    codes = set()
+    for code, entry in lookup.items():
+        if not isinstance(entry, dict):
+            continue
+        cg = entry.get("candidate_groups")
+        if isinstance(cg, list) and 4 in cg:
+            codes.add(code)
+    return codes, set(lookup), findings
+
+
 def check_group3_topography_map(ctx: DTContext, layer1: Path):
     """
     RULE 12 — the topography map is TOTAL and DISJOINT (contract §3, §6 rule 12).
@@ -6097,13 +6213,29 @@ def _scan_group4_banned_code(ctx: DTContext, repo: Path, code, scan_nos_fallback
                               scan_alias_targets, rule, cite, what):
     """
     Shared scanner for RULE 3 (8683) and RULE 8 (9364) — bound to CODE FIELDS by name,
-    never to a substring search of the file, because both rules explicitly want the
-    contract's own explanatory prose to be free to name the digits: §0.2 explains why
-    8683 is excluded and §2.4 explains what 9364 now is, both in `coding_note` text
-    that must not fail. A banned code in CLERK-FACING text still fails, because that is
-    a code the clerk can read and copy (same split check_group3_absent_codes() makes
-    for rule 7). `alias`/`also_known_as` are never scanned — those are what a clerk
-    TYPES, not what the tool emits.
+    never to a substring search of the file. Both rules ban the code as something this
+    file EMITS — a `morphology_code` (RULE 8), plus a `nos_fallback_code` or an alias
+    TARGET (RULE 3 only, per its own wider wording) — never as a string that merely
+    appears somewhere in it.
+
+    Prose is exempt, author-facing OR clerk-facing, and that is deliberate, not an
+    oversight: neither contract §0.2 (8683) nor §2.4/ruling D4 (9364) says anything
+    about text, only about what gets EMITTED (contract §8 rules 3 and 8, each read
+    literally — "must not appear as a morphology_code", nothing about `reason`). Both
+    codes are real, valid ICD-O-3.2 codes that this group legitimately talks ABOUT: a
+    `coding_note` explains why 8683 has no Group IV entry, and a `refer_group` branch's
+    `reason` is exactly where 9364 belongs, because Group IV's own pPNET aliases refer
+    OUT to Group VIII/IX and the clerk needs to be told what they will find there —
+    Group 3 sets the same precedent, naming its own referral targets' codes in its
+    `refer_group` `reason` text. Withholding the digits from prose would leave a
+    referral with no answer, so a banned code in CLERK-FACING text is a WARN — recorded
+    so it can be reviewed, never blocking the build — and author-facing text (never
+    displayed at all) is a WARN for the same reason it always was. This split is
+    NARROWER than check_group3_absent_codes()'s (rule 7), which does fail clerk-facing
+    text: rule 7's codes do not exist in ICD-O-3.2 at all, so naming one in prose can
+    only be a mistake with nothing legitimate to protect; 8683 and 9364 are real codes
+    with a real, correct reason to be named. `alias`/`also_known_as` are never scanned
+    — those are what a clerk TYPES, not what the tool emits.
     """
     out, hits = [], 0
     rx = _code_token_re(code)
@@ -6112,6 +6244,14 @@ def _scan_group4_banned_code(ctx: DTContext, repo: Path, code, scan_nos_fallback
         code_keys.append("nos_fallback_code")
     if scan_alias_targets:
         code_keys.append("maps_to_morphology_codes")
+
+    scope_bits = ["a morphology_code"]
+    if scan_nos_fallback:
+        scope_bits.append("a nos_fallback_code")
+    if scan_alias_targets:
+        scope_bits.append("an alias target")
+    scope_label = (scope_bits[0] if len(scope_bits) == 1 else
+                   ", ".join(scope_bits[:-1]) + " or " + scope_bits[-1])
 
     def scan(container, where):
         nonlocal hits
@@ -6138,10 +6278,13 @@ def _scan_group4_banned_code(ctx: DTContext, repo: Path, code, scan_nos_fallback
                                       "the code is written in exactly these terms "
                                       "(%s)" % (rule, loc, code, cite)))
                 elif key in CLERK_FACING_TEXT_KEYS:
-                    hits += 1
-                    out.append((FAIL, "%s — %s prints %s in text a clerk reads. A "
-                                      "code on screen is a code that gets entered "
-                                      "(%s)" % (rule, loc, code, cite)))
+                    out.append((WARN, "%s — %s prints %s in text a clerk reads. That "
+                                      "is fine and expected — %s bans %s only as %s, "
+                                      "never in prose, and naming the destination "
+                                      "code in a `reason`/`hint` is how a referral or "
+                                      "an exclusion tells the clerk what to expect "
+                                      "(%s)" % (rule, loc, code, rule, code, scope_label,
+                                                cite)))
 
     scan(ctx.data, ctx.name)
     if scan_alias_targets:
@@ -6160,13 +6303,6 @@ def _scan_group4_banned_code(ctx: DTContext, repo: Path, code, scan_nos_fallback
         return out
     if hits:
         return out
-    scope_bits = ["a morphology_code"]
-    if scan_nos_fallback:
-        scope_bits.append("a nos_fallback_code")
-    if scan_alias_targets:
-        scope_bits.append("an alias target")
-    scope_label = (scope_bits[0] if len(scope_bits) == 1 else
-                   ", ".join(scope_bits[:-1]) + " or " + scope_bits[-1])
     return out + [(OK, "%s — %s appears nowhere as %s in group_04_dt.json%s (%s)"
                    % (rule, code, scope_label,
                       " or its alias file" if scan_alias_targets else "", cite))]
@@ -6181,8 +6317,10 @@ def check_group4_absent_codes(ctx: DTContext, repo: Path):
     Group IV admits behaviour 3 only, so there is no 8683/3 and no Group IV entry for
     it at all (§0.2 — IARC's own *Summary of main changes* names 8683/0 as the single
     deliberate survivor of the whole 868-870 block, and WHO 2022 independently renamed
-    the entity CoGNET). It remains legitimate as an ALIAS INPUT and, deliberately, in
-    author-facing prose explaining the exclusion — see _scan_group4_banned_code().
+    the entity CoGNET). It remains legitimate as an ALIAS INPUT and, in ANY prose —
+    author-facing or clerk-facing — explaining the exclusion; the contract bans 8683
+    only from the three EMITTING fields named above, never from text. See
+    _scan_group4_banned_code().
     """
     if ctx.group != GROUP4:
         return []
@@ -6204,11 +6342,12 @@ def check_group4_not_a_group_code(ctx: DTContext, repo: Path):
     pPNET. Group IV's own "peripheral PNET" aliases (alias-instruction entries 30, 31,
     33) resolve through a CROSS-GROUP REFERRAL — Group VIII at bone, Group IX at soft
     tissue — never through a Group IV `morphology_code`. Narrower scope than rule 3:
-    9364 is a real, valid code that `refer_code` hints and D4's own `coding_note`
-    reasoning may legitimately carry, so only the emitting field is bound, and neither
-    nos_fallback_code nor the alias file is scanned (a Group IV alias file entry
-    naming 9364 as WHERE THE CASE GOES, via refer_group/refer_code, is exactly D4's
-    design, not a violation of it).
+    9364 is a real, valid code that `refer_code`, `reason`, `hint` and D4's own
+    `coding_note` reasoning may all legitimately carry — the contract's own wording
+    ("must not appear as a `morphology_code`") binds one field, not the file's prose —
+    so only the emitting field is bound, and neither nos_fallback_code nor the alias
+    file is scanned (a Group IV alias file entry naming 9364 as WHERE THE CASE GOES,
+    via refer_group/refer_code, is exactly D4's design, not a violation of it).
     """
     if ctx.group != GROUP4:
         return []
@@ -6276,29 +6415,49 @@ def check_group4_9504_unreachable(ctx: DTContext):
                  "anywhere in the file names it (rule 4)" % GROUP4_UNREACHABLE_CODE)]
 
 
-def check_group4_topography_map(ctx: DTContext, layer1: Path):
+def check_group4_topography_map(ctx: DTContext, repo: Path):
     """
     RULE 5 (contract §5, §8 rule 5) — the four-tree topography map is TOTAL and
-    DISJOINT over every topography Group IV can carry, and 9501-9504 are unreachable
-    from any tree whose declared topography sits inside C70.0-C72.9 — that band
-    belongs to Group III (contract §0.6, §2.5).
+    DISJOINT over every topography Group IV can carry, 9501-9504 are unreachable from
+    any tree whose declared topography sits inside C70.0-C72.9 — that band belongs to
+    Group III (contract §0.6, §2.5) — and the router names a working catch-all for
+    everything the map does not enumerate.
 
-    Same architecture as check_group3_topography_map(): topography is declared per
-    tree under one of TREE_TOPOGRAPHY_KEYS, expanded via _expand_topography(), and
-    swept against what Layer 1 actually enumerates via _existing_topography() —
-    never against a hand-written list of subcodes. See GROUP4_TOPOGRAPHY_SWEEP's own
-    comment for why a Group-IV analogue of GROUP3_TREE_TOPOGRAPHY (a hardcoded dict of
-    every tree's subcodes, cross-checked as a WARN) is deliberately NOT built here:
-    Group IV's declared scope is close to the whole ICD-O topography space rather than
-    one anatomical compartment, and transcribing C10/C11/C30-C32/C38/C47/C48/C74/C75/
-    C77's own subcodes from memory is exactly the kind of recall this file's own
-    design note (top of file) says never to trust for a check.
+    REVISED 2026-09-18 — the original sweep here generated every C00.0-C80.9 slot and
+    swept it against Layer 1's REDCap topography list, which is the whole REGISTRY's
+    topography universe, not Group IV's: C50.x breast, C34.x lung and C61.9 prostate
+    all came back "resolve to NO tree", 292 of them, none a Group IV defect, because no
+    Group IV tree was ever meant to claim them. Two things that sweep got wrong, now
+    fixed:
 
-    The second half — the C70-72 cross-check — reuses the SAME `declared` map: any
-    tree whose own declared topography intersects C70.0-C72.9 must never still emit
-    9501, 9502, 9503 or 9504 from a node inside it. Bound to direct morphology_code
-    emissions (ctx.emissions()), matching the contract's own, simpler wording here
-    (unlike rule 4, this clause does not separately name nos_fallback paths).
+    1. Group IV's four trees positively claim only the codes `topography_codes.json`'s
+       `topography_lookup` names for group 4 (34 of them) — read by
+       _group4_candidate_topography() rather than hand-transcribed, for the same
+       reason a Group-IV analogue of GROUP3_TREE_TOPOGRAPHY is not hand-built here:
+       transcribing C10/C11/C30-C32/C38/C47/C48/C74/C75/C77's own subcodes from memory
+       is exactly the kind of recall this file's own design note (top of file) says
+       never to trust for a check. That 34-code universe, not the whole topography
+       space, is what "TOTAL and DISJOINT" is swept over below.
+    2. Everything else Group IV can carry — contract §5's own words — is NOT covered
+       by an enumerated list at all: it reaches `g4_other_peripheral` through
+       presentation_router.json's `groups["4"].tree_routing.default`, exactly the
+       mechanism app.js's own `routedTree()` refuses to run without (it throws
+       "declares no default tree" when `tr.default` is missing). So the second half of
+       this check reads that same `default` and fails if it is missing or names a tree
+       this file does not declare — a group whose trees do not cover everything and
+       which declares no catch-all IS a dead end, and it has to fail exactly like an
+       unrouted code does. (The generic cross-layer check_presentation_router() already
+       verifies an EXISTING default's entry_node resolves to a document_inventory node
+       and that its tree_id is declared in metadata — this check adds the one thing
+       that check cannot: that a default exists at all, and, as a Group-4-scoped
+       sanity check tied to the disjoint/total sweep above, that it names a tree this
+       file actually has.)
+
+    The C70-72 cross-check is unchanged: it reuses the SAME `declared` map — any tree
+    whose own declared topography intersects C70.0-C72.9 must never still emit 9501,
+    9502, 9503 or 9504 from a node inside it. Bound to direct morphology_code emissions
+    (ctx.emissions()), matching the contract's own, simpler wording here (unlike rule
+    4, this clause does not separately name nos_fallback paths).
     """
     if ctx.group != GROUP4:
         return []
@@ -6349,19 +6508,28 @@ def check_group4_topography_map(ctx: DTContext, layer1: Path):
         for code in codes:
             owners.setdefault(code, []).append(tree_id)
 
-    existing, topo_source = _existing_topography(layer1)
-    if existing:
-        sweep = [c for c in GROUP4_TOPOGRAPHY_SWEEP if c in existing]
+    # -- the universe: what Group IV can actually carry (contract §5), not the whole
+    # registry's topography space — see this function's own docstring and the retired
+    # GROUP4_TOPOGRAPHY_SWEEP comment for why a hand-written or REDCap-wide sweep is
+    # exactly the false-FAIL this rule must not reproduce.
+    universe, all_topo_codes, topo_findings = _group4_candidate_topography(repo)
+    out.extend(topo_findings)
+    if universe:
+        sweep = sorted(universe)
     else:
         sweep = sorted(set().union(*declared.values()))
-        out.append((WARN, "RULE 5 — the REDCap topography option list could not be "
-                          "read, so the sweep falls back to the codes this file's "
-                          "own trees declare. A real topography code that no tree "
-                          "owns would not be caught"))
+        out.append((WARN, "RULE 5 — data/shared/topography_codes.json's "
+                          "topography_lookup could not be read, so the sweep falls "
+                          "back to the codes this file's own trees declare. A real "
+                          "Group IV topography that no tree owns would not be caught"))
 
     unrouted = [c for c in sweep if not owners.get(c)]
     duplicated = [(c, owners[c]) for c in sweep if len(owners.get(c, [])) > 1]
     outside = sorted(set(owners) - set(sweep))
+    # A code a tree claims that is not even a real topography code at all (a typo, or
+    # a stale sub-code) — checked against the FULL lookup, not just Group IV's 34, so
+    # this catches the mistake regardless of which group the typo happens to resemble.
+    unreal = sorted(c for c in owners if all_topo_codes and c not in all_topo_codes)
 
     if unrouted:
         out.append((FAIL, "RULE 5 — %d topography code(s) resolve to NO tree: %s. A "
@@ -6374,9 +6542,48 @@ def check_group4_topography_map(ctx: DTContext, layer1: Path):
                           "picks whichever row the engine reads first — which is not "
                           "a decision anybody made (contract §5, §8 rule 5)"
                     % (code, len(trees_), ", ".join(sorted(trees_)))))
+    for code in unreal:
+        out.append((FAIL, "RULE 5 — tree(s) %s declare topography %s, which is not in "
+                          "data/shared/topography_codes.json at all — a case can never "
+                          "actually carry it, so the code that would route it there is "
+                          "untested and probably wrong (contract §5, §8 rule 5)"
+                    % (", ".join(sorted(owners[code])), code)))
     if outside:
         out.append((WARN, "%d topography code(s) are owned by a tree but are "
                           "outside the sweep: %s" % (len(outside), ", ".join(outside))))
+
+    # -- the catch-all: everything the 34-code universe above does NOT enumerate has
+    # to still resolve, through presentation_router.json's own declared default —
+    # never through an enumerated list (contract §5's "g4_other_peripheral is the
+    # catch-all"). app.js's routedTree() itself refuses to run without one; this is
+    # that same requirement, checked at build time instead of discovered by a clerk.
+    router, router_findings = load_json(Path(repo) / "data" / "shared"
+                                         / "presentation_router.json")
+    out.extend(router_findings)
+    if router is not None:
+        group_meta = (router.get("groups") or {}).get(str(GROUP4))
+        tr = group_meta.get("tree_routing") if isinstance(group_meta, dict) else None
+        default = tr.get("default") if isinstance(tr, dict) else None
+        if not isinstance(default, dict) or not default.get("tree_id"):
+            out.append((FAIL, "RULE 5 — presentation_router.json "
+                              "groups[\"4\"].tree_routing declares no usable "
+                              "'default'. Group IV's trees claim only %d of the "
+                              "topography codes it can carry (contract §5: "
+                              "\"C00.0-C80.9 for fourteen of its eighteen codes\") — "
+                              "without a declared catch-all, a case whose topography "
+                              "is not one of those %d reaches the router, finds no "
+                              "handoff and dead-ends, exactly as app.js's own "
+                              "routedTree() refuses to run without one (contract §5, "
+                              "§8 rule 5)" % (len(universe), len(universe))))
+        else:
+            known_trees = {t["tree_id"] for t in ctx.trees} | set(ctx.metadata_tree_ids)
+            if ctx.nodes and default["tree_id"] not in known_trees:
+                out.append((FAIL, "RULE 5 — presentation_router.json "
+                                  "groups[\"4\"].tree_routing.default names tree_id "
+                                  "%r, which %s does not declare. The catch-all for "
+                                  "everything else Group IV can carry would route to "
+                                  "a tree that does not exist in this file (contract "
+                                  "§5, §8 rule 5)" % (default["tree_id"], ctx.name)))
 
     g3_trees = {tid for tid, codes in declared.items()
                 if codes & set(GROUP4_G3_OVERLAP_TOPOGRAPHY)}
@@ -6393,10 +6600,11 @@ def check_group4_topography_map(ctx: DTContext, layer1: Path):
 
     if [f for f in out if f[0] == FAIL]:
         return out
-    out.append((OK, "topography map is total and disjoint: all %d recordable "
-                    "code(s) resolve to exactly one of %d tree(s), and no tree "
-                    "declaring C70.0-C72.9 emits 9501-9504 (rule 5)"
-                % (len(sweep), len(declared))))
+    out.append((OK, "topography map is total and disjoint: all %d Group IV "
+                    "candidate topography code(s) resolve to exactly one of %d "
+                    "tree(s), the router's default catch-all resolves to a tree this "
+                    "file declares, and no tree declaring C70.0-C72.9 emits "
+                    "9501-9504 (rule 5)" % (len(sweep), len(declared))))
     return out
 
 
@@ -7279,7 +7487,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group4_behaviour_declaration, ctx)            # rule 2
         report.run(check_group4_absent_codes, ctx, repo)               # rule 3
         report.run(check_group4_9504_unreachable, ctx)                 # rule 4
-        report.run(check_group4_topography_map, ctx, layer1)           # rule 5
+        report.run(check_group4_topography_map, ctx, repo)              # rule 5
         report.run(check_visser_table4_gate, ctx)                      # rule 6
         report.run(check_group4_not_a_group_code, ctx, repo)           # rule 8
         # the four new checks (three of them are per-file)
