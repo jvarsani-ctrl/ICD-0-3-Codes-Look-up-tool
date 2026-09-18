@@ -748,6 +748,39 @@ read (§10.1), which also settled the edition question. Both are struck from thi
 4. **D3 is settled — see below. The Hyams table is held. Nothing in this group now waits on a
    paywall.**
 
+### 10.1b The behaviour code is IARC's, not WHO's — do not let anyone "fix" it
+
+**Recorded 18 September 2026, because three sources now invite the wrong inference.**
+
+Juhlin CC, *The road ahead: a brief guide to navigating the 2022 WHO classification of endocrine
+and neuroendocrine tumours*, Journal of Clinical Pathology 2025;78:1–10
+([10.1136/jcp-2023-209060](https://doi.org/10.1136/jcp-2023-209060), `Group 4 Papers/1.full.pdf`),
+says of pheochromocytoma and paraganglioma that *"they display some malignant potential, the
+overall risk of distant metastasis is low"* (p. 8), and notes that the fifth WHO classification
+*"does not endorse the use of PASS or GAPP"*. It states **no ICD-O code for any entity**, as does
+Mete 2022, as does Agarwal 2023.
+
+Read carelessly that looks like a WHO source declining to call these tumours malignant, and
+therefore like an argument against `/3`. **It is not, and the two statements are about different
+things.**
+
+- **WHO abolished the *adjectives*.** Mete 2022, p. 100: *"Prior to the 2017 WHO classification
+  (also known the 4th edition), PPGLs… were accompanied by the adjectives 'benign' or 'malignant'.…
+  As a result, all PPGLs have been considered as malignant neoplasms with variable metastatic
+  potential."* The reason is that no histological feature reliably predicts which tumour will
+  metastasise — which is also why PASS and GAPP are not endorsed.
+- **IARC implemented that as a behaviour code.** *Deleted codes and their terms* records
+  `8680/0 Paraganglioma, benign  Deleted` and `8680/1 Paraganglioma, NOS  Moved to /3`, with the
+  same `/1 → /3` move for `8681`, `8682`, `8690`, `8691`, `8692`, `8693`, and `8700/0` deleted.
+- **ICD-O behaviour is not a prognosis.** `/3` means *malignant, primary site*. It does not claim
+  the tumour will metastasise, and a low observed metastatic rate is not evidence against it.
+
+**So the `/3`-only rule for Group IV rests on ICD-O-3.2 and IARC's deletion list, which are Layer
+1, and never on a WHO paper.** A WHO paper is the second source for *which entity exists*, never
+for *which number carries it* — none of the three states a code at all. Anyone citing Juhlin to
+argue these codes should carry a lower behaviour has confused a clinical risk statement with a
+coding instruction.
+
 ### 10.2b D3, settled on evidence
 
 > **Rooper LM.** *Proceedings of the 2023 North American Society of Head and Neck Pathology
@@ -776,6 +809,18 @@ And, from the introduction: *"In the 5th edition WHO, there are no substantive a
 definition of olfactory neuroblastoma (ONB)—a neuroectodermal neoplasm that is still regarded as
 unique to the sinonasal tract"*. The paper's section heading is **"Olfactory Neuroblastoma"**,
 singular.
+
+**A second, independent zero.** Agarwal A, et al., *Update from the 5th Edition of the WHO
+Classification of Nasal, Paranasal, and Skull Base Tumors*, AJNR 2023;44(10):1116–1125
+([10.3174/ajnr.A7960](https://doi.org/10.3174/ajnr.A7960), `Group 4 Papers/1116.full-2.pdf`), read
+in full on 18 September 2026, returns **`neurocytoma` 0, `neurogenic` 0, `neuroepithelioma` 0**.
+`esthesioneuro` appears twice, both inside reference titles as a parenthetical synonym for
+olfactory neuroblastoma, never in the body. Its own summary table lists only *"Olfactory
+neuroblastoma"* under the 5th edition's "other" category (p. 1117), described as *"malignant,
+neuroectodermal neoplasms"* (pp. 1122–23).
+
+Two papers on the WHO 5th-edition sinonasal classification, read in full, from different groups and
+different journals, both silent on all three terms.
 
 **WHO's 5th edition recognises one entity here.** *Olfactory neurocytoma* and *olfactory neurogenic
 tumour* are not mentioned at all; *olfactory neuroepithelioma* survives only as a paper title in the
