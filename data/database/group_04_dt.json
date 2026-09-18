@@ -1661,7 +1661,7 @@
           "step_number": 4,
           "step_label": "Constitutional genetics",
           "question": "Was constitutional (germline) SDHx testing performed, and if so, what gene and result are recorded?",
-          "hint": "This does not change the code. Parasympathetic head and neck paraganglioma is predominantly SDHD (46.5%), then SDHB (30.2%), then SDHC (16.3%) (Mete 2022, Supplementary Table S3). Record the gene and result for the surveillance record; site alone, in the table that follows, sets the morphology code.",
+          "hint": "This does not change the code. Parasympathetic head and neck paraganglioma is predominantly SDHD (46.5%), then SDHB (30.2%), then SDHC (16.3%) (Pfister 2022, Supplementary Table S3). Record the gene and result for the surveillance record; site alone, in the table that follows, sets the morphology code.",
           "clinical_alert": null,
           "coding_note": "Germline genetics versus somatic cytogenetics: contract Sec.0.1 item 7. molecular_freetext is used because the result never resolves the code. SDHB IHC loss recorded upstream at hn_ihc_checklist is what typically triggers this question; a germline finding here is why it triggers genetic testing rather than anything diagnostic.",
           "captured_variables": [
