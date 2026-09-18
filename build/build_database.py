@@ -533,6 +533,69 @@ ICDO32_SOURCE_TERM_EXEMPTIONS = {
 }
 
 
+# --------------------------------------------------------------------------------------
+# Group 4 build contract §3, §8 — the one new field (behaviour_exclusion) and the
+# nine validation rules it and the rest of the group's schema force.
+# --------------------------------------------------------------------------------------
+
+GROUP4 = 4
+
+# §1: "Behaviour declaration `3` — exactly one, across every Group IV range." Named and
+# cited here, the same way GROUP3_BEHAVIOURS_DECLARED is above, so RULE 2 below reads
+# the declaration off a constant rather than comparing against a bare "3" written inline
+# in the loop. It is NOT a general per-group lookup: Group III's own declaration is
+# validated by check_group3_behaviour_split()'s stronger, per-code, ICD-O-3.2-computed
+# rule (necessary there because Group III has eighteen behaviour-overloaded codes; Group
+# IV has none — contract §1.2 — so a flat membership test is the whole rule). Extending
+# this constant into a cross-group table and running the same flat check over Group III
+# was considered and rejected: it cannot be verified against the real group_03_dt.json
+# without running the build this task must not run, and "do not regress Groups 1-3" is
+# the harder constraint. One group, one constant, one scoped check — the same shape
+# every other group-specific rule in this file already takes.
+GROUP4_BEHAVIOUR_DECLARED = {"3"}
+
+# §0.2 / §8 rule 3 — the one ICCC-3-named code ICD-O-3.2 does not carry at a declared
+# behaviour. 8683 exists only at /0 (Gangliocytic paraganglioma); Group IV admits /3
+# only, so there is no 8683/3 and no Group IV entry for it (§0.2).
+GROUP4_ABSENT_CODE = "8683"
+
+# §2.4 / §8 rule 8, ruling D4 — 9364 is Ewing sarcoma AND the peripheral neuroectodermal
+# tumour / pPNET code (IARC's own *Summary of main changes*). Group IV's pPNET aliases
+# refer OUT to Group VIII/IX; 9364 must never be what a Group IV terminal emits.
+GROUP4_NOT_A_GROUP_CODE = "9364"
+
+# §2.3 / §8 rule 4, ruling D2 — authored in morphology_entries[] so an alias or a
+# historical record can resolve, reachable from no tree: no current WHO entity lives on
+# the stem, but ICD-O-3.2 does not mark it [obs] either, so the Group 3 obsolete_term
+# precedent (thirteen entries, same shape) governs rather than §1.1's absent-code rule.
+GROUP4_UNREACHABLE_CODE = "9504"
+
+# §4.2 rule 1 (Visser Table 4, p.06) — the only two codes a no_tissue terminal may name.
+GROUP4_VISSER_TABLE4_CODES = {"9500", "8700"}
+
+# §0.6, §2.5 — the topography band ICCC-3 gives to Group III for 9501-9504. A Group IV
+# tree whose OWN captured topography sits inside it may never still be able to emit one
+# of the four (§8 rule 5's second clause).
+GROUP4_G3_OVERLAP_CODES = {"9501", "9502", "9503", "9504"}
+GROUP4_G3_OVERLAP_TOPOGRAPHY = (
+    ["C70.%d" % d for d in range(10)]
+    + ["C71.%d" % d for d in range(10)]
+    + ["C72.%d" % d for d in range(10)]
+)
+
+# §5 — "the map must be TOTAL and DISJOINT over every topography Group IV can carry."
+# Unlike GROUP3_TOPOGRAPHY_SWEEP (four hand-named C7x/C8x ranges), Group IV's own scope
+# is C00.0-C80.9 for fourteen of its eighteen codes (contract §5) — effectively the
+# whole ICD-O topography space rather than one anatomical compartment. Hand-transcribing
+# every C10/C11/C30-C32/C38/C47/C48/C74/C75/C77 subcode from memory to build a Group-IV
+# equivalent of GROUP3_TREE_TOPOGRAPHY risks getting exactly the subcodes wrong that this
+# whole file exists to stop being recalled rather than checked — so the candidate sweep
+# below is generated mechanically (every C00.0-C80.9 slot) and, like Group III's sweep,
+# is then filtered down to what Layer 1's own topography option list actually enumerates
+# by _existing_topography() before anything is asserted about it.
+GROUP4_TOPOGRAPHY_SWEEP = ["C%02d.%d" % (n, d) for n in range(0, 81) for d in range(10)]
+
+
 # Raw-hex ban (data.md §5) — the three front-end files, wherever they land in the repo.
 HEX_SCANNED_FILENAMES = ["index.html", "app.js", "uccf-tool.css"]
 HEX_RE = re.compile(r"#(?:[0-9a-fA-F]{3,8})(?![0-9A-Za-z_-])")
@@ -2199,14 +2262,17 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
     i.e. the option is demonstrably spoken for by the sibling. Anything less than all
     three and the mismatch is a FAIL — the exemption can never absorb ordinary drift.
 
-    GROUP 3 IS OUT OF SCOPE, and is validated by something stronger (Group 3 build
-    contract §5.2). For that group Layer 1 for code identity is ICD-O-3.2, not the REDCap
-    option file: check_icdo32_round_trip() requires every (code, name, behaviour) triple
-    the engine can emit to exist verbatim in icdo32.sqlite. That is a superset of this
-    check's question, because the option list itself carries 28 (code, term) pairs the
-    database does not — matching them would inherit the errors rather than catch them. The
-    option strings are not dropped; they move to the alias file and are checked the other
-    way round (every alias resolves to a valid triple; no alias is ever emitted).
+    GROUPS 3 AND 4 ARE OUT OF SCOPE, and are validated by something stronger (Group 3
+    build contract §5.2; Group 4 build contract §1.1a, which adopts the same rule for the
+    same reason — §0.3 lists four Group IV divergences between the REDCap option strings
+    and the ICD-O-3.2 preferred terms). For those groups Layer 1 for code identity is
+    ICD-O-3.2, not the REDCap option file: check_icdo32_round_trip() requires every
+    (code, name, behaviour) triple the engine can emit to exist verbatim in icdo32.sqlite.
+    That is a superset of this check's question, because the option list itself carries
+    (code, term) pairs the database does not — matching them would inherit the errors
+    rather than catch them. The option strings are not dropped; they move to the alias
+    file and are checked the other way round (every alias resolves to a valid triple; no
+    alias is ever emitted).
 
     Nothing about Groups 1 and 2 changes. Their Layer 1 is still the option file, the
     sibling exemption still works exactly as described above, and the scoping below is a
@@ -2215,13 +2281,14 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
     flag in the file exempting itself (rule 8).
     """
     out = []
-    if ctx.group == GROUP3:
-        return [(NOTE, "group 3: morphology_name is checked by check_icdo32_round_trip() "
+    if ctx.group in (GROUP3, GROUP4):
+        return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
                        "against icdo32.sqlite instead of against the REDCap option file "
-                       "(contract §5.2). That is the stronger question — it rejects the 28 "
-                       "(code, term) pairs the option list carries that ICD-O-3.2 does not, "
-                       "where this check would have inherited them. Groups 1 and 2 are "
-                       "unaffected.")]
+                       "(contract §5.2 for Group 3; §1.1a for Group 4). That is the "
+                       "stronger question — it rejects (code, term) pairs the option list "
+                       "carries that ICD-O-3.2 does not, where this check would have "
+                       "inherited them. Groups 1 and 2 are unaffected."
+                       % ctx.group)]
     options = redcap_options.get(ctx.group)
     if not options:
         return [(NOTE, "no REDCap options parsed for group %d — exact-string check skipped"
@@ -5492,6 +5559,14 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     code at this behaviour", which the option list cannot answer for itself. Groups 1 and 2
     keep the REDCap check exactly as it was; nothing here runs on them.
 
+    EXTENDED TO GROUP 4 (Group 4 build contract §1.1a): "Groups 1 and 2 keep their
+    current check_redcap_exact_names behaviour — this must not regress them" is §8 rule
+    7's own wording, so the extension is the group-scoping guard below admitting GROUP4
+    alongside GROUP3 — nothing else in this function changes, and §0.3's four REDCap/
+    ICD-O-3.2 divergences (Middle ear paraganglioma, Carotid body paraganglioma,
+    Ganglioneuroblastoma vs Ganglioneuroma, Teratoid medulloepithelioma) are exactly the
+    kind of drift this check exists to catch instead of inherit.
+
     Rule 8: the comparison keys off the database and off NOTHING in the file. No flag
     exempts a name. `redcap_option_verified`, whatever it says, is not read here — that
     flag was authored to mean "not yet checked" and was read as "exempt from checking",
@@ -5509,13 +5584,14 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     Fix the typo upstream and the third condition fails, so the exemption FAILS rather than
     quietly outliving its reason. An exemption that cannot collapse is a hole (data.md §5A).
     """
-    if ctx.group != GROUP3:
+    if ctx.group not in (GROUP3, GROUP4):
         return []
     index, err = load_icdo32(layer1)
     if err:
         return [(WARN, "RULE 13 could not run: %s. morphology_name is NOT validated for "
                        "this group — check_redcap_exact_names() steps aside for Group 3 "
-                       "(contract §5.2) on the understanding that this check replaces it, "
+                       "and Group 4 (contract §5.2, §1.1a) on the understanding that this "
+                       "check replaces it, "
                        "so with the database absent nothing is checking the names at all"
                  % err)]
 
@@ -5813,6 +5889,647 @@ def check_iccc3_subgroup_by_topography(ctx: DTContext, layer1: Path):
     out.append((OK, "%d iccc3_subgroup_by_topography[] rule list(s): every rule names a "
                     "subgroup ICCC-2017 assigns to that code at that topography, and so "
                     "does every entry's own default (contract §1.3)" % seen))
+    return out
+
+
+# --------------------------------------------------------------------------------------
+# B4b. Group 4 schema extension (build contract §3) and its nine validation rules (§8).
+# Each check is scoped to GROUP4 only, the same way every Group III check above is
+# scoped to GROUP3 only — a check that has not been verified against the real file of
+# another group must not run over it (this task's own standing rule: do not run the
+# real build). Several of these pass VACUOUSLY on a file with no trees yet, or no
+# tree yet: an empty decision_trees[] contains no violation of "9504 is unreachable"
+# or "no no_tissue terminal breaks the Visser gate", and the functions say so with an
+# empty return rather than manufacturing an OK line for something they never looked at.
+# --------------------------------------------------------------------------------------
+
+def check_behaviour_exclusion(ctx: DTContext, layer1: Path):
+    """
+    RULE 1 (contract §3, §8 rule 1, ruling D1) — the `behaviour_exclusion` field.
+
+    It exists because the schema had no way to say "this histological entity exists,
+    has a real ICD-O code, and that code's behaviour sits outside the group's own
+    declaration" — a ganglioneuroma is 9490/0, and ICCC-3 Group IV admits behaviour 3
+    only, so it is not a registrable Group IV cancer and there is no other ICCC-3 group
+    to refer it to (§2.1). Six checks on every `behaviour_exclusion` block found
+    anywhere in the tree:
+
+        1. all six keys present and non-null (non-empty for the strings);
+        2. icdo_code/icdo_behaviour/icdo_term round-trip to icdo32.sqlite, and the term
+           must be the database's own PREFERRED term at that (code, behaviour) pair —
+           a Synonym or a Related term is a real string but not what the field promises;
+        3. icdo_behaviour is NOT a member of the group's own declaration
+           (GROUP4_BEHAVIOUR_DECLARED). THIS IS THE SUBTLE ONE: a behaviour_exclusion
+           naming an ADMITTED behaviour would hide a code that should have been emitted
+           as a real Group IV entry — the field is an escape hatch for behaviours the
+           group cannot code, not a second way to skip coding one it can;
+        4. the branch does not ALSO carry morphology_code — the two are mutually
+           exclusive destinations (app.js's advance() checks morphology_code first, so
+           an author who wrote both would never notice the exclusion silently doing
+           nothing at runtime);
+        5. reason is non-empty — it is CLERK-FACING and rendered on the output panel
+           (app.js excludeBehaviour()/renderOutput()), never a coding_note.
+
+    Scoped to `behaviour_exclusion` objects found by walk_dicts() over every node in
+    THIS group's file only (contract §3's last line: "Group 4 only. The engine
+    supports it; no other group is obliged to adopt it.") — Groups 5-12 may add their
+    own instances later, on their own evidence, and this check does not presume to
+    validate them until then.
+    """
+    if ctx.group != GROUP4:
+        return []
+    out = []
+    seen = 0
+    index, err = load_icdo32(layer1)
+    if err:
+        out.append((WARN, "RULE 1 could not round-trip icdo_code/icdo_behaviour/"
+                          "icdo_term against icdo32.sqlite: %s. The shape, behaviour-"
+                          "declaration and reason checks still ran" % err))
+
+    required = ("icdo_code", "icdo_behaviour", "icdo_term", "group_declares",
+                "reason", "registrar_decision_required")
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            be = holder.get("behaviour_exclusion")
+            if not isinstance(be, dict):
+                continue
+            seen += 1
+            loc = "node %s (%s) behaviour_exclusion" % (node_id, where)
+
+            missing = []
+            for key in required:
+                if key not in be or be[key] is None:
+                    missing.append(key)
+                elif isinstance(be[key], str) and not be[key].strip():
+                    missing.append(key)
+            if missing:
+                out.append((FAIL, "%s is missing, null or empty for %s — all six keys "
+                                  "are REQUIRED (contract §3, §8 rule 1)"
+                            % (loc, ", ".join(missing))))
+            rdr = be.get("registrar_decision_required")
+            if rdr is not None and not isinstance(rdr, bool):
+                out.append((FAIL, "%s: registrar_decision_required must be a boolean, "
+                                  "got %r" % (loc, rdr)))
+
+            code = as_code(be.get("icdo_code"))
+            beh = be.get("icdo_behaviour")
+            beh_s = None if beh is None else str(beh).strip()
+            term = be.get("icdo_term")
+            if code and beh_s is not None and isinstance(term, str) and index:
+                terms = index.get((code, beh_s))
+                if not terms:
+                    out.append((FAIL, "%s: ICD-O-3.2 carries no term at all for %s/%s "
+                                      "— icdo_code/icdo_behaviour do not round-trip "
+                                      "(contract §3, §8 rule 1)" % (loc, code, beh_s)))
+                elif term not in terms:
+                    near = _nearest(term, terms)
+                    out.append((FAIL, "%s: icdo_term %r is not a term ICD-O-3.2 "
+                                      "carries for %s/%s.%s (contract §3, §8 rule 1)"
+                                % (loc, term, code, beh_s,
+                                   ("\n               ICD-O-3.2 has  : %r" % near)
+                                   if near else "")))
+                else:
+                    level, obs = terms[term]
+                    if level != "Preferred":
+                        out.append((FAIL, "%s: icdo_term %r is a %s term for %s/%s, "
+                                          "not the PREFERRED one. Contract §3 requires "
+                                          "the Preferred term at that (code, "
+                                          "behaviour) pair" % (loc, term, level or "?",
+                                                               code, beh_s)))
+                    elif obs:
+                        out.append((WARN, "%s: icdo_term %r is marked %s in "
+                                          "icdo32.sqlite even though it is the "
+                                          "Preferred term for %s/%s" % (loc, term, obs,
+                                                                        code, beh_s)))
+
+            if beh_s is not None and beh_s in GROUP4_BEHAVIOUR_DECLARED:
+                out.append((FAIL, "%s: icdo_behaviour %r IS in Group IV's own "
+                                  "declaration (behaviour %s). A behaviour_exclusion "
+                                  "may only name a behaviour the group does NOT "
+                                  "admit — naming an admitted one would HIDE a code "
+                                  "that should have been emitted as a real Group IV "
+                                  "entry instead of excluded (contract §3, §8 rule 1 "
+                                  "— the subtle one)"
+                            % (loc, beh_s, "/".join(sorted(GROUP4_BEHAVIOUR_DECLARED)))))
+
+            if as_code(holder.get("morphology_code")) is not None:
+                out.append((FAIL, "%s: this branch ALSO carries morphology_code %r. "
+                                  "behaviour_exclusion and morphology_code are "
+                                  "mutually exclusive destinations — app.js's "
+                                  "advance() checks morphology_code first, so this "
+                                  "exclusion would never fire at runtime (contract "
+                                  "§3, §8 rule 1)"
+                            % (loc, holder.get("morphology_code"))))
+
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d behaviour_exclusion block(s) well formed: all six keys "
+                    "present, icdo_code/icdo_behaviour/icdo_term round-trip to the "
+                    "Preferred ICD-O-3.2 term, the named behaviour is outside the "
+                    "group's own declaration, no branch also carries morphology_code, "
+                    "and reason is non-empty (rule 1)" % seen))
+    return out
+
+
+def check_group4_behaviour_declaration(ctx: DTContext):
+    """
+    RULE 2 (contract §1, §8 rule 2) — every `morphology_entries[]` object carries
+    `behavior_code` "3", the group's own declaration, and nothing else.
+
+    Unlike Group III (eighteen behaviour-overloaded codes, checked by
+    check_group3_behaviour_split() against a per-code set computed from ICD-O-3.2),
+    Group IV has NO behaviour-overloaded codes at all (contract §1.2): one entry per
+    code, one behaviour for the whole group. So this is a flat membership test, not a
+    per-code computation.
+
+    READS the group's declaration rather than hardcoding a bare "3" inline: the
+    expected set is GROUP4_BEHAVIOUR_DECLARED, a named constant declared once, above,
+    and cited to contract §1 ("Behaviour declaration `3` — exactly one, across every
+    Group IV range"). This function itself never writes the literal "3" — it compares
+    against that constant, so extending Group IV's own declaration later (it will
+    not, contract §1 is explicit that it is exactly one behaviour, but the shape does
+    not assume that) is a one-line change here.
+
+    NOT generalised into a cross-group lookup keyed by ctx.group, on purpose. A single
+    constant reused as a per-group table would ALSO run this flat membership test over
+    Group III, and while Group III's own declaration (GROUP3_BEHAVIOURS_DECLARED,
+    {"0","1","3"}) should already hold for every one of its entries as an inherent
+    consequence of check_group3_behaviour_split() passing, that has not been verified
+    here against the real group_03_dt.json — this task must not run the real build —
+    and "do not regress Groups 1-3" is the harder constraint than a marginal reuse of
+    one comparison. So: scoped to GROUP4 only, exactly like every other group-specific
+    check in this file.
+    """
+    if ctx.group != GROUP4:
+        return []
+    out = []
+    seen = 0
+    declared_label = "/".join(sorted(GROUP4_BEHAVIOUR_DECLARED))
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        seen += 1
+        beh = entry.get("behavior_code")
+        beh_s = None if beh is None else str(beh).strip()
+        if beh_s not in GROUP4_BEHAVIOUR_DECLARED:
+            out.append((FAIL, "RULE 2 — morphology_entries[%d] (code %s) carries "
+                              "behavior_code %r; Group IV's own declaration is "
+                              "behaviour %s and nothing else (contract §1, §8 rule "
+                              "2). Any other value files the entry under a "
+                              "behaviour ICCC-3 does not register for this group"
+                        % (i, code, beh, declared_label)))
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d Group IV morphology_entries[] object(s) all carry "
+                    "behavior_code %s, the group's own declaration (rule 2)"
+                % (seen, declared_label)))
+    return out
+
+
+def _scan_group4_banned_code(ctx: DTContext, repo: Path, code, scan_nos_fallback,
+                              scan_alias_targets, rule, cite, what):
+    """
+    Shared scanner for RULE 3 (8683) and RULE 8 (9364) — bound to CODE FIELDS by name,
+    never to a substring search of the file, because both rules explicitly want the
+    contract's own explanatory prose to be free to name the digits: §0.2 explains why
+    8683 is excluded and §2.4 explains what 9364 now is, both in `coding_note` text
+    that must not fail. A banned code in CLERK-FACING text still fails, because that is
+    a code the clerk can read and copy (same split check_group3_absent_codes() makes
+    for rule 7). `alias`/`also_known_as` are never scanned — those are what a clerk
+    TYPES, not what the tool emits.
+    """
+    out, hits = [], 0
+    rx = _code_token_re(code)
+    code_keys = ["morphology_code"]
+    if scan_nos_fallback:
+        code_keys.append("nos_fallback_code")
+    if scan_alias_targets:
+        code_keys.append("maps_to_morphology_codes")
+
+    def scan(container, where):
+        nonlocal hits
+        for holder, path in walk_dicts(container):
+            for key, value in holder.items():
+                if key in ALIAS_INPUT_KEYS:
+                    continue
+                loc = "%s%s.%s" % (where, ("." + path) if path else "", key)
+                if key in code_keys:
+                    candidates = value if isinstance(value, list) else [value]
+                    for cand in candidates:
+                        if as_code(cand) == code:
+                            hits += 1
+                            out.append((FAIL, "%s — %s carries code %s. %s (%s)"
+                                        % (rule, loc, code, what, cite)))
+                    continue
+                if not isinstance(value, str) or not rx.search(value):
+                    continue
+                if key in AUTHOR_FACING_TEXT_KEYS:
+                    out.append((WARN, "%s — %s mentions %s in author-facing text. "
+                                      "That is fine and expected — this field is "
+                                      "never displayed, so no clerk reads it, and "
+                                      "the contract's own reasoning for excluding "
+                                      "the code is written in exactly these terms "
+                                      "(%s)" % (rule, loc, code, cite)))
+                elif key in CLERK_FACING_TEXT_KEYS:
+                    hits += 1
+                    out.append((FAIL, "%s — %s prints %s in text a clerk reads. A "
+                                      "code on screen is a code that gets entered "
+                                      "(%s)" % (rule, loc, code, cite)))
+
+    scan(ctx.data, ctx.name)
+    if scan_alias_targets:
+        alias_path = Path(repo) / "data" / "aliases" / ("aliases_group_%02d.json" % ctx.group)
+        if alias_path.exists():
+            data, findings = load_json(alias_path)
+            out.extend(findings)
+            if data is not None:
+                entries = data.get("aliases") if isinstance(data, dict) else data
+                if isinstance(entries, list):
+                    for i, entry in enumerate(entries):
+                        if isinstance(entry, dict):
+                            scan(entry, "%s[%d]" % (alias_path.name, i))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if hits:
+        return out
+    scope_bits = ["a morphology_code"]
+    if scan_nos_fallback:
+        scope_bits.append("a nos_fallback_code")
+    if scan_alias_targets:
+        scope_bits.append("an alias target")
+    scope_label = (scope_bits[0] if len(scope_bits) == 1 else
+                   ", ".join(scope_bits[:-1]) + " or " + scope_bits[-1])
+    return out + [(OK, "%s — %s appears nowhere as %s in group_04_dt.json%s (%s)"
+                   % (rule, code, scope_label,
+                      " or its alias file" if scan_alias_targets else "", cite))]
+
+
+def check_group4_absent_codes(ctx: DTContext, repo: Path):
+    """
+    RULE 3 (contract §0.2, §8 rule 3) — `8683` appears NOWHERE as a `morphology_code`,
+    a `nos_fallback_code`, or an alias TARGET.
+
+    ICD-O-3.2 carries 8683 only at behaviour /0 (Gangliocytic paraganglioma); ICCC-3
+    Group IV admits behaviour 3 only, so there is no 8683/3 and no Group IV entry for
+    it at all (§0.2 — IARC's own *Summary of main changes* names 8683/0 as the single
+    deliberate survivor of the whole 868-870 block, and WHO 2022 independently renamed
+    the entity CoGNET). It remains legitimate as an ALIAS INPUT and, deliberately, in
+    author-facing prose explaining the exclusion — see _scan_group4_banned_code().
+    """
+    if ctx.group != GROUP4:
+        return []
+    return _scan_group4_banned_code(
+        ctx, repo, GROUP4_ABSENT_CODE,
+        scan_nos_fallback=True, scan_alias_targets=True,
+        rule="RULE 3", cite="contract §0.2, §8 rule 3",
+        what="ICD-O-3.2 carries 8683 only at /0 (Gangliocytic paraganglioma); ICCC-3 "
+             "Group IV admits behaviour 3 only, so there is no Group IV entry for it")
+
+
+def check_group4_not_a_group_code(ctx: DTContext, repo: Path):
+    """
+    RULE 8 (contract §2.4, §8 rule 8, ruling D4) — `9364` is not a Group IV code and
+    must not appear as a `morphology_code` in `group_04_dt.json`.
+
+    IARC's *Summary of main changes* states plainly that Ewing sarcoma moved to
+    9364/3 and that 9364 is now also the code for peripheral neuroectodermal tumour /
+    pPNET. Group IV's own "peripheral PNET" aliases (alias-instruction entries 30, 31,
+    33) resolve through a CROSS-GROUP REFERRAL — Group VIII at bone, Group IX at soft
+    tissue — never through a Group IV `morphology_code`. Narrower scope than rule 3:
+    9364 is a real, valid code that `refer_code` hints and D4's own `coding_note`
+    reasoning may legitimately carry, so only the emitting field is bound, and neither
+    nos_fallback_code nor the alias file is scanned (a Group IV alias file entry
+    naming 9364 as WHERE THE CASE GOES, via refer_group/refer_code, is exactly D4's
+    design, not a violation of it).
+    """
+    if ctx.group != GROUP4:
+        return []
+    return _scan_group4_banned_code(
+        ctx, repo, GROUP4_NOT_A_GROUP_CODE,
+        scan_nos_fallback=False, scan_alias_targets=False,
+        rule="RULE 8", cite="contract §2.4, §8 rule 8",
+        what="ICD-O-3.2 moved Ewing sarcoma to 9364/3 and made it the peripheral "
+             "neuroectodermal tumour / pPNET code too (ruling D4); Group IV's pPNET "
+             "aliases refer OUT to Group VIII/IX rather than emitting it here")
+
+
+def check_group4_9504_unreachable(ctx: DTContext):
+    """
+    RULE 4 (contract §2.3, ruling D2, §8 rule 4) — `9504` Spongioneuroblastoma is
+    authored in `morphology_entries[]` (so an alias on the string, or a historical
+    record carrying the code, can resolve) and REACHABLE FROM NO TREE. ICD-O-3.2 does
+    not mark it `[obs]`, so the Group III absent-code test does not remove it — but no
+    current WHO entity lives on the stem, so the Group 3 `obsolete_term` precedent
+    (thirteen entries, same shape) governs instead.
+
+    Checked at every place a case could actually be handed the code: a direct
+    `morphology_code` emission anywhere in the tree (ctx.emissions(), which already
+    walks every node's options, resolution_logic[], bands[] and branches — "no
+    next_node, resolution rule, option, branch or terminal" in the contract's own
+    words), a NODE-level nos_fallback (the {"code","name","reason"} object hung off a
+    node's own `nos_fallback` key), and an ENTRY-level `nos_fallback_code` (some other
+    code's fallback destination named on the morphology_entries[] object itself). Any
+    of the three would hand a clerk 9504 from a live path.
+    """
+    if ctx.group != GROUP4:
+        return []
+    out = []
+    for code, holder, node_id, where in ctx.emissions():
+        if code == GROUP4_UNREACHABLE_CODE:
+            out.append((FAIL, "RULE 4 — node %s (%s) emits morphology_code %s. "
+                              "Spongioneuroblastoma is authored in "
+                              "morphology_entries[] and reachable from NO tree — no "
+                              "current WHO entity lives on the stem (contract §2.3, "
+                              "ruling D2, §8 rule 4)" % (node_id, where, code)))
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if is_nos_fallback_object(holder, where) and \
+                    as_code(holder.get("code")) == GROUP4_UNREACHABLE_CODE:
+                out.append((FAIL, "RULE 4 — node %s (%s) nos_fallback names code %s. "
+                                  "Same rule as a direct emission: %s is reachable "
+                                  "from no tree (contract §2.3, ruling D2, §8 rule 4)"
+                            % (node_id, where, GROUP4_UNREACHABLE_CODE,
+                               GROUP4_UNREACHABLE_CODE)))
+    for i, entry in enumerate(ctx.entries):
+        if isinstance(entry, dict) and \
+                as_code(entry.get("nos_fallback_code")) == GROUP4_UNREACHABLE_CODE:
+            out.append((FAIL, "RULE 4 — morphology_entries[%d] (code %s) declares "
+                              "nos_fallback_code %s. An entry-level fallback IS a "
+                              "live path to the code, and %s must be reachable from "
+                              "no tree at all (contract §2.3, ruling D2, §8 rule 4)"
+                        % (i, as_code(entry.get("morphology_code")),
+                           GROUP4_UNREACHABLE_CODE, GROUP4_UNREACHABLE_CODE)))
+    if out:
+        return out
+    if not ctx.nodes:
+        return []
+    return [(OK, "%s (Spongioneuroblastoma) is unreachable: no morphology_code "
+                 "emission, node-level nos_fallback or entry-level nos_fallback_code "
+                 "anywhere in the file names it (rule 4)" % GROUP4_UNREACHABLE_CODE)]
+
+
+def check_group4_topography_map(ctx: DTContext, layer1: Path):
+    """
+    RULE 5 (contract §5, §8 rule 5) — the four-tree topography map is TOTAL and
+    DISJOINT over every topography Group IV can carry, and 9501-9504 are unreachable
+    from any tree whose declared topography sits inside C70.0-C72.9 — that band
+    belongs to Group III (contract §0.6, §2.5).
+
+    Same architecture as check_group3_topography_map(): topography is declared per
+    tree under one of TREE_TOPOGRAPHY_KEYS, expanded via _expand_topography(), and
+    swept against what Layer 1 actually enumerates via _existing_topography() —
+    never against a hand-written list of subcodes. See GROUP4_TOPOGRAPHY_SWEEP's own
+    comment for why a Group-IV analogue of GROUP3_TREE_TOPOGRAPHY (a hardcoded dict of
+    every tree's subcodes, cross-checked as a WARN) is deliberately NOT built here:
+    Group IV's declared scope is close to the whole ICD-O topography space rather than
+    one anatomical compartment, and transcribing C10/C11/C30-C32/C38/C47/C48/C74/C75/
+    C77's own subcodes from memory is exactly the kind of recall this file's own
+    design note (top of file) says never to trust for a check.
+
+    The second half — the C70-72 cross-check — reuses the SAME `declared` map: any
+    tree whose own declared topography intersects C70.0-C72.9 must never still emit
+    9501, 9502, 9503 or 9504 from a node inside it. Bound to direct morphology_code
+    emissions (ctx.emissions()), matching the contract's own, simpler wording here
+    (unlike rule 4, this clause does not separately name nos_fallback paths).
+    """
+    if ctx.group != GROUP4:
+        return []
+    out = []
+    declared: dict = {}
+
+    def take(tree_id, holder):
+        for key in TREE_TOPOGRAPHY_KEYS:
+            if key not in holder:
+                continue
+            codes, bad = _expand_topography(holder[key])
+            for token in bad:
+                out.append((FAIL, "RULE 5 — tree %r: %s carries %s, which is not a "
+                                  "topography code or an ascending range of them "
+                                  "(expected e.g. \"C74.9\" or \"C38.1-C38.3\")"
+                            % (tree_id, key, token)))
+            if codes:
+                declared.setdefault(tree_id, set()).update(codes)
+            return
+
+    for item in ctx.metadata.get("decision_trees") or []:
+        if isinstance(item, dict):
+            tid = item.get("tree_id") or item.get("id")
+            if isinstance(tid, str):
+                take(tid, item)
+    for tree in ctx.trees:
+        raw = None
+        for candidate in ctx.data.get("decision_trees") or []:
+            if isinstance(candidate, dict) and \
+                    (candidate.get("tree_id") or candidate.get("id")) == tree["tree_id"]:
+                raw = candidate
+                break
+        if isinstance(raw, dict) and tree["tree_id"] not in declared:
+            take(tree["tree_id"], raw)
+
+    if not declared:
+        if not ctx.nodes:
+            return []
+        return [(FAIL, "RULE 5 — no tree in this file declares the topography it "
+                       "owns, so the map cannot be swept. The router picks the "
+                       "Group IV tree from the topography captured at Stage 1; with "
+                       "no map, every case enters whichever tree the engine reads "
+                       "first. Declare it under one of: %s (contract §5, §8 rule 5)"
+                 % ", ".join(TREE_TOPOGRAPHY_KEYS))]
+
+    owners: dict = {}
+    for tree_id, codes in declared.items():
+        for code in codes:
+            owners.setdefault(code, []).append(tree_id)
+
+    existing, topo_source = _existing_topography(layer1)
+    if existing:
+        sweep = [c for c in GROUP4_TOPOGRAPHY_SWEEP if c in existing]
+    else:
+        sweep = sorted(set().union(*declared.values()))
+        out.append((WARN, "RULE 5 — the REDCap topography option list could not be "
+                          "read, so the sweep falls back to the codes this file's "
+                          "own trees declare. A real topography code that no tree "
+                          "owns would not be caught"))
+
+    unrouted = [c for c in sweep if not owners.get(c)]
+    duplicated = [(c, owners[c]) for c in sweep if len(owners.get(c, [])) > 1]
+    outside = sorted(set(owners) - set(sweep))
+
+    if unrouted:
+        out.append((FAIL, "RULE 5 — %d topography code(s) resolve to NO tree: %s. A "
+                          "case at one of these reaches the router, finds no handoff "
+                          "and dead-ends (contract §5, §8 rule 5)"
+                    % (len(unrouted), ", ".join(unrouted))))
+    for code, trees_ in duplicated:
+        out.append((FAIL, "RULE 5 — topography %s resolves to %d trees (%s). The map "
+                          "must be disjoint: a duplicate does not fail, it silently "
+                          "picks whichever row the engine reads first — which is not "
+                          "a decision anybody made (contract §5, §8 rule 5)"
+                    % (code, len(trees_), ", ".join(sorted(trees_)))))
+    if outside:
+        out.append((WARN, "%d topography code(s) are owned by a tree but are "
+                          "outside the sweep: %s" % (len(outside), ", ".join(outside))))
+
+    g3_trees = {tid for tid, codes in declared.items()
+                if codes & set(GROUP4_G3_OVERLAP_TOPOGRAPHY)}
+    if g3_trees:
+        g3_nodes = {nid for nid, tid in ctx.node_tree.items() if tid in g3_trees}
+        for code, holder, node_id, where in ctx.emissions():
+            if node_id in g3_nodes and code in GROUP4_G3_OVERLAP_CODES:
+                out.append((FAIL, "RULE 5 — node %s (%s) in tree %r emits %s. This "
+                                  "tree declares topography inside C70.0-C72.9, "
+                                  "which belongs to Group III (contract §0.6, "
+                                  "§2.5) — 9501-9504 must be unreachable from any "
+                                  "node there" % (node_id, where,
+                                                  ctx.node_tree[node_id], code)))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "topography map is total and disjoint: all %d recordable "
+                    "code(s) resolve to exactly one of %d tree(s), and no tree "
+                    "declaring C70.0-C72.9 emits 9501-9504 (rule 5)"
+                % (len(sweep), len(declared))))
+    return out
+
+
+def check_visser_table4_gate(ctx: DTContext):
+    """
+    RULE 6 (contract §4.2, §8 rule 6) — the Visser Table 4 gate, BOUND TO
+    `basis_of_diagnosis`, not to `no_tissue`.
+
+    Revised after a finished tree exposed the original binding's blind spot: a
+    branch emitted `8680 Paraganglioma, NOS` off a referral-letter-only finding at
+    `basis_of_diagnosis: 1`, and another emitted `9522` off an inadequate specimen
+    at basis 2 — neither carrying `no_tissue: true`, because that flag reads as an
+    imaging-pathway concept and the author reasonably never reached for it on a
+    referral-letter or an inadequate-specimen branch. Bound to `no_tissue`, the
+    check never saw either.
+
+    Visser O, et al. Front Oncol 2023;13:1250549, rule 5 (p. 03): basis 1 or 2 means
+    morphology `8000/3`, except for the entities named in the paper's Table 3.
+    **ICCC-3 Group IV has no Table 3 entries** — Table 3 is Visser's list of
+    entities with their OWN named exception to rule 5, and none of Group IV's
+    eighteen codes is on it. So for this group, and only this group, basis 1 or 2
+    always means 8000/3, which is not a Group IV code and routes to Group XII
+    (the 8000-8005 dual-group rule). The one no-pathology route Group IV does have
+    is Table 4 (p. 06) at basis 4, for exactly two codes — neuroblastoma (9500) and
+    phaeochromocytoma (8700) — and rule 6 (p. 05) says basis 4 never stands alone:
+    the marker must accompany a clinical diagnosis or investigation, recorded in
+    `biochemical_questions[]` on the reaching `imaging_pathway`.
+
+    Two independent bindings, both keyed off `basis_of_diagnosis` wherever it
+    appears, at ANY node type — not only `imaging_pathway` — because the defect
+    that forced this rewrite happened on ordinary clinical/histology branches:
+
+        1. basis_of_diagnosis 1 or 2 on a branch that emits a morphology_code is a
+           build error outright; the same branch, emitting no code, must carry
+           `refer_group: 12`.
+        2. basis_of_diagnosis 4 on a branch that emits a morphology_code: the code
+           must be 9500 or 8700, and the reaching imaging_pathway's own
+           biochemical_questions[] must be non-empty.
+
+    SCOPED TO GROUP IV ONLY, and the reason is Table 3 COVERAGE, not a Group IV
+    peculiarity: Visser's Table 3 carries forty-three CNS rows, so Group III
+    legitimately emits its own group NOS code at basis 2 for an inadequate
+    specimen (an entity Table 3 explicitly covers), and Groups 1-2 have their own
+    Table rows besides. Running this rule over them would FAIL correct data; it is
+    Group IV specifically that has nothing in Table 3, which is what makes basis
+    1/2 unconditional here.
+
+    Only holders that are themselves a real destination are examined — a bare
+    `basis_of_diagnosis` on a branch that only continues via `next_node` is
+    ordinary cumulative evidence (app.js's assertBasis() reads every branch on the
+    path, and the panel reports the highest), not the terminal claim this rule is
+    about, so it is not a false-FAIL target.
+
+    This is DISTINCT from, and does not replace, check_imaging_terminals()'s rule
+    11: `no_tissue`, `endpoint_verification` and non-empty `diversion_criteria[]`
+    on an imaging-only terminal are still required exactly as before. That check
+    asks "does this imaging endpoint say it took no tissue"; this one asks "does
+    the EVIDENCE TIER actually justify the code", which is the question the 8680/
+    9522 defect showed the first framing could not catch.
+    """
+    if ctx.group != GROUP4:
+        return []
+    out, seen = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        candidates = [(node, "(node level)")] + list(_branch_containers(node))
+        for holder, where in candidates:
+            if "basis_of_diagnosis" not in holder:
+                continue
+            basis = holder.get("basis_of_diagnosis")
+            if isinstance(basis, bool) or not isinstance(basis, int) or basis not in (1, 2, 4):
+                continue  # not one of the three bases this rule is about; shape and
+                          # ENCR-membership are check_basis_of_diagnosis()'s job
+            code = as_code(holder.get("morphology_code"))
+            is_terminal = (code is not None or "refer_group" in holder
+                           or is_non_reportable(holder) or "behaviour_exclusion" in holder)
+            if not is_terminal:
+                continue
+            seen += 1
+            loc = "node %s (%s)" % (node_id, where)
+
+            if basis in (1, 2):
+                if code is not None:
+                    out.append((FAIL, "%s: RULE 6 — basis_of_diagnosis %d emits "
+                                      "morphology_code %s. Visser rule 5, p. 03: "
+                                      "basis 1 or 2 means 8000/3 except for Table "
+                                      "3 entities, and ICCC-3 Group IV has NO "
+                                      "Table 3 entries — so no Group IV code may "
+                                      "be emitted at this basis at all (contract "
+                                      "§4.2, §8 rule 6)" % (loc, basis, code)))
+                else:
+                    refer = holder.get("refer_group")
+                    if refer is None:
+                        refer = node.get("refer_group")
+                    if str(refer) != "12":
+                        out.append((FAIL, "%s: RULE 6 — basis_of_diagnosis %d "
+                                          "emits no morphology_code and must "
+                                          "instead carry refer_group: 12 (the "
+                                          "8000-8005 dual-group rule to Group "
+                                          "XII), got %r. Visser rule 5, p. 03: "
+                                          "with no Table 3 entry to except it, "
+                                          "everything at this basis is 8000/3, "
+                                          "which is not a Group IV code (contract "
+                                          "§4.2, §8 rule 6)" % (loc, basis, refer)))
+            elif basis == 4 and code is not None:
+                if code not in GROUP4_VISSER_TABLE4_CODES:
+                    out.append((FAIL, "%s: RULE 6 — basis_of_diagnosis 4 emits %s, "
+                                      "which is neither 9500 nor 8700. Visser "
+                                      "Table 4 (p. 06) names exactly these two "
+                                      "entities a marker constellation alone may "
+                                      "establish (contract §4.2, §8 rule 6)"
+                                % (loc, code)))
+                else:
+                    bq = holder.get("biochemical_questions")
+                    if bq is None:
+                        bq = node.get("biochemical_questions")
+                    if not isinstance(bq, list) or not bq:
+                        out.append((FAIL, "%s: RULE 6 — biochemical_questions[] "
+                                          "is missing or empty on the reaching "
+                                          "imaging_pathway for a basis-4 %s "
+                                          "terminal. Visser rule 6, p. 05: basis "
+                                          "4 never stands alone — the marker "
+                                          "must accompany a clinical diagnosis "
+                                          "or investigation, and this is the "
+                                          "field that records it (contract "
+                                          "§4.2, §8 rule 6)" % (loc, code)))
+    if not seen and not out:
+        return []
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    out.append((OK, "%d basis-1/2/4 terminal(s): none emits a Group IV code at "
+                    "basis 1 or 2 (Visser rule 5 — Group IV has no Table 3 "
+                    "entries), and every basis-4 emission is 9500 or 8700 with a "
+                    "non-empty biochemical_questions[] (rule 6)" % seen))
     return out
 
 
@@ -6554,6 +7271,17 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group3_topography_map, ctx, layer1)    # rule 12
         report.run(check_icdo32_round_trip, ctx, layer1)        # rules 8, 13
         report.run(check_iccc3_subgroup_by_topography, ctx, layer1)   # contract §1.3
+        # Group IV schema extension (Group 4 build contract §3) and its nine
+        # validation rules (§8). Each is scoped to Group 4 only and is a no-op —
+        # not even a NOTE — on any other group's file (verified below by diffing
+        # a Groups-1-3-only report against itself with these checks added).
+        report.run(check_behaviour_exclusion, ctx, layer1)             # rule 1
+        report.run(check_group4_behaviour_declaration, ctx)            # rule 2
+        report.run(check_group4_absent_codes, ctx, repo)               # rule 3
+        report.run(check_group4_9504_unreachable, ctx)                 # rule 4
+        report.run(check_group4_topography_map, ctx, layer1)           # rule 5
+        report.run(check_visser_table4_gate, ctx)                      # rule 6
+        report.run(check_group4_not_a_group_code, ctx, repo)           # rule 8
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)

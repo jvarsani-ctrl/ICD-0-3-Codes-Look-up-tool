@@ -1470,3 +1470,545 @@ Stated plainly rather than covered by a check that looks like it covers it.
   passed 74 checks with 15 of its 61 nodes not rendering at all, because the fault was in
   the seam between the data and the renderer. Contract §7 step 9's browser pass is not
   optional and nothing in this document substitutes for it.
+
+---
+
+# Group IV checks — negative controls
+
+Evidence that the `behaviour_exclusion` field (contract §3) and the eight validation rules
+added for it (contract §8) catch what they claim to, and that they fire on nothing else.
+Same method as the Group II and Group III sections above: break the data deliberately,
+confirm the check FAILs, restore, confirm it passes — and separately confirm it does
+**not** fire on correct data or on another group's data, because a false FAIL is the more
+corrosive failure.
+
+**`data/database/group_04_dt.json` did not exist when this work was done.** Three other
+agents are authoring trees into it in parallel, and this task was explicitly told not to
+touch it, not to read it, and not to run `python3 build/build_database.py` — the standing
+rule on this project, restated for this build: the trees do not exist yet, a real run would
+fail on things later tasks fix, and would tell this task nothing about whether ITS OWN
+checks work. So every control here runs the way contract §8's own instructions describe:
+**the check functions are imported directly from `build/build_database.py` and called
+against a synthetic `DTContext`, the way a unit test would** — never through `run_build()`,
+never through `main()`, and never against the real file.
+
+## The fixture
+
+A Python harness (`g4_negative_controls.py`, kept outside the repo in the session
+scratchpad — it is a test script, not a build artefact) builds one synthetic, in-memory
+`group_04_dt.json`-shaped `dict` and wraps it in `build_database.DTContext` directly:
+
+- **18 `morphology_entries[]`**, one per contract §1's inventory table, every
+  `(morphology_code, morphology_name, behavior_code)` triple copied character-for-character
+  from a direct query against `icdo32.sqlite` (not from the contract's prose table, and not
+  from memory) before being written into the fixture — the same discipline rule 13/8
+  itself enforces on real data.
+- **Four trees**, one per contract §5's table (`g4_sympathoadrenal`, `g4_head_neck_paraganglia`,
+  `g4_sinonasal`, `g4_other_peripheral`), each declaring a topography under
+  `metadata.decision_trees[].topography`.
+- **One live `behaviour_exclusion`** — the ganglioneuroma case, contract §3's own worked
+  example verbatim — on `g4_sympathoadrenal`'s `histology_subclassification` node,
+  alongside a sibling option that emits `9500` at basis 7.
+- **One live `imaging_pathway`** (`sa_imaging`) with a non-empty `biochemical_questions[]`,
+  a basis-4 terminal emitting `9500`, and a basis-1 terminal that emits no code and refers
+  to Group 12 — the two legal shapes contract §4.2 describes.
+- **9504** is authored in `morphology_entries[]` (entry 14) and referenced by NO node — the
+  D2 shape under test.
+
+Because Group IV's own topography scope is close to the whole ICD-O topography space
+(contract §5: "C00.0–C80.9 for fourteen of its eighteen codes"), sweeping the REAL Layer 1
+topography list for `check_group4_topography_map` would require the fixture's four trees to
+between them own several hundred real subcodes, which is unit-testing the wrong thing — it
+would prove the fixture was transcribed correctly, not that the check's TOTAL/DISJOINT logic
+and its C70–72 cross-check are correct. So for rule 5 only, `build_database._existing_topography`
+(the function that reads Layer 1's real topography option list) is monkey-patched for the
+duration of the call to return a small, fixed, four- or five-code universe
+(`{"C74.9","C75.5","C30.0","C47.0"}`, one per tree, plus `"C70.9"` for the cross-check
+control only). This is standard test isolation — stubbing the one external dependency so the
+function under test is exercised on a domain small enough to reason about by hand — and it
+is declared here rather than left implicit. It does **not** touch the real Layer 1 file, and
+it is undone (the real function restored) immediately after each call.
+
+Every other check (behaviour_exclusion's round-trip, rule 7's round-trip) reads the REAL
+`icdo32.sqlite` at its real path, read-only — that is the anchor these two rules exist to
+key off, and stubbing it would prove nothing.
+
+## The false-FAIL control (correct data)
+
+Every one of the eight rules reports **0 FAIL** against the unmodified fixture, with an OK
+line describing real content:
+
+```
+OK    1 behaviour_exclusion block(s) well formed: all six keys present, icdo_code/icdo_behaviour/icdo_term
+      round-trip to the Preferred ICD-O-3.2 term, the named behaviour is outside the group's own
+      declaration, no branch also carries morphology_code, and reason is non-empty (rule 1)
+OK    18 Group IV morphology_entries[] object(s) all carry behavior_code 3, the group's own declaration (rule 2)
+OK    RULE 3 — 8683 appears nowhere as a morphology_code, a nos_fallback_code or an alias target in
+      group_04_dt.json or its alias file (contract §0.2, §8 rule 3)
+OK    9504 (Spongioneuroblastoma) is unreachable: no morphology_code emission, node-level nos_fallback or
+      entry-level nos_fallback_code anywhere in the file names it (rule 4)
+OK    topography map is total and disjoint: all 4 recordable code(s) resolve to exactly one of 4 tree(s),
+      and no tree declaring C70.0-C72.9 emits 9501-9504 (rule 5)
+OK    3 basis-1/2/4 terminal(s): none emits a Group IV code at basis 1 or 2 (Visser rule 5 — Group IV has
+      no Table 3 entries), and every basis-4 emission is 9500 or 8700 with a non-empty
+      biochemical_questions[] (rule 6)
+OK    RULE 8 — 9364 appears nowhere as a morphology_code in group_04_dt.json (contract §2.4, §8 rule 8)
+OK    18/18 (code, name, behaviour) triple(s) exist verbatim in icdo32.sqlite; 0 declared name
+      exemption(s), each still anchored to a string the database actually carries (rules 8 and 13)
+NOTE  group 4: morphology_name is checked by check_icdo32_round_trip() against icdo32.sqlite instead of
+      against the REDCap option file (contract §5.2 for Group 3; §1.1a for Group 4). […] Groups 1 and 2
+      are unaffected.
+```
+
+**All 62 assertions in the harness behaved as designed** — 21 expected FAIL and did, 41
+expected PASS/no-op and did, 0 mismatches.
+
+---
+
+## `check_behaviour_exclusion` (contract §3, §8 rule 1)
+
+**What it catches.** All six keys required and non-null/non-empty; `icdo_code`/
+`icdo_behaviour`/`icdo_term` round-trip to the **Preferred** ICD-O-3.2 term at that pair;
+`icdo_behaviour` must NOT be a member of the group's own declaration; a branch may not carry
+both `behaviour_exclusion` and `morphology_code`; `reason` non-empty.
+
+### Control 1.1 — `reason` deleted
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion is missing, null or empty for reason —
+      all six keys are REQUIRED (contract §3, §8 rule 1)
+```
+
+Restored: **0 FAIL.**
+
+### Control 1.2 — THE SUBTLE ONE: `icdo_behaviour` set to `"3"`, a behaviour Group IV admits
+
+Rule 1's own text calls this out as the one to get right: a `behaviour_exclusion` naming an
+admitted behaviour would hide a code that should have been emitted. Expected **FAIL**, got
+**FAIL** — and a second, independent FAIL alongside it, because `icdo_term` ("Ganglioneuroma")
+is real only at `9490/0`, not `9490/3` ("Ganglioneuroblastoma"), so the round-trip rule fires
+too. Both are real defects on this mutated fixture; nothing was suppressed:
+
+```
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion: icdo_term 'Ganglioneuroma' is not a
+      term ICD-O-3.2 carries for 9490/3. (contract §3, §8 rule 1)
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion: icdo_behaviour '3' IS in Group IV's
+      own declaration (behaviour 3). A behaviour_exclusion may only name a behaviour the group does NOT
+      admit — naming an admitted one would HIDE a code that should have been emitted as a real Group IV
+      entry instead of excluded (contract §3, §8 rule 1 — the subtle one)
+```
+
+Restored: **0 FAIL.**
+
+### Control 1.3 — the same branch also given `morphology_code: "9490"`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion: this branch ALSO carries
+      morphology_code '9490'. behaviour_exclusion and morphology_code are mutually exclusive
+      destinations — app.js's advance() checks morphology_code first, so this exclusion would never
+      fire at runtime (contract §3, §8 rule 1)
+```
+
+Restored: **0 FAIL.**
+
+### Control 1.4 — `icdo_term` is a real but non-Preferred term (`9501/0` "Diktyoma, benign" is a Synonym; the Preferred term is "Medulloepithelioma, benign")
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion: icdo_term 'Diktyoma, benign' is a
+      Synonym term for 9501/0, not the PREFERRED one. Contract §3 requires the Preferred term at that
+      (code, behaviour) pair
+```
+
+Restored: **0 FAIL.**
+
+### Control 1.5 — `icdo_term` case-drifted (`"GANGLIONEUROMA"`)
+
+Expected **FAIL**, got **FAIL**, with the near-miss printed:
+
+```
+FAIL  node sa_histology_subtype (options[1]) behaviour_exclusion: icdo_term 'GANGLIONEUROMA' is not a
+      term ICD-O-3.2 carries for 9490/0.
+               ICD-O-3.2 has  : 'Ganglioneuroma' (contract §3, §8 rule 1)
+```
+
+Restored: **0 FAIL.**
+
+---
+
+## `check_group4_behaviour_declaration` (contract §1, §8 rule 2)
+
+**What it catches.** Any `morphology_entries[]` object whose `behavior_code` is not `"3"` —
+Group IV's own declaration, read off the named constant `GROUP4_BEHAVIOUR_DECLARED` rather
+than compared against a bare literal inline (see "generalised or hardcoded", below).
+
+### Control 2.1 — the `9490` entry moved to `behavior_code: "0"`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 2 — morphology_entries[8] (code 9490) carries behavior_code '0'; Group IV's own declaration
+      is behaviour 3 and nothing else (contract §1, §8 rule 2). Any other value files the entry under a
+      behaviour ICCC-3 does not register for this group
+```
+
+Restored: **0 FAIL.**
+
+### Control 2.2 — regression: a Group III-shaped entry at `behavior_code: "1"` (legal for Group III) run through this same function
+
+Expected **`[]`** (a true no-op — the function is scoped to Group 4 only), got **`[]`**.
+
+---
+
+## `check_group4_absent_codes` — `8683` (contract §0.2, §8 rule 3)
+
+**What it catches.** `8683` as a `morphology_code`, a `nos_fallback_code`, or an alias
+target — never a substring sweep of the file, so the contract §0.2 prose explaining the
+exclusion is free to name the digits.
+
+### Control 3.1 — `8683` authored as a `morphology_code`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 3 — group_04_dt.json.decision_trees[1].nodes[0].options[2].morphology_code carries code
+      8683. ICD-O-3.2 carries 8683 only at /0 (Gangliocytic paraganglioma); ICCC-3 Group IV admits
+      behaviour 3 only, so there is no Group IV entry for it (contract §0.2, §8 rule 3)
+```
+
+Restored: **0 FAIL.**
+
+### Control 3.2 — `8683` named in an author-facing `coding_note`
+
+Expected **WARN, not FAIL** (this is the prose caveat the contract explicitly asks for), got
+exactly that:
+
+```
+WARN  RULE 3 — […].coding_note mentions 8683 in author-facing text. That is fine and expected — this
+      field is never displayed, so no clerk reads it, and the contract's own reasoning for excluding
+      the code is written in exactly these terms (contract §0.2, §8 rule 3)
+OK    RULE 3 — 8683 appears nowhere as a morphology_code, a nos_fallback_code or an alias target in
+      group_04_dt.json or its alias file (contract §0.2, §8 rule 3)
+```
+
+Restored: **0 FAIL.**
+
+### Control 3.3 — `8683` named in a clerk-facing `reason`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 3 — group_04_dt.json.decision_trees[0].nodes[2].options[1].reason prints 8683 in text a
+      clerk reads. A code on screen is a code that gets entered (contract §0.2, §8 rule 3)
+```
+
+Restored: **0 FAIL.**
+
+---
+
+## `check_group4_9504_unreachable` (contract §2.3, ruling D2, §8 rule 4)
+
+**What it catches.** `9504` reached by any of the three live paths: a direct
+`morphology_code` emission, a node-level `nos_fallback`, or an entry-level
+`nos_fallback_code` naming it.
+
+### Control 4.1 — a node emits `morphology_code: "9504"` directly
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 4 — node op_entry (options[2]) emits morphology_code 9504. Spongioneuroblastoma is
+      authored in morphology_entries[] and reachable from NO tree — no current WHO entity lives on the
+      stem (contract §2.3, ruling D2, §8 rule 4)
+```
+
+Restored: **0 FAIL.**
+
+### Control 4.2 — a node-level `nos_fallback` names `9504`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 4 — node op_entry (nos_fallback) nos_fallback names code 9504. Same rule as a direct
+      emission: 9504 is reachable from no tree (contract §2.3, ruling D2, §8 rule 4)
+```
+
+Restored: **0 FAIL.**
+
+### Control 4.3 — an entry-level `nos_fallback_code` (on the `9503` entry) names `9504`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 4 — morphology_entries[12] (code 9503) declares nos_fallback_code 9504. An entry-level
+      fallback IS a live path to the code, and 9504 must be reachable from no tree at all (contract
+      §2.3, ruling D2, §8 rule 4)
+```
+
+Restored: **0 FAIL.**
+
+---
+
+## `check_group4_topography_map` (contract §5, §8 rule 5)
+
+**What it catches.** An unrouted topography code, a duplicated one, and — the second
+clause — `9501`–`9504` reachable from a tree whose own declared topography sits inside
+`C70.0`–`C72.9`, which belongs to Group III.
+
+### Control 5.1 — `g4_other_peripheral`'s declared topography emptied (unrouted)
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 5 — 1 topography code(s) resolve to NO tree: C47.0. A case at one of these reaches the
+      router, finds no handoff and dead-ends (contract §5, §8 rule 5)
+```
+
+Restored: **0 FAIL.**
+
+### Control 5.2 — `C74.9` also declared by `g4_head_neck_paraganglia` (duplicate)
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 5 — topography C74.9 resolves to 2 trees (g4_head_neck_paraganglia,
+      g4_sympathoadrenal). The map must be disjoint: a duplicate does not fail, it silently picks
+      whichever row the engine reads first — which is not a decision anybody made (contract §5, §8
+      rule 5)
+```
+
+Restored: **0 FAIL.**
+
+### Control 5.3 — `g4_other_peripheral` claims `C70.9` and its node still emits `9501`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 5 — node op_entry (options[0]) in tree 'g4_other_peripheral' emits 9501. This tree
+      declares topography inside C70.0-C72.9, which belongs to Group III (contract §0.6, §2.5) —
+      9501-9504 must be unreachable from any node there
+```
+
+Restored: **0 FAIL.**
+
+---
+
+## `check_visser_table4_gate` (contract §4.2, §8 rule 6) — REVISED mid-build
+
+**The correction.** Specified first as binding on `no_tissue: true`. A finished tree exposed
+the blind spot: `8680` emitted off a referral-letter-only finding at `basis_of_diagnosis: 1`,
+and `9522` off an inadequate specimen at basis 2 — neither carrying `no_tissue: true`, so the
+`no_tissue`-bound check never saw either. Rewritten to bind on `basis_of_diagnosis` itself,
+at any node type, per the corrected spec: basis 1/2 emitting a code is always a build error
+for Group IV (Visser rule 5, p. 03 — Group IV has no Table 3 exceptions), and basis 4 may
+emit only `9500`/`8700` with a non-empty `biochemical_questions[]` (Visser rule 6, p. 05).
+The `no_tissue`/`endpoint_verification`/`diversion_criteria[]` requirements stay exactly as
+they were, in the pre-existing, group-agnostic `check_imaging_terminals()` (rule 11) — this
+rule does not replace or duplicate that one.
+
+### Control 6.1 — the coordinator's own example 1: `8680` emitted at basis 1 (referral-letter-only)
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node hn_entry (options[0]): RULE 6 — basis_of_diagnosis 1 emits morphology_code 8680. Visser
+      rule 5, p. 03: basis 1 or 2 means 8000/3 except for Table 3 entities, and ICCC-3 Group IV has
+      NO Table 3 entries — so no Group IV code may be emitted at this basis at all (contract §4.2, §8
+      rule 6)
+```
+
+Restored: **0 FAIL.**
+
+### Control 6.2 — the coordinator's own example 2: `9522` emitted at basis 2 (inadequate specimen)
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sn_entry (options[0]): RULE 6 — basis_of_diagnosis 2 emits morphology_code 9522. Visser
+      rule 5, p. 03: basis 1 or 2 means 8000/3 except for Table 3 entities, and ICCC-3 Group IV has NO
+      Table 3 entries — so no Group IV code may be emitted at this basis at all (contract §4.2, §8
+      rule 6)
+```
+
+Restored: **0 FAIL.**
+
+### Control 6.3 — a basis-1, no-code terminal referring to the wrong group (8, not 12)
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_imaging (options[1]): RULE 6 — basis_of_diagnosis 1 emits no morphology_code and must
+      instead carry refer_group: 12 (the 8000-8005 dual-group rule to Group XII), got 8. Visser rule
+      5, p. 03: with no Table 3 entry to except it, everything at this basis is 8000/3, which is not a
+      Group IV code (contract §4.2, §8 rule 6)
+```
+
+Restored: **0 FAIL.**
+
+### Control 6.4 — the coordinator's requested basis-4 control: `9501` emitted at basis 4
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_imaging (options[0]): RULE 6 — basis_of_diagnosis 4 emits 9501, which is neither 9500
+      nor 8700. Visser Table 4 (p. 06) names exactly these two entities a marker constellation alone
+      may establish (contract §4.2, §8 rule 6)
+```
+
+Restored: **0 FAIL.**
+
+### Control 6.5 — basis 4, correct code (`9500`), `biochemical_questions[]` emptied
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  node sa_imaging (options[0]): RULE 6 — biochemical_questions[] is missing or empty on the
+      reaching imaging_pathway for a basis-4 9500 terminal. Visser rule 6, p. 05: basis 4 never stands
+      alone — the marker must accompany a clinical diagnosis or investigation, and this is the field
+      that records it (contract §4.2, §8 rule 6)
+```
+
+Restored: **0 FAIL.**
+
+### Control 6.6 — THE REGRESSION THE COORDINATOR ASKED FOR: a Group III fixture emitting its own group NOS code (`9473`) at basis 2
+
+Group III legitimately does this — Visser Table 3 carries forty-three CNS rows, so an
+inadequate CNS specimen defaulting to the group NOS code at basis 2 is an entity Table 3
+explicitly covers. Expected **`[]`** (still passes — the check is scoped to Group 4 only),
+got **`[]`**.
+
+---
+
+## `check_group4_not_a_group_code` — `9364` (contract §2.4, §8 rule 8, ruling D4)
+
+**What it catches.** `9364` as a `morphology_code` in `group_04_dt.json` — narrower than
+rule 3: `9364` is a real code that a `refer_code` hint or D4's own `coding_note` reasoning
+may legitimately carry, so only the emitting field is bound.
+
+### Control 8.1 — `9364` authored as a `morphology_code`
+
+Expected **FAIL**, got **FAIL**:
+
+```
+FAIL  RULE 8 — group_04_dt.json.decision_trees[3].nodes[0].options[2].morphology_code carries code
+      9364. ICD-O-3.2 moved Ewing sarcoma to 9364/3 and made it the peripheral neuroectodermal tumour
+      / pPNET code too (ruling D4); Group IV's pPNET aliases refer OUT to Group VIII/IX rather than
+      emitting it here (contract §2.4, §8 rule 8)
+```
+
+Restored: **0 FAIL.**
+
+### Control 8.2 — `9364` named in an author-facing `coding_note`
+
+Expected **WARN, not FAIL**, got exactly that (same prose caveat as rule 3):
+
+```
+WARN  RULE 8 — […].coding_note mentions 9364 in author-facing text. That is fine and expected — […]
+      (contract §2.4, §8 rule 8)
+```
+
+Restored: **0 FAIL.**
+
+### Control 8.3 — the false-FAIL guard: `9364` as a legitimate `refer_code` hint on a referral branch
+
+D4's own design has `9364` appear exactly this way. Expected **PASS (no FAIL, not even a
+WARN)**, got **PASS** — `refer_code` is outside this rule's scope by design.
+
+Restored (no change needed): **0 FAIL.**
+
+---
+
+## `check_icdo32_round_trip` extended to Group 4, and `check_redcap_exact_names` stepping aside (contract §1.1a, §8 rule 7)
+
+**What it catches.** Every `(morphology_code, morphology_name, behavior_code)` triple in
+`group_04_dt.json` must exist verbatim, as the **Preferred** term or otherwise, in
+`icdo32.sqlite` — the same rule Group 3 already runs under, now also scoped to Group 4.
+`check_redcap_exact_names` steps aside for Group 4 exactly as it already does for Group 3,
+so the two REDCap/ICD-O-3.2 divergences contract §0.3 documents (`8690`/"Glomus jugulare
+tumor, NOS", `9522`/"Esthesioneuroblastoma", …) are never matched against the wrong Layer 1.
+
+### Control 7.1 — `9522`'s `morphology_name` case-drifted to `"Olfactory Neuroblastoma"`
+
+Expected **FAIL**, got **FAIL**, with the near-miss printed:
+
+```
+FAIL  entry 9522/3: the triple (9522, 'Olfactory Neuroblastoma', 3) does not exist in ICD-O-3.2.
+      RULE 13 — every name the engine can emit must be a real term for that code at that behaviour,
+      checked against the database and not against the REDCap option list […] (contract §5.2, §6 rule
+      13).
+               ICD-O-3.2 has  : 'Olfactory neuroblastoma'
+```
+
+Restored: **0 FAIL.**
+
+### Control 7.2 — the same Group 4 file run through `check_redcap_exact_names` with a synthetic REDCap option (`9522` → `"Esthesioneuroblastoma"`, the real REDCap synonym) that would fail an exact-string match
+
+Expected: steps aside with a single **NOTE**, no comparison attempted. Got exactly that:
+
+```
+NOTE  group 4: morphology_name is checked by check_icdo32_round_trip() against icdo32.sqlite instead
+      of against the REDCap option file (contract §5.2 for Group 3; §1.1a for Group 4). […]
+```
+
+### Control 7.3 — REGRESSION: Group 1 is untouched by either change
+
+`check_icdo32_round_trip` on a synthetic Group 1 fixture still returns `[]` (still steps
+aside — unchanged). `check_redcap_exact_names` on the same fixture, given a REDCap option
+that does NOT match the authored name, still does its **real** comparison and FAILs exactly
+as before:
+
+```
+FAIL  entry 9861: a REDCap option EXISTS for this code and morphology_name is not character-identical
+      to it (redcap_option_verified: True — the flag does not exempt it).
+               dt.json : 'Right name'
+               REDCap  : 'Wrong name entirely'
+```
+
+---
+
+## Regression — all seven new Group-4-scoped checks are a true no-op on Groups 1–3
+
+Every one of `check_behaviour_exclusion`, `check_group4_behaviour_declaration`,
+`check_group4_absent_codes`, `check_group4_9504_unreachable`, `check_group4_topography_map`,
+`check_visser_table4_gate` and `check_group4_not_a_group_code` was run against a minimal
+synthetic fixture with `metadata.group_id` set to 1, 2 and 3 in turn. **Every call returned
+exactly `[]`** — not an OK, not a NOTE, not a WARN — confirming the `if ctx.group != GROUP4:
+return []` guard at the top of each (contract §8's own scoping requirement, and this task's
+"do not regress Groups 1–3").
+
+## How rule 2 reads the group's declaration
+
+Contract §8 asked, for rule 2: "Make this general — read the group's declaration rather than
+hardcoding `"3"` for group 4 if you can do so cleanly; say which you did." Done narrowly, not
+generally: the expected set is `GROUP4_BEHAVIOUR_DECLARED = {"3"}`, a named constant declared
+once and cited to contract §1, and `check_group4_behaviour_declaration()` compares against
+that constant rather than a bare `"3"` written inline in the loop — so the function itself
+never contains the literal string being checked for. It is **not** generalised into a
+cross-group lookup table keyed by `ctx.group` (which would also run the same flat membership
+test over Group III's ~90 non-overloaded entries): Group III's own declaration is already
+validated, more strongly, by `check_group3_behaviour_split()`'s per-code computation against
+ICD-O-3.2, and extending a second, weaker test onto live Group III data has not been verified
+against the real `group_03_dt.json` — this task must not run the real build — so it was left
+scoped to Group 4 only, matching every other group-specific check already in this file.
+
+## What this could not check
+
+- **The real Layer 1 topography sweep for rule 5.** `_existing_topography()` was stubbed to
+  a five-code universe for the reason given above (the fixture). The check's TOTAL/DISJOINT
+  and C70–72 cross-check LOGIC is proven; that it correctly enumerates the real, full
+  C00.0–C80.9 sweep against the real `RedCap Options/Topography Redcap.md` is not proven
+  until a real `group_04_dt.json` exists and the standing build (contract §9 step 9) runs
+  against it.
+- **`check_visser_table4_gate`'s interaction with real trees' node wiring** — the fixture's
+  `sa_imaging` node is deliberately small (one basis-4 branch, one basis-1 branch). The four
+  real trees will have considerably more branches per node; the per-holder, per-branch loop
+  was written to be shape-agnostic (it walks every branch container generically), but that is
+  a code-reading claim until the real trees exist.
+- **A green build is still not a working tool.** Everything above tests the data and the
+  validator. Contract §9 step 9's browser pass — driving the real tool once all four trees
+  exist — is not optional and nothing here substitutes for it.

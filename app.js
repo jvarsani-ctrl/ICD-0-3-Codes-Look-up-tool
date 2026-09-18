@@ -1500,6 +1500,12 @@ function advance(target, label, value, before) {
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
   if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert);
+  /* Group 4 build contract §3, ruling D1: a real ICD-O-3.2 entity whose
+     BEHAVIOUR sits outside this group's own declaration — a ganglioneuroma
+     is 9490/0, and ICCC-3 Group IV admits behaviour 3 only. Checked before
+     next_node for the same reason morphology_code and refer_group are: it is
+     a destination in its own right, not a step toward one. */
+  if (target.behaviour_exclusion) return excludeBehaviour(target.behaviour_exclusion);
   if (target.next_node) {
     if (!findNode(target.next_node)) throw new Error('Unresolved next_node: ' + target.next_node);
     state.firedAlert = target.clinical_alert || null;
@@ -1640,6 +1646,34 @@ function exclude(reason, alert) {
   state.stage = 'output';
 }
 
+/* A terminal for a real ICD-O-3.2 entity whose BEHAVIOUR falls outside this
+   group's own declaration (Group 4 build contract §3, ruling D1). Distinct
+   from both exclude() and refer(): this case is not a non-malignancy — a
+   ganglioneuroma is a genuine, named, benign entity, and the tumour it sits
+   beside on the same four-digit stem (ganglioneuroblastoma, 9490/3) is a
+   real Group IV cancer. And it is not a cross-group referral either — ICCC-3
+   registers no group at all for a benign neurogenic tumour, so there is
+   nowhere to refer it TO. No morphology_code is ever emitted here (the
+   validator enforces that the two never coexist on one branch); the panel
+   instead names the code the tumour actually sits at, the behaviour it
+   carries, and what this group declares, and defers the case to the
+   registrar. `basis_of_diagnosis` still applies — the case had histology —
+   so it is carried through exactly as it is for any other terminal. */
+function excludeBehaviour(be) {
+  state.workup = []; state.pending = null;
+  state.result = {
+    behaviourExcluded: true,
+    icdoCode: be.icdo_code,
+    icdoBehaviour: be.icdo_behaviour,
+    icdoTerm: be.icdo_term,
+    groupDeclares: be.group_declares,
+    reason: be.reason || null,
+    registrarDecisionRequired: !!be.registrar_decision_required,
+    basisOfDiagnosis: basisOfDiagnosis()
+  };
+  state.stage = 'output';
+}
+
 /* ============================================================================
    Output block — rows in REDCap field order so the clerk reads down both
    panels in lockstep (redcap.md §2).
@@ -1730,6 +1764,30 @@ function renderOutput() {
       banner('info', 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
+      outActions() + '</div>';
+  }
+  /* Group 4 build contract §3, ruling D1. Neither the referral panel above
+     nor the exclusion panel below fits: this case is a real ICD-O-3.2
+     entity — not a non-malignancy — and ICCC-3 registers no group it could
+     be referred TO, because Group IV's own behaviour declaration is the
+     thing excluding it. The panel says which code and behaviour the tumour
+     actually sits at, what this group declares instead, and (§3, §6 rule 1)
+     always carries a registrar flag alongside the clerk-facing reason. */
+  if (r.behaviourExcluded) {
+    return '<div class="node--live">' +
+      banner('info', 'Benign — outside this group’s declared behaviour', r.reason) +
+      '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
+      orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
+      orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +
+      (r.registrarDecisionRequired
+        ? banner('warn', 'Registrar decision required',
+            'This code and behaviour need the registrar’s ruling before the case can be closed.')
+        : '') +
+      (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined
+        ? orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' + (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'))
+        : '') +
+      orow('Topography', state.captured.topography || '—') +
+      orow('Based on', basisFromTrail() || '—') +
       outActions() + '</div>';
   }
   var e = r.entry, redcap = state.host === 'redcap';
