@@ -615,5 +615,513 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 
 ---
 
-*Last updated 18 September 2026, on the Group 4 branch (`group-04-neuroblastoma`). Previously 18
-September 2026, on the Group 4 build.*
+## 14. ⚠️ Three router dual-group rules still carry the stale CNS topography scope
+
+**Found 18 September 2026 during the Group 4 build, extending the `9501-9504` rule. Not fixed
+here — these are Group III/VIII/IX rules and the Group 4 branch was scoped to its own.**
+
+`docs/TODO.md` §10.2 above records that the `9501-9504` rule carried a note reading *"Extend
+both files together when Group III is authored"* and was extended in this build. **Three other
+rules in `data/shared/presentation_router.json` carry the identical note, verbatim, and were
+not extended.** `9260` is a separate defect and is already recorded at §10.1; it is not
+repeated here.
+
+### What happens
+
+Each of the three matches only the NOS-level CNS codes `C70.9`, `C71.9` and `C72.9`, and each
+carries the same `cns_topography_scope_note`: *"Uses NOS-level CNS topography codes
+(C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites --
+that granularity belongs to Group III's own build (not yet started). Extend both files together
+when Group III is authored."* **Group III was authored 16 September 2026, and
+`topography_codes.json` now enumerates all 21 codes in `C70.0`–`C72.9`.** The premise of the
+note is false and the note says so on its face.
+
+| Rule | Codes | CNS branch result | Default when the CNS branch misses | What ICCC-2017 actually says |
+|---|---|---|---|---|
+| `9473` | `9473` | Group 3, `IIIc2` — *"Intracranial."* | **Group 9**, *"Peripheral / soft tissue PNET."* | range 29 — `9473`, sites **`000-809`**, behaviour `0-1,3` → `IIIc2`. **The only range carrying `9473` at all.** Group III at *every* site |
+| `8963` | `8963` | Group 3 — *"Via 9508 (ATRT)."* | **Group 9**, `IXd3` | ranges 48 (`649` → `VIa2`), 54 (`220,221` → `VIIa2`), 82 (`000-218,239-639,659-699,739-768,809` → `IXd3`). **`IXd3`'s site list excludes `700-729` entirely** |
+| `8000-8005` | `8000`–`8005` | Group 3, `IIIf` (adds `C75.1`, `C75.2`, `C75.3`) | **Group 12** | range 42 — `8000-8005`, sites **`700-729,751-753`**, behaviour `0-1,3` → `IIIf`. `XIIb` (range 143) excludes both those blocks |
+
+### What it costs
+
+A case at a **specific** CNS subsite falls through the CNS branch to the default, and the
+default is a different group.
+
+1. `9473/3 CNS embryonal tumour, NOS` at, say, `C71.6 Cerebellum` routes to **Group IX (soft
+   tissue sarcomas)** rather than Group III. `9473` is the CNS primitive neuroectodermal
+   tumour stem — build contract §6 ruling D4 records that `Primitive neuroectodermal tumor,
+   NOS` and `PNET, NOS` sit on `9473/3` and belong to Group III, while the *peripheral*
+   wordings are `9364`. A cerebellar `9473` reaching Group IX is the exact confusion D4 exists
+   to prevent, arriving by a different route.
+
+   **And this rule is wrong more broadly than the stale scope note accounts for.** Verified
+   against `ICCC-2017.sqlite` `code_ranges` on 18 September 2026: **range 29 is the only range
+   in the whole table carrying `9473`**, it takes sites `000-809`, and it resolves to `IIIc2`.
+   ICCC-2017 gives `9473` to Group III at **every** site. So the rule's default — *"Peripheral
+   / soft tissue PNET"* → Group 9 — has no basis in ICCC-2017 at any topography, not merely at
+   unenumerated CNS subsites. Extending `topography_in` would fix the CNS cases and leave a
+   genuinely peripheral `9473` still routing to Group IX. The honest fix is probably that
+   `9473` is not topography-dependent at all, but that is a Group III/IX decision, not one this
+   entry should make.
+2. `8963/3 Rhabdoid tumour, NOS` at a specific CNS subsite routes to **Group IX** rather than
+   Group III, where it should reach `9508/3 Atypical teratoid/rhabdoid tumour` (range 31,
+   `9508`, sites `000-809`, → `IIIc4`). The router's own note, *"Via 9508 (ATRT)"*, states that
+   intent correctly. `IXd3`'s ICCC-2017 site list (range 82) **excludes `700-729`**, so the
+   default is not merely a less specific answer at a CNS subsite — it names a group ICCC-2017
+   does not admit there at all. Group III's clinical warning on atypical teratoid/rhabdoid
+   tumour (`docs/clinical-warnings.md`, Group III table) turns on SMARCB1 (INI1) loss and
+   rhabdoid tumour predisposition syndrome, none of which the Group IX tree asks about.
+3. `8000/3 Neoplasm, malignant, NOS` at a specific CNS subsite routes to **Group XII** rather
+   than Group III `IIIf` (unspecified intracranial and intraspinal neoplasms). Same shape as
+   the last: `XIIb`'s site list (range 143) excludes `700-729` and `751-753`, so Group XII is
+   not an admissible answer there. Note that this rule's CNS branch already reaches beyond
+   `C70`–`C72` — it lists `C75.1`, `C75.2` and `C75.3`, exactly matching range 42's
+   `700-729,751-753` — so the omission is of subsite granularity, not of the whole idea, and
+   those three codes must survive the fix.
+
+Group 4's own exposure is nil: `op_document_inventory`'s first option gates on a
+`C70.0`–`C72.9` topography and refers to Group III before any code is emitted, and its
+`coding_note` states in terms that *"the router's own dual_group_rule for this must not be
+relied on as the only safeguard."* The three rules above have no such second gate.
+
+### Why the build did not catch it
+
+Nothing checks a `dual_group_rule`'s topography list against `topography_codes.json`. The
+router check that runs (`check_router_integrity`, `checks routing narrows`) proves every
+candidate list is a non-empty list of real groups and every crosswalk code resolves — it never
+asks whether a rule's `topography_in` covers the range the rule's own `label` implies. The
+`9501-9504` rule was extended in this build only because the Group 4 build contract §2.5 named
+it explicitly; the three siblings were never named, so nothing looked at them.
+
+### To close
+
+Extend each rule's `topography_in` to all 21 codes in `C70.0`–`C72.9` that
+`topography_codes.json` enumerates — the same edit already applied to `9501-9504` — and delete
+the obsolete `cns_topography_scope_note` from each. Then write the check that would have found
+all four at once: **a `dual_group_rule` branch whose `topography_in` contains any of `C70.9`,
+`C71.9` or `C72.9` must contain all 21**, or declare why not. `8000-8005` additionally keeps
+`C75.1`–`C75.3`, which are not part of that range and must not be dropped. The ICCC-2017
+ranges are already confirmed in the table above, so no re-derivation is needed — but `9473`
+needs the separate decision named under "What it costs" item 1 before its rule is touched,
+because extending its topography list alone would leave the larger defect in place.
+
+### How it was found
+
+Extending the `9501-9504` rule for build contract §2.5 meant reading the rule's scope note;
+the note's wording was distinctive enough to grep for, and the grep returned four rules
+carrying it, not one. Each was then checked against `ICCC-2017.sqlite` directly rather than by
+analogy with `9501`–`9504`, which is what turned up the wider `9473` defect.
+
+---
+
+## 15. `C32.x`, `C77.0` and `C10.x` are missing from `topography_codes.json`
+
+**Found 18 September 2026 during the Group 4 build. Not fixed here: the build contract's own
+rule is that a topography code is added with a `redcap_code` read from the REDCap file and
+never invented, and adding a site the Group 4 trees do not yet claim is a routing change, not
+a documentation one.**
+
+### What happens
+
+Build contract §5's tree-architecture table assigns `g4_head_neck_paraganglia` six topography
+groups: `C75.4`, `C75.5`, `C30.1`, **`C10.x`, `C32.x` and `C77.0`**. The first three exist in
+`data/shared/topography_codes.json`; the last three do not. The file enumerates 87 codes after
+this build's 19 additions, and none of them is a larynx, oropharynx or head-and-neck lymph node
+code. `C77.9 Lymph node, NOS` is present; `C77.0` is not.
+
+The build reported this rather than inventing it. `presentation_router.json`'s
+`groups["4"].tree_routing._comment` says so in the file itself: *"NOT yet routable: the build
+contract's own §5 architecture table names C10.x (oropharynx), C32.x (larynx) and C77.0 (lymph
+nodes of head/face/neck) as g4_head_neck_paraganglia topography, but none of the three exists
+in topography_codes.json yet, so none is included below -- reported, not invented."*
+
+### What it costs
+
+Three presentations cannot be routed to the head and neck paraganglioma tree:
+
+1. **Laryngeal paraganglioma** (`C32.x`). ICD-O-3.2 carries `Laryngeal paraganglioma` as a
+   Related term on `8693/3 Extra-adrenal paraganglioma, NOS`, so the code exists and the entity
+   is named in Layer 1. Build contract §5 lists laryngeal paraganglioma among the head and neck
+   tree's dominant differentials by name.
+2. **Vagal paraganglioma presenting in the neck** and any paraganglioma whose recorded
+   topography is a head or neck lymph node (`C77.0`).
+3. **Oropharyngeal sites** (`C10.x`).
+
+A Group IV case at any of these sites has no `topography_codes.json` row, so `narrowBySite()`
+has no candidate list to intersect and the case cannot reach `g4_head_neck_paraganglia` through
+the router at all. It is not lost — `g4_other_peripheral` is the declared catch-all and
+`op_paraganglioma_uncovered` exists for exactly this, emitting `8680/3 Paraganglioma, NOS` at
+the family level. **The cost is a less specific code**: `8693/3 Extra-adrenal paraganglioma,
+NOS` rather than `8680/3`, and no site-resolution step.
+
+### Why the build did not catch it
+
+It did catch it — `check_group4_topography_map` (rule 5) proves the map is total and disjoint
+over **Group IV's own candidate topography codes**, which is the set `topography_codes.json`
+declares. A code absent from that file is absent from the universe the check sweeps, so a
+missing site is invisible to a totality check by construction. The check can prove every
+declared code routes; it cannot prove every code the group *should* declare is declared. That
+gap is what this entry is.
+
+### To close
+
+Add the three blocks to `topography_lookup` with `redcap_code` read from `ICD coding/RedCap
+Options/Topography Redcap.md`. **All the values exist there and none needs inventing** —
+verified 18 September 2026: `320` Glottis, `321` Supraglottis, `322` Subglottis, `323`
+Laryngeal cartilage, `328` Overlapping lesion of larynx, `329` Larynx, NOS; `770` Lymph nodes
+of head, face and neck; `100` Vallecula through `109` Oropharynx, NOS. Then add the matching
+`coarse_organ_crosswalk` rows — there is no larynx and no oropharynx row today, and the
+existing `Lymph nodes` row carries `candidate_groups: [2]` and would need `4` added for
+`C77.0`. Then extend `g4_head_neck_paraganglia`'s `topography[]` and the router's
+`tree_routing` rule together, and re-run rule 5. Do **not** add `C77.0` to Group 4 without
+deciding what it means: a paraganglioma recorded at a lymph node is more often a metastasis
+than a primary, and that is a registrar question, not a routing one.
+
+### How it was found
+
+Sweeping all 34 topography codes the four Group 4 trees claim against the three archetypes that
+can reach the group — the same sweep that found the `C48.2` defect fixed in commit `10ca4fa` —
+and then reading build contract §5's architecture table back against the file.
+
+---
+
+## 16. ❓ FOR THE REGISTRAR — ruling D6's CD99 gate was applied wider than D6 names
+
+**Open question, recorded 18 September 2026. Not resolved by the build, and not to be resolved
+by a build task.**
+
+### What happens
+
+Ruling D6 (build contract §6) reads: *"'Peripheral neuroepithelioma' goes to `9503`, and the
+branch asks what the IHC shows."* It names **one** phrase — *peripheral neuroepithelioma* — and
+rules that because that exact phrase appears nowhere in ICD-O-3.2, the destination is decided by
+the CD99 / PHOX2B / synaptophysin panel already on file rather than by the report's wording.
+
+As built, `op_clinical_alias`'s second option is labelled *"Neuroepithelioma, NOS",
+"Neuroepithelioma", or "peripheral neuroepithelioma"* and routes **all three** to `op_ihc_cd99`.
+So a report whose diagnostic line reads plainly `Neuroepithelioma, NOS` — the exact ICD-O-3.2
+Preferred term on `9503/3`, unambiguous in Layer 1, and the subject of alias-instruction entry
+29, which D4 explicitly leaves standing — is also sent through the Ewing-family gate, and a
+CD99-positive / PHOX2B-negative / synaptophysin-negative panel refers it out of Group IV to
+`9364/3 Ewing sarcoma`.
+
+The build knew it was doing this and wrote the reason down in `op_clinical_alias`'s own
+`coding_note`: *"entry 29 (Neuroepithelioma alone, to 9503) stands, but every case in this
+family is still routed through the CD99/PHOX2B/synaptophysin check (`op_ihc_cd99`) rather than
+trusting the word, because that is the evidence-not-wording standard D6 sets and there is no
+reason to apply it selectively."* That is a defensible reading. **It is not what D6 says**, and
+the difference decides which group a case is counted in.
+
+### What it costs
+
+Nothing today, because no case has been coded. Going forward it is a directional bias of
+unknown size: every bare `Neuroepithelioma, NOS` with an Ewing-family immunophenotype leaves
+Group IV for Group VIII or IX. If the registrar's intent was that Layer 1's own Preferred term
+be honoured when the report uses it, Group IV under-counts and Groups VIII/IX over-count, and
+nothing in the record will say why.
+
+Note which way the asymmetry runs. The gate can only move a case **out** of Group IV; it can
+never move one in. So a wrong answer here is not neutral.
+
+### Why the build did not settle it
+
+It is not a build question. The evidence is not in dispute — ICD-O-3.2 carries
+`9503/3 Neuroepithelioma, NOS` as its only term on the stem, in both the 2019 draft and the
+9 October 2020 final, and carries no PNET synonym there; the phrase *peripheral
+neuroepithelioma* appears nowhere in the workbook. What is in dispute is how far a ruling
+extends beyond the words it uses, and build contract §6 is explicit that **a build task that
+finds a ruling inconvenient escalates; it does not reinterpret.** Applying D6 more widely than
+its text is a reinterpretation, however reasonable.
+
+### To close
+
+The registrar answers one question: **does the CD99 gate apply to a report that says plainly
+`Neuroepithelioma, NOS`, with no "peripheral", or only to the peripheral phrase?**
+
+- **If only the peripheral phrase:** split `op_clinical_alias`'s second option in two. Bare
+  `Neuroepithelioma` / `Neuroepithelioma, NOS` resolves directly to `9503/3` at basis 7; only
+  *peripheral neuroepithelioma* goes to `op_ihc_cd99`. One option, one destination, no engine
+  change.
+- **If the gate applies to both:** the data is already correct and D6's text should be amended
+  in the contract to say so, so that the next reader is not left reconciling the two.
+
+Either way the answer belongs in `memory/registrar-rulings.md`, because Groups VIII and IX will
+meet the other side of it.
+
+### How it was found
+
+Reading `op_clinical_alias`'s option labels against ruling D6's text word for word while
+writing this build's documentation.
+
+---
+
+## 17. ❓ FOR THE REGISTRAR — the head and neck and sinonasal panels have no NEGATIVE button
+
+**Open question, recorded 18 September 2026. A real gap in the two trees, and it cannot be
+closed by copying the closed vocabulary onto the variables — see "To close".**
+
+### What happens
+
+`hn_ihc_checklist` and `sn_ihc_checklist` each declare three `test_result_states` variables.
+Two of the three offer exactly one state:
+
+| Node | Variable | Declared states |
+|---|---|---|
+| `hn_ihc_checklist` | `keratin_status` | `positive` · `negative` · `not_done` · `not_available` · `not_assessable` |
+| `hn_ihc_checklist` | `general_ne_markers_status` | **`positive` only** |
+| `hn_ihc_checklist` | `architecture_status` | **`positive` only** |
+| `sn_ihc_checklist` | `pankeratin_status` | `positive` · `negative` · `not_done` · `not_available` · `not_assessable` |
+| `sn_ihc_checklist` | `general_ne_markers_status` | **`positive` only** |
+| `sn_ihc_checklist` | `architecture_status` | **`positive` only** |
+
+`general_ne_markers_status` covers INSM1, synaptophysin and chromogranin; `architecture_status`
+covers the zellballen / sustentacular pattern (SOX10, S100) in the head and neck tree and the
+S100/SOX10 sustentacular network in the sinonasal tree.
+
+**A clerk whose neuroendocrine panel came back negative has no button for it.** The only
+available action is to leave the line blank, which fails the `when` clause that requires
+`positive`, drops to the keratin-negative rule, and emits `8680/3 Paraganglioma, NOS` or
+`9522/3 Olfactory neuroblastoma` at basis 7 with a `reason` that says the confirmatory panel
+*"was either not completed or the result is equivocal."*
+
+**A tested-and-negative panel is neither of those things.**
+
+### What it costs
+
+It conflates *not tested* with *tested and negative* — the exact distinction the keratin line
+immediately above it is careful to preserve, at length, in five separate branches, for the
+stated reason that *"an unread keratin is not a negative one."* The two variables sit in the
+same node, under the same question, and do not make the distinction at all.
+
+And the direction is wrong. A tumour with **negative** general neuroendocrine markers is
+evidence **against** paraganglioma and against olfactory neuroblastoma; the case still resolves
+to the tree's own family code, with a reason implying the workup is merely incomplete. That is a
+case looking better evidenced than it is, on a screen a clerk reads — the class of defect this
+project treats as the first thing to test for.
+
+Scale, stated honestly: both codes are the trees' NOS-level family carriers, reached by several
+other routes, so this does not silently create a diagnosis out of nothing. It emits a plausible
+family code where the honest output is *this does not look like the tree's entity*.
+
+### Why the build did not catch it
+
+`check_ihc_checklist_renders_a_control`, added in this build (§13 above), asks whether a node
+renders **any** control. Both nodes now do — the keratin line alone satisfies it. Nothing asks
+whether the control offered covers the answers a clerk can actually have. `check_test_result_
+states` (ruling 11) asks the opposite question: every **declared** state must be consumed by a
+`when` clause. A one-state vocabulary passes both trivially — the single state is rendered, and
+it is consumed.
+
+### To close
+
+**Do not simply copy the five-state closed vocabulary onto the two variables.** The
+pre-existing `check_declared_states_consumed` (ruling 11) FAILs the build on any declared state
+that no `when` clause consumes, so adding `negative`, `not_done`, `not_available` and
+`not_assessable` to either variable FAILs immediately unless a branch is written for each, in
+both nodes. That is eight new states and, at minimum, a rule per state per node.
+
+The work, once the registrar has ruled on the substance:
+
+1. Decide what a **negative** general neuroendocrine panel means in each tree. In the head and
+   neck tree a keratin-negative, neuroendocrine-marker-negative tumour is probably not a
+   paraganglioma at all, and the honest destination may be a referral rather than `8680/3`. In
+   the sinonasal tree the same logic points away from olfactory neuroblastoma. **Neither is a
+   coding-mechanics question, and neither is answered by any paper held in `Group 4 Papers/` —
+   Mete 2022 and Rooper 2023 both state the positive panel and are silent on what a fully
+   negative one implies.**
+2. Then extend both vocabularies and write the branches, keeping `not_done` /
+   `not_available` / `not_assessable` distinct from `negative` exactly as the keratin line does.
+3. Then re-run `induce_flow.py` and confirm `check_declared_states_consumed` and
+   `check_flow_charts` both pass.
+
+A validator rule worth adding at the same time: **a `test_result_states` block declaring a
+single state is a build WARN**, naming the node and the variable. One state is a legitimate
+shape only when the variable genuinely has one possible answer, which is rare enough to be
+worth writing down each time.
+
+### How it was found
+
+Reading `hn_ihc_checklist`'s and `sn_ihc_checklist`'s `test_result_states` blocks against their
+own `marker_groups[]` while documenting the fix recorded in §13 — the fix that gave both nodes a
+control in the first place established that `keratin_status` needed the full vocabulary and did
+not ask the same question of the other two variables.
+
+---
+
+## 18. ❓ FOR THE REGISTRAR — a CNS neuroblastoma cannot reach Group IVa, and ICCC-3 puts it there
+
+**Found 18 September 2026 while checking the alias agent's escalation during the Group 4 build.
+Verified against Layer 1 directly, not inferred. Three parts, in three different files, one of
+them in Group 3, which is already merged to `main`. Not fixed here. It needs a registrar ruling
+on all three parts together — see "To close".**
+
+### What Layer 1 says
+
+**ICD-O-3.2** (`ICD coding/ICD-O-3.2/icdo32.sqlite`, table `icd_o_3_2_morphology`,
+`code4 = '9500'`):
+
+```
+9500/3  Preferred  Neuroblastoma, NOS
+9500/3  Synonym    Central neuroblastoma      (C71._)
+9500/3  Synonym    CNS neuroblastoma
+9500/3  Synonym    Sympathicoblastoma         [obs]
+```
+
+and separately `9490/3  Related  CNS ganglioneuroblastoma`. **ICD-O-3.2 itself puts CNS
+neuroblastoma on `9500/3`**, and attaches an explicit `(C71._)` site reference to the *Central
+neuroblastoma* synonym — the code is not merely tolerated at a brain site, the workbook names
+one.
+
+**ICCC-2017** (`ICCC-2017.sqlite`, table `code_ranges`). Three rows decide this:
+
+| range | histology | sites | behaviour | group |
+|---|---|---|---|---|
+| 43 | `9490,9500` | **`000-809`** | `3` | 32 = **IVa**, *Neuroblastoma and ganglioneuroblastoma* |
+| 45 | `9501-9504` | `000-699,739-768,809` | `3` | 33 = IVb, *Other peripheral nervous cell tumors* |
+| 30 | `9501-9504` | `700-729` | `0-1,3` | 21 = IIIc3, *Medulloepithelioma* |
+
+**The site split applies to `9501`–`9504` only.** Range 43 is the only range in the table
+carrying `9490` or `9500` at all, it takes sites `000-809`, and it resolves to **IVa**. So
+`9490` and `9500` are Group IVa at **every** site, the central nervous system included, and
+Group III never claims either. Build contract §0.6 says this in terms: *"There is no conflict
+to resolve; there is a routing note to write, because it reads wrong."*
+
+### What happens
+
+Three things, each independently sufficient to stop a CNS neuroblastoma reaching Group IVa.
+
+**1. `data/shared/topography_codes.json` gives all 21 CNS codes `candidate_groups: [3]`.**
+`C70.0`, `C70.1`, `C70.9`, `C71.0`–`C71.9`, `C72.0`–`C72.5`, `C72.8`, `C72.9` — every one
+offers Group 3 alone. `narrowBySite()` intersects the site's candidate list with the
+archetype's, and Group 4 is not in the site's list, so **the case cannot reach Group IV by site
+routing at any CNS topography.** This is the same mechanism as the `C48.2` defect fixed in
+commit `10ca4fa`, at 21 codes instead of one.
+
+**2. `op_document_inventory` option 0 refers every CNS topography out, unconditionally.** The
+option's `reason` is correct and carefully scoped: *"ICCC-3 gives medulloepithelioma, teratoid
+medulloepithelioma, neuroepithelioma and spongioneuroblastoma to Group III (IIIc3) across the
+whole of C70.0-C72.9, and to Group IV only outside that range."* That is `9501`–`9504`, exactly
+right. **The `label` carries no such scope:** *"The topography recorded for this tumour is a
+meningeal, brain, spinal cord or other central-nervous-system site coded C70.0 through C72.9"*
+→ `refer_group: 3`. The label is what the clerk reads and acts on. A `9500/3` CNS neuroblastoma
+that somehow reached this step is referred out of the group ICCC-2017 assigns it to, by a rule
+written for four other codes. The node's `hint` repeats the unscoped form: *"If the topography
+is … C70.0-C72.9, stop here and use the first option below."*
+
+**3. `group_03_dt.json` codes `CNS neuroblastoma, FOXR2-activated` as `9473/3` and emits `9500`
+nowhere** — the string `9500` does not appear in the file. **This part may well be deliberate,
+and this entry does not assert that it is wrong.** ICD-O-3.2 was finalised 9 October 2020 and
+*WHO Classification of Tumours of the Central Nervous System*, 5th edition followed in 2021, so
+ICD-O-3.2 carries no FOXR2 entity anywhere (verified: `term LIKE '%FOXR2%'` returns zero rows),
+and Group 3's own data says so — it records the entity with
+`"code_status": "no_code"` against `9473/3`, whose ICD-O-3.2 Preferred term is `CNS embryonal
+tumor, NOS` and which the Group 3 build designates the live NOS home for the whole new CNS
+embryonal family. That is a considered position, written down with its reasoning.
+
+It is also not obviously the same thing as ICD-O-3.2's `9500/3` synonym. *CNS neuroblastoma,
+FOXR2-activated* is a molecularly defined 2021 entity; *CNS neuroblastoma* as a `9500/3`
+synonym predates it and is defined morphologically. Whether a FOXR2-negative or untested CNS
+neuroblastoma is the `9500/3` synonym, or is `9473/3`, is exactly the question nobody has
+answered.
+
+### What it costs
+
+**A paediatric CNS neuroblastoma is recorded in ICCC-3 Group III when ICCC-3 puts it in Group
+IVa.** That moves the case between two published incidence groups — *III CNS and miscellaneous
+intracranial and intraspinal neoplasms* and *IVa Neuroblastoma and ganglioneuroblastoma* —
+which are reported separately, compared internationally, and used as denominators. It is not a
+less specific code; it is a different count, and both counts are wrong by one in opposite
+directions.
+
+The same reasoning applies to `9490/3 Ganglioneuroblastoma` at a CNS site, which ICD-O-3.2
+carries as `CNS ganglioneuroblastoma` (a Related term) and range 43 likewise assigns to IVa.
+
+A second, smaller cost, already paid: **the alias agent declined to author the `CNS
+neuroblastoma` and `Central neuroblastoma` aliases for Group 4 because of part 2**, on the
+ground that the alias would resolve into a tree that immediately refers the case out. That is
+the right call — an alias that routes to a referral is worse than no alias, because it looks
+like the question was answered. Two ICD-O-3.2 synonyms of a Group IV code are therefore
+unsearchable, and will stay unsearchable until this is ruled on.
+
+### Why the build did not catch it
+
+Each check was correct about the thing it was scoped to.
+
+- `check_group4_topography_map` (rule 5) sweeps **Group IV's own candidate topography codes**,
+  sourced from `candidate_groups` in `topography_codes.json`. The CNS codes declare `[3]`, so
+  they are not in Group IV's universe, so the totality sweep never sees them. The check proves
+  every declared code routes to exactly one tree; it cannot prove the declaration is right.
+  This is the same blind spot §15 records for `C32.x`/`C77.0`/`C10.x`, at higher stakes.
+- The same rule's other half — *"no tree declaring `C70.0`–`C72.9` emits `9501`–`9504`"* — is
+  the `9501`–`9504` half of build contract §0.6, and it passes. Nothing asks the converse
+  question, whether `9490` and `9500` are **reachable** at a CNS site, because no check is
+  framed in terms of reachability by site.
+- Nothing compares an option's `label` against its own `reason`. `op_document_inventory`
+  option 0 is internally inconsistent — a correctly scoped reason under an unscoped label — and
+  no validator reads the two together. `check_no_internal_identifier_leaks` scans clerk-facing
+  prose for identifier leaks, not for scope drift against the branch's own justification.
+- Group 3's `9500`-absence is invisible from Group 4: no check crosses two group files to ask
+  whether a code one group claims is being emitted by another.
+
+Build contract §0.6 identified the substance of this on 16 September 2026 and called for *"a
+routing note to write"*. A note was written, and it is exactly right — but it is in **`9500`'s
+`coding_note`**, under the heading *CNS NOTE*: *"ICCC-3 places this code in Group IVa at every
+site, including the CNS, and Group III does not claim it. This reads wrong to a reviewer who
+expects a CNS-sited tumour to route to Group III; it is not an error, it is how ICCC-3 states
+the group. Do not 'fix' it by adding a CNS carve-out."* `9500`'s own
+`topography_routing_note` field is `null`, and so is `9490`'s.
+
+`coding_note` is author-facing and is never displayed (memory
+`uccf-lookup-tool-clerk-facing-text`). **A note in a field nobody reads at runtime does not
+change `candidate_groups` and does not make the case routable.** The build wrote down the right
+answer, in the one place that could not act on it. That is the gap between what §0.6 asked for
+and what the build delivered, and it is worth noting that the note's closing instruction — *do
+not add a CNS carve-out* — is correct and points the opposite way from what parts 1 and 2
+actually do.
+
+### To close
+
+**This needs a registrar ruling on all three parts together, and no part should be changed
+alone.** Part 1 changes routing for Group 3, which is already merged to `main`; changing it
+without settling part 3 would make a CNS site offer Group 4 while Group 3's own tree still
+codes the entity to `9473/3`, so the same case would resolve differently depending on which
+tree the clerk was sent to. Changing part 2 alone would let a case into a tree the router
+cannot deliver it to.
+
+The three questions, as they should be put:
+
+1. **Does this registry record a CNS neuroblastoma in ICCC-3 Group IVa, as ICCC-2017 range 43
+   states?** If yes, the 21 CNS topography codes need `4` added to `candidate_groups`, and the
+   `coarse_organ_crosswalk` row *Brain, meninges and central nervous system* with it. If no,
+   the reason belongs in `memory/registrar-rulings.md`, because it overrides Layer 1 and the
+   next builder will otherwise reopen it.
+2. **Does `op_document_inventory` option 0's label need the `9501`–`9504` scope its own reason
+   already carries?** This one is a defect on any answer to question 1 — the label and the
+   reason contradict each other, and only the label is displayed. The minimal fix is to name
+   the four codes in the label, matching the reason.
+3. **Is `9473/3` the right home for `CNS neuroblastoma, FOXR2-activated`, given that ICD-O-3.2
+   carries `CNS neuroblastoma` as a `9500/3` synonym?** State what each source says: ICD-O-3.2
+   has no FOXR2 entity and puts CNS neuroblastoma on `9500/3`; WHO CNS5 (2021) defines the
+   FOXR2 entity and postdates ICD-O-3.2; ICCC-2017 range 43 puts `9500` in IVa at every site
+   and range 29 puts `9473` in IIIc2 at every site. **The reconciliation is the registrar's.**
+   Whichever way it goes, a FOXR2-negative or untested CNS neuroblastoma needs a destination
+   too, and that case is not covered by either file today.
+
+Once ruled, the alias agent's two withheld aliases (`CNS neuroblastoma`, `Central
+neuroblastoma`) can be authored against whichever code the ruling names, and a check is worth
+adding: **a code ICCC-2017 admits at a topography must be reachable at that topography**,
+derived from `code_ranges` rather than from `candidate_groups`, so the declaration is checked
+against Layer 1 instead of being trusted as the universe.
+
+### How it was found
+
+The alias agent escalated rather than authoring `CNS neuroblastoma` and `Central neuroblastoma`
+into `aliases_group_04.json`, having noticed that `op_document_inventory` would refer the case
+straight out of the group. Checking that escalation meant querying `icdo32.sqlite` and
+`ICCC-2017.sqlite` for what each actually says about `9500` at a CNS site, which turned up
+parts 1 and 3 as well.
+
+---
+
+*Last updated 18 September 2026, on the Group 4 branch (`group-04-neuroblastoma`), with the
+Group 4 build documentation (§14–§18). Previously 18 September 2026, on the Group 4 build.*
