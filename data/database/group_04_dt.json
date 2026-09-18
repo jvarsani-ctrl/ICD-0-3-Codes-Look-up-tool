@@ -921,17 +921,16 @@
           "step_number": 2,
           "step_label": "Inadequate specimen",
           "question": "A specimen was obtained but is reported as inadequate, non-diagnostic, or crush artefact only. What is the plan?",
-          "hint": "Inadequate resolves to the tree's own NOS with a note that the case is incompletely worked up — it is not a negative result and must not be coded as though a diagnosis was reached.",
+          "hint": "A non-diagnostic specimen cannot be coded to a Group IV entity: this group has no basis-1/2 route to a specific code, only the two Table 4 marker routes (basis 4) or tissue (basis 5, 7 or 8). Refer to Group XII rather than guessing a family.",
           "clinical_alert": null,
-          "coding_note": "Mirrors the Group 3 un_inadequate_specimen precedent: family NOS at basis 2, not basis 7 — the tissue did not yield a diagnosis.",
+          "coding_note": "Visser Rule 5 (p.03): basis 1 or 2 means morphology 8000/3, except for entities in Table 3 — and ICCC-3 Group IV has no Table 3 entries at all. The Group 3 un_inadequate_specimen precedent (family NOS at basis 2) does NOT transfer here: Group III's forty-three Table 3 CNS rows permit exactly that, and Group IV's only no-pathology route is Table 4 (basis 4, and only for 9500/8700). So an inadequate specimen refers to Group XII (8000/3) rather than falling back to a Group IV code.",
           "captured_variables": [],
           "options": [
             {
               "label": "A repeat biopsy is already planned or pending",
-              "morphology_code": "9500",
-              "behavior_code": "3",
-              "basis_of_diagnosis": 2,
-              "upgrade_path": "Await the repeat biopsy. A diagnostic specimen would place this case in the correct family and, if paraganglionic, the correct site-specific code.",
+              "refer_group": 12,
+              "refer_code": "8000",
+              "reason": "No tissue diagnosis was reached, and this group has no route to a specific code without one. ENCR Rule 5 (p.03) codes the case 8000/3, malignant neoplasm, NOS, which is Group XII, not Group IV. A repeat biopsy is planned; re-code the case once a diagnostic specimen is available.",
               "captures": {
                 "specimen_adequacy": "inadequate",
                 "workup_status": "incomplete"
@@ -939,10 +938,9 @@
             },
             {
               "label": "A repeat biopsy is not feasible, or the patient is lost to follow-up",
-              "morphology_code": "9500",
-              "behavior_code": "3",
-              "basis_of_diagnosis": 2,
-              "upgrade_path": "No further tissue is expected. This case remains coded to the tree's default pending any later specimen.",
+              "refer_group": 12,
+              "refer_code": "8000",
+              "reason": "No tissue diagnosis was reached and no further tissue is expected. ENCR Rule 5 (p.03) codes the case 8000/3, malignant neoplasm, NOS, which is Group XII, not Group IV.",
               "captures": {
                 "specimen_adequacy": "inadequate",
                 "workup_status": "incomplete"
