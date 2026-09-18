@@ -133,7 +133,7 @@ ear*, *Accessory sinuses*, *Mediastinum*, *Carotid body and other paraganglia*.
 **Three sites the contract names are still absent, and the build said so rather than inventing
 them** — `C10.x` oropharynx, `C32.x` larynx, `C77.0` lymph nodes of head, face and neck.
 `presentation_router.json`'s `tree_routing._comment` records the omission in the file itself.
-`docs/TODO.md` §15 records what closing it takes; the REDCap codes all exist and none needs
+`docs/TODO.md` §13 records what closing it takes; the REDCap codes all exist and none needs
 inventing.
 
 ### 4.2 The `C48.2` fix — a neuroblastoma that could never reach the group
@@ -170,7 +170,7 @@ that can reach the group. `C48.2` was the only failure.
   `coding_note` says the router's own rule *"must not be relied on as the only safeguard."*
 
 **Three sibling rules carrying the identical stale note were not touched** — `9473`, `8963` and
-`8000-8005`, all out of scope for this branch. `docs/TODO.md` §14 records them, with the
+`8000-8005`, all out of scope for this branch. `docs/TODO.md` §12 records them, with the
 ICCC-2017 ranges that decide each. Checking those ranges turned up a wider defect on `9473`:
 range 29 is the only range in `ICCC-2017.sqlite` carrying `9473`, it takes sites `000-809`, and
 it resolves to `IIIc2`, so the rule's *"Peripheral / soft tissue PNET"* default to Group IX has
@@ -240,13 +240,13 @@ negative. **Negative is what confirms paraganglioma and olfactory neuroblastoma*
 The same shape was then searched for across every group's `ihc_checklist` nodes. It turned up
 **exactly two more, both in Group 3** — `pf_mb_molecular_gate` and `mn_grade_assembly` — already
 merged to `main` and out of scope here. They are named in a dated exemption that downgrades
-them to WARN and FAILs on its own if either stops having the defect. `docs/TODO.md` §13.
+them to WARN and FAILs on its own if either stops having the defect. `docs/TODO.md` §11.
 
 **Two variables on those two nodes are still wrong, and it is recorded rather than fixed.**
 `general_ne_markers_status` and `architecture_status` declare only `positive`, so a clerk whose
 neuroendocrine panel came back **negative** has no button for it, and leaving the line blank
 emits `8680/3` or `9522/3` with a reason saying the panel *"was either not completed or
-equivocal."* A tested-and-negative panel is neither. `docs/TODO.md` §17 — it is a registrar
+equivocal."* A tested-and-negative panel is neither. `docs/TODO.md` §15 — it is a registrar
 question, and a five-state vocabulary cannot simply be copied on, because
 `check_declared_states_consumed` (ruling 11) FAILs any declared state no `when` clause consumes.
 
@@ -285,7 +285,7 @@ before the final run.
 ### ★ 1. A CNS neuroblastoma cannot reach Group IVa, and ICCC-3 puts it there
 
 **This is the item worth your time.** Three parts, in three files, one of them in Group 3 which
-is already merged. Full detail and the Layer 1 queries are in `docs/TODO.md` §18.
+is already merged. Full detail and the Layer 1 queries are in `docs/TODO.md` §16.
 
 ICD-O-3.2 carries `CNS neuroblastoma` and `Central neuroblastoma` (the latter with an explicit
 `(C71._)` site reference) as synonyms on **`9500/3`**. ICCC-2017 range 43 gives `9490,9500` to
@@ -322,11 +322,11 @@ D6 names one phrase — *peripheral neuroepithelioma*. As built, `op_clinical_al
 alias-instruction entry 29, which D4 leaves standing — through the same Ewing-family gate. The
 build wrote its reasoning into the node's `coding_note` and it is defensible, but it is not what
 D6 says, and the gate can only move a case **out** of Group IV, never in. One question, one
-option split if the answer is "the peripheral phrase only". `docs/TODO.md` §16.
+option split if the answer is "the peripheral phrase only". `docs/TODO.md` §14.
 
 ### 3. The head and neck and sinonasal panels have no NEGATIVE button
 
-§6.1 above. `docs/TODO.md` §17.
+§6.1 above. `docs/TODO.md` §15.
 
 ### 4. Three sites the contract names are still unroutable
 
@@ -335,7 +335,7 @@ option split if the answer is "the peripheral phrase only". `docs/TODO.md` §16.
 paraganglioma* as a Related term on `8693/3`. The cost is a less specific code — `8680/3
 Paraganglioma, NOS` from the catch-all instead of `8693/3` with a site-resolution step. Adding
 `C77.0` needs a decision first: a paraganglioma recorded at a lymph node is more often a
-metastasis than a primary. `docs/TODO.md` §15.
+metastasis than a primary. `docs/TODO.md` §13.
 
 ### 5. A mis-citation in `hn_genetics`, in scope for this branch and not mine to fix
 
@@ -356,7 +356,7 @@ field a clerk reads.
   routing is unchanged.
 - **CoGNET still has no ICD-O code in any source.** Four have now been read in full and all
   four are silent. The registrar's instruction of 18 September 2026 is to stop chasing it.
-  `docs/TODO.md` §11.
+  `docs/TODO.md` §9.
 - **The `/3`-only rule rests on IARC, never on a WHO paper.** Juhlin CC, *The road ahead*,
   Journal of Clinical Pathology 2025;78:1–10, p. 8, says pheochromocytoma and paraganglioma
   *"display some malignant potential, the overall risk of distant metastasis is low"*. Read
@@ -418,7 +418,7 @@ should be visible rather than silently absent.
 the corrections of contract §0 applied) · `Group 4 — Alias Build Instructions.md`, with
 entries 30, 31 and 33 overridden by D4 · `ICD coding/ICD-O-3.2/icdo32.sqlite` (IARC FINAL,
 9 October 2020) · `ICCC-2017.sqlite` · the seventeen key-point extractions in `Group 4 Papers/`.
-Open items: `ICD-Lookup/docs/TODO.md` §§10–18. Negative-control evidence:
+Open items: `ICD-Lookup/docs/TODO.md` §§8–16. Negative-control evidence:
 `ICD-Lookup/docs/validator_negative_controls.md`. Clinical warnings:
 `ICD-Lookup/docs/clinical-warnings.md`, Group IV. A copy of this report is at
 `ICD-Lookup/docs/group_04_build_report.md` so repo cross-references resolve.*
