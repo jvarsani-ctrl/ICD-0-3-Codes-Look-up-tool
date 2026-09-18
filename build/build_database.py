@@ -7027,6 +7027,121 @@ def check_flow_charts(ctx: DTContext):
     return out
 
 
+
+# ----------------------------------------------------------------------------------
+# Fix dated 18 Sep 2026 (branch group-04-neuroblastoma) — an ihc_checklist has to
+# render a control the clerk can actually answer.
+#
+# app.js's nodeControl() (~line 615) routes every `ihc_checklist` node to markerFlow()
+# whenever the node carries a `branch_sequence`, and to markerGrid() only when it does
+# not. markerFlow() (~line 913) asks one marker at a time strictly from
+# `branch_sequence.order` (via nextMarker(), ~line 846) — it does not read
+# `marker_groups[]` at all. dispatchNode() (~line 613) separately prepends
+# stateSelectors(), which renders one set of buttons per block in `test_result_states`
+# (stateBlocks(), ~line 643) — the only OTHER control an ihc_checklist can show.
+#
+# check_flow_charts() (above) already tolerates an empty `branch_sequence.order` as
+# "legitimate" whenever the node's rules read no markers, on the theory that
+# `test_result_states` state selectors ARE the flow chart in that case. It never
+# actually checks that a `test_result_states` block exists — which is exactly how
+# hn_ihc_checklist and sn_ihc_checklist (Group 4) shipped with neither: an empty
+# `order` and no `test_result_states`, so nothing rendered but the question, the hint
+# and a bare Continue button. Both are fixed on this branch by giving them a
+# `test_result_states` array, one block per status variable their `resolution_logic`
+# keys off, matching op_ihc_cd99 (Group 4 build contract §3.4).
+# ----------------------------------------------------------------------------------
+
+# Group 3 carries the identical, still-open defect on two of its own nodes. Group 3 is
+# already merged to main and this branch may not touch its data (see docs/TODO.md for
+# the fix). Named, dated exemption, downgraded to WARN — NOT a scope carve-out for
+# Group 3 generally, only for these two node IDs:
+GROUP3_UNANSWERABLE_IHC_EXEMPTION = {
+    "pf_mb_molecular_gate",   # Group 3, molecular_freetext gate — see docs/TODO.md
+    "mn_grade_assembly",      # Group 3, meningioma grade assembly — see docs/TODO.md
+}
+
+
+def check_ihc_checklist_renders_a_control(ctx: DTContext):
+    """
+    An `ihc_checklist` node must render at least one input control.
+
+    It needs a non-empty `branch_sequence.order` (markerFlow() asks from it), OR a
+    non-empty `test_result_states` (stateSelectors() renders from it) — contract §3.4.
+    A node with NEITHER presents a question, a hint and a Continue button, with
+    nothing on screen the clerk can tap to answer it: exactly the defect found by
+    driving hn_ihc_checklist and sn_ihc_checklist in a browser (Group 4, 18 Sep 2026).
+
+    `marker_groups[]` alone can never satisfy this. It documents the panel for
+    `check_marker_tokens_declared`/`check_marker_names_verbatim` and for
+    `induce_flow.py`'s own ordering of markers actually named in
+    `resolution_logic[].positive`/`.negative` — but app.js's markerFlow() (the renderer
+    an ihc_checklist with a `branch_sequence` is routed to) never reads
+    `marker_groups[]`. A node whose rules key off captured state variables instead of
+    marker tokens (`when` clauses, not `positive`/`negative`) induces an empty `order`
+    by construction, and looks identical to a rendering node right up until it is
+    driven in a browser.
+
+    Group 3 has two more instances of this exact defect — `pf_mb_molecular_gate` and
+    `mn_grade_assembly` — merged to main already, out of scope for this branch to fix.
+    They are named explicitly, above, and downgraded to WARN rather than excluded from
+    the check or scoped around by group number. If either node is ever repaired,
+    deleting it from `GROUP3_UNANSWERABLE_IHC_EXEMPTION` is required — the second half
+    of this check FAILS on its own if a named node no longer has the defect, so the
+    exemption cannot silently go stale.
+    """
+    out = []
+    checked = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        if node.get("node_type") != "ihc_checklist":
+            continue
+        checked += 1
+        bs = node.get("branch_sequence")
+        order = bs.get("order") if isinstance(bs, dict) else None
+        has_control = bool(order) or bool(node.get("test_result_states"))
+        if has_control:
+            continue
+        msg = ("node %s is an ihc_checklist with an empty branch_sequence.order and no "
+               "test_result_states — app.js's markerFlow() asks only from "
+               "branch_sequence.order and never reads marker_groups[], so this node "
+               "renders a question, a hint and a Continue button with nothing to "
+               "answer (contract §3.4; app.js nodeControl()/markerFlow())" % node_id)
+        if ctx.group == GROUP3 and node_id in GROUP3_UNANSWERABLE_IHC_EXEMPTION:
+            out.append((WARN, msg + " — known Group 3 defect (pf_mb_molecular_gate, "
+                               "mn_grade_assembly), tracked in docs/TODO.md, out of "
+                               "scope for this branch"))
+        else:
+            out.append((FAIL, msg))
+
+    # The exemption's own collapse test. A named node that no longer has the defect
+    # means the exemption is describing a file that no longer exists — that has to be
+    # loud, not a quietly-passing WARN nobody notices was never earned.
+    if ctx.group == GROUP3:
+        for node_id in sorted(GROUP3_UNANSWERABLE_IHC_EXEMPTION):
+            node = ctx.nodes.get(node_id)
+            if node is None:
+                continue
+            bs = node.get("branch_sequence")
+            order = bs.get("order") if isinstance(bs, dict) else None
+            if bool(order) or bool(node.get("test_result_states")):
+                out.append((FAIL, "GROUP3_UNANSWERABLE_IHC_EXEMPTION names %s, which now "
+                                  "renders a control (branch_sequence.order or "
+                                  "test_result_states is no longer empty) — the Group 3 "
+                                  "defect this exemption covers for %s is fixed. DELETE "
+                                  "%s from GROUP3_UNANSWERABLE_IHC_EXEMPTION in "
+                                  "build/build_database.py"
+                            % (node_id, node_id, node_id)))
+
+    if [f for f in out if f[0] == FAIL]:
+        return out
+    if checked:
+        out.append((OK, "%d ihc_checklist node(s) all render at least one input control "
+                        "— a non-empty branch_sequence.order or test_result_states "
+                        "(contract §3.4)" % checked))
+    else:
+        out.append((NOTE, "no ihc_checklist node in this file — nothing to check"))
+    return out
+
+
 def check_marker_names_verbatim(ctx: DTContext):
     """Ruling 10 — a gene or fusion name renders as written.
 
@@ -7499,6 +7614,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_awaiting_layer1, ctx, repo)
         report.run(check_no_clinical_alerts, ctx)
         report.run(check_flow_charts, ctx)
+        report.run(check_ihc_checklist_renders_a_control, ctx)
         report.run(check_marker_names_verbatim, ctx)
         report.run(check_declared_states_consumed, ctx)
         # source of truth

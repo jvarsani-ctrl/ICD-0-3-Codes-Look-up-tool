@@ -2336,3 +2336,172 @@ bare-string `nos_fallback` (2), `test_result_states` closed vocabulary (2),
 `provisional_pending` on a codeless branch (3)) was already cleared by the data agent's own
 commit (`798a3ec Fix four Group IV data defects in group_04_dt.json`) before this task's
 fixes were even written, and is confirmed absent from the final 0-FAIL, 243-check run.
+
+---
+
+# `check_ihc_checklist_renders_a_control` — a new, cross-group check (2026-09-18)
+
+**What it catches.** `hn_ihc_checklist` and `sn_ihc_checklist` (Group 4) were driven in a
+browser and rendered a question, a hint and a Continue button — and nothing to answer.
+`branch_sequence.order` was empty (their `resolution_logic[]` keys off captured state
+variables, not marker tokens, so `induce_flow.py` induces nothing to ask) and neither node
+carried a `test_result_states` block. `app.js`'s `nodeControl()` (~line 615) routes every
+`ihc_checklist` carrying a `branch_sequence` to `markerFlow()`, which asks one marker at a
+time strictly from `branch_sequence.order` (`nextMarker()`, ~line 846) and never reads
+`marker_groups[]`. `dispatchNode()` (~line 613) separately prepends `stateSelectors()`,
+which renders one set of buttons per `test_result_states` block (`stateBlocks()`, ~line
+643) — the only other control an `ihc_checklist` can show. Empty `order` and no
+`test_result_states` together mean neither renderer produces a single input.
+
+Neither `build/build_database.py` nor `build/induce_flow.py` caught it before this check:
+`induce_flow.py` only proves every rule in `resolution_logic[]` has a *witness* — an answer
+vector that fires it — and a `when`-keyed rule keying off a captured variable has a witness
+regardless of whether anything in the UI can ever set that variable. `check_flow_charts()`
+(this file, above `check_ihc_checklist_renders_a_control`) already tolerates an empty
+`branch_sequence.order` as "legitimate" whenever the node's rules read no marker tokens, on
+the theory that `test_result_states` selectors are the flow chart in that case — but it
+never actually checks that a `test_result_states` block exists. Both defects passed every
+existing check clean; the new check is the first one that looks at the RENDERED CONTROL
+rather than at the rule logic behind it.
+
+**The rule.** A non-empty `branch_sequence.order`, OR a non-empty `test_result_states` —
+one or the other, not both required. `marker_groups[]` alone can never satisfy it:
+`markerFlow()` is the renderer an `ihc_checklist` with a `branch_sequence` is routed to, and
+it does not read `marker_groups[]` at all (confirmed by reading `app.js` directly, not
+inferred from the schema) — `marker_groups[]` only feeds `check_marker_tokens_declared`,
+`check_marker_names_verbatim`, and `induce_flow.py`'s own marker universe.
+
+This check is registered unconditionally (`report.run(check_ihc_checklist_renders_a_control,
+ctx)`, immediately after `check_flow_charts`) and runs on every group's file, not just
+Group 4.
+
+**The Group 3 exemption.** Group 3 — already merged to `main`, out of scope for this
+branch's data to touch — has the identical defect on two of its own nodes:
+`pf_mb_molecular_gate` and `mn_grade_assembly`. A blanket `if ctx.group == GROUP4` guard
+would have hidden that Group 3 needs its own fix; instead `GROUP3_UNANSWERABLE_IHC_EXEMPTION`
+names the two node IDs explicitly, dated, and downgrades ONLY them to WARN when
+`ctx.group == GROUP3`. Every other unanswerable `ihc_checklist`, in any group, including
+any OTHER Group 3 node, still FAILs. The exemption carries its own collapse assertion: on
+every Group 3 run it re-checks each named node, and FAILs (loudly, on its own, independent
+of the main sweep) if a named node no longer has the defect — so a fix landing in Group 3
+cannot leave a stale, silently-passing exemption behind. `docs/TODO.md` §7 records the
+Group 3 defect and what closing it takes.
+
+## Method
+
+Like the "Group IV validator false-FAILs" section immediately above, `check_
+ihc_checklist_renders_a_control` is exercised directly against a hand-built `DTContext`
+(`build_database.DTContext`, imported the way a unit test would), never through
+`run_build()`/`main()`. Controls 1, 2, 3 and 3b use small synthetic node dicts — this check
+needs nothing from Layer 1, `redcap_options`, or any other file, so a synthetic node is a
+cleaner, more exact control than a fixture repo would be. Controls 4 and 5 use synthetic
+copies of the two real Group 3 node IDs (never the real file — `data/database/
+group_03_dt.json` is not opened for writing anywhere in this harness). The two "restore"
+runs at the end load the REAL `group_04_dt.json` and `group_03_dt.json` read-only and
+confirm the check's verdict on unmodified data. The harness is `nc_harness.py`, kept in the
+session scratchpad, not the repo. `git status` after every run in this section shows only
+`build/build_database.py` and `data/database/group_04_dt.json` as modified — both
+deliverables of this task, neither a control artefact.
+
+### Control 1 — non-empty `branch_sequence.order`, no `test_result_states` — PASSES
+
+A synthetic node (`order: ["CD99"]`, a `positive`-keyed rule, no `test_result_states`).
+Expected **pass**, got:
+
+```
+OK    1 ihc_checklist node(s) all render at least one input control — a non-empty branch_sequence.order or test_result_states (contract §3.4)
+```
+
+### Control 2 — empty `order`, `test_result_states` present — PASSES
+
+A synthetic node (`order: []`, a `when`-keyed rule, one `test_result_states` block).
+Expected **pass**, got:
+
+```
+OK    1 ihc_checklist node(s) all render at least one input control — a non-empty branch_sequence.order or test_result_states (contract §3.4)
+```
+
+### Control 3 — neither — FAILS, exact message
+
+A synthetic node (`order: []`, a `when`-keyed rule, no `test_result_states`) — the exact
+shape `hn_ihc_checklist`/`sn_ihc_checklist` shipped with. Expected **FAIL**, got:
+
+```
+FAIL  node ctrl_c is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow())
+```
+
+### Control 3b — no `branch_sequence` key at all — FAILS the same way (defensive-null variant)
+
+A synthetic node with no `branch_sequence` key whatsoever (pre-`induce_flow.py` state, or a
+hand-authored node nobody has run the inducer over yet). Expected **FAIL**, got:
+
+```
+FAIL  node ctrl_c2 is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow())
+```
+
+Confirms `bs.get("order") if isinstance(bs, dict) else None` degrades safely instead of
+raising `AttributeError` on `None.get(...)`.
+
+### Control 4 — the Group 3 exemption produces WARN, not FAIL
+
+Synthetic copies of both named nodes, `ctx.group = 3`, both still carrying the defect
+(empty `order`, no `test_result_states`, exactly as the real file has them). Expected **WARN
+on both, FAIL on neither**, got:
+
+```
+WARN  node mn_grade_assembly is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow()) — known Group 3 defect (pf_mb_molecular_gate, mn_grade_assembly), tracked in docs/TODO.md, out of scope for this branch
+WARN  node pf_mb_molecular_gate is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow()) — known Group 3 defect (pf_mb_molecular_gate, mn_grade_assembly), tracked in docs/TODO.md, out of scope for this branch
+```
+
+Confirmed against the REAL, unmodified `group_03_dt.json` too (loaded read-only): identical
+two WARNs, plus `OK 31 ihc_checklist node(s) all render at least one input control …` for
+the other 29 Group 3 checklist nodes that do not have the defect.
+
+### Control 5 — the exemption's own collapse test: one named node repaired
+
+Same fixture as Control 4, except `pf_mb_molecular_gate` is given a `test_result_states`
+block in memory (`mn_grade_assembly` left broken). Expected **FAIL, naming
+`pf_mb_molecular_gate`, saying to delete it from the exemption** (and `mn_grade_assembly`
+still WARN, since it is still genuinely broken), got:
+
+```
+WARN  node mn_grade_assembly is an ihc_checklist with an empty branch_sequence.order and no test_result_states — app.js's markerFlow() asks only from branch_sequence.order and never reads marker_groups[], so this node renders a question, a hint and a Continue button with nothing to answer (contract §3.4; app.js nodeControl()/markerFlow()) — known Group 3 defect (pf_mb_molecular_gate, mn_grade_assembly), tracked in docs/TODO.md, out of scope for this branch
+FAIL  GROUP3_UNANSWERABLE_IHC_EXEMPTION names pf_mb_molecular_gate, which now renders a control (branch_sequence.order or test_result_states is no longer empty) — the Group 3 defect this exemption covers for pf_mb_molecular_gate is fixed. DELETE pf_mb_molecular_gate from GROUP3_UNANSWERABLE_IHC_EXEMPTION in build/build_database.py
+```
+
+### Control 5b — both named nodes repaired: the exemption is fully stale
+
+Same fixture, both `pf_mb_molecular_gate` and `mn_grade_assembly` given a fix (a
+`test_result_states` block on the first, a non-empty `order` on the second). Expected **two
+independent FAILs, one per node, no WARN**, got:
+
+```
+FAIL  GROUP3_UNANSWERABLE_IHC_EXEMPTION names mn_grade_assembly, which now renders a control (branch_sequence.order or test_result_states is no longer empty) — the Group 3 defect this exemption covers for mn_grade_assembly is fixed. DELETE mn_grade_assembly from GROUP3_UNANSWERABLE_IHC_EXEMPTION in build/build_database.py
+FAIL  GROUP3_UNANSWERABLE_IHC_EXEMPTION names pf_mb_molecular_gate, which now renders a control (branch_sequence.order or test_result_states is no longer empty) — the Group 3 defect this exemption covers for pf_mb_molecular_gate is fixed. DELETE pf_mb_molecular_gate from GROUP3_UNANSWERABLE_IHC_EXEMPTION in build/build_database.py
+```
+
+Restored (real files, unmodified, both controls above re-run against them): the real
+`group_03_dt.json` never trips this collapse assertion — both named nodes still have the
+defect on disk — and the real `group_04_dt.json` shows `OK 4 ihc_checklist node(s) all
+render at least one input control` with no FAIL and no WARN.
+
+## Full-build confirmation (real repo, not the harness)
+
+Before Deliverable 1's fix, `hn_ihc_checklist` and `sn_ihc_checklist` had no
+`test_result_states` at all; before Deliverable 2 the new check did not exist, so nothing
+in `python3 build/build_database.py`'s output ever named the defect. After both:
+
+* `python3 build/induce_flow.py` — `group_04_dt.json 4 checklist nodes OK`, all four
+  (`op_ihc_cd99`, `sa_ihc_checklist`, `hn_ihc_checklist`, `sn_ihc_checklist`) proven to have
+  a witness for every rule; overall `Every rule in every checklist has a witness. Flow
+  charts written.`
+* `python3 build/build_database.py`, before registering the new check (Deliverable 1
+  already applied): **243 checks run, OK 173, WARN 49, FAIL 0, BUILD PASSED.**
+* Same command, after registering `check_ihc_checklist_renders_a_control`: **247 checks
+  run, OK 177, WARN 51, FAIL 0, BUILD PASSED** — 4 more checks run (one per group's file),
+  2 more WARN (`pf_mb_molecular_gate`, `mn_grade_assembly`, Group 3 only), 4 more OK lines
+  (one per group, each reporting every `ihc_checklist` node in that file renders a
+  control), 0 new FAIL.
+* `git diff --quiet main -- data/database/group_01_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_02_dt.json` — exit 0, identical.
+* `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.

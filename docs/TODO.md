@@ -547,4 +547,73 @@ throughout and are not affected.
 
 ---
 
-*Last updated 18 September 2026, on the Group 4 build. Previously 16 September 2026.*
+## 13. ⚠️ Group 3 defect — two `ihc_checklist` nodes render no way to answer them
+
+**Found 18 September 2026 fixing the identical defect on `hn_ihc_checklist` and `sn_ihc_checklist`
+(Group 4). Group 3 is merged to `main`. Not fixed here — it is outside the Group 4 branch — but
+`build/build_database.py` now WARNs about it on every run (`check_ihc_checklist_renders_a_control`,
+with a named, dated exemption for exactly these two node IDs) instead of staying silent.**
+
+### What happens
+
+`pf_mb_molecular_gate` and `mn_grade_assembly` are `ihc_checklist` nodes whose `resolution_logic[]`
+keys off captured state variables (`when` clauses), not marker tokens. `induce_flow.py` induces
+`branch_sequence.order` only from marker names in `positive`/`negative` arrays, so both nodes carry
+`{"order": [], "intensity_markers": [], "rule_count": …}` — and neither carries a
+`test_result_states` block. `app.js`'s `nodeControl()` routes every `ihc_checklist` with a
+`branch_sequence` to `markerFlow()`, which asks one marker at a time strictly from
+`branch_sequence.order` and never reads `marker_groups[]`. `dispatchNode()` separately prepends
+`stateSelectors()`, which renders a control only where `test_result_states` exists. With both
+absent, a clerk reaching either node sees the question, the hint and a bare Continue button, and
+nothing to tap to answer it — the exact defect `hn_ihc_checklist`/`sn_ihc_checklist` shipped with on
+the Group 4 branch, fixed there by giving each a `test_result_states` array (one block per status
+variable its rules key off, matching `op_ihc_cd99`'s own pattern).
+
+| Node | `resolution_logic[].when` variables | `branch_sequence.order` | `test_result_states` | Rendered control |
+|---|---|---|---|---|
+| `pf_mb_molecular_gate` | (captured molecular/pathway variables) | **empty** (7 rules) | **none** | **nothing** |
+| `mn_grade_assembly` | (captured grade-criterion variables) | **empty** (33 rules) | **none** | **nothing** |
+
+### What it costs
+
+A clerk reaching either node cannot answer it and falls through to that node's fallback (or throws,
+depending on what `nos_fallback`/`next_node` is declared) without ever recording the finding the
+node exists to ask about — the same "green build, broken seam" failure mode as §12 above, on a
+different node type.
+
+### Why the build did not catch it
+
+`induce_flow.py` proves every rule in `resolution_logic[]` has a *witness* — an answer vector that
+fires it, checked in the abstract against the rule logic. A `when`-keyed rule keying off a captured
+variable has a witness whether or not anything in the UI can ever set that variable, so this passed
+clean. `check_flow_charts()` in `build/build_database.py` (ruling 13) already special-cases an empty
+`branch_sequence.order` as legitimate whenever a node's rules read no marker tokens, on the theory
+that `test_result_states` selectors are the flow chart in that case — but until 18 September 2026 it
+never actually checked that a `test_result_states` block existed. Both checks validate the RULE
+LOGIC; neither looked at whether the renderer that logic depends on has anything to show. Found only
+by reading `app.js`'s `nodeControl()`/`markerFlow()` directly while fixing the same defect in Group 4.
+
+### To close
+
+Give `pf_mb_molecular_gate` and `mn_grade_assembly` a `test_result_states` block for each status
+variable their `resolution_logic[]` keys off — the same fix applied to `hn_ihc_checklist` and
+`sn_ihc_checklist` on the Group 4 branch (see `data/database/group_04_dt.json` for the worked
+pattern: one block per variable, closed vocabulary, `not_done`/`not_available`/`not_assessable`
+never collapsed onto `negative` where a branch treats a negative result as diagnostic). Both nodes
+are `ihc_checklist` with far more rules than Group 4's two (7 and 33 respectively), so read each
+node's full `resolution_logic[]` before authoring the states — do not assume the Group 4 shape maps
+directly. Once fixed, delete both node IDs from `GROUP3_UNANSWERABLE_IHC_EXEMPTION` in
+`build/build_database.py`; the exemption's own collapse assertion FAILs the build and names whichever
+one is still listed if this is forgotten.
+
+### How it was found
+
+Found while fixing `hn_ihc_checklist`/`sn_ihc_checklist` on the Group 4 branch: the same
+`branch_sequence.order`-empty-and-no-`test_result_states` shape was searched for across every
+group's `ihc_checklist` nodes (`data/database/group_0{1,2,3,4}_dt.json`), turning up exactly these
+two Group 3 nodes and no others in Groups 1, 2 or 4.
+
+---
+
+*Last updated 18 September 2026, on the Group 4 branch (`group-04-neuroblastoma`). Previously 18
+September 2026, on the Group 4 build.*

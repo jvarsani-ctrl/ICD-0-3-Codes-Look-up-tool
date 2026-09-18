@@ -1471,7 +1471,7 @@
           "question": "What does the immunohistochemistry (and the morphology it was read against) show?",
           "hint": "Confirm this is a paraganglioma before anything else — site, not histology or immunohistochemistry, is what chooses the code once that confirmation is made. Keratins are the key negative: a keratin-positive tumour is a well-differentiated neuroendocrine tumour, not a paraganglioma, and does not belong in this tree. GATA3, tyrosine hydroxylase, dopamine β-hydroxylase and choline acetyltransferase are supportive markers. SOX10 and S100 mark the sustentacular cells at the rim of the zellballen nests, not the tumour cells themselves; tick the architecture line if zellballen nesting with a sustentacular rim is described. Ask which functional imaging (¹²³I-MIBG, ⁶⁸Ga-DOTATATE, ¹⁸F-FDOPA) and which biochemical tests were actually performed, and record what was done — never assume a laboratory ran a particular test. Head and neck paragangliomas are often biochemically silent, so a normal or untested catecholamine/metanephrine result does not exclude the diagnosis and is never required to reach a code.",
           "clinical_alert": null,
-          "coding_note": "WHO panel per Mete O, et al. Endocrine Pathology 2022;33(1):90-114, pp. 96-106: INSM1, synaptophysin, chromogranin (general neuroendocrine); keratins negative; GATA3, tyrosine hydroxylase, dopamine beta-hydroxylase, choline acetyltransferase; SOX10/S100 on sustentacular cells only. Mete 2022 states no ICD-O code anywhere in 25 pages read in full 16 Sep 2026 (contract Sec.10.1) — it corroborates that a current WHO entity (parasympathetic paraganglioma) lives on this family, it never confirms which number carries it. SDHB immunohistochemistry loss indicates a germline SDHx mutation; it triggers genetic testing and changes no code (recorded in hn_genetics, not resolved here). PHOX2B is not on WHO's panel; if used, cite Manethova M, et al. Virchows Arch 2023;482(4):679-86 and do not imply WHO recommends it. This node confirms the diagnosis and forwards; it does not itself emit a code except on its NOS fallback (tissue exists, so basis 7 is still correct there — this is not a no-tissue case, which hn_document_inventory and hn_clinical_alias already routed to Group XII).",
+          "coding_note": "WHO panel per Mete O, et al. Endocrine Pathology 2022;33(1):90-114, pp. 96-106: INSM1, synaptophysin, chromogranin (general neuroendocrine); keratins negative; GATA3, tyrosine hydroxylase, dopamine beta-hydroxylase, choline acetyltransferase; SOX10/S100 on sustentacular cells only. Mete 2022 states no ICD-O code anywhere in 25 pages read in full 16 Sep 2026 (contract Sec.10.1) — it corroborates that a current WHO entity (parasympathetic paraganglioma) lives on this family, it never confirms which number carries it. SDHB immunohistochemistry loss indicates a germline SDHx mutation; it triggers genetic testing and changes no code (recorded in hn_genetics, not resolved here). PHOX2B is not on WHO's panel; if used, cite Manethova M, et al. Virchows Arch 2023;482(4):679-86 and do not imply WHO recommends it. This node confirms the diagnosis and forwards when keratin is negative and the confirmatory panel is complete; it resolves itself at the family level (basis 7, tissue exists throughout) when keratin is negative but that panel is not, and it must not resolve at all while keratin itself is unread — a keratin-positive result excludes this tree, so an unread keratin is answered with a provisional, never with the negative branch. This is not a no-tissue case; hn_document_inventory and hn_clinical_alias already routed those to Group XII.",
           "marker_groups": [
             {
               "group_label": "General neuroendocrine (confirmatory)",
@@ -1519,6 +1519,30 @@
             "hn_testing_tier",
             "workup_status"
           ],
+          "test_result_states": [
+            {
+              "variable": "keratin_status",
+              "states": [
+                "positive",
+                "negative",
+                "not_done",
+                "not_available",
+                "not_assessable"
+              ]
+            },
+            {
+              "variable": "general_ne_markers_status",
+              "states": [
+                "positive"
+              ]
+            },
+            {
+              "variable": "architecture_status",
+              "states": [
+                "positive"
+              ]
+            }
+          ],
           "resolution_logic": [
             {
               "when": {
@@ -1529,13 +1553,93 @@
             },
             {
               "when": {
+                "keratin_status": "negative",
                 "general_ne_markers_status": "positive",
                 "architecture_status": "positive"
               },
               "next_node": "hn_genetics",
+              "coding_note": "Keratin negative excludes a well-differentiated neuroendocrine tumour; INSM1/synaptophysin/chromogranin and the sustentacular architecture (SOX10/S100/zellballen) both positive confirms paraganglioma. Site, not further histology, selects the code from here.",
               "captures": {
+                "keratin_status": "negative",
                 "hn_testing_tier": "ihc",
                 "workup_status": "complete"
+              }
+            },
+            {
+              "when": {
+                "keratin_status": "negative"
+              },
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Keratin is negative, excluding a well-differentiated neuroendocrine tumour, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to genetics and a site-specific code from hn_site_resolution.",
+              "captures": {
+                "keratin_status": "negative",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "keratin_status": "not_done"
+              },
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Keratin has not been performed, so a well-differentiated neuroendocrine tumour cannot yet be excluded. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Keratin has not been performed. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "keratin_status": "not_done",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "keratin_status": "not_available"
+              },
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Keratin has been ordered but the result is not yet available. An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain is outstanding; a keratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Keratin has been ordered but the result has not come back. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "keratin_status": "not_available",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "keratin_status": "not_assessable"
+              },
+              "morphology_code": "8680",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Keratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread keratin is not a negative one: keratin-negative is what confirms paraganglioma, so this case cannot be treated as though it had cleared that test. 8680/3 Paraganglioma, NOS is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning keratin-positive would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Keratin could not be interpreted and needs repeating on a fresh section. A keratin-positive result would show this is a well-differentiated neuroendocrine tumour, not a paraganglioma, and route the case to the neuroendocrine/carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "keratin_status": "not_assessable",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
               }
             }
           ],
@@ -1548,7 +1652,7 @@
           "branch_sequence": {
             "order": [],
             "intensity_markers": [],
-            "rule_count": 2
+            "rule_count": 6
           }
         },
         {
@@ -1914,7 +2018,7 @@
           "question": "What does the immunohistochemistry show?",
           "hint": "Synaptophysin, chromogranin and INSM1 positive, pankeratin negative, S100/SOX10 on sustentacular cells only, is the Rooper 2023 panel for olfactory neuroblastoma. Calretinin positivity is the discriminator that separates it from other small round blue cell tumours of the sinonasal tract — use it. PHOX2B is not part of this panel: it is positive in only 1 of 6 olfactory neuroblastomas (Manethova M, et al. Virchows Arch 2023;482(4):679-86), so a negative PHOX2B does not exclude this diagnosis and must not be used to rule it out.",
           "clinical_alert": null,
-          "coding_note": "Rooper LM, Head Neck Pathol 2023;17(2):299-312: 'By immunohistochemistry, ONB consistently shows strong and diffuse positivity for all neuroendocrine markers, including synaptophysin, chromogranin, and INSM1. The vast majority of ONB are negative for pankeratin ... Classically, ONB is surrounded by a delicate network of sustentacular cells that are positive for S100 protein and SOX10. ONB is also consistently positive for calretinin, which can help differentiate it from overlapping small round blue cell tumors.' Agarwal A, et al., AJNR 2023;44(10):1116-1125, pp. 1122-23: 'malignant, neuroectodermal neoplasms' with 'diffuse staining for conventional neuroendocrine markers and S-100 protein'. Two entities proposed since the WHO 5th edition — olfactory carcinoma and IDH2-mutant sinonasal carcinoma — are carcinomas and belong to ICCC-3 Group XI, not Group IV; a keratin-positive sinonasal neuroectodermal tumour, especially with an intermixed glandular component, is the signal. This node confirms the diagnosis and forwards; its NOS fallback still rests on tissue (basis 7) — the no-tissue routes were already sent to Group XII upstream.",
+          "coding_note": "Rooper LM, Head Neck Pathol 2023;17(2):299-312: 'By immunohistochemistry, ONB consistently shows strong and diffuse positivity for all neuroendocrine markers, including synaptophysin, chromogranin, and INSM1. The vast majority of ONB are negative for pankeratin ... Classically, ONB is surrounded by a delicate network of sustentacular cells that are positive for S100 protein and SOX10. ONB is also consistently positive for calretinin, which can help differentiate it from overlapping small round blue cell tumors.' Agarwal A, et al., AJNR 2023;44(10):1116-1125, pp. 1122-23: 'malignant, neuroectodermal neoplasms' with 'diffuse staining for conventional neuroendocrine markers and S-100 protein'. Two entities proposed since the WHO 5th edition — olfactory carcinoma and IDH2-mutant sinonasal carcinoma — are carcinomas and belong to ICCC-3 Group XI, not Group IV; a keratin-positive sinonasal neuroectodermal tumour, especially with an intermixed glandular component, is the signal. This node confirms the diagnosis and forwards when pankeratin is negative and the confirmatory panel is complete; it resolves itself at the family level (basis 7, tissue exists throughout) when pankeratin is negative but that panel is not, and it must not resolve at all while pankeratin itself is unread — a pankeratin-positive result excludes this tree, so an unread pankeratin is answered with a provisional, never with the negative branch. The no-tissue routes were already sent to Group XII upstream.",
           "marker_groups": [
             {
               "group_label": "General neuroendocrine (confirmatory)",
@@ -1959,6 +2063,30 @@
             "sn_testing_tier",
             "workup_status"
           ],
+          "test_result_states": [
+            {
+              "variable": "pankeratin_status",
+              "states": [
+                "positive",
+                "negative",
+                "not_done",
+                "not_available",
+                "not_assessable"
+              ]
+            },
+            {
+              "variable": "general_ne_markers_status",
+              "states": [
+                "positive"
+              ]
+            },
+            {
+              "variable": "architecture_status",
+              "states": [
+                "positive"
+              ]
+            }
+          ],
           "resolution_logic": [
             {
               "when": {
@@ -1969,13 +2097,93 @@
             },
             {
               "when": {
+                "pankeratin_status": "negative",
                 "general_ne_markers_status": "positive",
                 "architecture_status": "positive"
               },
               "next_node": "sn_grading_staging",
+              "coding_note": "Pankeratin negative excludes the carcinoma differential (olfactory carcinoma, IDH2-mutant sinonasal carcinoma); synaptophysin/chromogranin/INSM1 and the sustentacular architecture (S100/SOX10) both positive is the Rooper 2023 panel for olfactory neuroblastoma. Grade and stage, not further histology, are recorded from here — neither changes the code.",
               "captures": {
+                "pankeratin_status": "negative",
                 "sn_testing_tier": "ihc",
                 "workup_status": "complete"
+              }
+            },
+            {
+              "when": {
+                "pankeratin_status": "negative"
+              },
+              "morphology_code": "9522",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Pankeratin is negative, excluding the carcinoma differential, but the confirmatory panel — the general neuroendocrine markers and the sustentacular architecture — is not both positive; it was either not completed or the result is equivocal. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7). A panel that later reads both positive would move the case on to grading and staging at sn_grading_staging.",
+              "captures": {
+                "pankeratin_status": "negative",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "pankeratin_status": "not_done"
+              },
+              "morphology_code": "9522",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Pankeratin has not been performed, so the carcinoma differential (olfactory carcinoma, IDH2-mutant sinonasal carcinoma) cannot yet be excluded. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Pankeratin has not been performed. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "pankeratin_status": "not_done",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "pankeratin_status": "not_available"
+              },
+              "morphology_code": "9522",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Pankeratin has been ordered but the result is not yet available. An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain is outstanding; a pankeratin-positive result would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Pankeratin has been ordered but the result has not come back. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "pankeratin_status": "not_available",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "pankeratin_status": "not_assessable"
+              },
+              "morphology_code": "9522",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "Pankeratin was attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). An unread pankeratin is not a negative one: pankeratin-negative is what confirms olfactory neuroblastoma over the carcinoma differential, so this case cannot be treated as though it had cleared that test. 9522/3 Olfactory neuroblastoma is recorded at the family level (basis 7) while the stain remains unread; a repeat panel returning pankeratin-positive would move this case out of Group IV entirely (refer_group 11), not to a more specific code here.",
+              "diagnostic_tests_required": [
+                "pankeratin"
+              ],
+              "provisional_pending": {
+                "reason": "Pankeratin could not be interpreted and needs repeating on a fresh section. A pankeratin-positive result would show this is a carcinoma (olfactory carcinoma or IDH2-mutant sinonasal carcinoma), not olfactory neuroblastoma, and route the case to the carcinoma pathway (refer_group 11) instead of leaving it here.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "pankeratin_status": "not_assessable",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
               }
             }
           ],
@@ -1988,7 +2196,7 @@
           "branch_sequence": {
             "order": [],
             "intensity_markers": [],
-            "rule_count": 2
+            "rule_count": 6
           }
         },
         {
