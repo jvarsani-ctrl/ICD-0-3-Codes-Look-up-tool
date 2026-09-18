@@ -1039,6 +1039,7 @@
               "Synaptophysin",
               "Chromogranin A"
             ],
+            "intensity_markers": [],
             "rule_count": 3
           },
           "captured_variables": [
@@ -1543,6 +1544,11 @@
             "behavior_code": "3",
             "name": "Paraganglioma, NOS",
             "reason": "Histology is consistent with a paraganglioma but the immunohistochemical panel confirming it, and separating it from a well-differentiated neuroendocrine tumour, was not completed or was equivocal. Tissue exists, so this is recorded at the family level (basis 7) rather than referred out; a completed panel would allow the site-specific code to be assigned from hn_site_resolution."
+          },
+          "branch_sequence": {
+            "order": [],
+            "intensity_markers": [],
+            "rule_count": 2
           }
         },
         {
@@ -1600,7 +1606,12 @@
               }
             }
           ],
-          "nos_fallback": "8680"
+          "nos_fallback": {
+            "code": "8680",
+            "behavior_code": "3",
+            "name": "Paraganglioma, NOS",
+            "reason": "Constitutional genetics result captured, but the case did not carry through to site resolution; falls back to the parasympathetic paraganglioma family NOS."
+          }
         },
         {
           "node_id": "hn_site_resolution",
@@ -1623,15 +1634,6 @@
               "morphology_code": "8692",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Carotid body paraganglioma",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Site-specific code assigned on a confirmed paraganglioma at the carotid body."
-              },
               "captures": {
                 "resolved_site": "carotid_body"
               }
@@ -1642,15 +1644,7 @@
               "morphology_code": "8690",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Middle ear paraganglioma",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Covers jugulotympanic paraganglioma and glomus jugulare tumor, both carried as ICD-O-3.2 Synonyms on this stem."
-              },
+              "coding_note": "Covers jugulotympanic paraganglioma and glomus jugulare tumor, both carried as ICD-O-3.2 Synonyms on this stem.",
               "captures": {
                 "resolved_site": "middle_ear"
               }
@@ -1661,15 +1655,6 @@
               "morphology_code": "8691",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Aortic body tumor",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Site-specific code assigned on a confirmed paraganglioma at the aortic body."
-              },
               "captures": {
                 "resolved_site": "aortic_body"
               }
@@ -1680,15 +1665,6 @@
               "morphology_code": "8693",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Extra-adrenal paraganglioma, NOS",
-                "suffix": "nos",
-                "grade_system": null,
-                "grade": null,
-                "comment": "For a confirmed paraganglioma at a documented head and neck site other than carotid body, middle ear or aortic body."
-              },
               "captures": {
                 "resolved_site": "other_extra_adrenal_head_neck"
               }
@@ -1699,15 +1675,6 @@
               "morphology_code": "8682",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Parasympathetic paraganglioma",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "For a confirmed parasympathetic paraganglioma whose precise site within the head and neck is not stated."
-              },
               "captures": {
                 "resolved_site": "parasympathetic_nfs"
               }
@@ -1718,15 +1685,6 @@
               "morphology_code": "8680",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Paraganglioma, NOS",
-                "suffix": "nos",
-                "grade_system": null,
-                "grade": null,
-                "comment": "The diagnosis of paraganglioma is confirmed but the report does not establish a specific site within the head and neck."
-              },
               "captures": {
                 "resolved_site": "not_established"
               }
@@ -1910,15 +1868,6 @@
               "morphology_code": "9520",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Olfactory neurogenic tumor",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Recorded exactly as the pathology report states it."
-              },
               "reason": "This term is not confirmed against a current WHO classification; two papers on the WHO 5th-edition sinonasal chapter, read in full, do not use it. It is recorded because the pathology report uses it, and is flagged for registrar review before the code is finalized in REDCap.",
               "coding_note": "No current WHO entity has been confirmed on this stem (Rooper 2023 and Agarwal 2023, both read in full, zero occurrences of 'neurogenic'). ICD-O-3.2 still prints it as a live, non-obsolete Preferred term. Settling this needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold.",
               "captures": {
@@ -1930,15 +1879,6 @@
               "morphology_code": "9521",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Olfactory neurocytoma",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Recorded exactly as the pathology report states it."
-              },
               "reason": "This term is not confirmed against a current WHO classification; two papers on the WHO 5th-edition sinonasal chapter, read in full, do not use it. It is recorded because the pathology report uses it, and is flagged for registrar review before the code is finalized in REDCap.",
               "coding_note": "No current WHO entity has been confirmed on this stem (Rooper 2023 and Agarwal 2023, both read in full, zero occurrences of 'neurocytoma'). ICD-O-3.2 still prints it as a live, non-obsolete Preferred term. Settling this needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold.",
               "captures": {
@@ -1950,15 +1890,6 @@
               "morphology_code": "9523",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Olfactory neuroepithelioma",
-                "suffix": null,
-                "grade_system": null,
-                "grade": null,
-                "comment": "Recorded exactly as the pathology report states it."
-              },
               "reason": "This term is not confirmed against a current WHO classification; in two papers on the WHO 5th-edition sinonasal chapter, read in full, it appears only in reference titles from 20th-century literature, never as a current entity. It is recorded because the pathology report uses it, and is flagged for registrar review before the code is finalized in REDCap.",
               "coding_note": "No current WHO entity has been confirmed on this stem (Rooper 2023: 5 occurrences of 'neuroepithelioma', none as a current entity; Agarwal 2023: 0 occurrences). ICD-O-3.2 still prints it as a live, non-obsolete Preferred term. Settling this needs WHO Head and Neck Tumours, 5th edition, which the registry does not hold.",
               "captures": {
@@ -2053,6 +1984,11 @@
             "behavior_code": "3",
             "name": "Olfactory neuroblastoma",
             "reason": "Histology is consistent with olfactory neuroblastoma but the confirmatory panel, and the carcinoma differential it also settles, was not completed or was equivocal. Tissue exists, so this is recorded at the family level (basis 7) rather than referred out."
+          },
+          "branch_sequence": {
+            "order": [],
+            "intensity_markers": [],
+            "rule_count": 2
           }
         },
         {
@@ -2075,15 +2011,6 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Olfactory neuroblastoma",
-                "suffix": "nos",
-                "grade_system": null,
-                "grade": null,
-                "comment": "Hyams grade and/or Kadish/Kadish-Morita stage recorded as stated in the report; neither is asserted or interpreted here, and neither changes this code."
-              },
               "captures": {
                 "hyams_grade_reported": "as_stated_in_report",
                 "stage_system_reported": "as_stated_in_report",
@@ -2095,15 +2022,6 @@
               "morphology_code": "9522",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Olfactory neuroblastoma",
-                "suffix": "nos",
-                "grade_system": null,
-                "grade": null,
-                "comment": "No Hyams grade or Kadish/Kadish-Morita stage stated in the report. Neither is required for coding."
-              },
               "captures": {
                 "hyams_grade_reported": "not_stated",
                 "stage_system_reported": "not_stated",
@@ -2111,7 +2029,12 @@
               }
             }
           ],
-          "nos_fallback": "9522"
+          "nos_fallback": {
+            "code": "9522",
+            "behavior_code": "3",
+            "name": "Olfactory neuroblastoma",
+            "reason": "Grade/stage wording did not match either captured pattern; the morphology remains Olfactory neuroblastoma regardless."
+          }
         }
       ]
     },
@@ -2259,11 +2182,7 @@
             {
               "label": "Too little tissue, or no lesional tissue was present in the specimen",
               "refer_group": 12,
-              "reason": "The specimen contained no diagnostic material. Under Visser rule 5 (Front Oncol 2023;13:1250549, p. 03), a case with no tissue diagnosis is coded 8000/3, Neoplasm, malignant, NOS, at ENCR basis 2 - and Group IV has no Table 3 entries permitting a specific morphology code at that basis. 8000/3 at this topography is not an ICCC-3 Group IV code. Code the case from the ICCC-3 Group XII tree until a repeat biopsy reaches lesional tissue.",
-              "provisional_pending": {
-                "reason": "The specimen contained no diagnostic material. A repeat biopsy that reaches lesional tissue is what resolves this and returns the case to this tree.",
-                "resolving_test": "Histology"
-              },
+              "reason": "The specimen contained no diagnostic material. Under Visser rule 5 (Front Oncol 2023;13:1250549, p. 03), a case with no tissue diagnosis is coded 8000/3, Neoplasm, malignant, NOS, at ENCR basis 2 - and Group IV has no Table 3 entries permitting a specific morphology code at that basis. 8000/3 at this topography is not an ICCC-3 Group IV code. Code the case from the ICCC-3 Group XII tree until a repeat biopsy reaches lesional tissue, which is what resolves this and returns the case to this tree.",
               "captures": {
                 "specimen_adequacy": "inadequate",
                 "workup_status": "incomplete",
@@ -2275,11 +2194,7 @@
             {
               "label": "The section could not be read - crush artefact, failed processing, or no cells on the slide",
               "refer_group": 12,
-              "reason": "The preparation could not be interpreted, so no tissue diagnosis exists. Under Visser rule 5 (Front Oncol 2023;13:1250549, p. 03), that is coded 8000/3, Neoplasm, malignant, NOS, at ENCR basis 2, which is not an ICCC-3 Group IV code. Code the case from the ICCC-3 Group XII tree until the block is recut or a repeat biopsy yields a readable section.",
-              "provisional_pending": {
-                "reason": "Recutting the existing block, not necessarily a repeat operation, is what usually resolves an unreadable preparation. Either one returns the case to this tree.",
-                "resolving_test": "Histology"
-              },
+              "reason": "The preparation could not be interpreted, so no tissue diagnosis exists. Under Visser rule 5 (Front Oncol 2023;13:1250549, p. 03), that is coded 8000/3, Neoplasm, malignant, NOS, at ENCR basis 2, which is not an ICCC-3 Group IV code. Code the case from the ICCC-3 Group XII tree until the block is recut or a repeat biopsy yields a readable section; either one returns the case to this tree.",
               "captures": {
                 "specimen_adequacy": "not_assessable",
                 "workup_status": "incomplete",
@@ -2309,11 +2224,7 @@
             {
               "label": "The report exists and a copy can be requested",
               "refer_group": 12,
-              "reason": "Tissue was examined by someone and this file cannot see the result, so there is no tissue diagnosis in hand. Under Visser rule 5, that is 8000/3, Neoplasm, malignant, NOS - Group XII, not Group IV. Code the case from the ICCC-3 Group XII tree until the report is retrieved and the case can be reassessed against the entities this tree names.",
-              "provisional_pending": {
-                "reason": "The histology report exists and is not in the file. Retrieving it is what resolves this and returns the case to this tree.",
-                "resolving_test": "Histology"
-              },
+              "reason": "Tissue was examined by someone and this file cannot see the result, so there is no tissue diagnosis in hand. Under Visser rule 5, that is 8000/3, Neoplasm, malignant, NOS - Group XII, not Group IV. Code the case from the ICCC-3 Group XII tree until the report is retrieved and the case can be reassessed against the entities this tree names; retrieving it is what resolves this and returns the case to this tree.",
               "captures": {
                 "specimen_adequacy": "not_available",
                 "workup_status": "incomplete",
@@ -2488,8 +2399,11 @@
           "test_result_states": {
             "variable": "cd99_ewing_panel_result",
             "states": [
-              "yes",
-              "no_or_not_done"
+              "positive",
+              "negative",
+              "not_done",
+              "not_available",
+              "not_assessable"
             ]
           },
           "captured_variables": [
@@ -2501,29 +2415,93 @@
           "resolution_logic": [
             {
               "when": {
-                "cd99_ewing_panel_result": "yes"
+                "cd99_ewing_panel_result": "positive"
               },
               "next_node": "op_ewing_site",
               "coding_note": "CD99 positive, PHOX2B negative, synaptophysin negative: the Ewing-family immunophenotype. ICD-O-3.2 states this constellation's usual clinical name - peripheral (primitive) neuroectodermal tumor, PPNET - is Ewing sarcoma, 9364/3, not 9503.",
               "captures": {
-                "cd99_ewing_panel_result": "yes"
+                "cd99_ewing_panel_result": "positive"
               }
             },
             {
               "when": {
-                "cd99_ewing_panel_result": "no_or_not_done"
+                "cd99_ewing_panel_result": "negative"
               },
               "morphology_code": "9503",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "CD99, PHOX2B and synaptophysin do not together support an Ewing-family tumour, or the panel was not done. 9503/3 Neuroepithelioma, NOS is the only ICD-O-3.2 stem this wording can carry. CD99, PHOX2B and synaptophysin remain an outstanding workup item on this case - a result that later completes the Ewing-family constellation replaces this code.",
+              "reason": "CD99, PHOX2B and synaptophysin were assessed and do not together support an Ewing-family tumour. 9503/3 Neuroepithelioma, NOS is the only ICD-O-3.2 stem this wording can carry.",
+              "captures": {
+                "cd99_ewing_panel_result": "negative",
+                "basis_of_diagnosis": 7,
+                "workup_status": "complete"
+              }
+            },
+            {
+              "when": {
+                "cd99_ewing_panel_result": "not_done"
+              },
+              "morphology_code": "9503",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "CD99, PHOX2B and synaptophysin have not been performed. 9503/3 Neuroepithelioma, NOS is the only ICD-O-3.2 stem this wording can carry while the panel is outstanding; a result that later completes the Ewing-family constellation replaces this code.",
               "diagnostic_tests_required": [
                 "CD99",
                 "PHOX2B",
                 "Synaptophysin"
               ],
+              "provisional_pending": {
+                "reason": "CD99, PHOX2B and synaptophysin have not been performed. A panel showing CD99 positive with PHOX2B and synaptophysin negative would replace this code with the Ewing-family referral instead.",
+                "resolving_test": "IHC"
+              },
               "captures": {
-                "cd99_ewing_panel_result": "no_or_not_done",
+                "cd99_ewing_panel_result": "not_done",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "cd99_ewing_panel_result": "not_available"
+              },
+              "morphology_code": "9503",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "CD99, PHOX2B and synaptophysin have been ordered but the result is not yet available. 9503/3 Neuroepithelioma, NOS is the only ICD-O-3.2 stem this wording can carry while the panel is outstanding; a result that later completes the Ewing-family constellation replaces this code.",
+              "diagnostic_tests_required": [
+                "CD99",
+                "PHOX2B",
+                "Synaptophysin"
+              ],
+              "provisional_pending": {
+                "reason": "CD99, PHOX2B and synaptophysin have been ordered but the result has not come back. A panel showing CD99 positive with PHOX2B and synaptophysin negative would replace this code with the Ewing-family referral instead.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "cd99_ewing_panel_result": "not_available",
+                "basis_of_diagnosis": 7,
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "when": {
+                "cd99_ewing_panel_result": "not_assessable"
+              },
+              "morphology_code": "9503",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "CD99, PHOX2B and synaptophysin were attempted but the result cannot be interpreted (for example, exhausted block or a technical failure). 9503/3 Neuroepithelioma, NOS is the only ICD-O-3.2 stem this wording can carry while the panel remains unread; a repeat panel that completes the Ewing-family constellation replaces this code.",
+              "diagnostic_tests_required": [
+                "CD99",
+                "PHOX2B",
+                "Synaptophysin"
+              ],
+              "provisional_pending": {
+                "reason": "CD99, PHOX2B and synaptophysin could not be interpreted and need repeating on a fresh section. A panel showing CD99 positive with PHOX2B and synaptophysin negative would replace this code with the Ewing-family referral instead.",
+                "resolving_test": "IHC"
+              },
+              "captures": {
+                "cd99_ewing_panel_result": "not_assessable",
                 "basis_of_diagnosis": 7,
                 "workup_status": "incomplete"
               }
@@ -2534,6 +2512,11 @@
             "behavior_code": "3",
             "name": "Neuroblastoma, NOS",
             "reason": "The CD99/PHOX2B/synaptophysin panel result was not recorded in a recognised state. The case falls to this tree's designated group-level code at the reportable behaviour; review before the record is closed. This is the tree's generic fallback, not a claim that the tumour is a neuroblastoma."
+          },
+          "branch_sequence": {
+            "order": [],
+            "intensity_markers": [],
+            "rule_count": 5
           }
         },
         {
