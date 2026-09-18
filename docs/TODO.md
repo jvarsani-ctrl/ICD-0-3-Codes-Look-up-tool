@@ -484,4 +484,67 @@ has already tried to obtain. Or a future IARC ICD-O revision that assigns the en
 
 ---
 
+## 12. ⚠️ Group 3 defect — three `imaging_pathway` nodes throw at runtime
+
+**Found 18 September 2026 during the Group 4 build. Group 3 is merged to `main`. Not fixed here —
+it is outside the Group 4 branch — but it is the most serious open item in this file.**
+
+### What happens
+
+`app.js` resolves an `imaging_pathway` node at line 2217. There are exactly three outcomes: a ticked
+diversion criterion or an incomplete constellation goes to `fallbackTarget(n)`; a complete
+constellation advances to the node itself. **`options[]` is never consulted**, and
+`imagingPathway()` at line 1005 renders only `imaging_features`, `biochemical_questions` and
+`diversion_criteria` — never an option list.
+
+`fallbackTarget()` tries `insufficient_next_node`, then `nos_fallback`, then **throws
+`'Node has no fallback and did not resolve'`**. `nos_fallback` is forbidden on `imaging_pathway`
+(`NOS_FORBIDDEN_TYPES`). So a node with neither crashes.
+
+| Node | `options[]` | `insufficient_next_node` | Result |
+|---|---|---|---|
+| `pf_imaging_no_tissue` | 6 | **null** | **throws** |
+| `st_imaging_pathway` | 4 | **null** | **throws** |
+| `sp_imaging_no_tissue` | 4 | **null** | **throws** |
+| `md_pituitary_prolactin_route` · `md_pituitary_functioning_route` · `md_cranio_imaging` · `md_pineal_imaging_only` · `md_optic_nf1_imaging` · `mn_imaging_pathway` · `un_imaging_only` | 0 | set | work correctly |
+
+**The pattern is exact:** every node that carries options has no `insufficient_next_node`, and every
+node that works has `insufficient_next_node` and no options. The author used `options[]` as the
+routing mechanism for this node type; the engine does not support it.
+
+### What it costs
+
+1. **A crash on the common path.** Not an edge case — ticking any diversion feature, or leaving the
+   constellation incomplete, is the ordinary outcome for most cases reaching these nodes.
+2. **14 authored options are dead**, and one of them matters a great deal:
+   `pf_imaging_no_tissue`'s first option routes *"A midline mass with an ELEVATED serum AFP or CSF
+   β-hCG"* to **`refer_group: 10`**. A secreting germ cell tumour presenting as a midline
+   intracranial mass **never leaves Group III.** The Group 3 contract §4 calls the AFP / β-hCG rule
+   one-directional and load-bearing — *"Elevated → refer to Group X and stop"* — and it does not run.
+
+### Why the build did not catch it
+
+`check_orphan_nodes` and the rest validate **shape**, not reachability through the renderer. This is
+the failure mode the contract §0 already records for Group 2 — 74 checks, 10 of 10 data traversals
+and 102 engine assertions passing while 15 of 61 nodes did not render. Every automated layer tested
+the data or the renderer in isolation; the fault was in the seam. **A green build is not a working
+tool.**
+
+### To close
+
+Give each of the three nodes an `insufficient_next_node`, and re-home the 14 options. The germ-cell
+referral needs a real destination — most likely its own node before the imaging gate, since an
+elevated marker should divert *before* an imaging constellation is even offered. Then a validator
+rule: **an `imaging_pathway` node must declare `insufficient_next_node`, and must not declare
+`options[]`.** That rule would have caught all three the day they were written, and it is cheap.
+
+### How it was found
+
+The Group 4 `g4_sympathoadrenal` author was told to read `pf_imaging_no_tissue` for shape, declined
+to copy its `options[]` because they could not see the engine reading them, and said so instead of
+guessing. Verified from `app.js` afterwards. The Group 4 trees use `insufficient_next_node`
+throughout and are not affected.
+
+---
+
 *Last updated 18 September 2026, on the Group 4 build. Previously 16 September 2026.*
