@@ -454,4 +454,34 @@ this build.
 
 ---
 
-*Last updated 16 September 2026, on the Group 4 build. Previously 14 September 2026, Group 3.*
+## 11. CoGNET has no ICD-O code in any source
+
+**Registrar's instruction, 18 September 2026: leave it here and stop chasing it.**
+
+WHO 2022 renamed *gangliocytic paraganglioma* to **composite gangliocytoma/neuroma and
+neuroendocrine tumour (CoGNET)**. The old code `8683` exists in ICD-O-3.2 at `/0` only, ICCC-3
+Group IV admits `/3` only, so `8683` drops out of the group and `iv_morph` pick 9 is retired
+(`ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` §4).
+
+**No source gives CoGNET an ICD-O code. Four have now been checked in full:**
+
+| Source | What it says |
+|---|---|
+| **Mete O, et al.** *Overview of the 2022 WHO Classification of Paragangliomas and Pheochromocytomas.* Endocrine Pathology 2022;33(1):90–114 · [DOI](https://doi.org/10.1007/s12022-022-09704-6) | States the rename at p. 94. **No ICD-O code for any entity in 25 pages.** Never mentions `8683`. |
+| **Juhlin CC.** *The road ahead: a brief guide to navigating the 2022 WHO classification of endocrine and neuroendocrine tumours.* Journal of Clinical Pathology 2025;78:1–10 · [DOI](https://doi.org/10.1136/jcp-2023-209060) | Names it at p. 8 — *"composite gangliocytoma/neuroma and neuroendocrine tumour, previously called 'gangliocytic paraganglioma'"* — under the heading *paraganglioma-like neuroendocrine neoplasia*. **No code.** Does not say which volume owns it. |
+| **Pfister SM, et al.** Supplementary Table S3, the WHO Paediatric Tumours entity list | Gangliocytic paraganglioma and CoGNET both **absent** — consistent with the entity leaving the paraganglioma family. |
+| IARC ICD-O-3.2 *Deleted codes and their terms* · *New codes and their terms* · *Summary of main changes* | `8683` is **not** in the deleted list. The summary says only *"In the 3-digit group 868–870 the only remaining non-malignant term is under 8683/0."* No successor code is named. |
+
+**What this costs.** Exactly one thing: a REDCap record sitting on `iv_morph` pick 9 has no
+automatic destination and must be re-coded from the source pathology report. The repair package
+says so. Nothing in `group_04_dt.json` depends on it — `8683` is an alias input only, resolving to
+a terminal that explains the rename.
+
+**What would close it:** the WHO *Classification of Endocrine and Neuroendocrine Tumours*, 5th
+edition (IARC Blue Book volume 10) itself, which is not freely available and which the registrar
+has already tried to obtain. Or a future IARC ICD-O revision that assigns the entity a number.
+**Do not spend further effort on secondary sources — four have been read and all four are silent.**
+
+---
+
+*Last updated 18 September 2026, on the Group 4 build. Previously 16 September 2026.*
