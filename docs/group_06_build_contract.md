@@ -281,15 +281,39 @@ same is true of `topography_routing_note`. Clerk-facing text goes in `reason`, `
 - Cite the paper and the page, and write full forms — *clear cell sarcoma of the kidney*, not CCSK,
   in clerk-facing text.
 
-### 0.11 ★ Visser Table 3 and this group — read before authoring any imaging terminal
+### 0.11 ★★ Visser Table 3 — settled, and it licenses the imaging route at basis 2 only
 
-Group V's whole architecture rested on Visser Table 3 naming retinoblastoma as one of five entities
-registrable at basis 1 or 2 with no tissue. **Check whether Wilms tumour / nephroblastoma appears in
-Table 3 before authoring the imaging-sufficient terminal.** The claim that a renal mass may be
-registered on imaging alone is the load-bearing claim of this entire group, and it must rest on
-Visser, not on the SIOP protocol's willingness to *treat* without biopsy. Treating without tissue
-and registering without tissue are different decisions, and the pathway document conflates them
-(§5.1). This is **Task 1's first job** and its answer changes §4.2.
+The load-bearing claim of this entire group is that a renal mass may be **registered** without
+tissue. That claim must rest on the European Network of Cancer Registries rules, not on the SIOP
+protocol's willingness to *treat* without biopsy — treating without tissue and registering without
+tissue are different decisions, and the diagnostic pathway document conflates them.
+
+**It rests on Visser, and the row is already extracted in this repo.** Visser O, et al. *Frontiers
+in Oncology* 2023;13:1250549, Table 3, pp. 04–05, transcribed in
+`docs/references/visser-2023-key-points.md`:
+
+| Entity | Basis | Topography | Morphology | Group |
+|---|---|---|---|---|
+| **Nephroblastoma** | **2** | **C64** | **`8960/3`** | **VI** |
+
+The paper heads this row, with hepatoblastoma and retinoblastoma, *"Solid childhood cancers (age
+<15 years)"*.
+
+**Three things follow, and they are not negotiable:**
+
+1. **The imaging-sufficient route is legitimate, and it is `8960/3` at C64 and nothing else.** No
+   other Group VI code appears in Table 3 or Table 4.
+2. **Basis 2, never basis 1.** Unlike retinoblastoma — which Table 3 gives as "1 or 2" and which is
+   why Group V has a clinical-alias node that emits a code on wording alone — nephroblastoma is
+   basis **2**: clinical investigation, which includes imaging. **No Group VI terminal may emit
+   basis 1.** A referral letter saying "Wilms tumour", with no imaging in the file, does not
+   register `8960/3`.
+3. **Everything else without pathology is `8000/3`.** Visser rule 5: anything not in Table 3 or
+   Table 4, diagnosed without pathology, is `8000/3` — unless a coding expert at the registry rules
+   otherwise, which is the registrar's call and not the tool's. So a renal mass that fails the
+   nephroblastoma imaging constellation, and has no tissue, is `8000/3` at C64.9, subgroup VIc. That
+   is what VIc is for, and it is why §3.4's router fix matters: without it that case reaches
+   Group XII instead.
 
 ---
 
@@ -476,11 +500,20 @@ that can make a case look better worked up than it is.** A typo never matches an
 quietly does nothing; a value the code does not require is an inert no-op that still reads as a live
 claim. The validator checks it. Use it deliberately here and nowhere casually.
 
-### 4.2 The imaging route — conditional on §0.11
+### 4.2 The imaging route
 
-`imaging_sufficient: true` on `8960/3` **only**, and only if Visser Table 3 supports registering a
-renal tumour without tissue. If it does not, the imaging route emits at the basis Visser does allow
-and the terminal says plainly that the registration rests on imaging.
+`imaging_sufficient: true` on `8960/3` **only** (§0.11). The confirmed-constellation terminal emits
+`8960/3` at `basis_of_diagnosis: 2`. No Group VI terminal emits basis 1. A file with a referral
+letter and nothing else reaches `rn_clinical_alias`, which emits **no code** — it records the
+wording and sends the case on for imaging, because Table 3 gives nephroblastoma basis 2 and not
+basis 1. That is the one structural difference between this group's alias node and Group V's, and
+it is deliberate.
+
+Note the engine constraint recorded in `docs/TODO.md` §10 and Group 5 contract §0.6:
+`imagingPathway()` renders only `imaging_features`, `biochemical_questions` and
+`diversion_criteria` — `options[]` is **never** rendered on an `imaging_pathway` node. So
+`rn_imaging_pathway` declares `insufficient_next_node`, does not declare `options[]`, and carries
+its own `morphology_code` / `behavior_code` / `basis_of_diagnosis` for the confirmed outcome.
 
 Imaging features to encode, and their standing:
 
@@ -747,9 +780,9 @@ Left for Jay, not resolved in this build.
    and other molecularly defined renal cell carcinoma.
 4. **`8965` is a retired number still offered in REDCap** (§2A). First retired number met in a live
    option list. It needs the `[RETIRED]` treatment the Group V package defines for `9514`.
-5. **Does Visser Table 3 admit a renal tumour at basis 1 or 2?** (§0.11). The answer decides whether
-   the imaging-sufficient route is legitimate at all, and it is the load-bearing question of the
-   group.
+5. ~~**Does Visser Table 3 admit a renal tumour at basis 1 or 2?**~~ **Closed 22 September 2026.**
+   Table 3 gives nephroblastoma basis **2**, C64, `8960/3`, Group VI. The imaging route is
+   legitimate at basis 2; no Group VI terminal emits basis 1 (§0.11).
 6. **Whether benign renal entities should be registered at all.** Ten REDCap options are behaviour 0
    or 1 (§2A). Group VI cannot hold them. If the registry wants them, they need a home outside
    Group VI, not a behaviour override inside it.
