@@ -1,400 +1,778 @@
 [
- {
-  "alias": "Retinoblastoma",
-  "full_form": "Retinoblastoma -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Retinoblastoma, malignant"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C7541",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Retinoblastoma is the embryonal tumour of the retina, almost entirely a disease of children under five (contract Sec.0.1). Diagnosis is clinical plus imaging: leukocoria on examination with a calcified intraocular mass on B-scan ultrasound is the diagnostic standard, and biopsy of an intact globe is contraindicated because it risks extraocular seeding - histology exists only after the eye has been removed (contract Sec.0.5). Retinoblastoma is one of only five entities in the entire ENCR scheme registrable at basis 1, clinical examination alone, with no imaging and no tissue (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4). About 30-40% of cases are hereditary (germline RB1) and those are bilateral or multifocal; hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings never change the code (contract Sec.0.5).",
-  "coding_note": null
- },
- {
-  "alias": "RB",
-  "full_form": "RB -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Retinoblastoma, malignant",
-   "Retinoblastoma, NOS"
-  ],
-  "alias_type": "abbreviation",
-  "origin_system": "Clinical abbreviation",
-  "nci_concept_id": "NCIT:C7541",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Standard clinical abbreviation for retinoblastoma, used in paediatric oncology, ophthalmology and genetic counselling notes. 'RB' also names the RB1 gene and its protein product, but in a diagnosis lookup the abbreviation means the tumour, not the gene - genetic test results naming RB1 status do not change the code (contract Sec.0.5).",
-  "coding_note": null
- },
- {
-  "alias": "Retinoblastoma, NOS",
-  "full_form": "Retinoblastoma, NOS -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Retinoblastoma, malignant"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C7541",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "The ICD-O-3.2 Preferred term, confirmed by direct query of icdo32.sqlite: 9510/3 Preferred 'Retinoblastoma, NOS', no Synonym row, no Related row (contract Sec.0.3). This is the default code when no histological subtype is stated, and the only code the imaging and clinical-alias routes may emit (Visser Table 3, contract Sec.0.4): no branch may reach 9511, 9512 or 9513 without a pathology report from an enucleated eye.",
-  "coding_note": null
- },
- {
-  "alias": "Eye cancer",
-  "full_form": "Eye cancer -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [],
-  "alias_type": "local",
-  "origin_system": "Local referral letter terminology",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "The term parents and referring clinicians use in referral letters (contract Sec.6). In a child, an intraocular mass described as 'eye cancer' is retinoblastoma until proven otherwise - other intraocular malignancies are vanishingly rare in this age group. Non-specific: routes into the document-inventory intake, where the clinical, imaging or histology findings actually present determine the code, and a leukocoria mimic with no calcified mass (Coats disease, persistent hyperplastic primary vitreous) is not registrable at all in the absence of pathology (Visser rule 4, contract Sec.0.4).",
-  "coding_note": null
- },
- {
-  "alias": "Eye tumour",
-  "full_form": "Eye tumour -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Eye tumor"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "A descriptive term in clinical summaries and referral letters; UK spelling common in East African medical writing (contract Sec.6). Same caution as 'Eye cancer' - non-specific, routes into the document-inventory intake, and the finding must be confirmed against the calcified-mass discriminator or a pathology report before a subtype code is assigned.",
-  "coding_note": null
- },
- {
-  "alias": "Intraocular tumour",
-  "full_form": "Intraocular tumour -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Intraocular tumor",
-   "Intraocular mass"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": "NCIT:C7846",
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "A more formal descriptive term than 'eye tumour', used by ophthalmologists and in imaging reports for a mass inside the globe. In a child the most common intraocular tumour is retinoblastoma, but the term itself does not confirm the calcified-mass discriminator (contract Sec.4.1) or distinguish retinoblastoma from its mimics - Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM, cited at contract Sec.0.5 and Sec.4.1). Intraocular medulloepithelioma at the ciliary body is an ICCC-3 Group IV tumour, not Group V (contract Sec.5.3) - a genuine leukocoria mimic this alias does not distinguish; the imaging or histology findings do.",
-  "coding_note": null
- },
- {
-  "alias": "Leukocoria",
-  "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "White pupil",
-   "White pupillary reflex",
-   "White eye reflex",
-   "White eye",
-   "Cat's-eye reflex"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
-  "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6: referral letters arrive in lay language, and the instructions under-cover this vocabulary. 'White eye', 'white pupil' and 'cat's-eye reflex' are grouped here as also_known_as rather than given separate entries, since they name the same clinical sign as 'leukocoria', not a different one - per the build task's instruction not to manufacture a separate entry where also_known_as is the honest home."
- },
- {
-  "alias": "Strabismus",
-  "full_form": "Strabismus -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Squint",
-   "Crossed eye"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "The second most common presenting sign of retinoblastoma after leukocoria, caused by a macular or paramacular tumour interfering with fixation. Referral letters describe it as a squint or crossed eye. Far more childhood strabismus is caused by refractive error and amblyopia than by retinoblastoma, so the sign alone is weak evidence - it routes into the document-inventory intake, where the calcified-mass discriminator on imaging or a pathology report determines the code (contract Sec.4.1).",
-  "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6."
- },
- {
-  "alias": "Proptosis",
-  "full_form": "Proptosis -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Protruding eye",
-   "Bulging eye"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Referral letters describe orbital or extraocular extension of retinoblastoma as a protruding or bulging eye - a later, more advanced presentation than leukocoria, and a diversion criterion on the imaging pathway (contract Sec.4.1: extraocular or orbital extension changes the specimen that will arrive). The morphology code is unaffected by the extent of disease; ICD-O-3.2's retinoblastoma stem has no code for extraocular spread, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
-  "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6."
- },
- {
-  "alias": "Buphthalmos",
-  "full_form": "Buphthalmos -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "An enlarged, firm globe, resulting from secondary angle-closure glaucoma when a large intraocular retinoblastoma raises intraocular pressure - a late-presentation sign in populations without early screening. Buphthalmos is not specific to retinoblastoma: congenital glaucoma causes primary buphthalmos in an eye with no tumour. Referral wording naming this sign routes into the document-inventory intake; imaging or a pathology report, not the sign, determines the code.",
-  "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6's instruction to cover referral-letter vernacular the instructions under-cover."
- },
- {
-  "alias": "Hereditary retinoblastoma",
-  "full_form": "Hereditary retinoblastoma -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [
-   "Familial retinoblastoma",
-   "Retinoblastoma syndrome"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": "NCIT:C8495",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "About 30-40% of retinoblastoma is hereditary - a germline RB1 mutation - and hereditary disease is bilateral or multifocal (contract Sec.0.1). The morphology code does not change: hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings (RB1 germline status, MYCN amplification, chromosome 6p gain) drive counselling and prognosis, never the code (contract Sec.0.5; code_neutral_molecular is true on every entry in this group).",
-  "coding_note": null
- },
- {
-  "alias": "Bilateral retinoblastoma",
-  "full_form": "Bilateral retinoblastoma -> Retinoblastoma, NOS (9510)",
-  "also_known_as": [],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": "NCIT:C8713",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Bilateral disease occurs in about 30% of retinoblastoma cases and is the hallmark of hereditary disease (contract Sec.4.3). Laterality and focality are registry fields recorded separately; the morphology code is unaffected - bilateral disease is still 9510/3, and the tool does not branch on it.",
-  "coding_note": null
- },
- {
-  "alias": "Trilateral retinoblastoma",
-  "full_form": "Trilateral retinoblastoma -> Retinoblastoma, NOS (9510) for the ocular component; the intracranial component is a separate primary, refer to ICCC-3 Group III",
-  "also_known_as": [],
-  "alias_type": "descriptive",
-  "origin_system": "Clinical descriptive term",
-  "nci_concept_id": null,
-  "who_version_current": "N/A",
-  "maps_to_morphology_codes": [
-   "9510"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Bilateral retinoblastoma with a midline intracranial primitive neuroectodermal tumour - usually pineoblastoma, suprasellar in the tetralateral form - occurs in 1.5-5% of cases and is associated with hereditary disease (contract Sec.4.2). The ocular tumour codes 9510/3 in ICCC-3 Group V. The intracranial tumour is a separate primary in ICCC-3 Group III and needs its own tumour record - this is not a dual-group code; the same code does not route to two groups by site, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
-  "coding_note": "Extends alias-instruction entry 9, which mapped only to 9510 with a descriptive note about the intracranial component. Contract Sec.4.2 and Sec.6 require refer_group: 3 on this entry: trilateral retinoblastoma is a second primary, not a dual-group code. refer_code names pineoblastoma, 9362/3, ICD-O-3.2 Preferred term, verified directly against icdo32.sqlite 22 Sep 2026 (Related: 'Mixed pineal tumor'; Synonym: 'Mixed pineocytoma-pineoblastoma'). The tetralateral variant's suprasellar component has no single fixed ICD-O-3.2 code and is not asserted here; refer_code names the usual intracranial component only. This entry adds a 'reason' field, which is not part of the key set in aliases_group_04.json, to carry the clerk-facing instruction to open the second record - the alias schema in contract Sec.6 has no dedicated clerk-facing field the way a tree branch destination does (contract Sec.0.7). Flagged as a schema deviation in the build report for this entry alone; no other entry in this file carries a 'reason' key.",
-  "refer_group": 3,
-  "refer_code": "9362",
-  "reason": "Bilateral retinoblastoma with a pineal or suprasellar mass is trilateral disease. Code the eye here as retinoblastoma. Open a second tumour record in Group III for the intracranial mass - it is a separate primary and does not share this code."
- },
- {
-  "alias": "Retinoblastoma, differentiated",
-  "full_form": "Retinoblastoma, differentiated -> Retinoblastoma, differentiated (9511)",
-  "also_known_as": [
-   "Differentiated retinoblastoma"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66813",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9511"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Shows photoreceptor differentiation - Flexner-Wintersteiner rosettes and/or fleurettes on histology, or an enucleation report naming CAP grade G1 or G2 (contract Sec.2.4, College of American Pathologists Retinoblastoma Protocol v4.0.0.0, 2017). The subtype is read from the report's own stated grade or growth pattern, never derived by the tool, and imaging alone cannot reach this code - imaging_sufficient is true on 9510 only (contract Sec.2.5). Where a report states a Mendoza anaplasia grade instead of a differentiation grade, retinocytoma-grade or mild maps to the differentiated end (contract Sec.2.4); where both appear, code from the differentiation grade and record anaplasia as a prognostic finding that changes no code.",
-  "coding_note": null
- },
- {
-  "alias": "Retinoblastoma, undifferentiated",
-  "full_form": "Retinoblastoma, undifferentiated -> Retinoblastoma, undifferentiated (9512)",
-  "also_known_as": [
-   "Undifferentiated retinoblastoma"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66814",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9512"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Poorly differentiated tumour, occasional rosettes or none, composed of sheets of small round blue cells - an enucleation report naming CAP grade G3 or G4 (contract Sec.2.4). Read from the report's own stated grade, never derived by the tool; imaging alone cannot reach this code (contract Sec.2.5). Where a report states severe Mendoza anaplasia instead, that maps to the undifferentiated end (contract Sec.2.4).",
-  "coding_note": null
- },
- {
-  "alias": "Retinoblastoma, diffuse",
-  "full_form": "Retinoblastoma, diffuse -> Retinoblastoma, diffuse (9513)",
-  "also_known_as": [
-   "Diffuse retinoblastoma",
-   "Diffuse infiltrating retinoblastoma"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66815",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [
-   "9513"
-  ],
-  "maps_to_iccc3_subgroup_id": "V",
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "A flat, diffusely infiltrating growth within the retina with no discrete mass, rare (1-2%), presenting later than typical retinoblastoma (around age 6) and mimicking uveitis or endophthalmitis (contract Sec.2.5). It grows without the calcified mass the imaging route requires, so the imaging pathway cannot resolve it: imaging_sufficient is true on 9510 only and false on 9511, 9512 and 9513 (contract Sec.2.5), and this code is enucleation-only - read from the report's own stated growth pattern, never derived by the tool (contract Sec.2.4).",
-  "coding_note": null
- },
- {
-  "alias": "Retinoblastoma, spontaneously regressed",
-  "full_form": "Retinoblastoma, spontaneously regressed -> ICD-O-3.2 9514/1; ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
-  "also_known_as": [
-   "Spontaneously regressed retinoblastoma"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66816",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [],
-  "maps_to_iccc3_subgroup_id": null,
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "A spontaneously regressed retinoblastoma is the shrunken, calcified, non-functional globe (phthisis bulbi) with no viable tumour, occurring in about 2% of cases (contract Sec.2.2). ICD-O-3.2 codes it 9514/1 - behaviour 1, not 3 - confirmed by direct query of icdo32.sqlite: 9514/1 Preferred 'Retinoblastoma, spontaneously regressed', no Synonym row, no Related row. ICCC-3 Group V declares behaviour 3 only, so this term maps to no Group V code. This is real, treated or self-treated disease that existed, not the same entity as retinocytoma (9510/0, entries 'Retinocytoma' and 'Retinoma') - the two are behaviour-excluded for different reasons and are not interchangeable. Whether the registry registers a regressed retinoblastoma as an incident case, and on what code, is a registration-rules question for the registrar, recorded in contract Sec.11 item 2, not resolved here.",
-  "coding_note": "Overrides alias-instruction entry 13, which mapped this term to 9514 without distinguishing behaviour, and instruction Sec.0 note 3, which claimed all retinoblastoma codes are malignant (/3) - that claim is not carried here or anywhere in this file; 9510/0 and 9514/1 are not. Per contract Sec.0.2, Sec.2.2, Sec.5.1: the diagnostic pathway document gave 9514 behaviour /3, which is wrong - ICD-O-3.2 gives it /1. maps_to_morphology_codes is set to [] per contract Sec.6's correction. nci_concept_id NCIT:C66816 is retained from the alias instructions (Section 1) because it identifies the named concept correctly; it does not imply a Group V code."
- },
- {
-  "alias": "Retinocytoma",
-  "full_form": "Retinocytoma -> ICD-O-3.2 9510/0 Retinocytoma; ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
-  "also_known_as": [
-   "Retinoma"
-  ],
-  "alias_type": "who_preferred",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66812",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [],
-  "maps_to_iccc3_subgroup_id": null,
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Retinocytoma (retinoma) is the benign counterpart of retinoblastoma: a differentiated, non-growing retinal tumour, often calcified, sometimes found in the relative of a proband. ICD-O-3.2 codes it 9510/0, confirmed by direct query of icdo32.sqlite: 9510/0 Preferred 'Retinocytoma', no Synonym row, no Related row - it shares its four-digit stem with 9510/3 Retinoblastoma, NOS, and that shared stem is the trap: resolving 'retinocytoma' to 9510 without carrying the behaviour would emit 9510/3 for a benign lesion. ICCC-3 Group V admits behaviour 3 only, so this term maps to no Group V code. 'Retinocytoma' is also a genuine homonym: it names the lowest grade on Mendoza's anaplasia scale - retinocytoma / mild / moderate / severe (Mendoza PR, et al. Histopathologic grading of anaplasia in retinoblastoma. American Journal of Ophthalmology 2015;159(4):764-776) - used inside an active retinoblastoma. A 'retinocytomatous area' in an enucleation report is differentiation within a retinoblastoma, not a benign lesion, and must not be coded 9510/0. Whether a pure retinocytoma is registrable anywhere is an open registrar question (contract Sec.11 item 3); ICCC-3 registers no benign eye tumour.",
-  "coding_note": "Overrides alias-instruction entry 14, which mapped this term to 9514 - the pathway's own error, carried into the alias instructions (contract Sec.5.2: 'ICD-O-3.2 gives retinocytoma its own code, 9510/0'). maps_to_morphology_codes set to [] per contract Sec.6's correction; also_known_as trimmed to remove 'Spontaneously Regressed Retinoblastoma' and 'Retinoblastoma, spontaneously regressed', which the alias instructions listed as synonyms of this term - contract Sec.5.2 and Sec.2.1-2.2 hold these as two separate codes (9510/0 and 9514/1) for two separate reasons, and carrying them as synonyms would reproduce the exact conflation the contract corrects. nci_concept_id NCIT:C66812 is retained from the alias instructions (Section 1); its own NCIt synonym list includes 'Spontaneously Regressed Retinoblastoma', conflating the two ICD-O-3.2 codes the way ICD-O-3.2 and this contract do not - flagged here, not resolved, since the identifier itself is not fabricated."
- },
- {
-  "alias": "Retinoma",
-  "full_form": "Retinoma -> ICD-O-3.2 9510/0 Retinocytoma (retinoma is a synonym); ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
-  "also_known_as": [
-   "Retinocytoma"
-  ],
-  "alias_type": "descriptive",
-  "origin_system": "ICD-O-3.2",
-  "nci_concept_id": "NCIT:C66812",
-  "who_version_current": "WHO 2022",
-  "maps_to_morphology_codes": [],
-  "maps_to_iccc3_subgroup_id": null,
-  "needs_ihc_tree": false,
-  "ihc_tree_id": "g5_retinoblastoma",
-  "tree_entry_node": "rb_document_inventory",
-  "clinical_alert": null,
-  "notes": "Retinoma is used interchangeably with retinocytoma in the literature; some authors reserve 'retinoma' for the fundoscopic appearance (a grey, translucent, calcified lesion) and 'retinocytoma' for the histological diagnosis, but the terms overlap in practice. ICD-O-3.2's Preferred term at this code is 'Retinocytoma' (9510/0); 'retinoma' is not itself a Synonym or Related row in icdo32.sqlite - confirmed by direct query, which returns only the Preferred row for 9510/0. Same behaviour exclusion as 'Retinocytoma': ICCC-3 Group V admits behaviour 3 only, so this term maps to no Group V code. Also a genuine homonym risk - a 'retinocytomatous area' in an active retinoblastoma is differentiation within the tumour, not this benign entity; see the 'Retinocytoma' entry's notes.",
-  "coding_note": "Overrides alias-instruction entry 15, which mapped this term to 9514 alongside entry 14's identical error (contract Sec.5.2). maps_to_morphology_codes set to [] per contract Sec.6's correction; also_known_as trimmed to 'Retinocytoma' only, removing the spontaneously-regressed synonyms the instructions listed, for the same reason given on the 'Retinocytoma' entry. nci_concept_id NCIT:C66812 reused from the alias instructions (Section 1), which assigned the same concept to both 'Retinocytoma' and 'Retinoma'. alias_type set to 'descriptive' rather than 'who_preferred' (used on the sibling 'Retinocytoma' entry) because 'Retinoma' is not itself the ICD-O-3.2 Preferred term string - a minor typing judgement call, noted in the build report."
- }
+  {
+    "alias": "Retinoblastoma",
+    "full_form": "Retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Retinoblastoma, malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C7541",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Retinoblastoma is the embryonal tumour of the retina, almost entirely a disease of children under five (contract Sec.0.1). Diagnosis is clinical plus imaging: leukocoria on examination with a calcified intraocular mass on B-scan ultrasound is the diagnostic standard, and biopsy of an intact globe is contraindicated because it risks extraocular seeding - histology exists only after the eye has been removed (contract Sec.0.5). Retinoblastoma is one of only five entities in the entire ENCR scheme registrable at basis 1, clinical examination alone, with no imaging and no tissue (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4). About 30-40% of cases are hereditary (germline RB1) and those are bilateral or multifocal; hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings never change the code (contract Sec.0.5).",
+    "coding_note": null
+  },
+  {
+    "alias": "RB",
+    "full_form": "RB -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Retinoblastoma, malignant",
+      "Retinoblastoma, NOS"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": "NCIT:C7541",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Standard clinical abbreviation for retinoblastoma, used in paediatric oncology, ophthalmology and genetic counselling notes. 'RB' also names the RB1 gene and its protein product, but in a diagnosis lookup the abbreviation means the tumour, not the gene - genetic test results naming RB1 status do not change the code (contract Sec.0.5).",
+    "coding_note": null
+  },
+  {
+    "alias": "Retinoblastoma, NOS",
+    "full_form": "Retinoblastoma, NOS -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Retinoblastoma, malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C7541",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ICD-O-3.2 Preferred term, confirmed by direct query of icdo32.sqlite: 9510/3 Preferred 'Retinoblastoma, NOS', no Synonym row, no Related row (contract Sec.0.3). This is the default code when no histological subtype is stated, and the only code the imaging and clinical-alias routes may emit (Visser Table 3, contract Sec.0.4): no branch may reach 9511, 9512 or 9513 without a pathology report from an enucleated eye.",
+    "coding_note": null
+  },
+  {
+    "alias": "Eye cancer",
+    "full_form": "Eye cancer -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The term parents and referring clinicians use in referral letters (contract Sec.6). In a child, an intraocular mass described as 'eye cancer' is retinoblastoma until proven otherwise - other intraocular malignancies are vanishingly rare in this age group. Non-specific: routes into the document-inventory intake, where the clinical, imaging or histology findings actually present determine the code, and a leukocoria mimic with no calcified mass (Coats disease, persistent hyperplastic primary vitreous) is not registrable at all in the absence of pathology (Visser rule 4, contract Sec.0.4).",
+    "coding_note": null
+  },
+  {
+    "alias": "Eye tumour",
+    "full_form": "Eye tumour -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Eye tumor"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A descriptive term in clinical summaries and referral letters; UK spelling common in East African medical writing (contract Sec.6). Same caution as 'Eye cancer' - non-specific, routes into the document-inventory intake, and the finding must be confirmed against the calcified-mass discriminator or a pathology report before a subtype code is assigned.",
+    "coding_note": null
+  },
+  {
+    "alias": "Intraocular tumour",
+    "full_form": "Intraocular tumour -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Intraocular tumor",
+      "Intraocular mass"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C7846",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A more formal descriptive term than 'eye tumour', used by ophthalmologists and in imaging reports for a mass inside the globe. In a child the most common intraocular tumour is retinoblastoma, but the term itself does not confirm the calcified-mass discriminator (contract Sec.4.1) or distinguish retinoblastoma from its mimics - Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM, cited at contract Sec.0.5 and Sec.4.1). Intraocular medulloepithelioma at the ciliary body is an ICCC-3 Group IV tumour, not Group V (contract Sec.5.3) - a genuine leukocoria mimic this alias does not distinguish; the imaging or histology findings do.",
+    "coding_note": null
+  },
+  {
+    "alias": "Leukocoria",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "White pupil",
+      "White pupillary reflex",
+      "White eye reflex",
+      "White eye",
+      "Cat's-eye reflex"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6: referral letters arrive in lay language, and the instructions under-cover this vocabulary. 'White eye', 'white pupil' and 'cat's-eye reflex' are grouped here as also_known_as rather than given separate entries, since they name the same clinical sign as 'leukocoria', not a different one - per the build task's instruction not to manufacture a separate entry where also_known_as is the honest home."
+  },
+  {
+    "alias": "Strabismus",
+    "full_form": "Strabismus -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Squint",
+      "Crossed eye"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common presenting sign of retinoblastoma after leukocoria, caused by a macular or paramacular tumour interfering with fixation. Referral letters describe it as a squint or crossed eye. Far more childhood strabismus is caused by refractive error and amblyopia than by retinoblastoma, so the sign alone is weak evidence - it routes into the document-inventory intake, where the calcified-mass discriminator on imaging or a pathology report determines the code (contract Sec.4.1).",
+    "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6."
+  },
+  {
+    "alias": "Proptosis",
+    "full_form": "Proptosis -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Protruding eye",
+      "Bulging eye"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Referral letters describe orbital or extraocular extension of retinoblastoma as a protruding or bulging eye - a later, more advanced presentation than leukocoria, and a diversion criterion on the imaging pathway (contract Sec.4.1: extraocular or orbital extension changes the specimen that will arrive). The morphology code is unaffected by the extent of disease; ICD-O-3.2's retinoblastoma stem has no code for extraocular spread, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
+    "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6."
+  },
+  {
+    "alias": "Buphthalmos",
+    "full_form": "Buphthalmos -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "An enlarged, firm globe, resulting from secondary angle-closure glaucoma when a large intraocular retinoblastoma raises intraocular pressure - a late-presentation sign in populations without early screening. Buphthalmos is not specific to retinoblastoma: congenital glaucoma causes primary buphthalmos in an eye with no tumour. Referral wording naming this sign routes into the document-inventory intake; imaging or a pathology report, not the sign, determines the code.",
+    "coding_note": "New entry, not in the 13 May 2026 alias instructions. Added per contract Sec.6's instruction to cover referral-letter vernacular the instructions under-cover."
+  },
+  {
+    "alias": "Hereditary retinoblastoma",
+    "full_form": "Hereditary retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [
+      "Familial retinoblastoma",
+      "Retinoblastoma syndrome"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C8495",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "About 30-40% of retinoblastoma is hereditary - a germline RB1 mutation - and hereditary disease is bilateral or multifocal (contract Sec.0.1). The morphology code does not change: hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings (RB1 germline status, MYCN amplification, chromosome 6p gain) drive counselling and prognosis, never the code (contract Sec.0.5; code_neutral_molecular is true on every entry in this group).",
+    "coding_note": null
+  },
+  {
+    "alias": "Bilateral retinoblastoma",
+    "full_form": "Bilateral retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C8713",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Bilateral disease occurs in about 30% of retinoblastoma cases and is the hallmark of hereditary disease (contract Sec.4.3). Laterality and focality are registry fields recorded separately; the morphology code is unaffected - bilateral disease is still 9510/3, and the tool does not branch on it.",
+    "coding_note": null
+  },
+  {
+    "alias": "Trilateral retinoblastoma",
+    "full_form": "Trilateral retinoblastoma -> Retinoblastoma, NOS (9510) for the ocular component; the intracranial component is a separate primary, refer to ICCC-3 Group III",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Bilateral retinoblastoma with a midline intracranial primitive neuroectodermal tumour - usually pineoblastoma, suprasellar in the tetralateral form - occurs in 1.5-5% of cases and is associated with hereditary disease (contract Sec.4.2). The ocular tumour codes 9510/3 in ICCC-3 Group V. The intracranial tumour is a separate primary in ICCC-3 Group III and needs its own tumour record - this is not a dual-group code; the same code does not route to two groups by site, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
+    "coding_note": "Extends alias-instruction entry 9, which mapped only to 9510 with a descriptive note about the intracranial component. Contract Sec.4.2 and Sec.6 require refer_group: 3 on this entry: trilateral retinoblastoma is a second primary, not a dual-group code. refer_code names pineoblastoma, 9362/3, ICD-O-3.2 Preferred term, verified directly against icdo32.sqlite 22 Sep 2026 (Related: 'Mixed pineal tumor'; Synonym: 'Mixed pineocytoma-pineoblastoma'). The tetralateral variant's suprasellar component has no single fixed ICD-O-3.2 code and is not asserted here; refer_code names the usual intracranial component only. This entry adds a 'reason' field, which is not part of the key set in aliases_group_04.json, to carry the clerk-facing instruction to open the second record - the alias schema in contract Sec.6 has no dedicated clerk-facing field the way a tree branch destination does (contract Sec.0.7). Flagged as a schema deviation in the build report for this entry alone; no other entry in this file carries a 'reason' key.",
+    "refer_group": 3,
+    "refer_code": "9362",
+    "reason": "Bilateral retinoblastoma with a pineal or suprasellar mass is trilateral disease. Code the eye here as retinoblastoma. Open a second tumour record in Group III for the intracranial mass - it is a separate primary and does not share this code."
+  },
+  {
+    "alias": "Retinoblastoma, differentiated",
+    "full_form": "Retinoblastoma, differentiated -> Retinoblastoma, differentiated (9511)",
+    "also_known_as": [
+      "Differentiated retinoblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66813",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9511"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Shows photoreceptor differentiation - Flexner-Wintersteiner rosettes and/or fleurettes on histology, or an enucleation report naming CAP grade G1 or G2 (contract Sec.2.4, College of American Pathologists Retinoblastoma Protocol v4.0.0.0, 2017). The subtype is read from the report's own stated grade or growth pattern, never derived by the tool, and imaging alone cannot reach this code - imaging_sufficient is true on 9510 only (contract Sec.2.5). Where a report states a Mendoza anaplasia grade instead of a differentiation grade, retinocytoma-grade or mild maps to the differentiated end (contract Sec.2.4); where both appear, code from the differentiation grade and record anaplasia as a prognostic finding that changes no code.",
+    "coding_note": null
+  },
+  {
+    "alias": "Retinoblastoma, undifferentiated",
+    "full_form": "Retinoblastoma, undifferentiated -> Retinoblastoma, undifferentiated (9512)",
+    "also_known_as": [
+      "Undifferentiated retinoblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66814",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9512"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Poorly differentiated tumour, occasional rosettes or none, composed of sheets of small round blue cells - an enucleation report naming CAP grade G3 or G4 (contract Sec.2.4). Read from the report's own stated grade, never derived by the tool; imaging alone cannot reach this code (contract Sec.2.5). Where a report states severe Mendoza anaplasia instead, that maps to the undifferentiated end (contract Sec.2.4).",
+    "coding_note": null
+  },
+  {
+    "alias": "Retinoblastoma, diffuse",
+    "full_form": "Retinoblastoma, diffuse -> Retinoblastoma, diffuse (9513)",
+    "also_known_as": [
+      "Diffuse retinoblastoma",
+      "Diffuse infiltrating retinoblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66815",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9513"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A flat, diffusely infiltrating growth within the retina with no discrete mass, rare (1-2%), presenting later than typical retinoblastoma (around age 6) and mimicking uveitis or endophthalmitis (contract Sec.2.5). It grows without the calcified mass the imaging route requires, so the imaging pathway cannot resolve it: imaging_sufficient is true on 9510 only and false on 9511, 9512 and 9513 (contract Sec.2.5), and this code is enucleation-only - read from the report's own stated growth pattern, never derived by the tool (contract Sec.2.4).",
+    "coding_note": null
+  },
+  {
+    "alias": "Retinoblastoma, spontaneously regressed",
+    "full_form": "Retinoblastoma, spontaneously regressed -> ICD-O-3.2 9514/1; ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
+    "also_known_as": [
+      "Spontaneously regressed retinoblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66816",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A spontaneously regressed retinoblastoma is the shrunken, calcified, non-functional globe (phthisis bulbi) with no viable tumour, occurring in about 2% of cases (contract Sec.2.2). ICD-O-3.2 codes it 9514/1 - behaviour 1, not 3 - confirmed by direct query of icdo32.sqlite: 9514/1 Preferred 'Retinoblastoma, spontaneously regressed', no Synonym row, no Related row. ICCC-3 Group V declares behaviour 3 only, so this term maps to no Group V code. This is real, treated or self-treated disease that existed, not the same entity as retinocytoma (9510/0, entries 'Retinocytoma' and 'Retinoma') - the two are behaviour-excluded for different reasons and are not interchangeable. Whether the registry registers a regressed retinoblastoma as an incident case, and on what code, is a registration-rules question for the registrar, recorded in contract Sec.11 item 2, not resolved here.",
+    "coding_note": "Overrides alias-instruction entry 13, which mapped this term to 9514 without distinguishing behaviour, and instruction Sec.0 note 3, which claimed all retinoblastoma codes are malignant (/3) - that claim is not carried here or anywhere in this file; 9510/0 and 9514/1 are not. Per contract Sec.0.2, Sec.2.2, Sec.5.1: the diagnostic pathway document gave 9514 behaviour /3, which is wrong - ICD-O-3.2 gives it /1. maps_to_morphology_codes is set to [] per contract Sec.6's correction. nci_concept_id NCIT:C66816 is retained from the alias instructions (Section 1) because it identifies the named concept correctly; it does not imply a Group V code."
+  },
+  {
+    "alias": "Retinocytoma",
+    "full_form": "Retinocytoma -> ICD-O-3.2 9510/0 Retinocytoma; ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
+    "also_known_as": [
+      "Retinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66812",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Retinocytoma (retinoma) is the benign counterpart of retinoblastoma: a differentiated, non-growing retinal tumour, often calcified, sometimes found in the relative of a proband. ICD-O-3.2 codes it 9510/0, confirmed by direct query of icdo32.sqlite: 9510/0 Preferred 'Retinocytoma', no Synonym row, no Related row - it shares its four-digit stem with 9510/3 Retinoblastoma, NOS, and that shared stem is the trap: resolving 'retinocytoma' to 9510 without carrying the behaviour would emit 9510/3 for a benign lesion. ICCC-3 Group V admits behaviour 3 only, so this term maps to no Group V code. 'Retinocytoma' is also a genuine homonym: it names the lowest grade on Mendoza's anaplasia scale - retinocytoma / mild / moderate / severe (Mendoza PR, et al. Histopathologic grading of anaplasia in retinoblastoma. American Journal of Ophthalmology 2015;159(4):764-776) - used inside an active retinoblastoma. A 'retinocytomatous area' in an enucleation report is differentiation within a retinoblastoma, not a benign lesion, and must not be coded 9510/0. Whether a pure retinocytoma is registrable anywhere is an open registrar question (contract Sec.11 item 3); ICCC-3 registers no benign eye tumour.",
+    "coding_note": "Overrides alias-instruction entry 14, which mapped this term to 9514 - the pathway's own error, carried into the alias instructions (contract Sec.5.2: 'ICD-O-3.2 gives retinocytoma its own code, 9510/0'). maps_to_morphology_codes set to [] per contract Sec.6's correction; also_known_as trimmed to remove 'Spontaneously Regressed Retinoblastoma' and 'Retinoblastoma, spontaneously regressed', which the alias instructions listed as synonyms of this term - contract Sec.5.2 and Sec.2.1-2.2 hold these as two separate codes (9510/0 and 9514/1) for two separate reasons, and carrying them as synonyms would reproduce the exact conflation the contract corrects. nci_concept_id NCIT:C66812 is retained from the alias instructions (Section 1); its own NCIt synonym list includes 'Spontaneously Regressed Retinoblastoma', conflating the two ICD-O-3.2 codes the way ICD-O-3.2 and this contract do not - flagged here, not resolved, since the identifier itself is not fabricated."
+  },
+  {
+    "alias": "Retinoma",
+    "full_form": "Retinoma -> ICD-O-3.2 9510/0 Retinocytoma (retinoma is a synonym); ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
+    "also_known_as": [
+      "Retinocytoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66812",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Retinoma is used interchangeably with retinocytoma in the literature; some authors reserve 'retinoma' for the fundoscopic appearance (a grey, translucent, calcified lesion) and 'retinocytoma' for the histological diagnosis, but the terms overlap in practice. ICD-O-3.2's Preferred term at this code is 'Retinocytoma' (9510/0); 'retinoma' is not itself a Synonym or Related row in icdo32.sqlite - confirmed by direct query, which returns only the Preferred row for 9510/0. Same behaviour exclusion as 'Retinocytoma': ICCC-3 Group V admits behaviour 3 only, so this term maps to no Group V code. Also a genuine homonym risk - a 'retinocytomatous area' in an active retinoblastoma is differentiation within the tumour, not this benign entity; see the 'Retinocytoma' entry's notes.",
+    "coding_note": "Overrides alias-instruction entry 15, which mapped this term to 9514 alongside entry 14's identical error (contract Sec.5.2). maps_to_morphology_codes set to [] per contract Sec.6's correction; also_known_as trimmed to 'Retinocytoma' only, removing the spontaneously-regressed synonyms the instructions listed, for the same reason given on the 'Retinocytoma' entry. nci_concept_id NCIT:C66812 reused from the alias instructions (Section 1), which assigned the same concept to both 'Retinocytoma' and 'Retinoma'. alias_type set to 'descriptive' rather than 'who_preferred' (used on the sibling 'Retinocytoma' entry) because 'Retinoma' is not itself the ICD-O-3.2 Preferred term string - a minor typing judgement call, noted in the build report."
+  },
+  {
+    "alias": "Retinoblastoma, malignant",
+    "full_form": "Retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C7541",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Retinoblastoma is the embryonal tumour of the retina, almost entirely a disease of children under five (contract Sec.0.1). Diagnosis is clinical plus imaging: leukocoria on examination with a calcified intraocular mass on B-scan ultrasound is the diagnostic standard, and biopsy of an intact globe is contraindicated because it risks extraocular seeding - histology exists only after the eye has been removed (contract Sec.0.5). Retinoblastoma is one of only five entities in the entire ENCR scheme registrable at basis 1, clinical examination alone, with no imaging and no tissue (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4). About 30-40% of cases are hereditary (germline RB1) and those are bilateral or multifocal; hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings never change the code (contract Sec.0.5).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Eye tumor",
+    "full_form": "Eye tumour -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A descriptive term in clinical summaries and referral letters; UK spelling common in East African medical writing (contract Sec.6). Same caution as 'Eye cancer' - non-specific, routes into the document-inventory intake, and the finding must be confirmed against the calcified-mass discriminator or a pathology report before a subtype code is assigned.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Eye tumour', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Eye tumour' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Intraocular tumor",
+    "full_form": "Intraocular tumour -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C7846",
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A more formal descriptive term than 'eye tumour', used by ophthalmologists and in imaging reports for a mass inside the globe. In a child the most common intraocular tumour is retinoblastoma, but the term itself does not confirm the calcified-mass discriminator (contract Sec.4.1) or distinguish retinoblastoma from its mimics - Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM, cited at contract Sec.0.5 and Sec.4.1). Intraocular medulloepithelioma at the ciliary body is an ICCC-3 Group IV tumour, not Group V (contract Sec.5.3) - a genuine leukocoria mimic this alias does not distinguish; the imaging or histology findings do.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Intraocular tumour', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Intraocular tumour' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Intraocular mass",
+    "full_form": "Intraocular tumour -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A more formal descriptive term than 'eye tumour', used by ophthalmologists and in imaging reports for a mass inside the globe. In a child the most common intraocular tumour is retinoblastoma, but the term itself does not confirm the calcified-mass discriminator (contract Sec.4.1) or distinguish retinoblastoma from its mimics - Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM, cited at contract Sec.0.5 and Sec.4.1). Intraocular medulloepithelioma at the ciliary body is an ICCC-3 Group IV tumour, not Group V (contract Sec.5.3) - a genuine leukocoria mimic this alias does not distinguish; the imaging or histology findings do.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Intraocular tumour', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Intraocular tumour' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "White pupil",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Leukocoria', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Leukocoria' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "White pupillary reflex",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Leukocoria', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Leukocoria' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "White eye reflex",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Leukocoria', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Leukocoria' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "White eye",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Leukocoria', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Leukocoria' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Cat's-eye reflex",
+    "full_form": "Leukocoria -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common presenting sign of retinoblastoma, described in referral letters as a white pupil, white eye reflex or cat's-eye reflex, and often first noticed by a parent on a flash photograph. It causes retinoblastoma in only 56-72% of children; the rest is Coats disease (4-16%), persistent hyperplastic primary vitreous (19-28%), coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek AKA & Elkhamary SM. Magnetic resonance imaging of retinoblastoma. British Journal of Ophthalmology 2011;95(2):282-286, cited at contract Sec.4.1). Retinoblastoma is one of five entities registrable at basis 1, clinical examination alone (Visser O, et al. 2022 revised European recommendations for the coding of the basis of diagnosis of cancer cases in population-based cancer registries. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, cited at contract Sec.0.4), but 'possible' cancer is not registrable - a non-malignant disorder that could equally explain the finding is not coded in the absence of pathology (Visser rule 4, p. 03, cited at contract Sec.0.4). A calcified mass on ultrasound is the discriminator (contract Sec.4.1); leukocoria alone routes into the document-inventory intake, not directly to a code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Leukocoria', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Leukocoria' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Squint",
+    "full_form": "Strabismus -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common presenting sign of retinoblastoma after leukocoria, caused by a macular or paramacular tumour interfering with fixation. Referral letters describe it as a squint or crossed eye. Far more childhood strabismus is caused by refractive error and amblyopia than by retinoblastoma, so the sign alone is weak evidence - it routes into the document-inventory intake, where the calcified-mass discriminator on imaging or a pathology report determines the code (contract Sec.4.1).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Strabismus', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Strabismus' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Crossed eye",
+    "full_form": "Strabismus -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common presenting sign of retinoblastoma after leukocoria, caused by a macular or paramacular tumour interfering with fixation. Referral letters describe it as a squint or crossed eye. Far more childhood strabismus is caused by refractive error and amblyopia than by retinoblastoma, so the sign alone is weak evidence - it routes into the document-inventory intake, where the calcified-mass discriminator on imaging or a pathology report determines the code (contract Sec.4.1).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Strabismus', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Strabismus' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Protruding eye",
+    "full_form": "Proptosis -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Referral letters describe orbital or extraocular extension of retinoblastoma as a protruding or bulging eye - a later, more advanced presentation than leukocoria, and a diversion criterion on the imaging pathway (contract Sec.4.1: extraocular or orbital extension changes the specimen that will arrive). The morphology code is unaffected by the extent of disease; ICD-O-3.2's retinoblastoma stem has no code for extraocular spread, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Proptosis', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Proptosis' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Bulging eye",
+    "full_form": "Proptosis -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "local",
+    "origin_system": "Local referral letter terminology",
+    "nci_concept_id": null,
+    "who_version_current": "N/A",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Referral letters describe orbital or extraocular extension of retinoblastoma as a protruding or bulging eye - a later, more advanced presentation than leukocoria, and a diversion criterion on the imaging pathway (contract Sec.4.1: extraocular or orbital extension changes the specimen that will arrive). The morphology code is unaffected by the extent of disease; ICD-O-3.2's retinoblastoma stem has no code for extraocular spread, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Proptosis', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Proptosis' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Familial retinoblastoma",
+    "full_form": "Hereditary retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C8495",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "About 30-40% of retinoblastoma is hereditary - a germline RB1 mutation - and hereditary disease is bilateral or multifocal (contract Sec.0.1). The morphology code does not change: hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings (RB1 germline status, MYCN amplification, chromosome 6p gain) drive counselling and prognosis, never the code (contract Sec.0.5; code_neutral_molecular is true on every entry in this group).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Hereditary retinoblastoma', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Hereditary retinoblastoma' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Retinoblastoma syndrome",
+    "full_form": "Hereditary retinoblastoma -> Retinoblastoma, NOS (9510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C8495",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9510"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "About 30-40% of retinoblastoma is hereditary - a germline RB1 mutation - and hereditary disease is bilateral or multifocal (contract Sec.0.1). The morphology code does not change: hereditary and sporadic retinoblastoma both code 9510/3, and molecular findings (RB1 germline status, MYCN amplification, chromosome 6p gain) drive counselling and prognosis, never the code (contract Sec.0.5; code_neutral_molecular is true on every entry in this group).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Hereditary retinoblastoma', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Hereditary retinoblastoma' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Differentiated retinoblastoma",
+    "full_form": "Retinoblastoma, differentiated -> Retinoblastoma, differentiated (9511)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66813",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9511"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Shows photoreceptor differentiation - Flexner-Wintersteiner rosettes and/or fleurettes on histology, or an enucleation report naming CAP grade G1 or G2 (contract Sec.2.4, College of American Pathologists Retinoblastoma Protocol v4.0.0.0, 2017). The subtype is read from the report's own stated grade or growth pattern, never derived by the tool, and imaging alone cannot reach this code - imaging_sufficient is true on 9510 only (contract Sec.2.5). Where a report states a Mendoza anaplasia grade instead of a differentiation grade, retinocytoma-grade or mild maps to the differentiated end (contract Sec.2.4); where both appear, code from the differentiation grade and record anaplasia as a prognostic finding that changes no code.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma, differentiated', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma, differentiated' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Undifferentiated retinoblastoma",
+    "full_form": "Retinoblastoma, undifferentiated -> Retinoblastoma, undifferentiated (9512)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66814",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9512"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "Poorly differentiated tumour, occasional rosettes or none, composed of sheets of small round blue cells - an enucleation report naming CAP grade G3 or G4 (contract Sec.2.4). Read from the report's own stated grade, never derived by the tool; imaging alone cannot reach this code (contract Sec.2.5). Where a report states severe Mendoza anaplasia instead, that maps to the undifferentiated end (contract Sec.2.4).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma, undifferentiated', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma, undifferentiated' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Diffuse retinoblastoma",
+    "full_form": "Retinoblastoma, diffuse -> Retinoblastoma, diffuse (9513)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66815",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9513"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A flat, diffusely infiltrating growth within the retina with no discrete mass, rare (1-2%), presenting later than typical retinoblastoma (around age 6) and mimicking uveitis or endophthalmitis (contract Sec.2.5). It grows without the calcified mass the imaging route requires, so the imaging pathway cannot resolve it: imaging_sufficient is true on 9510 only and false on 9511, 9512 and 9513 (contract Sec.2.5), and this code is enucleation-only - read from the report's own stated growth pattern, never derived by the tool (contract Sec.2.4).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma, diffuse', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma, diffuse' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Diffuse infiltrating retinoblastoma",
+    "full_form": "Retinoblastoma, diffuse -> Retinoblastoma, diffuse (9513)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66815",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9513"
+    ],
+    "maps_to_iccc3_subgroup_id": "V",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A flat, diffusely infiltrating growth within the retina with no discrete mass, rare (1-2%), presenting later than typical retinoblastoma (around age 6) and mimicking uveitis or endophthalmitis (contract Sec.2.5). It grows without the calcified mass the imaging route requires, so the imaging pathway cannot resolve it: imaging_sufficient is true on 9510 only and false on 9511, 9512 and 9513 (contract Sec.2.5), and this code is enucleation-only - read from the report's own stated growth pattern, never derived by the tool (contract Sec.2.4).",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma, diffuse', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma, diffuse' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  },
+  {
+    "alias": "Spontaneously regressed retinoblastoma",
+    "full_form": "Retinoblastoma, spontaneously regressed -> ICD-O-3.2 9514/1; ICCC-3 Group V admits behaviour 3 only, so no Group V code is emitted",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": "NCIT:C66816",
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g5_retinoblastoma",
+    "tree_entry_node": "rb_document_inventory",
+    "clinical_alert": null,
+    "notes": "A spontaneously regressed retinoblastoma is the shrunken, calcified, non-functional globe (phthisis bulbi) with no viable tumour, occurring in about 2% of cases (contract Sec.2.2). ICD-O-3.2 codes it 9514/1 - behaviour 1, not 3 - confirmed by direct query of icdo32.sqlite: 9514/1 Preferred 'Retinoblastoma, spontaneously regressed', no Synonym row, no Related row. ICCC-3 Group V declares behaviour 3 only, so this term maps to no Group V code. This is real, treated or self-treated disease that existed, not the same entity as retinocytoma (9510/0, entries 'Retinocytoma' and 'Retinoma') - the two are behaviour-excluded for different reasons and are not interchangeable. Whether the registry registers a regressed retinoblastoma as an incident case, and on what code, is a registration-rules question for the registrar, recorded in contract Sec.11 item 2, not resolved here.",
+    "coding_note": "Promoted to a primary alias 2026-09-22. It was authored only as an also_known_as string on 'Retinoblastoma, spontaneously regressed', and build_database.py indexes the `alias` field alone -- so it could not be searched at all, only displayed on a case that had already reached the code. The Alias master instruction file Sec.2 defines `alias` as 'the primary search term... Separate entries for abbreviation vs full name vs eponym vs local term', which is what this is. The string is left in place on 'Retinoblastoma, spontaneously regressed' as well: aliasesFor() in app.js dedupes the 'Also called' list case-insensitively, so nothing renders twice. See docs/TODO.md Sec.18 for the 395 strings in Groups I-IV with the same problem, not fixed here."
+  }
 ]

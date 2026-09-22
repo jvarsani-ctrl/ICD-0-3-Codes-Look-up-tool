@@ -1070,7 +1070,7 @@ turned up the 24.
 
 ---
 
-## 18. ⚠️ FOR THE REGISTRAR — 395 authored alias terms cannot be searched
+## 18. ⚠️ FOR THE REGISTRAR — 375 authored alias terms cannot be searched
 
 **Found 22 September 2026, driving Group V in a browser. Measured across all five alias files.**
 
@@ -1089,10 +1089,13 @@ Driven in the browser against the live tool:
 | `leukocoria` | ✅ Group 5 | it is an `alias` |
 | `buphthalmos` | ✅ Group 5 | it is an `alias` |
 | `eye cancer` | ✅ Group 5 | it is an `alias` |
-| `white pupil` | ❌ *"No match. Use guided entry."* | it is an `also_known_as` |
+| `white pupil` | ❌ *"No match. Use guided entry."* | it was an `also_known_as` |
 | `cat` (for cat's-eye reflex) | ❌ no match | `also_known_as` |
 | `squint` | ❌ no match | `also_known_as` |
 | `protruding` (protruding eye) | ❌ no match | `also_known_as` |
+
+**All four now return Group 5** — see *What was fixed for Group 5* below. The table records the
+state that was found.
 
 ### The scale
 
@@ -1104,9 +1107,17 @@ Driven in the browser against the live tool:
 | 04 | 69 | 115 |
 | 05 | 19 | 25 |
 
-793 distinct `also_known_as` strings exist. **395 of them are not reachable by search at all** —
-the rest coincide with some entry's primary `alias`. Roughly a third of every search term the four
-alias builds authored is inert.
+793 distinct `also_known_as` strings exist. **375 of them are not reachable by search at all** —
+the rest coincide with some entry's primary `alias`. Roughly a third of every search term the alias
+builds authored is inert.
+
+| Group | still unsearchable |
+|---|---|
+| 01 | 69 |
+| 02 | 121 |
+| 03 | 168 |
+| 04 | 21 |
+| **05** | **0 — fixed, see below** |
 
 ### What it costs
 
@@ -1142,8 +1153,40 @@ on a build branch.
 router's existing `discriminators` block), then index `also_known_as`. Doing both makes 395 terms
 findable with no new silent misroute. Doing the second alone does not.
 
-Not done on the Group 5 branch: it changes search behaviour for all five built groups, and the
-Group 5 work neither needs it nor is the right place to prove it.
+### What was fixed for Group 5, and why that route does not scale to the rest
+
+**The registrar asked the obvious question — why not just put them in `alias`?** For Group 5 that
+was exactly right, and it was done: **20 strings promoted to primary alias entries**, taking the
+file from 19 entries to 39. `white pupil`, `white eye`, `cat's-eye reflex`, `squint`, `crossed
+eye`, `protruding eye`, `bulging eye`, `eye tumor`, `intraocular mass` and eleven clinical variants
+are now searchable, all verified in the browser. Group 5's unsearchable count is **0**.
+
+Three things made it safe and correct **here**:
+
+1. **The master instruction file already says so.** Sec. 2 defines `alias` as *"the primary search
+   term… Separate entries for abbreviation vs full name vs eponym vs **local term**"*, and
+   `alias_type: local` as *"registry-, setting- or region-specific terminology not in international
+   databases"*. Referral-letter vernacular is a local term by that definition, so it belonged in
+   `alias` from the start. This was an authoring miss, not a schema limitation.
+2. **Zero new collisions.** Swept before promoting: not one of the 20 collides with any string in
+   Groups I–IV.
+3. **The display is unchanged.** `aliasesFor()` dedupes the *"Also called"* list
+   case-insensitively, so the strings stay in `also_known_as` for provenance and nothing renders
+   twice — verified: 28 chips, 0 duplicates.
+
+**Why the remaining 375 are not the same job.** Group 5's were curated by hand: 11 of the 20 are
+lay vernacular with `nci_concept_id: null`, authored for this registry's referral letters. The
+other groups' `also_known_as` arrays are **machine-harvested from the NCI Thesaurus and EBI OLS
+`synonyms` arrays** (master file Sec. 4E). Promoting 375 harvested synonyms into full entries would
+duplicate `maps_to_morphology_codes`, `notes`, `coding_note` and `nci_concept_id` 375 times, with
+nothing keeping the copies in step — and it would still add the 12 collisions, because those come
+from the strings entering the index, not from the mechanism that puts them there.
+
+So: **promote a curated local term; index a harvested synonym.** The one-loop index fix is still
+the right answer for the other four groups, and it still wants §17 fixed first.
+
+Not done on this branch for Groups I–IV: it changes search behaviour for four built groups, and
+the Group 5 work neither needs it nor is the right place to prove it.
 
 ---
 

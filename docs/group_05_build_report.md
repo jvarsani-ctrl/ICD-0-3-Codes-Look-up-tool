@@ -223,6 +223,7 @@ It never showed on Groups I–IV because no code there carries enough aliases to
 | Path | Result |
 |---|---|
 | Guided entry → eye → **C69.2 Retina** → Group 5 | routes correctly; all nine C69 codes render, ligature fixed |
+| Search `white pupil` / `squint` / `cat` / `bulging` | all resolve to Group 5 after the alias promotion; 28 chips, 0 duplicates |
 | Imaging constellation confirmed | `9510` · basis 2 · workup complete · correct upgrade text |
 | Enucleation G1 / diffuse / GX | `9511` / `9513` / `9510`, all basis 7, all workup complete |
 | Retinocytoma, whole specimen | **"No code emitted here"**, `9510/0` shown as ICD-O only, registrar decision flagged, **no override button** |
@@ -276,11 +277,16 @@ the correction.
   engine, and **24 alias strings already resolve to two groups**, every one a dual-group term
   (`CLL`, `ATLL`, the B-lymphoblastic family, `medulloepithelioma`). `state.group = hit.groups[0]`
   takes the lower number without asking the discriminator.
-- **`docs/TODO.md` §18** — **395 of 793 authored `also_known_as` strings cannot be searched at
-  all.** `white pupil`, `cat's-eye reflex`, `squint`, `protruding eye` all return *"No match"*.
-  That is precisely the referral vernacular this registry needs. The one-loop fix would add 12 new
-  collisions to §17's 24, so **fix §17 first, then index `also_known_as`.** Not done here: it
-  changes search for all five built groups.
+- **`docs/TODO.md` §18** — `build_database.py` indexes the `alias` field alone, so
+  `also_known_as` strings cannot be searched at all. **Fixed for Group 5, still open for I–IV
+  (375 strings).** On the registrar's question — *why not just add them in `alias`?* — that is
+  what the master instruction file Sec. 2 already prescribes for a **local term**, so 20 Group 5
+  strings were promoted to primary entries (19 entries → 39): `white pupil`, `white eye`,
+  `cat's-eye reflex`, `squint`, `crossed eye`, `protruding eye`, `bulging eye`, `eye tumor`,
+  `intraocular mass` and eleven clinical variants. Zero new collisions; the *"Also called"* list
+  is unchanged because `aliasesFor()` dedupes. **The other 375 are machine-harvested NCI Thesaurus
+  synonyms, not curated local terms** — promoting those would duplicate every field 375 times, so
+  the one-loop index fix remains the right answer there, after §17.
 
 ---
 
@@ -305,5 +311,5 @@ the correction.
 ---
 
 *Group V — Retinoblastoma. Built 22 September 2026 following the Group 3 method
-(`docs/group_baseline_documents.md`). Four codes, one tree, seven nodes, nineteen aliases,
+(`docs/group_baseline_documents.md`). Four codes, one tree, seven nodes, thirty-nine aliases,
 seven validation rules, thirteen negative controls, 347 checks, 0 FAIL.*
