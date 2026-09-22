@@ -824,8 +824,33 @@ function markerWorth(m, live) {
 function nextMarker(n) {
   var rules = arr(n.resolution_logic), live = liveRules(n);
   /* Two ways the node is already decided, and asking on would be theatre: one
-     rule left, or every remaining rule emitting the same outcome. */
-  if (live.length <= 1 || outcomeCount(live) <= 1) return null;
+     rule left, or every remaining rule emitting the same outcome.
+
+     BUT "one rule left" IS NOT "decided", AND THAT COST A WRONG CODE. A rule
+     stays LIVE while a marker it requires is merely unanswered — ruleLive()
+     skips an undefined marker rather than failing on it, which is what lets a
+     partial walk narrow at all. So the surviving rule can be the only one left
+     and still not be SATISFIED, and stopping on live.length alone stops there:
+     the screen says one outcome remains and names it, matchRules() then matches
+     nothing because the rule's marker was never answered, and the node emits its
+     nos_fallback instead. The tool tells the clerk one code and records another.
+
+     Found 22 September 2026 driving Group VI's SMARCB1 / WT1 / BCOR / ALK fork
+     in a browser. With SMARCB1, WT1 and BCOR all negative, only the ALK rule
+     stayed live; ALK was never asked; the screen read "One outcome remains.
+     Continue to record it." above 8311 Hereditary leiomyomatosis and renal cell
+     carcinoma syndrome-associated renal cell carcinoma; and Continue emitted
+     8000 Neoplasm, malignant. Nothing in the build catches this — the rule has a
+     witness, the flow chart is well formed, and the data is correct.
+
+     So the node is decided only when what survives is also satisfied. When it is
+     not, fall through and let markerWorth() pick the marker that settles it:
+     against a single unsatisfied rule every answer still splits match from
+     no-match, so the question scores above zero and gets asked. This is
+     arithmetic on rules the engine already evaluates — no codes, no marker
+     names, no group branches (rule 2). */
+  if (!live.length) return null;
+  if ((live.length <= 1 || outcomeCount(live) <= 1) && live.every(ruleSatisfied)) return null;
 
   /* Once a live rule is satisfied outright, only the rules ABOVE it can still
      change the answer — first match wins, so anything below it is settled. Ask
