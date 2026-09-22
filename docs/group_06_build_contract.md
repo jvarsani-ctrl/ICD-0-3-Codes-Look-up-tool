@@ -954,6 +954,33 @@ no alias is ever emitted as a name.
 either check and there is no defect to fix. Whether it should also move to the round-trip is a
 question for the Group 5 branch, not this one. Record it; do not change it here.
 
+### 8.1 ★ Probe every check with correct data, not only with broken data
+
+A negative control proves a check **fires**. It does not prove the check is **quiet** when it
+should be. Both halves are needed, and the second is the one that gets skipped.
+
+`check_group6_molecular_rcc_code` passed its negative control on the first try: route a TFE3
+rearrangement to `8312/3` and it FAILs, exactly as intended. It was then probed with a
+**legitimate** branch — a renal cell carcinoma still unclassified after a complete workup in which
+TFE3, TFEB, ELOC, fumarate hydratase, succinate dehydrogenase and ALK were all tested and all
+negative, which is precisely the case `8312/3` exists for — and it FAILed on that too. The check
+scanned prose for entity tokens, and prose names a marker both when it was found and when it was
+looked for and was not.
+
+**A false FAIL is the more corrosive kind of defect.** A check that misses something leaves the
+data as it was; a check that fires on correct data teaches the next author to restructure correct
+data to appease the validator. On the Group 1 build one tree author had already begun doing exactly
+that.
+
+The fix separates two questions that are not each other's negation: *mentioning* a molecular entity
+is what an `8311/3` branch must do, while *asserting* one as found is what makes `8312/3` and its
+four siblings wrong. A marker named as absent, negative, excluded, retained or wild-type is not a
+finding.
+
+**So: for every check that reads free text rather than a fixed field, write both controls.** Break
+the data and watch it fail; then write the most plausible *correct* branch you can and watch it stay
+silent. Neither alone is evidence.
+
 Regression: Groups 1–5 must stay **byte-identical to their state on `group-05-retinoblastoma`**.
 
 ---
