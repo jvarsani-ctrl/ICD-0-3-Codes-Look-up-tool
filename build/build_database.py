@@ -8217,6 +8217,105 @@ def check_presentation_router(repo: Path, contexts: dict):
     return out
 
 
+def check_router_branch_when_vocabulary(repo: Path, contexts: dict):
+    """
+    A dual-group branch's `when` may use ONLY the shapes app.js's branchMatches() reads.
+
+    branchMatches() is eight lines and reads exactly two:
+
+        if (when.topography_in) return arr(when.topography_in).indexOf(topo) !== -1;
+        if (!when.captured_variable) return false;
+        ... equals / operator+value on that captured variable
+
+    Anything else returns false. Not an error, not a warning — false. The branch simply
+    never matches, every case falls through to the rule's `default`, and nothing on
+    screen says a branch was skipped.
+
+    FOUR BRANCHES WERE IN EXACTLY THAT STATE, all writing `topography_equals` where the
+    engine reads `topography_in` (found 22 Sep 2026, Group VI build):
+
+        9380       at C72.3  ->  Group III IIIb   fell to  Group III IIId2
+        8158,8290  at C75.1  ->  Group III IIIe1  fell to  GROUP XI
+        8963       at C64.9  ->  Group VI VIa2    fell to  GROUP IX IXd3
+        8000-8005  at C64.9  ->  Group VI VIc     fell to  GROUP XII
+
+    Two of the four crossed an ICCC-3 group boundary. A pituitary tumour sited at the
+    pituitary gland routed out of Group III; a rhabdoid tumour of the kidney could never
+    reach Group VI at all, which is the group that owns the code.
+
+    Why nothing caught it. check_presentation_router() proves every handoff resolves and
+    every group number is 1-12; check_routing_narrows() proves every candidate list is a
+    non-empty list of real groups and every crosswalk code resolves. Both ask whether the
+    DESTINATIONS are real. Neither asks whether the CONDITION can ever be true — and a
+    branch whose condition is unreadable has a perfectly valid destination it never
+    reaches. The gap is the shape of the bug: valid JSON, valid groups, dead logic.
+
+    Rule 8 discipline: this keys off the engine's source, not off anything in the data
+    file. No flag exempts a branch. The vocabulary below is transcribed from
+    branchMatches() and a change there must be made here in the same commit.
+    """
+    ALLOWED = {"topography_in", "captured_variable", "equals", "value", "operator"}
+    path = repo / "data" / "shared" / "presentation_router.json"
+    data, findings = load_json(path)
+    out = list(findings)
+    if data is None:
+        return out
+    rules = (data or {}).get("dual_group_rules") or {}
+    if not isinstance(rules, dict):
+        return out + [(FAIL, "dual_group_rules is not an object")]
+
+    branches = 0
+    for key, rule in sorted(rules.items()):
+        if key.startswith("_") or not isinstance(rule, dict):
+            continue
+        for i, branch in enumerate(rule.get("branches") or []):
+            if not isinstance(branch, dict):
+                continue
+            when = branch.get("when")
+            if not isinstance(when, dict):
+                out.append((FAIL, "dual_group_rule %r branch[%d] has no 'when' object; "
+                                  "branchMatches() returns false for a missing `when`, so "
+                                  "the branch is dead and every case falls to the rule's "
+                                  "default" % (key, i)))
+                continue
+            branches += 1
+            unknown = sorted(set(when) - ALLOWED)
+            if unknown:
+                dest = branch.get("result") or {}
+                out.append((FAIL, "dual_group_rule %r branch[%d] uses %s in its `when`. "
+                                  "app.js branchMatches() reads only %s, so this branch "
+                                  "NEVER MATCHES: its destination (group %s, subgroup %s) "
+                                  "is unreachable and every case falls to the rule's "
+                                  "default (group %s). Valid JSON, valid destination, dead "
+                                  "logic — the defect this check exists for"
+                            % (key, i, ", ".join(repr(u) for u in unknown),
+                               ", ".join(sorted(ALLOWED)),
+                               dest.get("group"), dest.get("subgroup"),
+                               (rule.get("default") or {}).get("group"))))
+                continue
+            if "captured_variable" in when:
+                if "equals" not in when and not ("value" in when and "operator" in when):
+                    out.append((FAIL, "dual_group_rule %r branch[%d] names captured_variable "
+                                      "%r but gives neither `equals` nor `operator`+`value`. "
+                                      "branchMatches() falls off its last line and returns "
+                                      "false — the branch is dead"
+                                % (key, i, when.get("captured_variable"))))
+            elif "topography_in" not in when:
+                out.append((FAIL, "dual_group_rule %r branch[%d] `when` has neither "
+                                  "`topography_in` nor `captured_variable`; branchMatches() "
+                                  "returns false and the branch is dead" % (key, i)))
+            elif not isinstance(when.get("topography_in"), list) or not when["topography_in"]:
+                out.append((FAIL, "dual_group_rule %r branch[%d] `topography_in` is not a "
+                                  "non-empty list; indexOf() on it can never hit and the "
+                                  "branch is dead" % (key, i)))
+
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "router branch `when` vocabulary: all %d dual-group branch(es) use a "
+                        "shape app.js branchMatches() actually reads, so none is dead"
+                    % branches))
+    return out
+
+
 def check_alias_cross_references(repo: Path, contexts: dict):
     """Alias -> decision-tree references (Architecture §8, Alias master §10A)."""
     out = []
@@ -8422,6 +8521,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report.section("C. cross-layer — presentation_router.json")
     report.run(check_presentation_router, repo, contexts)
     report.run(check_routing_narrows, repo, contexts)
+    report.run(check_router_branch_when_vocabulary, repo, contexts)
 
     report.section("C. cross-layer — alias files")
     report.run(check_alias_cross_references, repo, contexts)
