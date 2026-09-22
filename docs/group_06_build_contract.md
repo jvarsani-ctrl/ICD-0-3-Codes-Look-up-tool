@@ -502,7 +502,7 @@ This is the same class of defect as *"a neuroblastoma at C48.2 could never reach
 
 WHO 2022 Table 1 lists *Nephrogenic rests*, *Perilobar nephrogenic rests*, *Intralobar nephrogenic
 rests* and *Nephroblastomatosis* under "Nephroblastic tumours" **with no ICD-O code printed against
-any of them**. Fialkowski et al. *Pediatric Blood & Cancer* 2022;69(12):e30162, DOI
+any of them**. Fialkowski E, et al. *Pediatric Blood & Cancer* 2023;70(Suppl. 2):e30162, DOI
 [10.1002/pbc.30162](https://doi.org/10.1002/pbc.30162) — on disk — establishes that there is no
 gold-standard test separating them from Wilms tumour on imaging or on pathology.
 
@@ -592,18 +592,33 @@ features from what is on disk, mark them in `imaging_features` as resting on Spr
 papers index rather than on a dedicated imaging source, and put both Chung papers on
 `docs/sources-requested.md`.
 
-**Diversion criteria — any one forces the tissue branch:**
+**★ Diversion criteria — any one forces the tissue branch. Four of the six are SIOP's own.**
 
-1. diffuse or multifocal renal involvement, or nephrogenic rests / nephroblastomatosis described
-   (§3.5) — imaging cannot separate these from Wilms tumour;
-2. extrarenal origin, or vessel encasement rather than displacement — the neuroblastoma pattern,
-   which is Group IV, not Group VI;
-3. an infiltrative medullary mass in an adolescent, with or without sickle-cell trait — the renal
-   medullary carcinoma pattern (§4.3);
-4. age ten or over — renal cell carcinoma overtakes Wilms tumour in the second decade
-   (Cajaiba MM, et al. *Cancer* 2018;124(16):3381–3389, DOI
-   [10.1002/cncr.31578](https://doi.org/10.1002/cncr.31578), on disk), and imaging alone cannot
-   carry a carcinoma diagnosis.
+Spreafico 2021, PDF p. 10, gives the conditions under which the SIOP algorithm **does** biopsy, and
+they are the right basis for this list because they are the profession's own statement of when
+imaging is not enough: *"SIOP diagnostic algorithms recommend percutaneous image-guided coaxial
+core needle biopsy through a retroperitoneal approach in patients 7 years of age or older or in
+patients with imaging findings unusual for WT (psoas muscle infiltration, numerous calcifications,
+vessel encasement or massive lymphadenopathy)."* The age threshold *"is under revision"* and a
+consensus to raise it is forming, so it is authored as a diversion, not as a hard cut-off.
+
+1. **psoas muscle infiltration**  — SIOP atypical feature;
+2. **numerous calcifications** — SIOP atypical feature;
+3. **vessel encasement rather than displacement** — SIOP atypical feature, and the same finding
+   separates neuroblastoma, which encases, from Wilms tumour, which displaces. Neuroblastoma is
+   Group IV;
+4. **massive lymphadenopathy** — SIOP atypical feature;
+5. **diffuse or multifocal renal involvement, or nephrogenic rests / nephroblastomatosis described**
+   (§3.5) — no test separates these from Wilms tumour;
+6. **age ten or over, or an infiltrative medullary mass** — renal cell carcinoma overtakes Wilms
+   tumour in the second decade (Cajaiba MM, et al. *Cancer* 2018;124(16):3381–3389, DOI
+   [10.1002/cncr.31578](https://doi.org/10.1002/cncr.31578)), and imaging alone cannot carry a
+   carcinoma diagnosis.
+
+**And a warning the tool must not contradict.** Spreafico 2021, same page: *"needle biopsy cannot
+reliably distinguish WT from nephrogenic rests, and often misses anaplasia."* So the tissue branch
+is where the case goes, not where it is guaranteed to be resolved — the `hint` on the node the
+diversion leads to must not imply that a core biopsy settles it.
 
 ### 4.3 ★ The SMARCB1/INI1 fork — one marker, two codes, decided by age and sickle-cell status
 
