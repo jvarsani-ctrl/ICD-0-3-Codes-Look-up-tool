@@ -4,7 +4,8 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Built: **1, 2, 3**. Remaining: **4, 5, 6, 7, 8, 9, 10, 11, 12** — nine, not eight.
+Built: **1, 2, 3**, then **4** and **5** on their own branches, and **6** in progress on
+`group-06-renal`. Remaining: **7, 8, 9, 10, 11, 12**.
 
 ---
 
@@ -25,7 +26,7 @@ before building.** A pathway is not designed on secondary sources or on recall.
 | **III** — CNS and miscellaneous intracranial and intraspinal | Vol. 6, CNS Tumours | **Louis DN, et al.** *The 2021 WHO Classification of Tumors of the Central Nervous System: a summary.* Neuro-Oncology 2021;23(8):1231–1251. [10.1093/neuonc/noab106](https://doi.org/10.1093/neuonc/noab106) | **held on disk** — `Group 3 Papers/Exported Items/PDF/13300/` |
 | **IV** — Neuroblastoma and other peripheral nervous cell tumours | Vol. 7, Paediatric Tumours | **Pfister SM, et al.** *A Summary of the Inaugural WHO Classification of Pediatric Tumors: Transitioning from the Optical into the Molecular Era.* Cancer Discovery 2022;12(2):331–355. [10.1158/2159-8290.CD-21-1094](https://doi.org/10.1158/2159-8290.CD-21-1094) | PMID 34921008 · PMC9401511 |
 | **V** — Retinoblastoma | Vol. 13, Eye and Orbit Tumours | **Milman T, Grossniklaus HE, et al.** *The 5th Edition of the World Health Organization Classification of Tumours of the Eye and Orbit.* Ocular Oncology and Pathology 2023;9(3–4):71–95. [10.1159/000530730](https://doi.org/10.1159/000530730) | PMID 37900189 · PMC10601864 |
-| **VI** — Renal tumours | Vol. 8, Urinary and Male Genital Tumours (Part A) | **Moch H, et al.** *The 2022 WHO Classification of Tumours of the Urinary System and Male Genital Organs — Part A: Renal, Penile, and Testicular Tumours.* European Urology 2022;82(5):458–468. [10.1016/j.eururo.2022.06.016](https://doi.org/10.1016/j.eururo.2022.06.016) | PMID 35853783 |
+| **VI** — Renal tumours ✅ | Vol. 8, Urinary and Male Genital Tumours (Part A) | **Moch H, et al.** *The 2022 WHO Classification of Tumours of the Urinary System and Male Genital Organs — Part A: Renal, Penile, and Testicular Tumours.* European Urology 2022;82(5):458–468. [10.1016/j.eururo.2022.06.016](https://doi.org/10.1016/j.eururo.2022.06.016) | PMID 35853783 · **held on disk** — `Group 6 Papers/Moch-2022-WHO-urinary-male-genital-PartA.pdf` |
 | **VII** — Hepatic tumours | Vol. 1, Digestive System Tumours | **Nagtegaal ID, et al.** *The 2019 WHO classification of tumours of the digestive system.* Histopathology 2020;76(2):182–188. [10.1111/his.13975](https://doi.org/10.1111/his.13975) | PMID 31433515 · PMC7003895 |
 | **VIII** — Malignant bone tumours | Vol. 3, Soft Tissue and Bone Tumours | **Sbaraglia M, Bellan E, Dei Tos AP.** *The 2020 WHO Classification of Soft Tissue Tumours: news and perspectives.* Pathologica 2020;113(2):70–84. [10.32074/1591-951X-213](https://doi.org/10.32074/1591-951X-213) | PMID 33179614 · PMC8167394 |
 | **IX** — Soft-tissue and other extraosseous sarcomas | Vol. 3, Soft Tissue and Bone Tumours | same as VIII | PMID 33179614 · PMC8167394 |
@@ -63,6 +64,14 @@ That is the registrar's call and is not assumed here.
 > not engage it. **Pfister's coverage is chapter-by-chapter and uneven**, and it is the group's
 > baseline only where it actually discusses the group. Search the full text before assuming it for
 > VI, VII or X — the volume name matching the group name proved nothing here.
+
+> **Closed for Group VI the same day, the same way, and more starkly.** The same full text
+> (PMC9401511) was searched for the renal vocabulary: **"kidney" appears zero times.** "Renal"
+> appears 16 times, none of them opening a renal section; "Wilms" appears 6 times, all in passing —
+> as the worked example of a blastoma, in the anaplasia criterion, and in the
+> cancer-predisposition-syndrome groupings. There is no renal tumour section. **Pfister 2022 is not
+> the spine for Group VI either**, and the structural question above can be treated as answered for
+> two of the five paediatric-site groups: search the text, do not assume the volume.
 
 ### Two things to carry into the builds
 
@@ -114,6 +123,7 @@ registry-comparison studies — nothing that does for another volume what Hoogen
 | Group | Registry-implications source |
 |---|---|
 | **III** — CNS | Hoogendijk 2022, above ✅ |
+| **VI** — renal | **None exists and none is needed** ✅ — the classification summary and the registry-implications document are the same paper. **Moch 2022's Table 1, *"ICD-O coding of tumours of the kidney"*, prints the ICD-O-3.2 code against every WHO 2022 renal entity**, which is precisely what Hoogendijk's Table 1 does for CNS. It is what established that `8311/3` carries seven entities, `8510/3` four, `8316/3` two, and that `8959/3` carries none at all. A PubMed MeSH sweep for a Hoogendijk equivalent (recorded in `Group 6 Papers/Group 6 — Registry-Implications MeSH Search Results.md`) returned nine records and no candidate, and that is the correct result rather than a gap. |
 | **I, II** — haematolymphoid | No registry paper. The equivalent problem is **two competing classifications published in 2022**: WHO-HAEM5 and the **International Consensus Classification**. Compared in **Falini B & Martelli MP.** *Comparison of the International Consensus and 5th WHO edition classifications of adult myelodysplastic syndromes and acute myeloid leukemia.* Am J Hematol 2023;98(3):481–492. [10.1002/ajh.26812](https://doi.org/10.1002/ajh.26812) · PMID 36606297 — and for myelodysplastic syndromes specifically **Hasserjian RP, et al.** Virchows Arch 2023;482(1):39–51. [10.1007/s00428-022-03417-1](https://doi.org/10.1007/s00428-022-03417-1) · PMID 36287260 |
 | **IV–XII** | **None found.** Use the cross-cutting layer. |
 
@@ -181,5 +191,10 @@ Green build is necessary and not sufficient.
 ---
 
 *Written 16 September 2026, from the Group 3 build. Baseline documents for groups 1, 2, 8 and 9
-retrieved via PubMed; groups 4, 5, 6, 7, 10, 11 and 12 are outstanding and are flagged to the
+retrieved via PubMed; groups 4, 5, 6, 7, 10, 11 and 12 were outstanding and flagged to the
 registrar.*
+
+*Updated 22 September 2026 on the Group VI branch. Moch 2022 is now held on disk and is confirmed
+as both the classification summary and the registry-implications document for Group VI — the only
+group so far where one paper does both jobs. Pfister 2022 is ruled out as the spine for Group VI as
+it was for Group V, on the same evidence: its full text does not discuss the organ.*
