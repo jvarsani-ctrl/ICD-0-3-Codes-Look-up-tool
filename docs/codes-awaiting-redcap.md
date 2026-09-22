@@ -181,6 +181,63 @@ neither formula currently handles. Full detail in
 
 ---
 
+## Group 6 — open
+
+Three ICD-O-3.2 additions the inventory carries and `Group 6 - Renal Tumors.md` does not offer.
+Unlike the Group 3 entry above, none of these is reached from a decision-tree leaf — the Group 6
+build contract §0.3 records that everything in VIb beyond the five-code paediatric core is an
+adult-type carcinoma reachable only by direct code entry, with no branch built for it. All three
+are appended for completeness, not because a case is expected to need them.
+
+### 8023/3 — Nuclear protein in testis (NUT)-associated carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8023/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent** from `Group 6 - Renal Tumors.md`. The list runs `8022`, `8030`, skipping `8023`–`8029` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8010-8041,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | Nothing. `8020` Carcinoma, undifferentiated, NOS is the nearest offered option, but it is a different, less specific diagnosis |
+
+**Paediatric relevance.** NUT carcinoma is an aggressive, molecularly defined carcinoma driven by
+`NUTM1` rearrangement, described mainly in the midline thorax and head and neck; a primary renal
+presentation is not established in the paediatric literature. Built under ruling 1 — paediatric
+occurrence, not frequency, is the test — but occurrence at this site in a child has not been
+reported.
+
+### 8054/3 — Warty carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8054/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent**. The list runs `8053`, `8060`, skipping `8054`–`8059` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8050-8075,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | Nothing offered nearby names the same entity |
+
+**Paediatric relevance.** Warty carcinoma is a human-papillomavirus-associated squamous carcinoma
+pattern, described at genital and upper-aerodigestive sites in adults. It has no established
+paediatric renal presentation.
+
+### 8482/3 — Mucinous carcinoma, gastric type
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8482/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent**. The list runs `8481`, `8490`, skipping `8482`–`8489` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8480-8490,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | `8480` Mucinous adenocarcinoma is the nearest offered option, but it is the generic form, not the gastric-type subtype this code names |
+
+**Paediatric relevance.** Gastric-type mucinous carcinoma is described as a rare pattern in adult
+renal and Müllerian mucinous neoplasms. No paediatric renal case is established.
+
+**All three are adult-type carcinomas a paediatric renal registry is unlikely to meet.** The append
+keeps the inventory-to-REDCap reconciliation complete, per the standing rule at the top of this
+file, and is not a signal that any of the three is expected soon.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block

@@ -163,6 +163,36 @@ originally requested because the pathway document cited it; that citation was as
 
 ---
 
+## Group 6 — Renal Tumours, requested 22 September 2026
+
+Two designated imaging papers, named in the Group 6 build contract §4.2 and the papers index as
+the sources for this group's imaging content, and **neither is on disk**.
+
+### 9. Chung EM, Graeber AR, Conran RM. *Renal Tumors of Childhood: Radiologic-Pathologic Correlation Part 1. The 1st Decade.* RadioGraphics 2016;36(2):499–522
+[DOI](https://doi.org/10.1148/rg.2016150230)
+
+### 10. Chung EM, Lattin GE Jr, Fagen KE, et al. *Renal Tumors of Childhood: Radiologic-Pathologic Correlation Part 2. The 2nd Decade.* RadioGraphics 2017;37(5):1538–1558
+[DOI](https://doi.org/10.1148/rg.2017160189)
+
+**What they would settle.** These two papers are the designated sources for two separate parts of
+the Group VI build: the imaging-sufficient branch on `8960/3` Nephroblastoma, NOS — the claw sign
+separating an intrarenal Wilms tumour from an extrarenal, vessel-encasing neuroblastoma, and the
+large, well-demarcated, displacing mass pattern in a child under five — and the imaging
+discriminators used to divert a case off the imaging route toward tissue, including the renal cell
+carcinoma pattern that becomes more likely from the second decade on.
+
+**What it costs to go without them.** `imaging_sufficient` is built on `8960/3` regardless, because
+Visser 2023 Table 3 (build contract §0.11) already establishes that nephroblastoma is registrable
+at basis 2, imaging, and that finding does not depend on either Chung paper. But the specific
+imaging features written into `imaging_features` rest on Spreafico F, et al. *Wilms tumour.* Nature
+Reviews Disease Primers 2021;7:75 and the papers index, rather than on a dedicated
+radiology–pathology correlation source. Spreafico is a clinical review with a paragraph on imaging,
+not an imaging paper; a dedicated source would let those features be cited with the same precision
+the rest of the imaging-pathway node has, and would corroborate — or correct — the diversion
+criteria in build contract §4.2 rather than leaving them resting on a single non-imaging review.
+
+---
+
 ## One paper already on disk that nobody listed
 
 **Mudassar M, et al.** *Sub-categorization of Pediatric Small Round Blue Cell Tumors using
