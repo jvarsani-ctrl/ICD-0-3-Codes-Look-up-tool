@@ -401,6 +401,26 @@ type. All three are ICD-O-3.2 additions. They go on `docs/codes-awaiting-redcap.
 `8311` and `8504` are the two that matter clinically: each REDCap label names a **different lesion**
 from the one the code now carries.
 
+### 2D. One code has no current term at behaviour 3 at all
+
+`8130` is not in any of the three classes above. Queried against `icdo32.sqlite` on 22 September
+2026: it carries six terms across three behaviours, and **both of the two at behaviour 3 carry
+`[obs]`** — *Papillary urothelial carcinoma* (Preferred) and *Papillary transitional cell carcinoma*
+(Synonym). The `/1` and `/2` terms are clean and current. None of the four IARC 3.1→3.2 change
+documents mentions `8130`, so the marker is inherited from ICD-O-3.1.
+
+The reason is visible in the behaviour split: an invasive papillary urothelial carcinoma is now
+coded `8120/3 Transitional cell carcinoma, NOS`, and the "papillary" qualifier was dropped at
+behaviour 3. WHO 2022 Table 1 does not list `8130` under the kidney at all.
+
+**The code stays in the inventory.** ICD-O-3.2 carries `8130/3` and ICCC-3 VIb admits it, so the
+generator returns it and the tool holds it. It has no decision-tree branch — it is an adult
+urothelial code — and its `coding_note` must record that every term on it at behaviour 3 is
+obsolete. Do not apply the weaker test and remove it; that is what wrongly removed `9430/3` and
+`9480/3` from Group III (§0.6).
+
+---
+
 **The exact-string check is keyed off Layer 1, never off `redcap_option_verified`.** A flag authored
 to mean "not yet checked" was once read as "exempt", and six drifted names passed a green build.
 `morphology_name` is the ICD-O-3.2 preferred term; where Layer 1 disagrees, the repair package
