@@ -287,8 +287,18 @@ numeric_gate
 
 `refer_group` — must name a different ICCC-3 group, carry **no** morphology code, and put its
 clerk-facing text in `reason`. `coding_note` is **not rendered** and is author-facing only; the
-same is true of `topography_routing_note`. Clerk-facing text goes in `reason`, `hint` or
-`clinical_alert`.
+same is true of `topography_routing_note`.
+
+**★ `clinical_alert` must be `null` everywhere, in every node and every entry — this contract said
+otherwise in an earlier revision and was wrong.** Registrar ruling 9, 4 September 2026: the lookup
+tool is a coding tool, not a live clinical tool, and a warning the clerk cannot act on costs
+attention without changing the code that gets entered. `check_no_clinical_alerts()` walks every
+dict in the file and FAILs on any non-empty value. Groups III, IV and V all carry `null`.
+
+**The warnings are not discarded — they move to `docs/clinical-warnings.md`**, which exists for
+exactly this and already holds sections for Groups I through V. Group VI adds its own, and the
+warnings §3.1 and §4.3 describe belong there, not in the JSON. Clerk-facing text inside the tool
+goes in `reason`, `hint` and `question`.
 
 ### 0.10 Rules inherited unchanged, which this build does not reopen
 
@@ -432,11 +442,20 @@ records it and the check is expected to report the drift.
 
 ### 3.1 `8963` — the group's only dual-group code, and the routing already exists
 
-`data/shared/presentation_router.json` → `dual_group_rules["8963"]` already routes
-`C70.9/C71.9/C72.9` → Group 3 (via `9508`), `C64.9` → Group 6 `VIa2`, default → Group 9 `IXd3`.
-**No router change is needed for `8963`.** The morphology entry carries
-`topography_dependent: true` and a `topography_routing_note`; the tree's rhabdoid terminal is
-reachable only with `C64.9` confirmed.
+`data/shared/presentation_router.json` → `dual_group_rules["8963"]` routes the CNS sites to
+Group 3 (via `9508`), `C64.9` → Group 6 `VIa2`, default → Group 9 `IXd3`. The morphology entry
+carries `topography_dependent: true` and a `topography_routing_note`; the tree's rhabdoid terminal
+is reachable only with `C64.9` confirmed.
+
+> **⚠️ This rule did not work, and was repaired during this build.** Its `C64.9` branch was written
+> `"topography_equals": "C64.9"` — a key `app.js`'s `branchMatches()` has never read — so the branch
+> never matched and every renal rhabdoid tumour fell to the rule's default, **Group IX `IXd3`**,
+> whose ICCC-2017 site list excludes `649`. Group VI's own code could not reach Group VI. Three
+> sibling branches were dead the same way. See the router commit and `docs/TODO.md` §12.
+
+The rhabdoid warning — SMARCB1/INI1 loss required, consider renal medullary carcinoma in an
+adolescent, germline SMARCB1 or SMARCA4 means rhabdoid tumour predisposition syndrome — goes in
+`docs/clinical-warnings.md`, **not** in `clinical_alert` (§0.9).
 
 ### 3.2 `8959/3` — emitted, but never on a benign or borderline description
 
@@ -650,6 +669,9 @@ cell carcinoma also has a predilection for children with sickle-cell trait. So "
 renal carcinoma" is not pathognomonic for renal medullary carcinoma, and the node must prompt for
 ALK as well as SMARCB1. ALK-rearranged RCC codes `8311/3` (§0.5).
 
+Both warnings this section describes — the rhabdoid/medullary fork and the ALK point — belong in
+`docs/clinical-warnings.md`. `clinical_alert` stays `null` (§0.9).
+
 `sickle_cell_status` is a captured variable with values `trait` · `disease` · `negative` ·
 `unknown`. In a registry where sickle-cell trait is common, `unknown` will be the modal answer and
 must not be silently read as `negative`.
@@ -850,6 +872,10 @@ Clerk-facing alias text goes in `reason` / `hint`. `coding_note` is not rendered
    document; nothing in the lookup tool depends on it, and nothing is applied to the live form.
 5. **`docs/codes-awaiting-redcap.md`** — append `8023`, `8054`, `8482` (§2B).
 6. **`docs/sources-requested.md`** — append both Chung RadioGraphics papers (§4.2).
+7. **`docs/clinical-warnings.md`** — a Group VI section, in the Group III/IV/V format: a level-1
+   heading, a note on why the tree carries none of it, and a `Trigger | Warning | Source` table.
+   Every row cites the paper and the page, and is checked against the primary source held in
+   `Group 6 Papers/`, not against this contract's summary of it.
 
 ---
 
