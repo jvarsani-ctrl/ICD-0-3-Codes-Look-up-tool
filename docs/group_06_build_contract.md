@@ -803,6 +803,27 @@ Clerk-facing alias text goes in `reason` / `hint`. `coding_note` is not rendered
    and the `handoff`, mirroring `groups["5"]`.
 2. **`data/shared/presentation_router.json`** — `dual_group_rules["8000-8005"]`: add a
    `C64.9 → {group: 6, subgroup: "VIc"}` branch **above** the Group XII default (§3.4).
+
+2b. **★ `data/shared/presentation_router.json` — close `docs/TODO.md` §12 for the two rules this
+   group owns.** TODO §12 records three router rules still carrying a `cns_topography_scope_note`
+   that reads *"topography_codes.json does not yet enumerate finer CNS subsites … Extend both files
+   together when Group III is authored."* **Group III was authored on 16 September 2026 and
+   `topography_codes.json` now enumerates all 21 codes in `C70.0`–`C72.9`.** The note's premise is
+   false on its face. Two of the three rules are Group VI codes and this build owns them:
+
+   | Rule | Defect | Fix |
+   |---|---|---|
+   | `8963` | Matches only `C70.9`/`C71.9`/`C72.9`. A rhabdoid tumour at a **specific** CNS subsite — `C71.6` cerebellum, say — misses the branch and falls to the default, **Group IX `IXd3`**, whose ICCC-2017 site list (`000-218,239-639,659-699,739-768,809`) **excludes `700-729` entirely**. So the default names a group ICCC-2017 does not admit there at all, and the case never reaches `9508/3` atypical teratoid/rhabdoid tumour. | Extend `topography_in` to all 21 codes `C70.0`–`C72.9`. Delete the scope note. |
+   | `8000-8005` | Same shape. `8000/3` at a specific CNS subsite falls to **Group XII**, whose `XIIb` site list excludes `700-729` and `751-753`. | Extend `topography_in` to all 21 codes `C70.0`–`C72.9`, **keeping `C75.1`, `C75.2` and `C75.3`**, which match ICCC-2017 range 42's `700-729,751-753`. Delete the scope note. Then add the C64.9 branch from item 2. |
+
+   Do this in the same edit as item 2, because it is the same rule object and leaving half of it
+   stale while touching the other half is how a note outlives its reason.
+
+   **The third rule, `9473`, is not this build's to fix.** TODO §12 shows it is wrong more broadly
+   than the stale note accounts for — ICCC-2017 range 29 is the only range carrying `9473` at all,
+   takes sites `000-809`, and resolves to `IIIc2`, so the rule's Group IX default has no basis at
+   any topography. That is a Group III/IX decision. Leave it and say in the build report that it was
+   left.
 3. **`data/shared/topography_codes.json`** — `C64.9` already exists with `candidate_groups: [6]`.
    Confirm no change is needed. **Do not add `C65.9` to Group VI** (§0.2).
 4. **`docs/group_06_layer1_repair.md`** — the REDCap-project repair package for §2. A REDCap
