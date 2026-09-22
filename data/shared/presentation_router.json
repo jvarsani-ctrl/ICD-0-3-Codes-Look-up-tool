@@ -642,9 +642,18 @@
     },
     "6": {
       "name": "Renal Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g6_renal",
+          "entry_node": "rn_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 6,
+        "tree_id": "g6_renal",
+        "entry_node": "rn_document_inventory"
+      }
     },
     "7": {
       "name": "Hepatic Tumors",
