@@ -2255,6 +2255,7 @@
         "methylation_counts_as": 8
       },
       "topography": [
+        "C69.4",
         "C80.9"
       ],
       "nodes": [
@@ -2837,7 +2838,8 @@
           ],
           "nos_fallback": null
         }
-      ]
+      ],
+      "topography_note": "C69.4 (ciliary body) added 2026-09-22 on the group-05-retinoblastoma branch. ICCC-3 gives 9501-9504 to Group IVb everywhere outside C70.0-C72.9, so an intraocular medulloepithelioma of the ciliary body is a Group IV tumour -- and op_medulloepithelioma is already the node for it. The site became routable only when the Group 5 build added the nine C69 codes to topography_codes.json (Group 5 build contract Sec.7.1); before that C69 held C69.9 alone and no ciliary body case could reach any group. Milman 2023 Table 10 gives the discriminator against retinoblastoma: medulloepithelioma expresses LIN28A and PAX8. Neither code in the declaration touches C70.0-C72.9, so rule 5's second clause is unaffected."
     }
   ]
 }

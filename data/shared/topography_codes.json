@@ -177,12 +177,21 @@
       "organ": "eye",
       "topography_range": "C69",
       "codes": [
+        "C69.0",
+        "C69.1",
+        "C69.2",
+        "C69.3",
+        "C69.4",
+        "C69.5",
+        "C69.6",
+        "C69.8",
         "C69.9"
       ],
       "candidate_groups": [
         5
       ],
-      "label": "Eye"
+      "label": "Eye",
+      "note": "Expanded from C69.9 alone to all nine C69 codes, Group 5 build contract §7.1 -- without C69.2 (Retina), the topography Visser Table 3 names for retinoblastoma, a retina-sited retinoblastoma could not reach Group V at all. C69.4 (Ciliary body) alone carries an additional candidate group in topography_lookup -- [5, 4] -- because intraocular medulloepithelioma at that site is an ICCC-3 Group IV tumour and a genuine leukocoria mimic (contract §5.3). Orbital rhabdomyosarcoma (Group 9) and ocular melanoma (Group 11) also arise at C69 and belong in the relevant per-code candidate_groups once those groups are built; not added now."
     },
     {
       "organ": "lymph_node",
@@ -1245,6 +1254,82 @@
         4
       ],
       "note": "REDCap's label for this pick (755) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma (topography C30.1). So a reported glomus jugulare tumour can plausibly be sited at either C75.5 or C30.1. Recorded, not resolved -- Group 4 build contract §7.1."
+    },
+    "C69.0": {
+      "code": "C69.0",
+      "label": "Conjunctiva",
+      "redcap_code": "690",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
+    },
+    "C69.1": {
+      "code": "C69.1",
+      "label": "Cornea, NOS (Limbus of cornea)",
+      "redcap_code": "691",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
+    },
+    "C69.2": {
+      "code": "C69.2",
+      "label": "Retina",
+      "redcap_code": "692",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ],
+      "note": "The topography Visser 2023 Table 3 names for retinoblastoma (Group 5 build contract §0.4). Added so a retina-sited retinoblastoma can reach Group V at all -- contract §7.1."
+    },
+    "C69.3": {
+      "code": "C69.3",
+      "label": "Choroid (Crystalline lens)",
+      "redcap_code": "693",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
+    },
+    "C69.4": {
+      "code": "C69.4",
+      "label": "Ciliary body (Iris, Sclera, Uveal tract, Intraocular, Eyeball)",
+      "redcap_code": "694",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5,
+        4
+      ],
+      "note": "Carries [5, 4], not [5] alone: intraocular medulloepithelioma (9501-9504) at the ciliary body is an ICCC-3 Group IV tumour, not Group V, and is a genuine leukocoria mimic. Group 5 build contract §5.3, §7.1."
+    },
+    "C69.5": {
+      "code": "C69.5",
+      "label": "Lacrimal gland (Lacrimal duct, NOS, Nasal lacrimal duct, Nasolacrimal duct, Lacrimal sac)",
+      "redcap_code": "695",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
+    },
+    "C69.6": {
+      "code": "C69.6",
+      "label": "Orbit, NOS (Autonomic nervous system of orbit, Connective tissue of orbit, Extraocular muscle, Peripheral nerves of orbit, Retrobulbar tissue, Soft tissue of orbit)",
+      "redcap_code": "696",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ],
+      "note": "Topography Redcap.md line 696 renders the last item of this pick's parenthetical synonym list as \"So! tissue of orbit\" -- ligature damage, the same defect class as line 56 (docs/TODO.md §1.3). Written here as \"Soft tissue of orbit\", per Group 5 build contract §7.1. The REDCap source file itself was not edited."
+    },
+    "C69.8": {
+      "code": "C69.8",
+      "label": "Overlapping lesion of eye and adnexa",
+      "redcap_code": "698",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
     }
   }
 }

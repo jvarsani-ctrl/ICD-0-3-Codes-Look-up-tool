@@ -2908,3 +2908,107 @@ Both buttons present.
 * `git diff --quiet main -- data/database/group_03_dt.json` — exit 0, identical.
 * No `group_0*_dt.json` was edited by this branch; the fix is entirely in `app.js` and the
   check entirely in `build/build_database.py`.
+
+---
+
+# Group V checks — negative controls
+
+**22 September 2026, on the `group-05-retinoblastoma` branch.** Evidence that the six checks
+added for Group 5, plus the generalisation of `check_behaviour_exclusion()`, catch what they
+claim to. Method unchanged: break the data deliberately, confirm the check FAILs, restore,
+confirm it passes — and separately confirm none fires on correct data, because a false FAIL is
+the more corrosive failure.
+
+## The fixture
+
+A schema-complete Group V file built **in memory** by
+`scratchpad/nc5.py`, not written to `data/database/`: four morphology entries
+(`9510`, `9511`, `9512`, `9513` — the generated inventory), one tree `g5_retinoblastoma`, three
+nodes covering the three shapes the rules are about — a `document_inventory`, an
+`imaging_pathway` carrying all seven of its required fields, and a
+`histology_subclassification` whose third option is a well-formed `behaviour_exclusion` for
+`9510/0 Retinocytoma`.
+
+It is deliberately **not** `data/database/group_05_dt.json`. That file was being authored by
+another agent while these controls ran, and a control that mutates the real file cannot prove
+anything about a file someone else is writing.
+
+The checks are exercised by importing `build/build_database.py` as a module and calling each
+function against a `DTContext` built from the fixture, so a control exercises the check and
+nothing else — no build ordering, no other group's data, no filesystem state.
+
+## The false-FAIL control (correct data)
+
+On the unmodified fixture, **0 FAIL**, and every one of the seven checks reports OK against
+real content rather than an empty NOTE:
+
+```
+OK  1 imaging_pathway node(s): each declares insufficient_next_node and none declares options[] (rule 1)
+OK  RULE 3 — every emitted code is in {9510, 9511, 9512, 9513}; 1 terminal(s) at basis 1 or 2 emit 9510 and nothing else (Visser Table 3)
+OK  GROUP 5 RULE 4 — 9514 appears nowhere as a morphology_code, a nos_fallback_code or an alias target
+OK  RULE 5 — imaging_sufficient is true on 9510 only
+OK  RULE 6 — no ihc_checklist node; ihc_markers_required and ihc_markers_exclude null on all 4 entries
+OK  RULE 7 — code_neutral_molecular true on all 4 entries
+OK  1 behaviour_exclusion block(s) well formed: all six keys present, icdo_code/icdo_behaviour/icdo_term round-trip to the Preferred term
+```
+
+## The thirteen controls
+
+All thirteen caught, none missed.
+
+| | Control | Mutation | Caught by |
+|---|---|---|---|
+| **A** | `imaging_pathway` loses `insufficient_next_node` | delete the key | rule 1 |
+| **B** | `imaging_pathway` gains `options[]` | add one option | rule 1 |
+| **C** | **a subtype emitted at basis 2** | `rb_imaging_pathway` emits `9513` instead of `9510` | rule 3b |
+| **D** | a code outside the group | an option emits `9501` | rule 3a |
+| **E** | `9514` emitted as a `morphology_code` | an option emits `9514` | rule 4 |
+| **F** | `imaging_sufficient` true on `9513` | flip the entry's flag | rule 5 |
+| **G** | `imaging_sufficient` false on `9510` | flip the entry's flag | rule 5 |
+| **H** | an `ihc_checklist` node appears | append one | rule 6 |
+| **I** | `ihc_markers_required` non-null | set `["CRX"]` | rule 6 |
+| **J** | `code_neutral_molecular` false | flip one entry | rule 7 |
+| **K** | **`behaviour_exclusion` names an ADMITTED behaviour** | `icdo_behaviour` `"0"` → `"3"` | rule 2 |
+| **L** | `behaviour_exclusion` `icdo_term` does not round-trip | `"Retinocytoma"` → `"Retinoblastoma, NOS"` | rule 2 |
+| **M** | `behaviour_exclusion` also carries a `morphology_code` | add `9510` to the same branch | rule 2 |
+
+### The three that matter most
+
+**C — a subtype emitted at basis 2.** This is the error the whole group is most exposed to and
+the one a reader would least likely notice. `9513` at basis 2 is a syntactically perfect
+record that says a diffuse infiltrating retinoblastoma was established by imaging, when
+diffuse retinoblastoma is the one variant with **no** calcified mass and the constellation
+could not have confirmed it. Downstream it reads as a graded, enucleation-confirmed tumour for
+a child whose eye was never removed. Visser 2023 Table 3 licenses `9510/3` and nothing else
+without pathology, and rule 3b is that sentence made executable.
+
+**K — the subtle clause, and the proof the generalisation landed.** A `behaviour_exclusion`
+naming a behaviour the group *does* admit would **hide a code that should have been emitted**.
+Before 22 September 2026 `check_behaviour_exclusion()` was hard-guarded
+`if ctx.group != GROUP4: return []`, so a Group 5 block would have been authored and never
+validated at all. Control K's FAIL message reads *"IS in Group **V**'s own declaration"* — the
+group label and the `BEHAVIOUR_DECLARED_BY_GROUP` lookup are both resolving for group 5, which
+is what proves the check now reaches the group rather than silently returning an empty list.
+
+**A and B — the rule that found a defect it was never shown.** Run against the real repository,
+rule 1 reported the three Group 3 nodes `pf_imaging_no_tissue`, `st_imaging_pathway` and
+`sp_imaging_no_tissue` with 6, 4 and 4 dead options each and no `insufficient_next_node` —
+matching `docs/TODO.md` §10's independently-recorded table exactly. That is a real-world
+positive control nobody had to construct: the check found a known runtime crash from first
+principles. It is WARN rather than FAIL outside group 5 because those three files are on
+`main` and outside this branch.
+
+## Regression evidence for Groups 1–4
+
+The pre-change validator (`git show HEAD:build/build_database.py`) and the new one were run
+over identical data from the repository root. **255 checks / 0 FAIL** against
+**279 checks / 0 FAIL**. Diffing the two reports line by line, **no finding changed for any
+group** — every difference is one of the new checks. Groups 1, 2 and 3's `dt.json` and alias
+files, and `app.js`, are byte-identical to HEAD.
+
+The one FAIL raised during this work was real and was fixed: adding the nine `C69` codes to
+`topography_codes.json` made `C69.4` a Group 4 candidate site, and
+`check_group4_topography_map` (rule 5) correctly reported it resolving to no Group 4 tree.
+`C69.4` is now declared on `g4_other_peripheral`, whose `op_medulloepithelioma` node was
+already the right destination — a fix to a pre-existing gap, since before this change `C69`
+held `C69.9` alone and no ciliary body case could reach any group at all.

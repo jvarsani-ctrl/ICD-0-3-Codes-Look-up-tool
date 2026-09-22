@@ -45,6 +45,11 @@ file. `Topography Redcap.md` is a thirteenth file and was not swept: `so!` for *
 56, 278), `Le!` for *Left* (line 97), `"roat` for *Throat* (line 65). **None is in the CNS
 block.** Documentation defect.
 
+A fourth instance of the same `so!` corruption surfaced during the Group 5 build: line 696,
+`So!` for *Soft* (`"So! tissue of orbit"` for *Soft tissue of orbit*, inside the C69.6 Orbit,
+NOS parenthetical). Written correctly in `topography_codes.json`; the source file itself was
+not touched — Group 5 build contract §7.1.
+
 ---
 
 ## 2. Schema gaps — three trees hit each of these independently
@@ -969,5 +974,179 @@ parts 1 and 3 as well.
 
 ---
 
-*Last updated 18 September 2026, on the Group 4 branch (`group-04-neuroblastoma`), with the
-Group 4 build documentation (§14–§18). Previously 18 September 2026, on the Group 4 build.*
+## 17. ⚠️ Every field on an alias entry except `alias` and `also_known_as` is dead
+
+**Found 22 September 2026 during the Group 5 build, reading `app.js` to settle whether an alias
+entry's clerk-facing text renders. It does not. Nothing on any alias entry does.**
+
+### What happens
+
+The search path is three steps and reads two values.
+
+1. `searchAlias(q)` (app.js:380) matches the query against **`alias_index.json` only** — a generated
+   map of `alias string -> [group numbers]`, built by `build_database.py` from each entry's `alias`
+   field and nothing else.
+2. `handleOption`'s `case 'alias'` (app.js:1990) does `state.group = hit.groups[0]` and calls
+   `afterGroup()`. The tree is then picked from `presentation_router.json`.
+3. `aliasesFor(code)` (app.js:1894) later renders the *"Also called"* line from `alias` and
+   `also_known_as`.
+
+So of the seventeen keys an alias entry carries, **`alias` and `also_known_as` are read and the
+other fifteen are not**: `maps_to_morphology_codes`, `maps_to_iccc3_subgroup_id`, `full_form`,
+`alias_type`, `origin_system`, `nci_concept_id`, `who_version_current`, `needs_ihc_tree`,
+`ihc_tree_id`, `tree_entry_node`, `clinical_alert`, `notes`, `coding_note`, `refer_group`,
+`refer_code`.
+
+### What it costs
+
+Mostly nothing today, and one thing that will bite.
+
+- `ihc_tree_id` and `tree_entry_node` are validated by `check_alias_cross_references` and are
+  **correct data that the engine ignores** — routing comes from the router's handoff instead. Two
+  sources of truth for the same fact, one of them unread. The day they disagree, nothing notices.
+- **`refer_group` on an alias does not refer.** `aliases_group_04.json`'s *Peripheral
+  neuroectodermal tumor* entry carries `refer_group: [8, 9]` and `refer_code: "9364"`; Group 5's
+  *Trilateral retinoblastoma* entry carries `refer_group: 3`. A clerk who reaches either by search
+  is put into the entry's own group and sees no referral at all. The referral survives only because
+  both trees also carry it as a branch destination, where it *is* rendered. Nobody should rely on
+  that holding for the next group.
+- **★ `state.group = hit.groups[0]` picks the lowest-numbered group with no disambiguation, and
+  there are already 24 collisions — every one of them on a dual-group term.** Swept across all five
+  alias files on 22 September 2026:
+
+  | Groups | Colliding alias strings |
+  |---|---|
+  | **1 / 2** (21) | `adult t-cell leukemia/lymphoma` · `atl` · `atll` · `b lymphoblastic leukemia/lymphoma` · `b-cell chronic lymphocytic leukemia/small lymphocytic lymphoma` · `bcr-abl1-like b-all` · `burkitt cell leukemia` · `burkitt leukaemia` · `cll` · `fab l3` · `l3 all` · `leukaemic burkitt lymphoma` · `lgl leukaemia` · `mature b-cell all` · `non-hodgkin lymphoma` · `ph-like all` · `sll` · `small lymphocytic lymphoma` |
+  | **3 / 4** (6) | `medulloepithelioma` · `medulloepithelioma, nos` · `teratoid medulloepithelioma` · `teratoid medulloepithelioma, nos` · `neuroepithelioma` · `spongioneuroblastoma` |
+
+  **These are not incidental collisions. They are the dual-group families** — the B-lymphoblastic
+  family, chronic lymphocytic leukaemia / small lymphocytic lymphoma, adult T-cell
+  leukaemia/lymphoma and Burkitt, whose group turns on `primary_compartment`; and `9501`–`9504`,
+  whose group turns on topography. They are precisely the terms for which the group is *undecided
+  until a question is asked*, and the express lane answers it by taking the lower number.
+
+  A clerk who types `CLL` is put in Group 1 without being asked whether the disease is marrow- or
+  node-centred. A clerk who types `medulloepithelioma` is put in Group 3 — yet an intraocular
+  medulloepithelioma of the ciliary body (C69.4) is an ICCC-3 **Group IV** tumour, which is why
+  `topography_codes.json` now gives C69.4 candidate groups `[5, 4]` (Group 5 build contract §5.3,
+  §7.1).
+
+  Recovery is not guaranteed and is not designed. `group_01_dt.json` and `group_02_dt.json` do
+  carry `primary_compartment` (32 and 23 occurrences), so a case that entered the wrong one of that
+  pair may still be referred out by the tree it landed in. Nothing verifies that for the 3/4 pair,
+  and nothing verifies it for any pair added by Groups 6–12. **The express lane's own comment says
+  it "bypasses the clinical scaffold" — the scaffold is where the discriminator is asked.**
+
+### To close
+
+Three options, in increasing order of work, and this is a design decision rather than a bug fix:
+
+1. **Document the fields as author-facing** and stop writing clerk-facing text into them. Cheapest,
+   and honest. `notes` and `coding_note` are already author-facing by convention; the others would
+   join them.
+2. **Render what is already authored** — a referral entry that shows its `refer_group` and `reason`
+   before entering a tree, and the `full_form` on the search result row.
+3. **★ Ask when an alias is ambiguous**, instead of taking `groups[0]`. This is the one that is
+   already costing something, on 24 terms. The router already owns the machinery: `discriminators`
+   in `presentation_router.json` defines `primary_compartment` and `tumour_origin` with their
+   questions, options and `narrows` maps, and `dual_group_rules` names which codes need which. An
+   ambiguous alias hit should route into that same question rather than round down.
+
+Two validator rules are worth having whichever option is taken:
+
+- An alias string indexed to more than one group **is reported**, with the groups named. Today the
+  count is 24 and nobody knew.
+- An alias entry carrying `refer_group` while the corresponding group's tree carries no matching
+  referral branch is a referral that exists only on paper.
+
+### How it was found
+
+The Group 5 alias author added a `reason` key to its trilateral-retinoblastoma entry — a key the
+Group 4 schema does not have — and flagged it as a deliberate schema deviation rather than adding
+it silently. Checking whether the deviation mattered meant tracing the field to the renderer, which
+showed that neither `reason` nor the fourteen other fields reach one. Sweeping the five alias files
+for collisions, to confirm the Group 5 author's "no collisions" claim (true for its own file), then
+turned up the 24.
+
+---
+
+## 18. ⚠️ FOR THE REGISTRAR — 395 authored alias terms cannot be searched
+
+**Found 22 September 2026, driving Group V in a browser. Measured across all five alias files.**
+
+### What happens
+
+`build_database.py` builds `alias_index.json` from each entry's **`alias`** field and nothing
+else — one line, `index.setdefault(alias.strip(), set()).add(group)`. `app.js`'s `searchAlias()`
+matches the query against that index alone. **`also_known_as` is never indexed.** It is read only
+by `aliasesFor(code)`, which renders the *"Also called"* chips on a finished case — that is, it is
+shown to a clerk only **after** they have already reached the code it would have helped them find.
+
+Driven in the browser against the live tool:
+
+| Typed | Result | Why |
+|---|---|---|
+| `leukocoria` | ✅ Group 5 | it is an `alias` |
+| `buphthalmos` | ✅ Group 5 | it is an `alias` |
+| `eye cancer` | ✅ Group 5 | it is an `alias` |
+| `white pupil` | ❌ *"No match. Use guided entry."* | it is an `also_known_as` |
+| `cat` (for cat's-eye reflex) | ❌ no match | `also_known_as` |
+| `squint` | ❌ no match | `also_known_as` |
+| `protruding` (protruding eye) | ❌ no match | `also_known_as` |
+
+### The scale
+
+| Group | `alias` entries | `also_known_as` strings |
+|---|---|---|
+| 01 | 283 | 448 |
+| 02 | 368 | 484 |
+| 03 | 223 | 445 |
+| 04 | 69 | 115 |
+| 05 | 19 | 25 |
+
+793 distinct `also_known_as` strings exist. **395 of them are not reachable by search at all** —
+the rest coincide with some entry's primary `alias`. Roughly a third of every search term the four
+alias builds authored is inert.
+
+### What it costs
+
+The `also_known_as` field exists to hold *what a clerk might actually type*. That is the whole of
+its job, and it does not do it. The cost is worst exactly where the registry needs it most: this is
+a Ugandan paediatric registry where late presentation is normal and referrals arrive in lay
+language. Group V's alias build was asked specifically to cover referral-letter vernacular, and it
+did — `white pupil`, `white eye`, `cat's-eye reflex`, `squint`, `crossed eye`, `protruding eye`,
+`bulging eye`. **Every one of those is unsearchable.** A clerk holding a letter that says
+"white eye" is told there is no match and sent to guided entry.
+
+### To close — and the reason this is the registrar's call and not a quiet fix
+
+Indexing `also_known_as` is a small change to one loop in `build_database.py`. Measured before
+proposing it: it would add **12 new cross-group collisions** to the 24 that already exist (§17).
+
+```
+b-cell lymphoblastic leukemia/lymphoma   [01, 02]   nhl                              [01, 02]
+htlv-1 associated adult t-cell l/l       [01, 02]   pgl                              [02, 04]
+iamp21                                   [01, 02]   precursor b lymphoblastic l/l    [01, 02]
+lgll                                     [01, 02]   precursor t-cell lymphoblastic   [01, 02]
+neuroepithelioma, nos                    [03, 04]   t-all                            [01, 02]
+t-cell all                               [01, 02]   t-lgl leukemia                   [01, 02]
+```
+
+Every one lands in a family §17 already names, and §17's defect is that
+`state.group = hit.groups[0]` resolves an ambiguous hit by **taking the lower group number without
+asking the discriminator**. So indexing `also_known_as` on its own would make search much better
+and make an existing silent-misroute defect fire more often — a net that nobody should decide
+on a build branch.
+
+**Recommended order:** fix §17 option 3 first (ask when an alias is ambiguous, reusing the
+router's existing `discriminators` block), then index `also_known_as`. Doing both makes 395 terms
+findable with no new silent misroute. Doing the second alone does not.
+
+Not done on the Group 5 branch: it changes search behaviour for all five built groups, and the
+Group 5 work neither needs it nor is the right place to prove it.
+
+---
+
+*Last updated 22 September 2026, on the Group 5 branch (`group-05-retinoblastoma`), with §17 and
+the second ligature instance in §1.3. Previously 18 September 2026, on the Group 4 branch
+(`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*

@@ -627,9 +627,18 @@
     },
     "5": {
       "name": "Retinoblastoma",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g5_retinoblastoma",
+          "entry_node": "rb_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 5,
+        "tree_id": "g5_retinoblastoma",
+        "entry_node": "rb_document_inventory"
+      }
     },
     "6": {
       "name": "Renal Tumors",

@@ -46,7 +46,7 @@ edition**: three of these papers do not actually cover the group they are assign
 | Group | Concern |
 |---|---|
 | **VIII** — bone | Sbaraglia is titled *"The 2020 WHO Classification of **Soft Tissue** Tumours"*. It does not cover the bone chapter. A search for a dedicated bone-chapter summary returns only head-and-neck jawbone tumours (Vered & Wright, Head Neck Pathol 2022;16(1):63–75) and further soft-tissue summaries (Choi & Ro, Adv Anat Pathol 2021;28(1):44–58). **Group VIII currently has no baseline that covers it.** |
-| **V** — retinoblastoma | Milman 2023 is indexed by PubMed as an **Editorial** with no abstract. It announces the Eye and Orbit volume rather than summarising its entities the way Louis 2021 does for CNS. Usable as a pointer; thin as an authority. |
+| **V** — retinoblastoma | ~~Milman 2023 is indexed by PubMed as an **Editorial** with no abstract. It announces the Eye and Orbit volume rather than summarising its entities the way Louis 2021 does for CNS. Usable as a pointer; thin as an authority.~~ **RESOLVED 22 Sep 2026 — Milman 2023 stands.** The Editorial tag is real and is not a measure of standing: 25 pages against Louis 2021's 21, organised by chapter with "ICD-O coding" subsections throughout, and written by the Eye and Orbit volume's **own editorial board** — the same model as Louis 2021, which is the CNS volume's own board. No better candidate exists. Two real weaknesses replace the one withdrawn: it summarises a **beta version ahead of print** (April 2023) while the bound volume printed **23 January 2026**, thirty-three months later with no published comparison; and its Table 9 names only *Retinocytoma* and *Retinoblastoma* under the neurosensory retina, leaving the status of `9511/3`, `9512/3` and `9513/3` unsettled behind a paywall. Full working: `docs/group_05_build_contract.md` §10. |
 | **VII** — hepatic | Nagtegaal 2019 is a seven-page overview of the **whole** digestive system, also with no abstract in PubMed. Paediatric liver tumours — hepatoblastoma above all — will be thinly covered. |
 | **XI** — other epithelial and melanoma | Vol. 10 is **thyroid only**. The group also takes skin melanoma, adrenocortical carcinoma and carcinomas of other sites, each in a different volume. At least two further baselines are needed. |
 
@@ -55,6 +55,14 @@ edition**: three of these papers do not actually cover the group they are assign
 Classification of Paediatric Tumours* — the volume written for exactly these tumours. It may be the
 better spine for several of them, with the organ volume as the second source rather than the first.
 That is the registrar's call and is not assumed here.
+
+> **Closed for Group V, 22 September 2026 — and the way it closed is a warning for the rest.**
+> Pfister 2022's complete full text was retrieved and searched: *eye*, *ocular* and *retina* appear
+> nowhere in it, and *retinoblastoma* appears exactly once, inside a list of cancer predisposition
+> syndromes. The paediatric volume reportedly has an *Eye tumours* chapter; its summary paper does
+> not engage it. **Pfister's coverage is chapter-by-chapter and uneven**, and it is the group's
+> baseline only where it actually discusses the group. Search the full text before assuming it for
+> VI, VII or X — the volume name matching the group name proved nothing here.
 
 ### Two things to carry into the builds
 
