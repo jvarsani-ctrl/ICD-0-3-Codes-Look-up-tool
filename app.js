@@ -1834,13 +1834,38 @@ function renderOutput() {
   /* Ruling 3: the tree is allowed to run ahead of the REDCap option list, but
      never silently. A clerk who cannot find the row has to be told why before
      they go looking, and in BOTH views — the code is just as unselectable
-     outside the REDCap host as inside it. */
+     outside the REDCap host as inside it.
+
+     TWO DIFFERENT FACTS RODE ON ONE FLAG, AND THE BANNER STATED THE WRONG ONE.
+     `redcap_option_verified: false` means the option string was not verified to
+     match. It does NOT mean no option exists — and this banner said "This code
+     has no option in the registry dropdown, so it cannot be selected yet" for
+     both. Eleven codes across Groups I, II and VI have an option that a clerk
+     can select today and were being told they could not: 9898, 9718, 9725, and
+     Group VI's eight drifted strings including 8311, whose option is still
+     labelled with the obsolete term "Hypernephroid tumor" for a different
+     lesion. Sending a clerk away from a row that is there is the same class of
+     defect as sending them to one that is not.
+
+     `awaiting_layer1` is the signal that separates them, and it separates them
+     exactly: checked 22 September 2026 across all six built groups, every entry
+     flagged false either carries `awaiting_layer1` and has no option, or carries
+     none and has one — 18 of 18, no exceptions. check_redcap_banner_signal()
+     in build/build_database.py keeps it that way, so this branch cannot drift
+     from the option file behind the engine's back. */
   if (e.redcap_option_verified === false) {
     var aw = e.awaiting_layer1;
-    h += banner('warn', 'Not yet a REDCap option',
-      'This code has no option in the registry dropdown, so it cannot be selected yet.' +
-      (aw && arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
-      ' Record the case against the nearest available option and flag it for re-coding.');
+    if (aw) {
+      h += banner('warn', 'Not yet a REDCap option',
+        'This code has no option in the registry dropdown, so it cannot be selected yet.' +
+        (arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
+        ' Record the case against the nearest available option and flag it for re-coding.');
+    } else {
+      h += banner('warn', 'The REDCap label for this code is out of date',
+        'The dropdown does carry an option for this code, so the case can be entered. ' +
+        'Its label is not the current term shown above — match on the four-digit code, ' +
+        'not on the words, and flag the option for re-labelling.');
+    }
   }
   /* Behaviour is shown only where it is not the reportable /3 default: a case
      whose code carries the other behaviour reads as an ordinary malignancy

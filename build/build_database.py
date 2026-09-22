@@ -9206,6 +9206,84 @@ def check_router_cns_topography_completeness(repo: Path, contexts: dict):
     return out
 
 
+def check_redcap_banner_signal(ctx: DTContext, redcap_options: dict):
+    """
+    `awaiting_layer1` must mark exactly the entries Layer 1 has NO option for.
+
+    app.js's output block renders two different warnings off one flag, and it has
+    to, because two different things can be true of an entry carrying
+    `redcap_option_verified: false`:
+
+        awaiting_layer1 present  ->  "Not yet a REDCap option ... cannot be
+                                      selected yet" — the tree has run ahead of
+                                      the option list (ruling 3).
+        awaiting_layer1 absent   ->  "The REDCap label for this code is out of
+                                      date ... the case can be entered" — the row
+                                      is there, its words are stale.
+
+    Until 22 September 2026 the engine printed the FIRST message for both, so
+    eleven codes with an option a clerk could select today said they could not:
+    9898 (Group I), 9718 and 9725 (Group II), and Group VI's eight drifted
+    strings. 8311 is the sharpest of them — its option exists and is labelled
+    "Hypernephroid tumor", the obsolete 8311/1 term for a different lesion, so
+    the clerk needs to be told the label is wrong, not that the row is missing.
+    Sending a clerk away from a row that is there is the same class of defect as
+    sending them to one that is not.
+
+    THIS CHECK IS WHAT LETS THE ENGINE TRUST THE FLAG. It keys off the option
+    file itself — Layer 1, never anything in the file being checked (rule 8) —
+    and fails in both directions:
+
+        awaiting_layer1 set   on a code Layer 1 DOES carry  -> the clerk is told
+                              to go away from a usable row;
+        awaiting_layer1 unset on a code Layer 1 does NOT carry -> the clerk is
+                              told to match a label that is not there at all.
+
+    Scoped to entries flagged `redcap_option_verified: false`, because that is
+    the only branch app.js reads it on. Silent when a group's options cannot be
+    parsed: a missing option file is already reported by parse_redcap_options()
+    and guessing from its absence would invent a finding.
+    """
+    options = redcap_options.get(ctx.group)
+    if not options:
+        return []
+    checked = 0
+    out = []
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("redcap_option_verified") is not False:
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        checked += 1
+        has_option = code in options
+        awaiting = bool(entry.get("awaiting_layer1"))
+        if has_option and awaiting:
+            out.append((FAIL, "entry %s carries awaiting_layer1, but Layer 1 DOES "
+                              "offer an option for this code. app.js then tells the "
+                              "clerk it 'has no option in the registry dropdown, so "
+                              "it cannot be selected yet' and sends them away from a "
+                              "row that is there. Drop awaiting_layer1; the label-drift "
+                              "banner is the correct one" % code))
+        elif not has_option and not awaiting:
+            out.append((FAIL, "entry %s is flagged redcap_option_verified false with no "
+                              "awaiting_layer1, but Layer 1 offers no option for this "
+                              "code at all. app.js then tells the clerk the row exists "
+                              "and to 'match on the four-digit code', and there is no "
+                              "row to match. Add awaiting_layer1 with what it needs"
+                        % code))
+    if not checked:
+        return []
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "REDCap banner signal: all %d entry/entries flagged "
+                        "redcap_option_verified false carry awaiting_layer1 exactly "
+                        "when Layer 1 has no option for them, so both output banners "
+                        "state something true" % checked))
+    return out
+
+
 def check_alias_cross_references(repo: Path, contexts: dict):
     """Alias -> decision-tree references (Architecture §8, Alias master §10A)."""
     out = []
@@ -9406,6 +9484,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group6_no_flow_cytometry, ctx)                # rule 9
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
+        report.run(check_redcap_banner_signal, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)
         report.run(check_mpal_rule_ordering, ctx)
         # the 4 Sep 2026 registrar rulings
