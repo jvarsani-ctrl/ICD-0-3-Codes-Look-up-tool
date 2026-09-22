@@ -466,10 +466,35 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 
 ---
 
-## 12. ⚠️ Three router dual-group rules still carry the stale CNS topography scope
+## 12. ✅ MOSTLY CLOSED — router dual-group rules and the stale CNS topography scope
 
-**Found 18 September 2026 during the Group 4 build, extending the `9501-9504` rule. Not fixed
-here — these are Group III/VIII/IX rules and the Group 4 branch was scoped to its own.**
+> **Closed 22 September 2026 on the Group VI branch (`group-06-renal`) for `8963` and
+> `8000-8005`, the two rules Group VI owns, and for `9380` and `8158,8290`, which turned out to
+> have a second and worse defect described below. `9473` remains open and is now the only open
+> part of this item — it is exempt by name in `check_router_cns_topography_completeness()`, and
+> that exemption FAILS the build if the rule is ever repaired without deleting the name.**
+>
+> **A fourth rule was in the list and a worse defect was underneath all of it.** Four branches —
+> `9380` at `C72.3`, `8158,8290` at `C75.1`, `8963` at `C64.9` and the `8000-8005` branch added
+> in the same commit — wrote `topography_equals`, a key `app.js`'s `branchMatches()` has never
+> read. All four were **dead**: the branch never matched and every case fell to the rule's
+> default. Two crossed an ICCC-3 group boundary — a pituitary tumour sited at the pituitary gland
+> routed to **Group XI**, and a rhabdoid tumour of the kidney could never reach **Group VI**, the
+> group that owns the code. So the stale CNS scope note was hiding a second, larger fault on the
+> same objects.
+>
+> **Two checks were written, and the one this section proposed is the second of them.**
+> `check_router_branch_when_vocabulary()` closes the branch `when` vocabulary against
+> `branchMatches()` itself — it catches a branch that can never match.
+> `check_router_cns_topography_completeness()` is the check proposed in "To close" below — it
+> catches a branch that matches at the NOS level and misses every specific subsite, which is the
+> worse of the two to find because it works in testing. Its trigger is the **NOS-level** codes and
+> not any CNS code: a branch saying "the CNS" must name all of it, while `9380`'s single `C72.3`
+> is saying something narrower and is left alone. Four negative controls on the first check and
+> two on the second, all confirmed firing and restored.
+
+**Found 18 September 2026 during the Group 4 build, extending the `9501-9504` rule. Fixed 22
+September 2026 on the Group VI branch, except for `9473`.**
 
 The `9501-9504` rule carried a note reading *"Extend both files together when Group III is
 authored"* and was extended during the Group 4 build. **Three other
@@ -1190,6 +1215,7 @@ the Group 5 work neither needs it nor is the right place to prove it.
 
 ---
 
-*Last updated 22 September 2026, on the Group 5 branch (`group-05-retinoblastoma`), with §17 and
-the second ligature instance in §1.3. Previously 18 September 2026, on the Group 4 branch
+*Last updated 22 September 2026, on the Group VI branch (`group-06-renal`), closing §12 for all
+but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
+§17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
