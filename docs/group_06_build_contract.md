@@ -155,6 +155,29 @@ the registry then cannot count the entity it actually holds.
 **Both directions are banned.** Do not emit `8311/3` on a molecular suspicion that the file does not
 state; do not emit `8312/3` for a tumour the file names as one of the six.
 
+**How much of the group this decides.** Cajaiba MM, et al. *Cancer* 2018;124(16):3381–3389, DOI
+[10.1002/cncr.31578](https://doi.org/10.1002/cncr.31578) — on disk — classified 212 renal cell
+carcinomas in children and young adults enrolled prospectively on Children's Oncology Group
+protocol AREN03B2. Mapped onto ICD-O-3.2 by WHO 2022 Table 1:
+
+| Subtype | Frequency | ICD-O-3.2 |
+|---|---|---|
+| MiT-family translocation renal cell carcinoma (TFE3 93.2%, TFEB 6.8%) | **41.5%** | `8311/3` |
+| Papillary renal cell carcinoma | 16.5% | `8260/3` |
+| Renal medullary carcinoma | 12.3% | `8510/3` |
+| Chromophobe renal cell carcinoma | 6.6% | `8317/3` |
+| ALK-rearranged renal cell carcinoma | 3.8% | `8311/3` |
+| Clear cell renal cell carcinoma | 3.3% | `8310/3` |
+| Fumarate hydratase-deficient renal cell carcinoma | 1.4% | `8311/3` |
+| Succinate dehydrogenase-deficient renal cell carcinoma | 0.5% | `8311/3` |
+| Unclassified | 7.5% | `8312/3` |
+
+**`8311/3` carries 47.2% of paediatric renal cell carcinoma, and MiT-family translocation carcinoma
+alone is the commonest subtype in this age group.** Routing them to `8312/3` as the diagnostic
+pathway document instructs would record nearly half of this group's carcinomas as unclassified when
+the file names the entity. That is not a technicality; it is the difference between a registry that
+can count its translocation carcinomas and one that cannot.
+
 ### 0.6 ICD-O-3.2 changed this group materially — checked, not assumed
 
 All four IARC 3.1→3.2 change documents were text-extracted and searched on 22 September 2026 for
@@ -565,17 +588,40 @@ carcinomas": clinical and diagnostic features and management implications.* Urol
 2024;42(7):211–219, DOI [10.1016/j.urolonc.2024.02.003](https://doi.org/10.1016/j.urolonc.2024.02.003),
 for the medullary side.
 
-**Two corrections Moch 2022 forces on the pathway document's §2E:**
+**★ A genuine two-source conflict on haemoglobinopathy, and the later document wins.**
 
-1. The pathway document says haemoglobinopathy is an "**essential** diagnostic criterion" for renal
-   medullary carcinoma. Moch 2022 §2.4 says otherwise: *"Some unclassified RCC cases with medullary
-   phenotype can show complete loss of SMARCB1, but no association with haemoglobinopathies,
-   suggesting that sickle cell is not a prerequisite for this genetic lesion."* WHO 2022 Table 1
-   accordingly puts *SMARCB1-deficient undifferentiated renal cell carcinoma, NOS* on `8510/3`
-   alongside medullary carcinoma. So rule 3 above must not read "no sickle trait, therefore not
-   `8510`" — it must leave the case for the registrar.
-2. Moch 2022 §2.4 also records that **collecting duct carcinoma retains SMARCB1**, which is what
-   separates `8319/3` from `8510/3`. That belongs in the node's `hint`.
+The diagnostic pathway document's §2E says haemoglobinopathy is an "**essential** diagnostic
+criterion" for renal medullary carcinoma. It is not making that up — it is quoting Trpkov 2021
+correctly:
+
+> **Trpkov 2021, p. 1407:** *"The presence of a hemoglobinopathy is now considered an essential
+> diagnostic criterion."* GUPS separated the SMARCB1-lost tumour **without** a haemoglobinopathy as
+> a distinct lesion, *"unclassified renal cell carcinoma with medullary phenotype"* (RCCU-MP),
+> *"essentially indistinguishable from renal medullary carcinoma, by histology and
+> immunohistochemistry, except for the lack of hemoglobinopathy in the affected patients, and often
+> older age at presentation."*
+
+> **Moch 2022 §2.4, one year later and the group's baseline:** *"Some unclassified RCC cases with
+> medullary phenotype can show complete loss of SMARCB1, but no association with
+> haemoglobinopathies, suggesting that sickle cell is not a prerequisite for this genetic lesion.
+> These tumours can be regarded as subtypes of SMARCB1-deficient medullary RCC."*
+
+WHO 2022 Table 1 acts on that: *SMARCB1-deficient undifferentiated renal cell carcinoma, NOS* sits
+on **`8510/3`**, alongside medullary carcinoma. **Latest document wins, and it is also the group's
+baseline**, so the tool follows Moch.
+
+Two consequences for the fork:
+
+1. Rule 3 must not read "no sickle-cell trait, therefore not `8510`". Under WHO 2022 the tumour
+   Trpkov called RCCU-MP is a subtype of the same code. The honest terminal names the finding, emits
+   no code on its own authority, and refers to the registrar — and its `reason` says *why* it is
+   uncertain, which is that two current sources disagree and the case is an adolescent with a
+   SMARCB1-deficient medullary tumour and no documented haemoglobinopathy.
+2. **Collecting duct carcinoma retains SMARCB1.** Both sources agree, and it is what separates
+   `8319/3` from `8510/3`. Trpkov 2021 adds that collecting duct carcinoma *"should only be
+   diagnosed when other considerations, particularly fumarate hydratase-deficient renal cell
+   carcinoma, medullary carcinoma, and metastases from other primaries are excluded"* — a diagnosis
+   of exclusion, which belongs in the node's `hint`.
 
 **And the third tumour the sickle-cell association points at.** Argani P. *Translocation carcinomas
 of the kidney.* Genes, Chromosomes and Cancer 2021;60(3):219–227, DOI
@@ -619,6 +665,87 @@ anaplasia (Vujanić GM, et al. *Medical and Pediatric Oncology* 2002;38(2):79–
   `8312/3`. The prioritised workup Cajaiba 2018 gives is TFE3 immunohistochemistry → TFE3/TFEB
   break-apart FISH → fusion FISH → next-generation sequencing.
 
+### 4.6 The clinical detail the tree needs, extracted so nobody re-reads the PDFs
+
+Everything below was read out of the papers held in `Group 6 Papers/` on 22 September 2026. An
+implementing agent should author from this section, not from the PDFs.
+
+**Clear cell sarcoma of the kidney — the marker panel.** Aldera AP & Pillay K. *Archives of
+Pathology & Laboratory Medicine* 2020;144(1):119–123, pp. 121–122:
+
+- **BCOR** (BCL-6 coreceptor), diffuse strong **nuclear** staining — *"highly sensitive and specific
+  for the diagnosis of [clear cell sarcoma of the kidney] in the context of pediatric renal
+  neoplasia."* This is the confirmatory marker.
+- **Cyclin D1** and **nerve growth factor receptor (NGFR)** — *"sensitive but not entirely
+  specific."* Supporting, not confirmatory.
+- **Consistently negative** for cytokeratins, epithelial membrane antigen, synaptophysin, S100,
+  CD34, desmin, membranous CD99, **and WT1**.
+- Molecular: **BCOR internal tandem duplication**; **t(10;17) YWHAE::NUTM2B/E**.
+
+> **The WT1-negative result is the discriminator that matters.** Blastemal Wilms tumour is WT1
+> positive and clear cell sarcoma of the kidney is WT1 negative, and the two are the pair the
+> morphology node cannot separate. Put WT1 in the panel.
+
+**The anaplasia criterion — all three features, or it is not anaplasia.** Vujanić GM, et al.
+*Medical and Pediatric Oncology* 2002;38(2):79–82, p. 81, requires *"the presence of all three
+criteria"*:
+
+1. atypical tri- or multipolar mitotic figures;
+2. marked nuclear enlargement, with diameters **at least three times** those of adjacent cells;
+3. hyperchromatic tumour cell nuclei.
+
+Pfister SM, et al. *Cancer Discovery* 2022;12(2):331–355 states the same three for WHO. Hill DA,
+et al. *Cancer* 2003;97(9):2318–2326 shows that nuclear enlargement **without** the abnormal
+multipolar mitoses — *nuclear unrest* — behaves as favourable histology. So a report saying "atypia"
+or "nuclear enlargement" and nothing about mitotic figures does **not** support an anaplastic
+classification, and the tool must not let it set one.
+
+*Focal* anaplasia (Vujanić p. 81) is *"a clearly defined focus within a primary intrarenal tumour,
+without evidence of anaplasia or prominent nuclear atypia in extrarenal tumour sites."* *Diffuse*
+anaplasia is everything else. Both stay `8960/3`.
+
+**The SIOP risk groups, verbatim from Vujanić Table I — and note there are two lists, not one.**
+
+*A. For pretreated cases (after preoperative chemotherapy):*
+
+| Risk | Entities |
+|---|---|
+| Low | Mesoblastic nephroma · cystic partially differentiated nephroblastoma · completely necrotic nephroblastoma |
+| Intermediate | Nephroblastoma — epithelial type · stromal type · mixed type · regressive type · focal anaplasia |
+| High | Nephroblastoma — blastemal type · diffuse anaplasia · clear cell sarcoma of the kidney · rhabdoid tumour of the kidney |
+
+*B. For primary nephrectomy cases (no preoperative chemotherapy):*
+
+| Risk | Entities |
+|---|---|
+| Low | Mesoblastic nephroma · cystic partially differentiated nephroblastoma |
+| Intermediate | Non-anaplastic nephroblastoma and its variants · focal anaplasia |
+| High | Nephroblastoma — diffuse anaplasia · clear cell sarcoma of the kidney · rhabdoid tumour of the kidney |
+
+**Blastemal type is high risk only after preoperative chemotherapy.** Vujanić p. 80: *"In cases
+diagnosed after primary nephrectomy, blastemal nephroblastoma remains in the intermediate risk
+tumors."* Its criteria: only the **viable** part is assessed and must comprise **more than one
+third** of the tumour mass; **at least two thirds** of that viable tumour must be blastema.
+
+So the tool cannot record a SIOP risk subtype without knowing whether the specimen is
+pre-treatment or post-chemotherapy. If the tree captures risk at all, it captures that first. All
+of it is code-neutral — every row above that is a nephroblastoma stays `8960/3`.
+
+> Note what the SIOP low-risk row contains: **mesoblastic nephroma** and **cystic partially
+> differentiated nephroblastoma**, both of which this group cannot code (§3.2, §3.3). They are real
+> paediatric diagnoses that a SIOP-following unit will send to this registry. The behaviour-exclusion
+> text for them must say the case is outside the group's behaviour declaration and belongs with the
+> registrar — never that it is not a tumour.
+
+**Renal cell carcinoma workup order.** Cajaiba 2018, p. 3387: characteristic morphology plus
+under-expression of epithelial markers plus diffuse strong nuclear **TFE3** immunohistochemistry
+*"reliably detected RCC with TFE3 rearrangements in our series without the need for molecular
+studies"* — but FISH break-apart probes give **false negatives** on NONO::TFE3 and RBM10::TFE3
+because the rearrangements are inversions and the split signals do not separate. So a negative
+break-apart FISH does not overturn a positive TFE3 immunohistochemistry with matching morphology.
+Order: TFE3 immunohistochemistry → TFE3/TFEB break-apart FISH → fusion-specific FISH →
+next-generation sequencing.
+
 ---
 
 ## 5. What the diagnostic pathway document gets wrong
@@ -633,7 +760,7 @@ anaplasia (Vujanić GM, et al. *Medical and Pediatric Oncology* 2002;38(2):79–
 | **5.3** | CMN is recoded to `8960` "per registry convention" (§4D, §7.10) | `8960/1` in both ICD-O-3.2 and WHO 2022 Table 1. The recode would register a benign-behaviour tumour as malignant (§3.3). |
 | **5.4** | Urothelial carcinoma of the renal pelvis is Group VI at C65.9 (§1) | C65.9 is `XIf10`. Group VI has no C65.9 anywhere (§0.2). |
 | **5.5** | The molecular RCCs "all collapse to 8312" with no dedicated code (§4F, §7.6) | `8311/3` exists and WHO 2022 Table 1 assigns them to it (§0.5). |
-| **5.6** | Haemoglobinopathy is an "essential diagnostic criterion" for `8510` (§2E) | Moch 2022 §2.4: sickle cell is **not a prerequisite** (§4.3). |
+| **5.6** | Haemoglobinopathy is an "essential diagnostic criterion" for `8510` (§2E) | Correct as of Trpkov 2021, superseded by Moch 2022 §2.4: sickle cell is **not a prerequisite**, and WHO 2022 Table 1 puts the SMARCB1-deficient tumour without haemoglobinopathy on the same code. Latest document wins (§4.3). |
 
 Its §7.13 proposal to author separate `morphology_entries` per behaviour for `8959` and `8960` is
 **half right**: the behaviours below 3 are not entries in this file at all, they are
