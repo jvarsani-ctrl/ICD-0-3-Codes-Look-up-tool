@@ -8316,6 +8316,125 @@ def check_router_branch_when_vocabulary(repo: Path, contexts: dict):
     return out
 
 
+def check_router_cns_topography_completeness(repo: Path, contexts: dict):
+    """
+    A dual-group branch that names ANY CNS topography must name all 21 of them.
+
+    Proposed by docs/TODO.md §12's own "To close" section and written here, on the Group VI
+    branch, alongside the fix it guards.
+
+    `topography_codes.json` enumerates 21 codes in C70.0-C72.9. Four router branches
+    matched only the three NOS-level ones — C70.9, C71.9, C72.9 — because when they were
+    written Group III was unbuilt and the finer subsites did not exist in the shared
+    layer. Group III was authored on 16 September 2026 and they do. Until 22 September
+    2026 three of those four branches were still short, and a case at a SPECIFIC CNS
+    subsite (C71.6 cerebellum, say) missed the branch and fell to the rule's default,
+    which for two of them is a group ICCC-2017 does not admit at a CNS site at all.
+
+    This is a different failure from the one check_router_branch_when_vocabulary()
+    catches, and both are needed. That one catches a branch that can NEVER match. This
+    one catches a branch that matches at the NOS level and silently misses every specific
+    subsite — which is worse to find, because it works in testing. A clerk who records
+    "brain, NOS" is routed correctly and a clerk who records the cerebellum is not.
+
+    THE TRIGGER IS THE NOS-LEVEL CODES, NOT ANY CNS CODE. A branch naming C70.9, C71.9 or
+    C72.9 is saying "the CNS", and a branch saying that must name all of it. A branch
+    naming only a SPECIFIC subsite is saying something narrower and is left alone — the
+    `9380` rule names C72.3 alone because a glioma at the optic nerve is IIIb and a glioma
+    anywhere else is IIId2, and demanding all 21 there would destroy the distinction the
+    branch exists to draw. The first draft of this check triggered on any C70/C71/C72 code
+    and failed `9380` for doing its job; this is the rule docs/TODO.md §12 actually
+    proposed.
+
+    Codes outside C70-C72 in the same list are untouched — `8000-8005` legitimately adds
+    C75.1-C75.3, which match ICCC-2017 range 42's `700-729,751-753`.
+
+    ONE NAMED EXEMPTION, and it collapses when fixed. `9473` is the third of the four
+    stale branches and is the one docs/TODO.md §12 says not to repair here: extending its
+    topography list would fix the CNS cases and leave the larger defect in place, because
+    ICCC-2017 range 29 is the ONLY range carrying `9473`, it takes sites `000-809`, and it
+    resolves to IIIc2 — so the rule's Group IX default has no basis at any topography, not
+    merely at unenumerated CNS subsites. Whether `9473` is topography-dependent at all is a
+    Group III/IX decision. It is downgraded to WARN by name, and if it is ever repaired
+    this check FAILS on the stale exemption rather than letting it quietly outlive its
+    reason.
+
+    Keyed off topography_codes.json, not off a list written here, so enumerating a new
+    CNS subsite in the shared layer makes this check demand it everywhere in the same
+    build rather than in whichever build someone next remembers.
+    """
+    # docs/TODO.md §12 — repaired elsewhere, on its own evidence. Deleting this name once
+    # the rule is fixed is required; the second clause below fails if it goes stale.
+    CNS_COMPLETENESS_EXEMPTION = {"9473"}
+    NOS_LEVEL = {"C70.9", "C71.9", "C72.9"}
+    router_path = repo / "data" / "shared" / "presentation_router.json"
+    topo_path = repo / "data" / "shared" / "topography_codes.json"
+    data, findings = load_json(router_path)
+    topo, topo_findings = load_json(topo_path)
+    out = list(findings) + list(topo_findings)
+    if data is None or topo is None:
+        return out
+
+    lookup = (topo or {}).get("topography_lookup") or {}
+    cns = {c for c in lookup if str(c).startswith(("C70", "C71", "C72"))}
+    if not cns:
+        return out + [(WARN, "topography_codes.json enumerates no C70-C72 code; CNS "
+                             "completeness cannot be checked")]
+
+    rules = (data or {}).get("dual_group_rules") or {}
+    checked = 0
+    exempted = 0
+    for key, rule in sorted(rules.items()):
+        if key.startswith("_") or not isinstance(rule, dict):
+            continue
+        for i, branch in enumerate(rule.get("branches") or []):
+            if not isinstance(branch, dict):
+                continue
+            listed = branch.get("when", {}).get("topography_in")
+            if not isinstance(listed, list):
+                continue
+            named = {c for c in listed if str(c).startswith(("C70", "C71", "C72"))}
+            if not named & NOS_LEVEL:
+                continue
+            missing = sorted(cns - named)
+            exempt = key in CNS_COMPLETENESS_EXEMPTION
+            if not (exempt and missing):
+                checked += 1
+            else:
+                exempted += 1
+            if not missing and exempt:
+                out.append((FAIL, "dual_group_rule %r is named in "
+                                  "CNS_COMPLETENESS_EXEMPTION but no longer has the defect "
+                                  "— delete the name. An exemption that cannot collapse is "
+                                  "a hole" % key))
+            if missing:
+                dest = branch.get("result") or {}
+                out.append((WARN if exempt else FAIL,
+                            ("EXEMPT (docs/TODO.md §12 — repaired on its own evidence, not "
+                             "here): " if exempt else "")
+                            + "dual_group_rule %r branch[%d] names %d of the %d CNS "
+                                  "topography code(s) topography_codes.json enumerates, "
+                                  "missing %s. A case at any of those subsites misses this "
+                                  "branch and falls to the rule's default (group %s) "
+                                  "instead of reaching group %s %s — and it works at the "
+                                  "NOS level, so testing with 'brain, NOS' would not show "
+                                  "it (docs/TODO.md §12)"
+                            % (key, i, len(named), len(cns),
+                               ", ".join(missing[:6]) + ("…" if len(missing) > 6 else ""),
+                               (rule.get("default") or {}).get("group"),
+                               dest.get("group"), dest.get("subgroup") or "")))
+
+    if not checked and not exempted:
+        return out
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "CNS topography completeness: %d of %d branch(es) naming the CNS at "
+                        "NOS level name all %d codes topography_codes.json enumerates%s"
+                    % (checked, checked + exempted, len(cns),
+                       "" if not exempted else
+                       "; %d exempt and still short, reported above as WARN" % exempted)))
+    return out
+
+
 def check_alias_cross_references(repo: Path, contexts: dict):
     """Alias -> decision-tree references (Architecture §8, Alias master §10A)."""
     out = []
@@ -8522,6 +8641,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report.run(check_presentation_router, repo, contexts)
     report.run(check_routing_narrows, repo, contexts)
     report.run(check_router_branch_when_vocabulary, repo, contexts)
+    report.run(check_router_cns_topography_completeness, repo, contexts)
 
     report.section("C. cross-layer — alias files")
     report.run(check_alias_cross_references, repo, contexts)
