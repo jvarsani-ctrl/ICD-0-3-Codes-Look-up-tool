@@ -241,6 +241,28 @@ carrying a `when` precede unconditioned ones.** A rule whose conditions are a su
 rule's can never fire. The `8963` / `8510` fork is therefore written as *two conditioned rules
 above one unconditioned rule*, not as a nested branch.
 
+### 0.8b ★ `imaging_features` is two different fields with the same name
+
+**On a node**, it is a clerk-facing checkbox list, and **every box must be ticked** for the imaging
+constellation to count. `app.js` `imagingPathway()` (line 1006) renders each array element as its
+own `<label class="check"><input type="checkbox">`, and the completeness test at line 2275 is
+`.every()`:
+
+```js
+var okF = arr(n.imaging_features).every(function (_, i) { return state.draft['f' + i]; });
+```
+
+So one feature a real radiology report rarely states makes the whole imaging route unreachable in
+practice, and the case falls through `insufficient_next_node` instead of coding `8960/3`. Each
+element is one short, individually tickable statement. No citations, no contract references, no
+reasoning — that goes in the node's `coding_note`, which is author-facing.
+
+`diversion_criteria` work the other way: **any one** ticked forces the tissue branch.
+
+**On a morphology entry**, `imaging_features` is never rendered at all. Only `n.imaging_features`
+appears in `app.js`; the entry's field is documentation, and the long cited form Groups V and VI use
+there is correct. Do not copy entry prose into a node.
+
 ### 0.9 Schema, in one place
 
 `morphology_entries[]` — every field present, `null` where it does not apply
