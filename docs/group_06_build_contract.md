@@ -829,6 +829,26 @@ restore. A check nobody has broken is not known to work.
 | 8 | `check_group6_imaging_sufficient` | `imaging_sufficient: true` on any entry other than `8960`. |
 | 9 | `check_group6_no_flow_cytometry` | `Flow cytometry` appearing in any Group VI `diagnostic_tests_required`. |
 
+**Plus one extension to an existing check, which is not optional.**
+
+`check_redcap_exact_names()` requires `morphology_name` to be character-identical to the REDCap
+option string. Group VI has **eight** drifts (§2C), so under that check the build cannot pass with
+correct data. Groups 3 and 4 already step aside from it in favour of `check_icdo32_round_trip()`,
+which asks the stronger question — *is this a real ICD-O-3.2 term for this code at this behaviour?*
+— and therefore rejects the `(code, term)` pairs the option list carries that ICD-O-3.2 does not,
+where the REDCap check would inherit them.
+
+**Extend `check_icdo32_round_trip()` to Group VI, and make `check_redcap_exact_names()` step aside
+for it**, exactly as Group 4's contract §1.1a did. The scoping is a single equality on the group
+number, which `check_top_level_keys()` cross-checks against `metadata.group_id`, so it is not a flag
+in the file exempting itself. The drifted option strings do not disappear: they move to the alias
+file, where they are checked the other way round — every alias must resolve to a valid triple, and
+no alias is ever emitted as a name.
+
+**Group 5 is left alone.** Its four names are character-identical to both sources, so it passes
+either check and there is no defect to fix. Whether it should also move to the round-trip is a
+question for the Group 5 branch, not this one. Record it; do not change it here.
+
 Regression: Groups 1–5 must stay **byte-identical to their state on `group-05-retinoblastoma`**.
 
 ---
