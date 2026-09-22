@@ -77,8 +77,9 @@ python3 build/generate_group_inventory.py --group VI --out /tmp/g6_inventory.jso
 `codes_absent_from_icdo32` list means *absent at behaviour 3*, not absent from ICD-O-3.2 — the
 same wording trap recorded in Group 5's metadata.
 
-The 90 break down as: **6** VIc (8000–8005), **81** VIb, **2** VIa1 (8959, 8960), **1** VIa2
-(8963), **1** VIa3 (8964).
+The 90 break down as: **6** VIc (8000–8005), **80** VIb, **2** VIa1 (8959, 8960), **1** VIa2
+(8963), **1** VIa3 (8964). *(An earlier revision of this line said 81 VIb and summed to 91. The
+generator's count is 80; corrected on review, 22 September 2026.)*
 
 **The paediatric core is five codes.** Everything else in VIb is an adult-type carcinoma that is
 reachable by direct code entry and gets no decision-tree leaf:
