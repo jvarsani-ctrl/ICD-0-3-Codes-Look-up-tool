@@ -1,0 +1,1141 @@
+[
+  {
+    "alias": "Nephroblastoma, NOS",
+    "full_form": "Nephroblastoma, NOS -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [
+      "Wilms tumor, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Wilms tumour, the dominant renal cancer of childhood, roughly 90% of the group. Recorded as Nephroblastoma, NOS (8960/3) at every stage of workup, whatever elements the report describes and whatever SIOP risk group is assigned later - anaplasia and risk grouping are prognostic, not code-changing. This code may be reached on imaging alone (an intrarenal mass with a claw sign, pushing rather than invading, in a child under five) - the only Group VI entity registrable without tissue, and only at basis of diagnosis 2, never basis 1 (Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8960. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Nephroblastoma at 8960/3, subgroup VIa1. imaging_sufficient is true on this code only in Group VI (contract §0.11, §4.2). Evidence does not monotonically refine this code (contract §4.1): histology, when it exists, arrives after the nephrectomy that treats the child and refines the SIOP risk group, not the ICD-O code (Spreafico F, et al. Nature Reviews Disease Primers 2021;7:75) - do not present missing histology as outstanding workup on a case already resolved by imaging. nci_concept_id left null: not verified against any NCIT source within this build's scope."
+  },
+  {
+    "alias": "Nephroblastoma",
+    "full_form": "Nephroblastoma -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The short form clerks and referral letters use for Wilms tumour. Recorded as Nephroblastoma, NOS (8960/3); see the 'Nephroblastoma, NOS' entry for the full picture, including the imaging route and why missing histology is not treated as outstanding workup.",
+    "coding_note": "Wording variant of the ICD-O-3.2 preferred term, not the exact string itself, so alias_type is descriptive rather than who_preferred - same convention as Group 5's 'Differentiated retinoblastoma' beside 'Retinoblastoma, differentiated'. Content duplicated from the preferred-term entry deliberately; both are primary aliases because build_database.py indexes the alias field alone, and a clerk searching this shorter, commoner form must not depend on an also_known_as match (the Group 5 build report's 'promoted alias' defect, contract §6)."
+  },
+  {
+    "alias": "Wilms tumour",
+    "full_form": "Wilms tumour -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [
+      "Wilms sarcoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The dominant renal cancer of childhood, roughly 90% of the group. Recorded as Nephroblastoma, NOS (8960/3) at every stage of workup, on imaging alone (an intrarenal mass with a claw sign, pushing rather than invading, in a child under five, at basis of diagnosis 2 - Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05) or on histology (any combination of blastemal, epithelial or stromal elements). Anaplasia and SIOP risk grouping are prognostic and do not change the code.",
+    "coding_note": "ICD-O-3.2 carries this exact wording as a current Synonym on the 8960 stem (dt.json 8960 coding_note: 'the synonym \"Nephroma, NOS\" carries the [obs] marker, \"Wilms tumor\" does not'), so origin_system is ICD-O-3.2 though this is not itself the Preferred term string - descriptive, matching the 'Retinoblastoma, differentiated' / 'Differentiated retinoblastoma' convention. Made a primary alias in its own right, not left as an also_known_as, because a clerk searching this spelling must be found (contract §6's four named spellings; the alias field alone is indexed)."
+  },
+  {
+    "alias": "Wilms tumor",
+    "full_form": "Wilms tumor -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The dominant renal cancer of childhood, roughly 90% of the group. Recorded as Nephroblastoma, NOS (8960/3) at every stage of workup, on imaging alone (an intrarenal mass with a claw sign, pushing rather than invading, in a child under five, at basis of diagnosis 2 - Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05) or on histology (any combination of blastemal, epithelial or stromal elements). Anaplasia and SIOP risk grouping are prognostic and do not change the code.",
+    "coding_note": "ICD-O-3.2 carries this exact wording as a current Synonym on the 8960 stem (dt.json 8960 coding_note: 'the synonym \"Nephroma, NOS\" carries the [obs] marker, \"Wilms tumor\" does not'), so origin_system is ICD-O-3.2 though this is not itself the Preferred term string - descriptive, matching the 'Retinoblastoma, differentiated' / 'Differentiated retinoblastoma' convention. Made a primary alias in its own right, not left as an also_known_as, because a clerk searching this spelling must be found (contract §6's four named spellings; the alias field alone is indexed)."
+  },
+  {
+    "alias": "Wilms' tumour",
+    "full_form": "Wilms' tumour -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [
+      "Wilms' tumor"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The dominant renal cancer of childhood, roughly 90% of the group. Recorded as Nephroblastoma, NOS (8960/3) at every stage of workup, on imaging alone (an intrarenal mass with a claw sign, pushing rather than invading, in a child under five, at basis of diagnosis 2 - Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05) or on histology (any combination of blastemal, epithelial or stromal elements). Anaplasia and SIOP risk grouping are prognostic and do not change the code.",
+    "coding_note": "ICD-O-3.2 carries this exact wording as a current Synonym on the 8960 stem (dt.json 8960 coding_note: 'the synonym \"Nephroma, NOS\" carries the [obs] marker, \"Wilms tumor\" does not'), so origin_system is ICD-O-3.2 though this is not itself the Preferred term string - descriptive, matching the 'Retinoblastoma, differentiated' / 'Differentiated retinoblastoma' convention. Made a primary alias in its own right, not left as an also_known_as, because a clerk searching this spelling must be found (contract §6's four named spellings; the alias field alone is indexed). The apostrophe-s form, common in referral correspondence."
+  },
+  {
+    "alias": "Wilm's tumour",
+    "full_form": "Wilm's tumour -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The dominant renal cancer of childhood, roughly 90% of the group. Recorded as Nephroblastoma, NOS (8960/3) at every stage of workup, on imaging alone (an intrarenal mass with a claw sign, pushing rather than invading, in a child under five, at basis of diagnosis 2 - Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05) or on histology (any combination of blastemal, epithelial or stromal elements). Anaplasia and SIOP risk grouping are prognostic and do not change the code.",
+    "coding_note": "ICD-O-3.2 carries this exact wording as a current Synonym on the 8960 stem (dt.json 8960 coding_note: 'the synonym \"Nephroma, NOS\" carries the [obs] marker, \"Wilms tumor\" does not'), so origin_system is ICD-O-3.2 though this is not itself the Preferred term string - descriptive, matching the 'Retinoblastoma, differentiated' / 'Differentiated retinoblastoma' convention. Made a primary alias in its own right, not left as an also_known_as, because a clerk searching this spelling must be found (contract §6's four named spellings; the alias field alone is indexed). The alternative, and more common miswritten, apostrophe placement (before rather than after the final s) - named explicitly in contract §6 as a spelling this file must catch."
+  },
+  {
+    "alias": "Nephroma, NOS",
+    "full_form": "Nephroma, NOS -> Nephroblastoma, NOS (8960)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8960"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "An old, no-longer-current name for Wilms tumour that may still appear in older referral letters or transcribed records. Recorded as Nephroblastoma, NOS (8960/3), the same as 'Wilms tumour'.",
+    "coding_note": "ICD-O-3.2 [obs] Synonym on the 8960 stem (dt.json 8960 coding_note, confirmed by direct query of icdo32.sqlite: 'the synonym \"Nephroma, NOS\" carries the [obs] marker'). Included because an obsolete synonym still in circulation on paper records is exactly the vocabulary this alias layer exists to catch (contract §6) - the house rule against presenting an obsolete term as current (contract §2D) governs what the tool DISPLAYS as the answer (Nephroblastoma, NOS, not this string), not what search terms it accepts."
+  },
+  {
+    "alias": "Bone-metastasizing renal tumour of childhood",
+    "full_form": "Bone-metastasizing renal tumour of childhood -> Clear cell sarcoma of kidney (8964)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8964"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A historical name for clear cell sarcoma of the kidney, coined for its distinctive tendency to metastasise to bone - a pattern other paediatric renal tumours do not share. Recorded as Clear cell sarcoma of kidney (8964/3).",
+    "coding_note": "Historical name named explicitly in contract §6 for the alias layer, and in the dt.json 8964 coding_note. Not confirmed as an icdo32.sqlite Synonym/Related row (unlike 'Grawitz tumor' and 'Hypernephroma' on the 8312 stem, which are) - origin_system set to Clinical descriptive term rather than ICD-O-3.2, to avoid claiming a database row this build did not verify."
+  },
+  {
+    "alias": "Grawitz tumor",
+    "full_form": "Grawitz tumor -> Renal cell carcinoma, NOS (8312)",
+    "also_known_as": [
+      "Grawitz's tumor"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8312"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "An old eponym for renal cell carcinoma, from the (mistaken) 19th-century belief that these tumours arose from adrenal rest tissue. Recorded as Renal cell carcinoma, NOS (8312/3) only once TFE3/TFEB immunohistochemistry and the rest of the molecular workup have not identified one of the molecularly defined carcinomas on 8311/3 (see that entry) - this eponym carries no subtype information of its own.",
+    "coding_note": "ICD-O-3.2 [obs] Synonym under 8312/3, confirmed by direct query of icdo32.sqlite (dt.json 8312 coding_note: 'the synonyms \"Grawitz tumor\" and \"Hypernephroma\" both carry the [obs] marker, the preferred term does not'). Named explicitly in contract §6."
+  },
+  {
+    "alias": "Hypernephroma",
+    "full_form": "Hypernephroma -> Renal cell carcinoma, NOS (8312)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8312"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "An old name for renal cell carcinoma, from the same mistaken adrenal-origin theory as 'Grawitz tumor'. Recorded as Renal cell carcinoma, NOS (8312/3) only once the molecular workup for the defined carcinomas on 8311/3 (see that entry) is complete and non-contributory.",
+    "coding_note": "ICD-O-3.2 [obs] Synonym under 8312/3, confirmed by direct query of icdo32.sqlite (dt.json 8312 coding_note). Named explicitly in contract §6. Distinct from 'Hypernephroid tumor', the obsolete 8311/1 term, which is NOT the same word and does not share this destination - see that entry; the two are easy to conflate by sight and that is exactly the trap."
+  },
+  {
+    "alias": "Hypernephroid tumor",
+    "full_form": "Hypernephroid tumor -> ICD-O-3.2 8311/1 [obs]; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [
+      "Hypernephroid tumor [obs]"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "This is the REDCap dropdown label still printed against option 8311, and it is not the same disease as what code 8311 now records. 'Hypernephroid tumor' is ICD-O-3.2's obsolete term for 8311/1, a borderline-behaviour renal tumour. Do not select REDCap option 8311 for a case described only this way. The current ICD-O-3.2 term on the 8311 stem, at behaviour 3, is Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma, and Moch H, et al. European Urology 2022;82(5):458-468, Table 1 assigns seven distinct, molecularly defined renal cell carcinomas to that same stem - see the TFE3-rearranged, TFEB-altered, ELOC-mutated, fumarate hydratase-deficient, HLRCC, succinate dehydrogenase-deficient and eosinophilic solid and cystic entries, plus ALK-rearranged renal cell carcinoma. If the pathology report names one of those entities, or states one of their defining molecular findings, use that entry instead. If the report genuinely describes only a borderline hypernephroid tumour with none of those findings, this is outside Group VI's malignant-behaviour declaration - record the finding and take the case to the registrar rather than selecting a code from this lookup.",
+    "coding_note": "This is the single most consequential alias in the file (task brief; contract §0.5, §2C; docs/group_06_layer1_repair.md §3). icdo32.sqlite, code4 = 8311: '8311/1 Preferred Hypernephroid tumor [obs]' - a DIFFERENT behaviour and a different disease from '8311/3 Preferred Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma', the stem's malignant term (contract §0.5). ICCC-3 VIb declares behaviour 3 only across the 8311-8319 range (contract §0.2), so 8311/1 has no ICCC-3 Group VI code at all - the same class of exclusion as 8960/1 (mesoblastic nephroma) and 8959/0 (benign cystic nephroma), not a recode and not a refer_group case, since no other ICCC-3 group claims a borderline-behaviour renal tumour either. maps_to_morphology_codes is deliberately [] and maps_to_iccc3_subgroup_id is deliberately null: an alias resolving 'hypernephroid tumor' to 8311/3 would record a wrong disease under a borderline-behaviour label, the exact mirror of the banned direction in contract §0.5 (routing a molecularly defined carcinoma to 8312/3 NOS) - both directions overstate or understate the evidence the report actually gives, and both are banned. docs/group_06_layer1_repair.md §3 calls this 'the most consequential single option-file defect the project has found' and §4 of that document instructs pulling the source pathology text for every existing record on this option before any REDCap relabel, since the stored value cannot distinguish a genuine 8311/1 diagnosis from a record that in fact named one of the seven molecularly defined carcinomas. No registrar ruling exists yet for where a genuine 8311/1 case should be recorded in this registry; flagged, not guessed, per the standing rule against fabricating a destination."
+  },
+  {
+    "alias": "Hypernephroid tumour",
+    "full_form": "Hypernephroid tumour -> ICD-O-3.2 8311/1 [obs]; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "This is the REDCap dropdown label still printed against option 8311, and it is not the same disease as what code 8311 now records. 'Hypernephroid tumor' is ICD-O-3.2's obsolete term for 8311/1, a borderline-behaviour renal tumour. Do not select REDCap option 8311 for a case described only this way. The current ICD-O-3.2 term on the 8311 stem, at behaviour 3, is Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma, and Moch H, et al. European Urology 2022;82(5):458-468, Table 1 assigns seven distinct, molecularly defined renal cell carcinomas to that same stem - see the TFE3-rearranged, TFEB-altered, ELOC-mutated, fumarate hydratase-deficient, HLRCC, succinate dehydrogenase-deficient and eosinophilic solid and cystic entries, plus ALK-rearranged renal cell carcinoma. If the pathology report names one of those entities, or states one of their defining molecular findings, use that entry instead. If the report genuinely describes only a borderline hypernephroid tumour with none of those findings, this is outside Group VI's malignant-behaviour declaration - record the finding and take the case to the registrar rather than selecting a code from this lookup.",
+    "coding_note": "This is the single most consequential alias in the file (task brief; contract §0.5, §2C; docs/group_06_layer1_repair.md §3). icdo32.sqlite, code4 = 8311: '8311/1 Preferred Hypernephroid tumor [obs]' - a DIFFERENT behaviour and a different disease from '8311/3 Preferred Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma', the stem's malignant term (contract §0.5). ICCC-3 VIb declares behaviour 3 only across the 8311-8319 range (contract §0.2), so 8311/1 has no ICCC-3 Group VI code at all - the same class of exclusion as 8960/1 (mesoblastic nephroma) and 8959/0 (benign cystic nephroma), not a recode and not a refer_group case, since no other ICCC-3 group claims a borderline-behaviour renal tumour either. maps_to_morphology_codes is deliberately [] and maps_to_iccc3_subgroup_id is deliberately null: an alias resolving 'hypernephroid tumor' to 8311/3 would record a wrong disease under a borderline-behaviour label, the exact mirror of the banned direction in contract §0.5 (routing a molecularly defined carcinoma to 8312/3 NOS) - both directions overstate or understate the evidence the report actually gives, and both are banned. docs/group_06_layer1_repair.md §3 calls this 'the most consequential single option-file defect the project has found' and §4 of that document instructs pulling the source pathology text for every existing record on this option before any REDCap relabel, since the stored value cannot distinguish a genuine 8311/1 diagnosis from a record that in fact named one of the seven molecularly defined carcinomas. No registrar ruling exists yet for where a genuine 8311/1 case should be recorded in this registry; flagged, not guessed, per the standing rule against fabricating a destination. British spelling of the ICD-O-3.2 string (which is written 'tumor'); made a separate primary alias, not an also_known_as, for the same searchability reason as every other spelling pair in this file."
+  },
+  {
+    "alias": "Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma",
+    "full_form": "Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "One of seven molecularly defined renal cell carcinomas that ICD-O-3.2 groups under a single code, 8311/3, new in the 3.2 revision (IARC '3.1 to 3.2 -- New codes and their terms', p. 5). Recorded as 8311/3 once a germline FH mutation or the HLRCC phenotype is documented, or fumarate hydratase immunohistochemistry shows loss - see the 'FH-deficient' entry for the immunohistochemistry route into the same code.",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8311, confirmed by direct query of icdo32.sqlite (contract §0.5). Moch H, et al. European Urology 2022;82(5):458-468, Table 1 assigns seven WHO 2022 entities to this one stem; this is the entity the Preferred term itself names. This is the contract's §0.5 correction and the single highest-value code-defining entry in this file: the diagnostic pathway document instructed collapsing these carcinomas into 8312/3 NOS, which the contract calls understating the registry's own code set."
+  },
+  {
+    "alias": "HLRCC",
+    "full_form": "HLRCC -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "HLRCC-associated renal cell carcinoma"
+    ],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The standard abbreviation for hereditary leiomyomatosis and renal cell carcinoma syndrome, used in genetics and pathology reports for both the syndrome and its associated kidney cancer. Recorded as 8311/3.",
+    "coding_note": "Clinical abbreviation for the ICD-O-3.2 Preferred term on the 8311 stem (contract §0.5). Kept short deliberately: a genetics or molecular-pathology report is more likely to write the abbreviation than the full syndrome name."
+  },
+  {
+    "alias": "MiT family translocation carcinoma",
+    "full_form": "MiT family translocation carcinoma -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "MiT-family translocation renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The umbrella term for the TFE3-rearranged and TFEB-altered renal cell carcinomas together - the commonest renal cell carcinoma subtype in this age group, 41.5% of paediatric and young-adult renal cell carcinoma in the largest series (Cajaiba MM, et al. Cancer 2018;124(16):3381-3389, TFE3 93.2% of that 41.5%, TFEB 6.8%). Recorded as 8311/3. Use the 'TFE3-rearranged' or 'TFEB-altered' entry when the report names the specific rearrangement.",
+    "coding_note": "ICD-O-3.2 Related term on the 8311/3 stem, confirmed by direct query of icdo32.sqlite (contract §0.5 database dump). Frequency figure and workup order (TFE3 immunohistochemistry, then TFE3/TFEB break-apart FISH, then fusion-specific FISH, then next-generation sequencing) from Cajaiba MM, et al. Cancer 2018;124(16):3381-3389, p. 3387: a negative break-apart FISH does not overturn a positive TFE3 immunohistochemistry, because NONO::TFE3 and RBM10::TFE3 rearrangements are inversions the probes can miss."
+  },
+  {
+    "alias": "TFE3-rearranged",
+    "full_form": "TFE3-rearranged -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "TFE3-rearranged renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "One of the two rearrangements behind MiT family translocation carcinoma (the other is TFEB), and by itself the commonest renal cell carcinoma subtype in children (Cajaiba MM, et al. Cancer 2018;124(16):3381-3389). Recorded as 8311/3 on diffuse strong nuclear TFE3 immunohistochemistry with matching morphology, TFE3 break-apart FISH, or fusion-specific testing - immunohistochemistry alone is sufficient and does not require a positive FISH to confirm it.",
+    "coding_note": "WHO 2022 entity name (Moch H, et al. European Urology 2022;82(5):458-468, Table 1), not itself a confirmed icdo32.sqlite row (unlike 'MiT family translocation carcinoma', its parent term, and 'Hereditary leiomyomatosis...', the stem's Preferred term) - origin_system set to Clinical descriptive term rather than ICD-O-3.2 to avoid overclaiming a database match this build did not verify."
+  },
+  {
+    "alias": "TFEB-altered",
+    "full_form": "TFEB-altered -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "TFEB-altered renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The rarer of the two MiT family translocation carcinoma rearrangements, about 6.8% of the translocation-carcinoma group (Cajaiba MM, et al. Cancer 2018;124(16):3381-3389). Recorded as 8311/3 on TFEB break-apart FISH or fusion-specific testing confirming the rearrangement.",
+    "coding_note": "WHO 2022 entity name (Moch H, et al. European Urology 2022;82(5):458-468, Table 1), same provenance note as 'TFE3-rearranged'."
+  },
+  {
+    "alias": "ELOC-mutated",
+    "full_form": "ELOC-mutated -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "ELOC (TCEB1)-mutated renal cell carcinoma",
+      "TCEB1-mutated"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "ELOC was formerly named TCEB1; a report may use either name for the same gene. Recorded as 8311/3 on a documented ELOC (TCEB1) mutation.",
+    "coding_note": "WHO 2022 entity name (Moch H, et al. European Urology 2022;82(5):458-468, Table 1: 'ELOC (formerly TCEB1)-mutated renal cell carcinoma'), same provenance note as 'TFE3-rearranged'."
+  },
+  {
+    "alias": "FH-deficient",
+    "full_form": "FH-deficient -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "Fumarate hydratase-deficient renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Fumarate hydratase deficiency, demonstrated by loss of FH immunohistochemistry or a germline FH finding, is the molecular lesion behind HLRCC-associated renal cell carcinoma. Recorded as 8311/3. Moch H, et al. European Urology 2022;82(5):458-468, §2.6: FH deficiency was identified after 2016 in many cases previously described as unclassified high-grade renal carcinomas - do not default such a case to 8312/3 NOS without checking FH status.",
+    "coding_note": "WHO 2022 entity name; also the mechanism behind the Preferred term itself ('Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma'). The dt.json 8312 entry cites the same Moch H, et al. European Urology 2022;82(5):458-468, §2.6 point to explain why 8312/3's code_neutral_molecular flag is false: a later FH result moves a case off 8312/3 onto this code."
+  },
+  {
+    "alias": "SDH-deficient",
+    "full_form": "SDH-deficient -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "Succinate dehydrogenase-deficient renal cell carcinoma",
+      "SDHB-deficient"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Succinate dehydrogenase (SDHB) immunohistochemistry loss defines this carcinoma, often in the context of a hereditary paraganglioma-pheochromocytoma syndrome. Recorded as 8311/3.",
+    "coding_note": "ICD-O-3.2 Related term on the 8311/3 stem ('Succinate dehydrogenase deficient renal cell carcinoma'), confirmed by direct query of icdo32.sqlite (contract §0.5 database dump), and also new in the 3.2 revision (IARC '3.1 to 3.2 -- New codes and their terms', p. 5)."
+  },
+  {
+    "alias": "ALK-rearranged",
+    "full_form": "ALK-rearranged -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "ALK-rearranged renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "ALK-rearranged renal cell carcinoma, confirmed by ALK immunohistochemistry or FISH. It shares sickle-cell trait's association with renal medullary carcinoma (Argani P. Genes, Chromosomes and Cancer 2021;60(3):219-227), but is a different tumour on a different code - see the 'Renal medullary carcinoma' entry for that distinction. Recorded as 8311/3, not 8510/3.",
+    "coding_note": "WHO 2022 entity name (Moch H, et al. European Urology 2022;82(5):458-468, Table 1). Argani P. Genes, Chromosomes and Cancer 2021;60(3):219-227 is the source for the shared sickle-cell association; contract §4.3 point 3 makes this the reason rn_ihc_checklist tests ALK alongside SMARCB1 in a sickle-positive adolescent, rather than assuming renal medullary carcinoma from sickle status alone."
+  },
+  {
+    "alias": "Eosinophilic solid and cystic",
+    "full_form": "Eosinophilic solid and cystic -> Hereditary leiomyomatosis and renal cell carcinoma (HLRCC) syndrome-associated renal cell carcinoma (8311)",
+    "also_known_as": [
+      "Eosinophilic solid and cystic renal cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8311"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A distinct architectural pattern - solid and cystic growth with eosinophilic cytoplasm - among the molecularly defined renal cell carcinomas WHO 2022 places on this code. Recorded as 8311/3.",
+    "coding_note": "WHO 2022 entity name (Moch H, et al. European Urology 2022;82(5):458-468, Table 1: 'Eosinophilic solid and cystic RCC'), same provenance note as 'TFE3-rearranged'."
+  },
+  {
+    "alias": "SMARCB1",
+    "full_form": "SMARCB1 -> routes to the SMARCB1/INI1 differential (rn_ihc_checklist); the code depends on age and sickle-cell/ALK status, never on this finding by itself",
+    "also_known_as": [
+      "SMARCB1 loss",
+      "SMARCB1 (INI1)"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "SMARCB1 (also called INI1, BAF47 or SNF5) is one protein under four names, and a pathology report may use any of them. Its loss on immunohistochemistry is the defining finding for BOTH rhabdoid tumour of the kidney (8963/3) and renal medullary carcinoma / SMARCB1-deficient carcinoma (8510/3) - loss alone never chooses between the two. Work through the tool's SMARCB1/INI1 checklist: it asks age and sickle-cell status alongside the marker result and resolves the code from all three together. If the finding is instead that SMARCB1 is RETAINED, consider collecting duct carcinoma (8319/3) - the one entity in this differential that keeps the protein.",
+    "coding_note": "Ambiguous by design: maps_to_morphology_codes is [] because contract §4.3 states outright that the tool must not auto-resolve SMARCB1/INI1 loss to 8963 - the same finding, on the same immunohistochemistry stain, distinguishes rhabdoid tumour of the kidney from renal medullary carcinoma / SMARCB1-deficient carcinoma only once age and sickle-cell/ALK status are known (rn_ihc_checklist resolution_logic, three conditioned rules before the unconditioned one). needs_ihc_tree is true for exactly this reason: this is the one class of term in the file where the wording by itself is insufficient and the clerk must be sent into the marker-and-age workflow rather than given a direct code. Sources: Sredni ST & Tomita T. Pediatric and Developmental Pathology 2015;18(1):49-58 (rhabdoid side); Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 and Moch H, et al. European Urology 2022;82(5):458-468, §2.4 (medullary side, the haemoglobinopathy disagreement the tool resolves by taking the later document, per contract §4.3); collecting duct carcinoma's SMARCB1 retention likewise from Moch H, et al. European Urology 2022;82(5):458-468, §2.4."
+  },
+  {
+    "alias": "INI1",
+    "full_form": "INI1 -> routes to the SMARCB1/INI1 differential (rn_ihc_checklist); the code depends on age and sickle-cell/ALK status, never on this finding by itself",
+    "also_known_as": [
+      "INI1 loss"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "SMARCB1 (also called INI1, BAF47 or SNF5) is one protein under four names, and a pathology report may use any of them. Its loss on immunohistochemistry is the defining finding for BOTH rhabdoid tumour of the kidney (8963/3) and renal medullary carcinoma / SMARCB1-deficient carcinoma (8510/3) - loss alone never chooses between the two. Work through the tool's SMARCB1/INI1 checklist: it asks age and sickle-cell status alongside the marker result and resolves the code from all three together. If the finding is instead that SMARCB1 is RETAINED, consider collecting duct carcinoma (8319/3) - the one entity in this differential that keeps the protein.",
+    "coding_note": "Ambiguous by design: maps_to_morphology_codes is [] because contract §4.3 states outright that the tool must not auto-resolve SMARCB1/INI1 loss to 8963 - the same finding, on the same immunohistochemistry stain, distinguishes rhabdoid tumour of the kidney from renal medullary carcinoma / SMARCB1-deficient carcinoma only once age and sickle-cell/ALK status are known (rn_ihc_checklist resolution_logic, three conditioned rules before the unconditioned one). needs_ihc_tree is true for exactly this reason: this is the one class of term in the file where the wording by itself is insufficient and the clerk must be sent into the marker-and-age workflow rather than given a direct code. Sources: Sredni ST & Tomita T. Pediatric and Developmental Pathology 2015;18(1):49-58 (rhabdoid side); Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 and Moch H, et al. European Urology 2022;82(5):458-468, §2.4 (medullary side, the haemoglobinopathy disagreement the tool resolves by taking the later document, per contract §4.3); collecting duct carcinoma's SMARCB1 retention likewise from Moch H, et al. European Urology 2022;82(5):458-468, §2.4."
+  },
+  {
+    "alias": "BAF47",
+    "full_form": "BAF47 -> routes to the SMARCB1/INI1 differential (rn_ihc_checklist); the code depends on age and sickle-cell/ALK status, never on this finding by itself",
+    "also_known_as": [
+      "BAF47 loss"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "SMARCB1 (also called INI1, BAF47 or SNF5) is one protein under four names, and a pathology report may use any of them. Its loss on immunohistochemistry is the defining finding for BOTH rhabdoid tumour of the kidney (8963/3) and renal medullary carcinoma / SMARCB1-deficient carcinoma (8510/3) - loss alone never chooses between the two. Work through the tool's SMARCB1/INI1 checklist: it asks age and sickle-cell status alongside the marker result and resolves the code from all three together. If the finding is instead that SMARCB1 is RETAINED, consider collecting duct carcinoma (8319/3) - the one entity in this differential that keeps the protein.",
+    "coding_note": "Ambiguous by design: maps_to_morphology_codes is [] because contract §4.3 states outright that the tool must not auto-resolve SMARCB1/INI1 loss to 8963 - the same finding, on the same immunohistochemistry stain, distinguishes rhabdoid tumour of the kidney from renal medullary carcinoma / SMARCB1-deficient carcinoma only once age and sickle-cell/ALK status are known (rn_ihc_checklist resolution_logic, three conditioned rules before the unconditioned one). needs_ihc_tree is true for exactly this reason: this is the one class of term in the file where the wording by itself is insufficient and the clerk must be sent into the marker-and-age workflow rather than given a direct code. Sources: Sredni ST & Tomita T. Pediatric and Developmental Pathology 2015;18(1):49-58 (rhabdoid side); Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 and Moch H, et al. European Urology 2022;82(5):458-468, §2.4 (medullary side, the haemoglobinopathy disagreement the tool resolves by taking the later document, per contract §4.3); collecting duct carcinoma's SMARCB1 retention likewise from Moch H, et al. European Urology 2022;82(5):458-468, §2.4."
+  },
+  {
+    "alias": "SNF5",
+    "full_form": "SNF5 -> routes to the SMARCB1/INI1 differential (rn_ihc_checklist); the code depends on age and sickle-cell/ALK status, never on this finding by itself",
+    "also_known_as": [
+      "SNF5 loss"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "SMARCB1 (also called INI1, BAF47 or SNF5) is one protein under four names, and a pathology report may use any of them. Its loss on immunohistochemistry is the defining finding for BOTH rhabdoid tumour of the kidney (8963/3) and renal medullary carcinoma / SMARCB1-deficient carcinoma (8510/3) - loss alone never chooses between the two. Work through the tool's SMARCB1/INI1 checklist: it asks age and sickle-cell status alongside the marker result and resolves the code from all three together. If the finding is instead that SMARCB1 is RETAINED, consider collecting duct carcinoma (8319/3) - the one entity in this differential that keeps the protein.",
+    "coding_note": "Ambiguous by design: maps_to_morphology_codes is [] because contract §4.3 states outright that the tool must not auto-resolve SMARCB1/INI1 loss to 8963 - the same finding, on the same immunohistochemistry stain, distinguishes rhabdoid tumour of the kidney from renal medullary carcinoma / SMARCB1-deficient carcinoma only once age and sickle-cell/ALK status are known (rn_ihc_checklist resolution_logic, three conditioned rules before the unconditioned one). needs_ihc_tree is true for exactly this reason: this is the one class of term in the file where the wording by itself is insufficient and the clerk must be sent into the marker-and-age workflow rather than given a direct code. Sources: Sredni ST & Tomita T. Pediatric and Developmental Pathology 2015;18(1):49-58 (rhabdoid side); Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 and Moch H, et al. European Urology 2022;82(5):458-468, §2.4 (medullary side, the haemoglobinopathy disagreement the tool resolves by taking the later document, per contract §4.3); collecting duct carcinoma's SMARCB1 retention likewise from Moch H, et al. European Urology 2022;82(5):458-468, §2.4."
+  },
+  {
+    "alias": "Rhabdoid tumor, NOS",
+    "full_form": "Rhabdoid tumor, NOS -> Rhabdoid tumor, NOS (8963)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Rhabdoid tumour of the kidney, confirmed by SMARCB1 (INI1) loss on immunohistochemistry in a child under five. This code applies at the kidney (C64.9) only - the same tumour at a CNS site is Group III (via 9508, atypical teratoid/rhabdoid tumour), and at another soft-tissue site is Group IX. Recorded as Rhabdoid tumor, NOS (8963/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8963, topography-constrained to C64.9 (dt.json 8963 entry). Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Rhabdoid tumour (kidney) at 8963/3. This is the group's only dual-group code; data/shared/presentation_router.json dual_group_rules['8963'] carries the C64.9/CNS/default split (contract §3.1) - not touched by this file, which only records that the alias applies to the kidney presentation."
+  },
+  {
+    "alias": "Malignant rhabdoid tumor",
+    "full_form": "Malignant rhabdoid tumor -> Rhabdoid tumor, NOS (8963)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap dropdown still carries this older wording for option 8963; ICD-O-3.2's current preferred term for the same code is Rhabdoid tumor, NOS. Both name the same kidney tumour - recorded as 8963/3 for a confirmed renal (C64.9) case.",
+    "coding_note": "Class 3 string drift #1, cosmetic (docs/group_06_layer1_repair.md §3): the REDCap option string is a current, non-[obs] ICD-O-3.2 Synonym on the 8963/3 stem, not a different disease - unlike the 8311 and 8504 drifts, relabelling this option does not change what any existing record means. Included as its own primary alias, not folded into 'Rhabdoid tumor, NOS' as an also_known_as, because a clerk who has just read this exact wording off the REDCap dropdown needs it to be searchable (contract §2C, task brief)."
+  },
+  {
+    "alias": "Medullary carcinoma, NOS",
+    "full_form": "Medullary carcinoma, NOS -> Medullary carcinoma, NOS (8510)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8510"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Renal medullary carcinoma, an aggressive centrally located tumour strongly associated with sickle-cell trait or disease, confirmed by SMARCB1 (INI1) loss. Sickle-cell trait or disease is not required to code this: Moch H, et al. European Urology 2022;82(5):458-468, §2.4 states that a SMARCB1-deficient carcinoma without a documented haemoglobinopathy is still recorded on this same code, so 'unknown' or 'negative' sickle-cell status does not by itself exclude 8510/3. Recorded as Medullary carcinoma, NOS (8510/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8510. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 places four WHO 2022 entities on this stem: Medullary carcinoma, NOS; SMARCB1-deficient medullary-like renal cell carcinoma; SMARCB1-deficient undifferentiated renal cell carcinoma, NOS; and SMARCB1-deficient dedifferentiated renal cell carcinoma of other specific subtypes. Two-source conflict, later document wins (contract §4.3): Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 calls haemoglobinopathy 'an essential diagnostic criterion'; Moch H, et al. European Urology 2022;82(5):458-468, §2.4, a year later and this group's baseline, says sickle cell 'is not a prerequisite for this genetic lesion' and places the haemoglobinopathy-negative tumour on the same code - the tool follows Moch."
+  },
+  {
+    "alias": "Renal medullary carcinoma",
+    "full_form": "Renal medullary carcinoma -> Medullary carcinoma, NOS (8510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8510"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The full clinical name clerks and referral letters use for what ICD-O-3.2 calls Medullary carcinoma, NOS. Same finding, same code (8510/3); see that entry for the sickle-cell-status caution.",
+    "coding_note": "Wording variant of the ICD-O-3.2 preferred term - descriptive rather than who_preferred, same convention used throughout this file for a fuller clinical phrasing of a Preferred term string. Content duplicated deliberately from 'Medullary carcinoma, NOS' for the reason recorded there."
+  },
+  {
+    "alias": "RMC",
+    "full_form": "RMC -> Medullary carcinoma, NOS (8510)",
+    "also_known_as": [],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8510"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Standard abbreviation for renal medullary carcinoma in pathology and genetics reports. Recorded as 8510/3.",
+    "coding_note": "Clinical abbreviation for 'Renal medullary carcinoma' / Medullary carcinoma, NOS (8510/3). Kept short: it is easy to search and unambiguous within this group's differential."
+  },
+  {
+    "alias": "Collecting duct carcinoma",
+    "full_form": "Collecting duct carcinoma -> Collecting duct carcinoma (8319)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8319"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A high-grade carcinoma centred in the renal medulla, distinguished from renal medullary carcinoma and SMARCB1-deficient carcinoma by RETAINING SMARCB1 (INI1) nuclear expression. It is a diagnosis of exclusion: Trpkov K, et al. Modern Pathology 2021;34(7):1392-1424, p. 1407 states it 'should only be diagnosed when other considerations, particularly fumarate hydratase-deficient renal cell carcinoma, medullary carcinoma, and metastases from other primaries are excluded'. Recorded as Collecting duct carcinoma (8319/3) once those are excluded and SMARCB1 is confirmed retained.",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8319. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Collecting duct carcinoma at 8319/3; Moch H, et al. European Urology 2022;82(5):458-468, §2.4 records that it retains SMARCB1, the fact that separates it from every entity on the 8510 stem, all of which lose the protein (contract §4.3 point 2). code_neutral_molecular is false on the underlying morphology_entries[] entry: a later fumarate hydratase result can move a case from here to 8311/3 (Moch H, et al. European Urology 2022;82(5):458-468, §2.6)."
+  },
+  {
+    "alias": "Bellini duct carcinoma",
+    "full_form": "Bellini duct carcinoma -> Collecting duct carcinoma (8319)",
+    "also_known_as": [
+      "Renal carcinoma, collecting duct type"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8319"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A synonym for collecting duct carcinoma, named for the collecting ducts of Bellini it arises from. Same entity, same caution about SMARCB1 retention and diagnosis-of-exclusion status - see the 'Collecting duct carcinoma' entry. Recorded as 8319/3.",
+    "coding_note": "ICD-O-3.2 Synonym on the 8319 stem, confirmed in the dt.json 8319 coding_note ('synonyms \"Bellini duct carcinoma\" and \"Renal carcinoma, collecting duct type\"'). Named explicitly in contract §6 as the term this file must distinguish from renal medullary carcinoma."
+  },
+  {
+    "alias": "Papillary urothelial carcinoma",
+    "full_form": "Papillary urothelial carcinoma -> Papillary urothelial carcinoma (8130) [obs] - no current ICD-O-3.2 term exists at this behaviour",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8130"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "ICD-O-3.2 has no current (non-obsolete) preferred term for this diagnosis at malignant behaviour. Both the ICD-O-3.2 preferred term on this stem and this wording itself are marked obsolete [obs] in ICD-O-3.2. The code 8130 is still valid in ICD-O-3.2 and admitted by ICCC-3 Group VI, and this tool can still record it, but only by direct code entry - no decision path in this tool leads here on its own. An invasive papillary urothelial carcinoma is today usually coded 8120/3 (Transitional cell carcinoma, NOS); a non-invasive papillary urothelial carcinoma sits at a different behaviour this group does not hold. If a report uses this wording, take the case to the registrar before selecting a code on this alias alone.",
+    "coding_note": "Contract §2D, §2C: queried against icdo32.sqlite, 8130 carries six terms across three behaviours, and BOTH terms at behaviour 3 - the Preferred term 'Papillary urothelial carcinoma' and the Synonym 'Papillary transitional cell carcinoma' - carry the [obs] marker; the /1 and /2 terms on the same stem are current. None of the four IARC 3.1-to-3.2 change documents mentions 8130, so the marker is inherited from ICD-O-3.1. docs/group_06_layer1_repair.md §3 (its own §3 and §7.1) considered proposing 8120/3 as the modern equivalent for an invasive case but explicitly declines to guess: 'this repair package does not guess... flags it for a direct check before any relabel is finalised.' This alias file follows that same restraint - maps_to_morphology_codes stays ['8130'] (the code the generator and the inventory both still hold, per contract §0.6's rule that a code leaves the tree only when no current WHO entity lives on its stem, and 8130 is reachable by direct entry regardless), rather than silently rerouting to 8120, which this build was not asked to verify and did not verify against icdo32.sqlite or WHO 2022 Table 1."
+  },
+  {
+    "alias": "Papillary transitional cell carcinoma",
+    "full_form": "Papillary transitional cell carcinoma -> Papillary urothelial carcinoma (8130) [obs] - no current ICD-O-3.2 term exists at this behaviour",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8130"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "ICD-O-3.2 has no current (non-obsolete) preferred term for this diagnosis at malignant behaviour. Both the ICD-O-3.2 preferred term on this stem and this wording itself are marked obsolete [obs] in ICD-O-3.2. The code 8130 is still valid in ICD-O-3.2 and admitted by ICCC-3 Group VI, and this tool can still record it, but only by direct code entry - no decision path in this tool leads here on its own. An invasive papillary urothelial carcinoma is today usually coded 8120/3 (Transitional cell carcinoma, NOS); a non-invasive papillary urothelial carcinoma sits at a different behaviour this group does not hold. If a report uses this wording, take the case to the registrar before selecting a code on this alias alone.",
+    "coding_note": "Contract §2D, §2C: queried against icdo32.sqlite, 8130 carries six terms across three behaviours, and BOTH terms at behaviour 3 - the Preferred term 'Papillary urothelial carcinoma' and the Synonym 'Papillary transitional cell carcinoma' - carry the [obs] marker; the /1 and /2 terms on the same stem are current. None of the four IARC 3.1-to-3.2 change documents mentions 8130, so the marker is inherited from ICD-O-3.1. docs/group_06_layer1_repair.md §3 (its own §3 and §7.1) considered proposing 8120/3 as the modern equivalent for an invasive case but explicitly declines to guess: 'this repair package does not guess... flags it for a direct check before any relabel is finalised.' This alias file follows that same restraint - maps_to_morphology_codes stays ['8130'] (the code the generator and the inventory both still hold, per contract §0.6's rule that a code leaves the tree only when no current WHO entity lives on its stem, and 8130 is reachable by direct entry regardless), rather than silently rerouting to 8120, which this build was not asked to verify and did not verify against icdo32.sqlite or WHO 2022 Table 1. This exact string is Class 3 string drift #3, REDCap option 8130 (contract §2C, docs/group_06_layer1_repair.md §3), the one drift the repair package leaves unresolved rather than proposing a relabel for, for the reason given above."
+  },
+  {
+    "alias": "Urothelial carcinoma, sarcomatoid",
+    "full_form": "Urothelial carcinoma, sarcomatoid -> Urothelial carcinoma, sarcomatoid (8122)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8122"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A high-grade urothelial carcinoma with a sarcoma-like (spindle cell) component. Recorded as Urothelial carcinoma, sarcomatoid (8122/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8122. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists this entity at 8122/3; reachable in this tool only by direct code entry, with no decision-tree branch (contract §0.3)."
+  },
+  {
+    "alias": "Transitional cell carcinoma, spindle cell",
+    "full_form": "Transitional cell carcinoma, spindle cell -> Urothelial carcinoma, sarcomatoid (8122)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8122"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap dropdown still carries this older wording for option 8122; ICD-O-3.2's current preferred term for the same code is Urothelial carcinoma, sarcomatoid. A high-grade urothelial carcinoma with a sarcoma-like (spindle cell) component. Recorded as 8122/3, the same as 'Urothelial carcinoma, sarcomatoid'.",
+    "coding_note": "Class 3 string drift #2, cosmetic (contract §2C, docs/group_06_layer1_repair.md §3): the REDCap option string is a current, non-[obs] ICD-O-3.2 synonym for the same disease, not a different one. Included as its own primary alias, not folded into the current-term entry's also_known_as, so a clerk who has just read this exact wording off the REDCap dropdown finds it (contract §2C, task brief)."
+  },
+  {
+    "alias": "Urothelial carcinoma, micropapillary",
+    "full_form": "Urothelial carcinoma, micropapillary -> Urothelial carcinoma, micropapillary (8131)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8131"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A urothelial carcinoma with a micropapillary growth pattern, associated with a worse prognosis. Recorded as Urothelial carcinoma, micropapillary (8131/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8131. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists this entity at 8131/3; reachable in this tool only by direct code entry, with no decision-tree branch (contract §0.3)."
+  },
+  {
+    "alias": "Transitional cell carcinoma, micropapillary",
+    "full_form": "Transitional cell carcinoma, micropapillary -> Urothelial carcinoma, micropapillary (8131)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8131"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap dropdown still carries this older wording for option 8131; ICD-O-3.2's current preferred term for the same code is Urothelial carcinoma, micropapillary. A urothelial carcinoma with a micropapillary growth pattern, associated with a worse prognosis. Recorded as 8131/3, the same as 'Urothelial carcinoma, micropapillary'.",
+    "coding_note": "Class 3 string drift #4, cosmetic (contract §2C, docs/group_06_layer1_repair.md §3): the REDCap option string is a current, non-[obs] ICD-O-3.2 synonym for the same disease, not a different one. Included as its own primary alias, not folded into the current-term entry's also_known_as, so a clerk who has just read this exact wording off the REDCap dropdown finds it (contract §2C, task brief)."
+  },
+  {
+    "alias": "Neuroendocrine tumor, NOS",
+    "full_form": "Neuroendocrine tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A well-differentiated neuroendocrine neoplasm. Recorded as Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8240. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists this entity at 8240/3; reachable in this tool only by direct code entry, with no decision-tree branch (contract §0.3)."
+  },
+  {
+    "alias": "Carcinoid tumor, NOS",
+    "full_form": "Carcinoid tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap dropdown still carries this older wording for option 8240; ICD-O-3.2's current preferred term for the same code is Neuroendocrine tumor, NOS. A well-differentiated neuroendocrine neoplasm. Recorded as 8240/3, the same as 'Neuroendocrine tumor, NOS'.",
+    "coding_note": "Class 3 string drift #5, cosmetic (contract §2C, docs/group_06_layer1_repair.md §3): the REDCap option string is a current, non-[obs] ICD-O-3.2 synonym for the same disease, not a different one. Included as its own primary alias, not folded into the current-term entry's also_known_as, so a clerk who has just read this exact wording off the REDCap dropdown finds it (contract §2C, task brief)."
+  },
+  {
+    "alias": "Vipoma",
+    "full_form": "Vipoma -> Vipoma (8155)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8155"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A vasoactive intestinal peptide-secreting neuroendocrine tumour, rare in the kidney. Recorded as Vipoma (8155/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8155 - the bare word, with no 'NOS' or other qualifier; confirmed against the dt.json 8155 entry. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists this entity at 8155/3."
+  },
+  {
+    "alias": "Vipoma, malignant",
+    "full_form": "Vipoma, malignant -> Vipoma (8155)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8155"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap dropdown still carries this wording for option 8155; ICD-O-3.2's current preferred term for the same code is the bare word Vipoma. Recorded as 8155/3, the same as 'Vipoma'.",
+    "coding_note": "Class 3 string drift #6 (contract §2C, docs/group_06_layer1_repair.md §3), and the odd one among the four cosmetic drifts: unlike 8963, 8122, 8131 and 8240, this wording does not match any ICD-O-3.2 term on the 8155 stem at any behaviour - not the Preferred term, not a Synonym, not an obsolete form. docs/group_06_layer1_repair.md §3 §3: 'it reads as invented wording rather than a stale one.' The code itself is correct and unambiguous, so this alias still routes to 8155/3 for searchability, but origin_system is set to Clinical descriptive term rather than ICD-O-3.2, since this exact string is not itself ICD-O-3.2 vocabulary."
+  },
+  {
+    "alias": "Encapsulated papillary carcinoma with invasion",
+    "full_form": "Encapsulated papillary carcinoma with invasion -> Encapsulated papillary carcinoma with invasion (8504)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8504"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "An invasive papillary carcinoma arising within an encapsulated papillary neoplasm. Recorded as Encapsulated papillary carcinoma with invasion (8504/3). Not the same lesion as 'Intracystic carcinoma, NOS' - see that entry.",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8504. '3.1 to 3.2 -- Terms that are changing behaviour' records the move 8504/3 -> /2 for the non-invasive form, leaving this invasive term as the current occupant of 8504/3 (contract §2C). Reachable in this tool only by direct code entry."
+  },
+  {
+    "alias": "Intracystic carcinoma, NOS",
+    "full_form": "Intracystic carcinoma, NOS -> ICD-O-3.2 8504/2; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "This is the REDCap dropdown label still printed against option 8504, and it describes a different, non-invasive lesion from what code 8504 records in this group. 'Intracystic carcinoma, NOS' is ICD-O-3.2's current term for 8504/2 - in situ, not invasive. This group's own code on the same stem, 8504/3, is Encapsulated papillary carcinoma with invasion (see that entry) - a different, invasive diagnosis. Do not select REDCap option 8504 for a report reading only 'intracystic carcinoma, NOS'. Check whether the report specifically describes invasion; if it does, the diagnosis is encapsulated papillary carcinoma with invasion. If it does not, this is a non-invasive lesion outside this group's behaviour-3 declaration - record the finding and take the case to the registrar.",
+    "coding_note": "Class 3 string drift #8, one of the two 'a different lesion entirely' drifts alongside 8311 (contract §2C, docs/group_06_layer1_repair.md §3). '3.1 to 3.2 -- Terms that are changing behaviour' records 8504/3 -> /2; the option's own text, 'Intracystic carcinoma, NOS', is confirmed against icdo32.sqlite at /2, not /3 (contract §2C). maps_to_morphology_codes is deliberately []: a clerk who reads this wording and selects it believing they are recording a non-invasive process would, under the code's current behaviour, be recording an invasive diagnosis instead if this alias pointed at 8504/3 - the same class of error as 'Hypernephroid tumor', a stem shared between a behaviour this group holds and one it does not."
+  },
+  {
+    "alias": "Clear cell sarcoma of kidney",
+    "full_form": "Clear cell sarcoma of kidney -> Clear cell sarcoma of kidney (8964)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8964"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common paediatric renal cancer after Wilms tumour, about 5% of the group. Confirmed by diffuse strong nuclear BCOR positivity, which Aldera AP & Pillay K. Archives of Pathology & Laboratory Medicine 2020;144(1):119-123, pp. 121-122 calls 'highly sensitive and specific' on its own; cyclin D1 and NGFR are supporting, not confirmatory, and WT1 is consistently negative - the discriminator from blastemal Wilms tumour, which is WT1 positive. Recorded as Clear cell sarcoma of kidney (8964/3). This code applies wherever the tumour is found, not only at the kidney (contract §0.2 point 4).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8964 (note: ICD-O-3.2's own string omits 'the' before 'kidney' - this alias matches that string exactly for the cross-reference check; clerk-facing prose in this file's notes uses the full house-style form, 'clear cell sarcoma of the kidney', per contract house style). Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Clear cell sarcoma of the kidney at 8964/3. Marker panel and WT1-negative discriminator from Aldera AP & Pillay K. Archives of Pathology & Laboratory Medicine 2020;144(1):119-123, pp. 121-122, pp. 121-122; molecular confirmation (BCOR internal tandem duplication, t(10;17) YWHAE::NUTM2B/E) is code-neutral, since histology and the marker panel already set the code (contract §4.5)."
+  },
+  {
+    "alias": "CCSK",
+    "full_form": "CCSK -> Clear cell sarcoma of kidney (8964)",
+    "also_known_as": [],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8964"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIa3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Standard abbreviation for clear cell sarcoma of the kidney in pathology reports and the paediatric oncology literature. Recorded as 8964/3.",
+    "coding_note": "Clinical abbreviation for Clear cell sarcoma of kidney (8964/3). House style keeps the clerk-facing full form spelled out in every other entry's notes - this abbreviation exists purely as a search term."
+  },
+  {
+    "alias": "Renal cell carcinoma, NOS",
+    "full_form": "Renal cell carcinoma, NOS -> Renal cell carcinoma, NOS (8312)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8312"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The genuine not-otherwise-specified carcinoma code - for a renal cell carcinoma that remains unclassified after a full workup (TFE3 immunohistochemistry, break-apart and fusion FISH, fumarate hydratase and SDHB immunohistochemistry, ALK testing), not a shortcut around it. If the report names a specific architecture (clear cell, papillary, chromophobe, collecting duct, tubulocystic, mucinous tubular and spindle cell) or a molecular finding (TFE3-rearranged, TFEB-altered, ELOC-mutated, FH-deficient, HLRCC, SDH-deficient, ALK-rearranged, eosinophilic solid and cystic), use that entry instead. Recorded as Renal cell carcinoma, NOS (8312/3).",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8312. Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Renal cell carcinoma, NOS at 8312/3. code_neutral_molecular is false on the underlying morphology_entries[] entry (corrected on review, per that entry's own coding_note): once coded here, a later positive molecular finding for one of the 8311/3 entities moves the case off this code, because Moch H, et al. European Urology 2022;82(5):458-468, §2.6 records that fumarate hydratase deficiency was found post-2016 in many cases previously called 'unclassified'. Both directions of the error this entry guards against are banned by contract §0.5: never 8311/3 on a suspicion the report does not state, never 8312/3 for a tumour the report names as molecularly defined."
+  },
+  {
+    "alias": "RCC",
+    "full_form": "RCC -> Renal cell carcinoma, NOS (8312)",
+    "also_known_as": [],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8312"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The generic abbreviation for renal cell carcinoma. This alias is a starting point, not a final answer: search the specific architecture or molecular finding the report gives (clear cell, papillary, chromophobe, medullary, collecting duct, TFE3-rearranged, and the rest) before settling on 8312/3 - see the 'Renal cell carcinoma, NOS' entry.",
+    "coding_note": "Clinical abbreviation, deliberately routed to the NOS code with a caution rather than to any specific subtype, since the bare abbreviation carries no subtype information of its own. This is the understating-evidence direction the project's standing rule warns against if a clerk stops here without checking for a named subtype - the notes field says so explicitly."
+  },
+  {
+    "alias": "Neoplasm, malignant",
+    "full_form": "Neoplasm, malignant -> Neoplasm, malignant (8000)",
+    "also_known_as": [
+      "Malignant renal neoplasm, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8000"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIc",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The group's own honest ceiling for a renal malignancy with no more specific diagnosis available - imaging that does not confirm the nephroblastoma constellation, a non-diagnostic cytology, or a report that simply states cancer is present with no further detail. Recorded as Neoplasm, malignant (8000/3), ICCC-3 subgroup VIc, at C64.9. This is a Group VI code in its own right, not a placeholder pointing elsewhere - do not refer such a case to another group.",
+    "coding_note": "ICD-O-3.2 Preferred term, exact match to the generated morphology_entries[] name for 8000; synonyms in icdo32.sqlite include 'Blastoma, NOS', 'Tumor, malignant, NOS', 'Cancer', 'Malignancy' and 'Unclassified tumor, malignant' (dt.json 8000 coding_note). Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05, rule 5: anything not in the paper's Table 3 or Table 4, diagnosed without pathology, is 8000/3 unless a registry coding expert rules otherwise. ICCC-3 VIc is 8000-8005 at C64.9 only (contract §0.2); the router's C64.9 branch that lets a renal case actually reach this code, rather than falling to Group XII's default, was a dead branch repaired during this build (contract §3.4, §0.2 note on the 8963 entry) - this alias exists because that route now works."
+  },
+  {
+    "alias": "Congenital mesoblastic nephroma",
+    "full_form": "Congenital mesoblastic nephroma -> ICD-O-3.2 8960/1; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [
+      "Mesoblastic nephroma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mesoblastic nephroma is a borderline fibroblastic tumour of infancy, coded 8960/1 in both ICD-O-3.2 and WHO 2022 - a different behaviour on the same four-digit stem as Nephroblastoma, NOS (8960/3). It is not a Wilms tumour and is not recoded to 8960/3 by any registry convention: doing so would record a malignant Wilms tumour for an infant with a borderline tumour. This is not a registrable cancer in this group. Record the finding - classic, cellular or mixed subtype - and take the case to the registrar.",
+    "coding_note": "Contract §3.3, §5.3: the diagnostic pathway document asserts a recode to 8960/3 'by registry convention', citing no source; Moch H, et al. European Urology 2022;82(5):458-468, Table 1 and ICD-O-3.2 agree mesoblastic nephroma sits at 8960/1, and this build refuses the recode. maps_to_morphology_codes is deliberately []. Matches the tree's own rn_histology behaviour_exclusion block for the identical finding (icdo_code 8960, icdo_behaviour 1, registrar_decision_required true) - this alias exists so a clerk who only ever types the diagnosis name, and never reaches that branch of the tree, is stopped just as reliably. Not a refer_group case: no other ICCC-3 group claims a borderline-behaviour renal tumour either."
+  },
+  {
+    "alias": "Cystic nephroma",
+    "full_form": "Cystic nephroma -> ICD-O-3.2 8959/0; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [
+      "Mixed epithelial and stromal tumour of the kidney",
+      "Paediatric cystic nephroma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Benign cystic nephroma, including mixed epithelial and stromal tumour and the DICER1-associated paediatric cystic nephroma, is coded 8959/0 - benign, sharing its four-digit stem with the malignant Malignant cystic nephroma (8959/3), which this group does hold. A cystic nephroma described as benign, with bland epithelium and no malignant component, is not a registrable cancer in this group. This is not the DICER1 tumour's fault: WHO 2022 places it at 8959/0 regardless of the DICER1 association. Record the finding and take the case to the registrar.",
+    "coding_note": "Contract §3.2, §5.2, §0.7: the diagnostic pathway document calls 8959 'the DICER1-associated cystic variant' and instructs coding 8959 for it, but WHO 2022 Table 1 puts paediatric (DICER1) cystic nephroma at 8959/0, benign - not a Group VI registration. maps_to_morphology_codes is deliberately []. Matches the tree's own rn_cystic behaviour_exclusion block for this finding. Not a refer_group case: no other ICCC-3 group claims a benign renal cyst."
+  },
+  {
+    "alias": "Cystic partially differentiated nephroblastoma",
+    "full_form": "Cystic partially differentiated nephroblastoma -> ICD-O-3.2 8959/1; ICCC-3 Group VI admits behaviour 3 only on this stem, so no Group VI code is emitted",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A multiloculated cystic tumour whose septa contain immature nephrogenic elements, coded 8959/1 - a real, SIOP low-risk paediatric diagnosis, not a lesser finding, even though this group cannot code it at its own behaviour-3 declaration. It is a different reading of the same 8959 stem from both 'Malignant cystic nephroma' (8959/3, which this group holds) and 'Cystic nephroma' (8959/0, also out of scope). This case is outside the group's behaviour declaration, not outside the registry - record the finding and take the case to the registrar.",
+    "coding_note": "Contract §3.2: three separate readings of the one 8959 stem, each handled on its own behaviour. maps_to_morphology_codes is deliberately []. The clerk-facing wording deliberately avoids implying this is 'not a tumour' (contract §3.2's own caution, echoed in the tree's rn_cystic behaviour_exclusion reason text, which this note mirrors). Not a refer_group case."
+  },
+  {
+    "alias": "Metanephric adenoma",
+    "full_form": "Metanephric adenoma -> ICD-O-3.2 8325/0; ICCC-3 Group VI admits behaviour 3 only, so no Group VI code is emitted",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "A benign epithelial renal tumour, coded 8325/0. This is not a registrable cancer in this group. Record the finding and take the case to the registrar if malignant transformation is described.",
+    "coding_note": "Contract §2A: one of eleven REDCap options the tool cannot emit, behaviour 0 only - Moch H, et al. European Urology 2022;82(5):458-468, Table 1 places it at 8325/0. maps_to_morphology_codes is deliberately []. Not a refer_group case: no other ICCC-3 group claims a benign renal adenoma."
+  },
+  {
+    "alias": "Nephrogenic adenofibroma",
+    "full_form": "Nephrogenic adenofibroma -> ICD-O-3.2 8965 deleted, moved to 9013/0; ICCC-3 Group VI admits behaviour 3 only, so no Group VI code is emitted either way",
+    "also_known_as": [
+      "Metanephric adenofibroma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The old code for this benign lesion, 8965, is retired in ICD-O-3.2 - the only genuinely deleted number this group's REDCap option list carries. The entity now sits at 9013/0 (metanephric adenofibroma), which is benign and would be out of this group's scope regardless of the renumbering. This is not a registrable cancer in this group. Record the finding and take the case to the registrar.",
+    "coding_note": "Contract §0.6, §2A: IARC 'Deleted codes and their terms', 9 October 2020 - '8965/0 Nephrogenic adenofibroma (C64.9) -- Moved to 9013/0.' Zero rows for 8965 in icdo32.sqlite. maps_to_morphology_codes is deliberately []; not [\"9013\"], because 9013/0 is itself behaviour 0 and out of this group's declaration - recording the new number here would invite exactly the same wrong-behaviour error this file guards against everywhere else. Not a refer_group case."
+  },
+  {
+    "alias": "Nephrogenic rest",
+    "full_form": "Nephrogenic rest -> no ICD-O-3.2 code; not registrable without a discrete tumour",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "WHO 2022 lists nephrogenic rests - perilobar and intralobar - with no ICD-O code printed against either, and no test, on imaging or on pathology, reliably separates them from Wilms tumour (Fialkowski E, et al. Pediatric Blood & Cancer 2023;70(Suppl. 2):e30162). A report describing diffuse or multifocal nephrogenic rests with no discrete tumour is not registered - this is not a coding gap to chase with a fallback code, and it is not the same situation as an inconclusive workup. If a discrete nephroblastoma is also described, code that (Nephroblastoma, NOS, 8960/3) and record the rests as an associated finding, not the diagnosis.",
+    "coding_note": "Contract §3.5: Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists Nephrogenic rests, Perilobar nephrogenic rests and Intralobar nephrogenic rests under 'Nephroblastic tumours' with no ICD-O code against any of them. maps_to_morphology_codes is deliberately []. Matches the tree's own handling - both rn_histology and rn_imaging_pathway's insufficient-imaging branch route this finding to non_reportable, never to a fallback code such as 8000/3, because a fallback code would imply a workable-but-incomplete case rather than a finding this tool cannot register at all. Not a refer_group case: no other ICCC-3 group has a code for this either."
+  },
+  {
+    "alias": "Nephroblastomatosis",
+    "full_form": "Nephroblastomatosis -> no ICD-O-3.2 code; not registrable without a discrete tumour",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "The diffuse or multifocal form of nephrogenic rests. WHO 2022 lists it with no ICD-O code printed against it, and no test reliably separates it from Wilms tumour (Fialkowski E, et al. Pediatric Blood & Cancer 2023;70(Suppl. 2):e30162). Not registered on this wording alone - see the 'Nephrogenic rest' entry, which this shares its handling with. If a discrete nephroblastoma is also described, code that instead.",
+    "coding_note": "Contract §3.5, same source and reasoning as 'Nephrogenic rest'. maps_to_morphology_codes is deliberately []. Matches rn_histology's and rn_imaging_pathway's non_reportable handling for the identical finding."
+  },
+  {
+    "alias": "Angiomyolipoma",
+    "full_form": "Angiomyolipoma -> no ICD-O-3.2 code verified within this build's scope; benign, not a Group VI registration regardless",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Renal angiomyolipoma is not registrable in ICCC-3 Group VI, which declares behaviour 3 only. ICD-O-3.2 codes it 8860/0, and the epithelioid variant 8860/1; Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists both under adult renal mesenchymal tumours, together with 8860/0 oncocytic angiomyolipoma and 8860/0 angiomyolipoma with epithelial cysts. Neither behaviour is in this group and 8860 has no Group VI option at all. Take the case to the registrar.",
+    "coding_note": "Verified 23 September 2026 against icdo32.sqlite (8860/0 Preferred 'Angiomyolipoma'; 8860/1 Preferred 'Angiomyolipoma, epithelioid' -- the code carries no behaviour 3 at all) and Moch 2022 Table 1. Outside the group by behaviour, and absent from the generated inventory for the same reason. An earlier revision recorded no verified code; both are now established. Unlike the oncocytoma entry there is no same-stem trap here, because 8860 appears nowhere in the Group VI option list."
+  },
+  {
+    "alias": "Oncocytoma",
+    "full_form": "Oncocytoma -> no ICD-O-3.2 code verified within this build's scope; benign, not a Group VI registration regardless",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g6_renal",
+    "tree_entry_node": "rn_document_inventory",
+    "clinical_alert": null,
+    "notes": "Renal oncocytoma is a benign tumour and is not registrable in ICCC-3 Group VI, which declares behaviour 3 only. ICD-O-3.2 codes it 8290/0, as a synonym under the preferred term Oxyphilic adenoma; Moch H, et al. European Urology 2022;82(5):458-468, Table 1 lists '8290/0 Oncocytoma' under oncocytic and chromophobe renal tumours. Do not record this case under 8290 in the Group VI dropdown. That option is 8290/3 Oxyphilic adenocarcinoma, a malignant tumour on the same four-digit stem -- selecting it would register a benign oncocytoma as a carcinoma. Take the case to the registrar.",
+    "coding_note": "SAME-STEM TRAP, verified 23 September 2026 against icdo32.sqlite and Moch 2022 Table 1. Oncocytoma is 8290/0 (Synonym, under Preferred term 'Oxyphilic adenoma'); 8290/3 'Oxyphilic adenocarcinoma' IS in this group's generated inventory at subgroup VIb. One four-digit code, one benign entity and one malignant, and the Group VI option list offers only the malignant one. maps_to_morphology_codes is deliberately empty: 8290/0 is outside the group's behaviour declaration and this file must never route a clerk to 8290 for this word. An earlier revision recorded this as an unverified suspicion; it is now established from both sources."
+  }
+]
