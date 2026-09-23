@@ -1862,21 +1862,18 @@ function renderOutput() {
 
      TWO DIFFERENT FACTS RODE ON ONE FLAG, AND THE BANNER STATED THE WRONG ONE.
      `redcap_option_verified: false` means the option string was not verified to
-     match. It does NOT mean no option exists — and this banner said "This code
-     has no option in the registry dropdown, so it cannot be selected yet" for
-     both. Eleven codes across Groups I, II and VI have an option that a clerk
-     can select today and were being told they could not: 9898, 9718, 9725, and
-     Group VI's eight drifted strings including 8311, whose option is still
-     labelled with the obsolete term "Hypernephroid tumor" for a different
-     lesion. Sending a clerk away from a row that is there is the same class of
-     defect as sending them to one that is not.
+     match. It does NOT mean no option exists — and this banner asserted the
+     stronger claim for both, so entries whose option is merely mislabelled were
+     telling the clerk the row was missing. Sending a clerk away from a row that
+     is there is the same class of defect as sending them to one that is not.
 
-     `awaiting_layer1` is the signal that separates them, and it separates them
-     exactly: checked 22 September 2026 across all six built groups, every entry
-     flagged false either carries `awaiting_layer1` and has no option, or carries
-     none and has one — 18 of 18, no exceptions. check_redcap_banner_signal()
-     in build/build_database.py keeps it that way, so this branch cannot drift
-     from the option file behind the engine's back. */
+     `awaiting_layer1` is the signal that separates them, it is checked to
+     separate them exactly, and check_redcap_banner_signal() in
+     build/build_database.py keys off Layer 1 to keep it that way — so this
+     branch cannot drift from the option file behind the engine's back. Which
+     entries were affected, and why the flag now means one thing only:
+     docs/codes-awaiting-redcap.md, "Two banners, and the flag that separates
+     them". */
   if (e.redcap_option_verified === false) {
     var aw = e.awaiting_layer1;
     if (aw) {
