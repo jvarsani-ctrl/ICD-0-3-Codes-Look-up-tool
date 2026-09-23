@@ -1004,6 +1004,31 @@ parts 1 and 3 as well.
 **Found 22 September 2026 during the Group 5 build, reading `app.js` to settle whether an alias
 entry's clerk-facing text renders. It does not. Nothing on any alias entry does.**
 
+> ### ⚠️ RE-RATED 23 September 2026 — "mostly nothing today" is no longer true
+>
+> The assessment below was written when every alias mapped to a code, so a dead `notes` field cost
+> only some helpful prose. **Group VI's alias file has sixteen entries that deliberately map to no
+> code at all**, and their whole purpose is to say something to the clerk. All sixteen are silent.
+>
+> Confirmed in the browser, 23 September 2026: typing *hypernephroid* finds the alias and drops the
+> clerk into `rn_document_inventory`, whose first question is about evidence tiers. The tree does
+> not know a trap word was typed, and **none of the entry's `notes` reaches the screen** — including
+> the sentence that exists precisely to stop the case going wrong: *"Do not select REDCap option
+> 8311 for a case described only this way."*
+>
+> Two that matter most:
+>
+> | Typed | What the clerk is told | What they should be told |
+> |---|---|---|
+> | *hypernephroid* | nothing | the REDCap label for `8311` is an obsolete term for a different, borderline lesion; `8311/3` now carries seven molecularly defined carcinomas; if none is named, this is outside the group |
+> | *oncocytoma* | nothing | renal oncocytoma is `8290/0`, benign; `8290/3` Oxyphilic adenocarcinoma is on the same stem and **is** in the Group VI dropdown, so picking `8290` registers a benign tumour as a carcinoma |
+>
+> A clerk who types *oncocytoma* now enters the Group VI tree and can walk it to a carcinoma
+> terminal. The alias file knows better and cannot say so.
+>
+> This is no longer a tidiness item. Rendering an alias entry's `notes` — one line at the top of the
+> node the alias routes into — would close it, and the data is already authored and validated.
+
 ### What happens
 
 The search path is three steps and reads two values.
