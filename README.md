@@ -75,9 +75,22 @@ LAYER 4  app.js                             one group-agnostic engine
 
 ```bash
 python3 build/build_database.py
+node build/check_engine_flow.mjs
 ```
 
-All checks must pass. `--strict` also promotes warnings to failures. The gate covers
+Both must pass, and the second is not optional because the first cannot see what it
+checks. `build_database.py` validates the DATA; `check_engine_flow.mjs` loads the shipped
+`app.js` and drives the ENGINE — it is the only thing in the repo that tests `app.js` at
+all. The two defects that forced it into existence both sat in the seam between them: the
+data was correct, every data check passed, and the tool still told a clerk one code and
+recorded another. A green `build_database.py` is not a working tool.
+
+It is deliberately a separate command rather than a step inside the Python gate, so that
+the build keeps its one dependency-free entry point; the cost is that it can be forgotten,
+which is why it is written here beside the command it does not replace. See
+`docs/engine_flow_negative_controls.md`.
+
+All data checks must pass. `--strict` also promotes warnings to failures. The gate covers
 decision-tree integrity, the NOS-fallback rule *by node type*, the closed node vocabulary,
 cross-layer references, and the checks that exist because their absence would be invisible:
 
@@ -97,7 +110,14 @@ cross-layer references, and the checks that exist because their absence would be
 - **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
   morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
 
+The engine gate adds two invariants of its own, swept across every `ihc_checklist` node in
+every group: a stopped flow may not leave a marker unasked that could still satisfy a live
+rule, and what the screen says at that stop must equal what Continue records.
+
 Every check is proved with a **negative control** — break the data, watch it fail, restore.
+For the engine gate the same method runs against a copy of a pre-fix `app.js` via
+`APP=<path>`, because a check only ever proved against code that passes has not been
+proved at all.
 The exact-string check is keyed off Layer 1, never off `redcap_option_verified`: a flag
 authored to mean "not yet checked" was once read as "exempt", and six drifted names passed a
 green build.

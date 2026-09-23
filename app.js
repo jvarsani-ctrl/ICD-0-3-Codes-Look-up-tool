@@ -831,24 +831,19 @@ function nextMarker(n) {
      skips an undefined marker rather than failing on it, which is what lets a
      partial walk narrow at all. So the surviving rule can be the only one left
      and still not be SATISFIED, and stopping on live.length alone stops there:
-     the screen says one outcome remains and names it, matchRules() then matches
-     nothing because the rule's marker was never answered, and the node emits its
-     nos_fallback instead. The tool tells the clerk one code and records another.
+     the screen names the outcome that remains, matchRules() then matches
+     nothing because the rule's marker was never asked, and the node emits its
+     nos_fallback. The tool tells the clerk one code and records another.
 
-     Found 22 September 2026 driving Group VI's SMARCB1 / WT1 / BCOR / ALK fork
-     in a browser. With SMARCB1, WT1 and BCOR all negative, only the ALK rule
-     stayed live; ALK was never asked; the screen read "One outcome remains.
-     Continue to record it." above 8311 Hereditary leiomyomatosis and renal cell
-     carcinoma syndrome-associated renal cell carcinoma; and Continue emitted
-     8000 Neoplasm, malignant. Nothing in the build catches this — the rule has a
-     witness, the flow chart is well formed, and the data is correct.
+     Nothing in the build catches it: the rule has a witness and the flow chart
+     is well formed, so it is the ASKING ORDER that is wrong, not the data.
+     Reproduction, sweep and negative controls:
+     docs/engine_flow_negative_controls.md.
 
-     So the node is decided only when what survives is also satisfied. When it is
-     not, fall through and let markerWorth() pick the marker that settles it:
-     against a single unsatisfied rule every answer still splits match from
-     no-match, so the question scores above zero and gets asked. This is
-     arithmetic on rules the engine already evaluates — no codes, no marker
-     names, no group branches (rule 2). */
+     So the node is decided only when what survives is also satisfied. When it
+     is not, fall through and let markerWorth() pick the marker that settles
+     it: against a single unsatisfied rule every answer still splits match from
+     no-match, so the question scores above zero and gets asked. */
   if (!live.length) return null;
   if ((live.length <= 1 || outcomeCount(live) <= 1) && live.every(ruleSatisfied)) return null;
 
@@ -935,6 +930,14 @@ function answeredChips(n) {
     }).join('') + '</div>';
 }
 
+/* What Continue records when no rule is satisfied, in the same words the
+   candidate list uses for everything else. Empty for a node with no fallback —
+   that is a data defect the build catches, and not a reason for the panel to
+   stop rendering. */
+function fallbackOutcome(n) {
+  try { return outcomeOf(fallbackTarget(n)); } catch (e) { return ''; }
+}
+
 function markerFlow(n) {
   var live = liveRules(n), m = nextMarker(n);
   var cands = candidateList(n);
@@ -952,10 +955,31 @@ function markerFlow(n) {
       }).join('') + '</div></div>';
     h += '<p class="node__hint">One marker at a time. Every answer removes the outcomes it rules out.</p>';
   } else {
-    h += '<p class="node__hint">' + (outcomeCount(live) <= 1
-      ? 'One outcome remains. Continue to record it.'
-      : 'No remaining marker separates what is left — continue, and the first rule the '
-        + 'answers satisfy decides it.') + '</p>';
+    /* THE SCREEN MAY NOT PROMISE WHAT THE BUTTON WILL NOT DELIVER. This message
+       used to be chosen by outcomeCount(live) alone, and liveness is not
+       settlement: a rule stays live while a marker it needs is merely
+       unanswered, so a node could read "One outcome remains. Continue to record
+       it." above a single candidate and then record its nos_fallback, because
+       matchRules() — which needs the marker actually answered — matched
+       nothing. Worse where nothing was left alive at all: the count line read
+       "0 outcomes still in play" and the sentence under it still promised one.
+       Reachable in over a thousand states across fifteen nodes when it was
+       swept — sweep and negative controls:
+       docs/engine_flow_negative_controls.md.
+
+       So the wording is chosen by the same call the Continue button makes.
+       Where a rule is satisfied the old two sentences stand, and where none is
+       the clerk is told plainly which code is about to be recorded instead of
+       being left to infer it from a list that no longer applies. */
+    var picked = matchRules(n.resolution_logic), fb = fallbackOutcome(n);
+    h += '<p class="node__hint">' + (picked
+      ? (cands.length <= 1
+        ? 'One outcome remains. Continue to record it.'
+        : 'No remaining marker separates what is left — continue, and the first rule the '
+          + 'answers satisfy decides it.')
+      : esc('These answers match no rule on this node' +
+        (cands.length ? ', so nothing listed above is settled' : '') + '.' +
+        (fb ? ' Continue records ' + fb + '.' : ''))) + '</p>';
   }
   h += '<div class="actions"><button class="btn" data-act="resolve">' +
     (m ? 'Skip the rest and resolve' : 'Continue') + '</button></div>';
