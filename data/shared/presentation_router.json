@@ -525,21 +525,135 @@
     },
     "4": {
       "name": "Neuroblastoma and Other Peripheral Nervous Cell Tumours",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g4_sympathoadrenal",
+          "entry_node": "sa_document_inventory"
+        },
+        {
+          "tree_id": "g4_head_neck_paraganglia",
+          "entry_node": "hn_document_inventory"
+        },
+        {
+          "tree_id": "g4_sinonasal",
+          "entry_node": "sn_document_inventory"
+        },
+        {
+          "tree_id": "g4_other_peripheral",
+          "entry_node": "op_document_inventory"
+        }
+      ],
+      "tree_routing": {
+        "_comment": "Group IV's three tumour families separate cleanly on topography, already captured at Stage 1, so the clerk is asked nothing extra -- the same mechanism as Group III's tree_routing (Group 4 build contract §5). The one real overlap, neuroblastoma vs pheochromocytoma at the adrenal, is resolved inside g4_sympathoadrenal by age and catecholamine profile, not here. The map below is total and disjoint over every topography code topography_codes.json currently associates with Group 4 (candidate_groups including 4, plus C48.2 and C80.9 -- see build report), with g4_other_peripheral as the catch-all. NOT yet routable: the build contract's own §5 architecture table names C10.x (oropharynx), C32.x (larynx) and C77.0 (lymph nodes of head/face/neck) as g4_head_neck_paraganglia topography, but none of the three exists in topography_codes.json yet, so none is included below -- reported, not invented.",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C74.0",
+              "C74.1",
+              "C74.9",
+              "C47.0",
+              "C47.1",
+              "C47.2",
+              "C47.3",
+              "C47.4",
+              "C47.5",
+              "C47.6",
+              "C47.8",
+              "C47.9",
+              "C48.0",
+              "C48.2",
+              "C48.8",
+              "C38.1",
+              "C38.2",
+              "C38.3"
+            ],
+            "tree_id": "g4_sympathoadrenal",
+            "entry_node": "sa_document_inventory",
+            "label": "Sympathoadrenal -- adrenal medulla/cortex, peripheral nerve and autonomic nervous system, retroperitoneum/peritoneum, mediastinum"
+          },
+          {
+            "topography_in": [
+              "C75.4",
+              "C75.5",
+              "C30.1"
+            ],
+            "tree_id": "g4_head_neck_paraganglia",
+            "entry_node": "hn_document_inventory",
+            "label": "Head and neck paraganglia -- carotid body, aortic body/other paraganglia (incl. jugulotympanic), middle ear"
+          },
+          {
+            "topography_in": [
+              "C30.0",
+              "C31.0",
+              "C31.1",
+              "C31.2",
+              "C31.3",
+              "C31.8",
+              "C31.9",
+              "C11.0",
+              "C11.1",
+              "C11.2",
+              "C11.3",
+              "C11.8",
+              "C11.9"
+            ],
+            "tree_id": "g4_sinonasal",
+            "entry_node": "sn_document_inventory",
+            "label": "Sinonasal -- nasal cavity, accessory sinuses, nasopharynx (olfactory neuroblastoma / sinonasal differential)"
+          },
+          {
+            "topography_in": [
+              "C80.9"
+            ],
+            "tree_id": "g4_other_peripheral",
+            "entry_node": "op_document_inventory",
+            "label": "Unknown primary site"
+          }
+        ],
+        "default": {
+          "tree_id": "g4_other_peripheral",
+          "entry_node": "op_document_inventory",
+          "label": "Everything else Group IV can carry",
+          "reason": "A Group IV case whose topography resolves to none of the three site-specific families reaches the catch-all, the analogue of g3_unspecified -- medulloepithelioma/neuroepithelioma at a peripheral site none of the other trees own, an inadequate specimen, or an unestablished site."
+        }
+      },
+      "handoff": {
+        "group": 4,
+        "tree_id": "g4_other_peripheral",
+        "entry_node": "op_document_inventory"
+      }
     },
     "5": {
       "name": "Retinoblastoma",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g5_retinoblastoma",
+          "entry_node": "rb_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 5,
+        "tree_id": "g5_retinoblastoma",
+        "entry_node": "rb_document_inventory"
+      }
     },
     "6": {
       "name": "Renal Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g6_renal",
+          "entry_node": "rn_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 6,
+        "tree_id": "g6_renal",
+        "entry_node": "rn_document_inventory"
+      }
     },
     "7": {
       "name": "Hepatic Tumors",
@@ -579,7 +693,7 @@
     }
   },
   "dual_group_rules": {
-    "_comment": "Transcribed from Decision Tree JSON Build master §6. Consulted at Moment 1 (routePresentation, before any tree loads, when candidates.length > 1) and/or Moment 2 (resolveGroup at a terminal, Architecture §6). Engine walks branches[] in order; first match wins; falls to default if none match.",
+    "_comment": "Transcribed from Decision Tree JSON Build master §6. Consulted at Moment 1 (routePresentation, before any tree loads, when candidates.length > 1) and/or Moment 2 (resolveGroup at a terminal, Architecture §6). Engine walks branches[] in order; first match wins; falls to default if none match. | BRANCH `when` VOCABULARY IS CLOSED, and it is closed because it was not. branchMatches() in app.js reads exactly two shapes: `topography_in` (a list) and `captured_variable` with `equals` or with `operator`+`value`. It has never read `topography_equals`, and four branches used it -- 9380 at C72.3, 8158/8290 at C75.1, 8963 at C64.9 and 8000-8005 at C64.9. All four were dead: the branch never matched and every case fell to the rule's default, which for two of them is a different ICCC-3 group. Found and fixed 22 September 2026 during the Group VI build, and check_router_branch_when_vocabulary() now rejects any key branchMatches() does not read.",
     "9811-9819": {
       "codes": [
         "9811",
@@ -785,7 +899,9 @@
       "branches": [
         {
           "when": {
-            "topography_equals": "C72.3"
+            "topography_in": [
+              "C72.3"
+            ]
           },
           "result": {
             "group": 3,
@@ -843,8 +959,26 @@
         {
           "when": {
             "topography_in": [
+              "C70.0",
+              "C70.1",
               "C70.9",
+              "C71.0",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.6",
+              "C71.7",
+              "C71.8",
               "C71.9",
+              "C72.0",
+              "C72.1",
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C72.8",
               "C72.9"
             ]
           },
@@ -859,7 +993,7 @@
         "subgroup": null,
         "note": "Non-CNS."
       },
-      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
+      "cns_topography_scope_note": "Extended 2026-09-18 to the full C70.0-C72.9 CNS range (all 21 codes topography_codes.json's brain_cns crosswalk enumerates), now that Group III was authored 2026-09-16. Previously covered only the NOS-level codes C70.9/C71.9/C72.9, so a medulloepithelioma at a specific CNS subsite (e.g. C71.6) fell through to the default and misrouted to Group 4. ICCC-3 gives 9501-9504 to Group III (IIIc3) across the whole of C70.0-C72.9, Group 4 only outside it. Group 4 build contract §2.5."
     },
     "8158,8290": {
       "codes": [
@@ -872,7 +1006,9 @@
       "branches": [
         {
           "when": {
-            "topography_equals": "C75.1"
+            "topography_in": [
+              "C75.1"
+            ]
           },
           "result": {
             "group": 3,
@@ -932,8 +1068,26 @@
         {
           "when": {
             "topography_in": [
+              "C70.0",
+              "C70.1",
               "C70.9",
+              "C71.0",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.6",
+              "C71.7",
+              "C71.8",
               "C71.9",
+              "C72.0",
+              "C72.1",
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C72.8",
               "C72.9"
             ]
           },
@@ -945,7 +1099,9 @@
         },
         {
           "when": {
-            "topography_equals": "C64.9"
+            "topography_in": [
+              "C64.9"
+            ]
           },
           "result": {
             "group": 6,
@@ -957,7 +1113,7 @@
         "group": 9,
         "subgroup": "IXd3"
       },
-      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
+      "cns_topography_extended_note": "Extended from the three NOS-level codes C70.9/C71.9/C72.9 to all 21 codes in C70.0-C72.9 during the Group VI build, 22 September 2026. The note this replaces said to extend it \"when Group III is authored\"; Group III was authored on 16 September 2026 and topography_codes.json now enumerates every CNS subsite, so the note's premise was false on its face (docs/TODO.md Sec.12, Group 6 build contract Sec.7.2b). Before this, a case at a SPECIFIC CNS subsite -- C71.6 cerebellum, say -- missed the branch and fell to the default, which ICCC-2017 does not admit at a CNS site at all. For 8963 the default is Group IX IXd3, whose ICCC-2017 site list (000-218,239-639,659-699,739-768,809) excludes 700-729 entirely, so a rhabdoid tumour at a specific CNS subsite named a group ICCC-2017 does not admit there and never reached 9508/3 Atypical teratoid/rhabdoid tumour."
     },
     "8170": {
       "codes": [
@@ -1001,8 +1157,26 @@
         {
           "when": {
             "topography_in": [
+              "C70.0",
+              "C70.1",
               "C70.9",
+              "C71.0",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.6",
+              "C71.7",
+              "C71.8",
               "C71.9",
+              "C72.0",
+              "C72.1",
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C72.8",
               "C72.9",
               "C75.1",
               "C75.2",
@@ -1013,13 +1187,25 @@
             "group": 3,
             "subgroup": "IIIf"
           }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C64.9"
+            ]
+          },
+          "result": {
+            "group": 6,
+            "subgroup": "VIc"
+          },
+          "note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
         }
       ],
       "default": {
         "group": 12,
         "subgroup": null
       },
-      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
+      "cns_topography_extended_note": "Extended from the three NOS-level codes C70.9/C71.9/C72.9 to all 21 codes in C70.0-C72.9 during the Group VI build, 22 September 2026. The note this replaces said to extend it \"when Group III is authored\"; Group III was authored on 16 September 2026 and topography_codes.json now enumerates every CNS subsite, so the note's premise was false on its face (docs/TODO.md Sec.12, Group 6 build contract Sec.7.2b). Before this, a case at a SPECIFIC CNS subsite -- C71.6 cerebellum, say -- missed the branch and fell to the default, which ICCC-2017 does not admit at a CNS site at all. For 8000-8005 the default is Group XII, whose XIIb site list excludes 700-729 and 751-753. C75.1, C75.2 and C75.3 were already present and are kept -- they match ICCC-2017 range 42's 700-729,751-753."
     },
     "9930": {
       "codes": [

@@ -77,7 +77,42 @@ LAYER 4  app.js                             one group-agnostic engine
 python3 build/build_database.py
 ```
 
-All checks must pass. `--strict` also promotes warnings to failures. The gate covers
+One command. It now runs **two** gates and a preflight, in that order.
+
+**Preflight.** Every external requirement is checked before anything else, and **all of
+them are reported at once** — a gate that dies on the first missing thing sends you away
+to install it, come back, and be sent away again. Nothing else runs until they are
+satisfied, because a partial run reports green sections that were never exercised.
+
+| Requirement | Why |
+|---|---|
+| Python 3.9+, `sqlite3` | the gate itself |
+| Layer 1: `RedCap Options`, `icdo32.sqlite`, `ICCC-2017.sqlite` | the source of truth every code is verified against |
+| **Node.js** | the engine gate below |
+
+**The engine gate.** `build/check_engine_flow.mjs` loads the shipped `app.js` and drives
+it. It is JavaScript because `app.js` is — testing the engine means running it — and it is
+**the only thing in this repository that tests `app.js` at all**. `build_database.py`
+validates the DATA; this drives the ENGINE; the defects that forced it into existence sat
+in the seam between them, where the data was correct, every data check passed, and the tool
+still told a clerk one code and recorded another. A green data build is not a working tool.
+
+**Node.js is required, and the gate is never skipped when it is missing.** Registrar's
+decision, 23 September 2026. A gate that silently skips an absent tool returns a green
+build that checked nothing, which is how these defects shipped in the first place. The
+dependency-free property that is actually load-bearing belongs to the **tool** —
+`index.html`, `app.js`, one stylesheet, no build step, nothing to install to run it — and
+that is untouched. Nothing here runs in the browser.
+
+Run the engine gate alone while iterating on `app.js`:
+
+```bash
+node build/check_engine_flow.mjs
+```
+
+See `docs/engine_flow_negative_controls.md`.
+
+All data checks must pass. `--strict` also promotes warnings to failures. The gate covers
 decision-tree integrity, the NOS-fallback rule *by node type*, the closed node vocabulary,
 cross-layer references, and the checks that exist because their absence would be invisible:
 
@@ -97,7 +132,14 @@ cross-layer references, and the checks that exist because their absence would be
 - **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
   morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
 
+The engine gate adds two invariants of its own, swept across every `ihc_checklist` node in
+every group: a stopped flow may not leave a marker unasked that could still satisfy a live
+rule, and what the screen says at that stop must equal what Continue records.
+
 Every check is proved with a **negative control** — break the data, watch it fail, restore.
+For the engine gate the same method runs against a copy of a pre-fix `app.js` via
+`APP=<path>`, because a check only ever proved against code that passes has not been
+proved at all.
 The exact-string check is keyed off Layer 1, never off `redcap_option_verified`: a flag
 authored to mean "not yet checked" was once read as "exempt", and six drifted names passed a
 green build.

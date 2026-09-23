@@ -824,8 +824,28 @@ function markerWorth(m, live) {
 function nextMarker(n) {
   var rules = arr(n.resolution_logic), live = liveRules(n);
   /* Two ways the node is already decided, and asking on would be theatre: one
-     rule left, or every remaining rule emitting the same outcome. */
-  if (live.length <= 1 || outcomeCount(live) <= 1) return null;
+     rule left, or every remaining rule emitting the same outcome.
+
+     BUT "one rule left" IS NOT "decided", AND THAT COST A WRONG CODE. A rule
+     stays LIVE while a marker it requires is merely unanswered — ruleLive()
+     skips an undefined marker rather than failing on it, which is what lets a
+     partial walk narrow at all. So the surviving rule can be the only one left
+     and still not be SATISFIED, and stopping on live.length alone stops there:
+     the screen names the outcome that remains, matchRules() then matches
+     nothing because the rule's marker was never asked, and the node emits its
+     nos_fallback. The tool tells the clerk one code and records another.
+
+     Nothing in the build catches it: the rule has a witness and the flow chart
+     is well formed, so it is the ASKING ORDER that is wrong, not the data.
+     Reproduction, sweep and negative controls:
+     docs/engine_flow_negative_controls.md.
+
+     So the node is decided only when what survives is also satisfied. When it
+     is not, fall through and let markerWorth() pick the marker that settles
+     it: against a single unsatisfied rule every answer still splits match from
+     no-match, so the question scores above zero and gets asked. */
+  if (!live.length) return null;
+  if ((live.length <= 1 || outcomeCount(live) <= 1) && live.every(ruleSatisfied)) return null;
 
   /* Once a live rule is satisfied outright, only the rules ABOVE it can still
      change the answer — first match wins, so anything below it is settled. Ask
@@ -910,6 +930,14 @@ function answeredChips(n) {
     }).join('') + '</div>';
 }
 
+/* What Continue records when no rule is satisfied, in the same words the
+   candidate list uses for everything else. Empty for a node with no fallback —
+   that is a data defect the build catches, and not a reason for the panel to
+   stop rendering. */
+function fallbackOutcome(n) {
+  try { return outcomeOf(fallbackTarget(n)); } catch (e) { return ''; }
+}
+
 function markerFlow(n) {
   var live = liveRules(n), m = nextMarker(n);
   var cands = candidateList(n);
@@ -927,10 +955,31 @@ function markerFlow(n) {
       }).join('') + '</div></div>';
     h += '<p class="node__hint">One marker at a time. Every answer removes the outcomes it rules out.</p>';
   } else {
-    h += '<p class="node__hint">' + (outcomeCount(live) <= 1
-      ? 'One outcome remains. Continue to record it.'
-      : 'No remaining marker separates what is left — continue, and the first rule the '
-        + 'answers satisfy decides it.') + '</p>';
+    /* THE SCREEN MAY NOT PROMISE WHAT THE BUTTON WILL NOT DELIVER. This message
+       used to be chosen by outcomeCount(live) alone, and liveness is not
+       settlement: a rule stays live while a marker it needs is merely
+       unanswered, so a node could read "One outcome remains. Continue to record
+       it." above a single candidate and then record its nos_fallback, because
+       matchRules() — which needs the marker actually answered — matched
+       nothing. Worse where nothing was left alive at all: the count line read
+       "0 outcomes still in play" and the sentence under it still promised one.
+       Reachable in over a thousand states across fifteen nodes when it was
+       swept — sweep and negative controls:
+       docs/engine_flow_negative_controls.md.
+
+       So the wording is chosen by the same call the Continue button makes.
+       Where a rule is satisfied the old two sentences stand, and where none is
+       the clerk is told plainly which code is about to be recorded instead of
+       being left to infer it from a list that no longer applies. */
+    var picked = matchRules(n.resolution_logic), fb = fallbackOutcome(n);
+    h += '<p class="node__hint">' + (picked
+      ? (cands.length <= 1
+        ? 'One outcome remains. Continue to record it.'
+        : 'No remaining marker separates what is left — continue, and the first rule the '
+          + 'answers satisfy decides it.')
+      : esc('These answers match no rule on this node' +
+        (cands.length ? ', so nothing listed above is settled' : '') + '.' +
+        (fb ? ' Continue records ' + fb + '.' : ''))) + '</p>';
   }
   h += '<div class="actions"><button class="btn" data-act="resolve">' +
     (m ? 'Skip the rest and resolve' : 'Continue') + '</button></div>';
@@ -1036,7 +1085,7 @@ function renderEscapes(n) {
   var nos = n.nos_fallback;
   return '<div class="escapes">' +
     (nos ? '<button class="escape escape--nos" data-act="escape-nos">Uncertain subtype — still a malignancy' +
-      '<small>Falls back to ' + esc(nos.name) + ', flagged as discordant, confidence low.</small></button>' : '') +
+      '<small>Falls back to ' + esc(nos.name) + ', flagged as discordant.</small></button>' : '') +
     '<button class="escape escape--excluded" data-act="escape-excluded">Malignancy excluded / benign / revised' +
     '<small>Clean terminal. Emits no morphology code and leaves the malignant registry.</small></button>' +
     '</div>';
@@ -1247,8 +1296,8 @@ function capture(map) {
    unavailable instead of dangling it as a next step. An upgrade line that
    offers a test the laboratory cannot run reads as a plan; it is a dead end,
    and it makes the case look one step away from better evidence when it is
-   not — the same failure as reporting a confidence the evidence does not
-   support, in the one row the clerk reads as a worklist.
+   not — the one thing an advisory tool must never do, in the one row the
+   clerk reads as a worklist.
 
    The site's own level is read from captured state first (a tree may ask it,
    the router may capture it), then from a `site_profile` block on the router.
@@ -1345,13 +1394,12 @@ function unreachableTarget(from, st) {
 }
 
 /* ======================================================================
-   Basis of diagnosis (ENCR) — a REGISTRY DATA ITEM, not a confidence
+   Basis of diagnosis (ENCR) — a REGISTRY DATA ITEM
 
-   The two must never be run together. ENCR says a registry may register a
-   case on imaging; it does not say the tool may then call that answer firm.
-   `confidence` stays the tool's claim about its own answer; this is the
-   registry's record of what the diagnosis rests on, and a case can carry a
-   solid basis with low confidence or the reverse.
+   ENCR says a registry may register a case on imaging; it does not say the
+   tool may then call that answer firm. This is the registry's record of
+   what the diagnosis rests on — a fact about the evidence path, not a claim
+   about how sure the tool is of its own answer.
 
    Computed, never authored on the output: the highest code 1-8 that any
    branch on the path asserted, with 0 and 9 overriding — 0 before 9, because
@@ -1501,6 +1549,12 @@ function advance(target, label, value, before) {
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
   if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert);
+  /* Group 4 build contract §3, ruling D1: a real ICD-O-3.2 entity whose
+     BEHAVIOUR sits outside this group's own declaration — a ganglioneuroma
+     is 9490/0, and ICCC-3 Group IV admits behaviour 3 only. Checked before
+     next_node for the same reason morphology_code and refer_group are: it is
+     a destination in its own right, not a step toward one. */
+  if (target.behaviour_exclusion) return excludeBehaviour(target.behaviour_exclusion);
   if (target.next_node) {
     if (!findNode(target.next_node)) throw new Error('Unresolved next_node: ' + target.next_node);
     state.firedAlert = target.clinical_alert || null;
@@ -1511,21 +1565,6 @@ function advance(target, label, value, before) {
   throw new Error('Branch resolves to neither a code nor a next_node');
 }
 
-/* confidence_ceiling is the MAXIMUM achievable with all required tests
-   present (Design Spec §6) — not the answer. The reported confidence is the
-   lowest of the ceiling, whatever the reaching branch declared, and `low`
-   whenever the code was reached by a fallback or an escape hatch rather than
-   by a rule that actually matched. Reporting the ceiling on a fallback route
-   would overstate every incomplete case in the registry. */
-var CONFIDENCE_ORDER = ['low', 'medium', 'high'];
-function lowestConfidence(list) {
-  var best = 'high';
-  list.forEach(function (c) {
-    if (!c) return;
-    if (CONFIDENCE_ORDER.indexOf(c) < CONFIDENCE_ORDER.indexOf(best)) best = c;
-  });
-  return best;
-}
 /* "Based on" is the evidence chain since the case entered the group — the
    clerk has to be able to justify the code at the output block. */
 function basisFromTrail() {
@@ -1552,7 +1591,7 @@ function finish(target, basis) {
   /* A branch cannot hold the same test both outstanding and discharged. Where
      a provisional names the test that would resolve it, that test is struck
      from what this branch claims to satisfy (§3.2). This can only ever move a
-     test from "done" to "outstanding" — it can never raise a confidence. */
+     test from "done" to "outstanding" — never the reverse. */
   var evidence = arr(state.captured.evidence_tests).concat(
     arr(target.satisfies_tests).filter(function (t) {
       return !pending || String(t) !== String(pending.resolving_test);
@@ -1561,18 +1600,17 @@ function finish(target, basis) {
   /* A NAMED PROVISIONAL IS A DECLARATION THAT A SPECIFIC TEST IS OUTSTANDING,
      whether or not the entry's required-test list happens to name it. Without
      this, a code whose required tests are all present renders "Workup:
-     complete — no outstanding tests" and a HIGH badge directly above a
-     Provisional row saying the resolving test has not been done and two other
-     entities are not excluded. That is the one thing an advisory tool must
-     never do, and it is worse here than an ordinary missing test because the
-     panel positively asserts completeness.
+     complete — no outstanding tests" directly above a Provisional row saying
+     the resolving test has not been done and two other entities are not
+     excluded. That is the one thing an advisory tool must never do, and it is
+     worse here than an ordinary missing test because the panel positively
+     asserts completeness.
 
-     This is NOT the provisional being collapsed into a confidence level — the
-     named row stays exactly as authored, alongside. The test simply joins the
-     workup list under its own name, with its own status dropdown, and
-     confidence falls to `medium` through the SAME rule that already governs
-     every outstanding test. Nothing here is silent: the clerk sees the test,
-     the reason and the alternatives. */
+     This is not the provisional being merged into the workup list — the
+     named row stays exactly as authored, alongside. The test simply joins
+     the workup list under its own name, with its own status dropdown.
+     Nothing here is silent: the clerk sees the test, the reason and the
+     alternatives. */
   if (pending && pending.resolving_test && missing.indexOf(pending.resolving_test) === -1) {
     missing = missing.concat([pending.resolving_test]);
   }
@@ -1581,11 +1619,6 @@ function finish(target, basis) {
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };
   });
   var discordant = !!target.discordant;
-  /* The ceiling is what is achievable WITH ALL REQUIRED TESTS PRESENT (Design
-     Spec §6). While one is still outstanding the case cannot claim it — a
-     morphology-only result reporting "high" next to an outstanding flow
-     cytometry row tells the clerk the answer is firmer than the evidence
-     supports, which is the one thing an advisory tool must never do. */
   /* THE UPGRADE LINE MUST NOT DANGLE A TEST THIS LABORATORY CANNOT RUN. The
      sentence the engine writes itself — "X would yield a more specific code"
      — is exactly that dangle, so a blocked gate replaces it with the reason
@@ -1600,16 +1633,6 @@ function finish(target, basis) {
     : [authored || auto, gate ? gateText(gate) : ''].filter(Boolean).join(' ');
   state.result = {
     code: code, entry: entry, basis: basisFromTrail() || basis,
-    /* Confidence is the FLOOR of every constraint, never the entry's ceiling.
-       A `diagnosis_rendering` or a `resource_level_gate` that carries a
-       confidence joins the list; neither overrides it. A gate that BLOCKED is
-       a floor in its own right by the rule that already governs every
-       fallback route — the code was reached because a branch could not be
-       taken, not because a rule matched. */
-    confidence: lowestConfidence([entry.confidence_ceiling, target.confidence,
-      missing.length ? 'medium' : null, discordant ? 'low' : null,
-      target.diagnosis_rendering && target.diagnosis_rendering.confidence,
-      gate && gate.rule.confidence, gate && gate.blocked ? 'low' : null]),
     discordant: discordant,
     upgrade: upgrade,
     /* The two-track output: the code and the diagnosis the report states are
@@ -1618,16 +1641,17 @@ function finish(target, basis) {
     diagnosis: target.diagnosis_rendering || null,
     entity: target.entity_annotation || state.entity || null,
     gradeDecision: state.grade || null,
-    /* A registry data item, computed from what the path asserted, and kept
-       strictly apart from `confidence` above (§2.5). */
+    /* A registry data item, computed from what the path asserted: what the
+       diagnosis rests on, not a claim about how sure the tool is of its own
+       answer (§2.5). */
     basisOfDiagnosis: basisOfDiagnosis(),
     gate: gate,
     classification_system: target.classification_system || state.captured.classification_system_applied || null,
-    /* A NAMED, REVERSIBLE provisional — deliberately NOT a confidence level,
-       and deliberately absent from lowestConfidence() above (§3.2). Collapsing
-       "this specific test is outstanding, these specific entities are not
-       excluded" into the word "low" throws away everything actionable about
-       it. It renders on complete cases too; it is never suppressed. */
+    /* A NAMED, REVERSIBLE provisional with its own resolving test (§3.2).
+       Collapsing "this specific test is outstanding, these specific entities
+       are not excluded" into a single summary word would throw away
+       everything actionable about it. It renders on complete cases too; it
+       is never suppressed. */
     provisional: pending,
     /* The branch's own sentence for why THIS code rather than its neighbour —
        an entity boundary's reason_inside/reason_outside, or a behaviour leaf's
@@ -1668,6 +1692,34 @@ function refer(target) {
 function exclude(reason, alert) {
   state.workup = []; state.pending = null;
   state.result = { excluded: true, reason: reason, alert: alert || null };
+  state.stage = 'output';
+}
+
+/* A terminal for a real ICD-O-3.2 entity whose BEHAVIOUR falls outside this
+   group's own declaration (Group 4 build contract §3, ruling D1). Distinct
+   from both exclude() and refer(): this case is not a non-malignancy — a
+   ganglioneuroma is a genuine, named, benign entity, and the tumour it sits
+   beside on the same four-digit stem (ganglioneuroblastoma, 9490/3) is a
+   real Group IV cancer. And it is not a cross-group referral either — ICCC-3
+   registers no group at all for a benign neurogenic tumour, so there is
+   nowhere to refer it TO. No morphology_code is ever emitted here (the
+   validator enforces that the two never coexist on one branch); the panel
+   instead names the code the tumour actually sits at, the behaviour it
+   carries, and what this group declares, and defers the case to the
+   registrar. `basis_of_diagnosis` still applies — the case had histology —
+   so it is carried through exactly as it is for any other terminal. */
+function excludeBehaviour(be) {
+  state.workup = []; state.pending = null;
+  state.result = {
+    behaviourExcluded: true,
+    icdoCode: be.icdo_code,
+    icdoBehaviour: be.icdo_behaviour,
+    icdoTerm: be.icdo_term,
+    groupDeclares: be.group_declares,
+    reason: be.reason || null,
+    registrarDecisionRequired: !!be.registrar_decision_required,
+    basisOfDiagnosis: basisOfDiagnosis()
+  };
   state.stage = 'output';
 }
 
@@ -1763,12 +1815,36 @@ function renderOutput() {
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
       outActions() + '</div>';
   }
+  /* Group 4 build contract §3, ruling D1. Neither the referral panel above
+     nor the exclusion panel below fits: this case is a real ICD-O-3.2
+     entity — not a non-malignancy — and ICCC-3 registers no group it could
+     be referred TO, because Group IV's own behaviour declaration is the
+     thing excluding it. The panel says which code and behaviour the tumour
+     actually sits at, what this group declares instead, and (§3, §6 rule 1)
+     always carries a registrar flag alongside the clerk-facing reason. */
+  if (r.behaviourExcluded) {
+    return '<div class="node--live">' +
+      banner('info', 'Benign — outside this group’s declared behaviour', r.reason) +
+      '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
+      orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
+      orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +
+      (r.registrarDecisionRequired
+        ? banner('warn', 'Registrar decision required',
+            'This code and behaviour need the registrar’s ruling before the case can be closed.')
+        : '') +
+      (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined
+        ? orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' + (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'))
+        : '') +
+      orow('Topography', state.captured.topography || '—') +
+      orow('Based on', basisFromTrail() || '—') +
+      outActions() + '</div>';
+  }
   var e = r.entry, redcap = state.host === 'redcap';
   var h = '<div class="node--live">';
 
-  /* Rows run in REDCap FIELD ORDER — morphology → subgroup → confidence →
-     workup — so the clerk reads down this panel and down the REDCap form in
-     lockstep (redcap.md §2). Everything advisory follows underneath. */
+  /* Rows run in REDCap FIELD ORDER — morphology → subgroup → workup — so the
+     clerk reads down this panel and down the REDCap form in lockstep
+     (redcap.md §2). Everything advisory follows underneath. */
   if (redcap) {
     /* The headline is the FULL option string, verbatim — not the bare code.
        Matching a whole string is self-checking; matching four digits is not,
@@ -1782,13 +1858,35 @@ function renderOutput() {
   /* Ruling 3: the tree is allowed to run ahead of the REDCap option list, but
      never silently. A clerk who cannot find the row has to be told why before
      they go looking, and in BOTH views — the code is just as unselectable
-     outside the REDCap host as inside it. */
+     outside the REDCap host as inside it.
+
+     TWO DIFFERENT FACTS RODE ON ONE FLAG, AND THE BANNER STATED THE WRONG ONE.
+     `redcap_option_verified: false` means the option string was not verified to
+     match. It does NOT mean no option exists — and this banner asserted the
+     stronger claim for both, so entries whose option is merely mislabelled were
+     telling the clerk the row was missing. Sending a clerk away from a row that
+     is there is the same class of defect as sending them to one that is not.
+
+     `awaiting_layer1` is the signal that separates them, it is checked to
+     separate them exactly, and check_redcap_banner_signal() in
+     build/build_database.py keys off Layer 1 to keep it that way — so this
+     branch cannot drift from the option file behind the engine's back. Which
+     entries were affected, and why the flag now means one thing only:
+     docs/codes-awaiting-redcap.md, "Two banners, and the flag that separates
+     them". */
   if (e.redcap_option_verified === false) {
     var aw = e.awaiting_layer1;
-    h += banner('warn', 'Not yet a REDCap option',
-      'This code has no option in the registry dropdown, so it cannot be selected yet.' +
-      (aw && arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
-      ' Record the case against the nearest available option and flag it for re-coding.');
+    if (aw) {
+      h += banner('warn', 'Not yet a REDCap option',
+        'This code has no option in the registry dropdown, so it cannot be selected yet.' +
+        (arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
+        ' Record the case against the nearest available option and flag it for re-coding.');
+    } else {
+      h += banner('warn', 'The REDCap label for this code is out of date',
+        'The dropdown does carry an option for this code, so the case can be entered. ' +
+        'Its label is not the current term shown above — match on the four-digit code, ' +
+        'not on the words, and flag the option for re-labelling.');
+    }
   }
   /* Behaviour is shown only where it is not the reportable /3 default: a case
      whose code carries the other behaviour reads as an ordinary malignancy
@@ -1801,9 +1899,8 @@ function renderOutput() {
      pair can belong to two ICCC-3 subgroups depending on the topography, and
      the entry's own is only the default (§2.7). */
   var sub = subgroupFor(e, state.captured.topography);
-  h += '<div class="out__head out__head--' + esc(r.confidence) + '">' +
-    '<span class="out__subgroup">' + esc(sub.name) + ' — ICCC-3 <b>' + esc(sub.id) + '</b></span>' +
-    '<span class="badge badge--' + esc(r.confidence) + '">Confidence ' + esc(r.confidence) + '</span></div>';
+  h += '<div class="out__head">' +
+    '<span class="out__subgroup">' + esc(sub.name) + ' — ICCC-3 <b>' + esc(sub.id) + '</b></span></div>';
 
   /* The second track. It sits next to the code it accompanies, because for
      much of a group like this there is no code for the diagnosis the
@@ -1811,8 +1908,8 @@ function renderOutput() {
      report the case as less specific than the report is. */
   h += renderDiagnosisRows(r);
 
-  /* Not a confidence level — a specific claim with a specific resolving test
-     (§3.2). Rendered whether or not the case is otherwise complete. */
+  /* A specific claim with a specific resolving test (§3.2). Rendered whether
+     or not the case is otherwise complete. */
   if (r.provisional) {
     var pv = r.provisional, alts = arr(pv.alternative_entities), altc = arr(pv.alternative_codes);
     h += orow('Provisional', String(pv.reason || '') +
@@ -1823,8 +1920,8 @@ function renderOutput() {
 
   h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
   /* A registry data item in its own right, next to the workup it is derived
-     from and well away from the confidence badge: what the diagnosis RESTS ON
-     is not how sure the tool is of its own answer (§2.5). */
+     from: what the diagnosis RESTS ON is not a claim about how sure the tool
+     is of its own answer (§2.5). */
   if (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined) {
     h += orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' +
       (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'));
@@ -1914,10 +2011,43 @@ function renderWorkup() {
       }).join('') + '</select></span>';
   }).join('') + '</span>';
 }
-/* Override sits VISIBLY beside the primary action, never hidden. */
+/* DOES THIS TERMINAL CARRY A CODE? Asked of the RESOLVED OUTCOME, never of a
+   flag on the branch. `state.result.code` is set in exactly one place —
+   finish(), from the branch's own morphology_code, and only after entryFor()
+   has proved the code is real. The other three terminal builders never set it:
+   refer() builds {referral, group, codeHint}, exclude() builds {excluded,
+   reason}, excludeBehaviour() builds {behaviourExcluded, icdoCode} — and
+   icdoCode is deliberately a DIFFERENT key, because the code a benign tumour
+   sits at is not a code this group emitted.
+
+   So `code` is the one value that distinguishes the terminals that emitted a
+   morphology code from the terminals that emitted none, and it is the same
+   value the headline renders and the same value an override would replace.
+   Adding a fourth no-code terminal kind in a later group needs nothing here:
+   if it does not run through finish(), it carries no code, and it is covered.
+
+   Do NOT reintroduce a test on `referral`/`excluded`/`behaviourExcluded`. That
+   is a list somebody has to remember to extend, and the first kind left off it
+   gets the affordance back. */
+function resultCarriesCode(r) {
+  return !!(r && r.code);
+}
+
+/* Override sits VISIBLY beside the primary action, never hidden — but ONLY on a
+   terminal that actually emitted a code. On a terminal that emitted none it was
+   worse than useless: the handler validates the typed code with entryFor(),
+   which accepts only codes from THIS group, so the single thing the button
+   could do on a cross-group referral ("Emitting a code from this group would
+   put the case in the wrong ICCC-3 group") was force the case into this group —
+   the exact error the terminal exists to prevent. Observed in a browser on the
+   Group XI referral out of hn_ihc_checklist and on the 9490/0 ganglioneuroma
+   behaviour_exclusion, 18 Sep 2026. */
 function outActions() {
-  return '<div class="out__actions"><button class="btn" data-act="restart">Start new case</button>' +
-    '<button class="btn btn--ghost" data-act="override">Override this code</button></div>';
+  var acts = '<button class="btn" data-act="restart">Start new case</button>';
+  if (resultCarriesCode(state.result)) {
+    acts += '<button class="btn btn--ghost" data-act="override">Override this code</button>';
+  }
+  return '<div class="out__actions">' + acts + '</div>';
 }
 
 /* ============================================================================
@@ -2074,12 +2204,25 @@ function handleOption(act, el) {
       pushTrail(n ? (n.step_label || 'Answer') : 'Case', 'Malignancy excluded', before);
       return exclude('The abstractor recorded that this case is not a reportable malignancy.');
     case 'override': {
+      /* THE SAME GATE, INDEPENDENTLY OF WHAT RENDERED. outActions() no longer
+         offers this button on a code-less terminal, but the handler must refuse
+         the action on its own: a delegated listener acts on whatever markup
+         carries data-act, so a renderer regression, a stale panel or a hand-
+         dispatched action must not be able to turn a referral or a behaviour
+         exclusion into a code from this group. Refused BEFORE the prompt, so
+         the clerk is never asked for a code that would be discarded. */
+      if (!resultCarriesCode(state.result)) {
+        state.error = 'This terminal emits no morphology code, so there is no code to ' +
+          'override. Overriding here would emit a code from this group — which is the ' +
+          'one thing this terminal exists to prevent.';
+        return;
+      }
       var code = window.prompt('Enter the morphology code you judge correct:');
       if (!code) return;
       var reason = window.prompt('Reason for the override (recorded as a quality signal):') || 'No reason given';
       if (!entryFor(code)) { state.error = 'Override code not in this group: ' + code; return; }
       pushTrail('Override', code + ' — ' + reason, before);
-      return finish({ morphology_code: code, confidence: 'low', upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
+      return finish({ morphology_code: code, upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
     }
     case 'rewind': return restore(state.trail[i].before, i);
     case 'restart': return reset();
@@ -2219,7 +2362,7 @@ function fallbackTarget(n) {
     /* A behaviour-overloaded fallback has to name which half it means, or
        entryFor() takes whichever entry happens to be written first. */
     return { morphology_code: n.nos_fallback.code, behavior_code: n.nos_fallback.behavior_code,
-      upgrade_path: n.nos_fallback.reason, confidence: 'low' };
+      upgrade_path: n.nos_fallback.reason };
   }
   throw new Error('Node has no fallback and did not resolve: ' + n.node_id);
 }

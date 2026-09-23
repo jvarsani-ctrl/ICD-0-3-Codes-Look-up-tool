@@ -7,6 +7,10 @@ the dropdown; this file is what keeps the two reconcilable.
 The build reads this file. A code carrying `awaiting_layer1` in `group_NN_dt.json` and **not**
 listed here is a build failure, and so is a code listed here that no longer needs to be.
 
+**`awaiting_layer1` is also what the output block reads**, so it has to mean one thing only: Layer 1
+carries no option for this code. See *"Two banners, and the flag that separates them"* at the foot of
+this file before adding or removing it anywhere.
+
 Every term below is verified against the IARC ICD-O-3.2 morphology table, converted to
 `ICD coding/ICD-O-3.2/icdo32.sqlite`. Where a code is also outside the ICCC-2017 ranges, adding
 the REDCap option alone is not enough — `iccc_code` will fail to auto-populate and the case
@@ -181,6 +185,63 @@ neither formula currently handles. Full detail in
 
 ---
 
+## Group 6 — open
+
+Three ICD-O-3.2 additions the inventory carries and `Group 6 - Renal Tumors.md` does not offer.
+Unlike the Group 3 entry above, none of these is reached from a decision-tree leaf — the Group 6
+build contract §0.3 records that everything in VIb beyond the five-code paediatric core is an
+adult-type carcinoma reachable only by direct code entry, with no branch built for it. All three
+are appended for completeness, not because a case is expected to need them.
+
+### 8023/3 — Nuclear protein in testis (NUT)-associated carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8023/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent** from `Group 6 - Renal Tumors.md`. The list runs `8022`, `8030`, skipping `8023`–`8029` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8010-8041,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | Nothing. `8020` Carcinoma, undifferentiated, NOS is the nearest offered option, but it is a different, less specific diagnosis |
+
+**Paediatric relevance.** NUT carcinoma is an aggressive, molecularly defined carcinoma driven by
+`NUTM1` rearrangement, described mainly in the midline thorax and head and neck; a primary renal
+presentation is not established in the paediatric literature. Built under ruling 1 — paediatric
+occurrence, not frequency, is the test — but occurrence at this site in a child has not been
+reported.
+
+### 8054/3 — Warty carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8054/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent**. The list runs `8053`, `8060`, skipping `8054`–`8059` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8050-8075,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | Nothing offered nearby names the same entity |
+
+**Paediatric relevance.** Warty carcinoma is a human-papillomavirus-associated squamous carcinoma
+pattern, described at genital and upper-aerodigestive sites in adults. It has no established
+paediatric renal presentation.
+
+### 8482/3 — Mucinous carcinoma, gastric type
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8482/3` Preferred, an ICD-O-3.2 addition |
+| REDCap | **Absent**. The list runs `8481`, `8490`, skipping `8482`–`8489` |
+| ICCC-2017 | In range. VIb's carcinoma block runs `8480-8490,...` at `C64.9`, behaviour 3 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | `8480` Mucinous adenocarcinoma is the nearest offered option, but it is the generic form, not the gastric-type subtype this code names |
+
+**Paediatric relevance.** Gastric-type mucinous carcinoma is described as a rare pattern in adult
+renal and Müllerian mucinous neoplasms. No paediatric renal case is established.
+
+**All three are adult-type carcinomas a paediatric renal registry is unlikely to meet.** The append
+keeps the inventory-to-REDCap reconciliation complete, per the standing rule at the top of this
+file, and is not a signal that any of the three is expected soon.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block
@@ -198,3 +259,51 @@ the tool, but they mislead whoever reads the dropdown.
 `9727` needs no action: ICD-O-3.2 Preferred is `Precursor cell lymphoblastic lymphoma, NOS`,
 exactly as the list has it. `Blastic plasmacytoid dendritic cell neoplasm` is a Related term on
 the same code, which is worth knowing but is not a relabelling.
+
+---
+
+## Two banners, and the flag that separates them
+
+**Found 22 September 2026, on the output block, driving the Group VI carcinoma branch in a browser.**
+
+A clerk who reaches a code the dropdown cannot record has to be told so before they go looking
+(ruling 3). The engine did that from `redcap_option_verified: false`, with one message:
+
+> **Not yet a REDCap option** — This code has no option in the registry dropdown, so it cannot be
+> selected yet.
+
+**That flag does not carry that claim.** It means the option string was not verified to match. An
+option can exist and still fail to match — because its label has drifted from the ICD-O-3.2 term —
+and eleven codes across three built groups were in exactly that state, being told a row they can
+select is not there:
+
+| Group | Codes | What is actually true |
+|---|---|---|
+| I | `9898` | The option exists and names the sibling entity on the same four-digit code. |
+| II | `9718`, `9725` | Options exist; the strings drifted. |
+| VI | `8122`, `8130`, `8131`, `8155`, `8240`, `8311`, `8504`, `8963` | Options exist; eight strings drifted, two of them naming a different lesion. |
+
+`8311` is the sharpest. Its option exists and reads *"Hypernephroid tumor"* — the obsolete `8311/1`
+term, for a different lesion from the `8311/3` the tree emits. The clerk needs to be told the label
+is wrong, **not** that the row is missing. Sending someone away from a row that is there is the same
+class of defect as sending them to one that is not, and this project's rule is that the tool never
+states more than the evidence supports — in either direction.
+
+**`awaiting_layer1` is the signal that separates the two cases, and it separates them exactly.**
+Checked across all six built groups: every entry flagged `redcap_option_verified: false` either
+carries `awaiting_layer1` and has no option in Layer 1, or carries none and has one. Eighteen of
+eighteen, no exceptions. So the engine now renders:
+
+| Entry state | Banner |
+|---|---|
+| `awaiting_layer1` **present** | *Not yet a REDCap option* — the row does not exist; record against the nearest option and flag for re-coding. |
+| `awaiting_layer1` **absent** | *The REDCap label for this code is out of date* — the row exists and the case can be entered; match on the four-digit code, not on the words, and flag the option for re-labelling. |
+
+`check_redcap_banner_signal()` keeps the two in step. It keys off the option file itself — Layer 1,
+never anything in the file being checked — and fails in **both** directions: `awaiting_layer1` set on
+a code Layer 1 does carry, and unset on a code Layer 1 does not. Negative controls were run both
+ways, adding the flag to `8311` and removing it from `8023`, with the data restored byte-identically
+after each.
+
+**Adding or removing `awaiting_layer1` changes what a clerk is told they can do.** It is not
+bookkeeping for this file alone.
