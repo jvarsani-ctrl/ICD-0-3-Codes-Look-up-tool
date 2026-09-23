@@ -32,6 +32,8 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import shutil
+import subprocess
 import json
 import os
 import re
@@ -9346,6 +9348,129 @@ def check_alias_cross_references(repo: Path, contexts: dict):
 # Orchestration
 # --------------------------------------------------------------------------------------
 
+def check_requirements(repo: Path, layer1: Path):
+    """
+    PREFLIGHT — everything this gate needs, checked before it checks anything else.
+
+    Registrar's instruction, 23 September 2026: "if certain dependencies are lacking, user
+    must be warned ... a verification layer, that checks for all necessary requirements
+    for the tool to run before it loads."
+
+    Two properties matter and both are deliberate.
+
+    IT REPORTS EVERY MISSING REQUIREMENT AT ONCE, not the first one. A gate that dies on
+    the first missing thing sends someone away to install it, come back, and be sent away
+    again. Everything below is therefore evaluated even when an earlier item has already
+    failed.
+
+    IT NEVER SKIPS SOMETHING IT CANNOT CHECK. A requirement that cannot be verified is a
+    FAIL, never a silent pass. That is the failure mode this whole layer exists against:
+    the engine gate was a separate command for one day and the two defects it catches had
+    already shipped, precisely because a check nobody runs looks exactly like a check that
+    passed.
+
+    Node.js is REQUIRED, by the registrar's decision of 23 September 2026. The engine gate
+    is JavaScript because app.js is — testing the engine means running it — and it is the
+    only thing in this repository that tests app.js at all. The dependency-free property
+    that is genuinely load-bearing belongs to the TOOL (index.html, app.js, one stylesheet,
+    no build step), and it is untouched: nothing here runs in the browser.
+    """
+    out = []
+    ok = True
+
+    def need(label, present, detail, how):
+        nonlocal ok
+        if present:
+            out.append((OK, "requirement: %s — %s" % (label, detail)))
+        else:
+            ok = False
+            out.append((FAIL, "MISSING REQUIREMENT: %s. %s  →  %s" % (label, detail, how)))
+
+    need("Python 3.9 or newer", sys.version_info >= (3, 9),
+         "found %d.%d.%d" % sys.version_info[:3],
+         "install a newer python3; this gate uses syntax 3.8 does not parse")
+
+    try:
+        import sqlite3 as _sq
+        need("sqlite3 module", True, "found, SQLite %s" % _sq.sqlite_version, "")
+    except Exception as exc:
+        need("sqlite3 module", False, "import failed: %s" % exc,
+             "reinstall python3 with SQLite support")
+
+    for label, path, how in [
+        ("Layer 1 directory", layer1,
+         "pass --layer1 PATH, or set ICD_LAYER1, or place it at <repo>/../../ICD coding"),
+        ("REDCap option files", layer1 / "RedCap Options",
+         "restore the 'RedCap Options' directory inside Layer 1"),
+        ("icdo32.sqlite", layer1 / "ICD-O-3.2" / "icdo32.sqlite",
+         "rebuild it with ICD coding/ICD-O-3.2/convert_icdo32.py"),
+        ("ICCC-2017.sqlite", layer1.parent / "ICCC-2017.sqlite",
+         "restore it from the registry share; the inventory generators join against it"),
+    ]:
+        need(label, path.exists(), str(path), how)
+
+    # -- the engine gate, and the runtime it needs --------------------------------
+    engine_check = repo / "build" / "check_engine_flow.mjs"
+    need("build/check_engine_flow.mjs", engine_check.exists(), str(engine_check),
+         "restore it; it is the only thing in this repository that tests app.js")
+
+    node = shutil.which("node")
+    if node:
+        try:
+            ver = subprocess.run([node, "--version"], capture_output=True, text=True,
+                                 timeout=30).stdout.strip()
+        except Exception as exc:                               # pragma: no cover
+            ver = "(version query failed: %s)" % exc
+        need("Node.js", True, "%s at %s" % (ver, node), "")
+    else:
+        need("Node.js", False, "not on PATH",
+             "install Node.js (https://nodejs.org). REQUIRED since 23 Sep 2026: the engine "
+             "gate is JavaScript because app.js is, and it is the only check that runs the "
+             "engine. It is not skipped when Node.js is absent — a skipped engine gate is "
+             "how the defects it catches shipped in the first place")
+
+    return out, ok
+
+
+def run_engine_gate(repo: Path):
+    """Run build/check_engine_flow.mjs and fold its result into this report.
+
+    Wired in by the registrar's decision of 23 September 2026. It had been a second command
+    in README's "Before you push", which is exactly the shape that lets a gate be forgotten.
+
+    A non-zero exit is a FAIL and its output is printed, because the detail — which node,
+    which answers, what the screen said against what Continue records — is the whole value
+    and is not reconstructible from a summary line.
+    """
+    script = repo / "build" / "check_engine_flow.mjs"
+    node = shutil.which("node")
+    if not node or not script.exists():
+        # check_requirements() has already FAILed on whichever is missing. Saying it twice
+        # buries the requirement list under a consequence of it.
+        return [(NOTE, "engine gate not run — see the missing requirement above")]
+    try:
+        proc = subprocess.run([node, str(script)], capture_output=True, text=True,
+                              cwd=str(repo), timeout=600)
+    except subprocess.TimeoutExpired:
+        return [(FAIL, "engine gate timed out after 600s — build/check_engine_flow.mjs "
+                       "did not finish; it normally runs in under a minute")]
+    except Exception as exc:                                   # pragma: no cover
+        return [(FAIL, "engine gate could not be run: %s" % exc)]
+
+    tail = (proc.stdout or "").rstrip().splitlines()
+    if proc.returncode == 0:
+        summary = next((l.strip() for l in reversed(tail) if l.strip()), "OK")
+        return [(OK, "engine gate (build/check_engine_flow.mjs): %s" % summary)]
+
+    print("\n".join(tail))
+    if proc.stderr.strip():
+        print(proc.stderr.rstrip())
+    return [(FAIL, "engine gate FAILED (exit %d) — build_database.py validates the DATA, "
+                   "check_engine_flow.mjs drives the ENGINE, and a defect in the seam "
+                   "between them passes every data check while the tool tells a clerk one "
+                   "code and records another. Output above" % proc.returncode)]
+
+
 def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report = Report(strict=strict)
 
@@ -9356,6 +9481,19 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
                              % layer1))
     print(" mode    : %s" % ("strict (WARN counts as FAIL)" if strict else "normal"))
     print("=" * 78)
+
+    # -- Preflight -----------------------------------------------------------------
+    report.section("Preflight — requirements")
+    req_findings, req_ok = check_requirements(repo, layer1)
+    report.checks_run += 1
+    report.add(req_findings)
+    if not req_ok:
+        print(report.render(quiet=quiet))
+        print("\nSTOPPED AT PREFLIGHT. Every missing requirement is listed above, with how "
+              "to satisfy it.\nNothing else was checked — a partial run here would report "
+              "green sections that were never\nexercised, which is worse than reporting "
+              "nothing.")
+        return 1
 
     # -- Layer 1 -------------------------------------------------------------------
     report.section("Layer 1 — source of truth")
@@ -9514,6 +9652,11 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     # -- D. front-end --------------------------------------------------------------
     report.section("D. front-end — raw-hex ban")
     report.run(check_raw_hex_ban, repo)
+
+    # -- E. engine -----------------------------------------------------------------
+    report.section("E. engine — the guided flow")
+    report.checks_run += 1
+    report.add(run_engine_gate(repo))
 
     print(report.render(quiet=quiet))
     return 0 if report.passed() else 1
