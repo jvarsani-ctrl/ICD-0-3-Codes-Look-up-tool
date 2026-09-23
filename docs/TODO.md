@@ -1215,7 +1215,81 @@ the Group 5 work neither needs it nor is the right place to prove it.
 
 ---
 
-*Last updated 22 September 2026, on the Group VI branch (`group-06-renal`), closing §12 for all
+## 19. ❓ FOR THE REGISTRAR — should the engine gate run inside the Python gate?
+
+**Raised 22 September 2026 with `build/check_engine_flow.mjs`. Deliberately not settled.**
+
+There are now two gates and they test different layers:
+
+```bash
+python3 build/build_database.py      # the DATA
+node build/check_engine_flow.mjs     # the ENGINE
+```
+
+`check_engine_flow.mjs` is JavaScript because `app.js` is: testing the engine means loading and
+running it, and only a JavaScript runtime can. That means it needs **Node.js installed**, and
+`build_database.py` needs nothing but Python and SQLite.
+
+**The trade, stated plainly.** Wiring the engine gate into `build_database.py` gives one command
+that cannot be forgotten, and costs the Python gate its dependency-free property — a machine
+without Node.js could no longer run the build at all. Leaving them separate keeps that property and
+costs the guarantee: someone runs the Python gate, reads `BUILD PASSED`, and pushes. **That is
+exactly how both engine defects survived**, with every data check green while the tool told a clerk
+one code and recorded another.
+
+**The trap, whichever way it goes.** If it is wired in it must **FAIL** when Node.js is absent,
+never skip. A gate that silently skips a missing tool returns a green build that checked nothing,
+which is worse than either option above. The check already behaves correctly on its own: it exits
+1 when its target file is missing rather than passing.
+
+**A recommendation, not a decision.** Wire it in with a hard failure. The dependency-free property
+that is genuinely load-bearing belongs to the *tool* — `index.html`, `app.js`, one stylesheet, no
+build step, which is what the README's boast is actually about — and that is untouched either way.
+The gate already requires Python and SQLite. The failure mode being prevented has now bitten twice.
+
+Recorded meanwhile in `README.md`'s "Before you push" block, beside the command it does not replace.
+
+---
+
+## 20. 19 `ihc_checklist` nodes are swept to a path budget, not exhaustively
+
+**Raised 22 September 2026 with `build/check_engine_flow.mjs`.**
+
+The engine gate walks one witness per rule plus a budgeted exhaustive walk per node — 68 nodes, 743
+walks, about 58,000 stops, under a minute. Nodes with many markers (up to 40) exceed
+`STOP_BUDGET`, currently 3000, and are sampled instead.
+
+**They are reported as partial and never as OK**, which is the right behaviour — a sampled node is
+not a proved node, and the check says so rather than implying coverage it does not have. The 19 are
+named in its output; the largest are `g2_plasmablastic`, `g2_lineage`, `g2_matureB`,
+`ac_lineage_assignment` and `st_glioneuronal_family`.
+
+Raising the budget is a one-line change and costs only wall-clock. Left where the whole sweep
+finishes in under a minute, because a gate nobody waits for is a gate nobody runs. Worth revisiting
+if a defect is ever found in one of the 19.
+
+---
+
+## 21. Nothing tests `app.js` except the engine gate, and nothing tests the engine gate
+
+**Raised 22 September 2026, from the same two defects.**
+
+`build/check_engine_flow.mjs` is the only thing in the repository that exercises `app.js` at all.
+Its own correctness rests on its negative controls: nine fixtures that must fail against a pre-fix
+`app.js`, run via `APP=<path>`, three of which exist only to fail a fix bought too cheaply. That is
+a real proof and it is documented in `docs/engine_flow_negative_controls.md`.
+
+But it is a proof someone has to *re-run*. The controls are not part of either gate — running them
+means checking out an old `app.js` and pointing the checker at it by hand. So the check that guards
+the engine is itself guarded only by a procedure in a document.
+
+No action proposed. Recorded because the shape is familiar: both defects it now catches survived
+precisely because the thing that would have caught them was not part of anything automatic.
+
+---
+
+*Last updated 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
+engine gate. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
