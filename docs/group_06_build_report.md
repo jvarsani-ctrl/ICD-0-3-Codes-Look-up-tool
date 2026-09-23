@@ -230,6 +230,48 @@ not. Reasoning in `docs/codes-awaiting-redcap.md`.
 
 ---
 
+## 7b. The alias layer, and a defect it turns from tidy into clinical
+
+59 entries. **Sixteen of them deliberately map to no morphology code at all** — a third of the file
+exists to stop a word reaching a code:
+
+- terms excluded by behaviour — congenital mesoblastic nephroma `8960/1`, cystic nephroma `8959/0`,
+  cystic partially differentiated nephroblastoma `8959/1`, metanephric adenoma `8325/0`;
+- one deleted number — nephrogenic adenofibroma, now `9013/0`;
+- two lesions ICD-O-3.2 gives no code to at all — nephrogenic rest, nephroblastomatosis;
+- **SMARCB1, INI1, BAF47 and SNF5**, one protein under four names, all four resolving to nothing
+  on purpose, because loss alone cannot choose between `8963/3` and `8510/3` — that fork belongs to
+  the tree's age and sickle-cell gate, not to a search box;
+- **hypernephroid tumor**, the file's highest-stakes entry, which is the label REDCap still prints
+  against `8311` and is an obsolete term for a different, borderline lesion.
+
+Two entries the build left flagged were resolved from the sources rather than left as suspicions.
+**Oncocytoma is `8290/0`**, a synonym under *Oxyphilic adenoma*, printed in Moch Table 1 — and
+`8290/3 Oxyphilic adenocarcinoma` **is** in this group's inventory. One four-digit stem, one benign
+entity and one malignant, and the Group VI dropdown offers only the malignant one. **Angiomyolipoma
+is `8860/0`**, the epithelioid variant `8860/1`, with no behaviour 3 anywhere on the code.
+
+### ⚠️ And none of that text reaches the clerk
+
+`docs/TODO.md` §17, found during the Group V build, records that every field on an alias entry
+except `alias` and `also_known_as` is dead — `notes` included. It was judged "mostly nothing today".
+**That judgement does not survive this group**, and it was re-rated on 23 September 2026 with
+evidence from the browser rather than from reading the code:
+
+Typing *hypernephroid* finds the alias and drops the clerk into `rn_document_inventory`, whose first
+question is about evidence tiers. The tree does not know a trap word was typed, and the sentence
+written to stop the case going wrong — *"Do not select REDCap option 8311 for a case described only
+this way"* — never appears.
+
+*Oncocytoma* is worse. A clerk types it, enters the Group VI tree, and can walk to a carcinoma
+terminal, when the correct answer is that the lesion is benign and belongs with the registrar. The
+alias file knows this and cannot say it.
+
+Rendering an alias entry's `notes` at the top of the node it routes into would close it, and the
+data is already authored and validated. §8 item 8.
+
+---
+
 ## 8. What needs you
 
 1. **★ `8959/3` carries no WHO 2022 entity.** ICD-O-3.2 has the code and ICCC-3 admits it at
@@ -250,8 +292,14 @@ not. Reasoning in `docs/codes-awaiting-redcap.md`.
 6. **Both Chung RadioGraphics papers are still missing**, so `8960/3`'s imaging features rest on
    Spreafico 2021 and the papers index rather than a dedicated imaging source. On
    `docs/sources-requested.md`.
-7. **Should the engine gate run inside the Python gate?** `docs/TODO.md` §19, with a recommendation
-   and the reason it is yours rather than mine.
+7. ~~**Should the engine gate run inside the Python gate?**~~ **Decided 23 September 2026 — Node.js
+   added, with a preflight requirements layer in front of the whole gate.** `docs/TODO.md` §19.
+   One thing to carry into the merge: against `main`'s `app.js` the engine gate finds 458 stranded
+   flows in Group 2, 11 in Group 3 and 16 in Group 4. **The gate and the `app.js` fix must merge
+   together** — wiring in the gate alone turns `main` red for three groups on the first run.
+8. **★ Alias `notes` never reaches the clerk** (§7b, `docs/TODO.md` §17). Sixteen Group VI aliases
+   exist only to warn, and all sixteen are silent. The *oncocytoma* case can currently walk to a
+   carcinoma terminal. This is the one open item with a path to a wrong code in the live tool.
 
 ---
 
@@ -259,7 +307,7 @@ not. Reasoning in `docs/codes-awaiting-redcap.md`.
 
 | Gate | Result |
 |---|---|
-| `python3 build/build_database.py` | 0 FAIL |
+| `python3 build/build_database.py` | 479 checks, 0 FAIL — now preflight + data gate + engine gate in one command |
 | `python3 build/induce_flow.py` | every rule in every checklist has a witness |
 | `node build/check_engine_flow.mjs` | 68 nodes, 743 walks, ~58,000 stops, OK |
 | negative control, engine gate vs pre-fix `app.js` | 1245 failures, as it must |
