@@ -1215,9 +1215,26 @@ the Group 5 work neither needs it nor is the right place to prove it.
 
 ---
 
-## 19. ❓ FOR THE REGISTRAR — should the engine gate run inside the Python gate?
+## 19. ✅ CLOSED — the engine gate runs inside the Python gate
 
-**Raised 22 September 2026 with `build/check_engine_flow.mjs`. Deliberately not settled.**
+> **Registrar's decision, 23 September 2026: add Node.js.** *"if certain dependencies are lacking,
+> user must be warned, when the tool launches. I think there must be a verification layer, that
+> checks for all necessary requirements for the tool to run before it loads."*
+>
+> Implemented as a **preflight** section that reports every missing requirement at once and stops
+> before anything else runs, plus the engine gate as section E of the same command. Node.js is
+> required and the gate is never skipped when it is absent. Four negative controls run and
+> confirmed: Node.js off PATH, four requirements missing together, the engine script deleted, and a
+> broken engine swapped in — that last one now fails `build_database.py` itself.
+>
+> **Carry this into the merge.** Against `main`'s `app.js` the gate finds 458 stranded flows in
+> Group 2, 11 in Group 3 and 16 in Group 4, with matching screen-versus-record failures. The gate
+> and the `app.js` fix must merge together; wiring in the gate alone turns `main` red for three
+> groups on the first run.
+
+**Raised 22 September 2026 with `build/check_engine_flow.mjs`. Closed 23 September 2026. The
+reasoning is kept below because the trade it records is the reason the preflight is shaped the way
+it is.**
 
 There are now two gates and they test different layers:
 
@@ -1247,7 +1264,9 @@ that is genuinely load-bearing belongs to the *tool* — `index.html`, `app.js`,
 build step, which is what the README's boast is actually about — and that is untouched either way.
 The gate already requires Python and SQLite. The failure mode being prevented has now bitten twice.
 
-Recorded meanwhile in `README.md`'s "Before you push" block, beside the command it does not replace.
+~~Recorded meanwhile in `README.md`'s "Before you push" block, beside the command it does not
+replace.~~ Superseded: `README.md` now documents the single command, its preflight table and the
+engine gate.
 
 ---
 
@@ -1289,7 +1308,7 @@ precisely because the thing that would have caught them was not part of anything
 ---
 
 *Last updated 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
-engine gate. Previously 22 September 2026 on the same branch, closing §12 for all
+engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
