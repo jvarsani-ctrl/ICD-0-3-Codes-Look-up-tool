@@ -1414,6 +1414,17 @@ var BASIS_LABELS = {
   2: 'Clinical investigation without tissue', 4: 'Specific tumour markers',
   5: 'Cytology', 7: 'Histology', 8: 'Cytogenetic or molecular', 9: 'Unknown'
 };
+/* ICD-O's own meaning of the behaviour digit, for the behaviour-exclusion
+   banner. The title used to read "Benign" whatever the digit, so a giant cell
+   tumour of bone (9250/1) or a spontaneously regressed retinoblastoma (9514/1)
+   was announced as benign — a fact neither the data nor ICD-O states. */
+var BEHAVIOUR_TITLES = {
+  0: 'Benign — outside this group’s declared behaviour',
+  1: 'Borderline or uncertain behaviour — outside this group’s declared behaviour'
+};
+function behaviourExclusionTitle(b) {
+  return BEHAVIOUR_TITLES[String(b)] || 'Outside this group’s declared behaviour';
+}
 function basisCode(v) {
   var n = Number(v);
   if (v === '' || v === null || v === undefined || isNaN(n) || BASIS_CODES.indexOf(n) === -1) {
@@ -1824,7 +1835,7 @@ function renderOutput() {
      always carries a registrar flag alongside the clerk-facing reason. */
   if (r.behaviourExcluded) {
     return '<div class="node--live">' +
-      banner('info', 'Benign — outside this group’s declared behaviour', r.reason) +
+      banner('info', behaviourExclusionTitle(r.icdoBehaviour), r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
       orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
       orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +

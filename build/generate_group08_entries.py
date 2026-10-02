@@ -248,13 +248,15 @@ ANNOTATIONS: dict[str, dict] = {
                  % WHO2020,
                  "WHO 2020 classifies them separately from Ewing sarcoma (%s, p. 650)."
                  % ANDERSON)},
-    "8002": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
+    "8002": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HIST_IHC,
              "code_neutral_molecular": False,
              "coding_note": note(GENERATED_NOTE,
                  "Malignant tumor, small cell type: the fallback for a small round cell"
                  " tumour of bone whose line is not established - it claims neither a"
                  " sarcoma nor Ewing sarcoma. CD99 alone does not establish Ewing sarcoma"
-                 " (%s, p. 30)." % KALLEN)},
+                 " (%s, p. 30). IHC is a required test so that a panel that stopped short of"
+                 " the deciding stain shows it as outstanding rather than 'workup complete'"
+                 " (found driving the round cell panel in a browser, 2 Oct 2026)." % KALLEN)},
     "9370": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
              "coding_note": note(GENERATED_NOTE,
                  "Chordoma, NOS. WHO 2020 Table 1 codes both conventional and poorly"
