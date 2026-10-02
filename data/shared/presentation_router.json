@@ -657,9 +657,18 @@
     },
     "7": {
       "name": "Hepatic Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g7_hepatic",
+          "entry_node": "hp_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 7,
+        "tree_id": "g7_hepatic",
+        "entry_node": "hp_document_inventory"
+      }
     },
     "8": {
       "name": "Malignant Bone Tumors",
@@ -1107,6 +1116,20 @@
             "group": 6,
             "subgroup": "VIa2"
           }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIa2"
+          },
+          "note": "At the liver (C22.0, C22.1) a rhabdoid tumour is ICCC-3 Group VII, subgroup VIIa2, rhabdoid hepatic tumour.",
+          "authoring_note": "ICCC-2017 range 68: 8963 at sites 220,221, behaviour 3, is VIIa2. Without this branch a hepatic rhabdoid tumour fell to the Group IX IXd3 default, whose site list (000-218,239-639,659-699,739-768,809) excludes 220-238. Added by the Group VII build, 2 October 2026 (Group 7 build contract Sec.7.1)."
         }
       ],
       "default": {
@@ -1114,6 +1137,35 @@
         "subgroup": "IXd3"
       },
       "cns_topography_extended_note": "Extended from the three NOS-level codes C70.9/C71.9/C72.9 to all 21 codes in C70.0-C72.9 during the Group VI build, 22 September 2026. The note this replaces said to extend it \"when Group III is authored\"; Group III was authored on 16 September 2026 and topography_codes.json now enumerates every CNS subsite, so the note's premise was false on its face (docs/TODO.md Sec.12, Group 6 build contract Sec.7.2b). Before this, a case at a SPECIFIC CNS subsite -- C71.6 cerebellum, say -- missed the branch and fell to the default, which ICCC-2017 does not admit at a CNS site at all. For 8963 the default is Group IX IXd3, whose ICCC-2017 site list (000-218,239-639,659-699,739-768,809) excludes 700-729 entirely, so a rhabdoid tumour at a specific CNS subsite named a group ICCC-2017 does not admit there and never reached 9508/3 Atypical teratoid/rhabdoid tumour."
+    },
+    "8991": {
+      "codes": [
+        "8991"
+      ],
+      "label": "Embryonal sarcoma",
+      "topography_dependent": true,
+      "discriminator": "site",
+      "branches": [
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIa3"
+          },
+          "note": "At the liver (C22.0, C22.1) an embryonal sarcoma is ICCC-3 Group VII, subgroup VIIa3, embryonal sarcoma of liver.",
+          "authoring_note": "ICCC-2017 range 69: 8991 at sites 220,221, behaviour 3, is VIIa3 (Group 7 build contract Sec.0.2 point 2, Sec.7.1)."
+        }
+      ],
+      "default": {
+        "group": 9,
+        "subgroup": "IXa"
+      },
+      "default_note": "ICCC-2017 range 91 places 8991 in IXa, rhabdomyosarcomas, at sites 000-218,239-809 -- every site except the liver. Rule added by the Group VII build, 2 October 2026; ownership agreed with the Group IX session the same day."
     },
     "8170": {
       "codes": [
@@ -1137,9 +1189,10 @@
         }
       ],
       "default": {
-        "group": 11,
-        "subgroup": null
-      }
+        "group": 7,
+        "subgroup": "VIIb"
+      },
+      "default_corrected_note": "Default changed from group 11 to group 7 VIIb during the Group VII build, 2 October 2026. ICCC-2017 range 71 places 8160-8162 and 8170-8180 in VIIb at sites 000-809, any site, and no Group XI range carries 8170 at all, so the group 11 default had no basis in the recode (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
     },
     "8000-8005": {
       "codes": [
@@ -1199,6 +1252,20 @@
             "subgroup": "VIc"
           },
           "note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIc"
+          },
+          "note": "At the liver (C22.0, C22.1) a malignant neoplasm with no specific type is ICCC-3 Group VII, subgroup VIIc, unspecified malignant hepatic tumours.",
+          "authoring_note": "ICCC-2017 range 72: 8000-8005 at sites 220,221, behaviour 3, is VIIc. Without this branch a liver case coded 8000/3 fell to the Group XII default, whose XIIb site list excludes 220-238. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5 (Group 7 build contract Sec.0.6, Sec.7.1)."
         }
       ],
       "default": {

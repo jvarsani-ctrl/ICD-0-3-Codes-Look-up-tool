@@ -242,6 +242,98 @@ file, and is not a signal that any of the three is expected soon.
 
 ---
 
+## Group 7 — open
+
+Seven ICD-O-3.2 codes the inventory carries and `Group 7- Hepatic Tumors.md` does not offer
+(Group 7 build contract §2B). Five are the ICD-O-3.2 hepatocellular carcinoma subtypes, and the
+first of them is the one a paediatric liver registry will meet.
+
+### 8171/3 — Hepatocellular carcinoma, fibrolamellar
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8171/3` Preferred |
+| REDCap | **Absent.** The list carries `8170` and `8180` only from this range |
+| ICCC-2017 | In range. VIIb row 71 runs `8160-8162,8170-8180` at any site, behaviour 3 |
+| Reached from | `hp_histology` → hepatocellular carcinoma → fibrolamellar carcinoma → the molecular step |
+| Carried by until now | `8170` Hepatocellular carcinoma, NOS. The Diagnostic Pathway (§4D, §8.3) states fibrolamellar carcinoma has no code of its own; ICD-O-3.2 gives it one |
+
+**Paediatric relevance.** 15–25% of paediatric hepatocellular carcinoma in children over 5 years,
+88% of them after 12 years (López-Terrada D, et al. Virchows Archiv 2025;486(1):23–47, p. 29).
+Until REDCap carries the option, a fibrolamellar carcinoma cannot be recorded at its own code.
+
+### 8172/3 — Hepatocellular carcinoma, scirrhous
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8172/3` Preferred; "Sclerosing hepatic carcinoma" a Synonym |
+| REDCap | **Absent** |
+| ICCC-2017 | In range, row 71 |
+| Reached from | `hp_hcc_subtype` |
+| Carried by until now | `8170` |
+
+### 8173/3 — Hepatocellular carcinoma, spindle cell variant
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8173/3` Preferred; "Hepatocellular carcinoma, sarcomatoid" a Synonym |
+| REDCap | **Absent** |
+| ICCC-2017 | In range, row 71 |
+| Reached from | `hp_hcc_subtype` |
+| Carried by until now | `8170` |
+
+### 8174/3 — Hepatocellular carcinoma, clear cell type
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8174/3` Preferred |
+| REDCap | **Absent** |
+| ICCC-2017 | In range, row 71 |
+| Reached from | `hp_hcc_subtype` |
+| Carried by until now | `8170` |
+
+### 8175/3 — Hepatocellular carcinoma, pleomorphic type
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8175/3` Preferred |
+| REDCap | **Absent** |
+| ICCC-2017 | In range, row 71 |
+| Reached from | `hp_hcc_subtype` |
+| Carried by until now | `8170` |
+
+**8172–8175 in children.** No paediatric frequency is given for these four subtypes in the Group 7
+papers. They are built under ruling 2 (a code inside an ICCC range is added) and reached only when
+a report names them.
+
+### 8023/3 — Nuclear protein in testis (NUT)-associated carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8023/3` Preferred |
+| REDCap | **Absent.** The list runs `8022`, `8030` |
+| ICCC-2017 | In range. VIIb row 70 runs `8010-8041,...` at C22.0/C22.1 |
+| Reached from | `hp_other_carcinoma` |
+| Carried by until now | Nothing. `8020` is a different, less specific diagnosis |
+
+**Paediatric relevance.** NUT carcinoma is listed among the rare "other" malignant liver tumours
+of childhood in the International Consensus Classification (López-Terrada 2025, Table 1, p. 24).
+
+### 8054/3 — Warty carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8054/3` Preferred |
+| REDCap | **Absent.** The list runs `8052`, `8070` |
+| ICCC-2017 | In range, row 70 |
+| Reached from | Direct code entry only — no decision-tree leaf |
+| Carried by until now | Nothing |
+
+**Paediatric relevance.** None established at the liver. Appended so the inventory and the option
+list stay reconcilable.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block

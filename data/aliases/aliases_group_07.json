@@ -1,0 +1,1002 @@
+[
+  {
+    "alias": "Hepatoblastoma, NOS",
+    "full_form": "Hepatoblastoma, NOS -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Hepatoblastoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common primary liver malignancy under five, generally diagnosed under 3 years (López-Terrada 2025, p. 24). Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1. It may be registered without tissue on imaging with alpha-fetoprotein raised for age in a child aged 6 months to under 3 years, at basis of diagnosis 2 (Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3).",
+    "coding_note": "ICD-O-3.2 preferred term, exact match to the generated morphology_entries[] name for 8970/3. REDCap's option string is 'Hepatoblastoma', which ICD-O-3.2 does not carry at any level (contract §2C); it is carried here as also_known_as so the REDCap label reaches the output block (ruling 6)."
+  },
+  {
+    "alias": "Embryonal hepatoma",
+    "full_form": "Embryonal hepatoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "An older name for hepatoblastoma. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "ICD-O-3.2 synonym under 8970/3."
+  },
+  {
+    "alias": "Hepatoblastoma, epithelioid",
+    "full_form": "Hepatoblastoma, epithelioid -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Epithelial hepatoblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "An epithelial hepatoblastoma. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "ICD-O-3.2 related term under 8970/3."
+  },
+  {
+    "alias": "Hepatoblastoma, mixed epithelial-mesenchymal",
+    "full_form": "Hepatoblastoma, mixed epithelial-mesenchymal -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Mixed epithelial and mesenchymal hepatoblastoma",
+      "Teratoid hepatoblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A hepatoblastoma with stromal elements such as osteoid, cartilage or spindle cells; with neural or melanin-containing elements it is called teratoid. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "ICD-O-3.2 related term under 8970/3; teratoid hepatoblastoma per López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24, p. 25."
+  },
+  {
+    "alias": "Pure fetal hepatoblastoma",
+    "full_form": "Pure fetal hepatoblastoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Well-differentiated fetal hepatoblastoma",
+      "Fetal hepatoblastoma with low mitotic activity"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Pure fetal pattern with very low mitotic activity, a diagnosis that applies only to a tumour resected up front (López-Terrada 2025, p. 24). Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "International Pediatric Liver Tumors Consensus subtype, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24."
+  },
+  {
+    "alias": "Crowded fetal hepatoblastoma",
+    "full_form": "Crowded fetal hepatoblastoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Fetal hepatoblastoma, mitotically active"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Fetal hepatoblastoma with higher mitotic activity. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "Consensus subtype, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24; p. 25."
+  },
+  {
+    "alias": "Embryonal hepatoblastoma",
+    "full_form": "Embryonal hepatoblastoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The commonest hepatoblastoma epithelial pattern (López-Terrada 2025, p. 25). Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "Consensus subtype, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24."
+  },
+  {
+    "alias": "Cholangioblastic hepatoblastoma",
+    "full_form": "Cholangioblastic hepatoblastoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A hepatoblastoma with biliary differentiation; it is not a cholangiocarcinoma. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "Consensus subtype, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24; p. 25."
+  },
+  {
+    "alias": "Macrotrabecular hepatoblastoma",
+    "full_form": "Macrotrabecular hepatoblastoma -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [
+      "Hepatoblastoma, macrotrabecular pattern"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A hepatoblastoma with trabeculae more than five cells thick. The same pattern without nuclear beta-catenin is seen in paediatric hepatocellular carcinoma (López-Terrada 2025, p. 25), so code the report's own diagnosis. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "Consensus subtype, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24; p. 25."
+  },
+  {
+    "alias": "HBL",
+    "full_form": "HBL -> Hepatoblastoma, NOS (8970)",
+    "also_known_as": [],
+    "alias_type": "abbreviation",
+    "origin_system": "Clinical abbreviation",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Abbreviation for hepatoblastoma. Every epithelial and mixed hepatoblastoma subtype is recorded as Hepatoblastoma, NOS (8970/3); the subtype refines risk and does not change the code (López-Terrada 2025, pp. 24-25). A small cell undifferentiated or rhabdoid component is decided by INI1.",
+    "coding_note": "Abbreviation listed in the Group 7 Alias Build Instructions, entry 2."
+  },
+  {
+    "alias": "Small cell undifferentiated hepatoblastoma",
+    "full_form": "Small cell undifferentiated hepatoblastoma -> 8970 or 8963, decided by INI1",
+    "also_known_as": [
+      "SCUD hepatoblastoma",
+      "Blastemal hepatoblastoma",
+      "Anaplastic hepatoblastoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8970",
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 such tumours had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
+    "coding_note": "Maps to both codes because INI1 decides between them (contract §4.3). needs_ihc_tree true: the INI1 step of g7_hepatic is the fork. maps_to_iccc3_subgroup_id is the INI1-retained subgroup; the INI1-lost case is VIIa2."
+  },
+  {
+    "alias": "Rhabdoid tumor, NOS",
+    "full_form": "Rhabdoid tumor, NOS -> Rhabdoid tumor, NOS (8963)",
+    "also_known_as": [
+      "Malignant rhabdoid tumor",
+      "Rhabdoid sarcoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa2",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Malignant rhabdoid tumour of the liver: INI1 (SMARCB1) lost, or in about 5% INI1 kept and SMARCA4 lost (López-Terrada 2025, p. 37). A Group VII code at the liver only; at the kidney it is Group VI, in the central nervous system Group III, elsewhere Group IX.",
+    "coding_note": "ICD-O-3.2 preferred term under 8963/3. REDCap's option string 'Malignant rhabdoid tumor' is an ICD-O-3.2 synonym, carried as also_known_as (contract §2C)."
+  },
+  {
+    "alias": "Malignant rhabdoid tumour of the liver",
+    "full_form": "Malignant rhabdoid tumour of the liver -> Rhabdoid tumor, NOS (8963)",
+    "also_known_as": [
+      "Extrarenal rhabdoid tumour of the liver",
+      "Rhabdoid tumour of liver"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa2",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Highly aggressive, about 5% of primary liver malignancies in infants; serum alpha-fetoprotein usually normal (López-Terrada 2025, p. 36). Defined by loss of INI1 (SMARCB1), or of SMARCA4 when INI1 is kept.",
+    "coding_note": "Clinical descriptive term for 8963/3 at C22."
+  },
+  {
+    "alias": "SMARCB1-deficient tumour of the liver",
+    "full_form": "SMARCB1-deficient tumour of the liver -> Rhabdoid tumor, NOS (8963)",
+    "also_known_as": [
+      "INI1-deficient tumour of the liver",
+      "BAF47-deficient tumour",
+      "SNF5-deficient tumour",
+      "SMARCA4-deficient rhabdoid tumour"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8963"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa2",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "INI1, SMARCB1, BAF47 and SNF5 name the same protein. Its loss in a small cell undifferentiated or rhabdoid liver tumour is malignant rhabdoid tumour (Vokuhl 2016, p. 925).",
+    "coding_note": "INI1 vocabulary per contract §6."
+  },
+  {
+    "alias": "Embryonal sarcoma",
+    "full_form": "Embryonal sarcoma -> Embryonal sarcoma (8991)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8991"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Undifferentiated embryonal sarcoma of the liver: 9-15% of liver malignancies, peak age 6-10 years, alpha-fetoprotein usually normal (López-Terrada 2025, p. 35). Diagnosed on histology alone (p. 36). A Group VII code at the liver only; elsewhere 8991 is Group IX.",
+    "coding_note": "ICD-O-3.2 preferred term under 8991/3."
+  },
+  {
+    "alias": "Undifferentiated embryonal sarcoma of the liver",
+    "full_form": "Undifferentiated embryonal sarcoma of the liver -> Embryonal sarcoma (8991)",
+    "also_known_as": [
+      "UESL",
+      "Undifferentiated (embryonal) sarcoma of the liver"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8991"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Embryonal sarcoma (8991/3). Diagnosed on histology alone; no immunohistochemical marker is diagnostic (López-Terrada 2025, p. 36). It can arise in a mesenchymal hamartoma.",
+    "coding_note": "Consensus entity, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24."
+  },
+  {
+    "alias": "Calcifying nested stromal-epithelial tumor",
+    "full_form": "Calcifying nested stromal-epithelial tumor -> ICD-O-3.2 8975/1; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "also_known_as": [
+      "Calcifying nested epithelial stromal tumor",
+      "CNSET",
+      "Nested epithelial stromal tumour",
+      "Ossifying stromal-epithelial tumour"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "ICD-O-3.2 codes it 8975/1, uncertain whether benign or malignant, and has no behaviour-3 code for it. ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted; the case goes to the registrar. A rare low-grade liver tumour of children and young adults (López-Terrada 2025, p. 43).",
+    "coding_note": "Behaviour exclusion, contract §3.1. maps_to_morphology_codes is empty, the Group 5 9514/9510-0 pattern: 8975 has no /3 entry in morphology_entries[]. REDCap's option string 'Calcifying nested epithelial stromal tumor' reverses the ICD-O-3.2 word order."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, NOS",
+    "full_form": "Hepatocellular carcinoma, NOS -> Hepatocellular carcinoma, NOS (8170)",
+    "also_known_as": [
+      "Hepatocellular carcinoma",
+      "HCC"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8170"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common paediatric liver malignancy, about 20%, in older children and adolescents, often with an underlying liver disease (López-Terrada 2025, p. 27). Group VII at any site. Fibrolamellar carcinoma has its own code, 8171/3.",
+    "coding_note": "ICD-O-3.2 preferred term under 8170/3."
+  },
+  {
+    "alias": "Hepatoma, NOS",
+    "full_form": "Hepatoma, NOS -> Hepatocellular carcinoma, NOS (8170)",
+    "also_known_as": [
+      "Hepatoma, malignant",
+      "Hepatocarcinoma",
+      "Liver cell carcinoma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8170"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "An older name for hepatocellular carcinoma. Recorded as Hepatocellular carcinoma, NOS (8170/3).",
+    "coding_note": "ICD-O-3.2 synonyms under 8170/3."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, fibrolamellar",
+    "full_form": "Hepatocellular carcinoma, fibrolamellar -> Hepatocellular carcinoma, fibrolamellar (8171)",
+    "also_known_as": [
+      "Fibrolamellar carcinoma",
+      "Fibrolamellar hepatocellular carcinoma",
+      "FLC",
+      "FL-HCC"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8171"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Fibrolamellar carcinoma has its own ICD-O-3.2 code, 8171/3; it is not recorded as 8170. It occurs mostly in adolescents and young adults, in a normal liver, and carries the DNAJB1::PRKACA fusion (López-Terrada 2025, p. 29). Not yet an option in the REDCap list.",
+    "coding_note": "ICD-O-3.2 preferred term under 8171/3, awaiting_layer1 (contract §2B, §3.2)."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, scirrhous",
+    "full_form": "Hepatocellular carcinoma, scirrhous -> Hepatocellular carcinoma, scirrhous (8172)",
+    "also_known_as": [
+      "Sclerosing hepatic carcinoma",
+      "Scirrhous hepatocellular carcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8172"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Not yet an option in the REDCap list. The closest mimic of fibrolamellar carcinoma, without the PRKACA rearrangement (Graham RP, et al. Modern Pathology 2015;28(6):822-829, p. 822).",
+    "coding_note": "ICD-O-3.2 preferred term under 8172/3, awaiting_layer1."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, spindle cell variant",
+    "full_form": "Hepatocellular carcinoma, spindle cell variant -> Hepatocellular carcinoma, spindle cell variant (8173)",
+    "also_known_as": [
+      "Hepatocellular carcinoma, sarcomatoid"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8173"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Not yet an option in the REDCap list.",
+    "coding_note": "ICD-O-3.2 preferred term under 8173/3, awaiting_layer1."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, clear cell type",
+    "full_form": "Hepatocellular carcinoma, clear cell type -> Hepatocellular carcinoma, clear cell type (8174)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8174"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Not yet an option in the REDCap list.",
+    "coding_note": "ICD-O-3.2 preferred term under 8174/3, awaiting_layer1."
+  },
+  {
+    "alias": "Hepatocellular carcinoma, pleomorphic type",
+    "full_form": "Hepatocellular carcinoma, pleomorphic type -> Hepatocellular carcinoma, pleomorphic type (8175)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8175"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Not yet an option in the REDCap list. A pleomorphic pattern in a hepatoblastoma is hepatoblastoma, not this code (López-Terrada 2025, p. 25).",
+    "coding_note": "ICD-O-3.2 preferred term under 8175/3, awaiting_layer1."
+  },
+  {
+    "alias": "Hepatocellular neoplasm NOS",
+    "full_form": "Hepatocellular neoplasm NOS -> Neoplasm, malignant (8000)",
+    "also_known_as": [
+      "HCN-NOS",
+      "Hepatocellular malignant neoplasm, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8000"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIc",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A provisional consensus category for tumours between hepatoblastoma and hepatocellular carcinoma, treated as high-risk hepatoblastoma (López-Terrada 2025, pp. 29-31). ICD-O-3.2 has no code for it. Recorded as Neoplasm, malignant (8000/3) at the liver until the registrar chooses between Hepatoblastoma, NOS (8970/3) and Hepatocellular carcinoma, NOS (8170/3).",
+    "coding_note": "Contract §3.3, registrar item §11.3. The two candidate codes sit in different ICCC subgroups (VIIa1, VIIb); the tool does not choose."
+  },
+  {
+    "alias": "Combined hepatocellular carcinoma and cholangiocarcinoma",
+    "full_form": "Combined hepatocellular carcinoma and cholangiocarcinoma -> Combined hepatocellular carcinoma and cholangiocarcinoma (8180)",
+    "also_known_as": [
+      "Hepatocholangiocarcinoma",
+      "Mixed hepatocellular and bile duct carcinoma",
+      "cHCC-CCA",
+      "Combined hepatocellular-cholangiocarcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8180"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "One tumour with intimately mixed hepatocellular and cholangiocellular differentiation, diagnosed on routine histology (Brunt E, et al. Hepatology 2018;68(1):113-126, p. 2). Two separate tumours are a collision, not this diagnosis.",
+    "coding_note": "ICD-O-3.2 preferred term and synonyms under 8180/3."
+  },
+  {
+    "alias": "Cholangiocarcinoma",
+    "full_form": "Cholangiocarcinoma -> Cholangiocarcinoma (8160)",
+    "also_known_as": [
+      "Bile duct adenocarcinoma",
+      "Bile duct carcinoma",
+      "Intrahepatic cholangiocarcinoma",
+      "Cholangiolocarcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8160"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Very rare in children. Intrahepatic cholangiocarcinoma, large duct and small duct types and cholangiolocarcinoma included (Nagtegaal ID, et al. Histopathology 2020;76(2):182-188). A cholangioblastic hepatoblastoma is hepatoblastoma, not this code. Group VII at any site.",
+    "coding_note": "ICD-O-3.2 preferred term and synonyms under 8160/3."
+  },
+  {
+    "alias": "Perihilar cholangiocarcinoma",
+    "full_form": "Perihilar cholangiocarcinoma -> Perihilar cholangiocarcinoma (8162)",
+    "also_known_as": [
+      "Klatskin tumor",
+      "Hilar cholangiocarcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8162"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Perihilar cholangiocarcinoma (8162/3). The REDCap option still reads 'Klatskin tumor', a name ICD-O-3.2 marks obsolete. Group VII at any site.",
+    "coding_note": "ICD-O-3.2 preferred term under 8162/3; 'Klatskin tumor' is an [obs] synonym (contract §3.6)."
+  },
+  {
+    "alias": "Bile duct cystadenocarcinoma",
+    "full_form": "Bile duct cystadenocarcinoma -> Bile duct cystadenocarcinoma (8161)",
+    "also_known_as": [
+      "Biliary cystadenocarcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8161"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Bile duct cystadenocarcinoma (8161/3), the code ICD-O-3.2 gives this term. The current classification calls the tumour a mucinous cystic neoplasm with an associated invasive carcinoma, which ICD-O-3.2 codes 8470/3 (Salles-Silva E, et al. Seminars in Ultrasound, CT and MRI 2025;46(2):161-176, p. 165).",
+    "coding_note": "ICD-O-3.2 preferred term under 8161/3. Registrar item §11.6."
+  },
+  {
+    "alias": "Mucinous cystic neoplasm with an associated invasive carcinoma",
+    "full_form": "Mucinous cystic neoplasm with an associated invasive carcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [
+      "Mucinous cystadenocarcinoma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2019",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Mucinous cystadenocarcinoma, NOS (8470/3), the code ICD-O-3.2 gives this term. The hepatic form was formerly called biliary cystadenocarcinoma (Salles-Silva 2025, p. 165).",
+    "coding_note": "ICD-O-3.2 synonym under 8470/3."
+  },
+  {
+    "alias": "Nuclear protein in testis (NUT)-associated carcinoma",
+    "full_form": "Nuclear protein in testis (NUT)-associated carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
+    "also_known_as": [
+      "NUT carcinoma",
+      "NUT midline carcinoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8023"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Listed among the rare malignant liver tumours of childhood (López-Terrada 2025, Table 1, p. 24). Not yet an option in the REDCap list.",
+    "coding_note": "ICD-O-3.2 preferred term and synonyms under 8023/3, awaiting_layer1."
+  },
+  {
+    "alias": "Neuroendocrine tumor, NOS",
+    "full_form": "Neuroendocrine tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [
+      "Carcinoid tumor, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "At the liver this is a Group VII code. The REDCap option reads 'Carcinoid tumor, NOS', an ICD-O-3.2 synonym.",
+    "coding_note": "ICD-O-3.2 preferred term under 8240/3; REDCap drift, contract §2C."
+  },
+  {
+    "alias": "Vipoma",
+    "full_form": "Vipoma -> Vipoma (8155)",
+    "also_known_as": [
+      "Vipoma, malignant"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8155"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option reads 'Vipoma, malignant', a string ICD-O-3.2 does not carry; ICD-O-3.2 codes the tumour 8155/3 as 'Vipoma'.",
+    "coding_note": "ICD-O-3.2 preferred term under 8155/3; REDCap drift, contract §2C."
+  },
+  {
+    "alias": "ACTH-producing tumor",
+    "full_form": "ACTH-producing tumor -> ACTH-producing tumor (8158)",
+    "also_known_as": [
+      "Endocrine tumor, functioning, NOS"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8158"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option reads 'Endocrine tumor, functioning, NOS', which ICD-O-3.2 places at 8158/1, not at the behaviour-3 code this group holds.",
+    "coding_note": "ICD-O-3.2 preferred term under 8158/3; REDCap drift, contract §2C."
+  },
+  {
+    "alias": "Urothelial carcinoma, sarcomatoid",
+    "full_form": "Urothelial carcinoma, sarcomatoid -> Urothelial carcinoma, sarcomatoid (8122)",
+    "also_known_as": [
+      "Transitional cell carcinoma, spindle cell"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8122"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option reads 'Transitional cell carcinoma, spindle cell', an ICD-O-3.2 synonym.",
+    "coding_note": "ICD-O-3.2 preferred term under 8122/3; REDCap drift, contract §2C."
+  },
+  {
+    "alias": "Mucinous carcinoma, gastric type",
+    "full_form": "Mucinous carcinoma, gastric type -> Mucinous carcinoma, gastric type (8482)",
+    "also_known_as": [
+      "Mucinous adenocarcinoma, endocervical type"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8482"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option reads 'Mucinous adenocarcinoma, endocervical type', a synonym ICD-O-3.2 marks obsolete.",
+    "coding_note": "ICD-O-3.2 preferred term under 8482/3; the REDCap string is an [obs] synonym, contract §2C."
+  },
+  {
+    "alias": "Malignant liver tumour, type not stated",
+    "full_form": "Malignant liver tumour, type not stated -> Neoplasm, malignant (8000)",
+    "also_known_as": [
+      "Liver cancer",
+      "Hepatic malignancy",
+      "Malignant liver mass"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8000"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIc",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Neoplasm, malignant (8000/3), unspecified malignant hepatic tumour, until a report names the type.",
+    "coding_note": "Umbrella term, contract §6."
+  },
+  {
+    "alias": "Hepatic carcinoma, lineage not stated",
+    "full_form": "Hepatic carcinoma, lineage not stated -> Carcinoma, NOS (8010)",
+    "also_known_as": [
+      "Liver carcinoma, NOS"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "8010"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A carcinoma of the liver whose report does not say hepatocellular or biliary. Recorded as Carcinoma, NOS (8010/3).",
+    "coding_note": "Umbrella term for the VIIb carcinoma fallback."
+  },
+  {
+    "alias": "Hepatocellular adenoma",
+    "full_form": "Hepatocellular adenoma -> ICD-O-3.2 8170/0; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "also_known_as": [
+      "Liver cell adenoma"
+    ],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A benign tumour, ICD-O-3.2 8170/0. It shares its four digits with hepatocellular carcinoma, but ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted.",
+    "coding_note": "Behaviour exclusion on the 8170 stem."
+  },
+  {
+    "alias": "Bile duct adenoma",
+    "full_form": "Bile duct adenoma -> ICD-O-3.2 8160/0; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A benign tumour, ICD-O-3.2 8160/0. It shares its four digits with cholangiocarcinoma, but ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted.",
+    "coding_note": "Behaviour exclusion on the 8160 stem."
+  },
+  {
+    "alias": "Biliary intraepithelial neoplasia, high grade",
+    "full_form": "Biliary intraepithelial neoplasia, high grade -> ICD-O-3.2 8148/2; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "also_known_as": [
+      "BilIN-3",
+      "Glandular intraepithelial neoplasia, high grade"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "An in situ lesion, ICD-O-3.2 8148/2, with no behaviour-3 code. ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted.",
+    "coding_note": "Behaviour exclusion, contract §2A."
+  },
+  {
+    "alias": "Mesenchymal hamartoma of the liver",
+    "full_form": "Mesenchymal hamartoma of the liver -> not a reportable malignancy",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The second most common benign liver tumour of childhood, usually in the first two years; alpha-fetoprotein can be moderately raised (López-Terrada 2025, p. 39). Not a reportable malignancy. Undifferentiated embryonal sarcoma can arise from it.",
+    "coding_note": "Benign, no ICD-O-3.2 malignant code; non-reportable terminal."
+  },
+  {
+    "alias": "Infantile hepatic haemangioma",
+    "full_form": "Infantile hepatic haemangioma -> not a reportable malignancy",
+    "also_known_as": [
+      "Congenital hepatic haemangioma",
+      "Hepatic hemangioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The most common vascular liver tumour of childhood, benign (López-Terrada 2025, p. 33). Not a reportable malignancy. Alpha-fetoprotein is raised in about 14% of haemangiomas, so a raised value does not make a liver mass a hepatoblastoma.",
+    "coding_note": "Benign vascular tumour; non-reportable terminal."
+  },
+  {
+    "alias": "Focal nodular hyperplasia",
+    "full_form": "Focal nodular hyperplasia -> not a reportable malignancy",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A benign liver lesion. Not a reportable malignancy.",
+    "coding_note": "Benign; non-reportable terminal."
+  },
+  {
+    "alias": "Embryonal rhabdomyosarcoma of the biliary tree",
+    "full_form": "Embryonal rhabdomyosarcoma of the biliary tree -> ICCC-3 Group IX",
+    "also_known_as": [
+      "Biliary rhabdomyosarcoma",
+      "Hepatobiliary rhabdomyosarcoma",
+      "Botryoid rhabdomyosarcoma of the bile duct"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "The commonest malignant cause of obstructive jaundice in childhood, median age 3 (López-Terrada 2025, p. 38). A soft tissue sarcoma: ICCC-3 Group IX, not Group VII.",
+    "coding_note": "Refer terminal to Group IX at hp_histology; 8910/3 is IXa at any site (ICCC-2017 row 90)."
+  },
+  {
+    "alias": "Hepatic angiosarcoma",
+    "full_form": "Hepatic angiosarcoma -> ICCC-3 Group IX",
+    "also_known_as": [
+      "Angiosarcoma of the liver"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A vascular sarcoma: ICCC-3 Group IX, not Group VII.",
+    "coding_note": "Refer terminal to Group IX; 9120/3 is IXd8 at any site (ICCC-2017 row 108)."
+  },
+  {
+    "alias": "Epithelioid haemangioendothelioma of the liver",
+    "full_form": "Epithelioid haemangioendothelioma of the liver -> ICCC-3 Group IX",
+    "also_known_as": [
+      "Hepatic epithelioid hemangioendothelioma"
+    ],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A malignant vascular tumour: ICCC-3 Group IX, not Group VII.",
+    "coding_note": "Refer terminal to Group IX; 9133/3 is IXd8 at any site (ICCC-2017 row 108)."
+  },
+  {
+    "alias": "Yolk sac tumour of the liver",
+    "full_form": "Yolk sac tumour of the liver -> ICCC-3 Group X",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "A germ cell tumour outside the gonads: ICCC-3 Group X, subgroup Xb, not Group VII. Alpha-fetoprotein is raised in over 90% of yolk sac tumours.",
+    "coding_note": "Refer terminal to Group X; 9071/3 at C22 is Xb4 (ICCC-2017 row 126)."
+  }
+]
