@@ -95,7 +95,12 @@ Agreed by message with both sessions on 2 October 2026, and recorded in their re
 **Expected merge conflicts, all mechanical:** `build_database.py` (the `GROUP8`/`GROUP9` lines in the
 behaviour table and the two guards; the group check blocks inserted after Group 6's), the end of
 `docs/clinical-warnings.md`, the Group sections of `docs/codes-awaiting-redcap.md`, and
-`alias_index.json`, which is generated — rebuild it after merging. Keep both sides of each. The
+`alias_index.json`, which is generated — rebuild it after merging, and `docs/TODO.md`, where the
+Group 8 branch deleted §8 and rewrote the §12 line that pointed at it and the footer. Keep both
+sides of each. **Group 7 changed `app.js`** so a behaviour-exclusion panel names the ICD-O behaviour
+instead of always saying "Benign"; Group 9 did not touch `app.js`, but it writes more
+behaviour-exclusion branches than any group, so drive a few of them (desmoid at `8821/1`, DFSP at
+`8832/1`, lipoblastoma at `8881/0`) in the browser after merging. The
 README's status sentence ("Groups 1 to 6 are built") was left alone on purpose; set it once, after
 all three branches merge.
 
