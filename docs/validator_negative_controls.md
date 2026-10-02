@@ -3012,3 +3012,41 @@ The one FAIL raised during this work was real and was fixed: adding the nine `C6
 `C69.4` is now declared on `g4_other_peripheral`, whose `op_medulloepithelioma` node was
 already the right destination — a fix to a pre-existing gap, since before this change `C69`
 held `C69.9` alone and no ciliary body case could reach any group at all.
+
+---
+
+# Group 8 — Malignant Bone Tumours (2 October 2026)
+
+Three rules, build contract §8. Runner: `build/negative_controls_group08.py`. It mutates an
+in-memory copy of the data, runs one rule, and expects FAIL. It first runs each rule on the
+unmutated data and expects it to pass, because a check is proved with correct data as well as
+broken data. Nothing on disk changes. Exit status 0 on 2 October 2026: **12 of 12 caught, 3 of 3
+probes pass.**
+
+| | Control | Mutation | Caught by |
+|---|---|---|---|
+| R1-A | a round cell option emits 9260 | `bn_round_cell` option 1 `9364` → `9260` | rule 1 |
+| R1-B | an alias maps to 9260 | alias "Ewing sarcoma" → `["9260"]` | rule 1 (reads the alias file) |
+| R1-C | **the aneurysmal bone cyst exclusion claims /3** | `icdo_behaviour` `"0"` → `"3"` | rule 1, keyed off the behaviours `icdo32.sqlite` carries for 9260 |
+| R1-D | a fallback names 9260 | `bn_round_cell_ihc` `nos_fallback.code` → `9260` | rule 1 |
+| R2-A | a specific code with no tissue | `bn_imaging_os` emits `9364` | rule 2 |
+| R2-B | a no-tissue terminal claims basis 7 | `bn_imaging_line` 8000 option, basis 2 → 7 | rule 2 |
+| R2-C | a specific code at basis 1 | `bn_clinical_alias` emits `9180` at basis 1 | rule 2 |
+| R2-D | **the path, not the flag** | the evidence gate's histology option captures `["Imaging"]` instead of `["Histology"]` | rule 2 — every histology terminal is now reached with no tissue in the file, and the first reported is "Sarcoma, type not stated" at basis 7 |
+| R2-E | chondrosarcoma on imaging (design D10) | `bn_imaging_line` 8000 option → `9220` | rule 2 |
+| R3-A | Ewing sarcoma on CD99 alone | the CD99 + NKX2-2 rule loses NKX2-2 | rule 3 |
+| R3-B | the fusion rule weakened | the FET::ETS rule's `positive` → CD99 alone | rule 3 |
+| R3-C | the Ewing rules disappear | every `9364` rule re-pointed to `8803` | rule 3 ("found no marker rule emitting 9364") |
+
+**R2-D is the one that matters.** Rule 2 could have read each terminal's own
+`basis_of_diagnosis` and checked that no basis-1 or basis-2 terminal emits a specific code. That
+version passes a branch that misstates its own basis, which is the defect it exists to catch.
+The rule walks the tree from the entry and carries `evidence_tests` the way `app.js`'s
+`capture()` does, so a terminal's evidence comes from the path that reaches it. R2-D changes one
+capture at the gate and leaves every terminal untouched, and the rule fails on terminals it
+never had reason to look at before.
+
+**The engine fix found while driving the tree has no build check.** The behaviour-exclusion
+banner read "Benign" for every behaviour; `9250/1` Giant cell tumour of bone rendered as benign.
+Observed in the browser on commit `1cb7a27` and corrected in `2580cdb`. After the fix the same
+path renders "Borderline or uncertain behaviour — outside this group's declared behaviour".

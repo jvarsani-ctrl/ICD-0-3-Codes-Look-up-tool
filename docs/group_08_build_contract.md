@@ -331,11 +331,11 @@ publisher withholds the XML and the PMC page served a CAPTCHA. Both are on the r
 
 ## 11. Tasks
 
-- [ ] T1 `build/generate_group08_entries.py` → `group_08_dt.json` entries and metadata
-- [ ] T2 the tree, in the same script, then `induce_flow.py`
-- [ ] T3 `aliases_group_08.json`
-- [ ] T4 router and topography changes (§7)
-- [ ] T5 `build_database.py` registration and the three §8 rules
-- [ ] T6 `docs/clinical-warnings.md` Group VIII section; `docs/group_08_layer1_repair.md`
-- [ ] T7 build, negative controls, browser drive
-- [ ] T8 `docs/group_08_build_report.md`; registrar review file complete
+- [x] T1 `build/generate_group08_entries.py` → `group_08_dt.json` entries and metadata
+- [x] T2 the tree, in the same script, then `induce_flow.py`
+- [x] T3 `aliases_group_08.json`
+- [x] T4 router and topography changes (§7)
+- [x] T5 `build_database.py` registration and the three §8 rules
+- [x] T6 `docs/clinical-warnings.md` Group VIII section; `docs/group_08_layer1_repair.md`
+- [x] T7 build, negative controls, browser drive
+- [x] T8 `docs/group_08_build_report.md`; registrar review file complete

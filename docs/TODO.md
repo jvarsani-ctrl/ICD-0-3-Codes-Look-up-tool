@@ -240,6 +240,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **IV** | `iv_morph` | **3** — picks 10, 12, 20 | **8** — picks 1, 4, 6, 9, 14, 16, 17, 19 | **0** | Ready to review, not applied | `ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` |
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
+| **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid
 
@@ -285,23 +286,6 @@ Picks 1, 17 and 19 are **benign tumours outside ICCC-3 Group IV** — out of sco
 and the registrar decides whether the record stays in the registry. Pick 9 is re-coded from the
 report. If all eight return zero records the repair is label-and-formula only, which is likely:
 the registry began operating in 2025 and Group IV is small.
-
----
-
-## 8. Pre-existing defects found during the Group 4 build, outside Group 4
-
-### 8.1 The router's `9260` dual-group rule routes a code ICD-O-3.2 no longer carries
-
-`data/shared/presentation_router.json → dual_group_rules → "9260"` routes Ewing sarcoma to
-`VIIIc1` at bone and `IXd1` at soft tissue. **ICD-O-3.2 carries `9260` at `/0` only —
-`Aneurysmal bone cyst`.** Ewing sarcoma is `9364/3`, which also carries `Peripheral
-neuroectodermal tumor`, `PPNET` and `Peripheral primitive neuroectodermal tumor` as its own
-synonyms. Verified 2026-09-16 against both the 2019 draft and the 9 October 2020 final workbook,
-so it is neither a conversion artefact nor a draft-stage edit.
-
-A Group VIII/IX defect, not a Group IV one, and deliberately **not** touched by the Group 4
-build. Closing it means re-pointing the rule to `9364` and re-checking the `VIIIc1`/`VIIIc2` and
-`IXd1`/`IXd2` subgroup labels, which change with the code.
 
 ---
 
@@ -499,8 +483,8 @@ September 2026 on the Group VI branch, except for `9473`.**
 The `9501-9504` rule carried a note reading *"Extend both files together when Group III is
 authored"* and was extended during the Group 4 build. **Three other
 rules in `data/shared/presentation_router.json` carry the identical note, verbatim, and were
-not extended.** `9260` is a separate defect and is already recorded at §8.1; it is not
-repeated here.
+not extended.** `9260` was a separate defect (the former §8.1), closed on the Group VIII
+branch on 2 October 2026 by re-keying the rule to `9364` and `9365`.
 
 ### What happens
 
@@ -1295,7 +1279,9 @@ engine gate.
 
 ---
 
-## 20. 19 `ihc_checklist` nodes are swept to a path budget, not exhaustively
+## 20. 20 `ihc_checklist` nodes are swept to a path budget, not exhaustively
+
+*Count raised from 19 to 20 on 2 October 2026: Group VIII's `bn_round_cell_ihc` (14 markers) joins them.*
 
 **Raised 22 September 2026 with `build/check_engine_flow.mjs`.**
 
@@ -1332,7 +1318,44 @@ precisely because the thing that would have caught them was not part of anything
 
 ---
 
-*Last updated 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
+## 22. ❓ FOR THE REGISTRAR — Group IV refers CD99-positive cases to Group VIII expecting Ewing sarcoma; Group VIII asks for more
+
+**Found 2 October 2026 building Group VIII.** `group_04_dt.json` `op_ewing_site`, option "Bone",
+tells the clerk: *"CD99 positive, PHOX2B and synaptophysin negative … an Ewing-family tumour,
+ICD-O-3.2 9364/3 Ewing sarcoma. Code this case from the ICCC-3 Group VIII tree."* The Group VIII
+round cell panel records `9364/3` only on CD99 **with** NKX2-2, on a FET::ETS fusion, or on the
+report's own diagnosis of Ewing sarcoma. CD99 alone falls to `8002/3` Malignant tumor, small
+cell type, because *"CD99 is not specific for sarcomas such as Ewing sarcoma; it is also
+expressed in many acute leukemias"* (Kallen ME, Hornick JL. Semin Diagn Pathol
+2022;39(1):29–37, p. 30).
+
+**What it costs.** A clerk sent from Group IV with a CD99-only panel arrives expecting `9364`
+and gets `8002`. Both screens say what they are doing, so nothing is silent, but the two groups
+state different thresholds. It extends §14, which is the same gate seen from the Group IV side.
+
+**To close.** Either Group IV's referral text drops "9364/3 Ewing sarcoma" and says only "code
+from the Group VIII tree", or the registrar rules that CD99 with PHOX2B and synaptophysin
+negative is enough for `9364/3`, and Group VIII's rule 11 and `check_group8_ewing_requires_partner`
+change with it.
+
+## 23. `alias_index.json` is over the Architecture §4C size guideline
+
+**Found 2 October 2026.** With Group VIII's 127 aliases the index is 33,383 bytes against
+Architecture §4C's "keep it under ~30 KB". The build WARNs. Groups VII and IX are being built in
+parallel and will add more. It is a budget for the whole tool, not a defect in one group's file:
+either the guideline is raised, or the index is split per group and loaded with the group,
+which `app.js`'s lazy loading (data.md §7) already does for the decision trees.
+
+## 24. `ICCC-2017.sqlite` range 60 ends in a trailing comma
+
+**Found 2 October 2026.** Range 60 (VIIIb) reads `9210,9220,9240,`. The build reports an
+unreadable range token for Group VIII (WARN). The three codes still classify through the other
+VIIIb ranges and the generator, so nothing is mis-coded today. A Layer 1 repair, the same class
+as the broken Group I row in `docs/codes-awaiting-redcap.md`.
+
+---
+
+*Last updated 2 October 2026, on the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`), §7 gains the Group VIII row, §20 recounted, §22–§24 added. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch

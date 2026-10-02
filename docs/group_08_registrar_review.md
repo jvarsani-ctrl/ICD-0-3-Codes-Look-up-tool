@@ -113,9 +113,37 @@ group to match, the option becomes "obtain the imaging report".
    ("pPNET of bone"), not VIIIc1. VIIIc1 keeps only Askin tumour. Any report built on the
    ICCC-3 subgroups needs to know.
 
+7. **I edited one Layer 1 file, for formatting only.** In `ICD coding/RedCap Options/Group 8-
+   Malignant Bone Tumors.md` the VIIIc2 line (`9364, 9364 - Peripheral neuroectodermal tumor`)
+   sat outside a code fence, so the build could not see the option and failed on correct data.
+   I added the fence; no text changed, and the file still matches the 1 October dictionary
+   snapshot. Revert it if you would rather Layer 1 files change only by your hand.
+8. **`ICCC-2017.sqlite` range 60 ends in a trailing comma** (`9210,9220,9240,`). Not fixed
+   (TODO §24).
+
 ---
 
-## D. Sources
+## D. Found during the build, and what was done about it
+
+1. **Group IV and Group VIII disagree on CD99.** Group IV refers a CD99-positive,
+   PHOX2B-negative, synaptophysin-negative bone tumour here and tells the clerk it is `9364/3`.
+   Group VIII codes `9364/3` only with NKX2-2, a fusion, or the report's own diagnosis; CD99
+   alone gives `8002/3`. Which threshold do you want? (TODO §22, which extends §14.)
+2. **The tool called every excluded tumour benign. Fixed.** The behaviour-exclusion banner
+   read "Benign" whatever the behaviour, so giant cell tumour of bone (`9250/1`) and
+   chondrosarcoma grade 1 (`9222/1`) were announced as benign. It now follows the ICD-O
+   behaviour digit. This also corrects Group V's `9514/1` and Group VI's `8960/1` screens,
+   which are on `main`.
+3. **The alias index is over its size guideline** (33 KB against ~30 KB), and Groups VII and
+   IX will add more (TODO §23).
+4. **Coordination with the Group VII and IX sessions.** Agreed on 2 October 2026: Group VIII
+   owns the Ewing and extraskeletal-bone router rules; Group IX codes soft-tissue Ewing
+   `9364/3`, round cell sarcomas `8803/3` and soft-tissue undifferentiated pleomorphic sarcoma
+   `8802/3`. Group VII adds a disjoint C22 branch to the `8000-8005` rule. The three branches
+   will text-conflict on `build_database.py`'s group guard lines and on the router file; keep
+   every side.
+
+## E. Sources
 
 1. **No baseline WHO summary paper covers the bone chapter.** The build used WHO 2020's own
    Table 1, reproduced in the ICCR bone dataset, plus Anderson & Doyle 2021. The natural paper,

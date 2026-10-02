@@ -4,8 +4,9 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Built: **1, 2, 3**, then **4** and **5** on their own branches, and **6** in progress on
-`group-06-renal`. Remaining: **7, 8, 9, 10, 11, 12**.
+Built: **1, 2, 3**, then **4**, **5** and **6** on their own branches, merged to `main`; **8** on
+`claude/group-8-tumor-pathway-64edbc` (2 October 2026), with **7** and **9** in parallel sessions.
+Remaining: **10, 11, 12**.
 
 ---
 
@@ -46,7 +47,7 @@ edition**: three of these papers do not actually cover the group they are assign
 
 | Group | Concern |
 |---|---|
-| **VIII** — bone | Sbaraglia is titled *"The 2020 WHO Classification of **Soft Tissue** Tumours"*. It does not cover the bone chapter. A search for a dedicated bone-chapter summary returns only head-and-neck jawbone tumours (Vered & Wright, Head Neck Pathol 2022;16(1):63–75) and further soft-tissue summaries (Choi & Ro, Adv Anat Pathol 2021;28(1):44–58). **Group VIII currently has no baseline that covers it.** |
+| **VIII** — bone | Sbaraglia is titled *"The 2020 WHO Classification of **Soft Tissue** Tumours"*. It does not cover the bone chapter. A search for a dedicated bone-chapter summary returns only head-and-neck jawbone tumours (Vered & Wright, Head Neck Pathol 2022;16(1):63–75) and further soft-tissue summaries (Choi & Ro, Adv Anat Pathol 2021;28(1):44–58). **Group VIII currently has no baseline that covers it.** **WORKED AROUND 2 Oct 2026, pending the registrar — no new purchase.** Three sources do the job between them. For codes: WHO 2020's own Table 1 for bone, the intermediate and malignant tumours with their ICD-O codes, reproduced with WHO/IARC permission in the International Collaboration on Cancer Reporting dataset *Primary tumour in bone — resection*, histological tumour type note, pp. 1–2. This is Group VIII's Moch Table 1. For the narrative: Anderson WJ, Doyle LA. Histopathology 2021;78(5):644–657, held in `Group 8 Papers/`. For the odontogenic subgroup: Soluk-Tekkesin M, Wright JM. Turk Patoloji Derg 2022;38(2):168–184, Table 1, read through Europe PMC (PMC9999699), standing in for Vered & Wright, whose full text the publisher withholds. Choi JH, Ro JY. *The 2020 WHO Classification of Tumors of Bone: An Updated Review.* Adv Anat Pathol 2021;28(3):119–138 (PMID 33480599) remains the natural summary paper and is paywalled. The citation above (28(1):44–58) is a different Choi & Ro paper. Full working: `docs/group_08_build_contract.md` §10. |
 | **V** — retinoblastoma | ~~Milman 2023 is indexed by PubMed as an **Editorial** with no abstract. It announces the Eye and Orbit volume rather than summarising its entities the way Louis 2021 does for CNS. Usable as a pointer; thin as an authority.~~ **RESOLVED 22 Sep 2026 — Milman 2023 stands.** The Editorial tag is real and is not a measure of standing: 25 pages against Louis 2021's 21, organised by chapter with "ICD-O coding" subsections throughout, and written by the Eye and Orbit volume's **own editorial board** — the same model as Louis 2021, which is the CNS volume's own board. No better candidate exists. Two real weaknesses replace the one withdrawn: it summarises a **beta version ahead of print** (April 2023) while the bound volume printed **23 January 2026**, thirty-three months later with no published comparison; and its Table 9 names only *Retinocytoma* and *Retinoblastoma* under the neurosensory retina, leaving the status of `9511/3`, `9512/3` and `9513/3` unsettled behind a paywall. Full working: `docs/group_05_build_contract.md` §10. |
 | **VII** — hepatic | Nagtegaal 2019 is a seven-page overview of the **whole** digestive system, also with no abstract in PubMed. Paediatric liver tumours — hepatoblastoma above all — will be thinly covered. |
 | **XI** — other epithelial and melanoma | Vol. 10 is **thyroid only**. The group also takes skin melanoma, adrenocortical carcinoma and carcinomas of other sites, each in a different volume. At least two further baselines are needed. |
