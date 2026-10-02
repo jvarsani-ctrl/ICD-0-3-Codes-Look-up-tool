@@ -163,6 +163,21 @@ def m_alias_scud_8970(d, a, r):
     next(x for x in a if x["alias"].startswith("Small cell undifferentiated"))["maps_to_morphology_codes"] = ["8970", "8963"]
 
 
+def m_8970_when_dropped(d, a, r):
+    rule(d, "hp_ini1", 2).pop("when")
+
+
+def m_scud_emits_8963(d, a, r):
+    o = option(d, "hp_histology", "A small cell undifferentiated")
+    o.pop("next_node")
+    o.update(morphology_code="8963", behavior_code="3", basis_of_diagnosis=7, reason="x")
+
+
+def m_mrt_label_scud(d, a, r):
+    option(d, "hp_histology", "The report diagnoses a malignant rhabdoid")["label"] = (
+        "The report diagnoses a malignant rhabdoid tumour with a small cell undifferentiated pattern")
+
+
 def m_inventory_drops_c22(d, a, r):
     option(d, "hp_document_inventory", "Histology report")["captures"].pop("primary_site")
 
@@ -261,6 +276,9 @@ CONTROLS = [
     ("4D", 4, "INI1 not done falls back to 8970", m_ini1_fallback_8970, "falls back to 8970"),
     ("4E", 4, "the INI1-retained 8970 rule deleted", m_drop_retained_rule, "RULE 4(d)"),
     ("4F", 4, "the SCUD alias maps to 8970 again", m_alias_scud_8970, "RULE 4(e)"),
+    ("4G", 4, "the 8970 rule loses its small-cell condition", m_8970_when_dropped, "RULE 4(f)"),
+    ("4H", 4, "the small cell option codes 8963 directly", m_scud_emits_8963, "RULE 4(a)"),
+    ("4I", 4, "the diagnosed-MRT option also names a small cell pattern", m_mrt_label_scud, "RULE 4(a)"),
     ("5A", 5, "the histology route no longer captures C22", m_inventory_drops_c22, "never established"),
     ("5B", 5, "an 8963 rule loses its primary_site when", m_8963_no_when, "without `when` primary_site"),
     ("6A", 6, "the imaging node codes 8170 at basis 2", m_imaging_emits_8170, "8170 at basis 2"),

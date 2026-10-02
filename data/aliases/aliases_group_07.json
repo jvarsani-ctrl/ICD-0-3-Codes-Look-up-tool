@@ -221,7 +221,7 @@
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
-    "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 such tumours had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
+    "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid tumour had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained and no rhabdoid cells it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
     "coding_note": "Maps to no code on purpose. Found in the browser, 2 October 2026: mapped to both 8970 and 8963, this alias and its 'SCUD' and 'anaplastic' forms were listed under 'Also called' on every 8970 output, including a hepatoblastoma coded on imaging alone, which tells the clerk a small cell undifferentiated tumour is 8970 whatever its INI1 result. INI1 decides the code (contract §4.3); the search still finds this alias and enters the tree, and needs_ihc_tree true points at the INI1 step."
   },
   {
@@ -238,7 +238,7 @@
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
-    "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 such tumours had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
+    "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid tumour had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained and no rhabdoid cells it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
     "coding_note": "Promoted from also_known_as on 'Small cell undifferentiated hepatoblastoma' to an alias of its own, because the express-lane index is built from the alias field alone: searching 'SCUD hepatoblastoma' found nothing until 2 October 2026 (found driving the search in the browser; the Group 6 alias file records the same constraint). Same target and notes as the parent entry."
   },
   {
@@ -291,28 +291,10 @@
     "coding_note": "INI1 vocabulary per contract §6."
   },
   {
-    "alias": "Embryonal sarcoma",
-    "full_form": "Embryonal sarcoma -> Embryonal sarcoma (8991)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "WHO 2022",
-    "maps_to_morphology_codes": [
-      "8991"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIa3",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g7_hepatic",
-    "tree_entry_node": "hp_document_inventory",
-    "clinical_alert": null,
-    "notes": "Undifferentiated embryonal sarcoma of the liver: 9-15% of liver malignancies, peak age 6-10 years, alpha-fetoprotein usually normal (López-Terrada 2025, p. 35). Diagnosed on histology alone (p. 36). A Group VII code at the liver only; elsewhere 8991 is Group IX.",
-    "coding_note": "ICD-O-3.2 preferred term under 8991/3."
-  },
-  {
     "alias": "Undifferentiated embryonal sarcoma of the liver",
     "full_form": "Undifferentiated embryonal sarcoma of the liver -> Embryonal sarcoma (8991)",
     "also_known_as": [
+      "Embryonal sarcoma",
       "UESL",
       "Undifferentiated (embryonal) sarcoma of the liver"
     ],
@@ -329,7 +311,7 @@
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "Recorded as Embryonal sarcoma (8991/3). Diagnosed on histology alone; no immunohistochemical marker is diagnostic (López-Terrada 2025, p. 36). It can arise in a mesenchymal hamartoma.",
-    "coding_note": "Consensus entity, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24."
+    "coding_note": "Consensus entity, López-Terrada D, Stahlschmidt J, Pérez-Atayde AR. Virchows Archiv 2025;486(1):23-47, Table 1, p. 24. Carries the ICD-O-3.2 preferred term 'Embryonal sarcoma' as also_known_as. Primary alias made liver-specific after review, 3 October 2026: the generic string will exist in another group's alias file once Groups IX and XI are built, and the express lane enters a shared alias's lowest group (contract §6). The generic string stays in also_known_as."
   },
   {
     "alias": "UESL",
@@ -763,9 +745,10 @@
     "coding_note": "ICD-O-3.2 preferred term under 8161/3. Registrar item §11.6."
   },
   {
-    "alias": "Mucinous cystic neoplasm with an associated invasive carcinoma",
-    "full_form": "Mucinous cystic neoplasm with an associated invasive carcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "alias": "Mucinous cystic neoplasm of the liver with an associated invasive carcinoma",
+    "full_form": "Mucinous cystic neoplasm of the liver with an associated invasive carcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
     "also_known_as": [
+      "Mucinous cystic neoplasm with an associated invasive carcinoma",
       "Mucinous cystadenocarcinoma, NOS"
     ],
     "alias_type": "descriptive",
@@ -781,34 +764,16 @@
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "Recorded as Mucinous cystadenocarcinoma, NOS (8470/3), the code ICD-O-3.2 gives this term. The hepatic form was formerly called biliary cystadenocarcinoma (Salles-Silva 2025, p. 165).",
-    "coding_note": "ICD-O-3.2 synonym under 8470/3."
+    "coding_note": "ICD-O-3.2 synonym under 8470/3. Primary alias made liver-specific after review, 3 October 2026: the generic string will exist in another group's alias file once Groups IX and XI are built, and the express lane enters a shared alias's lowest group (contract §6). The generic string stays in also_known_as."
   },
   {
-    "alias": "Nuclear protein in testis (NUT)-associated carcinoma",
-    "full_form": "Nuclear protein in testis (NUT)-associated carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
+    "alias": "NUT carcinoma of the liver",
+    "full_form": "NUT carcinoma of the liver -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
     "also_known_as": [
+      "Nuclear protein in testis (NUT)-associated carcinoma",
       "NUT carcinoma",
       "NUT midline carcinoma"
     ],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8023"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIb",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g7_hepatic",
-    "tree_entry_node": "hp_document_inventory",
-    "clinical_alert": null,
-    "notes": "Listed among the rare malignant liver tumours of childhood (López-Terrada 2025, Table 1, p. 24). Not yet an option in the REDCap list.",
-    "coding_note": "ICD-O-3.2 preferred term and synonyms under 8023/3, awaiting_layer1."
-  },
-  {
-    "alias": "NUT carcinoma",
-    "full_form": "NUT carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
-    "also_known_as": [],
     "alias_type": "descriptive",
     "origin_system": "ICD-O-3.2",
     "nci_concept_id": null,
@@ -822,7 +787,7 @@
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "Listed among the rare malignant liver tumours of childhood (López-Terrada 2025, Table 1, p. 24). Not yet an option in the REDCap list.",
-    "coding_note": "Promoted from also_known_as on 'Nuclear protein in testis (NUT)-associated carcinoma' to an alias of its own, because the express-lane index is built from the alias field alone: searching 'NUT carcinoma' found nothing until 2 October 2026 (found driving the search in the browser; the Group 6 alias file records the same constraint). Same target and notes as the parent entry."
+    "coding_note": "ICD-O-3.2 preferred term and synonyms under 8023/3, awaiting_layer1. Primary alias made liver-specific after review, 3 October 2026: the generic string will exist in another group's alias file once Groups IX and XI are built, and the express lane enters a shared alias's lowest group (contract §6). The generic string stays in also_known_as."
   },
   {
     "alias": "Neuroendocrine tumour of the liver",
@@ -913,12 +878,13 @@
     "coding_note": "ICD-O-3.2 preferred term under 8122/3; REDCap drift, contract §2C. Primary alias made liver-specific on 2 October 2026: the generic string is also an alias in another group's file, and app.js enters an express-lane hit's FIRST group (hit.groups[0]), so a clerk searching it for a liver tumour was entered into the other group's tree. The generic and REDCap strings stay in also_known_as, which the output block lists and the index does not."
   },
   {
-    "alias": "Mucinous carcinoma, gastric type",
-    "full_form": "Mucinous carcinoma, gastric type -> Mucinous carcinoma, gastric type (8482)",
+    "alias": "Mucinous carcinoma, gastric type, at the liver",
+    "full_form": "Mucinous carcinoma, gastric type, at the liver -> Mucinous carcinoma, gastric type (8482)",
     "also_known_as": [
+      "Mucinous carcinoma, gastric type",
       "Mucinous adenocarcinoma, endocervical type"
     ],
-    "alias_type": "who_preferred",
+    "alias_type": "descriptive",
     "origin_system": "ICD-O-3.2",
     "nci_concept_id": null,
     "who_version_current": "ICD-O-3.2",
@@ -931,7 +897,7 @@
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "The REDCap option reads 'Mucinous adenocarcinoma, endocervical type', a synonym ICD-O-3.2 marks obsolete.",
-    "coding_note": "ICD-O-3.2 preferred term under 8482/3; the REDCap string is an [obs] synonym, contract §2C."
+    "coding_note": "ICD-O-3.2 preferred term under 8482/3; the REDCap string is an [obs] synonym, contract §2C. Primary alias made liver-specific after review, 3 October 2026: the generic string will exist in another group's alias file once Groups IX and XI are built, and the express lane enters a shared alias's lowest group (contract §6). The generic string stays in also_known_as."
   },
   {
     "alias": "Malignant liver tumour, type not stated",

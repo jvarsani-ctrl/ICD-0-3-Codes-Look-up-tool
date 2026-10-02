@@ -2800,7 +2800,7 @@
             },
             {
               "feature": "The mass is predominantly cystic or multicystic",
-              "reason": "Mesenchymal hamartoma and undifferentiated embryonal sarcoma both present as solid and cystic masses, and alpha-fetoprotein can be moderately raised in mesenchymal hamartoma (López-Terrada 2025, pp. 35, 39). Tissue is required."
+              "reason": "Undifferentiated embryonal sarcoma often looks cyst-like on CT and MRI (Salles-Silva 2025, p. 173), and mesenchymal hamartoma is solid and cystic with an alpha-fetoprotein that can be moderately raised (López-Terrada 2025, p. 39). Tissue is required."
             },
             {
               "feature": "The radiologist favours a vascular lesion, such as a haemangioma",
@@ -2820,7 +2820,7 @@
           "morphology_code": "8970",
           "behavior_code": "3",
           "basis_of_diagnosis": 2,
-          "reason": "A solid liver mass with alpha-fetoprotein raised for age, in a child aged 6 months to under 3 years, with no feature that requires tissue. Recorded as Hepatoblastoma, NOS (8970/3) at basis 2, clinical investigation (Visser 2023, Table 3, pp. 04–05).",
+          "reason": "A solid liver mass with alpha-fetoprotein raised for age, with neither age diversion ticked (younger than 6 months, or 3 years or older) and no other feature that requires tissue. Recorded as Hepatoblastoma, NOS (8970/3) at basis 2, clinical investigation (Visser 2023, Table 3, pp. 04–05).",
           "insufficient_next_node": "hp_imaging_insufficient",
           "upgrade_path": "A diagnostic biopsy, which the international consensus recommends for every child with a liver tumour (López-Terrada 2014, p. 484), would confirm hepatoblastoma and exclude malignant rhabdoid tumour, hepatocellular neoplasm NOS and hepatocellular carcinoma. The hepatoblastoma subtype it reports refines risk and does not change the code.",
           "captured_variables": [
@@ -2990,10 +2990,31 @@
               }
             },
             {
-              "label": "A small cell undifferentiated (blastemal) pattern predominates, or the report describes rhabdoid cells or a malignant rhabdoid tumour",
+              "label": "A small cell undifferentiated (blastemal) pattern predominates, with no rhabdoid cells described",
               "next_node": "hp_ini1",
+              "basis_of_diagnosis": 7,
               "captures": {
-                "histology_pattern": "small_cell_undifferentiated_or_rhabdoid"
+                "histology_pattern": "small_cell_undifferentiated"
+              }
+            },
+            {
+              "label": "The report diagnoses a malignant rhabdoid tumour",
+              "morphology_code": "8963",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "The pathologist diagnoses a malignant rhabdoid tumour. Rhabdoid tumour is still diagnosed on its histomorphology (López-Terrada 2014, p. 479), and a rhabdoid tumour that keeps INI1 is a recognised entity (López-Terrada 2025, Table 1, p. 24; Vokuhl 2016, p. 927). Recorded as Rhabdoid tumor, NOS (8963/3), a Group VII code at the liver only, on the report's diagnosis.",
+              "upgrade_path": "INI1 (SMARCB1) immunohistochemistry, if it is not in the file, would confirm the diagnosis; the code stays Rhabdoid tumor, NOS whatever it shows.",
+              "coding_note": "Added after review, 3 October 2026. A report that DIAGNOSES malignant rhabdoid tumour is coded on that diagnosis, not routed through INI1: before this split, an INI1-retained malignant rhabdoid tumour reached the 8970 rule and was recoded as hepatoblastoma with 'Workup: complete' (Vokuhl 2016, p. 927, case 17: typical rhabdoid morphology, INI1 retained, classed malignant rhabdoid tumour). No satisfies_tests: 8963 requires IHC, and nothing on this path records it, so IHC shows as outstanding. Registrar item in docs/group_07_open_questions.md.",
+              "captures": {
+                "histology_pattern": "rhabdoid_tumour_diagnosed"
+              }
+            },
+            {
+              "label": "Rhabdoid cells are described, but the report does not diagnose a malignant rhabdoid tumour",
+              "next_node": "hp_ini1",
+              "basis_of_diagnosis": 7,
+              "captures": {
+                "histology_pattern": "rhabdoid_cells"
               }
             },
             {
@@ -3001,7 +3022,8 @@
               "next_node": "hp_hcc_subtype",
               "captures": {
                 "histology_pattern": "hepatocellular_carcinoma"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Hepatocellular neoplasm NOS (HCN-NOS), hepatocellular malignant neoplasm NOS, or a hepatocellular tumour the report places between hepatoblastoma and hepatocellular carcinoma",
@@ -3023,7 +3045,7 @@
               "morphology_code": "8180",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Combined hepatocellular-cholangiocarcinoma is diagnosed on routine histology; immunostains support it but are not essential (Brunt 2018, p. 2). Two separate tumours in one liver are a collision, not this diagnosis. Recorded as Combined hepatocellular carcinoma and cholangiocarcinoma (8180/3).",
+              "reason": "Combined hepatocellular-cholangiocarcinoma is diagnosed on routine histology; immunostains support it but are not essential (Brunt 2018, manuscript p. 2). Two separate tumours in one liver are a collision, not this diagnosis. Recorded as Combined hepatocellular carcinoma and cholangiocarcinoma (8180/3).",
               "captures": {
                 "histology_pattern": "combined_hcc_cca"
               }
@@ -3033,7 +3055,8 @@
               "next_node": "hp_biliary",
               "captures": {
                 "histology_pattern": "biliary_carcinoma"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Undifferentiated embryonal sarcoma of the liver",
@@ -3057,7 +3080,8 @@
               },
               "captures": {
                 "histology_pattern": "calcifying_nested_stromal_epithelial_tumour"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Another sarcoma — embryonal rhabdomyosarcoma of the liver or bile ducts, angiosarcoma, epithelioid haemangioendothelioma, synovial sarcoma, desmoplastic small round cell tumour, or Kaposi sarcoma",
@@ -3096,14 +3120,16 @@
               "next_node": "hp_secondary_deposit",
               "captures": {
                 "histology_pattern": "metastasis"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Another carcinoma — adenocarcinoma, a neuroendocrine tumour or carcinoma, NUT carcinoma, undifferentiated carcinoma, or a carcinoma whose lineage the report does not state",
               "next_node": "hp_other_carcinoma",
               "captures": {
                 "histology_pattern": "other_carcinoma"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Hepatocellular adenoma",
@@ -3117,7 +3143,8 @@
               },
               "captures": {
                 "histology_pattern": "hepatocellular_adenoma"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Bile duct adenoma",
@@ -3131,7 +3158,8 @@
               },
               "captures": {
                 "histology_pattern": "bile_duct_adenoma"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Biliary intraepithelial neoplasia, high grade (BilIN-3), or high-grade glandular dysplasia with no invasive carcinoma",
@@ -3145,7 +3173,8 @@
               },
               "captures": {
                 "histology_pattern": "biliary_intraepithelial_neoplasia_high_grade"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Another benign or non-neoplastic lesion — haemangioma, mesenchymal hamartoma, focal nodular hyperplasia, a macroregenerative or dysplastic nodule, a cyst or an abscess",
@@ -3174,9 +3203,9 @@
           "step_number": 3,
           "step_label": "INI1 — hepatoblastoma or malignant rhabdoid tumour",
           "question": "Record the INI1 (SMARCB1) result, and SMARCA4 (BRG1) if it was done.",
-          "hint": "In a small cell undifferentiated or rhabdoid liver tumour, INI1 decides the code. Lost: malignant rhabdoid tumour — 22 of 23 tumours first called small cell undifferentiated hepatoblastoma had lost it (Vokuhl 2016, p. 925). Retained, with a valid internal control: hepatoblastoma (López-Terrada 2025, p. 25). About 5% of rhabdoid tumours keep INI1 and lose SMARCA4 instead (p. 37). INI1, SMARCB1, BAF47 and SNF5 name the same protein.",
+          "hint": "In a small cell undifferentiated liver tumour, INI1 decides the code. Lost: malignant rhabdoid tumour — 22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid tumour had lost it (Vokuhl 2016, p. 925). With INI1 retained, a small cell undifferentiated pattern in a hepatoblastoma carries no adverse prognosis of its own (López-Terrada 2025, p. 25). About 5% of rhabdoid tumours keep INI1 and lose SMARCA4 instead (p. 37). INI1, SMARCB1, BAF47 and SNF5 name the same protein.",
           "clinical_alert": null,
-          "coding_note": "Contract §4.3, the group's signature fork. Retention is its own POSITIVE marker, not a negative requirement on the loss marker, because app.js markerOff() satisfies a negative requirement with a marker that was never recorded (line 1220) — a 'not lost' rule written that way would code an untested tumour as hepatoblastoma, the error Vokuhl 2016 documents. Marker wording follows Group 3 st_embryonal_family. The SMARCA4 rule precedes the retention rule, so a tumour with INI1 retained and SMARCA4 lost reaches 8963. The 8963 rules condition on primary_site C22 (ICCC-2017 row 68; check_group7_c22_only_codes). INI1 not done falls to 8000/3 (ruling 11: the nearest code that does not overstate). The SMARCB1-loss rule also names the RETAINED marker as negative, so once retention is recorded the flow does not ask for an INI1 loss that would contradict it (found driving the flow in the browser, 2 October 2026); SMARCA4 is still asked, because about 5% of rhabdoid tumours keep INI1 and lose SMARCA4.",
+          "coding_note": "Contract §4.3, the group's signature fork. Retention is its own POSITIVE marker, not a negative requirement on the loss marker, because app.js markerOff() satisfies a negative requirement with a marker that was never recorded (line 1220) — a 'not lost' rule written that way would code an untested tumour as hepatoblastoma, the error Vokuhl 2016 documents. Marker wording follows Group 3 st_embryonal_family. The SMARCA4 rule precedes the retention rule, so a tumour with INI1 retained and SMARCA4 lost reaches 8963. The 8963 rules condition on primary_site C22 (ICCC-2017 row 68; check_group7_c22_only_codes). INI1 not done falls to 8000/3 (ruling 11: the nearest code that does not overstate). The SMARCB1-loss rule also names the RETAINED marker as negative, so once retention is recorded the flow does not ask for an INI1 loss that would contradict it (found driving the flow in the browser, 2 October 2026); SMARCA4 is still asked, because about 5% of rhabdoid tumours keep INI1 and lose SMARCA4. Review of 3 October 2026: the 8970 rule now requires histology_pattern small_cell_undifferentiated, and a fourth rule sends INI1-retained rhabdoid cells to 8000/3; a report that diagnoses malignant rhabdoid tumour is coded 8963 at the histology step and never reaches this node.",
           "marker_groups": [
             {
               "group_label": "SWI/SNF complex proteins",
@@ -3188,7 +3217,8 @@
             }
           ],
           "captured_variables": [
-            "primary_site"
+            "primary_site",
+            "histology_pattern"
           ],
           "resolution_logic": [
             {
@@ -3241,9 +3271,36 @@
               "morphology_code": "8970",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "INI1 is retained, so the small cell undifferentiated pattern belongs to a hepatoblastoma; with INI1 retained it carries no adverse prognosis of its own (López-Terrada 2025, p. 25). Recorded as Hepatoblastoma, NOS (8970/3).",
+              "reason": "INI1 is retained in a tumour with a small cell undifferentiated pattern and no rhabdoid cells. The pattern belongs to a hepatoblastoma, where with INI1 retained it carries no adverse prognosis of its own (López-Terrada 2025, p. 25). Recorded as Hepatoblastoma, NOS (8970/3).",
               "captures": {
                 "ihc_resolution": "hepatoblastoma_ini1_retained"
+              },
+              "when": {
+                "histology_pattern": [
+                  "small_cell_undifferentiated"
+                ]
+              },
+              "upgrade_path": "SMARCA4 (BRG1) immunohistochemistry, if it was not done: about 5% of malignant rhabdoid tumours keep INI1 and lose SMARCA4 (López-Terrada 2025, p. 37)."
+            },
+            {
+              "when": {
+                "histology_pattern": [
+                  "rhabdoid_cells"
+                ]
+              },
+              "positive": [
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control"
+              ],
+              "morphology_code": "8000",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "INI1 is retained in a tumour with rhabdoid cells that the report does not call a malignant rhabdoid tumour. A retained INI1 does not exclude one: in the Kiel series the one tumour that kept INI1 had typical rhabdoid morphology and was a malignant rhabdoid tumour (Vokuhl 2016, p. 927). Recorded as Neoplasm, malignant (8000/3) at the liver until the pathologist or the registrar settles it.",
+              "upgrade_path": "A pathologist's final diagnosis — hepatoblastoma or malignant rhabdoid tumour — and SMARCA4 (BRG1) immunohistochemistry if it was not done.",
+              "satisfies_tests": [
+                "IHC"
+              ],
+              "captures": {
+                "ihc_resolution": "rhabdoid_cells_ini1_retained_unresolved"
               }
             }
           ],
@@ -3251,7 +3308,7 @@
             "code": "8000",
             "behavior_code": "3",
             "name": "Neoplasm, malignant",
-            "reason": "INI1 was not done or could not be read. A small cell undifferentiated or rhabdoid liver tumour cannot be coded as hepatoblastoma without it, because most such tumours prove to be malignant rhabdoid tumours (Vokuhl 2016, p. 925). Recorded as Neoplasm, malignant (8000/3) at the liver pending INI1 immunohistochemistry."
+            "reason": "INI1 was not done or could not be read. A small cell undifferentiated or rhabdoid-cell liver tumour cannot be coded as hepatoblastoma without it, because most such tumours prove to be malignant rhabdoid tumours (Vokuhl 2016, p. 925). Recorded as Neoplasm, malignant (8000/3) at the liver pending INI1 immunohistochemistry."
           },
           "branch_sequence": {
             "order": [
@@ -3260,7 +3317,7 @@
               "SMARCB1 (INI1) loss (nuclear expression lost in tumour cells, internal control retained)"
             ],
             "intensity_markers": [],
-            "rule_count": 3
+            "rule_count": 4
           }
         },
         {
@@ -3269,7 +3326,7 @@
           "step_number": 3,
           "step_label": "Hepatocellular carcinoma — the subtype",
           "question": "Which hepatocellular carcinoma does the report name?",
-          "hint": "Code the subtype the report names. If the report places the tumour between hepatoblastoma and hepatocellular carcinoma, or calls it a hepatocellular neoplasm NOS, go back one step and choose that instead: those tumours are nuclear β-catenin positive and are not treated as hepatocellular carcinoma (López-Terrada 2025, p. 31).",
+          "hint": "Code the subtype the report names. If the report places the tumour between hepatoblastoma and hepatocellular carcinoma, or calls it a hepatocellular neoplasm NOS, go back one step and choose that instead: those tumours are nuclear β-catenin positive and are not treated as hepatocellular carcinoma (López-Terrada 2025, pp. 30–31).",
           "clinical_alert": null,
           "coding_note": "ICD-O-3.2 carries five hepatocellular carcinoma subtype codes inside ICCC-2017 row 71, none of them a REDCap option yet (contract §2B): 8171 fibrolamellar, 8172 scirrhous, 8173 spindle cell, 8174 clear cell, 8175 pleomorphic. Fibrolamellar goes through the molecular node because a negative test can move it to 8170 (contract §3.2). Subtypes ICD-O-3.2 does not code separately stay on 8170.",
           "captured_variables": [
@@ -3281,14 +3338,15 @@
               "next_node": "hp_flc_molecular",
               "captures": {
                 "hcc_subtype": "fibrolamellar"
-              }
+              },
+              "basis_of_diagnosis": 7
             },
             {
               "label": "Scirrhous hepatocellular carcinoma",
               "morphology_code": "8172",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Recorded as Hepatocellular carcinoma, scirrhous (8172/3). It is the closest mimic of fibrolamellar carcinoma and lacks the PRKACA rearrangement (Graham 2015, p. 822).",
+              "reason": "Recorded as Hepatocellular carcinoma, scirrhous (8172/3). Scirrhous hepatocellular carcinoma can closely mimic fibrolamellar carcinoma; PRKACA FISH was negative in all six tested (Graham 2015, p. 822).",
               "captures": {
                 "hcc_subtype": "scirrhous"
               }
@@ -3342,7 +3400,7 @@
           "step_number": 4,
           "step_label": "Fibrolamellar carcinoma — molecular result",
           "question": "What does the report say about molecular testing for fibrolamellar carcinoma?",
-          "hint": "Fibrolamellar carcinoma is coded 8171/3 on its morphology. The DNAJB1::PRKACA fusion was found in every fibrolamellar carcinoma tested and in none of six scirrhous hepatocellular carcinomas (Graham 2015, p. 822); in the Carney complex PRKAR1A is lost instead (Graham 2018, PDF p. 2). A negative test changes the code only when the report itself revises the diagnosis.",
+          "hint": "Fibrolamellar carcinoma is coded 8171/3 on its morphology. The DNAJB1::PRKACA fusion transcript was found in every fibrolamellar carcinoma tested and in no other liver tumour type, and PRKACA FISH was negative in all six scirrhous hepatocellular carcinomas tested (Graham 2015, p. 822). In the Carney complex PRKAR1A is lost instead (Graham 2018, PDF p. 2). A negative test changes the code only when the report itself revises the diagnosis.",
           "clinical_alert": null,
           "coding_note": "Contract §3.2. Basis 8 where a fusion or PRKAR1A loss is found (Visser rule 10: the abnormality is specific to the entity); basis 7 otherwise. The one code change: a report that revises the diagnosis to hepatocellular carcinoma with fibrolamellar-like features after negative testing — BAP1-inactivated mimics lack the fusion (López-Terrada 2025, p. 29). Gene names render verbatim (ruling 10).",
           "captured_variables": [
@@ -3363,18 +3421,19 @@
               "label": "PRKAR1A loss — loss of PRKAR1A protein or an inactivating PRKAR1A variant — with no PRKACA rearrangement",
               "morphology_code": "8171",
               "behavior_code": "3",
-              "basis_of_diagnosis": 8,
+              "basis_of_diagnosis": 7,
               "reason": "Fibrolamellar carcinoma in the Carney complex carries PRKAR1A loss instead of the DNAJB1::PRKACA fusion (Graham 2018, PDF p. 2). Recorded as Hepatocellular carcinoma, fibrolamellar (8171/3).",
               "captures": {
                 "flc_molecular": "prkar1a_loss"
-              }
+              },
+              "coding_note": "Basis 7, not 8 (review, 3 October 2026): PRKAR1A protein loss is read by immunohistochemistry, which Visser 2023 Table 1 places at 7, and PRKAR1A inactivation is the Carney-complex lesion, not an abnormality specific to fibrolamellar carcinoma, so Visser rule 10 does not give it basis 8. Registrar item in docs/group_07_open_questions.md."
             },
             {
               "label": "Not tested, or the result is not in the file",
               "morphology_code": "8171",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Fibrolamellar carcinoma diagnosed on its morphology and immunohistochemistry. Recorded as Hepatocellular carcinoma, fibrolamellar (8171/3).",
+              "reason": "Fibrolamellar carcinoma on the pathologist's diagnosis. Recorded as Hepatocellular carcinoma, fibrolamellar (8171/3).",
               "upgrade_path": "DNAJB1::PRKACA testing by RT-PCR or PRKACA FISH would confirm the diagnosis molecularly; it does not change the code.",
               "captures": {
                 "flc_molecular": "not_tested"
@@ -3594,11 +3653,27 @@
               }
             },
             {
-              "label": "A germ cell tumour",
+              "label": "A germ cell tumour, or another tumour of the ovary or testis",
               "refer_group": 10,
-              "reason": "Germ cell tumours are ICCC-3 Group X. Code the case at its primary.",
+              "reason": "Germ cell tumours and gonadal tumours are ICCC-3 Group X. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "germ_cell"
+              }
+            },
+            {
+              "label": "Retinoblastoma",
+              "refer_group": 5,
+              "reason": "Retinoblastoma is ICCC-3 Group V. Code the case at its primary.",
+              "captures": {
+                "metastasis_primary": "retinoblastoma"
+              }
+            },
+            {
+              "label": "A tumour of the brain or spinal cord",
+              "refer_group": 3,
+              "reason": "Central nervous system tumours are ICCC-3 Group III. Code the case at its primary.",
+              "captures": {
+                "metastasis_primary": "cns"
               }
             },
             {
@@ -3634,7 +3709,7 @@
               }
             },
             {
-              "label": "A carcinoma or melanoma of another organ",
+              "label": "A carcinoma or melanoma of another organ, other than the ovary or testis",
               "refer_group": 11,
               "reason": "Carcinomas of other organs and melanomas are ICCC-3 Group XI. Code the case at its primary.",
               "captures": {

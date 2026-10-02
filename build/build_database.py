@@ -954,6 +954,8 @@ GROUP7_HEPATOBLASTOMA_CODE = "8970"
 _G7_SCUD_RE = re.compile(r"small[- ]cell undifferentiated|\bSCUD\b|blastemal|rhabdoid", re.I)
 _G7_LOSS_MARKER_RE = re.compile(r"\b(SMARCB1|INI1|SMARCA4|BRG1)\b.*\bloss\b", re.I)
 _G7_RETAINED_MARKER_RE = re.compile(r"\b(SMARCB1|INI1)\b.*\bRETAINED\b", re.I)
+_G7_SMALL_CELL_RE = re.compile(r"small[- ]cell undifferentiated|\bSCUD\b|blastemal", re.I)
+_G7_MRT_DIAGNOSED_RE = re.compile(r"diagnos\w* a malignant rhabdoid tumou?r", re.I)
 
 # §3.2 — fibrolamellar carcinoma.
 GROUP7_FIBROLAMELLAR_CODE = "8171"
@@ -8101,6 +8103,22 @@ def check_group6_no_flow_cytometry(ctx: DTContext):
 # B5. Against the source of truth
 # --------------------------------------------------------------------------------------
 
+def _g7_asserted(text, rx):
+    """True when `rx` matches `text` with no negation cue in the 90 characters BEFORE it.
+
+    Rule 4 reads histology labels, where a negation precedes the term it negates:
+    "with no small cell undifferentiated or rhabdoid component". The shared
+    _marker_asserted() also looks AFTER each match, which suits molecular prose
+    ("TFE3 ... were all negative") but here cancels a term by the negation of the next
+    one: "A small cell undifferentiated pattern predominates, with no rhabdoid cells"
+    read as not asserting the small cell pattern at all. Found by the correct-data run
+    of the negative controls, 3 October 2026, the first time that label existed."""
+    for m in rx.finditer(text or ""):
+        if not _NEGATION_CUE_RE.search(text[max(0, m.start() - _NEGATION_WINDOW):m.start()]):
+            return True
+    return False
+
+
 def _g7_option_text(holder):
     """The clerk-facing words of one branch: the option label, else its reason."""
     for key in ("label", "finding", "descriptor", "site", "reason"):
@@ -8254,11 +8272,25 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
           ihc_checklist carrying both an 8963 rule and an INI1-retained 8970 rule, and
           that node's nos_fallback is not 8970.
 
+      (f) every option routing into the INI1 step from which an 8970 rule can fire —
+          its captures satisfy that rule's `when` — describes a small cell
+          undifferentiated pattern. Added after review, 3 October 2026: one option once
+          carried both "small cell undifferentiated" and "malignant rhabdoid tumour"
+          into the step, and an INI1-retained malignant rhabdoid tumour (Vokuhl 2016,
+          p. 927, case 17) reached 8970 with "Workup: complete";
+      (a') the one exemption from (a): an option whose label says the report DIAGNOSES a
+          malignant rhabdoid tumour may emit 8963 on that diagnosis, because rhabdoid
+          tumour is still a histomorphological diagnosis (López-Terrada 2014, p. 479). It
+          must not also describe a small cell undifferentiated pattern;
       (e) no alias in aliases_group_07.json that maps to 8970 asserts a small cell
           undifferentiated, blastemal or rhabdoid tumour. Found in the browser on
           2 October 2026, not by the build: an alias mapped to both 8970 and 8963 put
           "SCUD hepatoblastoma" under "Also called" on every 8970 output, including a
           case coded on imaging alone.
+
+    (c) would FAIL a correct option such as "hepatoblastoma with minor small cell
+    undifferentiated foci" that emits 8970 directly; no such option exists today, and one
+    added later should either route to the INI1 step or carry an INI1-retained marker.
 
     (c) is the condition, not the destination: a check that only tested "the SCUD
     option has a next_node" would pass a tree whose INI1 node codes 8970 on nothing
@@ -8278,7 +8310,10 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
         has_retained = any(_G7_RETAINED_MARKER_RE.search(p) for p in pos)
         if code == GROUP7_RHABDOID_CODE:
             rhabdoid_rules += 1
-            if not has_loss:
+            label = str(holder.get("label") or "")
+            diagnosed = bool(_G7_MRT_DIAGNOSED_RE.search(label)) \
+                and not _g7_asserted(label, _G7_SMALL_CELL_RE)
+            if not has_loss and not diagnosed:
                 out.append((FAIL, "RULE 4(a) — node %s (%s) emits 8963 without a SMARCB1/INI1 "
                                   "or SMARCA4/BRG1 loss marker in `positive` — malignant "
                                   "rhabdoid tumour reached on morphology alone (contract §4.3)"
@@ -8288,7 +8323,7 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
                 out.append((FAIL, "RULE 4(b) — node %s (%s) emits 8970 on an INI1/SMARCA4 "
                                   "loss marker; loss is malignant rhabdoid tumour (Vokuhl "
                                   "2016, p. 925)" % (node_id, where)))
-            if _marker_asserted(_g7_option_text(holder), _G7_SCUD_RE) and not has_retained:
+            if _g7_asserted(_g7_option_text(holder), _G7_SCUD_RE) and not has_retained:
                 out.append((FAIL, "RULE 4(c) — node %s (%s) emits 8970 for a branch that "
                                   "asserts a small cell undifferentiated or rhabdoid tumour "
                                   "with no INI1-retained marker required: %r (contract §4.3)"
@@ -8302,7 +8337,7 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
             target = holder.get("next_node")
             if not target or as_code(holder.get("morphology_code")):
                 continue
-            if not _marker_asserted(_g7_option_text(holder), _G7_SCUD_RE):
+            if not _g7_asserted(_g7_option_text(holder), _G7_SCUD_RE):
                 continue
             routed += 1
             dest = ctx.nodes.get(target) or {}
@@ -8325,6 +8360,27 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
     if not routed:
         out.append((FAIL, "RULE 4(d) — no option routes a small cell undifferentiated or "
                           "rhabdoid tumour to the INI1 step"))
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in _branch_containers(node):
+            target = holder.get("next_node")
+            dest = ctx.nodes.get(target) if target else None
+            if not dest or dest.get("node_type") != "ihc_checklist":
+                continue
+            captured = dict(holder.get("captures") or {})
+            captured.setdefault("primary_site", "C22")
+            for r in dest.get("resolution_logic") or []:
+                if not isinstance(r, dict) or as_code(r.get("morphology_code")) != GROUP7_HEPATOBLASTOMA_CODE:
+                    continue
+                when = r.get("when") or {}
+                fires = all(str(captured.get(k)) in [str(v) for v in (w if isinstance(w, list) else [w])]
+                            for k, w in when.items())
+                if fires and not _g7_asserted(_g7_option_text(holder), _G7_SMALL_CELL_RE):
+                    out.append((FAIL, "RULE 4(f) — node %s (%s) routes into %s, whose 8970 rule "
+                                      "can fire for it, but the option does not describe a small "
+                                      "cell undifferentiated pattern: %r. An INI1-retained "
+                                      "rhabdoid tumour would be recoded as hepatoblastoma "
+                                      "(Vokuhl 2016, p. 927)"
+                                % (node_id, where, target, _g7_option_text(holder)[:120])))
     alias_path = repo / "data" / "aliases" / "aliases_group_07.json" if repo else None
     if alias_path is not None and alias_path.exists():
         aliases, _ = load_json(alias_path)
@@ -8335,15 +8391,16 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
             if GROUP7_HEPATOBLASTOMA_CODE not in codes:
                 continue
             words = [entry.get("alias") or ""] + list(entry.get("also_known_as") or [])
-            if any(_marker_asserted(str(w), _G7_SCUD_RE) for w in words):
+            if any(_g7_asserted(str(w), _G7_SCUD_RE) for w in words):
                 out.append((FAIL, "RULE 4(e) — aliases_group_07.json[%d] %r maps to 8970 and "
                                   "names a small cell undifferentiated or rhabdoid tumour; it "
                                   "would be listed as another name for hepatoblastoma on "
                                   "every 8970 output, whatever INI1 showed (contract §4.3)"
                             % (i, entry.get("alias"))))
     if not [f for f in out if f[0] == FAIL]:
-        out.append((OK, "RULE 4 — %d 8963 terminal(s) all require an INI1/SMARCA4 loss "
-                        "marker; no 8970 terminal codes a small cell undifferentiated or "
+        out.append((OK, "RULE 4 — %d 8963 terminal(s), each on an INI1/SMARCA4 loss marker "
+                        "or on a report that diagnoses malignant rhabdoid tumour; no 8970 "
+                        "terminal codes a small cell undifferentiated or "
                         "rhabdoid tumour without INI1 retained; %d routing option(s) reach "
                         "a complete INI1 fork" % (rhabdoid_rules, routed)))
     return out
@@ -8381,6 +8438,12 @@ def check_group7_c22_only_codes(ctx: DTContext):
 
     A walk forward from each tree's entry node, following only edges that do NOT
     capture C22, finds every node reachable with the site unproven.
+
+    Known limit, recorded after review: `primary_site` C22 is captured by the evidence
+    step on every route, because the tree is entered for a liver mass, so the `when` on
+    the 8963 rules is satisfied by the file's own capture and never reads the topography
+    the router recorded. The check proves the capture cannot be bypassed, not that the
+    case's topography is C22 — the router's dual-group rules and rule 9 cover that.
     """
     if ctx.group != GROUP7:
         return []
