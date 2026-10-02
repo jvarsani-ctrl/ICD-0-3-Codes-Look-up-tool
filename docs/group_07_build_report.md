@@ -187,3 +187,11 @@ These shared files will conflict at merge. Each conflict resolves by keeping bot
 | `data/aliases/alias_index.json` | regenerated | regenerate after merging the alias files; never hand-merge |
 | `docs/*` shared files | appended sections | appended at the ends of the same files |
 | `app.js` | `BEHAVIOUR_LABELS` beside `BASIS_LABELS`; one heading line | none expected |
+
+**Reported by the Group IX session, 3 October 2026** (branch `claude/group-9-tumor-pathway-911c69`, 0 FAIL):
+it removed `dual_group_rules["9473"]` from the router and the `"9473"` exemption from
+`check_router_cns_topography_completeness()`, on the grounds that ICCC-2017 places `9473` in IIIc2 at
+every site and ICD-O-3.2 codes peripheral PNET at `9364/3`. No Group VII rule or check reads `9473`, so
+the two branches do not interact there. It expects text conflicts with this branch in
+`build/build_database.py`, the end of `docs/clinical-warnings.md`, `docs/codes-awaiting-redcap.md` and
+`alias_index.json`; keep both sides and regenerate the index.
