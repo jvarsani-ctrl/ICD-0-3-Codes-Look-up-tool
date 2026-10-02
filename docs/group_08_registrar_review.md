@@ -140,8 +140,10 @@ group to match, the option becomes "obtain the imaging report".
    owns the Ewing and extraskeletal-bone router rules; Group IX codes soft-tissue Ewing
    `9364/3`, round cell sarcomas `8803/3` and soft-tissue undifferentiated pleomorphic sarcoma
    `8802/3`. Group VII adds a disjoint C22 branch to the `8000-8005` rule. The three branches
-   will text-conflict on `build_database.py`'s group guard lines and on the router file; keep
-   every side.
+   will text-conflict on `build_database.py`'s group guard lines, on the router file, on
+   `docs/clinical-warnings.md` and on `docs/TODO.md` (Group IX closed §12 and removed the `9473`
+   router rule; this branch deleted §8 and edited §12's pointer to it). Regenerate
+   `alias_index.json` after merging rather than resolving it by hand. Keep every side.
 
 ## E. Sources
 
@@ -151,6 +153,9 @@ group to match, the option becomes "obtain the imaging report".
    you can obtain it, drop it in `Group 8 Papers/`.
 2. **Vered M, Wright JM. Head Neck Pathol 2022;16(1):63–75** (PMC9019005) could not be read.
    The publisher withholds the XML and the PMC page served a CAPTCHA. The build used
-   Soluk-Tekkesin & Wright 2022 instead.
+   Soluk-Tekkesin & Wright 2022 instead. The PubMed connector, which came online later the same night, also
+   returns the abstract only. The abstract adds one fact: WHO 2022 brought rhabdomyosarcoma with
+   TFCP2 rearrangement into the malignant jawbone tumours. It is a Group IX tumour, and the
+   round cell node already refers rhabdomyosarcoma there.
 3. The Diagnostic Pathway (13 June 2026) is wrong in ten places listed in the build contract §5.
    Should it be revised, or is the contract's correction list enough?
