@@ -218,7 +218,7 @@
       },
       "ask_before_site": true,
       "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass in muscle, fat or connective tissue with the bone intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
-      "authoring_note": "Group VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules."
+      "authoring_note": "Group VIII vs Group IX split for 9364 Ewing sarcoma and 9365 Askin tumour. ICD-O-3.2 deleted 9260/3 and moved Ewing sarcoma to 9364/3. See dual_group_rules."
     }
   },
   "site_to_group": {
@@ -663,9 +663,18 @@
     },
     "8": {
       "name": "Malignant Bone Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g8_bone",
+          "entry_node": "bn_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 8,
+        "tree_id": "g8_bone",
+        "entry_node": "bn_document_inventory"
+      }
     },
     "9": {
       "name": "Soft Tissue and Other Extraosseous Sarcomas",
@@ -1021,11 +1030,48 @@
         "subgroup": null
       }
     },
-    "9260": {
+    "9364": {
       "codes": [
-        "9260"
+        "9364"
       ],
       "label": "Ewing sarcoma",
+      "topography_dependent": true,
+      "discriminator": "tumour_origin",
+      "branches": [
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "bone"
+          },
+          "result": {
+            "group": 8,
+            "subgroup": "VIIIc2"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "soft_tissue"
+          },
+          "result": {
+            "group": 9,
+            "subgroup": "IXd2"
+          }
+        }
+      ],
+      "default": {
+        "group": null,
+        "subgroup": null,
+        "requires_disambiguation": true,
+        "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
+      },
+      "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
+    },
+    "9365": {
+      "codes": [
+        "9365"
+      ],
+      "label": "Askin tumour",
       "topography_dependent": true,
       "discriminator": "tumour_origin",
       "branches": [
@@ -1055,7 +1101,8 @@
         "subgroup": null,
         "requires_disambiguation": true,
         "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
-      }
+      },
+      "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
     },
     "8963": {
       "codes": [
@@ -1199,6 +1246,30 @@
             "subgroup": "VIc"
           },
           "note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C40.0",
+              "C40.1",
+              "C40.2",
+              "C40.3",
+              "C40.8",
+              "C40.9",
+              "C41.0",
+              "C41.1",
+              "C41.2",
+              "C41.3",
+              "C41.4",
+              "C41.8",
+              "C41.9"
+            ]
+          },
+          "result": {
+            "group": 8,
+            "subgroup": "VIIIe"
+          },
+          "authoring_note": "ICCC-2017 range 71: 8000-8005 at sites 400-419, behaviour 3, is subgroup VIIIe, Unspecified malignant bone tumors; XIIb (range 143) excludes 400-419. Without this branch a malignant bone neoplasm NOS fell to the Group XII default. Added in the Group VIII build, 2 October 2026; Group VII appends a disjoint C22 branch."
         }
       ],
       "default": {
