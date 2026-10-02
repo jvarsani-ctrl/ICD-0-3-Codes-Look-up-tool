@@ -8,7 +8,9 @@ morphology code, mapped to an ICCC-3 subgroup, ready for manual entry into REDCa
 option by hand. Every screen carries the line *"Advisory only — the abstractor confirms every
 code."*
 
-Specifications live one directory up, in `../`. This repository is the implementation.
+This repository is the implementation. The specifications and the code source of truth live
+in the registry vault one directory up. See "Working outside the registry vault" for what
+this repository does without them.
 
 ---
 
@@ -37,6 +39,41 @@ iframe src carries `?host=redcap&mode=transcript`.
 
 ---
 
+## Working outside the registry vault
+
+This repository is one part of a larger registry vault. Two inputs live beside it there
+rather than in git, because the sync layer that carries the vault corrupts git internals.
+
+| Input | Path in the vault | In a standalone clone |
+|---|---|---|
+| Layer 1 — ICCC-3 tables, `icdo32.sqlite`, the REDCap option strings, and `ICCC-2017.sqlite` beside it | `../../ICD coding/` | absent |
+| Project map and the ratified decisions | `../CLAUDE.md`, `../memory/*.md` | absent |
+
+A standalone clone can:
+
+- **Run the tool.** Nothing to install, no build step, no vault — see "Run it".
+- **Run the engine gate.** `node build/check_engine_flow.mjs` reads only `app.js` and
+  `data/`, and sweeps every built group.
+- **Read the decisions.** `CLAUDE.md` holds the standing rules, this file holds the three
+  rules and the registrar's rulings, and `docs/` holds the per-group build contracts, build
+  reports, baseline documents and negative controls.
+
+It cannot run `build/build_database.py`, which verifies every morphology code against Layer 1.
+No code can be verified when the source of truth is absent, so preflight stops and lists every
+missing requirement at once. That is the gate working, not a fault to route around. Point it
+at Layer 1 wherever it sits:
+
+```bash
+python3 build/build_database.py --layer1 "/path/to/ICD coding"
+```
+
+```bash
+export ICD_LAYER1="/path/to/ICD coding"
+```
+
+With neither given the default is `<repo>/../../ICD coding`, which is correct when the
+checkout sits in the vault.
+
 ## Layout
 
 ```
@@ -56,6 +93,7 @@ build/
 
 ```
 LAYER 1  ../../ICD coding/  ICCC-3 tables + the REDCap option strings   read-only truth
+         vault-side; override with --layer1 or $ICD_LAYER1
 LAYER 2  data/database/group_NN_dt.json     morphology entries + trees
 LAYER 3  data/shared/ + data/aliases/       routing and alias JSON
 LAYER 4  app.js                             one group-agnostic engine
@@ -146,20 +184,22 @@ green build.
 
 ## Status
 
-Group 1 (Leukaemias) is built and passing: 84 morphology entries, 4 trees, 97 nodes, 283
-aliases, 32 checks green. Groups 2–12 are declared in the router as `built: false`; the tool
-says "not yet available" rather than throwing.
+**Groups 1 to 6 are built and passing.** `data/database/` carries `group_01_dt.json` through
+`group_06_dt.json` with an alias file for each. The router declares Groups 7 to 12
+`built: false` and the tool says "not yet available" rather than throwing.
+`python3 build/build_database.py` reports `BUILD PASSED`.
 
-Group 1's 15 `refer_group` branches point at a Group II that does not exist, so leukaemic
-Burkitt currently lands nowhere — building Group II clears that debt.
+Group 1's 15 `refer_group` branches resolve — building Group II cleared that debt.
 
-See `../CLAUDE.md` for the project map and `../memory/` for the ratified decisions behind
-every choice in this repository.
+When this checkout sits in the registry vault, `../CLAUDE.md` holds the project map and
+`../memory/` the ratified decisions behind every choice here. In a standalone clone both are
+absent, and `CLAUDE.md` and `docs/` carry the same decisions.
 
 ## The 4 September 2026 registrar rulings
 
 Jay ruled on the twenty problems in the Group II review. The binding text is in
-`../memory/registrar-rulings.md`; what follows is what changed in this repository.
+`../memory/registrar-rulings.md` when the vault is present; what follows is what changed in
+this repository, and stands on its own without it.
 
 **The checklist is a flow chart (ruling 13).** A node of type `ihc_checklist` used to show
 every marker it knew about and evaluate an ordered rule list against whatever was ticked.
@@ -197,7 +237,7 @@ place each came from.
 `9749` Erdheim-Chester disease, `9819` B lymphoblastic leukemia/lymphoma BCR-ABL1-like. Each
 carries `awaiting_layer1` and is listed in `docs/codes-awaiting-redcap.md`; the build fails if
 those two facts disagree. Every term is verified against the IARC ICD-O-3.2 table, converted
-to `../../ICD coding/ICD-O-3.2/icdo32.sqlite`.
+to `icdo32.sqlite` inside Layer 1 (`../../ICD coding/ICD-O-3.2/` when the vault is present).
 
 **9754 is retired** (ruling 8). ICD-O-3.2 does not list it; the REDCap row for it carries
 9751's name and 9751's change note. LCH resolves to 9751 with the behaviour split.
