@@ -8183,10 +8183,11 @@ def check_group9_basis_rows(ctx: DTContext):
         if basis == 1:
             skin = (holder.get("captures") or {}).get("lesion_site") == "skin"
             if code not in GROUP9_VISSER_BASIS1 or not skin:
+                why = ("" if code not in GROUP9_VISSER_BASIS1 or skin
+                       else " without capturing lesion_site 'skin'")
                 out.append((FAIL, "RULE 4 — %s emits %s at basis 1%s. Visser Table 3 gives "
                                   "basis 1 only to Kaposi sarcoma of the skin, C44 (contract "
-                                  "§0.7)" % (path, code, "" if skin else " without capturing "
-                                             "lesion_site 'skin'")))
+                                  "§0.7)" % (path, code, why)))
         elif code not in GROUP9_VISSER_BASIS2:
             out.append((FAIL, "RULE 4 — %s emits %s at basis 2. Visser Table 3's soft tissue "
                               "rows at basis 2 are 8800, 8850, 8890 and 9120 only (contract "
