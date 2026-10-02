@@ -466,7 +466,7 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 
 ---
 
-## 12. ✅ MOSTLY CLOSED — router dual-group rules and the stale CNS topography scope
+## 12. ✅ CLOSED — router dual-group rules and the stale CNS topography scope
 
 > **Closed 22 September 2026 on the Group VI branch (`group-06-renal`) for `8963` and
 > `8000-8005`, the two rules Group VI owns, and for `9380` and `8158,8290`, which turned out to
@@ -492,6 +492,14 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 > not any CNS code: a branch saying "the CNS" must name all of it, while `9380`'s single `C72.3`
 > is saying something narrower and is left alone. Four negative controls on the first check and
 > two on the second, all confirmed firing and restored.
+
+> **`9473` closed 2 October 2026 on the Group 9 branch.** Group IX's half of the "Group III/IX
+> decision" this item left open: ICCC-2017 range 29 is the only range carrying `9473`, at sites
+> `000-809`, resolving to IIIc2, and ICD-O-3.2 codes the peripheral PNET wordings at `9364/3`. Group
+> IX has no claim on `9473` at any site. The rule was removed, so `9473` is a single-group Group III
+> code, and its name was deleted from `check_router_cns_topography_completeness()` in the same
+> change; a stale-name clause cannot fire once the rule it names is gone (Group 9 build contract
+> §3.12; `docs/group_09_negative_controls.md`).
 
 **Found 18 September 2026 during the Group 4 build, extending the `9501-9504` rule. Fixed 22
 September 2026 on the Group VI branch, except for `9473`.**

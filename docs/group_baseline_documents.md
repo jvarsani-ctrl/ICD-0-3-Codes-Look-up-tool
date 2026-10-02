@@ -73,6 +73,14 @@ That is the registrar's call and is not assumed here.
 > the spine for Group VI either**, and the structural question above can be treated as answered for
 > two of the five paediatric-site groups: search the text, do not assume the volume.
 
+> **Group IX, 2 October 2026 — the baseline was retrieved and read, and Pfister does cover this
+> group.** Sbaraglia 2021 (PMC8167394) was read in full from Europe PMC. Its twelve tables list the
+> WHO 2020 soft tissue entities by category and print no ICD-O code, so code currency for Group IX
+> rests on ICD-O-3.2 and the IARC change documents. Unlike Groups V and VI, **Pfister 2022 has a
+> *Soft-Tissue and Bone Tumors* section and a Table 2 of paediatric soft tissue entities**, which
+> the Group 9 build uses as its paediatric-occurrence evidence (ruling 1). The bone half of that
+> table may serve Group VIII the same way. Full working: `docs/group_09_build_contract.md` §0.4.
+
 ### Two things to carry into the builds
 
 **Group XI is only half covered.** Vol. 10 is thyroid. The group also takes skin melanomas,

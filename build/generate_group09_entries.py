@@ -143,7 +143,9 @@ ANNOTATIONS = {
     "9540": dict(who="Malignant peripheral nerve sheath tumour (Table X)", paed="MPNST",
                  leaf=True, tests=HI, ihc=["H3K27me3 loss"], nos="8801",
                  note="Also carries malignant melanotic nerve sheath tumour, which WHO 2020 calls "
-                      "malignant (ICD-O-3.2 related term 'Melanotic MPNST'; contract §3.9)."),
+                      "malignant (ICD-O-3.2 related term 'Melanotic MPNST'; contract §3.9). H3K27me3 loss "
+                      "occurs in 34-73% of MPNST and in a minority of synovial sarcomas, fibrosarcomatous "
+                      "DFSP and melanomas (Martinez AP, Fritchie KJ. Surgical Pathology Clinics 2018)."),
     "9542": dict(who="Epithelioid MPNST, a subtype of MPNST (Table X)", paed=None, leaf=True,
                  tests=HI, nos="9540"),
     "9560": dict(who=None, paed=None, leaf=False, tests=HI, nos="9540",
@@ -358,7 +360,10 @@ ANNOTATIONS = {
     "8804": dict(who="Epithelioid sarcoma: proximal and classic variant (Table XI)", paed="epithelioid sarcoma",
                  leaf=True, tests=HI, ihc=["SMARCB1 (INI1) loss"], nos="8800", topo=SOFT_VS_BONE,
                  note="A specific entity, not an 'epithelioid' fallback (pathway §1 IXe). SMARCB1 "
-                      "(INI1) loss in about 90% (Agaimy A. Advances in Anatomic Pathology 2014)."),
+                      "(INI1) loss in 90-100% of the classical and 100% of the proximal type, against 50% of "
+                      "epithelioid MPNST and 10-40% of myoepithelial carcinoma (Agaimy A. Advances in "
+                      "Anatomic Pathology 2014;21(6):394-410, Table 1), so the stain alone never sets this "
+                      "code."),
     "8805": dict(who="Undifferentiated sarcoma (Table XI)", paed="undifferentiated sarcomas", leaf=True,
                  tests=H, nos="8800", topo=SOFT_VS_BONE),
 }

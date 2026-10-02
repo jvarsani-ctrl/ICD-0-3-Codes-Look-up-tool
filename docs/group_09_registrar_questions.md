@@ -135,9 +135,12 @@ registration in a KSHV-endemic setting.
 ### E2. The HHV-8 gate is not mandatory (contract §3.5; pathway §7.4)
 
 **The build:** a histology report naming Kaposi sarcoma codes `9140/3` whether or not HHV-8 LANA-1 is
-reported; an untested case shows IHC as outstanding. `9140/3` is never emitted where HHV-8 is
-reported **negative**; that case goes to a node asking the final diagnosis, and if the report still
-says Kaposi sarcoma it is coded as stated and listed here.
+reported; an untested case shows IHC as outstanding. When HHV-8 is reported **negative** the case
+goes to a node asking the final diagnosis after the stain: angiosarcoma, kaposiform
+haemangioendothelioma, spindle cell haemangioma, another benign lesion — or, if the pathologist
+still concludes Kaposi sarcoma, `9140/3` as stated. Radu O, Pantanowitz L (*Archives of Pathology &
+Laboratory Medicine* 2013;137:289–294, p. 293) record HHV-8 in some angiosarcomas, haemangiomas and
+dermatofibromas, so a positive stain is not proof either.
 **For you:** should HHV-8 LANA-1 be required before `9140/3` when the case has histology?
 
 ### E3. Lymphadenopathy now offers Group IX
@@ -198,12 +201,40 @@ its own site.
 
 ---
 
-## I. Rhabdoid tumour
+## I. Rhabdoid tumour and the SMARCB1 (INI1) fork
 
-### I1. Rhabdoid tumour named, SMARCB1 (INI1) not tested
+Agaimy A. *Advances in Anatomic Pathology* 2014;21(6):394–410, Table 1: SMARCB1 loss is 100% in
+malignant rhabdoid tumour, 90–100% in classical and 100% in proximal epithelioid sarcoma, but also
+50% in epithelioid MPNST, 10–40% in myoepithelial carcinoma, 16% in extraskeletal myxoid
+chondrosarcoma and 74% (mosaic) in ossifying fibromyxoid tumour. The stain alone never sets the code.
 
-**The build:** `8963/3` as the report states, IHC outstanding. **For you:** require INI1 loss?
+### I1. Rhabdoid tumour named, SMARCB1 (INI1) loss not recorded
+
+**The build:** `8800/3` *Sarcoma, NOS*, because rhabdoid tumour is defined by SMARCB1 loss (Agaimy
+2014, p. 2: "still represents their main defining diagnostic criterion"). **For you:** accept
+`8800/3`, or code `8963/3` as the report states with immunohistochemistry left outstanding.
 
 ### I2. Rhabdoid morphology, SMARCB1 (INI1) retained
 
-**The build:** `8800/3` *Sarcoma, NOS*, not `8963`. **For you:** confirm.
+**The build:** the same fallback, `8800/3`. **For you:** confirm.
+
+### I3. Epithelioid or rhabdoid tumour described but not named, with SMARCB1 loss
+
+**The build:** no entity code from the stain alone; the fallback is `8800/3` unless the report
+names rhabdoid tumour or epithelioid sarcoma. **For you:** confirm.
+
+## J. Spindle cell stains
+
+### J1. H3K27me3 loss counts only with nerve sheath features
+
+Martinez AP, Fritchie KJ (*Surgical Pathology Clinics* 2018) give H3K27me3 loss in 34–73% of
+malignant peripheral nerve sheath tumours and in a minority of synovial sarcomas, fibrosarcomatous
+DFSP and melanomas. **The build:** a descriptive spindle cell tumour with H3K27me3 loss codes
+`9540/3` only when the clerk entered through the nerve sheath family; otherwise `8801/3`.
+**For you:** confirm.
+
+### J2. Pan-TRK only under age 2
+
+Hung YP, et al. (*Histopathology* 2018;73:634–644, p. 634): "highly sensitive but not entirely
+specific". **The build:** pan-TRK sets `8814/3` only at age under 2; spindle cell rhabdomyosarcoma
+(myogenin) is asked first. **For you:** confirm the age gate.

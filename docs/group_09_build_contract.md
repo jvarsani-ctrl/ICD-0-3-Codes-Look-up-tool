@@ -518,17 +518,23 @@ molecular result to identify the fusion **defining the tumour the report names**
 CD99-positive) · PHOX2B → Group IV · desmin + myogenin → `st_rms` · desmin + pan-cytokeratin + WT1 →
 `8806` · SS18-SSX → `9040` · CD99 + NKX2.2 → `9364` · BCOR → `8803` · fallback `8803`.
 
-`st_spindle_ihc` — HHV-8 LANA-1 → `9140` · myogenin → `8912` · SS18-SSX → `9041` · pan-TRK with age
-under 2 → `8814` · H3K27me3 loss → `9540` · STAT6 → `st_fibroblastic` (the malignant/NOS question is
-morphological) · MUC4 → `8840` · desmin + h-caldesmon → `8890` · fallback `8801`. Pan-TRK at age 2
-or over is a NTRK-rearranged spindle cell neoplasm, which has no ICD-O-3.2 code: fallback `8801` with
-the reason saying so (registrar question).
+`st_spindle_ihc` — HHV-8 LANA-1 → `9140` · myogenin → `8912` (asked before pan-TRK, because Hung
+2018 lists spindle cell rhabdomyosarcoma among the pan-TRK-positive mimics) · SS18-SSX → `9041` ·
+pan-TRK with age under 2 → `8814` · H3K27me3 loss **with `sarcoma_lineage` nerve sheath** → `9540`
+(Martinez & Fritchie 2018: loss in 34–73% of MPNST and in a minority of synovial sarcomas,
+fibrosarcomatous DFSP and melanomas, so it does not stand alone) · STAT6 → `st_sft_behaviour` (the
+malignant-or-not question is morphological) · MUC4 → `8840` · desmin + h-caldesmon → `8890` ·
+fallback `8801`. Pan-TRK at age 2 or over is a NTRK-rearranged spindle cell neoplasm, which has no
+ICD-O-3.2 code: fallback `8801`, with the reason saying so (registrar questions B3, J2).
 
-`st_epithelioid_ihc` — CNS site + SMARCB1 loss → Group III · `C64.9` + loss → Group VI · `C22.0`/`C22.1`
-+ loss → Group VII · TFE3 → `9581` · SMARCB1 loss with rhabdoid morphology captured → `8963` · SMARCB1
-loss with epithelioid-sarcoma morphology captured → `8804` · S100 + HMB45 → `9044` (clear cell sarcoma
-of soft tissue; melanoma is Group XI, so the reason names EWSR1::ATF1 as the separator) · pan-cytokeratin
-alone → Group XI · fallback `8800`.
+`st_epithelioid_ihc` — CNS site + SMARCB1 loss → Group III (`9508`) · `C64.9` + loss → Group VI ·
+`C22.0`/`C22.1` + loss → Group VII · loss with rhabdoid morphology captured → `8963` · TFE3 →
+`9581` · fallback `8800`. Epithelioid sarcoma is coded only when the report names it: Agaimy 2014
+Table 1 gives SMARCB1 loss in 50% of epithelioid MPNST, 10–40% of myoepithelial carcinoma, 16% of
+extraskeletal myxoid chondrosarcoma and 74% (mosaic) of ossifying fibromyxoid tumour, so the stain
+with an unspecified morphology sets nothing. Melanocytic markers and cytokeratin were left out of
+the node: neither separates clear cell sarcoma from melanoma, or a keratin-positive sarcoma
+(epithelioid sarcoma, synovial sarcoma) from carcinoma, without the report's own diagnosis.
 
 Every surrogate whose source calls it imperfect (pan-TRK "not fully specific", Hung 2018; TFE3 IHC
 below RT-PCR, Jaber 2015) carries that fact in `clinical-warnings.md`, not in the tree.
