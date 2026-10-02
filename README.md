@@ -184,9 +184,11 @@ green build.
 
 ## Status
 
-**Groups 1 to 6 are built and passing.** `data/database/` carries `group_01_dt.json` through
-`group_06_dt.json` with an alias file for each. The router declares Groups 7 to 12
-`built: false` and the tool says "not yet available" rather than throwing.
+**Groups 1 to 7 are built and passing.** `data/database/` carries `group_01_dt.json` through
+`group_07_dt.json` with an alias file for each. The router declares Groups 8 to 12
+`built: false` and the tool says "not yet available" rather than throwing. Group 7, hepatic
+tumours, was built on `claude/group-7-tumor-pathway-a88513`; its build report is
+`docs/group_07_build_report.md` and its open registrar questions `docs/group_07_open_questions.md`.
 `python3 build/build_database.py` reports `BUILD PASSED`.
 
 Group 1's 15 `refer_group` branches resolve — building Group II cleared that debt.
