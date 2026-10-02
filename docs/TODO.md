@@ -239,6 +239,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **III** | `topo_code` | — | — | `710, Cerebrum` | Open — §1.1 above | same |
 | **IV** | `iv_morph` | **3** — picks 10, 12, 20 | **8** — picks 1, 4, 6, 9, 14, 16, 17, 19 | **0** | Ready to review, not applied | `ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` |
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
+| **VII** | `vii_morph` | **10** — picks 1, 3, 39, 46, 47, 60, 83, 89, 102, 103 | **26**, and pick 2 (`8975`) awaiting a ruling | **7** — `8171`–`8175`, `8023`, `8054` as picks 113–119 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid

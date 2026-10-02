@@ -163,7 +163,11 @@ Three consequences:
 
 1. **The imaging route is legitimate for `8970/3` at basis 2.** The Design Specification §3.6 adds
    the constellation: large hepatic mass, child under 3, raised alpha-fetoprotein.
-2. **No Group VII terminal emits basis 1.** A referral letter alone registers nothing.
+2. **No specific Group VII code is emitted at basis 1.** A referral note that states a malignant liver
+   tumour is likely records `8000/3` at basis 1, which Visser rule 5 allows; it never records `8970` or any
+   other specific code. *(Amended during the build: the first draft said no terminal emits basis 1, which
+   would drop a likely cancer from the registry on a note alone. Registrar item 7 in
+   `docs/group_07_open_questions.md`.)*
 3. **Everything else without pathology is `8000/3`** (rule 5), which at C22 is subgroup VIIc.
 
 **Treating without tissue and registering without tissue are different decisions.** The consensus
@@ -233,7 +237,9 @@ come from `ICCC_DB` / `ICDO_DB` when set, so it runs from a worktree.
 
 ---
 
-## 2. ★ Layer 1 conflict — REDCap and ICD-O-3.2 disagree in 36 places
+## 2. ★ Layer 1 conflict — REDCap and ICD-O-3.2 disagree in 42 places
+
+Six options the group cannot emit (§2A), seven codes REDCap lacks (§2B), ten codes whose behaviour-3 string drifts (§2C) and nineteen option strings at a behaviour the group does not declare (§2D). The heading said 36 in the first draft; the sections sum to 42.
 
 `ICD coding/RedCap Options/Group 7- Hepatic Tumors.md` offers 112 option strings on 91 codes against
 the inventory's 92 codes. It gates the exact-string check, not the build. The REDCap-facing repair
@@ -266,7 +272,7 @@ ICD-O-3.2 carries it and ICCC range 71 admits it.
 | `8963` | Malignant rhabdoid tumor | synonym; preferred is Rhabdoid tumor, NOS |
 | `8162` | Klatskin tumor | synonym carrying **[obs]**; preferred is Perihilar cholangiocarcinoma |
 | `8170` | Hepatocellular carcinoma, NOS *(plus a transcription note pasted into the label)* | Hepatocellular carcinoma, NOS |
-| `8158` | Endocrine tumor, functioning, NOS | the `8158/1` related term; `8158/3` is ACTH-producing tumor |
+| `8158` | Endocrine tumor, functioning, NOS | a Related term under `8158/3` carrying **[obs]**; the preferred term is ACTH-producing tumor. ICD-O-3.2 has no `8158/1` row (corrected 2 October 2026; the first draft of this row said `8158/1`) |
 | `8155` | Vipoma, malignant | no match at any level; ICD-O-3.2 has "Vipoma" |
 | `8122` | Transitional cell carcinoma, spindle cell | synonym; preferred is Urothelial carcinoma, sarcomatoid |
 | `8240` | Carcinoid tumor, NOS · Carcinoid tumor of uncertain malignant potential | synonym · no match; preferred is Neuroendocrine tumor, NOS |
@@ -459,7 +465,8 @@ SMARCB1 but lack SMARCA4 expression."*
 `hp_ini1` markers and rules, first match wins:
 
 ```
-1. when {primary_site: [C22]}  positive [SMARCB1 (INI1) loss …]       → 8963/3, basis 7
+1. when {primary_site: [C22]}  positive [SMARCB1 (INI1) loss …]
+                               negative [SMARCB1 (INI1) … RETAINED …]  → 8963/3, basis 7
 2. when {primary_site: [C22]}  positive [SMARCA4 (BRG1) loss …]       → 8963/3, basis 7
 3.                             positive [SMARCB1 (INI1) … RETAINED …]  → 8970/3, basis 7
 nos_fallback                                                           → 8000/3
@@ -467,6 +474,11 @@ nos_fallback                                                           → 8000/
 
 **A small cell undifferentiated or rhabdoid tumour never reaches `8970` without a recorded INI1
 result.** INI1 not done falls to `8000/3` (ruling 11: the nearest code that does not overstate).
+
+*Two amendments from driving the step in the browser.* Rule 1 names the RETAINED marker as negative,
+so once retention is recorded the flow does not ask for an INI1 loss that would contradict it; SMARCA4
+is still asked. And `8000/3` requires Histology **and** IHC, so the INI1-not-done terminal shows IHC as
+outstanding instead of "Workup: complete".
 
 ### 4.4 Hepatoblastoma subtype is code-neutral
 
@@ -542,6 +554,15 @@ ICD-O-3.2 table on disk.
 
 REDCap's drifted strings (§2C) are aliases. Clerk-facing alias text is in `reason` / `hint`.
 
+**Three constraints found driving the search, recorded so the next group does not relearn them.**
+(1) The express-lane index reads the `alias` field only, never `also_known_as`, so every abbreviation a
+clerk types — SCUD, UESL, CNSET, HCN-NOS, HCC, FLC, cHCC-CCA, Klatskin — is an alias of its own.
+(2) An alias that exists in another group's file enters that group's tree if its number is lower,
+because the engine takes `hit.groups[0]`; Group VII's primary aliases are therefore liver-specific
+("Malignant rhabdoid tumour of the liver"), with the generic strings in `also_known_as`. (3) An alias
+that maps to a code is listed under "Also called" on every output of that code, so the small cell
+undifferentiated and hepatocellular neoplasm NOS aliases map to no code.
+
 ---
 
 ## 7. Shared-layer changes this build requires
@@ -586,11 +607,11 @@ plausible correct branch (Group 6 contract §8.1).
 | 1 | `check_group7_code_set` | an entry or terminal whose `(code, behaviour)` is not in the 92-code generated inventory — the fabricated-code guard |
 | 2 | `check_group7_absent_codes` | any §2A code (8975, 8148, 8202, 8264, 8561, 9013) as a `morphology_code` or `nos_fallback` code |
 | 3 | `check_group7_behaviour_declaration` | a `behaviour_exclusion` whose `group_declares` is not `"3"`, or whose code/behaviour pair is not real in `icdo32.sqlite` |
-| 4 | `check_group7_ini1_fork` | a terminal emitting `8963` without a SMARCB1 or SMARCA4 loss marker; a rule emitting `8970` on SMARCB1 loss; a small cell undifferentiated or rhabdoid histology option that emits a code instead of routing to the INI1 node |
+| 4 | `check_group7_ini1_fork` | a terminal emitting `8963` without a SMARCB1 or SMARCA4 loss marker; a rule emitting `8970` on SMARCB1 loss; a small cell undifferentiated or rhabdoid histology option that emits `8970` instead of routing to the INI1 node; **(e)** an alias on `8970` that names a small cell undifferentiated or rhabdoid tumour (added after the browser drive) |
 | 5 | `check_group7_c22_only_codes` | an `8963` or `8991` terminal reachable without `primary_site` C22 captured |
 | 6 | `check_group7_no_tissue_codes` | a no-tissue or imaging terminal emitting anything but `8970/3` at basis 2 or `8000/3`; any basis 1 |
 | 7 | `check_group7_imaging_constellation` | the imaging node without an alpha-fetoprotein question requiring "yes", or without the age diversions |
-| 8 | `check_group7_fibrolamellar` | a fusion or PRKAR1A-positive branch emitting anything but `8171`; a fibrolamellar histology option emitting `8170` directly |
+| 8 | `check_group7_fibrolamellar` | a fusion or PRKAR1A-positive branch emitting anything but `8171`; a fibrolamellar histology option emitting `8170` directly; **(d)** any branch of the fibrolamellar molecular step other than a revised diagnosis emitting anything but `8171` (added after the first negative-control pass) |
 | 9 | `check_group7_router_c22` | the router failing to reach group 7 for 8963, 8991 and 8000–8005 at C22.0/C22.1, or 8170 at any site, keyed off `ICCC-2017.sqlite` |
 
 Plus the round-trip extension (§2E) and `BEHAVIOUR_DECLARED_BY_GROUP[GROUP7] = {"3"}`.
@@ -613,16 +634,16 @@ Regression: Groups 1–6 byte-identical to `main`.
 
 ## 10. Tasks
 
-| # | Task | Output |
-|---|---|---|
-| T1 | Generator and entries | `build/generate_group07_entries.py`, `group_07_dt.json` entries |
-| T2 | Tree | `decision_trees[0]` in `group_07_dt.json`; `induce_flow.py` |
-| T3 | Aliases | `data/aliases/aliases_group_07.json` |
-| T4 | Router | §7.1 |
-| T5 | Validator | §8 checks in `build/build_database.py` |
-| T6 | Documents | §7.3 items 1–5 |
-| T7 | Verify | §9, negative controls |
-| T8 | Report | `docs/group_07_build_report.md` |
+| # | Task | Output | Status, 3 October 2026 |
+|---|---|---|---|
+| T1 | Generator and entries | `build/generate_group07_entries.py`, `group_07_dt.json` entries | done |
+| T2 | Tree | `decision_trees[0]` in `group_07_dt.json`; `induce_flow.py` | done — 12 nodes |
+| T3 | Aliases | `data/aliases/aliases_group_07.json` | done — 58 entries |
+| T4 | Router | §7.1 | done |
+| T5 | Validator | §8 checks in `build/build_database.py` | done — rules 1–9 |
+| T6 | Documents | §7.3 items 1–5 | done |
+| T7 | Verify | §9, negative controls | done — `build/negative_controls_group07.py`, 34 controls |
+| T8 | Report | `docs/group_07_build_report.md` | done |
 
 Build all parts, then verify once (standing rule 12).
 
@@ -630,7 +651,8 @@ Build all parts, then verify once (standing rule 12).
 
 ## 11. What needs the registrar
 
-Mirrored in `docs/group_07_open_questions.md`.
+**`docs/group_07_open_questions.md` is the current list** — seventeen items, including the eight below
+and nine found during the build. The list here is the one written before any JSON.
 
 1. **The baseline document.** Nagtegaal 2019 does not cover hepatoblastoma. The build uses the
    International Consensus Classification as written in López-Terrada 2014 and 2025 (§0.4). Confirm,

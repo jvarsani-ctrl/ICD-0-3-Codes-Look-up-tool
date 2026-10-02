@@ -3012,3 +3012,102 @@ The one FAIL raised during this work was real and was fixed: adding the nine `C6
 `C69.4` is now declared on `g4_other_peripheral`, whose `op_medulloepithelioma` node was
 already the right destination — a fix to a pre-existing gap, since before this change `C69`
 held `C69.9` alone and no ciliary body case could reach any group at all.
+
+---
+
+# Group VII checks — negative controls
+
+**2–3 October 2026, on `claude/group-7-tumor-pathway-a88513`.** Evidence that the nine Group 7
+checks, and Group 7's entry into `check_icdo32_round_trip()` and `check_behaviour_exclusion()`,
+catch what they claim to. Method unchanged: break the data, confirm the check FAILs for the stated
+reason, and confirm no check fires on the correct data.
+
+## The harness
+
+`build/negative_controls_group07.py`, committed so the controls rerun from a clean checkout:
+
+```
+ICD_LAYER1="<vault>/ICD coding" python3 build/negative_controls_group07.py
+```
+
+It loads the real `group_07_dt.json`, `aliases_group_07.json` and `presentation_router.json` into
+memory, applies one mutation, writes the three into a scratch directory for the checks that read
+files, runs the one check that should catch it, and requires a FAIL whose message contains the
+expected text. Nothing under `data/` is written.
+
+## The false-FAIL control (correct data)
+
+All eleven checks report OK on the unmodified files, against real content: 92 entries and 36
+emissions in the inventory; no §2A code emitted, used as a fallback or targeted by an alias; four
+behaviour exclusions on Group VII stems; two `8963` terminals, each on an INI1 or SMARCA4 loss
+marker; sixteen C22-only emissions, all on routes that establish the liver; three no-pathology
+emissions; one imaging node with the alpha-fetoprotein question and both age diversions; four `8171`
+terminals; the router agreeing with ICCC-2017; 99 of 99 name triples real in `icdo32.sqlite`; four
+behaviour exclusions naming the preferred term.
+
+## The thirty-four controls
+
+All caught.
+
+| | Rule | Mutation |
+|---|---|---|
+| 1A | 1 | an entry's code fabricated, `8970` → `8971` |
+| 1B | 1 | a node emits a fabricated `8176` |
+| 1C | 1 | the INI1 fallback names `8999` |
+| 2A | 2 | calcifying nested stromal-epithelial tumour emitted as `8975/3` |
+| 2B | 2 | its alias maps to `8975` |
+| 2C | 2 | an entry's `nos_fallback_code` is `9013` |
+| 3A | 3 | `group_declares` copied from Group III, `"0-1,3"` |
+| 3B | 3 | a behaviour exclusion on `9131/0`, no Group VII stem |
+| 3C | 3 | the exclusion names `8975/3`, not a real pair |
+| 4A | 4 | the `8963` rule keyed on INI1 RETAINED |
+| 4B | 4 | the small cell undifferentiated histology option codes `8970` directly |
+| 4C | 4 | the `8970` rule keyed on INI1 loss |
+| 4D | 4 | INI1 not done falls back to `8970` |
+| 4E | 4 | the INI1-retained `8970` rule deleted |
+| 4F | 4 | the small cell undifferentiated alias maps to `8970` again |
+| 5A | 5 | the histology route stops capturing C22 |
+| 5B | 5 | an `8963` rule loses its `primary_site` `when` |
+| 6A | 6 | the imaging node codes `8170` at basis 2 |
+| 6B | 6 | a referral note codes `8970` at basis 1 |
+| 6C | 6 | no tissue, `8000` at basis 4 |
+| 7A | 7 | the alpha-fetoprotein question removed |
+| 7B | 7 | the alpha-fetoprotein question requires "no" |
+| 7C | 7 | the under-6-months diversion removed |
+| 7D | 7 | `8170` marked `imaging_sufficient` |
+| 8A | 8 | a `DNAJB1::PRKACA` finding codes `8170` |
+| 8B | 8 | the fibrolamellar histology option codes `8170` |
+| 8C | 8 | "not tested" fibrolamellar codes `8170` |
+| 8D | 8 | every fibrolamellar branch codes `8170` |
+| 9A | 9 | the router's `8963` C22 branch removed |
+| 9B | 9 | the `8991` C22 branch names VIIa1 |
+| 9C | 9 | the `8170` default reverted to group 11 |
+| 9D | 9 | the `8000-8005` C22 branch removed |
+| RT | round trip | `8970` named by REDCap's string "Hepatoblastoma" |
+| BE | exclusion | the `8170/0` exclusion names its synonym, not the preferred term |
+
+## What the first pass found in the checks themselves
+
+**A false FAIL on correct data, rule 8.** Clause (d) marked every node reached from an option whose
+label asserts fibrolamellar carcinoma. The option "Hepatocellular carcinoma, including fibrolamellar
+carcinoma" routes to the subtype node, so scirrhous `8172` failed. Clause (d) now reads only the
+molecular step a fibrolamellar option routes into. Without the correct-data run this would have
+reached the build as a FAIL on good data — the kind that teaches the next author to bend the data.
+
+**A control missed, rule 9.** 9B (wrong subgroup on the `8991` branch) raised no FAIL. The ICCC
+lookup returned the main group as the integer 7 and the filter compared it with the string `"VII"`,
+so the expected subgroup was always empty and the subgroup comparison never ran. 9A's message showed
+it too ("ICCC-2017 says group 7 ?"). Fixed; 9B is caught.
+
+**A gap only the browser showed, rule 4.** An alias on `8970` and `8963` put "SCUD hepatoblastoma"
+under "Also called" on every `8970` output, including a hepatoblastoma coded on imaging alone. No
+check read the alias layer for this. Clause (e) and control 4F were added.
+
+**A gap the first control list missed, rule 8.** "Not tested" fibrolamellar carcinoma re-pointed at
+`8170` names no fibrolamellar or molecular finding in its own label, so the first two clauses could
+not see it. Clause (d) and control 8C were added before the first run.
+
+## Regression
+
+Groups 1–6 data and alias files are byte-identical to `main`. The full build reports 0 FAIL, the
+engine gate included.

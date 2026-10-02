@@ -887,7 +887,7 @@
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
-    "notes": "The REDCap option reads 'Endocrine tumor, functioning, NOS', which ICD-O-3.2 places at 8158/1, not at the behaviour-3 code this group holds.",
+    "notes": "The REDCap option reads 'Endocrine tumor, functioning, NOS', a related term that ICD-O-3.2 keeps under 8158/3 and marks obsolete. The current term for the code is ACTH-producing tumor.",
     "coding_note": "ICD-O-3.2 preferred term under 8158/3; REDCap drift, contract §2C. Primary alias made liver-specific on 2 October 2026: the generic string is also an alias in another group's file, and app.js enters an express-lane hit's FIRST group (hit.groups[0]), so a clerk searching it for a liver tumour was entered into the other group's tree. The generic and REDCap strings stay in also_known_as, which the output block lists and the index does not."
   },
   {
