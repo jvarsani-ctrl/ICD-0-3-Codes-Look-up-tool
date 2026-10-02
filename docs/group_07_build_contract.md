@@ -314,7 +314,8 @@ node records the basis and catches the one case that moves off the code:
   et al. Modern Pathology 2015;28(6):822–829, p. 822: the fusion was found in all fibrolamellar
   carcinomas and in no other tumour type tested, and PRKACA FISH was negative in all six scirrhous
   hepatocellular carcinomas, the closest mimic.
-- PRKAR1A loss, fusion absent → `8171/3`, basis 8. Graham RP, et al. Hepatology 2018;68(4):1441–1447,
+- PRKAR1A loss, fusion absent → `8171/3`, basis **7** (revised from 8 after review: the loss is read by
+  immunohistochemistry and is not specific to fibrolamellar carcinoma). Graham RP, et al. Hepatology 2018;68(4):1441–1447,
   PDF p. 2: Carney-complex fibrolamellar carcinomas carry PRKAR1A inactivation instead of the fusion.
 - not tested → `8171/3`, basis 7. CK7 and CD68 positivity is the routine diagnosis (Lin CC, Yang HM.
   Archives of Pathology & Laboratory Medicine 2018;142(9):1141–1145, p. 1143).
@@ -382,7 +383,9 @@ hp_imaging_insufficient  (morphology_only)          8000/3 basis 2 · non-report
 hp_cytology              (morphology_only)          8970/3 or 8170/3 at basis 5 · 8000/3
 hp_histology             (histology_subclassification)  the entity split
   ├── hepatoblastoma, no small cell undifferentiated predominance ..... 8970/3
-  ├── small cell undifferentiated / blastemal predominance, or rhabdoid  hp_ini1
+  ├── small cell undifferentiated / blastemal predominance .............. hp_ini1
+  ├── report diagnoses malignant rhabdoid tumour ......................... 8963/3
+  ├── rhabdoid cells described, no rhabdoid tumour diagnosis ............. hp_ini1
   ├── hepatocellular carcinoma ..................................... hp_hcc_subtype
   ├── hepatocellular neoplasm NOS / features between HB and HCC ...... 8000/3, registrar
   ├── combined hepatocellular-cholangiocarcinoma ..................... 8180/3
@@ -397,7 +400,7 @@ hp_histology             (histology_subclassification)  the entity split
   ├── benign lesion on a Group VII stem ............................. behaviour_exclusion
   ├── benign lesion, no Group VII stem .............................. non-reportable
   └── malignant, type not determined ................................ 8000/3
-hp_ini1                  (ihc_checklist)            SMARCB1 loss / SMARCA4 loss → 8963 · retained → 8970
+hp_ini1                  (ihc_checklist)            SMARCB1 / SMARCA4 loss → 8963 · small cell + retained → 8970 · rhabdoid cells + retained → 8000
 hp_hcc_subtype           (histology_subclassification)  8170, 8172–8175; fibrolamellar → hp_flc_molecular
 hp_flc_molecular         (cytogenetics_dropdown)    8171 (basis 8 or 7) · 8170 on revision
 hp_biliary               (histology_subclassification)  8160, 8162, 8161, 8470
@@ -411,8 +414,14 @@ imaging route, as diversion criteria.
 ### 4.1 Evidence does not monotonically refine the code
 
 As in Group VI: a hepatoblastoma coded on imaging stays `8970/3` when histology arrives. Epithelial
-subtype refines risk, not the code (López-Terrada 2025, pp. 24–25). The `8970` terminal does not
-present histology as outstanding work on the imaging route. Use `satisfies_tests` deliberately.
+subtype refines risk, not the code (López-Terrada 2025, pp. 24–25). **Unlike Group VI, the imaging
+`8970` terminal does show histology as outstanding work**: the consensus asks for a biopsy in every
+patient (López-Terrada 2014, p. 484), so suppressing the row would show the case as better worked up
+than it is. *(The first draft of this paragraph said the opposite; the build chose the safer reading.)*
+Use `satisfies_tests` deliberately.
+
+The citation "Ferraro 2019" refers to *Clinical Chemistry and Laboratory Medicine* 2019;57(6):783–797;
+the copy held is the 2018 ahead-of-print PDF, and its PDF page numbers are the ones cited.
 
 ### 4.2 The imaging route
 
@@ -468,8 +477,18 @@ SMARCB1 but lack SMARCA4 expression."*
 1. when {primary_site: [C22]}  positive [SMARCB1 (INI1) loss …]
                                negative [SMARCB1 (INI1) … RETAINED …]  → 8963/3, basis 7
 2. when {primary_site: [C22]}  positive [SMARCA4 (BRG1) loss …]       → 8963/3, basis 7
-3.                             positive [SMARCB1 (INI1) … RETAINED …]  → 8970/3, basis 7
+3. when {histology_pattern: [small_cell_undifferentiated]}
+                               positive [SMARCB1 (INI1) … RETAINED …]  → 8970/3, basis 7
+4. when {histology_pattern: [rhabdoid_cells]}
+                               positive [SMARCB1 (INI1) … RETAINED …]  → 8000/3, basis 7
 nos_fallback                                                           → 8000/3
+
+*Revised after the independent review of 3 October 2026.* The first version had one option carrying
+both "small cell undifferentiated" and "malignant rhabdoid tumour" into this step and an unconditioned
+rule 3, so an INI1-retained malignant rhabdoid tumour — Vokuhl 2016, p. 927, case 17 — was coded
+`8970` with "Workup: complete". A report that **diagnoses** malignant rhabdoid tumour is now coded
+`8963/3` at the histology step, because rhabdoid tumour is still a histomorphological diagnosis
+(López-Terrada 2014, p. 479).
 ```
 
 **A small cell undifferentiated or rhabdoid tumour never reaches `8970` without a recorded INI1
@@ -607,7 +626,7 @@ plausible correct branch (Group 6 contract §8.1).
 | 1 | `check_group7_code_set` | an entry or terminal whose `(code, behaviour)` is not in the 92-code generated inventory — the fabricated-code guard |
 | 2 | `check_group7_absent_codes` | any §2A code (8975, 8148, 8202, 8264, 8561, 9013) as a `morphology_code` or `nos_fallback` code |
 | 3 | `check_group7_behaviour_declaration` | a `behaviour_exclusion` whose `group_declares` is not `"3"`, or whose code/behaviour pair is not real in `icdo32.sqlite` |
-| 4 | `check_group7_ini1_fork` | a terminal emitting `8963` without a SMARCB1 or SMARCA4 loss marker; a rule emitting `8970` on SMARCB1 loss; a small cell undifferentiated or rhabdoid histology option that emits `8970` instead of routing to the INI1 node; **(e)** an alias on `8970` that names a small cell undifferentiated or rhabdoid tumour (added after the browser drive) |
+| 4 | `check_group7_ini1_fork` | a terminal emitting `8963` without a SMARCB1 or SMARCA4 loss marker; a rule emitting `8970` on SMARCB1 loss; a small cell undifferentiated or rhabdoid histology option that emits `8970` instead of routing to the INI1 node; **(e)** an alias on `8970` that names a small cell undifferentiated or rhabdoid tumour (added after the browser drive); **(f)** any route into the INI1 step that does not describe a small cell undifferentiated pattern but can reach the `8970` rule (added after review). Exemption **(a')**: an option whose label says the report diagnoses a malignant rhabdoid tumour may emit `8963` without a loss marker |
 | 5 | `check_group7_c22_only_codes` | an `8963` or `8991` terminal reachable without `primary_site` C22 captured |
 | 6 | `check_group7_no_tissue_codes` | a no-tissue or imaging terminal emitting anything but `8970/3` at basis 2 or `8000/3`; any basis 1 |
 | 7 | `check_group7_imaging_constellation` | the imaging node without an alpha-fetoprotein question requiring "yes", or without the age diversions |

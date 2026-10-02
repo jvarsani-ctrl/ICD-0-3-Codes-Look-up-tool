@@ -3,8 +3,9 @@
 **2 October 2026** · a **REDCap-project** document. The lookup tool does not depend on it: it
 generates its inventory from `icdo32.sqlite` and `ICCC-2017.sqlite` directly. Nothing here gates
 `group_07_dt.json`. **Nothing has been applied to the live form.**
-**Scale:** 112 picks on 91 codes. **10 relabel, 26 retire, 1 registrar
-decision, 7 append, 75 keep.**
+**Scale:** 112 picks on 91 codes. **9 relabel, 27 retire, 1 registrar
+decision, 8 append, 75 keep.** *(Revised 3 October 2026 after review: pick 89 moved from relabel to
+retire, and its behaviour-3 term is appended as pick 120 — see §3.)*
 
 ---
 
@@ -124,7 +125,7 @@ gives the ICD-O-3.2 preferred term at behaviour 3, which is the string the looku
 | 86 | `8503` | Noninfiltrating intraductal papillary adenocarcinoma | 8503/2 Preferred | **Retire** — behaviour outside Group VII |
 | 87 | `8503` | Intraductal papillary adenocarcinoma with invasion | 8503/3 Preferred | keep |
 | 88 | `8504` | Noninfiltrating intracystic carcinoma | 8504/2 Synonym | **Retire** — behaviour outside Group VII |
-| 89 | `8504` | Intracystic carcinoma, NOS | 8504/2 Synonym | **Relabel** → `Encapsulated papillary carcinoma with invasion` |
+| 89 | `8504` | Intracystic carcinoma, NOS | 8504/2 Synonym | **Retire** — behaviour outside Group VII; the `/3` term is appended as pick 120 (§3) |
 | 90 | `8510` | Medullary carcinoma, NOS | 8510/3 Preferred | keep |
 | 91 | `8550` | Acinar cell carcinoma | 8550/3 Preferred | keep |
 | 92 | `8560` | Adenosquamous carcinoma | 8560/3 Preferred | keep |
@@ -151,7 +152,7 @@ gives the ICD-O-3.2 preferred term at behaviour 3, which is the string the looku
 
 ---
 
-## 2. Append — seven picks
+## 2. Append — eight picks
 
 | New pick | Code | Label | `vii_code` | `vii_subgroup` |
 |---|---|---|---|---|
@@ -162,12 +163,13 @@ gives the ICD-O-3.2 preferred term at behaviour 3, which is the string the looku
 | 117 | `8175` | `8175 - Hepatocellular carcinoma, pleomorphic type` | `8175` | VIIb |
 | 118 | `8023` | `8023 - Nuclear protein in testis (NUT)-associated carcinoma` | `8023` | VIIb |
 | 119 | `8054` | `8054 - Warty carcinoma` | `8054` | VIIb |
+| 120 | `8504` | `8504 - Encapsulated papillary carcinoma with invasion` | `8504` | VIIb |
 
 **Pick 113 is the one that matters.** Fibrolamellar carcinoma is 15–25% of paediatric hepatocellular
 carcinoma over five years (López-Terrada D, et al. Virchows Archiv 2025;486(1):23–47, p. 29), and
 until this pick exists a fibrolamellar carcinoma can only be entered as `8170`.
 
-`vii_code` gains seven lines before its closing `''`:
+`vii_code` gains eight lines before its closing `''`:
 
 ```
 if([vii_morph]='113', '8171',
@@ -177,9 +179,10 @@ if([vii_morph]='116', '8174',
 if([vii_morph]='117', '8175',
 if([vii_morph]='118', '8023',
 if([vii_morph]='119', '8054',
+if([vii_morph]='120', '8504',
 ```
 
-with seven more closing parentheses.
+with eight more closing parentheses.
 
 ---
 
@@ -193,7 +196,10 @@ contract §11.2), so this package does not retire it.
 
 **Picks 88 and 89, `8504`.** Both labels are `8504/2` synonyms ("Noninfiltrating intracystic
 carcinoma", "Intracystic carcinoma, NOS"). The behaviour-3 entity on the code, "Encapsulated papillary
-carcinoma with invasion", has no pick. Retire 88; relabel 89 to the `/3` term.
+carcinoma with invasion", has no pick. **Retire both and append the `/3` term as pick 120.** The first
+draft of this package relabelled pick 89 to the `/3` term; that would have turned every record already
+stored on pick 89 from an in situ lesion into an invasive carcinoma, the hazard §0 exists to prevent.
+A relabel is safe only when the old and new labels name the same disease at the same behaviour.
 
 **Pick 47, `8158`.** "Endocrine tumor, functioning, NOS" is a Related term under `8158/3` that
 ICD-O-3.2 marks obsolete; the preferred term is "ACTH-producing tumor". The pasted note in the label
@@ -223,7 +229,9 @@ Group VII, not a pick inside it.
 ## 4. Pre-flight — before changing anything
 
 1. Export `vii_morph` counts by pick. Any record on a pick this package retires needs review before the
-   retire, because retiring blanks its `vii_code`.
+   retire, because retiring blanks its `vii_code`. Review relabelled picks too: each relabel here keeps the
+   disease and behaviour, but a record entered against the old label should still read correctly against the
+   new one.
 2. Confirm pick 103's stored records are hepatocellular carcinoma: the pasted note mentions `8C18.0`, a
    topography-like string, and a record entered against it before the note was noticed is worth a look.
 3. Apply relabels and appends together, retires after the review in step 1.

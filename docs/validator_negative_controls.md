@@ -3045,9 +3045,9 @@ emissions; one imaging node with the alpha-fetoprotein question and both age div
 terminals; the router agreeing with ICCC-2017; 99 of 99 name triples real in `icdo32.sqlite`; four
 behaviour exclusions naming the preferred term.
 
-## The thirty-four controls
+## The thirty-seven controls
 
-All caught.
+All caught. 4G–4I were added after the independent review of 3 October 2026.
 
 | | Rule | Mutation |
 |---|---|---|
@@ -3066,6 +3066,9 @@ All caught.
 | 4D | 4 | INI1 not done falls back to `8970` |
 | 4E | 4 | the INI1-retained `8970` rule deleted |
 | 4F | 4 | the small cell undifferentiated alias maps to `8970` again |
+| 4G | 4 | the `8970` rule loses its small-cell condition, so rhabdoid cells with INI1 retained reach it |
+| 4H | 4 | the small cell undifferentiated option codes `8963` directly, on morphology alone |
+| 4I | 4 | the diagnosed-rhabdoid-tumour option also names a small cell pattern |
 | 5A | 5 | the histology route stops capturing C22 |
 | 5B | 5 | an `8963` rule loses its `primary_site` `when` |
 | 6A | 6 | the imaging node codes `8170` at basis 2 |
@@ -3111,3 +3114,19 @@ not see it. Clause (d) and control 8C were added before the first run.
 
 Groups 1–6 data and alias files are byte-identical to `main`. The full build reports 0 FAIL, the
 engine gate included.
+
+## What the independent review found in the checks (3 October 2026)
+
+**Rule 4 permitted the defect it exists to stop.** Clause (c) exempted any `8970` branch carrying the
+INI1-RETAINED marker, and one histology option carried both a small cell undifferentiated pattern and a
+rhabdoid diagnosis into the INI1 step, so an INI1-retained malignant rhabdoid tumour (Vokuhl 2016,
+p. 927) was coded `8970`. Every control passed, because none built that case. Clause (f) now asks the
+condition directly: can an `8970` rule fire for a route that does not describe a small cell
+undifferentiated pattern? Control 4G breaks it.
+
+**The fix then exposed a matcher defect.** The shared `_marker_asserted()` reads 90 characters after a
+term as well as before it, so the new label "A small cell undifferentiated (blastemal) pattern
+predominates, with no rhabdoid cells described" read as not asserting the small cell pattern. The
+correct-data run reported a false FAIL, and controls 4B and 4D went missing because no option was
+counted as routing to the step. Rule 4 now uses `_g7_asserted()`, which reads only before the term;
+Group 6's checks keep the shared matcher.

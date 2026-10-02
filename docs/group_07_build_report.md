@@ -22,10 +22,13 @@ admits it. It is 15–25% of paediatric hepatocellular carcinoma over five years
 p. 29). The tree codes it `8171`; REDCap has no option for it yet.
 
 **A small cell undifferentiated hepatoblastoma is usually not a hepatoblastoma.** In Vokuhl 2016 (p. 925)
-22 of 23 such tumours had lost INI1 and were malignant rhabdoid tumours. The tree never codes a small
-cell undifferentiated or rhabdoid tumour as hepatoblastoma without an INI1 result: lost → `8963/3`,
-retained → `8970/3`, not done → `8000/3`. About 5% of rhabdoid tumours keep INI1 and lose SMARCA4
-(López-Terrada 2025, p. 37); that is a second route to `8963`.
+22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid
+tumour had lost INI1, and the authors class them all as malignant rhabdoid tumours of the liver. The
+tree never codes a small cell undifferentiated tumour as hepatoblastoma without an INI1 result: lost →
+`8963/3`, retained → `8970/3`, not done → `8000/3`. About 5% of rhabdoid tumours keep INI1 and lose
+SMARCA4 (López-Terrada 2025, p. 37), which is a second route to `8963`. A report that diagnoses
+malignant rhabdoid tumour is coded `8963/3` on that diagnosis whatever INI1 shows, because an
+INI1-retained rhabdoid tumour exists (Vokuhl 2016, p. 927).
 
 **The assigned baseline does not cover the group.** Nagtegaal 2019 never mentions hepatoblastoma. The
 build uses the International Pediatric Liver Tumors Consensus Classification, which Pfister 2022 names
@@ -61,13 +64,13 @@ macOS PDFKit, because neither poppler nor a Python PDF library is installed.
 | `hp_imaging_pathway` | imaging_pathway | solid liver mass + alpha-fetoprotein raised for age → `8970/3` at basis 2; six diversions |
 | `hp_imaging_insufficient` | morphology_only | `8000/3` at basis 2, not registrable, or tissue now in file |
 | `hp_cytology` | morphology_only | `8970` / `8170` at basis 5, `8000`, or back to imaging |
-| `hp_histology` | histology_subclassification | nineteen diagnoses — codes, onward steps, four behaviour exclusions, referrals to Groups I, II, IX, X |
-| `hp_ini1` | ihc_checklist | the INI1 fork |
+| `hp_histology` | histology_subclassification | twenty-one diagnoses — codes, onward steps, four behaviour exclusions, referrals to Groups I, II, IX, X |
+| `hp_ini1` | ihc_checklist | the INI1 fork: SMARCB1 or SMARCA4 loss → `8963`; small cell undifferentiated with INI1 retained → `8970`; rhabdoid cells with INI1 retained → `8000` |
 | `hp_hcc_subtype` | histology_subclassification | `8170`, `8172`–`8175`, or fibrolamellar → molecular step |
 | `hp_flc_molecular` | cytogenetics_dropdown | `8171` at basis 8 or 7; `8170` only when the report revises the diagnosis |
 | `hp_biliary` | histology_subclassification | `8160`, `8162`, `8470`, `8161` by the report's wording |
 | `hp_other_carcinoma` | morphology_only | `8140`, `8240`, `8246`, `8023`, `8020`, `8010` |
-| `hp_secondary_deposit` | site_resolution | a metastasis is referred to its primary's group; unknown primary → XII |
+| `hp_secondary_deposit` | site_resolution | a metastasis is referred to its primary's group (I–VI, VIII–XI); unknown primary → XII |
 
 No new node type and no new field; Group VII uses existing constructs only.
 
@@ -108,7 +111,7 @@ derives `redcap_option_verified` and `awaiting_layer1` from Layer 1 instead of w
 ## 5. Layer 1 — forty-two findings
 
 `vii_morph` stores a pick number, 1–112, translated by `vii_code`; new options can only be appended.
-`docs/group_07_layer1_repair.md` lists every pick: **10 relabel, 26 retire, 7 append (picks 113–119),
+`docs/group_07_layer1_repair.md` lists every pick: **9 relabel, 27 retire, 8 append (picks 113–120),
 1 held for your ruling (`8975`)**. The ten relabels include `8970` "Hepatoblastoma", which is not an
 ICD-O-3.2 term, and two obsolete synonyms used as labels (`8162` "Klatskin tumor", `8482`). Seven labels
 carry pasted transcription notes. Nothing has been applied.
@@ -140,6 +143,27 @@ The negative-control pass found two defects in the new checks themselves: a fals
 in rule 8, and rule 9 comparing an integer with a string so that a wrong subgroup could never fail. Both
 fixed (`docs/validator_negative_controls.md`).
 
+## 6b. What the independent review found
+
+One reviewer subagent read the branch against the contract, the databases and the papers on
+3 October 2026. Every finding was checked against its source before it was fixed.
+
+- **Critical, fixed.** An INI1-retained malignant rhabdoid tumour was coded `8970` hepatoblastoma with
+  "Workup: complete": one histology option carried both the small cell undifferentiated pattern and a
+  rhabdoid diagnosis into the INI1 step. Vokuhl 2016 (p. 927, case 17) reports exactly that tumour. The
+  option is now three (§1), and rule 4 gains clause (f), which fails any route that can reach `8970`
+  without describing a small cell undifferentiated pattern.
+- **Fixed.** PRKAR1A loss was recorded at basis 8; it is read by immunohistochemistry and is not specific
+  to fibrolamellar carcinoma, so it is now basis 7. The INI1 hint misdescribed the Vokuhl cohort. Three
+  histology-proven fallback and exclusion terminals carried no basis of diagnosis. The REDCap package
+  relabelled pick 89 from an in situ term to an invasive one, which would have changed stored records.
+- **Fixed, minor.** A citation for embryonal sarcoma's cyst-like imaging pointed to the wrong paper; the
+  metastasis step lacked retinoblastoma and CNS and sent gonadal carcinoma to Group XI; four generic
+  aliases would capture other groups' searches; several wording points.
+- **The fix exposed a defect in the check itself.** The shared negation matcher also reads 90 characters
+  after a term, so "pattern predominates, with no rhabdoid cells" read as not asserting the small cell
+  pattern. Rule 4 now uses a before-only matcher. The correct-data run caught it.
+
 Three statements in the first draft of the contract were wrong and are corrected in place: `8158`'s
 REDCap label is an obsolete `8158/3` term, not an `8158/1` term; the Layer 1 count is 42, not 36; and one
 sentence attributed to López-Terrada 2025 a conclusion the paper does not state.
@@ -148,7 +172,7 @@ sentence attributed to López-Terrada 2025 a conclusion the paper does not state
 
 ## 7. What needs you
 
-Seventeen items, in `docs/group_07_open_questions.md`. The five that change codes:
+Twenty-one items, in `docs/group_07_open_questions.md`. The five that change codes:
 
 1. **Hepatocellular neoplasm NOS** — `8970/3` or `8170/3`? The tool records `8000/3` until you rule.
 2. **`8975/1` calcifying nested stromal-epithelial tumour** — registered or not, and where.
@@ -162,6 +186,11 @@ Seventeen items, in `docs/group_07_open_questions.md`. The five that change code
 And one REDCap change that matters more than the rest: **append `8171` fibrolamellar carcinoma as
 pick 113.**
 
+**One deliberate departure from Group VI, recorded here as its coding note promised:** the imaging
+`8970` terminal shows histology as outstanding work, where Group VI's `8960` imaging terminal
+suppresses it. The paediatric liver consensus asks for a biopsy in every patient (López-Terrada 2014,
+p. 484), so suppressing the row would show the case as better worked up than it is.
+
 ---
 
 ## 8. Proof
@@ -170,9 +199,9 @@ pick 113.**
 |---|---|
 | `python3 build/build_database.py` | **614 checks, 0 FAIL**, engine gate included (`main`: 479) |
 | `python3 build/induce_flow.py` | every rule in every checklist has a witness |
-| `build/negative_controls_group07.py` | **34 of 34 caught**; all eleven checks OK on correct data |
+| `build/negative_controls_group07.py` | **37 of 37 caught**; all eleven checks OK on correct data |
 | Groups 1–6 | `dt.json`, alias files, `topography_codes.json`, `index.html`, `uccf-tool.css` byte-identical to `main` |
-| Browser, `http://localhost:8817` | driven through the UI and confirmed: hepatoblastoma imaging route; a diversion (age ≥ 3) to `8000/3`; INI1 lost → `8963`, retained → `8970`, not done → `8000`; fibrolamellar with fusion → `8171`, revised → `8170`; hepatocellular neoplasm NOS → `8000`; sarcoma → Group IX; calcifying nested stromal-epithelial tumour → behaviour exclusion; referral note → `8000` basis 1; cytology → `8970` basis 5; C22.1 cholangiocarcinoma → `8160`; unknown-primary metastasis → Group XII; other carcinoma → `8010` with search upgrade; the express lane; the REDCap-framed output. No console errors |
+| Browser, `http://localhost:8817` | driven through the UI and confirmed: hepatoblastoma imaging route; a diversion (age ≥ 3) to `8000/3`; INI1 lost → `8963`, small cell undifferentiated retained → `8970`, rhabdoid cells retained → `8000`, not done → `8000`; report-diagnosed malignant rhabdoid tumour → `8963`; fibrolamellar with fusion → `8171`, revised → `8170`; hepatocellular neoplasm NOS → `8000`; sarcoma → Group IX; calcifying nested stromal-epithelial tumour → behaviour exclusion; referral note → `8000` basis 1; cytology → `8970` basis 5; C22.1 cholangiocarcinoma → `8160`; unknown-primary metastasis → Group XII; other carcinoma → `8010` with search upgrade; the express lane; the REDCap-framed output. No console errors |
 
 ---
 

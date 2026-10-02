@@ -2,8 +2,8 @@
 
 **2 October 2026**, from the Group VII build on branch `claude/group-7-tumor-pathway-a88513`.
 Each item says what the tool does today, so nothing here blocks the build, and what decision is
-needed. Items 1–8 are coding decisions; 9–13 are REDCap and shared-layer items; 14–17 are documents
-and scope.
+needed. Items 1–8 and 18–21 are coding decisions; 9–13 are REDCap and shared-layer items; 14–17 are
+documents and scope. Items 18–21 were added after the independent review of 3 October 2026.
 
 Full reasoning for every item is in `docs/group_07_build_contract.md`; the section is named against
 each.
@@ -91,7 +91,7 @@ decides whether the twenty in situ and metastatic REDCap picks are retired (item
 
 ### 9. REDCap repairs — `docs/group_07_layer1_repair.md`
 
-10 relabels, 26 retires, 7 appends (picks 113–119: `8171`–`8175`, `8023`, `8054`), pick 2 held for
+9 relabels, 27 retires, 8 appends (picks 113–120: `8171`–`8175`, `8023`, `8054`, `8504/3`), pick 2 held for
 item 2. `vii_morph` stores a pick number, so new options go at the end only. **Pick 113, fibrolamellar
 carcinoma `8171/3`, matters most:** until it exists a fibrolamellar carcinoma can only be entered as
 `8170`. Nothing has been applied.
@@ -124,7 +124,7 @@ rules today.
 
 `app.js`'s behaviour-exclusion panel read "Benign" for every exclusion. It now names the ICD-O
 behaviour digit: benign, uncertain whether benign or malignant, in situ. It changes what Groups V and VI
-display for `9514/1` and `8960/1`, which were wrongly headed "Benign". **Confirm** the change is wanted
+display for `9514/1`, `8959/1` and `8960/1`, which were wrongly headed "Benign". **Confirm** the change is wanted
 across groups.
 
 ---
@@ -156,3 +156,39 @@ digestive volume's liver chapter would confirm this (`docs/sources-requested.md`
 `8160`–`8162` and `8170`–`8180` are Group VII at any site, but C23.9 and C24.x have no row in
 `topography_codes.json`, so the router cannot reach Group VII from a gallbladder or extrahepatic bile
 duct primary. Extremely rare in children. **Decide:** whether to add those topography rows.
+
+---
+
+## Added after the independent review, 3 October 2026
+
+### 18. A malignant rhabdoid tumour that keeps INI1
+
+**Today:** a report that **diagnoses** malignant rhabdoid tumour is coded `8963/3` on that diagnosis,
+with IHC shown as outstanding if it is not recorded. A tumour whose report **describes rhabdoid cells**
+without that diagnosis goes to the INI1 step: lost → `8963/3`; retained → `8000/3`, pending.
+**Why:** Vokuhl 2016 (p. 927, case 17) reports a malignant rhabdoid tumour with typical morphology and
+INI1 retained; López-Terrada 2014 (p. 479) keeps rhabdoid tumour a histomorphological diagnosis; the
+consensus lists an INI1-positive malignant rhabdoid tumour (López-Terrada 2025, Table 1, p. 24).
+**Decide:** confirm coding a report-diagnosed rhabdoid tumour on the diagnosis alone, and how to code
+rhabdoid cells with INI1 retained.
+
+### 19. Basis of diagnosis for the fibrolamellar molecular findings
+
+**Today:** a `DNAJB1::PRKACA` fusion is basis 8; PRKAR1A loss is basis 7.
+**Why:** Visser rule 10 gives basis 8 only to an abnormality specific to the cancer. The fusion is specific
+among primary liver tumours (Graham 2015, p. 822), but López-Terrada 2025 (p. 29) notes it also occurs in
+oncocytic pancreatic and biliary neoplasms. PRKAR1A loss is read by immunohistochemistry and is the
+Carney-complex lesion.
+**Decide:** keep 8 for the fusion, or drop it to 7; confirm 7 for PRKAR1A.
+
+### 20. The consensus table and its text disagree on small cell undifferentiated hepatoblastoma
+
+López-Terrada 2025, Table 1 (p. 24), still lists "Small cell undifferentiated, (INI1)+/−" under
+hepatoblastoma, while its text (p. 25) and Vokuhl 2016 reclassify the INI1-lost tumours as malignant
+rhabdoid tumours. **The tool follows the text.** Confirm.
+
+### 21. REDCap pick 89
+
+The first draft of the repair package relabelled pick 89 ("Intracystic carcinoma, NOS", an `8504/2` term)
+to the `8504/3` term. That would have changed every stored record on that pick from in situ to invasive.
+The package now retires pick 89 and appends the `/3` term as pick 120. Nothing was applied either way.
