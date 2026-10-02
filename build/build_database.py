@@ -2745,7 +2745,8 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
                        "otherwise FAIL this check on correct data). That is the "
                        "stronger question — it rejects (code, term) pairs the option list "
                        "carries that ICD-O-3.2 does not, where this check would have "
-                       "inherited them. Groups 1 and 2 are unaffected."
+                       "inherited them. Group 7 joins on its own contract §2E, for ten "
+                       "drifts. Groups 1 and 2 are unaffected."
                        % ctx.group)]
     options = redcap_options.get(ctx.group)
     if not options:
@@ -6076,7 +6077,13 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     this group; under this check it does, because the question is "is this a real
     ICD-O-3.2 term", not "does this match a REDCap string that may itself be stale."
     GROUP6 joins GROUP3 and GROUP4 in the guard below — again, nothing else in this
-    function changes. Group 5 is explicitly NOT added here: its four option strings
+    function changes.
+
+    EXTENDED TO GROUP 7 (Group 7 build contract §2E, 2 October 2026): ten REDCap-string
+    drifts (8122, 8155, 8158, 8162, 8170, 8240, 8482, 8504, 8963, 8970), among them an
+    [obs] synonym as the label for 8162 and for 8482, and a string ICD-O-3.2 does not
+    carry at any level for 8970 ("Hepatoblastoma"; the term is "Hepatoblastoma, NOS").
+    GROUP7 joins the guard, nothing else changes. Group 5 is explicitly NOT added here: its four option strings
     already match both sources, so extending it would change nothing it validates and
     the contract for this branch says leave that decision to Group 5's own branch.
 
@@ -8479,11 +8486,37 @@ def check_group7_fibrolamellar(ctx: DTContext):
           never emits a code other than 8171 (it may route onward);
       (c) a branch whose label asserts a DNAJB1::PRKACA fusion, a PRKACA rearrangement or
           PRKAR1A loss emits 8171 and nothing else. "Asserts" is negation-aware, so the
-          option "Tested, neither alteration found ..." is not read as a finding.
+          option "Tested, neither alteration found ..." is not read as a finding;
+      (d) inside the MOLECULAR step a fibrolamellar option routes to (a
+          cytogenetics_dropdown or molecular_freetext node), every branch emits 8171 except
+          one whose label says the report REVISES the diagnosis. Added after the first
+          negative-control pass, 2 October 2026: an "untested" option re-pointed at 8170
+          names no fibrolamellar or molecular finding in its own label, so (b) and (c) could
+          not see it and (a) only asks that 8171 survive somewhere. Scoped to molecular
+          nodes after the same pass raised a false FAIL on correct data: the histology
+          option "Hepatocellular carcinoma, including fibrolamellar carcinoma" routes to the
+          subtype node, whose scirrhous, clear cell and other options are rightly not 8171.
     """
     if ctx.group != GROUP7:
         return []
     out = []
+    flc_nodes = set()
+    for node_id, node in ctx.nodes.items():
+        for holder, _where in _branch_containers(node):
+            target = holder.get("next_node")
+            if target and _marker_asserted(str(holder.get("label") or ""), _G7_FIBROLAMELLAR_RE) \
+                    and (ctx.nodes.get(target) or {}).get("node_type") in (
+                        "cytogenetics_dropdown", "molecular_freetext"):
+                flc_nodes.add(target)
+    for node_id in sorted(flc_nodes):
+        for holder, where in _branch_containers(ctx.nodes.get(node_id) or {}):
+            code = as_code(holder.get("morphology_code"))
+            if code and code != GROUP7_FIBROLAMELLAR_CODE \
+                    and not re.search(r"\brevis", str(holder.get("label") or ""), re.I):
+                out.append((FAIL, "RULE 8(d) — node %s (%s), reached from a fibrolamellar "
+                                  "option, emits %s on a branch that does not revise the "
+                                  "diagnosis; fibrolamellar carcinoma is 8171/3 (contract "
+                                  "§3.2)" % (node_id, where, code)))
     emits_8171 = 0
     for code, holder, node_id, where in ctx.emissions():
         if code == GROUP7_FIBROLAMELLAR_CODE:
@@ -8535,7 +8568,7 @@ def _g7_iccc_subgroups(layer1, code, topo):
                         return True
                 return False
             if within(hist, int(code)) and within(sites, site):
-                hits.append((ROMAN.get(main), group_code))
+                hits.append((str(main), group_code))
     finally:
         con.close()
     return hits
