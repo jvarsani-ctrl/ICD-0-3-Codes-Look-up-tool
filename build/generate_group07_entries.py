@@ -322,6 +322,7 @@ ANNOTATIONS: dict[str, dict] = {
         ),
     ),
     "8000": dict(
+        diagnostic_tests_required=["Histology", "IHC"],
         topography_dependent=True,
         topography_routing_note=ROUTER_8000,
         coding_note=(
@@ -330,8 +331,11 @@ ANNOTATIONS: dict[str, dict] = {
             "without pathology and outside Tables 3 and 4 is 8000/3. The tree also emits it "
             "where two current sources leave the code undecided -- hepatocellular neoplasm "
             "NOS (contract §3.3) -- and where a small cell undifferentiated tumour has no INI1 "
-            "result (contract §4.3). diagnostic_tests_required is Histology, so an imaging-only "
-            "8000/3 shows tissue as outstanding. The REDCap list also offers 8000/6 and 8000/9 "
+            "result (contract §4.3). diagnostic_tests_required is Histology and IHC, so an "
+            "imaging-only 8000/3 shows tissue as outstanding and a small cell undifferentiated "
+            "tumour with no INI1 result shows IHC as outstanding; with Histology alone the "
+            "second read 'Workup: complete' above an upgrade line naming INI1 (found driving "
+            "the INI1 step in the browser, 2 October 2026). The REDCap list also offers 8000/6 and 8000/9 "
             "readings, outside this group (contract §2D)."
         ),
     ),
