@@ -104,6 +104,17 @@ high-grade myxoid liposarcoma. **For you:** confirm.
 
 ---
 
+### C2. Two alias decisions made while building the alias file
+
+- **Malignant schwannoma → `9540/3`.** Every behaviour-3 term on `9560` is `[obs]` and `9560` has no
+  tree leaf, so the alias sends the old name to malignant peripheral nerve sheath tumour, the WHO
+  2020 name for the same tumour. The alias instructions gave `9560`.
+- **Haemangiopericytoma without "malignant" → not registered.** ICD-O-3.2 moved
+  *Hemangiopericytoma, NOS* to `8815/1`, solitary fibrous tumour NOS. Only malignant
+  haemangiopericytoma maps to `8815/3`.
+
+**For you:** confirm both.
+
 ## D. Rhabdomyosarcoma
 
 ### D1. ★ FOXO1-negative "alveolar" rhabdomyosarcoma (pathway §4D, contract §3.8)

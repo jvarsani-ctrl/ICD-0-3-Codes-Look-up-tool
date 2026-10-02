@@ -2600,7 +2600,8 @@
               "reason": "Kaposi sarcoma of the skin may be registered on clinical examination alone, at basis 1 (Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, p. 04). Record the topography as the skin site of the lesions. A biopsy with HHV-8 (LANA-1) immunohistochemistry would confirm it.",
               "captures": {
                 "lesion_site": "skin"
-              }
+              },
+              "upgrade_path": "A biopsy with HHV-8 (LANA-1) immunohistochemistry would confirm Kaposi sarcoma. It would not change the code."
             },
             {
               "label": "Kaposi sarcoma suspected with no skin lesions — lymph nodes, mouth or internal organs only",
@@ -3898,7 +3899,8 @@
               "captures": {
                 "vascular_diagnosis": "kaposi_sarcoma",
                 "hhv8_lana": "not_done"
-              }
+              },
+              "upgrade_path": "HHV-8 (LANA-1) immunohistochemistry would confirm Kaposi sarcoma. It would not change the code."
             },
             {
               "label": "Kaposi sarcoma suspected, but HHV-8 (LANA-1) immunohistochemistry is negative",
