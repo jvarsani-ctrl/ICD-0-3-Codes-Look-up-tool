@@ -8235,7 +8235,7 @@ def check_group7_behaviour_declaration(ctx: DTContext, layer1: Path):
     return out
 
 
-def check_group7_ini1_fork(ctx: DTContext):
+def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
     """
     GROUP 7 RULE 4 (contract §4.3, §8 rule 4) — THE GROUP'S SIGNATURE CHECK.
 
@@ -8253,6 +8253,12 @@ def check_group7_ini1_fork(ctx: DTContext):
       (d) every option that asserts such a tumour and routes onward reaches an
           ihc_checklist carrying both an 8963 rule and an INI1-retained 8970 rule, and
           that node's nos_fallback is not 8970.
+
+      (e) no alias in aliases_group_07.json that maps to 8970 asserts a small cell
+          undifferentiated, blastemal or rhabdoid tumour. Found in the browser on
+          2 October 2026, not by the build: an alias mapped to both 8970 and 8963 put
+          "SCUD hepatoblastoma" under "Also called" on every 8970 output, including a
+          case coded on imaging alone.
 
     (c) is the condition, not the destination: a check that only tested "the SCUD
     option has a next_node" would pass a tree whose INI1 node codes 8970 on nothing
@@ -8319,6 +8325,22 @@ def check_group7_ini1_fork(ctx: DTContext):
     if not routed:
         out.append((FAIL, "RULE 4(d) — no option routes a small cell undifferentiated or "
                           "rhabdoid tumour to the INI1 step"))
+    alias_path = repo / "data" / "aliases" / "aliases_group_07.json" if repo else None
+    if alias_path is not None and alias_path.exists():
+        aliases, _ = load_json(alias_path)
+        for i, entry in enumerate(aliases if isinstance(aliases, list) else []):
+            if not isinstance(entry, dict):
+                continue
+            codes = [as_code(c) for c in entry.get("maps_to_morphology_codes") or []]
+            if GROUP7_HEPATOBLASTOMA_CODE not in codes:
+                continue
+            words = [entry.get("alias") or ""] + list(entry.get("also_known_as") or [])
+            if any(_marker_asserted(str(w), _G7_SCUD_RE) for w in words):
+                out.append((FAIL, "RULE 4(e) — aliases_group_07.json[%d] %r maps to 8970 and "
+                                  "names a small cell undifferentiated or rhabdoid tumour; it "
+                                  "would be listed as another name for hepatoblastoma on "
+                                  "every 8970 output, whatever INI1 showed (contract §4.3)"
+                            % (i, entry.get("alias"))))
     if not [f for f in out if f[0] == FAIL]:
         out.append((OK, "RULE 4 — %d 8963 terminal(s) all require an INI1/SMARCA4 loss "
                         "marker; no 8970 terminal codes a small cell undifferentiated or "
@@ -10235,7 +10257,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group7_code_set, ctx)                         # rule 1
         report.run(check_group7_absent_codes, ctx, repo)               # rule 2
         report.run(check_group7_behaviour_declaration, ctx, layer1)    # rule 3
-        report.run(check_group7_ini1_fork, ctx)                        # rule 4
+        report.run(check_group7_ini1_fork, ctx, repo)                  # rule 4
         report.run(check_group7_c22_only_codes, ctx)                   # rule 5
         report.run(check_group7_no_tissue_codes, ctx)                  # rule 6
         report.run(check_group7_imaging_constellation, ctx)            # rule 7

@@ -205,7 +205,7 @@
   },
   {
     "alias": "Small cell undifferentiated hepatoblastoma",
-    "full_form": "Small cell undifferentiated hepatoblastoma -> 8970 or 8963, decided by INI1",
+    "full_form": "Small cell undifferentiated hepatoblastoma -> not coded until INI1 is known: Rhabdoid tumor, NOS (8963) if lost, Hepatoblastoma, NOS (8970) if retained",
     "also_known_as": [
       "SCUD hepatoblastoma",
       "Blastemal hepatoblastoma",
@@ -215,17 +215,14 @@
     "origin_system": "Clinical descriptive term",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
-    "maps_to_morphology_codes": [
-      "8970",
-      "8963"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIa1",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
     "needs_ihc_tree": true,
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "Not coded until INI1 is known. With INI1 lost it is a malignant rhabdoid tumour of the liver, Rhabdoid tumor, NOS (8963/3) — 22 of 23 such tumours had lost INI1 (Vokuhl C, et al. Genes, Chromosomes & Cancer 2016;55(12):925-931, p. 925). With INI1 retained it is Hepatoblastoma, NOS (8970/3) (López-Terrada 2025, p. 25). Without an INI1 result it is recorded as Neoplasm, malignant (8000/3).",
-    "coding_note": "Maps to both codes because INI1 decides between them (contract §4.3). needs_ihc_tree true: the INI1 step of g7_hepatic is the fork. maps_to_iccc3_subgroup_id is the INI1-retained subgroup; the INI1-lost case is VIIa2."
+    "coding_note": "Maps to no code on purpose. Found in the browser, 2 October 2026: mapped to both 8970 and 8963, this alias and its 'SCUD' and 'anaplastic' forms were listed under 'Also called' on every 8970 output, including a hepatoblastoma coded on imaging alone, which tells the clerk a small cell undifferentiated tumour is 8970 whatever its INI1 result. INI1 decides the code (contract §4.3); the search still finds this alias and enters the tree, and needs_ihc_tree true points at the INI1 step."
   },
   {
     "alias": "Rhabdoid tumor, NOS",
@@ -510,7 +507,7 @@
   },
   {
     "alias": "Hepatocellular neoplasm NOS",
-    "full_form": "Hepatocellular neoplasm NOS -> Neoplasm, malignant (8000)",
+    "full_form": "Hepatocellular neoplasm NOS -> no ICD-O-3.2 code; recorded as Neoplasm, malignant (8000/3) until the registrar rules",
     "also_known_as": [
       "HCN-NOS",
       "Hepatocellular malignant neoplasm, NOS"
@@ -519,16 +516,14 @@
     "origin_system": "Clinical descriptive term",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
-    "maps_to_morphology_codes": [
-      "8000"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIc",
+    "maps_to_morphology_codes": [],
+    "maps_to_iccc3_subgroup_id": null,
     "needs_ihc_tree": false,
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
     "notes": "A provisional consensus category for tumours between hepatoblastoma and hepatocellular carcinoma, treated as high-risk hepatoblastoma (López-Terrada 2025, pp. 29-31). ICD-O-3.2 has no code for it. Recorded as Neoplasm, malignant (8000/3) at the liver until the registrar chooses between Hepatoblastoma, NOS (8970/3) and Hepatocellular carcinoma, NOS (8170/3).",
-    "coding_note": "Contract §3.3, registrar item §11.3. The two candidate codes sit in different ICCC subgroups (VIIa1, VIIb); the tool does not choose."
+    "coding_note": "Maps to no code on purpose, for the same reason as the small cell undifferentiated alias: mapped to 8000 it was listed under 'Also called' on every 8000/3 output, including an imaging-only liver mass that is not a hepatocellular neoplasm at all. Contract §3.3, registrar item §11.3."
   },
   {
     "alias": "Combined hepatocellular carcinoma and cholangiocarcinoma",

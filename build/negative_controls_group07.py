@@ -73,7 +73,7 @@ CHECKS = {
     1: lambda d, r: bd.check_group7_code_set(ctx_of(d)),
     2: lambda d, r: bd.check_group7_absent_codes(ctx_of(d), r),
     3: lambda d, r: bd.check_group7_behaviour_declaration(ctx_of(d), LAYER1),
-    4: lambda d, r: bd.check_group7_ini1_fork(ctx_of(d)),
+    4: lambda d, r: bd.check_group7_ini1_fork(ctx_of(d), r),
     5: lambda d, r: bd.check_group7_c22_only_codes(ctx_of(d)),
     6: lambda d, r: bd.check_group7_no_tissue_codes(ctx_of(d)),
     7: lambda d, r: bd.check_group7_imaging_constellation(ctx_of(d)),
@@ -157,6 +157,10 @@ def m_ini1_fallback_8970(d, a, r):
 
 def m_drop_retained_rule(d, a, r):
     del nodes(d)["hp_ini1"]["resolution_logic"][2]
+
+
+def m_alias_scud_8970(d, a, r):
+    next(x for x in a if x["alias"].startswith("Small cell undifferentiated"))["maps_to_morphology_codes"] = ["8970", "8963"]
 
 
 def m_inventory_drops_c22(d, a, r):
@@ -256,6 +260,7 @@ CONTROLS = [
     ("4C", 4, "the 8970 rule keyed on INI1 loss", m_8970_on_loss, "RULE 4(b)"),
     ("4D", 4, "INI1 not done falls back to 8970", m_ini1_fallback_8970, "falls back to 8970"),
     ("4E", 4, "the INI1-retained 8970 rule deleted", m_drop_retained_rule, "RULE 4(d)"),
+    ("4F", 4, "the SCUD alias maps to 8970 again", m_alias_scud_8970, "RULE 4(e)"),
     ("5A", 5, "the histology route no longer captures C22", m_inventory_drops_c22, "never established"),
     ("5B", 5, "an 8963 rule loses its primary_site when", m_8963_no_when, "without `when` primary_site"),
     ("6A", 6, "the imaging node codes 8170 at basis 2", m_imaging_emits_8170, "8170 at basis 2"),
