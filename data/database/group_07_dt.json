@@ -3015,7 +3015,8 @@
               "satisfies_tests": [
                 "IHC"
               ],
-              "coding_note": "satisfies_tests IHC: the consensus diagnosis rests on beta-catenin immunohistochemistry, which is universally nuclear positive in this category (López-Terrada 2025, p. 31), so a report that makes it has done IHC. 8000's entry requires Histology and IHC; without this the panel would show IHC as outstanding on a case whose diagnosis is defined by it."
+              "coding_note": "satisfies_tests IHC: the consensus diagnosis rests on beta-catenin immunohistochemistry, which is universally nuclear positive in this category (López-Terrada 2025, p. 31), so a report that makes it has done IHC. 8000's entry requires Histology and IHC; without this the panel would show IHC as outstanding on a case whose diagnosis is defined by it.",
+              "upgrade_path": "No more specific code exists yet. The registrar is to rule between Hepatoblastoma, NOS (8970/3) and Hepatocellular carcinoma, NOS (8170/3) for this category; re-code the case when they do."
             },
             {
               "label": "Combined hepatocellular-cholangiocarcinoma — hepatocellular and cholangiocellular differentiation intimately mixed in one tumour, not two separate tumours",

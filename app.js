@@ -1414,6 +1414,15 @@ var BASIS_LABELS = {
   2: 'Clinical investigation without tissue', 4: 'Specific tumour markers',
   5: 'Cytology', 7: 'Histology', 8: 'Cytogenetic or molecular', 9: 'Unknown'
 };
+/* The ICD-O behaviour digit, named. Vocabulary of the classification, not clinical
+   content. The behaviour-exclusion panel read "Benign" for every exclusion until
+   2 October 2026, which mislabelled the /1 ones — 8975/1 calcifying nested
+   stromal-epithelial tumour, 8960/1 mesoblastic nephroma, 9514/1 regressed
+   retinoblastoma — as benign when ICD-O-3.2 calls them uncertain. */
+var BEHAVIOUR_LABELS = {
+  '0': 'Benign', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
+  '3': 'Malignant', '6': 'Metastatic', '9': 'Malignant, uncertain whether primary or metastatic'
+};
 function basisCode(v) {
   var n = Number(v);
   if (v === '' || v === null || v === undefined || isNaN(n) || BASIS_CODES.indexOf(n) === -1) {
@@ -1824,7 +1833,8 @@ function renderOutput() {
      always carries a registrar flag alongside the clerk-facing reason. */
   if (r.behaviourExcluded) {
     return '<div class="node--live">' +
-      banner('info', 'Benign — outside this group’s declared behaviour', r.reason) +
+      banner('info', (BEHAVIOUR_LABELS[String(r.icdoBehaviour)] || 'Behaviour ' + r.icdoBehaviour) +
+        ' — outside this group’s declared behaviour', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
       orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
       orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +
