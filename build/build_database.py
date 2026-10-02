@@ -734,6 +734,10 @@ GROUP5 = 5
 # this dict rather than in Group 5's own block further down.
 GROUP6 = 6
 
+# Group 9 build contract §8 — Soft Tissue and Other Extraosseous Sarcomas. Defined here for
+# the same reason GROUP6 is: BEHAVIOUR_DECLARED_BY_GROUP needs the name at module load.
+GROUP9 = 9
+
 # Which groups have ADOPTED behaviour_exclusion, and what each one's ICCC-3 behaviour
 # declaration actually is. Read by check_behaviour_exclusion(), whose "subtle clause"
 # fails a block naming a behaviour the group DOES admit — so this table decides the
@@ -754,6 +758,11 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     GROUP4: {"3"},
     GROUP5: {"3"},
     GROUP6: {"3"},
+    # GROUP9 added 2 October 2026. Verified against ICCC-2017.sqlite: every one of the 22
+    # Group IX code ranges declares behaviour 3 (Group 9 build contract §0.2). Group IX
+    # writes more behaviour_exclusion blocks than any group so far (the benign and
+    # intermediate soft tissue catalogue); without this row the check skips all of them.
+    GROUP9: {"3"},
 }
 
 ROMAN_BY_GROUP = {
@@ -2661,13 +2670,15 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
     flag in the file exempting itself (rule 8).
     """
     out = []
-    if ctx.group in (GROUP3, GROUP4, GROUP6):
+    if ctx.group in (GROUP3, GROUP4, GROUP6, GROUP9):
         return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
                        "against icdo32.sqlite instead of against the REDCap option file "
                        "(contract §5.2 for Group 3; §1.1a for Group 4; Group 6 build "
                        "contract §8 for Group 6, whose eight REDCap-string drifts — "
                        "§2C, two of them naming a different lesion entirely — would "
-                       "otherwise FAIL this check on correct data). That is the "
+                       "otherwise FAIL this check on correct data; Group 9 build contract "
+                       "§8 for Group 9, whose fourteen string drifts include three labels "
+                       "naming a benign lesion on a malignant code). That is the "
                        "stronger question — it rejects (code, term) pairs the option list "
                        "carries that ICD-O-3.2 does not, where this check would have "
                        "inherited them. Groups 1 and 2 are unaffected."
@@ -6022,7 +6033,7 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     Fix the typo upstream and the third condition fails, so the exemption FAILS rather than
     quietly outliving its reason. An exemption that cannot collapse is a hole (data.md §5A).
     """
-    if ctx.group not in (GROUP3, GROUP4, GROUP6):
+    if ctx.group not in (GROUP3, GROUP4, GROUP6, GROUP9):
         return []
     index, err = load_icdo32(layer1)
     if err:
@@ -8019,6 +8030,340 @@ def check_group6_no_flow_cytometry(ctx: DTContext):
 # B5. Against the source of truth
 # --------------------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------------------
+# Group 9 build contract §8 — Soft Tissue and Other Extraosseous Sarcomas. Ten rules.
+# Every rule is scoped to group 9 by the file name, which check_top_level_keys()
+# cross-checks against metadata.group_id, and is a no-op on every other group.
+# --------------------------------------------------------------------------------------
+
+# The 82 codes build/generate_group_inventory.py --group IX generates from ICCC-2017.sqlite
+# joined to icdo32.sqlite, 2 October 2026, all at behaviour 3 (contract §0.3). Not read
+# back off group_09_dt.json, so a fabricated code cannot satisfy the anchor.
+GROUP9_CODES = frozenset("""
+8710 8711 8714 8800 8801 8802 8803 8804 8805 8806 8810 8811 8813 8814 8815 8825 8830 8832
+8840 8842 8850 8851 8852 8853 8854 8855 8857 8858 8890 8891 8894 8895 8896 8900 8901 8902
+8910 8912 8920 8921 8963 8990 8991 9040 9041 9042 9043 9044 9045 9120 9124 9130 9133 9137
+9140 9170 9180 9181 9182 9183 9184 9185 9186 9187 9192 9193 9194 9195 9220 9231 9240 9251
+9252 9364 9365 9540 9542 9560 9561 9571 9580 9581
+""".split())
+
+# §0.5, §0.6 — numbers this group must never emit. 9260/3 Ewing sarcoma moved to 9364/3
+# and 9260 survives only as 9260/0 Aneurysmal bone cyst; 9150 was deleted and moved to
+# 8815; 9366, 9367, 9368 and 8859 are WHO 2020 codes absent from icdo32.sqlite.
+GROUP9_ABSENT_CODES = ("9260", "9150", "9366", "9367", "9368", "8859")
+
+# §0.7 — Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, p. 04.
+GROUP9_VISSER_BASIS1 = {"9140"}
+GROUP9_VISSER_BASIS2 = {"8800", "8850", "8890", "9120"}
+
+# §0.6 — every behaviour-3 term on these stems carries [obs].
+GROUP9_OBS_ONLY = ("9560", "8853")
+
+_G9_EWING_RE = re.compile(r"\bEwing\b(?!-like)", re.I)
+_G9_EWING_LIKE_RE = re.compile(r"\bCIC\b|\bBCOR\b|non-ETS", re.I)
+_G9_LABEL_KEYS = ("label", "finding", "descriptor", "site")
+
+
+def _g9_label(holder) -> str:
+    return " ".join(str(holder.get(k)) for k in _G9_LABEL_KEYS if holder.get(k))
+
+
+def check_group9_code_set(ctx: DTContext):
+    """GROUP 9 RULE 1 (contract §0.3, §8 rule 1) — the fabricated-code guard: every
+    morphology_entries[] pair is one of the 82 generated (code, 3) records, and every code
+    a node emits is one of them."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    n = 0
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        n += 1
+        beh = str(entry.get("behavior_code")).strip()
+        if code not in GROUP9_CODES or beh != "3":
+            out.append((FAIL, "RULE 1 — morphology_entries[%d] carries %s/%s, which is not one "
+                              "of the 82 (code, behaviour) records build/generate_group_"
+                              "inventory.py --group IX generates (contract §0.3)" % (i, code, beh)))
+    missing = GROUP9_CODES - {as_code(e.get("morphology_code")) for e in ctx.entries
+                              if isinstance(e, dict)}
+    if missing:
+        out.append((FAIL, "RULE 1 — %d generated Group IX code(s) have no morphology_entries[] "
+                          "object: %s" % (len(missing), ", ".join(sorted(missing)))))
+    emitted = 0
+    for code, _holder, node_id, where in ctx.emissions():
+        emitted += 1
+        if code not in GROUP9_CODES:
+            out.append((FAIL, "RULE 1 — node %s (%s) emits %s, which is not a Group IX code "
+                              "(contract §0.3)" % (node_id, where, code)))
+    if not out:
+        out.append((OK, "RULE 1 — all %d entries and %d tree emission(s) are in the generated "
+                        "82-code Group IX inventory" % (n, emitted)))
+    return out
+
+
+def check_group9_absent_codes(ctx: DTContext):
+    """GROUP 9 RULE 2 (contract §0.5, §0.6, §8 rule 2) — no retired or non-ICD-O-3.2 number
+    is emitted, referred to, or used as a fallback: 9260 (Ewing sarcoma moved to 9364/3),
+    9150 (moved to 8815), and the WHO 2020 codes 9366, 9367, 9368 and 8859, which
+    icdo32.sqlite does not carry. Prose naming one of them is expected where a reason
+    explains why it is not used, and is not checked."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    for holder, path in walk_dicts(ctx.data):
+        for key in ("morphology_code", "refer_code", "nos_fallback_code", "code"):
+            if key == "code" and "name" not in holder:
+                continue
+            cs = as_code(holder.get(key))
+            if cs in GROUP9_ABSENT_CODES:
+                out.append((FAIL, "RULE 2 — %s.%s is %s, a number this group must never emit "
+                                  "(contract §0.5, §0.6)" % (path or "(root)", key, cs)))
+    if not out:
+        out.append((OK, "RULE 2 — none of %s is emitted, referred to or used as a fallback"
+                    % ", ".join(GROUP9_ABSENT_CODES)))
+    return out
+
+
+def check_group9_ewing_code(ctx: DTContext):
+    """GROUP 9 RULE 3 (contract §0.5, §3.2, §8 rule 3) — a branch whose own label names
+    Ewing sarcoma emits 9364, and a branch whose own label names a Ewing-like family (CIC,
+    BCOR, EWSR1-non-ETS) never emits 9364.
+
+    Reads the branch's LABEL, not its reason: a reason legitimately says "WHO 2020 separates
+    CIC-rearranged sarcoma from Ewing sarcoma" on the branch that correctly emits 8803."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    checked = 0
+    for code, holder, node_id, where in ctx.emissions():
+        label = _g9_label(holder)
+        if not label:
+            continue
+        if _G9_EWING_LIKE_RE.search(label):
+            checked += 1
+            if code == "9364":
+                out.append((FAIL, "RULE 3 — %s (%s) names a Ewing-like sarcoma and emits 9364. "
+                                  "WHO 2020 Table XII separates it from Ewing sarcoma; it codes "
+                                  "8803/3 (contract §3.2)" % (node_id, where)))
+        elif _G9_EWING_RE.search(label):
+            checked += 1
+            if code != "9364":
+                out.append((FAIL, "RULE 3 — %s (%s) names Ewing sarcoma and emits %s. Ewing "
+                                  "sarcoma is 9364/3 in ICD-O-3.2 (contract §0.5)"
+                            % (node_id, where, code)))
+    if not out:
+        out.append((OK, "RULE 3 — %d code-emitting branch(es) naming Ewing sarcoma or a "
+                        "Ewing-like family carry the right code" % checked))
+    return out
+
+
+def check_group9_basis_rows(ctx: DTContext):
+    """GROUP 9 RULE 4 (contract §0.7, §8 rule 4) — basis 1 and basis 2 are Visser Table 3
+    rows. Basis 1 only on a branch emitting 9140 that captures skin lesions (Kaposi sarcoma
+    of the skin, C44); basis 2 only on a branch emitting 8800, 8850, 8890 or 9120. Neither
+    on a branch that emits nothing: a basis claimed on the way to another question would
+    raise every code below it to a clinical basis nobody asserted for that code."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    seen = 0
+    for holder, path in walk_dicts(ctx.data):
+        basis = holder.get("basis_of_diagnosis")
+        if basis not in (1, 2):
+            continue
+        seen += 1
+        code = as_code(holder.get("morphology_code"))
+        if code is None:
+            out.append((FAIL, "RULE 4 — %s asserts basis %d but emits no code" % (path, basis)))
+            continue
+        if basis == 1:
+            skin = (holder.get("captures") or {}).get("lesion_site") == "skin"
+            if code not in GROUP9_VISSER_BASIS1 or not skin:
+                out.append((FAIL, "RULE 4 — %s emits %s at basis 1%s. Visser Table 3 gives "
+                                  "basis 1 only to Kaposi sarcoma of the skin, C44 (contract "
+                                  "§0.7)" % (path, code, "" if skin else " without capturing "
+                                             "lesion_site 'skin'")))
+        elif code not in GROUP9_VISSER_BASIS2:
+            out.append((FAIL, "RULE 4 — %s emits %s at basis 2. Visser Table 3's soft tissue "
+                              "rows at basis 2 are 8800, 8850, 8890 and 9120 only (contract "
+                              "§0.7)" % (path, code)))
+    if not out:
+        out.append((OK, "RULE 4 — %d basis-1/basis-2 branch(es), each a Visser Table 3 row" % seen))
+    return out
+
+
+def _g9_hhv8_negative(value) -> bool:
+    return isinstance(value, str) and value.strip().lower() in ("negative", "neg", "not_detected")
+
+
+def check_group9_kaposi_hhv8(ctx: DTContext):
+    """GROUP 9 RULE 5 (contract §3.5, §8 rule 5) — 9140 is never emitted by a branch that
+    itself records HHV-8 negative, and an ihc_checklist rule emits 9140 only with HHV-8
+    LANA-1 positive and never with it negative.
+
+    Branch-local on purpose. The one deliberate route to 9140 after a negative stain is
+    st_kaposi_hhv8_negative's option for a report that still concludes Kaposi sarcoma,
+    coded as stated and listed for the registrar; a path-based rule would forbid the
+    pathologist's own conclusion. What this rule catches is the authoring slip: a rule or
+    option that records the stain as negative and codes Kaposi sarcoma on the same branch."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    n = 0
+    for code, holder, node_id, where in ctx.emissions():
+        if code != "9140":
+            continue
+        n += 1
+        caps = holder.get("captures") or {}
+        if any(_g9_hhv8_negative(v) for k, v in caps.items() if "hhv8" in k.lower()):
+            out.append((FAIL, "RULE 5 — %s (%s) records HHV-8 negative and emits 9140"
+                        % (node_id, where)))
+        if "resolution_logic" in where:
+            pos = [str(t).split(":")[0] for t in holder.get("positive") or []]
+            neg = [str(t) for t in holder.get("negative") or []]
+            if "HHV-8 LANA-1" not in pos:
+                out.append((FAIL, "RULE 5 — %s (%s) is a marker rule emitting 9140 without "
+                                  "HHV-8 LANA-1 positive" % (node_id, where)))
+            if "HHV-8 LANA-1" in neg:
+                out.append((FAIL, "RULE 5 — %s (%s) emits 9140 with HHV-8 LANA-1 required "
+                                  "negative" % (node_id, where)))
+    if not out:
+        out.append((OK, "RULE 5 — %d branch(es) emit 9140; none records HHV-8 negative on "
+                        "the same branch, and every marker rule requires HHV-8 LANA-1 "
+                        "positive" % n))
+    return out
+
+
+def check_group9_8963_site(ctx: DTContext, repo: Path):
+    """GROUP 9 RULE 6 (contract §3.6, §8 rule 6) — rhabdoid tumour is Group IX only outside
+    the brain and spinal cord, the kidney and the liver (ICCC-2017 ranges 31, 48, 54, 82).
+    Every 8963 emission must be an ihc_checklist rule requiring SMARCB1 (INI1) loss, and in
+    the same node it must be preceded by SMARCB1-loss rules referring every CNS code
+    (read from topography_codes.json, not listed here) to Group 3, C64.9 to Group 6 and
+    C22.0 and C22.1 to Group 7. Without the preceding rules, a rhabdoid tumour of the
+    cerebellum would be coded in this group."""
+    if ctx.group != GROUP9:
+        return []
+    lookup, findings = _load_topography_lookup(repo)
+    out = list(findings)
+    cns = {c for c in lookup if str(c).startswith(("C70", "C71", "C72"))}
+    need = [(3, cns, "the CNS"), (6, {"C64.9"}, "C64.9"), (7, {"C22.0", "C22.1"}, "C22.0-C22.1")]
+    n = 0
+    for code, holder, node_id, where in ctx.emissions():
+        if code != "8963":
+            continue
+        n += 1
+        node = ctx.nodes.get(node_id) or {}
+        rules = node.get("resolution_logic") or []
+        if "resolution_logic" not in where or holder not in rules:
+            out.append((FAIL, "RULE 6 — %s (%s) emits 8963 outside an ihc_checklist rule; a "
+                              "rhabdoid tumour must pass the SMARCB1 (INI1) site fork "
+                              "(contract §3.6)" % (node_id, where)))
+            continue
+        if "SMARCB1 (INI1) loss" not in [str(t) for t in holder.get("positive") or []]:
+            out.append((FAIL, "RULE 6 — %s (%s) emits 8963 without SMARCB1 (INI1) loss"
+                        % (node_id, where)))
+        earlier = rules[:rules.index(holder)]
+        for group, sites, label in need:
+            covered = set()
+            for r in earlier:
+                if r.get("refer_group") != group:
+                    continue
+                if "SMARCB1 (INI1) loss" not in [str(t) for t in r.get("positive") or []]:
+                    continue
+                covered |= set(((r.get("when") or {}).get("topography")) or [])
+            if not sites <= covered:
+                out.append((FAIL, "RULE 6 — %s: the 8963 rule is not preceded by a SMARCB1-loss "
+                                  "rule referring %s to Group %d (missing %s)"
+                            % (node_id, label, group, ", ".join(sorted(sites - covered)[:5]))))
+    if not n:
+        out.append((FAIL, "RULE 6 — no branch emits 8963; extrarenal rhabdoid tumour is in the "
+                          "paediatric core (contract §1)"))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "RULE 6 — %d 8963 emission(s), each a SMARCB1-loss rule after the CNS, "
+                        "kidney and liver referrals" % n))
+    return out
+
+
+def check_group9_no_imaging_sufficient(ctx: DTContext):
+    """GROUP 9 RULE 7 (contract §0.7, §8 rule 7) — no entry is imaging_sufficient and the
+    tree has no imaging_pathway node. Visser Table 3's basis-2 rows key off what the clinical
+    investigation concludes, not off a constellation of imaging features."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    for e in ctx.entries:
+        if isinstance(e, dict) and e.get("imaging_sufficient") is True:
+            out.append((FAIL, "RULE 7 — %s is imaging_sufficient" % e.get("morphology_code")))
+    for node_id, node in ctx.nodes.items():
+        if node.get("node_type") == "imaging_pathway":
+            out.append((FAIL, "RULE 7 — %s is an imaging_pathway node" % node_id))
+    return out or [(OK, "RULE 7 — no imaging_sufficient entry and no imaging_pathway node")]
+
+
+def check_group9_no_flow_cytometry(ctx: DTContext):
+    """GROUP 9 RULE 8 (contract §0.9, §8 rule 8) — Flow cytometry is not a test this group
+    uses, in any required, captured or satisfied test list."""
+    if ctx.group != GROUP9:
+        return []
+    out = []
+    for holder, path in walk_dicts(ctx.data):
+        for key in ("diagnostic_tests_required", "satisfies_tests", "evidence_tests"):
+            if "Flow cytometry" in (holder.get(key) or []):
+                out.append((FAIL, "RULE 8 — %s.%s names Flow cytometry" % (path, key)))
+    return out or [(OK, "RULE 8 — no Flow cytometry in any Group IX test list")]
+
+
+def check_group9_obs_unreachable(ctx: DTContext):
+    """GROUP 9 RULE 9 (contract §0.6, §8 rule 9) — 9560/3 and 8853/3, whose every
+    behaviour-3 term carries [obs], are reachable by direct code entry only."""
+    if ctx.group != GROUP9:
+        return []
+    out = [(FAIL, "RULE 9 — %s (%s) emits %s, whose every behaviour-3 term is [obs]"
+            % (node_id, where, code))
+           for code, _h, node_id, where in ctx.emissions() if code in GROUP9_OBS_ONLY]
+    return out or [(OK, "RULE 9 — neither %s is emitted by the tree" % " nor ".join(GROUP9_OBS_ONLY))]
+
+
+def check_group9_leaf_claims(ctx: DTContext):
+    """GROUP 9 RULE 10 — every entry's coding_note says whether the tree reaches it, and the
+    claim is DERIVED from the tree here, never trusted. `terminal_reachable` drifted from
+    the data on 12 of 92 Group 2 entries (data.md §3): a statement about the data maintained
+    by hand. An entry claiming a leaf the tree never emits, or claiming direct entry only
+    while the tree emits it, FAILs. nos_fallback codes count as emissions."""
+    if ctx.group != GROUP9:
+        return []
+    emitted = {code for code, _h, _n, _w in ctx.emissions()}
+    for node in ctx.nodes.values():
+        fb = node.get("nos_fallback")
+        if isinstance(fb, dict) and as_code(fb.get("code")):
+            emitted.add(as_code(fb.get("code")))
+    out = []
+    leaves = 0
+    for e in ctx.entries:
+        if not isinstance(e, dict):
+            continue
+        code, note = as_code(e.get("morphology_code")), str(e.get("coding_note") or "")
+        says_leaf = "Reached by the g9_soft_tissue tree" in note
+        says_direct = "reachable by direct code entry only" in note
+        if says_leaf == says_direct:
+            out.append((FAIL, "RULE 10 — %s's coding_note states neither or both of 'Reached by "
+                              "the g9_soft_tissue tree' and 'direct code entry only'" % code))
+        elif says_leaf and code not in emitted:
+            out.append((FAIL, "RULE 10 — %s claims a tree leaf, but no branch or fallback "
+                              "emits it" % code))
+        elif says_direct and code in emitted:
+            out.append((FAIL, "RULE 10 — %s claims direct code entry only, but the tree emits "
+                              "it" % code))
+        leaves += says_leaf
+    return out or [(OK, "RULE 10 — %d leaf claims and %d direct-entry claims all match the "
+                        "tree" % (leaves, len(ctx.entries) - leaves))]
+
+
 def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
                                         classification: dict):
     """
@@ -9122,23 +9467,23 @@ def check_router_cns_topography_completeness(repo: Path, contexts: dict):
     Codes outside C70-C72 in the same list are untouched — `8000-8005` legitimately adds
     C75.1-C75.3, which match ICCC-2017 range 42's `700-729,751-753`.
 
-    ONE NAMED EXEMPTION, and it collapses when fixed. `9473` is the third of the four
-    stale branches and is the one docs/TODO.md §12 says not to repair here: extending its
-    topography list would fix the CNS cases and leave the larger defect in place, because
-    ICCC-2017 range 29 is the ONLY range carrying `9473`, it takes sites `000-809`, and it
-    resolves to IIIc2 — so the rule's Group IX default has no basis at any topography, not
-    merely at unenumerated CNS subsites. Whether `9473` is topography-dependent at all is a
-    Group III/IX decision. It is downgraded to WARN by name, and if it is ever repaired
-    this check FAILS on the stale exemption rather than letting it quietly outlive its
-    reason.
+    THE ONE NAMED EXEMPTION IS GONE. `9473` was the third of the four stale branches and
+    was exempted by name until the rule itself was settled. It was settled on the Group 9
+    branch, 2 October 2026 (Group 9 build contract §3.12): ICCC-2017 range 29 is the only
+    range carrying `9473`, at sites `000-809`, resolving to IIIc2, and ICD-O-3.2 codes the
+    peripheral PNET wordings at `9364/3`. Group IX has no claim on `9473` at any site, so
+    the rule was removed and `9473` is a single-group Group III code. The exemption set is
+    kept, empty, so a future exemption has a home and the stale-name clause below still
+    guards it.
 
     Keyed off topography_codes.json, not off a list written here, so enumerating a new
     CNS subsite in the shared layer makes this check demand it everywhere in the same
     build rather than in whichever build someone next remembers.
     """
-    # docs/TODO.md §12 — repaired elsewhere, on its own evidence. Deleting this name once
-    # the rule is fixed is required; the second clause below fails if it goes stale.
-    CNS_COMPLETENESS_EXEMPTION = {"9473"}
+    # docs/TODO.md §12. `9473` was named here until the rule was removed on the Group 9
+    # branch (contract §3.12). An exemption whose rule no longer exists cannot trip the
+    # stale-name clause below, so the name had to go with the rule.
+    CNS_COMPLETENESS_EXEMPTION: set = set()
     NOS_LEVEL = {"C70.9", "C71.9", "C72.9"}
     router_path = repo / "data" / "shared" / "presentation_router.json"
     topo_path = repo / "data" / "shared" / "topography_codes.json"
@@ -9620,6 +9965,17 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group6_anaplasia_code_neutral, ctx)           # rule 7
         report.run(check_group6_imaging_sufficient, ctx)               # rule 8
         report.run(check_group6_no_flow_cytometry, ctx)                # rule 9
+        # Group 9 build contract §8 — ten rules, each a no-op on any other group's file.
+        report.run(check_group9_code_set, ctx)                         # rule 1
+        report.run(check_group9_absent_codes, ctx)                     # rule 2
+        report.run(check_group9_ewing_code, ctx)                       # rule 3
+        report.run(check_group9_basis_rows, ctx)                       # rule 4
+        report.run(check_group9_kaposi_hhv8, ctx)                      # rule 5
+        report.run(check_group9_8963_site, ctx, repo)                  # rule 6
+        report.run(check_group9_no_imaging_sufficient, ctx)            # rule 7
+        report.run(check_group9_no_flow_cytometry, ctx)                # rule 8
+        report.run(check_group9_obs_unreachable, ctx)                  # rule 9
+        report.run(check_group9_leaf_claims, ctx)                      # rule 10
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_redcap_banner_signal, ctx, redcap_options)
