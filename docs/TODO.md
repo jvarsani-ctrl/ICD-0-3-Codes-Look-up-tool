@@ -247,7 +247,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 behaviour ICCC-3 Group IV does not admit.** `ICCC-3 declares behaviour `3`, and only `3`, for
 every Group IV range` — that one fact drives six of the eleven.
 
-This does **not** contradict `Registry Data/data dictionary/Group IV Verification.md`, which
+This does **not** contradict `REDCap Registry/docs/data-dictionary/Group IV Verification.md`, which
 found the field clean. That audit asked *does pick N return the code its label says?* and the
 answer is still yes for all 26. This asks *does that code actually carry that term, at a
 behaviour the group admits?* A pick-to-code audit cannot see a label defect, because the label

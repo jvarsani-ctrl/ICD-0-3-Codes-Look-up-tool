@@ -16,7 +16,7 @@ ninety-eight options**. Group 5 had one finding against five options.
 ## 0. Why this is the largest repair package in the project
 
 `vi_morph` stores the real ICD-O-3 code as the option value, the same convention `v_morph` uses —
-confirmed against `Registry Data/data dictionary/Diagnosis.md` (§ `vi_morph`, `vi_extended`,
+confirmed against `REDCap Registry/docs/data-dictionary/Diagnosis.md` (§ `vi_morph`, `vi_extended`,
 `vi_subgroup`) and `EAFYA IMPORT/redcap_field_choices.json`. There is no `vi_code` companion field,
 because Group VI's option list is one term per code, the same pattern as Groups I, II, V, IX, X, XI
 and XII. **Unlike `v_morph`, Group VI does carry two auto-calculated companion fields**,
@@ -350,6 +350,6 @@ list; these four are specific to `vi_morph`.
 workbook, 9 October 2020), `ICCC-2017.sqlite`, the four IARC 3.1→3.2 change documents, Moch H, et
 al. *European Urology* 2022;82(5):458–468, and `ICD coding/RedCap Options/Group 6 - Renal
 Tumors.md` for the live `vi_morph` option list (98 options, confirmed by direct count). Field
-storage confirmed against `Registry Data/data dictionary/Diagnosis.md` and
+storage confirmed against `REDCap Registry/docs/data-dictionary/Diagnosis.md` and
 `EAFYA IMPORT/redcap_field_choices.json`. See `docs/group_06_build_contract.md` §0.2, §0.3, §0.5,
 §0.6, §2 and §11.*
