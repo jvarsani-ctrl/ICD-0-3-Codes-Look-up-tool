@@ -376,6 +376,18 @@ def load_obs(icdo_path: Path) -> dict:
     return out
 
 
+# The ICCC-2017.sqlite row behind each Group VII subgroup (contract §0.2). VIIb holds two
+# rows: 71 for the any-site codes 8160-8162 and 8170-8180, 70 for the C22 carcinoma block.
+ICCC_ROW_BY_SUBGROUP = {"VIIa1": "67", "VIIa2": "68", "VIIa3": "69", "VIIb": "70", "VIIc": "72"}
+ANY_SITE_VIIB = {"8160", "8161", "8162"} | {str(c) for c in range(8170, 8181)}
+
+
+def iccc_range_row(code: str, subgroup: str) -> str:
+    if subgroup == "VIIb" and code in ANY_SITE_VIIB:
+        return "71"
+    return ICCC_ROW_BY_SUBGROUP.get(subgroup, "?")
+
+
 def build_entry(rec: dict, redcap: dict, obs: dict) -> dict:
     code, behaviour = rec["morphology_code"], rec["behavior_code"]
     topo = [t.replace("–", "-") for t in rec["topography"]]
@@ -424,7 +436,7 @@ def build_entry(rec: dict, redcap: dict, obs: dict) -> dict:
                 "ICD-O-3.2 code %s/3 '%s', verified against icdo32.sqlite and inside ICCC-2017 "
                 "range %s, is not an option in RedCap Options/Group 7- Hepatic Tumors.md. "
                 "Built under registrar rulings 1-3 of 4 September 2026 (contract §2B)."
-                % (code, rec["preferred_term"], "71" if code[:3] == "817" else "70")
+                % (code, rec["preferred_term"], iccc_range_row(code, rec["iccc3_subgroup_id"]))
             ),
             "needs": ["REDCap Group 7 option list"],
             "todo": "docs/codes-awaiting-redcap.md",
