@@ -953,9 +953,13 @@ GROUP7_RHABDOID_CODE = "8963"
 GROUP7_HEPATOBLASTOMA_CODE = "8970"
 _G7_SCUD_RE = re.compile(r"small[- ]cell undifferentiated|\bSCUD\b|blastemal|rhabdoid", re.I)
 _G7_LOSS_MARKER_RE = re.compile(r"\b(SMARCB1|INI1|SMARCA4|BRG1)\b.*\bloss\b", re.I)
-_G7_RETAINED_MARKER_RE = re.compile(r"\b(SMARCB1|INI1)\b.*\bRETAINED\b", re.I)
+# Anchored on "performed and RETAINED": every loss marker ends "internal control
+# retained", which a bare RETAINED with re.I also matched.
+_G7_RETAINED_MARKER_RE = re.compile(r"\b(SMARCB1|INI1)\b.*\bperformed and RETAINED\b", re.I)
 _G7_SMALL_CELL_RE = re.compile(r"small[- ]cell undifferentiated|\bSCUD\b|blastemal", re.I)
 _G7_MRT_DIAGNOSED_RE = re.compile(r"diagnos\w* a malignant rhabdoid tumou?r", re.I)
+_G7_HB_DIAGNOSED_RE = re.compile(r"diagnos\w* hepatoblastoma", re.I)
+_G7_SMARCA4_RETAINED_RE = re.compile(r"\b(SMARCA4|BRG1)\b.*\bperformed and RETAINED\b", re.I)
 
 # §3.2 — fibrolamellar carcinoma.
 GROUP7_FIBROLAMELLAR_CODE = "8171"
@@ -2608,6 +2612,48 @@ def check_classification_system(ctx: DTContext):
                                                      entry["classification_system"])))
     if not out:
         out.append((OK, "%d classification_system value(s) valid" % seen))
+    return out
+
+
+def check_outstanding_tests(ctx: DTContext):
+    """
+    `outstanding_tests[]` is the reverse of `satisfies_tests[]`: app.js ADDS each value
+    to the outstanding-workup rows of the code a branch emits. Added for Group 7,
+    3 October 2026, so that a branch reaching a code on a partial panel (INI1 retained,
+    SMARCA4 never done) shows the skipped test as owed instead of "Complete — no
+    outstanding tests". The same two silent failures as satisfies_tests apply: a value
+    outside the closed vocabulary still renders, as a row no REDCap workup field can
+    hold; and a branch that emits no code never reaches finish(), so the field is inert.
+    A test listed in both fields contradicts itself; app.js shows it owed.
+    """
+    out, seen = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if "outstanding_tests" not in holder:
+                continue
+            ot = holder.get("outstanding_tests")
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            if not isinstance(ot, list) or not ot or not all(isinstance(v, str) for v in ot):
+                out.append((FAIL, "%s: outstanding_tests must be a non-empty list of strings, "
+                                  "got %r" % (loc, ot)))
+                continue
+            if not as_code(holder.get("morphology_code")):
+                out.append((FAIL, "%s: outstanding_tests on a branch that emits no "
+                                  "morphology_code — app.js applies it only in finish(), so it "
+                                  "is silently inert here" % loc))
+                continue
+            seen += 1
+            for value in ot:
+                if value not in DIAGNOSTIC_TESTS:
+                    out.append((FAIL, "%s: outstanding_tests value %r is not in the closed "
+                                      "diagnostic-test vocabulary" % (loc, value)))
+            both = set(ot) & set(holder.get("satisfies_tests") or [])
+            if both:
+                out.append((FAIL, "%s: %s listed in both satisfies_tests and outstanding_tests"
+                            % (loc, ", ".join(sorted(both)))))
+    if seen and not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "%d outstanding_tests declaration(s): all values in the closed "
+                        "vocabulary, all on code-emitting terminals, none also satisfied" % seen))
     return out
 
 
@@ -8278,6 +8324,12 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
           carried both "small cell undifferentiated" and "malignant rhabdoid tumour"
           into the step, and an INI1-retained malignant rhabdoid tumour (Vokuhl 2016,
           p. 927, case 17) reached 8970 with "Workup: complete";
+      (g) every INI1-step rule that codes on INI1 retained without SMARCA4 retained names
+          IHC in `outstanding_tests` and SMARCA4 in its upgrade line. Registrar ruling,
+          3 October 2026 (open question 18): SMARCA4 not done gives the same code as both
+          retained, with SMARCA4 shown as owed. (f) also admits an option stating that the
+          report diagnoses hepatoblastoma, which reaches the INI1 step when rhabdoid cells are
+          described in it;
       (a') the one exemption from (a): an option whose label says the report DIAGNOSES a
           malignant rhabdoid tumour may emit 8963 on that diagnosis, because rhabdoid
           tumour is still a histomorphological diagnosis (López-Terrada 2014, p. 479). It
@@ -8374,13 +8426,31 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
                 when = r.get("when") or {}
                 fires = all(str(captured.get(k)) in [str(v) for v in (w if isinstance(w, list) else [w])]
                             for k, w in when.items())
-                if fires and not _g7_asserted(_g7_option_text(holder), _G7_SMALL_CELL_RE):
+                text = _g7_option_text(holder)
+                if fires and not _g7_asserted(text, _G7_SMALL_CELL_RE) \
+                        and not _G7_HB_DIAGNOSED_RE.search(text):
                     out.append((FAIL, "RULE 4(f) — node %s (%s) routes into %s, whose 8970 rule "
                                       "can fire for it, but the option does not describe a small "
-                                      "cell undifferentiated pattern: %r. An INI1-retained "
+                                      "cell undifferentiated pattern or a report that diagnoses "
+                                      "hepatoblastoma: %r. An INI1-retained "
                                       "rhabdoid tumour would be recoded as hepatoblastoma "
                                       "(Vokuhl 2016, p. 927)"
                                 % (node_id, where, target, _g7_option_text(holder)[:120])))
+    for code, holder, node_id, where in ctx.emissions():
+        if "resolution_logic" not in where:
+            continue
+        pos = positives(holder)
+        if not any(_G7_RETAINED_MARKER_RE.search(p) for p in pos) \
+                or any(_G7_SMARCA4_RETAINED_RE.search(p) for p in pos):
+            continue
+        if "IHC" not in (holder.get("outstanding_tests") or []) \
+                or not re.search(r"SMARCA4", str(holder.get("upgrade_path") or "")):
+            out.append((FAIL, "RULE 4(g) — node %s (%s) emits %s on INI1 retained without "
+                              "SMARCA4 retained, but does not show IHC as outstanding with an "
+                              "upgrade line naming SMARCA4; the output would read 'Complete' "
+                              "on a panel that never excluded a SMARCA4-deficient malignant "
+                              "rhabdoid tumour (Fazlollahi 2019, §4.1.1; registrar ruling, "
+                              "3 October 2026)" % (node_id, where, code)))
     alias_path = repo / "data" / "aliases" / "aliases_group_07.json" if repo else None
     if alias_path is not None and alias_path.exists():
         aliases, _ = load_json(alias_path)
@@ -10255,6 +10325,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_detection_method, ctx)
         report.run(check_classification_system, ctx)
         report.run(check_satisfies_tests, ctx)
+        report.run(check_outstanding_tests, ctx)
         # Group II schema extensions (Group II build contract §3) — fields, not node types
         report.run(check_behaviour_resolution, ctx)
         report.run(check_provisional_pending, ctx)

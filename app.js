@@ -1623,6 +1623,16 @@ function finish(target, basis) {
   if (pending && pending.resolving_test && missing.indexOf(pending.resolving_test) === -1) {
     missing = missing.concat([pending.resolving_test]);
   }
+  /* `outstanding_tests[]` is the reverse of `satisfies_tests[]`: the tests a
+     branch's own finding leaves owed, whatever the entry requires. A code's
+     required-test list is fixed per code, so without this a branch that
+     reaches a code on a partial panel — INI1 retained, SMARCA4 never done —
+     renders "Complete — no outstanding tests" above an upgrade line naming
+     the test that was skipped. Added for Group 7, 3 October 2026, on the
+     registrar's decision; group-agnostic, and it can only add a row. */
+  arr(target.outstanding_tests).forEach(function (t) {
+    if (missing.indexOf(t) === -1) missing = missing.concat([t]);
+  });
   state.workup = missing.map(function (t) {
     var prior = state.workup.filter(function (w) { return w.test === t; })[0];
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };

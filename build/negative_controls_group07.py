@@ -80,6 +80,7 @@ CHECKS = {
     8: lambda d, r: bd.check_group7_fibrolamellar(ctx_of(d)),
     9: lambda d, r: bd.check_group7_router_c22(r, LAYER1),
     "rt": lambda d, r: bd.check_icdo32_round_trip(ctx_of(d), LAYER1),
+    "ot": lambda d, r: bd.check_outstanding_tests(ctx_of(d)),
     "be": lambda d, r: bd.check_behaviour_exclusion(ctx_of(d), LAYER1),
 }
 
@@ -156,7 +157,8 @@ def m_ini1_fallback_8970(d, a, r):
 
 
 def m_drop_retained_rule(d, a, r):
-    del nodes(d)["hp_ini1"]["resolution_logic"][2]
+    ini = nodes(d)["hp_ini1"]
+    ini["resolution_logic"] = [x for x in ini["resolution_logic"] if x["morphology_code"] != "8970"]
 
 
 def m_alias_scud_8970(d, a, r):
@@ -180,6 +182,29 @@ def m_mrt_label_scud(d, a, r):
 
 def m_inventory_drops_c22(d, a, r):
     option(d, "hp_document_inventory", "Histology report")["captures"].pop("primary_site")
+
+
+def m_smarca4_not_owed(d, a, r):
+    rule(d, "hp_ini1", 5).pop("outstanding_tests")
+
+
+def m_smarca4_rule_satisfies(d, a, r):
+    x = rule(d, "hp_ini1", 6)
+    x.pop("outstanding_tests")
+    x["satisfies_tests"] = ["IHC"]
+
+
+def m_hb_rhabdoid_label_undiagnosed(d, a, r):
+    option(d, "hp_histology", "The report diagnoses hepatoblastoma")["label"] = (
+        "Hepatoblastoma-like areas and rhabdoid cells are described")
+
+
+def m_outstanding_off_vocabulary(d, a, r):
+    rule(d, "hp_ini1", 7)["outstanding_tests"] = ["SMARCA4"]
+
+
+def m_outstanding_and_satisfied(d, a, r):
+    rule(d, "hp_ini1", 7)["satisfies_tests"] = ["IHC"]
 
 
 def m_8963_no_when(d, a, r):
@@ -279,6 +304,9 @@ CONTROLS = [
     ("4G", 4, "the 8970 rule loses its small-cell condition", m_8970_when_dropped, "RULE 4(f)"),
     ("4H", 4, "the small cell option codes 8963 directly", m_scud_emits_8963, "RULE 4(a)"),
     ("4I", 4, "the diagnosed-MRT option also names a small cell pattern", m_mrt_label_scud, "RULE 4(a)"),
+    ("4J", 4, "SCUD with INI1 retained, SMARCA4 not done, no longer owes IHC", m_smarca4_not_owed, "RULE 4(g)"),
+    ("4K", 4, "hepatoblastoma with rhabdoid cells, SMARCA4 not done, claims IHC done", m_smarca4_rule_satisfies, "RULE 4(g)"),
+    ("4L", 4, "the hepatoblastoma-with-rhabdoid-cells option no longer says the report diagnoses hepatoblastoma", m_hb_rhabdoid_label_undiagnosed, "RULE 4(f)"),
     ("5A", 5, "the histology route no longer captures C22", m_inventory_drops_c22, "never established"),
     ("5B", 5, "an 8963 rule loses its primary_site when", m_8963_no_when, "without `when` primary_site"),
     ("6A", 6, "the imaging node codes 8170 at basis 2", m_imaging_emits_8170, "8170 at basis 2"),
@@ -297,6 +325,8 @@ CONTROLS = [
     ("9C", 9, "the 8170 default reverted to group 11", m_router_8170_default_11, "8170 at C24.0"),
     ("9D", 9, "the 8000-8005 C22 branch removed", m_router_drop_8000_c22, "8000 at C22.0"),
     ("RT", "rt", "8970 named by REDCap's string 'Hepatoblastoma'", m_name_redcap_string, "Hepatoblastoma"),
+    ("OT1", "ot", "outstanding_tests names a test outside the vocabulary", m_outstanding_off_vocabulary, "closed"),
+    ("OT2", "ot", "a rule both satisfies and owes IHC", m_outstanding_and_satisfied, "listed in both"),
     ("BE", "be", "the 8170/0 exclusion names its synonym", m_exclusion_synonym_term, "not the PREFERRED one"),
 ]
 

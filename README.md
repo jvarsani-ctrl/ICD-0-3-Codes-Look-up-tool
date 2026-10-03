@@ -167,6 +167,9 @@ cross-layer references, and the checks that exist because their absence would be
   one field that can make a case look better worked up than it is. A typo never matches (the
   suppression quietly does nothing); a value the code does not require is an inert no-op that
   still reads as a live claim.
+- **`outstanding_tests` guard** — the reverse field: a branch names tests its finding leaves owed,
+  which `app.js` adds to the outstanding-workup rows. Same closed vocabulary; it must sit on a
+  code-emitting branch and never repeat a value from `satisfies_tests`.
 - **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
   morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
 

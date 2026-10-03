@@ -482,11 +482,16 @@ SMARCB1 but lack SMARCA4 expression."*
 ```
 1. when {primary_site: [C22]}  positive [SMARCB1 (INI1) loss …]
                                negative [SMARCB1 (INI1) … RETAINED …]  → 8963/3, basis 7
-2. when {primary_site: [C22]}  positive [SMARCA4 (BRG1) loss …]       → 8963/3, basis 7
-3. when {histology_pattern: [small_cell_undifferentiated]}
-                               positive [SMARCB1 (INI1) … RETAINED …]  → 8970/3, basis 7
-4. when {histology_pattern: [rhabdoid_cells]}
-                               positive [SMARCB1 (INI1) … RETAINED …]  → 8000/3, basis 7
+2. when {primary_site: [C22]}  positive [SMARCA4 (BRG1) loss …]
+                               negative [SMARCA4 (BRG1) … RETAINED …]  → 8963/3, basis 7
+   INI1 retained AND SMARCA4 retained (workup complete):
+3. small_cell_undifferentiated                                        → 8970/3
+4. hepatoblastoma_with_rhabdoid_cells                                 → 8970/3
+5. rhabdoid_cells (report names no type)                              → 8000/3, satisfies IHC
+   INI1 retained, SMARCA4 not recorded (outstanding_tests [IHC], upgrade names SMARCA4):
+6. small_cell_undifferentiated                                        → 8970/3
+7. hepatoblastoma_with_rhabdoid_cells                                 → 8970/3
+8. rhabdoid_cells                                                     → 8000/3
 nos_fallback                                                           → 8000/3
 
 *Revised after the independent review of 3 October 2026.* The first version had one option carrying
@@ -505,7 +510,24 @@ so once retention is recorded the flow does not ask for an INI1 loss that would 
 is still asked. And `8000/3` requires Histology **and** IHC, so the INI1-not-done terminal shows IHC as
 outstanding instead of "Workup: complete".
 
-### 4.4 Hepatoblastoma subtype is code-neutral
+*Rebuilt on the registrar's ruling, 3 October 2026 (open question 18).* The first build coded rhabdoid
+cells with INI1 retained as `8000/3` on one case: Vokuhl 2016, p. 927, case 17, which kept both INI1
+and SMARCA4. The registrar asked for more evidence, since one case should not outweigh the typical
+pattern. The current definition of a primary rhabdoid tumour of the liver "requires testing for loss
+of SMARCB1 expression" (Trobaugh-Lotrario AD, et al. *Cancers* 2023;15(2):467, Discussion); a liver
+tumour with rhabdoid or small cell features that keeps INI1 "should then be evaluated for BRG1
+protein" (Fazlollahi L, et al. *Cancers* 2019;11(12):1992, §4.1.1); and of 20 tumours with features
+suggesting rhabdoid tumour, the 7 that kept INI1 carried no INI1 mutation (Wu X, et al. *Pathology*
+2008;40(7):664–670, p. 664). So:
+
+- the histology step splits rhabdoid cells by what the report calls the tumour: hepatoblastoma with
+  rhabdoid cells, or rhabdoid cells with no type named. The plain hepatoblastoma option now excludes
+  any rhabdoid cells, so every tumour with rhabdoid cells passes through INI1;
+- INI1 and SMARCA4 both retained: not a malignant rhabdoid tumour; the code follows the report;
+- INI1 retained, SMARCA4 not recorded: the same code, with IHC outstanding. A code's required-test
+  list is fixed per code, so this needed one group-agnostic engine field, `outstanding_tests[]`, the
+  reverse of `satisfies_tests[]`, approved by the registrar the same day. `check_outstanding_tests()`
+  validates it and rule 4(g) requires it on every such rule. Hepatoblastoma subtype is code-neutral
 
 Pure fetal, crowded fetal, embryonal, pleomorphic, cholangioblastic, macrotrabecular, mixed
 epithelial-mesenchymal and teratoid are all `8970/3` (López-Terrada 2025, pp. 24–25). The histology

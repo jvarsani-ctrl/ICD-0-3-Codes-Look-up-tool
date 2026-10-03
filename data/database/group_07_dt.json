@@ -2972,7 +2972,7 @@
           "step_number": 2,
           "step_label": "Histology — the diagnosis",
           "question": "What does the histology report diagnose?",
-          "hint": "Code from the report's own diagnosis. Hepatoblastoma subtype — pure fetal, crowded fetal, embryonal, pleomorphic, cholangioblastic, macrotrabecular, mixed epithelial and mesenchymal, teratoid — never changes the code. A small cell undifferentiated or rhabdoid tumour is decided by INI1 at the next step.",
+          "hint": "Code from the report's own diagnosis. Hepatoblastoma subtype — pure fetal, crowded fetal, embryonal, pleomorphic, cholangioblastic, macrotrabecular, mixed epithelial and mesenchymal, teratoid — never changes the code. A small cell undifferentiated tumour, or any tumour with rhabdoid cells that the report does not call a malignant rhabdoid tumour, is decided by INI1 and SMARCA4 at the next step.",
           "clinical_alert": null,
           "coding_note": "Contract §4. Entity list from the International Pediatric Liver Tumors Consensus Classification as reproduced in López-Terrada 2025, Table 1, p. 24. Hepatoblastoma subtypes all 8970/3 (pp. 24-25). Small cell undifferentiated or rhabdoid predominance must not emit 8970 without INI1 (Vokuhl 2016, p. 925; check_group7_ini1_fork). Hepatocellular neoplasm NOS has no ICD-O-3.2 code (contract §3.3). cHCC-CCA is H&E-defined (Brunt 2018, manuscript p. 2). UESL needs no marker panel (López-Terrada 2025, p. 36). CNSET is 8975/1 only (contract §3.1). Referrals: sarcomas to IX (8910 IXa, 9120/9133 IXd8, 9040 IXd7, 8806 IXd11, 9140 IXc, all any-site in ICCC-2017); germ cell tumours at C22 to Xb (rows 124, 126); lymphoma to II; leukaemia, including the acute megakaryoblastic leukaemia López-Terrada 2025 Table 1 lists among liver masses, to I. Benign lesions on a Group VII code stem (8170/0, 8160/0, 8148/2) are behaviour exclusions; benign lesions with no Group VII stem are non-reportable.",
           "captured_variables": [
@@ -2980,7 +2980,7 @@
           ],
           "options": [
             {
-              "label": "Hepatoblastoma — fetal, embryonal, pleomorphic, cholangioblastic or macrotrabecular epithelial pattern, mixed epithelial and mesenchymal, or teratoid — with no small cell undifferentiated or rhabdoid component predominating",
+              "label": "Hepatoblastoma — fetal, embryonal, pleomorphic, cholangioblastic or macrotrabecular epithelial pattern, mixed epithelial and mesenchymal, or teratoid — with no rhabdoid cells described and no small cell undifferentiated component predominating",
               "morphology_code": "8970",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -3010,7 +3010,15 @@
               }
             },
             {
-              "label": "Rhabdoid cells are described, but the report does not diagnose a malignant rhabdoid tumour",
+              "label": "The report diagnoses hepatoblastoma and also describes rhabdoid cells in it, without calling the tumour a malignant rhabdoid tumour",
+              "next_node": "hp_ini1",
+              "basis_of_diagnosis": 7,
+              "captures": {
+                "histology_pattern": "hepatoblastoma_with_rhabdoid_cells"
+              }
+            },
+            {
+              "label": "Rhabdoid cells are described, and the report names no tumour type — neither hepatoblastoma nor a malignant rhabdoid tumour",
               "next_node": "hp_ini1",
               "basis_of_diagnosis": 7,
               "captures": {
@@ -3202,17 +3210,18 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "INI1 — hepatoblastoma or malignant rhabdoid tumour",
-          "question": "Record the INI1 (SMARCB1) result, and SMARCA4 (BRG1) if it was done.",
-          "hint": "In a small cell undifferentiated liver tumour, INI1 decides the code. Lost: malignant rhabdoid tumour — 22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid tumour had lost it (Vokuhl 2016, p. 925). With INI1 retained, a small cell undifferentiated pattern in a hepatoblastoma carries no adverse prognosis of its own (López-Terrada 2025, p. 25). About 5% of rhabdoid tumours keep INI1 and lose SMARCA4 instead (p. 37). INI1, SMARCB1, BAF47 and SNF5 name the same protein.",
+          "question": "Record the INI1 (SMARCB1) result, and the SMARCA4 (BRG1) result if it was done.",
+          "hint": "INI1 decides the code, and SMARCA4 decides it when INI1 is retained. INI1 lost: malignant rhabdoid tumour — 22 of 23 tumours first diagnosed as small cell undifferentiated hepatoblastoma or malignant rhabdoid tumour had lost it (Vokuhl 2016, p. 925). INI1 retained: a small cell undifferentiated pattern, or rhabdoid cells in a hepatoblastoma, does not make the tumour a malignant rhabdoid tumour unless SMARCA4 is lost; about 5% of rhabdoid tumours keep INI1 and lose SMARCA4 instead (López-Terrada 2025, p. 37). Record SMARCA4 if it was done; if it was not, the code is given with IHC still outstanding. INI1, SMARCB1, BAF47 and SNF5 name the same protein; SMARCA4 is also called BRG1.",
           "clinical_alert": null,
-          "coding_note": "Contract §4.3, the group's signature fork. Retention is its own POSITIVE marker, not a negative requirement on the loss marker, because app.js markerOff() satisfies a negative requirement with a marker that was never recorded (line 1220) — a 'not lost' rule written that way would code an untested tumour as hepatoblastoma, the error Vokuhl 2016 documents. Marker wording follows Group 3 st_embryonal_family. The SMARCA4 rule precedes the retention rule, so a tumour with INI1 retained and SMARCA4 lost reaches 8963. The 8963 rules condition on primary_site C22 (ICCC-2017 row 68; check_group7_c22_only_codes). INI1 not done falls to 8000/3 (ruling 11: the nearest code that does not overstate). The SMARCB1-loss rule also names the RETAINED marker as negative, so once retention is recorded the flow does not ask for an INI1 loss that would contradict it (found driving the flow in the browser, 2 October 2026); SMARCA4 is still asked, because about 5% of rhabdoid tumours keep INI1 and lose SMARCA4. Review of 3 October 2026: the 8970 rule now requires histology_pattern small_cell_undifferentiated, and a fourth rule sends INI1-retained rhabdoid cells to 8000/3; a report that diagnoses malignant rhabdoid tumour is coded 8963 at the histology step and never reaches this node.",
+          "coding_note": "Contract §4.3, the group's signature fork. Retention is its own POSITIVE marker, not a negative requirement on the loss marker, because app.js markerOff() satisfies a negative requirement with a marker that was never recorded (line 1220) — a 'not lost' rule written that way would code an untested tumour as hepatoblastoma, the error Vokuhl 2016 documents. Marker wording follows Group 3 st_embryonal_family. The SMARCA4 rule precedes the retention rule, so a tumour with INI1 retained and SMARCA4 lost reaches 8963. The 8963 rules condition on primary_site C22 (ICCC-2017 row 68; check_group7_c22_only_codes). INI1 not done falls to 8000/3 (ruling 11: the nearest code that does not overstate). The SMARCB1-loss rule also names the RETAINED marker as negative, so once retention is recorded the flow does not ask for an INI1 loss that would contradict it (found driving the flow in the browser, 2 October 2026); SMARCA4 is still asked, because about 5% of rhabdoid tumours keep INI1 and lose SMARCA4. Review of 3 October 2026: the 8970 rule now requires histology_pattern small_cell_undifferentiated, and a fourth rule sends INI1-retained rhabdoid cells to 8000/3; a report that diagnoses malignant rhabdoid tumour is coded 8963 at the histology step and never reaches this node. Rebuilt 3 October 2026 on the registrar's ruling (open question 18): INI1 retained with SMARCA4 retained is not a malignant rhabdoid tumour; the code follows the report's own diagnosis; SMARCA4 not recorded gives the same code with IHC outstanding through outstanding_tests. Sources: Trobaugh-Lotrario AD, et al. Cancers 2023;15(2):467; Fazlollahi L, et al. Cancers 2019;11(12):1992; Wu X, et al. Pathology 2008;40(7):664-670.",
           "marker_groups": [
             {
               "group_label": "SWI/SNF complex proteins",
               "markers": [
                 "SMARCB1 (INI1) loss (nuclear expression lost in tumour cells, internal control retained)",
                 "SMARCA4 (BRG1) loss (nuclear expression lost in tumour cells, internal control retained)",
-                "SMARCB1 (INI1) performed and RETAINED with a valid internal control"
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control",
+                "SMARCA4 (BRG1) performed and RETAINED with a valid internal control"
               ]
             }
           ],
@@ -3262,25 +3271,110 @@
               ],
               "captures": {
                 "ihc_resolution": "rhabdoid_smarca4_loss"
+              },
+              "negative": [
+                "SMARCA4 (BRG1) performed and RETAINED with a valid internal control"
+              ]
+            },
+            {
+              "when": {
+                "histology_pattern": [
+                  "small_cell_undifferentiated"
+                ]
+              },
+              "positive": [
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control",
+                "SMARCA4 (BRG1) performed and RETAINED with a valid internal control"
+              ],
+              "morphology_code": "8970",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "INI1 and SMARCA4 are both retained in a tumour with a small cell undifferentiated pattern and no rhabdoid cells. A malignant rhabdoid tumour of the liver is diagnosed on loss of INI1, or of SMARCA4 in the rare tumour that keeps INI1 (Trobaugh-Lotrario 2023, Discussion; Fazlollahi 2019, §4.1.1). With INI1 retained the pattern belongs to a hepatoblastoma and carries no adverse prognosis of its own (López-Terrada 2025, p. 25). Recorded as Hepatoblastoma, NOS (8970/3).",
+              "captures": {
+                "ihc_resolution": "hepatoblastoma_ini1_smarca4_retained"
               }
             },
             {
+              "when": {
+                "histology_pattern": [
+                  "hepatoblastoma_with_rhabdoid_cells"
+                ]
+              },
+              "positive": [
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control",
+                "SMARCA4 (BRG1) performed and RETAINED with a valid internal control"
+              ],
+              "morphology_code": "8970",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "The report diagnoses hepatoblastoma, and INI1 and SMARCA4 are both retained, so the rhabdoid cells it describes do not make the tumour a malignant rhabdoid tumour. A malignant rhabdoid tumour of the liver is diagnosed on loss of INI1, or of SMARCA4 in the rare tumour that keeps INI1 (Trobaugh-Lotrario 2023, Discussion; Fazlollahi 2019, §4.1.1). Recorded as Hepatoblastoma, NOS (8970/3), on the report's diagnosis.",
+              "captures": {
+                "ihc_resolution": "hepatoblastoma_rhabdoid_cells_ini1_smarca4_retained"
+              }
+            },
+            {
+              "when": {
+                "histology_pattern": [
+                  "rhabdoid_cells"
+                ]
+              },
+              "positive": [
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control",
+                "SMARCA4 (BRG1) performed and RETAINED with a valid internal control"
+              ],
+              "morphology_code": "8000",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "INI1 and SMARCA4 are both retained, so the rhabdoid cells do not make the tumour a malignant rhabdoid tumour. A malignant rhabdoid tumour of the liver is diagnosed on loss of INI1, or of SMARCA4 in the rare tumour that keeps INI1 (Trobaugh-Lotrario 2023, Discussion; Fazlollahi 2019, §4.1.1). The report names no tumour type, so it is recorded as Neoplasm, malignant (8000/3) at the liver.",
+              "satisfies_tests": [
+                "IHC"
+              ],
+              "upgrade_path": "The pathologist's diagnosis of the tumour type would give a specific code.",
+              "captures": {
+                "ihc_resolution": "rhabdoid_cells_ini1_smarca4_retained_type_not_named"
+              }
+            },
+            {
+              "when": {
+                "histology_pattern": [
+                  "small_cell_undifferentiated"
+                ]
+              },
               "positive": [
                 "SMARCB1 (INI1) performed and RETAINED with a valid internal control"
               ],
               "morphology_code": "8970",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "INI1 is retained in a tumour with a small cell undifferentiated pattern and no rhabdoid cells. The pattern belongs to a hepatoblastoma, where with INI1 retained it carries no adverse prognosis of its own (López-Terrada 2025, p. 25). Recorded as Hepatoblastoma, NOS (8970/3).",
+              "reason": "INI1 is retained in a tumour with a small cell undifferentiated pattern and no rhabdoid cells. With INI1 retained the pattern belongs to a hepatoblastoma and carries no adverse prognosis of its own (López-Terrada 2025, p. 25). Recorded as Hepatoblastoma, NOS (8970/3); SMARCA4 is still owed.",
+              "outstanding_tests": [
+                "IHC"
+              ],
+              "upgrade_path": "SMARCA4 (BRG1) immunohistochemistry was not recorded. About 5% of malignant rhabdoid tumours keep INI1 and lose SMARCA4 (López-Terrada 2025, p. 37), and a liver tumour with small cell or rhabdoid features that keeps INI1 should be stained for it (Fazlollahi 2019, §4.1.1). A loss would change the code to Rhabdoid tumor, NOS (8963/3).",
               "captures": {
-                "ihc_resolution": "hepatoblastoma_ini1_retained"
-              },
+                "ihc_resolution": "hepatoblastoma_ini1_retained_smarca4_not_recorded"
+              }
+            },
+            {
               "when": {
                 "histology_pattern": [
-                  "small_cell_undifferentiated"
+                  "hepatoblastoma_with_rhabdoid_cells"
                 ]
               },
-              "upgrade_path": "SMARCA4 (BRG1) immunohistochemistry, if it was not done: about 5% of malignant rhabdoid tumours keep INI1 and lose SMARCA4 (López-Terrada 2025, p. 37)."
+              "positive": [
+                "SMARCB1 (INI1) performed and RETAINED with a valid internal control"
+              ],
+              "morphology_code": "8970",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "The report diagnoses hepatoblastoma and describes rhabdoid cells, and INI1 is retained. Most tumours with rhabdoid features that keep INI1 are not malignant rhabdoid tumours (Wu 2008, p. 664). Recorded as Hepatoblastoma, NOS (8970/3), on the report's diagnosis; SMARCA4 is still owed.",
+              "outstanding_tests": [
+                "IHC"
+              ],
+              "upgrade_path": "SMARCA4 (BRG1) immunohistochemistry was not recorded. About 5% of malignant rhabdoid tumours keep INI1 and lose SMARCA4 (López-Terrada 2025, p. 37), and a liver tumour with small cell or rhabdoid features that keeps INI1 should be stained for it (Fazlollahi 2019, §4.1.1). A loss would change the code to Rhabdoid tumor, NOS (8963/3).",
+              "captures": {
+                "ihc_resolution": "hepatoblastoma_rhabdoid_cells_ini1_retained_smarca4_not_recorded"
+              }
             },
             {
               "when": {
@@ -3294,13 +3388,13 @@
               "morphology_code": "8000",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "INI1 is retained in a tumour with rhabdoid cells that the report does not call a malignant rhabdoid tumour. A retained INI1 does not exclude one: in the Kiel series the one tumour that kept INI1 had typical rhabdoid morphology and was a malignant rhabdoid tumour (Vokuhl 2016, p. 927). Recorded as Neoplasm, malignant (8000/3) at the liver until the pathologist or the registrar settles it.",
-              "upgrade_path": "A pathologist's final diagnosis — hepatoblastoma or malignant rhabdoid tumour — and SMARCA4 (BRG1) immunohistochemistry if it was not done.",
-              "satisfies_tests": [
+              "reason": "INI1 is retained in a tumour with rhabdoid cells, SMARCA4 was not recorded, and the report names no tumour type. Recorded as Neoplasm, malignant (8000/3) at the liver.",
+              "outstanding_tests": [
                 "IHC"
               ],
+              "upgrade_path": "SMARCA4 (BRG1) immunohistochemistry was not recorded. About 5% of malignant rhabdoid tumours keep INI1 and lose SMARCA4 (López-Terrada 2025, p. 37), and a liver tumour with small cell or rhabdoid features that keeps INI1 should be stained for it (Fazlollahi 2019, §4.1.1). A loss would change the code to Rhabdoid tumor, NOS (8963/3). Otherwise the pathologist's diagnosis of the tumour type would give a specific code.",
               "captures": {
-                "ihc_resolution": "rhabdoid_cells_ini1_retained_unresolved"
+                "ihc_resolution": "rhabdoid_cells_ini1_retained_smarca4_not_recorded"
               }
             }
           ],
@@ -3313,11 +3407,12 @@
           "branch_sequence": {
             "order": [
               "SMARCB1 (INI1) performed and RETAINED with a valid internal control",
-              "SMARCA4 (BRG1) loss (nuclear expression lost in tumour cells, internal control retained)",
-              "SMARCB1 (INI1) loss (nuclear expression lost in tumour cells, internal control retained)"
+              "SMARCA4 (BRG1) performed and RETAINED with a valid internal control",
+              "SMARCB1 (INI1) loss (nuclear expression lost in tumour cells, internal control retained)",
+              "SMARCA4 (BRG1) loss (nuclear expression lost in tumour cells, internal control retained)"
             ],
             "intensity_markers": [],
-            "rule_count": 4
+            "rule_count": 8
           }
         },
         {

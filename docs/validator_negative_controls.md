@@ -3064,11 +3064,14 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | 4B | 4 | the small cell undifferentiated histology option codes `8970` directly |
 | 4C | 4 | the `8970` rule keyed on INI1 loss |
 | 4D | 4 | INI1 not done falls back to `8970` |
-| 4E | 4 | the INI1-retained `8970` rule deleted |
+| 4E | 4 | every `8970` rule deleted from the INI1 step |
 | 4F | 4 | the small cell undifferentiated alias maps to `8970` again |
 | 4G | 4 | the `8970` rule loses its small-cell condition, so rhabdoid cells with INI1 retained reach it |
 | 4H | 4 | the small cell undifferentiated option codes `8963` directly, on morphology alone |
 | 4I | 4 | the diagnosed-rhabdoid-tumour option also names a small cell pattern |
+| 4J | 4 | small cell undifferentiated with INI1 retained and SMARCA4 not recorded stops owing IHC |
+| 4K | 4 | hepatoblastoma with rhabdoid cells, SMARCA4 not recorded, claims IHC done instead |
+| 4L | 4 | the hepatoblastoma-with-rhabdoid-cells option stops saying the report diagnoses hepatoblastoma |
 | 5A | 5 | the histology route stops capturing C22 |
 | 5B | 5 | an `8963` rule loses its `primary_site` `when` |
 | 6A | 6 | the imaging node codes `8170` at basis 2 |
@@ -3088,6 +3091,8 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | 9D | 9 | the `8000-8005` C22 branch removed |
 | RT | round trip | `8970` named by REDCap's string "Hepatoblastoma" |
 | BE | exclusion | the `8170/0` exclusion names its synonym, not the preferred term |
+| OT1 | `check_outstanding_tests` | a value outside the diagnostic-test vocabulary |
+| OT2 | `check_outstanding_tests` | a rule lists IHC in both `satisfies_tests` and `outstanding_tests` |
 
 ## What the first pass found in the checks themselves
 

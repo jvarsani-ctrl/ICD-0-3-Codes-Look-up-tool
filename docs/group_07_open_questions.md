@@ -211,7 +211,12 @@ upgrade line on the same evidence. The recommendation sent to the registrar on 3
    rule 3.
 
 Point 2 needs one change to the histology step: the rhabdoid-cells option must say whether the report
-diagnoses hepatoblastoma. Not built until the registrar rules.
+diagnoses hepatoblastoma.
+
+**Ruled and built, 3 October 2026.** The registrar approved the three points, and chose a new
+group-agnostic branch field, `outstanding_tests[]`, to show SMARCA4 as owed, over naming it only on the
+upgrade line and over `8000/3` until SMARCA4 is done. Build report §10. **Still open from this item:**
+a report that *diagnoses* malignant rhabdoid tumour is coded `8963/3` on that diagnosis alone.
 
 ### 19. Basis of diagnosis for the fibrolamellar molecular findings
 
