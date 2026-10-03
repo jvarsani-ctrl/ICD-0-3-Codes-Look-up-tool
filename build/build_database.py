@@ -669,6 +669,18 @@ GROUP3_TOPOGRAPHY_SWEEP = (
 ICDO32_SOURCE_TERM_EXEMPTIONS = {
 }
 
+# -- the ICD-O matrix rule, by registrar ruling only -------------------------------------
+# ICD-O permits changing a code's behaviour digit to the behaviour the pathologist reports.
+# An entry made that way names a (code, behaviour) pair icdo32.sqlite does not print, so the
+# round-trip would fail it. Each pair here is a registrar ruling, and it holds only while
+# its anchor holds: the SAME term must still exist in icdo32.sqlite at the source behaviour.
+# (group, code, behaviour) -> (source behaviour, term).
+ICDO32_MATRIX_RULE = {
+    # Group 7 open question 2(b), ruled 3 October 2026: calcifying nested stromal-epithelial
+    # tumour reported as malignant or metastatic. ICCC-2017 row 67 places 8975/3 in VIIa1.
+    (7, "8975", "3"): ("1", "Calcifying nested stromal-epithelial tumor"),
+}
+
 
 # --------------------------------------------------------------------------------------
 # Group 4 build contract §3, §8 — the one new field (behaviour_exclusion) and the
@@ -928,7 +940,15 @@ GROUP7_CODES = frozenset([
 # §2A — the six REDCap options the tool cannot emit at behaviour 3, verified against
 # icdo32.sqlite on 2 October 2026: 8975 exists only at /1; 8148 at /0 and /2; 8202,
 # 8264, 8561 and 9013 at /0 only.
-GROUP7_ABSENT_CODES = ("8975", "8148", "8202", "8264", "8561", "9013")
+GROUP7_ABSENT_CODES = ("8148", "8202", "8264", "8561", "9013")
+
+# Registrar ruling, 3 October 2026 (open question 2): calcifying nested stromal-epithelial
+# tumour is registered in Group VII — 8975/1 as ICD-O-3.2 prints it, and 8975/3 under the
+# ICD-O matrix rule when the report calls it malignant or describes metastases. The only
+# Group VII pairs outside the generated inventory; check_group7_cnset() anchors both on
+# Layer 1 and fixes which label carries which behaviour.
+GROUP7_RULED_PAIRS = frozenset({("8975", "1"), ("8975", "3")})
+_G7_MALIGNANT_RE = re.compile(r"\bmalignant\b|\bmetasta", re.I)
 
 # §0.2 point 3 — the codes ICCC-2017 places in Group VII at ANY site: row 67 (8970,
 # with 8975 absent at /3) and row 71 (8160-8162, 8170-8180). Every other Group VII code
@@ -6177,6 +6197,17 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
             for (c, b), bucket in index.items():
                 if c == code:
                     terms.update(bucket)
+        matrix = ICDO32_MATRIX_RULE.get((ctx.group, code, str(beh).strip() if beh is not None else None))
+        if not terms and matrix:
+            source = index.get((code, matrix[0])) or {}
+            if name == matrix[1] and name in source:
+                matched += 1
+            else:
+                out.append((FAIL, "%s: %s/%s is a matrix-rule entry anchored on %r at %s/%s, "
+                                  "which icdo32.sqlite no longer carries under that name (or the "
+                                  "entry's name %r differs) — the ruling has lost its anchor"
+                            % (what, code, beh, matrix[1], code, matrix[0], name)))
+            return
         if not terms:
             out.append((FAIL, "%s: ICD-O-3.2 carries no term at all for %s/%s — the triple "
                               "cannot round-trip because the pair does not exist "
@@ -8189,6 +8220,8 @@ def check_group7_code_set(ctx: DTContext):
             continue
         code = as_code(entry.get("morphology_code"))
         beh = str(entry.get("behavior_code") or "").strip()
+        if (code, beh) in GROUP7_RULED_PAIRS:
+            continue
         if code and (code not in GROUP7_CODES or beh not in GROUP7_BEHAVIOUR_DECLARED):
             out.append((FAIL, "RULE 1 — morphology_entries[%d] carries %s/%s, which is not "
                               "one of the 92 records build/generate_group_inventory.py "
@@ -8198,6 +8231,8 @@ def check_group7_code_set(ctx: DTContext):
     for code, holder, node_id, where in ctx.emissions():
         seen += 1
         beh = str(holder.get("behavior_code") or "3").strip()
+        if (code, beh) in GROUP7_RULED_PAIRS:
+            continue
         if code not in GROUP7_CODES or beh not in GROUP7_BEHAVIOUR_DECLARED:
             out.append((FAIL, "RULE 1 — node %s (%s) emits %s/%s, which is not a Group VII "
                               "(code, behaviour) record (contract §0.3)"
@@ -8473,6 +8508,62 @@ def check_group7_ini1_fork(ctx: DTContext, repo: Path = None):
                         "terminal codes a small cell undifferentiated or "
                         "rhabdoid tumour without INI1 retained; %d routing option(s) reach "
                         "a complete INI1 fork" % (rhabdoid_rules, routed)))
+    return out
+
+
+def check_group7_cnset(ctx: DTContext, layer1: Path):
+    """
+    GROUP 7 RULE 10 — calcifying nested stromal-epithelial tumour, registrar ruling of
+    3 October 2026 (open question 2). Keyed off Layer 1 and off the option text:
+
+      (a) the anchors still hold: icdo32.sqlite prints 8975/1, and ICCC-2017 places 8975
+          in a Group VII range at behaviour 3. If either moves, the ruling needs revisiting;
+      (b) both entries exist, 8975/1 and 8975/3, and the tree emits both;
+      (c) 8975/3 is emitted only where the option says the report calls the tumour malignant
+          or describes metastases — the matrix rule changes the digit to what the pathologist
+          reports, so the evidence must be in the branch the clerk chose;
+      (d) 8975/1 is never emitted where the option asserts malignancy or metastases.
+    """
+    if ctx.group != GROUP7:
+        return []
+    out = []
+    index, err = load_icdo32(layer1)
+    if err:
+        return [(WARN, "RULE 10 — icdo32.sqlite unavailable (%s); the 8975 anchors are NOT "
+                       "checked" % err)]
+    if not index.get(("8975", "1")):
+        out.append((FAIL, "RULE 10(a) — icdo32.sqlite no longer prints 8975/1; the registrar's "
+                          "ruling on calcifying nested stromal-epithelial tumour has lost its anchor"))
+    hits = _g7_iccc_subgroups(layer1, "8975", "C22.0")
+    if hits is None:
+        out.append((WARN, "RULE 10(a) — ICCC-2017.sqlite not found; the VIIa1 anchor is NOT checked"))
+    elif not [sg for main, sg in hits if main == "VII"]:
+        out.append((FAIL, "RULE 10(a) — ICCC-2017 no longer places 8975/3 in Group VII"))
+    have = {(as_code(e.get("morphology_code")), str(e.get("behavior_code") or "").strip())
+            for e in ctx.entries if isinstance(e, dict)}
+    emitted = set()
+    for code, holder, node_id, where in ctx.emissions():
+        beh = str(holder.get("behavior_code") or "3").strip()
+        if code != "8975":
+            continue
+        emitted.add(beh)
+        text = _g7_option_text(holder)
+        says_malignant = _g7_asserted(text, _G7_MALIGNANT_RE)
+        if beh == "3" and not says_malignant:
+            out.append((FAIL, "RULE 10(c) — node %s (%s) emits 8975/3, but the option does not say "
+                              "the report calls the tumour malignant or describes metastases: %r"
+                        % (node_id, where, text[:140])))
+        if beh == "1" and says_malignant:
+            out.append((FAIL, "RULE 10(d) — node %s (%s) emits 8975/1 on an option that asserts "
+                              "malignancy or metastases: %r" % (node_id, where, text[:140])))
+    for pair in sorted(GROUP7_RULED_PAIRS):
+        if pair not in have:
+            out.append((FAIL, "RULE 10(b) — no morphology entry for %s/%s" % pair))
+        if pair[1] not in emitted:
+            out.append((FAIL, "RULE 10(b) — no branch emits %s/%s" % pair))
+    if not out:
+        out.append((OK, "RULE 10 — 8975/1 and 8975/3 anchored on icdo32.sqlite and ICCC-2017; "
+                        "8975/3 only where the report calls the tumour malignant or metastatic"))
     return out
 
 
@@ -10396,6 +10487,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group7_no_tissue_codes, ctx)                  # rule 6
         report.run(check_group7_imaging_constellation, ctx)            # rule 7
         report.run(check_group7_fibrolamellar, ctx)                    # rule 8
+        report.run(check_group7_cnset, ctx, layer1)                    # rule 10
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_redcap_banner_signal, ctx, redcap_options)

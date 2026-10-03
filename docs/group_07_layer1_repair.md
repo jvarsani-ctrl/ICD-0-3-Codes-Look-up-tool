@@ -38,7 +38,7 @@ gives the ICD-O-3.2 preferred term at behaviour 3, which is the string the looku
 | Pick | Code | REDCap label | ICD-O-3.2 | Action |
 |---|---|---|---|---|
 | 1 | `8970` | Hepatoblastoma | not an ICD-O-3.2 term | **Relabel** → `Hepatoblastoma, NOS` |
-| 2 | `8975` | Calcifying nested epithelial stromal tumor *(pasted note in label)* | not an ICD-O-3.2 term | **Registrar** — `8975/1` only; retire or keep pending ruling (§3) |
+| 2 | `8975` | Calcifying nested epithelial stromal tumor *(pasted note in label)* | not an ICD-O-3.2 term | **Relabel** → `Calcifying nested stromal-epithelial tumor` — kept by the registrar's ruling of 3 October 2026; serves both `8975/1` and `8975/3` (§3) |
 | 3 | `8963` | Malignant rhabdoid tumor | 8963/3 Synonym | **Relabel** → `Rhabdoid tumor, NOS` |
 | 4 | `8991` | Embryonal sarcoma | 8991/3 Preferred | keep |
 | 5 | `8010` | Carcinoma in situ, NOS | 8010/2 Preferred | **Retire** — behaviour outside Group VII |
@@ -190,9 +190,10 @@ with eight more closing parentheses.
 
 **Pick 2, `8975` Calcifying nested epithelial stromal tumor.** ICD-O-3.2 carries the code at `/1`
 only, as "Calcifying nested stromal-epithelial tumor" — the word order differs too. ICCC-3 Group VII
-admits behaviour 3. The lookup tool emits a behaviour exclusion for it and refers the case to the
-registrar. Whether the registry keeps a Group VII pick for it is the registrar's decision (Group 7 build
-contract §11.2), so this package does not retire it.
+admits behaviour 3. **Ruled 3 October 2026:** the tumour is registered in Group VII, as `8975/1`, or
+`8975/3` under the ICD-O matrix rule when the report calls it malignant or describes metastases. Keep
+the pick and relabel it to the ICD-O-3.2 term, dropping the pasted note. REDCap records no behaviour, so
+this one pick cannot tell `/1` from `/3` (open question 22).
 
 **Picks 88 and 89, `8504`.** Both labels are `8504/2` synonyms ("Noninfiltrating intracystic
 carcinoma", "Intracystic carcinoma, NOS"). The behaviour-3 entity on the code, "Encapsulated papillary

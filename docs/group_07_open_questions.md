@@ -50,6 +50,10 @@ intracranial germ cell subgroups Xa admits behaviour `/3` only.
 
 (Contract §3.1.)
 
+**Ruled and built, 3 October 2026.** (a) Register it as `8975/1`. (b) Yes: apply the matrix rule,
+`8975/3`, VIIa1, when the report calls it malignant or describes metastases. (c) Keep pick 2, relabelled
+to the ICD-O-3.2 term. Build report §11. One consequence is open: question 22.
+
 ### 3. Hepatocellular neoplasm NOS (HCN-NOS) has no ICD-O-3.2 code
 
 **Today:** `8000/3` Neoplasm, malignant, at the liver (VIIc), with both candidates named and an
@@ -257,3 +261,13 @@ rhabdoid tumours. **The tool follows the text.** Confirm.
 The first draft of the repair package relabelled pick 89 ("Intracystic carcinoma, NOS", an `8504/2` term)
 to the `8504/3` term. That would have changed every stored record on that pick from in situ to invasive.
 The package now retires pick 89 and appends the `/3` term as pick 120. Nothing was applied either way.
+
+### 22. Behaviour is not recorded for `8975`
+
+**Today:** the tool gives `8975/1` or `8975/3`, but the output headline shows only the four-digit code;
+the behaviour appears in the "Why" row. REDCap has no behaviour field, and pick 2 is the same option for
+both. A registry record therefore cannot show whether a calcifying nested stromal-epithelial tumour was
+registered as uncertain or as malignant.
+**Decide:** whether REDCap should record behaviour — a behaviour field, or two picks for `8975` — and
+whether the tool's headline should show the digit when a group carries a code at two behaviours. The
+REDCap side belongs to the REDCap Registry repository; the headline is an engine change for every group.

@@ -446,6 +446,47 @@ def build_entry(rec: dict, redcap: dict, obs: dict) -> dict:
     return out
 
 
+# Registrar ruling, 3 October 2026 (open question 2): calcifying nested stromal-epithelial
+# tumour is registered in Group VII. ICD-O-3.2 lists it only as 8975/1; ICCC-2017 row 67 places
+# 8975 in VIIa1 at behaviour 3. Two entries: 8975/1 for the usual case, and 8975/3 under the
+# ICD-O matrix rule when the pathologist reports it as malignant or it has metastasised. These are
+# the only Group VII entries not produced by build_inventory(); build_database.py anchors both on
+# Layer 1 (GROUP7_RULED_8975).
+CNSET_TERM = "Calcifying nested stromal-epithelial tumor"
+
+
+def build_ruled_8975(redcap: dict) -> list:
+    out = []
+    names = redcap.get("8975") or []
+    for behaviour, note in (
+        ("1", "Registrar ruling, 3 October 2026 (open question 2): registered in Group VII at its "
+              "ICD-O-3.2 behaviour, uncertain whether benign or malignant, although ICCC-3 Group VII "
+              "otherwise admits behaviour 3 only and ICCC-2017 gives 8975/1 no subgroup. Recorded under "
+              "VIIa1, where ICCC-2017 row 67 places 8975 and where REDCap pick 2 sits."),
+        ("3", "Registrar ruling, 3 October 2026 (open question 2): the ICD-O matrix rule, which "
+              "permits changing the behaviour digit to what the pathologist reports, applied when the "
+              "report calls the tumour malignant or describes metastases. ICD-O-3.2 prints no 8975/3 "
+              "term; ICCC-2017 row 67 places 8975/3 in VIIa1 at any site."),
+    ):
+        entry = {f: None for f in FIELD_ORDER}
+        entry.update(
+            morphology_code="8975", morphology_name=CNSET_TERM,
+            iccc3_subgroup_id="VIIa1", iccc3_subgroup_name="Hepatoblastoma",
+            who_version="WHO 2019", behavior_code=behaviour,
+            diagnostic_tests_required=["Histology"],
+            coding_note=(note + " Most patients have a benign course after complete excision; some "
+                         "relapse or metastasise (" + LOPEZ_2025 + ", p. 43). REDCap pick 2 carries "
+                         "the code under a label with a pasted note; REDCap records no behaviour, so "
+                         "the one pick serves both entries (docs/group_07_layer1_repair.md)."),
+            code_neutral_molecular=True, redcap_value="8975", primary_sites=["C00.0-C80.9"],
+            topography_dependent=False, topography_routing_note="",
+        )
+        e = {f: entry[f] for f in FIELD_ORDER}
+        e["redcap_option_verified"] = CNSET_TERM in names
+        out.append(e)
+    return out
+
+
 def build_metadata(summary: dict, n_entries: int, n_nodes: int, tree_ids: list) -> dict:
     return {
         "group_id": 7,
@@ -456,9 +497,10 @@ def build_metadata(summary: dict, n_entries: int, n_nodes: int, tree_ids: list) 
             "--group VII from ICCC-2017.sqlite joined to icdo32.sqlite, run via "
             "build/generate_group07_entries.py (contract §1). Generator summary, 2 October "
             "2026: ICCC range entries %d, distinct codes %d, absent at behaviour 3 %d, usable "
-            "%d. Six of the absent codes are REDCap options the tool cannot emit: 8975 (exists "
-            "only at /1), 8148 (/0 and /2), 8202, 8264, 8561 and 9013 (/0 only) -- contract "
-            "§2A. Seven usable codes are not REDCap options and carry awaiting_layer1: 8023, "
+            "%d. Five of the absent codes are REDCap options the tool cannot emit: 8148 (/0 "
+            "and /2), 8202, 8264, 8561 and 9013 (/0 only) -- contract §2A. 8975 exists only at /1; "
+            "by registrar ruling of 3 October 2026 it is added as two entries, 8975/1 and, under the "
+            "ICD-O matrix rule, 8975/3 (open question 2). Seven usable codes are not REDCap options and carry awaiting_layer1: 8023, "
             "8054, 8171-8175 (contract §2B)."
             % (summary["iccc_code_range_entries"], summary["iccc_distinct_codes"],
                len(summary["codes_absent_from_icdo32"]), summary["usable_distinct_codes"])
@@ -486,6 +528,7 @@ def main(argv=None) -> int:
         return 2
     obs = load_obs(ICDO)
     entries = [build_entry(r, redcap, obs) for r in payload["records"]]
+    entries += build_ruled_8975(redcap)
 
     missing = set(ANNOTATIONS) - {e["morphology_code"] for e in entries}
     if missing:

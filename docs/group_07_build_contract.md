@@ -311,6 +311,13 @@ most patients have a benign course, some relapse or metastasise. The tree emits 
 `behaviour_exclusion` on `8975/1` with `registrar_decision_required: true`. It does not recode to
 `/3`. Registrar item §11.2.
 
+*Ruled 3 October 2026 (open question 2).* The tumour is registered in Group VII. The histology step
+offers it twice: with no statement of malignancy → `8975/1`; reported as malignant or with metastases →
+`8975/3`, by the ICD-O matrix rule, which permits changing the behaviour digit to what the pathologist
+reports. ICCC-2017 row 67 places `8975/3` in VIIa1. Both are entries outside the generated inventory,
+anchored on Layer 1 by `check_group7_cnset()` (rule 10); the round-trip check admits `8975/3` through
+`ICDO32_MATRIX_RULE`, which fails if icdo32.sqlite stops printing the term at `8975/1`.
+
 ### 3.2 `8171/3` fibrolamellar carcinoma is built, and is reached by morphology
 
 Fibrolamellar carcinoma codes `8171/3`, never `8170/3`, on a report that diagnoses it. The molecular

@@ -334,7 +334,7 @@
   },
   {
     "alias": "Calcifying nested stromal-epithelial tumor",
-    "full_form": "Calcifying nested stromal-epithelial tumor -> ICD-O-3.2 8975/1; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "full_form": "Calcifying nested stromal-epithelial tumor -> 8975/1, or 8975/3 when reported as malignant or metastatic; ICCC-3 VIIa1",
     "also_known_as": [
       "Calcifying nested epithelial stromal tumor",
       "CNSET",
@@ -345,30 +345,34 @@
     "origin_system": "ICD-O-3.2",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
-    "maps_to_morphology_codes": [],
-    "maps_to_iccc3_subgroup_id": null,
+    "maps_to_morphology_codes": [
+      "8975"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
     "needs_ihc_tree": false,
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
-    "notes": "ICD-O-3.2 codes it 8975/1, uncertain whether benign or malignant, and has no behaviour-3 code for it. ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted; the case goes to the registrar. A rare low-grade liver tumour of children and young adults (López-Terrada 2025, p. 43).",
-    "coding_note": "Behaviour exclusion, contract §3.1. maps_to_morphology_codes is empty, the Group 5 9514/9510-0 pattern: 8975 has no /3 entry in morphology_entries[]. REDCap's option string 'Calcifying nested epithelial stromal tumor' reverses the ICD-O-3.2 word order."
+    "notes": "ICD-O-3.2 codes it 8975/1, uncertain whether benign or malignant. Registered in Group VII by the registrar's ruling of 3 October 2026: 8975/1 in the usual case, and 8975/3 under the ICD-O matrix rule when the report calls it malignant or describes metastases. A rare low-grade liver tumour of children and young adults (López-Terrada 2025, p. 43).",
+    "coding_note": "Registrar ruling 3 October 2026, open question 2; was a behaviour exclusion mapping to no code (contract §3.1). Maps to 8975, which carries two entries, /1 and /3; the histology step decides the behaviour. REDCap's option string 'Calcifying nested epithelial stromal tumor' reverses the ICD-O-3.2 word order."
   },
   {
     "alias": "CNSET",
-    "full_form": "CNSET -> ICD-O-3.2 8975/1; ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted",
+    "full_form": "CNSET -> 8975/1, or 8975/3 when reported as malignant or metastatic; ICCC-3 VIIa1",
     "also_known_as": [],
     "alias_type": "abbreviation",
     "origin_system": "Clinical abbreviation",
     "nci_concept_id": null,
     "who_version_current": "WHO 2022",
-    "maps_to_morphology_codes": [],
-    "maps_to_iccc3_subgroup_id": null,
+    "maps_to_morphology_codes": [
+      "8975"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIa1",
     "needs_ihc_tree": false,
     "ihc_tree_id": "g7_hepatic",
     "tree_entry_node": "hp_document_inventory",
     "clinical_alert": null,
-    "notes": "ICD-O-3.2 codes it 8975/1, uncertain whether benign or malignant, and has no behaviour-3 code for it. ICCC-3 Group VII admits behaviour 3 only, so no Group VII code is emitted; the case goes to the registrar. A rare low-grade liver tumour of children and young adults (López-Terrada 2025, p. 43).",
+    "notes": "ICD-O-3.2 codes it 8975/1, uncertain whether benign or malignant. Registered in Group VII by the registrar's ruling of 3 October 2026: 8975/1 in the usual case, and 8975/3 under the ICD-O matrix rule when the report calls it malignant or describes metastases. A rare low-grade liver tumour of children and young adults (López-Terrada 2025, p. 43).",
     "coding_note": "Promoted from also_known_as on 'Calcifying nested stromal-epithelial tumor' to an alias of its own, because the express-lane index is built from the alias field alone: searching 'CNSET' found nothing until 2 October 2026 (found driving the search in the browser; the Group 6 alias file records the same constraint). Same target and notes as the parent entry."
   },
   {

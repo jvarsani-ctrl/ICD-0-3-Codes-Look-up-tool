@@ -274,3 +274,30 @@ provisional block). No other group uses the field, so no other group's output ch
 
 **Vault documents not edited.** The Decision Tree master file's §3F, which documents
 `satisfies_tests`, lives in the vault outside this repository; it needs a line for `outstanding_tests`.
+
+---
+
+## 11. Registrar ruling on calcifying nested stromal-epithelial tumour, 3 October 2026
+
+Open question 2. The tumour is registered in Group VII: `8975/1` in the usual case, and `8975/3` under
+the ICD-O matrix rule when the report calls it malignant or describes metastases (ICCC-2017 row 67,
+VIIa1). It replaces the behaviour exclusion.
+
+| Change | Where |
+|---|---|
+| Two entries, `8975/1` and `8975/3`, the only ones outside the generated inventory | `build/generate_group07_entries.py` (`build_ruled_8975`); 94 entries |
+| The calcifying nested stromal-epithelial tumour option splits by what the report says about malignancy | `hp_histology` |
+| `ICDO32_MATRIX_RULE`: a registrar-ruled (group, code, behaviour) passes the round-trip only while icdo32.sqlite prints the same term at the source behaviour | `build/build_database.py`, all groups; one entry |
+| `GROUP7_RULED_PAIRS` admitted by rule 1; `8975` removed from the rule 2 absent codes | `build/build_database.py` |
+| Rule 10, `check_group7_cnset()`: Layer 1 anchors, both entries emitted, `8975/3` only on an option asserting malignancy or metastases, `8975/1` never on one | `build/build_database.py` |
+| The two aliases map to `8975` | `aliases_group_07.json` |
+| Controls 10A–C and RT2; 2A, 2B, 3A, 3C retargeted, since the exclusion they broke no longer exists | `build/negative_controls_group07.py` |
+
+**Verification.** 628 checks, 0 FAIL, engine gate included; 46 of 46 controls caught and correct data
+passes. Driven in the browser from the express lane ("CNSET"): both options appear; the usual case
+records `8975` with the behaviour-1 reason, the malignant case records `8975` with the matrix-rule
+reason, both VIIa1, workup complete. Rule 10(a)'s anchors read Layer 1 itself and have no in-memory
+control.
+
+**Found while driving it.** The headline shows `8975` for both; nothing but the "Why" row tells the clerk
+the behaviour, and REDCap has no field for it. Open question 22.

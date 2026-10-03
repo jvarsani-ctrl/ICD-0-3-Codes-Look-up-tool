@@ -81,6 +81,7 @@ CHECKS = {
     9: lambda d, r: bd.check_group7_router_c22(r, LAYER1),
     "rt": lambda d, r: bd.check_icdo32_round_trip(ctx_of(d), LAYER1),
     "ot": lambda d, r: bd.check_outstanding_tests(ctx_of(d)),
+    10: lambda d, r: bd.check_group7_cnset(ctx_of(d), LAYER1),
     "be": lambda d, r: bd.check_behaviour_exclusion(ctx_of(d), LAYER1),
 }
 
@@ -109,14 +110,32 @@ def m_fallback_fabricated(d, a, r):
     nodes(d)["hp_ini1"]["nos_fallback"]["code"] = "8999"
 
 
-def m_emit_8975(d, a, r):
-    o = option(d, "hp_histology", "Calcifying nested")
+def m_emit_8148(d, a, r):
+    o = option(d, "hp_histology", "Biliary intraepithelial neoplasia")
     o.pop("behaviour_exclusion")
-    o.update(morphology_code="8975", behavior_code="3", basis_of_diagnosis=7, reason="x")
+    o.update(morphology_code="8148", behavior_code="3", basis_of_diagnosis=7, reason="x")
 
 
-def m_alias_8975(d, a, r):
-    next(x for x in a if x["alias"].startswith("Calcifying nested"))["maps_to_morphology_codes"] = ["8975"]
+def m_alias_9013(d, a, r):
+    next(x for x in a if x["alias"] == "CNSET")["maps_to_morphology_codes"] = ["9013"]
+
+
+def m_cnset_3_unqualified(d, a, r):
+    option(d, "hp_histology", "Calcifying nested stromal-epithelial tumour (also called nested epithelial stromal tumour or ossifying stromal-epithelial tumour), with no")["behavior_code"] = "3"
+
+
+def m_cnset_1_on_malignant(d, a, r):
+    option(d, "hp_histology", "Calcifying nested stromal-epithelial tumour (also called nested epithelial stromal tumour or ossifying stromal-epithelial tumour), and the report")["behavior_code"] = "1"
+
+
+def m_cnset_entry_dropped(d, a, r):
+    d["morphology_entries"] = [e for e in d["morphology_entries"]
+                               if not (e["morphology_code"] == "8975" and e["behavior_code"] == "3")]
+
+
+def m_cnset_matrix_name(d, a, r):
+    next(e for e in d["morphology_entries"]
+         if e["morphology_code"] == "8975" and e["behavior_code"] == "3")["morphology_name"] = "Calcifying nested epithelial stromal tumor"
 
 
 def m_entry_fallback_9013(d, a, r):
@@ -124,7 +143,7 @@ def m_entry_fallback_9013(d, a, r):
 
 
 def m_group_declares(d, a, r):
-    option(d, "hp_histology", "Calcifying nested")["behaviour_exclusion"]["group_declares"] = "0-1,3"
+    option(d, "hp_histology", "Bile duct adenoma")["behaviour_exclusion"]["group_declares"] = "0-1,3"
 
 
 def m_exclusion_off_stem(d, a, r):
@@ -133,7 +152,7 @@ def m_exclusion_off_stem(d, a, r):
 
 
 def m_exclusion_fake_pair(d, a, r):
-    option(d, "hp_histology", "Calcifying nested")["behaviour_exclusion"]["icdo_behaviour"] = "3"
+    option(d, "hp_histology", "Bile duct adenoma")["behaviour_exclusion"]["icdo_behaviour"] = "9"
 
 
 def m_8963_no_loss_marker(d, a, r):
@@ -289,12 +308,12 @@ CONTROLS = [
     ("1A", 1, "an entry's code fabricated, 8970 -> 8971", m_entry_code, "morphology_entries"),
     ("1B", 1, "a node emits a fabricated 8176", m_emit_fabricated, "emits 8176"),
     ("1C", 1, "the INI1 fallback names 8999", m_fallback_fabricated, "falls back to 8999"),
-    ("2A", 2, "CNSET emitted as 8975/3", m_emit_8975, "8975"),
-    ("2B", 2, "the CNSET alias maps to 8975", m_alias_8975, "aliases_group_07.json"),
+    ("2A", 2, "high-grade biliary intraepithelial neoplasia emitted as 8148/3", m_emit_8148, "8148"),
+    ("2B", 2, "the CNSET alias maps to 9013", m_alias_9013, "aliases_group_07.json"),
     ("2C", 2, "an entry's nos_fallback_code is 9013", m_entry_fallback_9013, "nos_fallback_code is 9013"),
     ("3A", 3, "group_declares copied from Group III, '0-1,3'", m_group_declares, "group_declares"),
     ("3B", 3, "a behaviour exclusion on 9131/0, no Group VII stem", m_exclusion_off_stem, "not on a Group VII stem"),
-    ("3C", 3, "CNSET exclusion names 8975/3, not a real pair", m_exclusion_fake_pair, "not a real pair"),
+    ("3C", 3, "the bile duct adenoma exclusion names 8160/9, not a real pair", m_exclusion_fake_pair, "not a real pair"),
     ("4A", 4, "the SMARCB1 8963 rule keyed on INI1 RETAINED", m_8963_no_loss_marker, "RULE 4(a)"),
     ("4B", 4, "the SCUD histology option codes 8970 directly", m_scud_emits_8970, "RULE 4(c)"),
     ("4C", 4, "the 8970 rule keyed on INI1 loss", m_8970_on_loss, "RULE 4(b)"),
@@ -325,6 +344,10 @@ CONTROLS = [
     ("9C", 9, "the 8170 default reverted to group 11", m_router_8170_default_11, "8170 at C24.0"),
     ("9D", 9, "the 8000-8005 C22 branch removed", m_router_drop_8000_c22, "8000 at C22.0"),
     ("RT", "rt", "8970 named by REDCap's string 'Hepatoblastoma'", m_name_redcap_string, "Hepatoblastoma"),
+    ("10A", 10, "8975/3 on the option with no malignancy stated", m_cnset_3_unqualified, "RULE 10(c)"),
+    ("10B", 10, "8975/1 on the malignant-or-metastatic option", m_cnset_1_on_malignant, "RULE 10(d)"),
+    ("10C", 10, "the 8975/3 entry dropped", m_cnset_entry_dropped, "RULE 10(b)"),
+    ("RT2", "rt", "the 8975/3 matrix entry renamed to REDCap's word order", m_cnset_matrix_name, "matrix-rule entry"),
     ("OT1", "ot", "outstanding_tests names a test outside the vocabulary", m_outstanding_off_vocabulary, "closed"),
     ("OT2", "ot", "a rule both satisfies and owes IHC", m_outstanding_and_satisfied, "listed in both"),
     ("BE", "be", "the 8170/0 exclusion names its synonym", m_exclusion_synonym_term, "not the PREFERRED one"),

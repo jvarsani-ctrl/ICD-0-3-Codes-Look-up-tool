@@ -3054,12 +3054,16 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | 1A | 1 | an entry's code fabricated, `8970` → `8971` |
 | 1B | 1 | a node emits a fabricated `8176` |
 | 1C | 1 | the INI1 fallback names `8999` |
-| 2A | 2 | calcifying nested stromal-epithelial tumour emitted as `8975/3` |
-| 2B | 2 | its alias maps to `8975` |
+| 2A | 2 | high-grade biliary intraepithelial neoplasia emitted as `8148/3` |
+| 2B | 2 | the calcifying nested stromal-epithelial tumour abbreviation maps to `9013` |
 | 2C | 2 | an entry's `nos_fallback_code` is `9013` |
 | 3A | 3 | `group_declares` copied from Group III, `"0-1,3"` |
 | 3B | 3 | a behaviour exclusion on `9131/0`, no Group VII stem |
-| 3C | 3 | the exclusion names `8975/3`, not a real pair |
+| 3C | 3 | the bile duct adenoma exclusion names `8160/9`, not a real pair |
+| 10A | 10 | `8975/3` on the option with no malignancy stated |
+| 10B | 10 | `8975/1` on the malignant-or-metastatic option |
+| 10C | 10 | the `8975/3` entry dropped |
+| RT2 | round trip | the `8975/3` matrix entry renamed to REDCap's word order |
 | 4A | 4 | the `8963` rule keyed on INI1 RETAINED |
 | 4B | 4 | the small cell undifferentiated histology option codes `8970` directly |
 | 4C | 4 | the `8970` rule keyed on INI1 loss |
