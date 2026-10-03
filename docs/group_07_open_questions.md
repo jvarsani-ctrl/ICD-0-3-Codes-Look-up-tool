@@ -100,6 +100,10 @@ likely hepatocellular carcinoma without tissue is `8170/3` at basis 4 when alpha
 **Why:** Ferraro 2019 (PDF p. 7) finds alpha-fetoprotein reference intervals vary widely at least up
 to 6 months. The Diagnostic Pathway wrote 4 months.
 **Decide:** 6 months or 4. (Contract §4.2.)
+**Ruled 3 October 2026: 6 months**, as built. A child younger than 6 months is registered as `8000/3`
+until a biopsy, which the international consensus recommends for every child (López-Terrada 2014,
+p. 484). Ferraro 2019, Table 3 (PDF p. 8), shows infant reference intervals from studies of 10–13
+babies that disagree with each other up to 6 months.
 
 ### 6. Biliary mucinous cystic carcinoma: `8161/3` or `8470/3`
 

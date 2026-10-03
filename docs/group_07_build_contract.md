@@ -466,7 +466,7 @@ the copy held is the 2018 ahead-of-print PDF, and its PDF page numbers are the o
    2019;57(6):783–797, p. 7: the variability of reference intervals *"is striking for early age
    partitions at least up to 6 months of age"*, and abstract, p. 1: robust intervals cannot be defined
    in the first months of life. A "raised" value cannot be read reliably. The Diagnostic Pathway
-   says 4 months; the paper supports 6. Registrar item §11.5.
+   says 4 months; the paper supports 6. Registrar item §11.5 — *ruled 6 months, 3 October 2026.*
 3. **Predominantly cystic or multicystic mass.** Mesenchymal hamartoma and undifferentiated embryonal
    sarcoma both present as solid-cystic masses (López-Terrada 2025, pp. 35, 39), and alpha-fetoprotein
    can be moderately raised in mesenchymal hamartoma (p. 39).

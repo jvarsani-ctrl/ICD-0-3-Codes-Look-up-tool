@@ -340,3 +340,10 @@ alpha-fetoprotein is raised. Controls 6A retargeted (`8172` at basis 2), 6D and 
 Verification: 628 checks, 0 FAIL; controls all caught. Browser: each new option records its code and
 basis (4 — Specific tumour markers; 2 — Clinical investigation without tissue), subgroup VIIb, Histology
 outstanding.
+
+---
+
+## 14. Registrar ruling on the youngest age for the imaging route, 3 October 2026
+
+Open question 5: 6 months, as built. No change to the tree or the checks; rule 7 already fails an
+imaging node without the under-6-months diversion (control 7C).
