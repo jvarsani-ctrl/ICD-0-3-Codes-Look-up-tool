@@ -350,6 +350,14 @@ The two candidates are `8970/3` (VIIa1) and `8170/3` (VIIb), and the choice chan
 subgroup. **The tool does not choose.** It emits `8000/3`, VIIc at C22, with a `reason` naming both
 candidates, the same shape as Group VI's unresolved SMARCB1 fork. Registrar item §11.3.
 
+
+*Ruled 3 October 2026 (open question 3): `8970/3` Hepatoblastoma, NOS*, following López-Terrada 2025,
+p. 30 — the PHITT trial treats these patients as high-risk hepatoblastoma, not as hepatocellular
+carcinoma. The histology option emits `8970/3` at basis 7 with no `satisfies_tests` (8970 requires
+Histology only). The aliases "Hepatocellular neoplasm NOS", "HCN-NOS" and, added the same day,
+"Hepatocellular malignant neoplasm NOS" map to no code, so they are never listed under "Also called" on
+an ordinary hepatoblastoma output; each search enters the tree, where the option records `8970/3`.
+
 ### 3.4 `8963` and `8991` need the liver confirmed
 
 Both are C22-only in this group. `hp_document_inventory` captures `primary_site: "C22"` on every

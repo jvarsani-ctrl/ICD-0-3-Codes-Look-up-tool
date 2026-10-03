@@ -301,3 +301,18 @@ control.
 
 **Found while driving it.** The headline shows `8975` for both; nothing but the "Why" row tells the clerk
 the behaviour, and REDCap has no field for it. Open question 22.
+
+---
+
+## 12. Registrar ruling on hepatocellular neoplasm NOS, 3 October 2026
+
+Open question 3: `8970/3` Hepatoblastoma, NOS, following López-Terrada 2025, p. 30 (PHITT treats these
+children as high-risk hepatoblastoma). The histology option now emits `8970/3`; its `satisfies_tests`
+and upgrade line are gone. The generator's `8970` and `8000` notes say so. A new alias, "Hepatocellular
+malignant neoplasm NOS" (the consensus name, López-Terrada 2014, p. 481), joins "Hepatocellular neoplasm
+NOS" and "HCN-NOS"; all three map to no code, so "Also called" on a hepatoblastoma output does not list
+them (the alias layer's third constraint).
+
+Verification: 628 checks, 0 FAIL; controls all caught. Browser: "Hepatocellular malignant neoplasm"
+finds Group 7; the option records `8970/3`, workup complete, with the PHITT reason; a plain
+hepatoblastoma's "Also called" names none of the three.

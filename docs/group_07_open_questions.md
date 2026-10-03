@@ -64,7 +64,12 @@ sit in different ICCC subgroups.
 **Decide:** `8970/3` Hepatoblastoma, NOS (VIIa1) or `8170/3` Hepatocellular carcinoma, NOS (VIIb).
 The diagnostic pathway suggested `8970`. (Contract §3.3.)
 **3 October 2026:** the registrar agreed with the interim handling — `8000/3`, IHC counted as done,
-and an upgrade line naming the outstanding ruling. The choice between `8970` and `8170` is still open.
+and an upgrade line naming the outstanding ruling.
+**Ruled and built, 3 October 2026: `8970/3`.** Follow López-Terrada 2025 (*Virchows Archiv*): these
+children are treated as high-risk hepatoblastoma and not as hepatocellular carcinoma in the PHITT trial
+(p. 30). ICD-O-3.2 prints no term for the category, and neither consensus paper assigns a code; the WHO
+volumes were not checked (`docs/sources-requested.md` item 12). "Hepatocellular malignant neoplasm NOS",
+the consensus name, is now a search alias. Build report §12.
 
 ### 4. Coding without tissue
 
