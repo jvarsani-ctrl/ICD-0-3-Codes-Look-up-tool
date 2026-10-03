@@ -140,6 +140,7 @@ investigation (basis 2).** Paediatric rows outside Group 3:
 | Nephroblastoma | 2 | C64 | `8960/3` | **VI** |
 | Hepatoblastoma | 2 | C22 | `8970/3` | **VII** |
 | Hepatocellular carcinoma | 2 | C22.0 | `8170/3` | **VII** |
+| Cholangiocarcinoma | 2 | C22.1, C24.0, C24.9 | `8160/3` | **VII** |
 | Osteosarcoma · chondrosarcoma | 2 | C40, C41 | `9180/3` · `9220/3` | **VIII** |
 | Sarcoma NOS · liposarcoma · leiomyosarcoma · angiosarcoma | 2 | any site | `8800/3` · `8850/3` · `8890/3` · `9120/3` | **IX** |
 | Kaposi sarcoma of the skin | 1 | C44 | `9140/3` | **IX** |

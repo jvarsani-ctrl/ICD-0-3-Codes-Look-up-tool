@@ -2856,7 +2856,7 @@
               "morphology_code": "8000",
               "behavior_code": "3",
               "basis_of_diagnosis": 2,
-              "reason": "Recorded as Neoplasm, malignant (8000/3), this group's unspecified malignant hepatic subgroup at the liver, pending a diagnostic specimen. Visser 2023, rule 5 (p. 03): a case diagnosed without pathology, outside the specific codes Tables 3 and 4 allow, is 8000/3.",
+              "reason": "Recorded as Neoplasm, malignant (8000/3), this group's unspecified malignant hepatic subgroup at the liver, pending a diagnostic specimen. Visser 2023, rule 5 (p. 03), records a case diagnosed without pathology as 8000/3. Visser's Table 3 (pp. 04–05) also allows hepatocellular carcinoma and cholangiocarcinoma at basis 2, and its Table 4 (p. 06) allows hepatocellular carcinoma on alpha-fetoprotein; this tool codes both only on tissue, and the registrar's ruling on a no-tissue route for them is outstanding.",
               "captures": {
                 "basis_evidence_tier": "imaging_insufficient_needs_tissue",
                 "workup_status": "incomplete"
@@ -3177,9 +3177,9 @@
               "basis_of_diagnosis": 7
             },
             {
-              "label": "Another benign or non-neoplastic lesion — haemangioma, mesenchymal hamartoma, focal nodular hyperplasia, a macroregenerative or dysplastic nodule, a cyst or an abscess",
+              "label": "Another benign, premalignant or non-neoplastic lesion — haemangioma, mesenchymal hamartoma, focal nodular hyperplasia, a macroregenerative or dysplastic nodule, a cyst or an abscess",
               "non_reportable": true,
-              "reason": "A benign or non-neoplastic liver lesion is not a reportable malignancy. Mesenchymal hamartoma, haemangioma and focal nodular hyperplasia are among the benign liver masses of childhood (López-Terrada 2025, Table 1, p. 24).",
+              "reason": "A benign, premalignant or non-neoplastic liver lesion is not a reportable malignancy. The international consensus lists mesenchymal hamartoma, haemangioma and focal nodular hyperplasia among the benign liver lesions of childhood, and dysplastic nodules as premalignant (López-Terrada 2025, Table 1, p. 24).",
               "captures": {
                 "histology_pattern": "benign_or_non_neoplastic"
               }

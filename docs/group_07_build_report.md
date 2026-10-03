@@ -49,7 +49,16 @@ No registry-implications paper exists; the MeSH sweep in `Group 7 Papers/` found
 
 The PubMed connector was pending in this session; the two papers were fetched from NCBI's public
 E-utilities into the session's scratch directory, not into the vault. Papers on disk were read with
-macOS PDFKit, because neither poppler nor a Python PDF library is installed.
+macOS PDFKit, because neither poppler nor a Python PDF library was installed during the build.
+
+On 3 October 2026, once PDF libraries were installed, the five table pages the tree depends on were
+rendered to images and checked against the printed tables: López-Terrada 2025 Tables 1 and 2
+(pp. 24, 29), Visser 2023 Tables 3 and 4 (pp. 04, 06) and Ferraro 2019 Table 4 (p. 10). Every cited
+figure matched. Two corrections followed. Visser Table 3 also lists cholangiocarcinoma, `8160/3`, at
+basis 2 at C22.1; the contract, the shared transcription `docs/references/visser-2023-key-points.md`
+and the `hp_imaging_insufficient` reason now say so, and registrar item 4(c) asks whether to build it.
+López-Terrada Table 1 lists dysplastic nodules as premalignant, not benign; the contract and the
+benign-lesion option now say so. Neither correction changes a code or a route.
 
 ---
 

@@ -145,8 +145,10 @@ hepatoblastoma, mixed (epithelial and mesenchymal; teratoid); **malignant rhabdo
 and INI1+**; nested epithelial–stromal tumour. Malignant mesenchymal: embryonal sarcoma,
 rhabdomyosarcoma, epithelioid hemangioendothelioma, angiosarcoma, synovial sarcoma, other (including
 desmoplastic small round cell tumour, PNET, NUT carcinoma). Benign: hepatocellular adenoma, focal
-nodular hyperplasia, macroregenerative nodules, dysplastic nodules, bile duct adenoma, infantile and
-cavernous hemangioma, mesenchymal hamartoma. Metastatic: solid tumours, leukaemias (AML M7).
+nodular hyperplasia, macroregenerative nodules, bile duct adenoma, infantile and cavernous hemangioma,
+mesenchymal hamartoma. Premalignant: dysplastic nodules, low and high grade. Metastatic: solid tumours,
+leukaemias (AML M7). *(Corrected 3 October 2026 against the rendered table: the first draft listed
+dysplastic nodules as benign.)*
 
 ### 0.6 ★★ Visser Tables 3 and 4 — what may be registered without tissue
 
@@ -157,6 +159,7 @@ Visser O, et al. *Frontiers in Oncology* 2023;13:1250549, transcribed in
 |---|---|---|---|---|
 | 3, pp. 04–05 | Hepatoblastoma | **2** | C22 | `8970/3` |
 | 3, pp. 04–05 | Hepatocellular carcinoma | **2** | C22.0 | `8170/3` |
+| 3, pp. 04–05 | Cholangiocarcinoma | **2** | C22.1, C24.0, C24.9 | `8160/3` |
 | 4, p. 06 | Hepatocellular carcinoma, on alpha-fetoprotein | **4** | — | `8170/3` |
 
 Three consequences:
@@ -177,7 +180,10 @@ tumors.* Clinics in Liver Disease 2018;22(4):753–772, PDF p. 7, recommends bio
 and advises against fine-needle aspiration. Neither forbids registering a case that was never
 biopsied; Visser Table 3 governs that. The imaging node's hint says both.
 
-**Not built: an HCC no-tissue route.** Visser licenses `8170/3` at basis 2 or 4 without pathology.
+**Not built: an HCC no-tissue route, or a cholangiocarcinoma one.** Visser licenses `8170/3` at basis 2
+or 4 and `8160/3` at C22.1 at basis 2 without pathology. *(The cholangiocarcinoma row was added on
+3 October 2026, when the table was checked against the rendered page; the first transcription
+omitted it.)*
 The Diagnostic Pathway reserves imaging sufficiency for hepatoblastoma. In an older child three
 entities present as a liver mass with a raised alpha-fetoprotein: hepatoblastoma, hepatocellular
 neoplasm NOS, which López-Terrada 2025 (pp. 29–30) describes in older children with very high
@@ -683,6 +689,8 @@ and nine found during the build. The list here is the one written before any JSO
 4. **No-tissue coding.** (a) Does alpha-fetoprotein raise the hepatoblastoma imaging basis from 2 to
    4 under Visser rule 1? (b) Should an older child with chronic liver disease, a liver mass and a
    raised alpha-fetoprotein be coded `8170/3` at basis 4 under Visser Table 4, rather than `8000/3`?
+   (c) Visser Table 3 also allows cholangiocarcinoma, `8160/3`, at basis 2 at C22.1: build that route,
+   or keep `8000/3`?
 5. **Infant threshold for the imaging route**: 6 months (Ferraro) or 4 months (the pathway).
 6. **`8161/3` versus `8470/3`** for biliary mucinous cystic carcinoma (§3.5).
 7. **Extrahepatic biliary sites.** `8160`–`8162` are VIIb at any site, but C23.9 and C24.x have no

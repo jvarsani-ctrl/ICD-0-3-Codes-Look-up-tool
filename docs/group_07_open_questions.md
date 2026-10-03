@@ -53,6 +53,11 @@ alpha-fetoprotein with clinical investigation. Should the tool offer that route 
 chronic liver disease (for example chronic hepatitis B), a liver mass and a raised alpha-fetoprotein?
 In Uganda this presentation is plausible. Not built, because the Diagnostic Pathway reserves the
 imaging route for hepatoblastoma. (Contract §0.6.)
+**Decide (c):** Visser Table 3 also lists cholangiocarcinoma, `8160/3`, at basis 2 at C22.1, C24.0 and
+C24.9. The tool records a likely cholangiocarcinoma without tissue as `8000/3`, the same as (b). Should
+either route be built? The `hp_imaging_insufficient` reason now tells the clerk that both tables allow
+these codes and that the ruling is outstanding. *(Added 3 October 2026, from checking Table 3 against
+the rendered page.)*
 
 ### 5. The youngest age for the imaging route
 
@@ -81,7 +86,8 @@ specific code but can carry `8000/3`.
 
 **Today:** hepatocellular adenoma (`8170/0`), bile duct adenoma (`8160/0`) and high-grade biliary
 intraepithelial neoplasia (`8148/2`) are behaviour exclusions; haemangioma, mesenchymal hamartoma,
-focal nodular hyperplasia and other benign lesions are "not a reportable malignancy".
+focal nodular hyperplasia, other benign lesions and dysplastic nodules, which the consensus lists as
+premalignant (López-Terrada 2025, Table 1, p. 24), are "not a reportable malignancy".
 **Decide:** confirm that the registry does not register benign or in situ liver lesions. This also
 decides whether the twenty in situ and metastatic REDCap picks are retired (item 9).
 
