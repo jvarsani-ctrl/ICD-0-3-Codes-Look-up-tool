@@ -84,8 +84,8 @@ giant cell tumours), it becomes a behaviour exclusion instead.
 
 ### B3. Chondrosarcoma on imaging alone (D10)
 
-Visser Table 3 allows `9220/3` at C40/C41 on imaging (basis 2). Sharif 2021 (PDF p. 4) reports a
-47% grade mismatch between MRI and surgery in paediatric central chondrosarcoma, and
+Visser Table 3 allows `9220/3` at C40/C41 on imaging (basis 2). Sharif 2021 (p. 4), citing
+Ardakani et al. 2020, reports a 47% grade mismatch between MRI and surgery in paediatric central chondrosarcoma, and
 paediatric enchondromas often look aggressive. **Built:** no imaging route for
 chondrosarcoma. With malignancy called likely, the case is `8000/3` at basis 2; with a benign
 cartilage tumour in the differential, it is not registered (Visser rule 4).

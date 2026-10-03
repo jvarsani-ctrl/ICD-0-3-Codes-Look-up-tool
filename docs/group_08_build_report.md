@@ -43,8 +43,10 @@ come from Soluk-Tekkesin & Wright 2022 through Europe PMC. No registry-implicati
 exists for bone (32-record MeSH sweep, no candidate). Choi & Ro 2021, the natural summary
 paper, is paywalled and on the registrar's list.
 
-PDFs were read through macOS PDFKit, with nothing installed. Four papers in `Group 8 Papers/` were
-opened (Anderson, Menendez, Sharif, Kallen), each for a claim the tree rests on.
+Four papers in `Group 8 Papers/` were opened (Anderson, Menendez, Sharif, Kallen), each for a
+claim the tree rests on. They were first read through macOS PDFKit, which reports PDF page
+indices. On 3 October 2026 PyMuPDF was installed, and every page citation was rechecked against
+the printed page numbers (§9).
 
 ## 3. Where the sources disagree
 
@@ -75,8 +77,8 @@ coding and its statement that poorly differentiated chordoma has no code (WHO 20
 - **histology:** a matrix router over eleven tumour lines, three cross-group referrals (II,
   IX, and metastases to IV, VI, IX or XII), and the NOS codes.
 
-Imaging-only chondrosarcoma was deliberately not built. Sharif 2021 (PDF p. 4) reports a 47%
-MRI-to-surgery grade mismatch in paediatric central chondrosarcoma. Visser Table 3 would have
+Imaging-only chondrosarcoma was deliberately not built. Sharif 2021 (p. 4), citing Ardakani et al.
+2020, reports a 47% MRI-to-surgery grade mismatch in paediatric central chondrosarcoma. Visser Table 3 would have
 allowed it; the registrar has the question.
 
 The Diagnostic Pathway's `decalcification_status` variable was not built (D15). Rulings 11 and
@@ -153,4 +155,7 @@ threshold between Groups IV and VIII (D1).
 - Negative controls: 12 of 12 caught, 3 of 3 probes pass.
 - `group_01`–`group_06` data and alias files, `index.html` and `uccf-tool.css`
   byte-identical to `main`.
+- Page citations: 35 cited claims located on their printed pages with PyMuPDF. Two corrected:
+  the telangiectatic diversion is Menendez pp. 109–110, not p. 109, and the 47% chondrosarcoma
+  grade mismatch is Ardakani et al. 2020 as cited by Sharif 2021, p. 4.
 - New WARNs, both recorded: the alias index size (TODO §23) and ICCC-2017 range 60 (TODO §24).

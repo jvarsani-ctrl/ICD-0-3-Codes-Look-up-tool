@@ -179,8 +179,9 @@ NODES = [
                  "specific code." % VISSER,
                  {"evidence_tests": ["Imaging"], "workup_status": "incomplete",
                   "basis_evidence_tier": "imaging_malignant_unspecified"},
-                 note="Design D10. Sharif B, et al. Eur J Radiol 2021;137:109579, PDF p. 4: "
-                      "47% MRI-surgery grade mismatch in paediatric central chondrosarcoma."),
+                 note="Design D10. Sharif B, et al. Eur J Radiol 2021;137:109579, p. 4, citing "
+                      "Ardakani et al., Skeletal Radiol 2020: 47% MRI-surgery grade mismatch "
+                      "in 17 paediatric central chondrosarcomas."),
             nonrep("A benign-looking lesion, or a report whose differential includes a benign "
                    "tumour, infection or injury", NOT_REGISTRABLE_POSSIBLE,
                    {"workup_status": "not registrable",
@@ -228,7 +229,7 @@ NODES = [
             {"feature": "Fluid-fluid levels with little or no mineralised matrix",
              "reason": "This is the telangiectatic osteosarcoma pattern, which can be "
                        "mistaken for an aneurysmal bone cyst, a benign lesion (Menendez "
-                       "2022, p. 109). Tissue is required."},
+                       "2022, pp. 109–110). Tissue is required."},
         ],
         no_tissue=True,
         endpoint_verification="not_verified",

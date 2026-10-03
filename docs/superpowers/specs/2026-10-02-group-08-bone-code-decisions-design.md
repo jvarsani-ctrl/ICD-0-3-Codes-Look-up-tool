@@ -110,7 +110,8 @@ or "medullary" osteosarcoma reaches `9186/3` by alias, as written.
 ## D10 — No imaging-only chondrosarcoma route. PROVISIONAL.
 
 Visser Table 3 allows `9220/3` at C40/C41 on clinical investigation (basis 2). Sharif B, et
-al. Eur J Radiol 2021;137:109579, PDF p. 4: in 17 paediatric central chondrosarcomas, MRI and
+al. Eur J Radiol 2021;137:109579, p. 4, citing Ardakani et al. (Skeletal Radiology 2020): in 17
+paediatric central chondrosarcomas, MRI and
 surgical grade disagreed in 47%. Paediatric enchondromas are commonly expansile, and "some of
 the MRI features used to differentiate high-grade CS from ACT in adults cannot be applied to
 children". **Taken:** the only imaging-sufficient code is `9180/3`. An imaging-only cartilage

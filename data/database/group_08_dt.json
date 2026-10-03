@@ -1514,7 +1514,7 @@
               "behavior_code": "3",
               "basis_of_diagnosis": 2,
               "reason": "Recorded as Neoplasm, malignant (8000/3) at basis of diagnosis 2. Ewing sarcoma is not among the diagnoses the European rules allow without pathology, and imaging does not grade cartilage tumours reliably in children (Visser 2023, European Network of Cancer Registries, rule 5 and Table 3; Sharif 2021). A biopsy report gives the specific code.",
-              "coding_note": "Design D10. Sharif B, et al. Eur J Radiol 2021;137:109579, PDF p. 4: 47% MRI-surgery grade mismatch in paediatric central chondrosarcoma.",
+              "coding_note": "Design D10. Sharif B, et al. Eur J Radiol 2021;137:109579, p. 4, citing Ardakani et al., Skeletal Radiol 2020: 47% MRI-surgery grade mismatch in 17 paediatric central chondrosarcomas.",
               "captures": {
                 "evidence_tests": [
                   "Imaging"
@@ -1589,7 +1589,7 @@
             },
             {
               "feature": "Fluid-fluid levels with little or no mineralised matrix",
-              "reason": "This is the telangiectatic osteosarcoma pattern, which can be mistaken for an aneurysmal bone cyst, a benign lesion (Menendez 2022, p. 109). Tissue is required."
+              "reason": "This is the telangiectatic osteosarcoma pattern, which can be mistaken for an aneurysmal bone cyst, a benign lesion (Menendez 2022, pp. 109–110). Tissue is required."
             }
           ],
           "no_tissue": true,
