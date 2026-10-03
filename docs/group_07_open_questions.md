@@ -40,6 +40,8 @@ children are treated as high-risk hepatoblastoma (López-Terrada 2025, pp. 29–
 sit in different ICCC subgroups.
 **Decide:** `8970/3` Hepatoblastoma, NOS (VIIa1) or `8170/3` Hepatocellular carcinoma, NOS (VIIb).
 The diagnostic pathway suggested `8970`. (Contract §3.3.)
+**3 October 2026:** the registrar agreed with the interim handling — `8000/3`, IHC counted as done,
+and an upgrade line naming the outstanding ruling. The choice between `8970` and `8170` is still open.
 
 ### 4. Coding without tissue
 
@@ -177,6 +179,39 @@ INI1 retained; López-Terrada 2014 (p. 479) keeps rhabdoid tumour a histomorphol
 consensus lists an INI1-positive malignant rhabdoid tumour (López-Terrada 2025, Table 1, p. 24).
 **Decide:** confirm coding a report-diagnosed rhabdoid tumour on the diagnosis alone, and how to code
 rhabdoid cells with INI1 retained.
+
+**3 October 2026 — the registrar asked for more evidence: one case should not outweigh the typical
+pattern.** What the literature adds:
+
+- **The current definition needs SWI/SNF loss.** The CHIC re-review states that the diagnosis of a
+  primary rhabdoid tumour of the liver "requires testing for loss of SMARCB1 expression according to
+  the current classification" (Trobaugh-Lotrario A, et al. *Cancers* 2023;15(2):467, Discussion;
+  doi:10.3390/cancers15020467). It re-reviewed 73 of 1,605 hepatoblastoma trial patients: 11 were
+  rhabdoid tumours, 10 of them with documented INI1 loss; 41 were hepatoblastomas with a small cell
+  undifferentiated component, none with INI1 loss.
+- **INI1 kept means test SMARCA4, not assume rhabdoid tumour.** "If liver tumors show rhabdoid or
+  small cell features and express INI1, these tumors should then be evaluated for BRG1 protein, to
+  exclude the rare MRT associated with SMARCA4 inactivation" (Zhou S, et al. *Cancers*
+  2019;11(12):1992, §4.1.1; doi:10.3390/cancers11121992). About 5% of malignant rhabdoid tumours keep
+  INI1 and lose SMARCA4 (López-Terrada 2025, p. 37).
+- **Rhabdoid-looking tumours that keep INI1 are mostly something else.** Of 20 tumours with
+  histological or immunohistochemical features suggesting rhabdoid tumour, 7 kept INI1 uniformly and
+  none of the 7 carried an INI1 mutation (*Pathology* 2008;40(7); doi:10.1080/00313020802436451).
+  Vokuhl 2016 (p. 927) found one tumour in 23 that kept both INI1 and SMARCA4 with no mutation, and
+  suggested other genetic changes; it is the exception, not the rule.
+
+**Consequence for the tool.** The `8000/3` on "rhabdoid cells, INI1 retained" rests on that one case.
+Rule 3, small cell undifferentiated with INI1 retained, already codes `8970/3` and carries SMARCA4 as an
+upgrade line on the same evidence. The recommendation sent to the registrar on 3 October 2026:
+
+1. INI1 lost, or SMARCA4 lost: `8963/3` (unchanged).
+2. INI1 kept, SMARCA4 kept: not a malignant rhabdoid tumour by the current definition. Code what the
+   report calls the tumour — `8970/3` when it diagnoses hepatoblastoma, `8000/3` when it names no type.
+3. INI1 kept, SMARCA4 not done: the same code as point 2, with SMARCA4 shown as outstanding, matching
+   rule 3.
+
+Point 2 needs one change to the histology step: the rhabdoid-cells option must say whether the report
+diagnoses hepatoblastoma. Not built until the registrar rules.
 
 ### 19. Basis of diagnosis for the fibrolamellar molecular findings
 
