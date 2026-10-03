@@ -3098,6 +3098,8 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | RT | round trip | `8970` named by REDCap's string "Hepatoblastoma" |
 | BE | exclusion | the `8170/0` exclusion names its synonym, not the preferred term |
 | OT1 | `check_outstanding_tests` | a value outside the diagnostic-test vocabulary |
+| NH1 | `check_non_reportable_heading` | a benign heading on a branch that codes `8991` |
+| NH2 | `check_non_reportable_heading` | an empty heading |
 | OT2 | `check_outstanding_tests` | a rule lists IHC in both `satisfies_tests` and `outstanding_tests` |
 
 ## What the first pass found in the checks themselves

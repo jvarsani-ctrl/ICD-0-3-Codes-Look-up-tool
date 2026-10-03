@@ -375,3 +375,24 @@ Rule 6 admits `8000/3` at basis 9 and no longer at basis 1; control 6B now break
 basis 1. The imaging step's question and its `8000/3` option now accept imaging reported in a note.
 Verification: 628 checks, 0 FAIL; 49 controls caught. Browser: both note routes give the codes and bases
 above.
+
+---
+
+## 17. Benign liver lesions, 3 October 2026
+
+Open question 8, in part. REDCap's Group VII list has no benign liver picks; a non-cancer case is
+`dx_cancer` = No plus free text in `dx_exclusion`. The registrar ruled that the benign cases stay in the
+tool and the output calls them "Benign neoplasm (benign tumour)".
+
+| Change | Where |
+|---|---|
+| Behaviour 0 heading reads "Benign neoplasm (benign tumour)" — every group's behaviour-0 exclusion | `app.js`, `BEHAVIOUR_LABELS` |
+| `non_reportable_heading`: a non-reportable branch may replace the generic banner. Group-agnostic, text only | `app.js`, `exclude()` |
+| `check_non_reportable_heading()`: only on a `non_reportable` branch, non-empty | `build/build_database.py`, all groups |
+| The benign/premalignant/non-neoplastic option splits in three, following López-Terrada 2025, Table 1: benign tumours (heading set), dysplastic nodule (premalignant), non-neoplastic lesion | `hp_histology` |
+| Controls NH1, NH2 | `build/negative_controls_group07.py` |
+
+Verification: 635 checks, 0 FAIL; all controls caught. Browser, after forcing a fresh `app.js`: the
+benign-tumour option and both adenomas read "Benign neoplasm (benign tumour)"; the dysplastic nodule and
+the non-neoplastic lesion read "Not a reportable malignancy". Merge note: `app.js` changes in
+`exclude()` and `BEHAVIOUR_LABELS`.

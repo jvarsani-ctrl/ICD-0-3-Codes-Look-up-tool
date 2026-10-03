@@ -2683,6 +2683,32 @@ def check_outstanding_tests(ctx: DTContext):
     return out
 
 
+def check_non_reportable_heading(ctx: DTContext):
+    """
+    `non_reportable_heading` replaces the generic "Not a reportable malignancy" banner on a
+    non-reportable terminal. app.js reads it only in exclude(), so on any other branch it
+    is silently inert; and an empty string would fall back without saying so.
+    """
+    out, seen = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if "non_reportable_heading" not in holder:
+                continue
+            seen += 1
+            value = holder.get("non_reportable_heading")
+            loc = "node %s (%s)" % (node_id, where or "(node level)")
+            if holder.get("non_reportable") is not True:
+                out.append((FAIL, "%s: non_reportable_heading on a branch that is not "
+                                  "non_reportable — app.js never reads it there" % loc))
+            if not isinstance(value, str) or not value.strip():
+                out.append((FAIL, "%s: non_reportable_heading must be a non-empty string, got %r"
+                            % (loc, value)))
+    if seen and not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "%d non_reportable_heading declaration(s), all on non-reportable "
+                        "terminals" % seen))
+    return out
+
+
 def check_satisfies_tests(ctx: DTContext):
     """
     `satisfies_tests[]` SUPPRESSES an outstanding-workup row. That makes it the one
@@ -10428,6 +10454,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_classification_system, ctx)
         report.run(check_satisfies_tests, ctx)
         report.run(check_outstanding_tests, ctx)
+        report.run(check_non_reportable_heading, ctx)
         # Group II schema extensions (Group II build contract §3) — fields, not node types
         report.run(check_behaviour_resolution, ctx)
         report.run(check_provisional_pending, ctx)

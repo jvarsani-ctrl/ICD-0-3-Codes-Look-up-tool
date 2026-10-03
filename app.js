@@ -1418,9 +1418,11 @@ var BASIS_LABELS = {
    content. The behaviour-exclusion panel read "Benign" for every exclusion until
    2 October 2026, which mislabelled the /1 ones — 8975/1 calcifying nested
    stromal-epithelial tumour, 8960/1 mesoblastic nephroma, 9514/1 regressed
-   retinoblastoma — as benign when ICD-O-3.2 calls them uncertain. */
+   retinoblastoma — as benign when ICD-O-3.2 calls them uncertain. Behaviour 0
+   reads "Benign neoplasm (benign tumour)" since 3 October 2026, the registrar's
+   wording: ICD-O behaviour 0 is a benign neoplasm. */
 var BEHAVIOUR_LABELS = {
-  '0': 'Benign', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
+  '0': 'Benign neoplasm (benign tumour)', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
   '3': 'Malignant', '6': 'Metastatic', '9': 'Malignant, uncertain whether primary or metastatic'
 };
 function basisCode(v) {
@@ -1557,7 +1559,8 @@ function advance(target, label, value, before) {
   state.firedAlert = null;
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
-  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert);
+  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert,
+    target.non_reportable_heading);
   /* Group 4 build contract §3, ruling D1: a real ICD-O-3.2 entity whose
      BEHAVIOUR sits outside this group's own declaration — a ganglioneuroma
      is 9490/0, and ICCC-3 Group IV admits behaviour 3 only. Checked before
@@ -1708,9 +1711,13 @@ function refer(target) {
 
 /* A clean terminal that emits NO malignant code. Marked "not a reportable
    malignancy" and removed from the malignant registry (nodes.md §4). */
-function exclude(reason, alert) {
+/* `non_reportable_heading` lets a branch name what the lesion IS — "Benign
+   neoplasm (benign tumour)" — where the generic heading would lump a
+   haemangioma with an abscess. Text only; the outcome is the same. Added for
+   Group 7, 3 October 2026, on the registrar's wording. */
+function exclude(reason, alert, heading) {
   state.workup = []; state.pending = null;
-  state.result = { excluded: true, reason: reason, alert: alert || null };
+  state.result = { excluded: true, reason: reason, alert: alert || null, heading: heading || null };
   state.stage = 'output';
 }
 
@@ -1829,7 +1836,7 @@ function renderOutput() {
   }
   if (r.excluded) {
     return '<div class="node--live">' +
-      banner('info', 'Not a reportable malignancy', r.reason) +
+      banner('info', r.heading || 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
       outActions() + '</div>';

@@ -140,6 +140,19 @@ premalignant (López-Terrada 2025, Table 1, p. 24), are "not a reportable malign
 **Decide:** confirm that the registry does not register benign or in situ liver lesions. This also
 decides whether the twenty in situ and metastatic REDCap picks are retired (item 9).
 
+**3 October 2026 — REDCap checked.** The Group VII option list has no pick for hepatocellular adenoma,
+bile duct adenoma, haemangioma, mesenchymal hamartoma, focal nodular hyperplasia or dysplastic nodules.
+A non-cancer case is entered as `dx_cancer` = No with the diagnosis typed into `dx_exclusion`, a free-text
+field. The one exception is `8148`: REDCap offers "Glandular intraepithelial neoplasia, high grade", the
+ICD-O-3.2 preferred term at `8148/2`.
+**Ruled and built, 3 October 2026:** the benign cases stay in the tool, and the output names them
+"Benign neoplasm (benign tumour)" instead of instructing the clerk on REDCap. Applied to the lesions
+López-Terrada 2025, Table 1 (p. 24), lists as benign — hepatocellular adenoma and bile duct adenoma
+(behaviour exclusions), and focal nodular hyperplasia, macroregenerative nodule, haemangioma and
+mesenchymal hamartoma (a split-out option). Dysplastic nodules (premalignant) and non-neoplastic lesions
+keep "Not a reportable malignancy". **Still open:** whether high-grade biliary intraepithelial neoplasia,
+`8148/2`, is registered on its REDCap pick or retired with the other in situ picks.
+
 ---
 
 ## REDCap and shared-layer items
@@ -180,7 +193,8 @@ rules today.
 `app.js`'s behaviour-exclusion panel read "Benign" for every exclusion. It now names the ICD-O
 behaviour digit: benign, uncertain whether benign or malignant, in situ. It changes what Groups V and VI
 display for `9514/1`, `8959/1` and `8960/1`, which were wrongly headed "Benign". **Confirm** the change is wanted
-across groups.
+across groups. *3 October 2026:* behaviour 0 now reads "Benign neoplasm (benign tumour)" (item 8), which
+also changes Group IV's benign exclusions, such as ganglioneuroma.
 
 ---
 

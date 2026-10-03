@@ -170,6 +170,9 @@ cross-layer references, and the checks that exist because their absence would be
 - **`outstanding_tests` guard** — the reverse field: a branch names tests its finding leaves owed,
   which `app.js` adds to the outstanding-workup rows. Same closed vocabulary; it must sit on a
   code-emitting branch and never repeat a value from `satisfies_tests`.
+- **`non_reportable_heading` guard** — a non-reportable terminal may name what the lesion is
+  ("Benign neoplasm (benign tumour)") in place of the generic banner; the field must sit on a
+  `non_reportable` branch and be a non-empty string, or `app.js` silently ignores it.
 - **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
   morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
 

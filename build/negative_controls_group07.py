@@ -81,6 +81,7 @@ CHECKS = {
     9: lambda d, r: bd.check_group7_router_c22(r, LAYER1),
     "rt": lambda d, r: bd.check_icdo32_round_trip(ctx_of(d), LAYER1),
     "ot": lambda d, r: bd.check_outstanding_tests(ctx_of(d)),
+    "nh": lambda d, r: bd.check_non_reportable_heading(ctx_of(d)),
     10: lambda d, r: bd.check_group7_cnset(ctx_of(d), LAYER1),
     "be": lambda d, r: bd.check_behaviour_exclusion(ctx_of(d), LAYER1),
 }
@@ -226,6 +227,14 @@ def m_outstanding_and_satisfied(d, a, r):
     rule(d, "hp_ini1", 7)["satisfies_tests"] = ["IHC"]
 
 
+def m_heading_on_coded_branch(d, a, r):
+    option(d, "hp_histology", "Undifferentiated embryonal sarcoma")["non_reportable_heading"] = "Benign neoplasm (benign tumour)"
+
+
+def m_heading_empty(d, a, r):
+    option(d, "hp_histology", "A benign tumour")["non_reportable_heading"] = ""
+
+
 def m_8963_no_when(d, a, r):
     rule(d, "hp_ini1", 0).pop("when")
 
@@ -360,6 +369,8 @@ CONTROLS = [
     ("RT2", "rt", "the 8975/3 matrix entry renamed to REDCap's word order", m_cnset_matrix_name, "matrix-rule entry"),
     ("OT1", "ot", "outstanding_tests names a test outside the vocabulary", m_outstanding_off_vocabulary, "closed"),
     ("OT2", "ot", "a rule both satisfies and owes IHC", m_outstanding_and_satisfied, "listed in both"),
+    ("NH1", "nh", "a benign heading on a branch that codes 8991", m_heading_on_coded_branch, "not non_reportable"),
+    ("NH2", "nh", "an empty benign heading", m_heading_empty, "non-empty string"),
     ("BE", "be", "the 8170/0 exclusion names its synonym", m_exclusion_synonym_term, "not the PREFERRED one"),
 ]
 
