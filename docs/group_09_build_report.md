@@ -170,6 +170,13 @@ alveolar rhabdomyosarcoma (D1); the basis-1 cutaneous Kaposi sarcoma route (E1).
    controls on the round trip and on the removed `9473` exemption: `docs/group_09_negative_controls.md`,
    pinned to `a46d52c`.
 5. Five browser scenarios (§7).
+5a. **All 22 quotations in the Group IX section of `docs/clinical-warnings.md` checked word for word
+   on 3 October 2026**, after the first extraction used PDFKit, which drops ligatures: 13 against the
+   PDFs in `Group 9 Papers/` with pymupdf, two against the Dehner 2023 text held there, and seven
+   against the PubMed Central full texts of Sbaraglia 2021 (PMC8167394) and Pfister 2022
+   (PMC9401511). Every quotation is verbatim and correctly attributed. Sbaraglia 2021 reuses its
+   authors' 2019 abstract on Ewing-like sarcomas, but changes "should be considered" to "should be
+   preferred"; the warning quotes the 2021 text and cites 2021.
 6. Groups 1–6, their alias files, `app.js`, `index.html`, `uccf-tool.css`, `induce_flow.py` and
    `check_engine_flow.mjs` are byte-identical to `main`.
 
