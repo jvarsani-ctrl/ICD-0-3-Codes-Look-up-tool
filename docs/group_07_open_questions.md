@@ -24,12 +24,31 @@ hepatoblastoma taxonomy is based on the consensus classification.
 
 ### 2. `8975/1` calcifying nested stromal-epithelial tumour
 
-**Today:** a behaviour exclusion. The tool names `8975/1`, emits no Group VII code, and flags the case
-for the registrar.
-**Why:** ICD-O-3.2 has the code at behaviour 1 only; ICCC-3 Group VII admits behaviour 3. Most
-children have a benign course; some relapse or metastasise (López-Terrada 2025, p. 43).
-**Decide:** is this tumour registered, and if so on what code and in which group? REDCap pick 2 is
-left in place until you rule. (Contract §3.1.)
+**The tumour.** A rare, low-grade liver tumour of children and young adults. "Most of the patients have
+a benign clinical course, particularly if the tumor is completely excised. Some patients develop tumor
+relapses and even local or distant metastases" (López-Terrada 2025, p. 43).
+
+**The codes.** ICD-O-3.2 lists it once, as `8975/1`. The behaviour digit after the slash says how the
+tumour behaves: `/0` benign, `/1` uncertain whether benign or malignant (borderline, low malignant
+potential), `/2` in situ, `/3` malignant. ICCC-2017 places `8975` in Group VII, subgroup VIIa1, beside
+hepatoblastoma, but only at behaviour `/3` (row 67). Every ICCC-2017 range outside Group III and the
+intracranial germ cell subgroups Xa admits behaviour `/3` only.
+
+**Today:** the tool names `8975/1`, emits no Group VII code, and flags the case for the registrar.
+
+**Decide, in three parts:**
+
+- **(a) The usual case — no sign of malignancy.** Is a `/1` tumour outside the central nervous system
+  registered at all? Recommended: no. It is not a malignancy by its code, and Group VII and its REDCap
+  list hold malignant tumours.
+- **(b) The pathologist reports it as malignant, or it has metastasised.** ICD-O's matrix rule permits
+  changing the behaviour digit "so that it truly reflects what the pathologist describes as the
+  behavior" (SEER ICD-O-3 training, *What's the same*). That gives `8975/3`, which ICCC-2017 row 67
+  places in VIIa1. Apply the rule here, or record such a case some other way? The tool cannot emit
+  `8975/3` today: the build admits only codes ICD-O-3.2 lists, so this needs your ruling first.
+- **(c) REDCap pick 2**, which offers this tumour in Group VII. Keep it only if (b) is yes.
+
+(Contract §3.1.)
 
 ### 3. Hepatocellular neoplasm NOS (HCN-NOS) has no ICD-O-3.2 code
 
