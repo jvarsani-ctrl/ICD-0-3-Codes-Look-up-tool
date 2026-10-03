@@ -965,8 +965,11 @@ GROUP7_C22_VALUES = {"C22", "C22.0", "C22.1"}
 # cholangiocarcinoma basis 2 at C22.1; Table 4: hepatocellular carcinoma basis 4 on
 # alpha-fetoprotein; rule 5: 8000/3 at basis 1 or 2. The 8170 and 8160 rows were added on
 # the registrar's ruling of 3 October 2026 (open question 4, "go with Visser").
-GROUP7_NO_PATHOLOGY_BASES = {0, 1, 2, 4}
-GROUP7_NO_PATHOLOGY_ALLOWED = {("8970", 2), ("8000", 1), ("8000", 2),
+# Basis 1 is out (ruling 3 October 2026, open question 7): Visser rule 3 keeps it for cancers
+# found by physical examination, and lists no internal organ. A note naming no method is
+# basis 9, unknown (rule 1).
+GROUP7_NO_PATHOLOGY_BASES = {0, 1, 2, 4, 9}
+GROUP7_NO_PATHOLOGY_ALLOWED = {("8970", 2), ("8000", 2), ("8000", 9),
                                ("8170", 2), ("8170", 4), ("8160", 2)}
 _G7_AFP_RAISED_RE = re.compile(r"alpha-fetoprotein (is )?(reported )?raised", re.I)
 GROUP7_IMAGING_SUFFICIENT_CODE = "8970"
@@ -8666,8 +8669,9 @@ def check_group7_no_tissue_codes(ctx: DTContext):
         if (code, basis) not in GROUP7_NO_PATHOLOGY_ALLOWED:
             out.append((FAIL, "RULE 6 — node %s (%s) emits %s at basis %r without "
                               "pathology; Visser allows only 8970/3, 8170/3 and 8160/3 at basis 2 "
-                              "(Table 3), 8170/3 at basis 4 (Table 4) and 8000/3 at basis 1 or 2 "
-                              "(rule 5) (contract §0.6)" % (node_id, where, code, basis)))
+                              "(Table 3), 8170/3 at basis 4 (Table 4) and 8000/3 at basis 2, or at 9 "
+                              "when the method is unknown (rules 1, 5); basis 1 never, since a liver "
+                              "tumour is not found by physical examination (rule 3) (contract §0.6)" % (node_id, where, code, basis)))
         elif basis == 4 and not _g7_asserted(_g7_option_text(holder), _G7_AFP_RAISED_RE):
             out.append((FAIL, "RULE 6 — node %s (%s) emits %s at basis 4, but the option does not "
                               "say alpha-fetoprotein is raised; Visser Table 4 grants basis 4 on the "

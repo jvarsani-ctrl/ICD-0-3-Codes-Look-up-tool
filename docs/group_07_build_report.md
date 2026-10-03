@@ -355,3 +355,23 @@ imaging node without the under-6-months diversion (control 7C).
 Open question 6: both codes exist in ICD-O-3.2 at behaviour 3, so both stay — `8161/3` and `8470/3` —
 and the report's wording decides, as built. One addition: "Biliary cystadenocarcinoma" was a second name
 inside the `8161` alias and so could not be searched; it is now an alias of its own.
+
+---
+
+## 16. Registrar ruling on the referral note, 3 October 2026
+
+Open question 7: go with Visser 2023. Rule 5 was cited for `8000/3` at basis 1, but rule 3 decides
+whether basis 1 is available, and it keeps basis 1 for cancers found by physical examination — head and
+neck, eye, breast, skin, superficial soft tissue, external genitals, vagina, cervix, anus, rectum,
+prostate — not the liver. The earlier route rested on a misreading.
+
+| The note | Now |
+|---|---|
+| reports the imaging or alpha-fetoprotein the diagnosis rests on | enters `hp_imaging_pathway`; coded as those reports would be — `8970/3`, `8170/3`, `8160/3` or `8000/3` at basis 2 or 4 |
+| gives a malignancy as likely, names no method | `8000/3`, basis 9 (rule 1), Histology and IHC outstanding |
+| cancer only possible | not registered (rule 4), unchanged |
+
+Rule 6 admits `8000/3` at basis 9 and no longer at basis 1; control 6B now breaks the basis-9 option to
+basis 1. The imaging step's question and its `8000/3` option now accept imaging reported in a note.
+Verification: 628 checks, 0 FAIL; 49 controls caught. Browser: both note routes give the codes and bases
+above.

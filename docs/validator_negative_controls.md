@@ -3080,7 +3080,7 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | 5B | 5 | an `8963` rule loses its `primary_site` `when` |
 | 6A | 6 | the no-tissue cholangiocarcinoma option codes `8172` |
 | 6D | 6 | hepatocellular carcinoma at basis 4 with alpha-fetoprotein not raised |
-| 6B | 6 | a referral note codes `8970` at basis 1 |
+| 6B | 6 | the referral note's basis-9 option coded at basis 1 |
 | 6C | 6 | no tissue, `8000` at basis 4 |
 | 7A | 7 | the alpha-fetoprotein question removed |
 | 7B | 7 | the alpha-fetoprotein question requires "no" |

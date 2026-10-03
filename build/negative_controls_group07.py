@@ -243,11 +243,11 @@ def m_imaging_node_8170(d, a, r):
 
 
 def m_alias_basis1_8970(d, a, r):
-    option(d, "hp_clinical_alias", "The note states")["morphology_code"] = "8970"
+    option(d, "hp_clinical_alias", "The note gives a malignant")["basis_of_diagnosis"] = 1
 
 
 def m_basis4(d, a, r):
-    option(d, "hp_imaging_insufficient", "An imaging report")["basis_of_diagnosis"] = 4
+    option(d, "hp_imaging_insufficient", "Imaging is reported")["basis_of_diagnosis"] = 4
 
 
 def m_no_afp(d, a, r):
@@ -339,7 +339,7 @@ CONTROLS = [
     ("6A", 6, "the no-tissue cholangiocarcinoma option codes 8172", m_imaging_emits_8170, "8172 at basis 2"),
     ("6D", 6, "hepatocellular carcinoma at basis 4 with alpha-fetoprotein not raised", m_basis4_without_afp, "does not say alpha-fetoprotein is raised"),
     ("7E", 7, "the hepatoblastoma imaging node codes 8170", m_imaging_node_8170, "imaging route is for 8970 only"),
-    ("6B", 6, "a referral note codes 8970 at basis 1", m_alias_basis1_8970, "8970 at basis 1"),
+    ("6B", 6, "a referral note codes 8000 at basis 1", m_alias_basis1_8970, "8000 at basis 1"),
     ("6C", 6, "no tissue, 8000 at basis 4", m_basis4, "8000 at basis 4"),
     ("7A", 7, "the alpha-fetoprotein question removed", m_no_afp, "no alpha-fetoprotein question"),
     ("7B", 7, "the alpha-fetoprotein question requires 'no'", m_afp_no, "no alpha-fetoprotein question"),

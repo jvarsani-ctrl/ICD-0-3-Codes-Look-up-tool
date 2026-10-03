@@ -2786,9 +2786,9 @@
           "step_number": 2,
           "step_label": "Referral wording",
           "question": "What does the referral letter or clinical note say?",
-          "hint": "A note alone never registers a specific liver tumour. Visser 2023, Table 3 (pp. 04–05), allows hepatoblastoma to be registered without pathology at basis 2 — clinical investigation, including imaging — and not on a note. A malignancy that the note says is at least likely is recorded as Neoplasm, malignant (8000/3) at basis 1 until the imaging and pathology reports are found (Visser 2023, rule 5, p. 03).",
+          "hint": "Visser 2023 decides what a note can register. If the note reports the imaging or alpha-fetoprotein the diagnosis rests on, the next step records it at basis 2 or 4, as if those reports were in the file. If it only says a malignancy is likely, the basis is unknown (9) and the code is Neoplasm, malignant. A liver tumour is never basis 1: Visser keeps basis 1 for cancers found by physical examination (rule 3, p. 03).",
           "clinical_alert": null,
-          "coding_note": "Deviation from Group 6 rn_clinical_alias, recorded in the build report: Group 6 sends a referral-only case on to its imaging node, where a case with no imaging report cannot tick the constellation and its insufficient node offers no honest option. Here the note itself decides: a malignancy stated as at least likely is 8000/3 at basis 1, which Visser rule 5 (p. 03) allows and rule 4 bounds; anything less is not registered. No specific Group VII code is emitted at basis 1 (contract §0.6 point 2). Registrar item: contract §11.",
+          "coding_note": "Registrar ruling 3 October 2026 (open question 7, 'go with Visser'). Rule 3 (p. 03) keeps basis 1 for cancers detected by physical examination and lists no internal organ, so the earlier 8000/3 at basis 1 is gone. Rule 1: the basis is the method the diagnosis rests on, so a note reporting imaging or alpha-fetoprotein enters hp_imaging_pathway like the reports themselves; a note naming no method is basis 9. Rule 4 bounds both.",
           "captured_variables": [
             "evidence_tests",
             "workup_status",
@@ -2796,18 +2796,29 @@
           ],
           "options": [
             {
-              "label": "The note states that a malignant liver tumour is likely — for example 'hepatoblastoma', 'hepatocellular carcinoma', 'liver cancer' or 'malignant liver mass'",
+              "label": "The note reports the imaging or laboratory findings the diagnosis rests on — ultrasound, CT or MRI, or serum alpha-fetoprotein — and gives a malignant liver tumour as likely",
+              "next_node": "hp_imaging_pathway",
+              "captures": {
+                "evidence_tests": [
+                  "Referral only"
+                ],
+                "workup_status": "not done",
+                "basis_evidence_tier": "referral_reports_investigation"
+              }
+            },
+            {
+              "label": "The note gives a malignant liver tumour as likely — for example 'hepatoblastoma', 'liver cancer' or 'malignant liver mass' — but does not say how the diagnosis was made",
               "morphology_code": "8000",
               "behavior_code": "3",
-              "basis_of_diagnosis": 1,
-              "reason": "A note cannot register a specific liver tumour: hepatoblastoma needs at least clinical investigation, basis 2 (Visser 2023, Table 3). Visser rule 5 (p. 03) records a malignancy that is at least likely, on clinical grounds alone, as Neoplasm, malignant (8000/3), here at the liver in this group's unspecified subgroup. Find the imaging and pathology reports and code the case again — they will give a more specific code.",
+              "basis_of_diagnosis": 9,
+              "reason": "The note gives a malignancy as at least likely (Visser 2023, rule 4, p. 03) but not the method it rests on, so the basis of diagnosis cannot be determined: basis 9, unknown (rule 1). Basis 1 is not available, because a liver tumour is not diagnosed by physical examination alone (rule 3). Recorded as Neoplasm, malignant (8000/3) at the liver (rule 5). Find the imaging and pathology reports and code the case again.",
               "upgrade_path": "The imaging report, the alpha-fetoprotein result and any pathology report. Each can move this case from Neoplasm, malignant to a specific code.",
               "captures": {
                 "evidence_tests": [
                   "Referral only"
                 ],
                 "workup_status": "not done",
-                "basis_evidence_tier": "referral_clinical"
+                "basis_evidence_tier": "referral_basis_unknown"
               }
             },
             {
@@ -2830,7 +2841,7 @@
           "node_type": "imaging_pathway",
           "step_number": 2,
           "step_label": "Imaging and alpha-fetoprotein, no tissue",
-          "question": "No tissue exists. Tick what the imaging report and the laboratory report actually state, then answer the checklist below.",
+          "question": "No tissue exists. Tick what the imaging and laboratory reports state — or, where only a referral note reports them, what the note says they showed — then answer the checklist below.",
           "hint": "Both boxes must be true for the hepatoblastoma route to count. The international consensus recommends a biopsy for every child with a liver tumour, whatever the age or alpha-fetoprotein (López-Terrada 2014, p. 484); registering a case without one rests on Visser 2023, Table 3, which allows hepatoblastoma at basis 2. A normal or low alpha-fetoprotein does not exclude hepatoblastoma — leave that box unticked and the case goes to tissue.",
           "clinical_alert": null,
           "coding_note": "imaging_sufficient true on 8970/3 only (contract §4.2); basis 2 per Visser Table 3, pp. 04-05 (registrar item §11.4a: whether alpha-fetoprotein raises it to 4 under rule 1). The constellation is the Design Specification §3.6 row: large hepatic mass, child <3, raised AFP. Age is asked as two diversion criteria, not built into the constellation, because imagingPathway() requires every imaging_features box ticked and a box the clerk cannot read off the report makes the route unreachable (Group 6 contract §0.8b). The lower bound is 6 months on Ferraro 2019, PDF p. 7; the pathway document says 4 (registrar item §11.5). Every diversion cites the paper and page in its clerk-facing reason. No satisfies_tests: 8970's entry requires Histology, and the consensus asks for a biopsy in every patient (López-Terrada 2014, p. 484), so histology stays outstanding on this terminal rather than being suppressed — the opposite choice to Group 6's 8960 imaging terminal, recorded in the build report.",
@@ -2943,7 +2954,7 @@
               }
             },
             {
-              "label": "An imaging report is in the file, there is no diagnostic tissue, and the report or the clinical team states that a malignant liver tumour is likely but names no type, or names a type other than those above",
+              "label": "Imaging is reported — in its own report or in a referral note — with no diagnostic tissue, and the report or the clinical team states that a malignant liver tumour is likely but names no type, or names a type other than those above",
               "morphology_code": "8000",
               "behavior_code": "3",
               "basis_of_diagnosis": 2,

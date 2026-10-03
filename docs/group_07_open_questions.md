@@ -124,6 +124,12 @@ when cancer is at least likely.
 records the malignancy at the weakest basis instead of dropping it, because a note alone cannot carry a
 specific code but can carry `8000/3`.
 **Decide:** keep basis 1 `8000/3`, or follow Group VI and emit nothing until imaging is in the file.
+**Ruled and built, 3 October 2026: go with Visser.** Rule 5 sets the morphology only once a basis is
+legitimate; rule 3 (p. 03) keeps basis 1 for cancers found by physical examination and lists no internal
+organ, so a liver tumour is never basis 1. Rule 1 records the method the diagnosis rests on. So: a note
+that reports the imaging or alpha-fetoprotein enters the imaging step and is coded as those reports would
+be (basis 2 or 4); a note that gives a malignancy as likely but names no method is `8000/3` at basis 9,
+unknown; a note where cancer is only possible is not registered (rule 4). Build report §16.
 
 ### 8. Benign and in situ liver lesions
 

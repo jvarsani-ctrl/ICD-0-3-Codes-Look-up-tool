@@ -166,7 +166,9 @@ Three consequences:
 
 1. **The imaging route is legitimate for `8970/3` at basis 2.** The Design Specification §3.6 adds
    the constellation: large hepatic mass, child under 3, raised alpha-fetoprotein.
-2. **No specific Group VII code is emitted at basis 1.** A referral note that states a malignant liver
+2. *(Superseded 3 October 2026, open question 7: no Group VII code is emitted at basis 1 at all —
+   Visser rule 3 keeps basis 1 for cancers found by physical examination. A note naming no method is
+   `8000/3` at basis 9; a note reporting imaging enters the imaging step.)* **No specific Group VII code is emitted at basis 1.** A referral note that states a malignant liver
    tumour is likely records `8000/3` at basis 1, which Visser rule 5 allows; it never records `8970` or any
    other specific code. *(Amended during the build: the first draft said no terminal emits basis 1, which
    would drop a likely cancer from the registry on a note alone. Registrar item 7 in
