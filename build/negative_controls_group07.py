@@ -231,6 +231,14 @@ def m_8963_no_when(d, a, r):
 
 
 def m_imaging_emits_8170(d, a, r):
+    nodes(d)["hp_imaging_insufficient"]["options"][2]["morphology_code"] = "8172"
+
+
+def m_basis4_without_afp(d, a, r):
+    nodes(d)["hp_imaging_insufficient"]["options"][1]["basis_of_diagnosis"] = 4
+
+
+def m_imaging_node_8170(d, a, r):
     nodes(d)["hp_imaging_pathway"]["morphology_code"] = "8170"
 
 
@@ -328,7 +336,9 @@ CONTROLS = [
     ("4L", 4, "the hepatoblastoma-with-rhabdoid-cells option no longer says the report diagnoses hepatoblastoma", m_hb_rhabdoid_label_undiagnosed, "RULE 4(f)"),
     ("5A", 5, "the histology route no longer captures C22", m_inventory_drops_c22, "never established"),
     ("5B", 5, "an 8963 rule loses its primary_site when", m_8963_no_when, "without `when` primary_site"),
-    ("6A", 6, "the imaging node codes 8170 at basis 2", m_imaging_emits_8170, "8170 at basis 2"),
+    ("6A", 6, "the no-tissue cholangiocarcinoma option codes 8172", m_imaging_emits_8170, "8172 at basis 2"),
+    ("6D", 6, "hepatocellular carcinoma at basis 4 with alpha-fetoprotein not raised", m_basis4_without_afp, "does not say alpha-fetoprotein is raised"),
+    ("7E", 7, "the hepatoblastoma imaging node codes 8170", m_imaging_node_8170, "imaging route is for 8970 only"),
     ("6B", 6, "a referral note codes 8970 at basis 1", m_alias_basis1_8970, "8970 at basis 1"),
     ("6C", 6, "no tissue, 8000 at basis 4", m_basis4, "8000 at basis 4"),
     ("7A", 7, "the alpha-fetoprotein question removed", m_no_afp, "no alpha-fetoprotein question"),

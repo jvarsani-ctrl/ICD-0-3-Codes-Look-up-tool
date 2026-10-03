@@ -88,6 +88,11 @@ C24.9. The tool records a likely cholangiocarcinoma without tissue as `8000/3`, 
 either route be built? The `hp_imaging_insufficient` reason now tells the clerk that both tables allow
 these codes and that the ruling is outstanding. *(Added 3 October 2026, from checking Table 3 against
 the rendered page.)*
+**Ruled and built, 3 October 2026: go with Visser.** (a) Hepatoblastoma on imaging stays at basis 2:
+Visser Table 4 has no hepatoblastoma row, so alpha-fetoprotein is not a basis-4 marker for it. (b) A
+likely hepatocellular carcinoma without tissue is `8170/3` at basis 4 when alpha-fetoprotein is raised
+(Table 4), at basis 2 otherwise (Table 3). (c) A likely intrahepatic cholangiocarcinoma without tissue is
+`8160/3` at basis 2 (Table 3). Build report §13.
 
 ### 5. The youngest age for the imaging route
 

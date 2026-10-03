@@ -2867,6 +2867,10 @@
             {
               "feature": "A mass is also described outside the liver — gonad, sacrococcygeal region, mediastinum, adrenal gland or kidney",
               "reason": "The liver lesions may be metastases. Alpha-fetoprotein is raised in over 90% of yolk sac tumours (Ferraro 2019, Table 4, PDF p. 10). Tissue is required, and the case may belong to another group."
+            },
+            {
+              "feature": "The radiologist or the clinical team gives hepatocellular carcinoma or cholangiocarcinoma as the likely diagnosis",
+              "reason": "The record names a diagnosis other than hepatoblastoma. Visser 2023, Table 3 (pp. 04–05), codes the diagnosis the clinical record states when it is at least likely (p. 03); the next step records it."
             }
           ],
           "no_tissue": true,
@@ -2896,21 +2900,54 @@
           "node_type": "morphology_only",
           "step_number": 3,
           "step_label": "Imaging did not confirm — what next",
-          "question": "The imaging route did not confirm hepatoblastoma: a feature requiring tissue applies, or a box was not true. What does the file show?",
-          "hint": "Do not code a specific tumour from the imaging report's wording. A biopsy is where this case goes; it is not certain to settle it.",
+          "question": "The imaging route did not confirm hepatoblastoma: a feature requiring tissue applies, a box was not true, or another diagnosis is named. What does the file show?",
+          "hint": "Code a specific tumour without tissue only where Visser 2023 allows it: hepatocellular carcinoma or intrahepatic cholangiocarcinoma that the imaging report or the clinical team gives as the likely diagnosis. Anything else that is likely malignant is Neoplasm, malignant. A biopsy is still where this case goes.",
           "clinical_alert": null,
-          "coding_note": "Reached only from hp_imaging_pathway's insufficient_next_node, which carries no captures of its own (Group 6 rn_imaging_insufficient coding_note), so the first option's label requires an imaging report rather than assuming one: a case that entered on the inadequate-specimen route may have none. Visser 2023, rule 5 (p. 03) for the 8000/3 option; rule 4 (p. 03) for the non-reportable option.",
+          "coding_note": "Reached only from hp_imaging_pathway's insufficient_next_node, which carries no captures of its own (Group 6 rn_imaging_insufficient coding_note), so the first option's label requires an imaging report rather than assuming one: a case that entered on the inadequate-specimen route may have none. Visser 2023, rule 5 (p. 03) for the 8000/3 option; rule 4 (p. 03) for the non-reportable option. Registrar ruling 3 October 2026 (open question 4, 'go with Visser'): the three options above the 8000/3 one follow Visser Table 4 (8170/3 at basis 4 on alpha-fetoprotein) and Table 3 (8170/3 and 8160/3 at basis 2). check_group7_no_tissue_codes holds basis 4 to an option naming a raised alpha-fetoprotein.",
           "captured_variables": [
             "basis_evidence_tier",
             "workup_status"
           ],
           "options": [
             {
-              "label": "An imaging report is in the file, there is no diagnostic tissue, and the report or the clinical team states that a malignant liver tumour is likely",
+              "label": "The imaging report or the clinical team gives hepatocellular carcinoma as the likely diagnosis, and serum alpha-fetoprotein is reported raised for age — no diagnostic tissue",
+              "morphology_code": "8170",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 4,
+              "reason": "Hepatocellular carcinoma diagnosed on a raised alpha-fetoprotein together with clinical investigation. Visser 2023, Table 4 (p. 06), allows Hepatocellular carcinoma, NOS (8170/3) on alpha-fetoprotein, at basis 4, specific tumour markers; the marker must be accompanied by a clinical investigation (p. 06). Recorded as Hepatocellular carcinoma, NOS (8170/3) at basis 4, pending a diagnostic specimen.",
+              "captures": {
+                "basis_evidence_tier": "imaging_insufficient_needs_tissue",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "The imaging report or the clinical team gives hepatocellular carcinoma as the likely diagnosis, and alpha-fetoprotein is not raised or not reported — no diagnostic tissue",
+              "morphology_code": "8170",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 2,
+              "reason": "Hepatocellular carcinoma diagnosed on clinical investigation alone. Visser 2023, Table 3 (pp. 04–05) allows Hepatocellular carcinoma, NOS (8170/3) at C22.0 at basis 2 when the diagnosis is at least likely (p. 03). Recorded as Hepatocellular carcinoma, NOS (8170/3) at basis 2, pending a diagnostic specimen.",
+              "captures": {
+                "basis_evidence_tier": "imaging_insufficient_needs_tissue",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "The imaging report or the clinical team gives intrahepatic cholangiocarcinoma as the likely diagnosis — no diagnostic tissue",
+              "morphology_code": "8160",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 2,
+              "reason": "Cholangiocarcinoma diagnosed on clinical investigation alone. Visser 2023, Table 3 (pp. 04–05) allows Cholangiocarcinoma (8160/3) at C22.1, C24.0 and C24.9 at basis 2 when the diagnosis is at least likely (p. 03). Recorded as Cholangiocarcinoma (8160/3) at basis 2, pending a diagnostic specimen.",
+              "captures": {
+                "basis_evidence_tier": "imaging_insufficient_needs_tissue",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "An imaging report is in the file, there is no diagnostic tissue, and the report or the clinical team states that a malignant liver tumour is likely but names no type, or names a type other than those above",
               "morphology_code": "8000",
               "behavior_code": "3",
               "basis_of_diagnosis": 2,
-              "reason": "Recorded as Neoplasm, malignant (8000/3), this group's unspecified malignant hepatic subgroup at the liver, pending a diagnostic specimen. Visser 2023, rule 5 (p. 03), records a case diagnosed without pathology as 8000/3. Visser's Table 3 (pp. 04–05) also allows hepatocellular carcinoma and cholangiocarcinoma at basis 2, and its Table 4 (p. 06) allows hepatocellular carcinoma on alpha-fetoprotein; this tool codes both only on tissue, and the registrar's ruling on a no-tissue route for them is outstanding.",
+              "reason": "Recorded as Neoplasm, malignant (8000/3), this group's unspecified malignant hepatic subgroup at the liver, pending a diagnostic specimen. Visser 2023, rule 5 (p. 03): a cancer registered at basis 1 or 2 is 8000/3 unless Table 3 or 4 names its diagnosis.",
               "captures": {
                 "basis_evidence_tier": "imaging_insufficient_needs_tissue",
                 "workup_status": "incomplete"

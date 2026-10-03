@@ -180,6 +180,11 @@ tumors.* Clinics in Liver Disease 2018;22(4):753–772, PDF p. 7, recommends bio
 and advises against fine-needle aspiration. Neither forbids registering a case that was never
 biopsied; Visser Table 3 governs that. The imaging node's hint says both.
 
+*Superseded 3 October 2026 — the registrar ruled "go with Visser" (open question 4); both routes are
+built at `hp_imaging_insufficient`, and the hepatoblastoma imaging route gains a seventh diversion for a
+record that names hepatocellular carcinoma or cholangiocarcinoma. The paragraph below is the original
+reasoning.*
+
 **Not built: an HCC no-tissue route, or a cholangiocarcinoma one.** Visser licenses `8170/3` at basis 2
 or 4 and `8160/3` at C22.1 at basis 2 without pathology. *(The cholangiocarcinoma row was added on
 3 October 2026, when the table was checked against the rendered page; the first transcription

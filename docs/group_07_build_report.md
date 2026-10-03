@@ -316,3 +316,27 @@ them (the alias layer's third constraint).
 Verification: 628 checks, 0 FAIL; controls all caught. Browser: "Hepatocellular malignant neoplasm"
 finds Group 7; the option records `8970/3`, workup complete, with the PHITT reason; a plain
 hepatoblastoma's "Also called" names none of the three.
+
+---
+
+## 13. Registrar ruling on coding without tissue, 3 October 2026
+
+Open question 4: go with Visser 2023.
+
+| Case, no diagnostic tissue | Recorded | Visser |
+|---|---|---|
+| Hepatoblastoma constellation (unchanged) | `8970/3`, basis 2 | Table 3; Table 4 has no hepatoblastoma row, so no basis 4 |
+| Hepatocellular carcinoma likely, alpha-fetoprotein raised | `8170/3`, basis 4 | Table 4, p. 06 |
+| Hepatocellular carcinoma likely, alpha-fetoprotein not raised or not reported | `8170/3`, basis 2 | Table 3, C22.0 |
+| Intrahepatic cholangiocarcinoma likely | `8160/3`, basis 2 | Table 3, C22.1 |
+| Malignant, no type named or another type | `8000/3`, basis 2 | rule 5 |
+
+The three new options sit at the top of `hp_imaging_insufficient`; its hint and question say when a
+specific code is allowed. `hp_imaging_pathway` gains a seventh diversion, so a record naming
+hepatocellular carcinoma or cholangiocarcinoma leaves the hepatoblastoma constellation. Rule 6 admits
+`8170` at basis 2 and 4 and `8160` at basis 2, and fails basis 4 on an option that does not say
+alpha-fetoprotein is raised. Controls 6A retargeted (`8172` at basis 2), 6D and 7E added.
+
+Verification: 628 checks, 0 FAIL; controls all caught. Browser: each new option records its code and
+basis (4 — Specific tumour markers; 2 — Clinical investigation without tissue), subgroup VIIb, Histology
+outstanding.

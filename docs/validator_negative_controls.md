@@ -3078,13 +3078,15 @@ All caught. 4G–4I were added after the independent review of 3 October 2026.
 | 4L | 4 | the hepatoblastoma-with-rhabdoid-cells option stops saying the report diagnoses hepatoblastoma |
 | 5A | 5 | the histology route stops capturing C22 |
 | 5B | 5 | an `8963` rule loses its `primary_site` `when` |
-| 6A | 6 | the imaging node codes `8170` at basis 2 |
+| 6A | 6 | the no-tissue cholangiocarcinoma option codes `8172` |
+| 6D | 6 | hepatocellular carcinoma at basis 4 with alpha-fetoprotein not raised |
 | 6B | 6 | a referral note codes `8970` at basis 1 |
 | 6C | 6 | no tissue, `8000` at basis 4 |
 | 7A | 7 | the alpha-fetoprotein question removed |
 | 7B | 7 | the alpha-fetoprotein question requires "no" |
 | 7C | 7 | the under-6-months diversion removed |
 | 7D | 7 | `8170` marked `imaging_sufficient` |
+| 7E | 7 | the hepatoblastoma imaging node codes `8170` |
 | 8A | 8 | a `DNAJB1::PRKACA` finding codes `8170` |
 | 8B | 8 | the fibrolamellar histology option codes `8170` |
 | 8C | 8 | "not tested" fibrolamellar codes `8170` |

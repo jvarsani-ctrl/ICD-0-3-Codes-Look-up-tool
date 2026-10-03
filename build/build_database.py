@@ -961,11 +961,14 @@ GROUP7_C22_ONLY_CODES = GROUP7_CODES - GROUP7_ANY_SITE_CODES
 GROUP7_C22_VALUES = {"C22", "C22.0", "C22.1"}
 
 # §0.6, §4.2 — the only codes a no-pathology terminal may name, and at which bases.
-# Visser Table 3 gives hepatoblastoma basis 2 at C22; rule 5 gives 8000/3 at basis 1
-# or 2. Basis 4 (Table 4, hepatocellular carcinoma on alpha-fetoprotein) is not built
-# (registrar item §11.4).
+# Visser Table 3: hepatoblastoma basis 2 at C22, hepatocellular carcinoma basis 2 at C22.0,
+# cholangiocarcinoma basis 2 at C22.1; Table 4: hepatocellular carcinoma basis 4 on
+# alpha-fetoprotein; rule 5: 8000/3 at basis 1 or 2. The 8170 and 8160 rows were added on
+# the registrar's ruling of 3 October 2026 (open question 4, "go with Visser").
 GROUP7_NO_PATHOLOGY_BASES = {0, 1, 2, 4}
-GROUP7_NO_PATHOLOGY_ALLOWED = {("8970", 2), ("8000", 1), ("8000", 2)}
+GROUP7_NO_PATHOLOGY_ALLOWED = {("8970", 2), ("8000", 1), ("8000", 2),
+                               ("8170", 2), ("8170", 4), ("8160", 2)}
+_G7_AFP_RAISED_RE = re.compile(r"alpha-fetoprotein (is )?(reported )?raised", re.I)
 GROUP7_IMAGING_SUFFICIENT_CODE = "8970"
 
 # §4.3 — the INI1 fork.
@@ -8662,12 +8665,16 @@ def check_group7_no_tissue_codes(ctx: DTContext):
         seen += 1
         if (code, basis) not in GROUP7_NO_PATHOLOGY_ALLOWED:
             out.append((FAIL, "RULE 6 — node %s (%s) emits %s at basis %r without "
-                              "pathology; only 8970/3 at basis 2 (Visser Table 3) and "
-                              "8000/3 at basis 1 or 2 (rule 5) are allowed (contract §0.6)"
-                        % (node_id, where, code, basis)))
+                              "pathology; Visser allows only 8970/3, 8170/3 and 8160/3 at basis 2 "
+                              "(Table 3), 8170/3 at basis 4 (Table 4) and 8000/3 at basis 1 or 2 "
+                              "(rule 5) (contract §0.6)" % (node_id, where, code, basis)))
+        elif basis == 4 and not _g7_asserted(_g7_option_text(holder), _G7_AFP_RAISED_RE):
+            out.append((FAIL, "RULE 6 — node %s (%s) emits %s at basis 4, but the option does not "
+                              "say alpha-fetoprotein is raised; Visser Table 4 grants basis 4 on the "
+                              "marker (p. 06)" % (node_id, where, code)))
     if not out:
-        out.append((OK, "RULE 6 — %d no-pathology emission(s), all 8970/3 at basis 2 or "
-                        "8000/3 at basis 1 or 2" % seen))
+        out.append((OK, "RULE 6 — %d no-pathology emission(s), all on Visser's Table 3, Table 4 "
+                        "or rule 5 rows; basis 4 only on a raised alpha-fetoprotein" % seen))
     return out
 
 
