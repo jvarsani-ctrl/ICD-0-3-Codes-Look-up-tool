@@ -111,6 +111,10 @@ babies that disagree with each other up to 6 months.
 "mucinous cystic neoplasm with an associated invasive carcinoma" to `8470/3`. Both are ICD-O-3.2
 terms on their codes.
 **Decide:** whether the registry codes this tumour to one code whatever the wording. (Contract §3.5.)
+**Ruled 3 October 2026: keep both.** ICD-O-3.2 prints both at behaviour 3 — `8161/3` Bile duct
+cystadenocarcinoma (preferred term) and `8470/3` Mucinous cystadenocarcinoma, NOS, with "Mucinous cystic
+neoplasm with an associated invasive carcinoma" as a synonym — so `hp_biliary` keeps both options and the
+report's wording decides. "Biliary cystadenocarcinoma" became a search alias of its own.
 
 ### 7. A referral note that states a malignant liver tumour
 

@@ -748,9 +748,7 @@
   {
     "alias": "Bile duct cystadenocarcinoma",
     "full_form": "Bile duct cystadenocarcinoma -> Bile duct cystadenocarcinoma (8161)",
-    "also_known_as": [
-      "Biliary cystadenocarcinoma"
-    ],
+    "also_known_as": [],
     "alias_type": "who_preferred",
     "origin_system": "ICD-O-3.2",
     "nci_concept_id": null,
@@ -765,6 +763,25 @@
     "clinical_alert": null,
     "notes": "Recorded as Bile duct cystadenocarcinoma (8161/3), the code ICD-O-3.2 gives this term. The current classification calls the tumour a mucinous cystic neoplasm with an associated invasive carcinoma, which ICD-O-3.2 codes 8470/3 (Salles-Silva E, et al. Seminars in Ultrasound, CT and MRI 2025;46(2):161-176, p. 165).",
     "coding_note": "ICD-O-3.2 preferred term under 8161/3. Registrar item §11.6."
+  },
+  {
+    "alias": "Biliary cystadenocarcinoma",
+    "full_form": "Biliary cystadenocarcinoma -> ICD-O-3.2 8161/3 Bile duct cystadenocarcinoma; ICCC-3 VIIb",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8161"
+    ],
+    "maps_to_iccc3_subgroup_id": "VIIb",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g7_hepatic",
+    "tree_entry_node": "hp_document_inventory",
+    "clinical_alert": null,
+    "notes": "Recorded as Bile duct cystadenocarcinoma (8161/3), the code ICD-O-3.2 gives this term. The current classification calls the tumour a mucinous cystic neoplasm with an associated invasive carcinoma, which ICD-O-3.2 codes 8470/3 (Salles-Silva E, et al. Seminars in Ultrasound, CT and MRI 2025;46(2):161-176, p. 165).",
+    "coding_note": "Promoted from also_known_as on 'Bile duct cystadenocarcinoma' to an alias of its own, 3 October 2026, because the express lane indexes the alias field alone. Registrar ruling (open question 6): both 8161/3 and 8470/3 stay in the pathway and the report's wording decides."
   },
   {
     "alias": "Mucinous cystic neoplasm of the liver with an associated invasive carcinoma",

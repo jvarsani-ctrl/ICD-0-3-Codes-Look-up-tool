@@ -347,3 +347,11 @@ outstanding.
 
 Open question 5: 6 months, as built. No change to the tree or the checks; rule 7 already fails an
 imaging node without the under-6-months diversion (control 7C).
+
+---
+
+## 15. Registrar ruling on biliary mucinous cystic carcinoma, 3 October 2026
+
+Open question 6: both codes exist in ICD-O-3.2 at behaviour 3, so both stay — `8161/3` and `8470/3` —
+and the report's wording decides, as built. One addition: "Biliary cystadenocarcinoma" was a second name
+inside the `8161` alias and so could not be searched; it is now an alias of its own.
