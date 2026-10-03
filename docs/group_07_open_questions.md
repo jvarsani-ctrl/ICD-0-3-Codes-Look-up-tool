@@ -152,6 +152,8 @@ López-Terrada 2025, Table 1 (p. 24), lists as benign — hepatocellular adenoma
 mesenchymal hamartoma (a split-out option). Dysplastic nodules (premalignant) and non-neoplastic lesions
 keep "Not a reportable malignancy". **Still open:** whether high-grade biliary intraepithelial neoplasia,
 `8148/2`, is registered on its REDCap pick or retired with the other in situ picks.
+*Kept open by the registrar, 3 October 2026.* The tool keeps `8148/2` as a behaviour exclusion, headed
+"In situ", until the ruling.
 
 ---
 
