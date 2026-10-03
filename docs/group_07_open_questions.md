@@ -185,18 +185,18 @@ pattern.** What the literature adds:
 
 - **The current definition needs SWI/SNF loss.** The CHIC re-review states that the diagnosis of a
   primary rhabdoid tumour of the liver "requires testing for loss of SMARCB1 expression according to
-  the current classification" (Trobaugh-Lotrario A, et al. *Cancers* 2023;15(2):467, Discussion;
+  the current classification" (Trobaugh-Lotrario AD, et al. *Cancers* 2023;15(2):467, Discussion;
   doi:10.3390/cancers15020467). It re-reviewed 73 of 1,605 hepatoblastoma trial patients: 11 were
   rhabdoid tumours, 10 of them with documented INI1 loss; 41 were hepatoblastomas with a small cell
   undifferentiated component, none with INI1 loss.
 - **INI1 kept means test SMARCA4, not assume rhabdoid tumour.** "If liver tumors show rhabdoid or
   small cell features and express INI1, these tumors should then be evaluated for BRG1 protein, to
-  exclude the rare MRT associated with SMARCA4 inactivation" (Zhou S, et al. *Cancers*
+  exclude the rare MRT associated with SMARCA4 inactivation" (Fazlollahi L, et al. *Cancers*
   2019;11(12):1992, §4.1.1; doi:10.3390/cancers11121992). About 5% of malignant rhabdoid tumours keep
   INI1 and lose SMARCA4 (López-Terrada 2025, p. 37).
 - **Rhabdoid-looking tumours that keep INI1 are mostly something else.** Of 20 tumours with
   histological or immunohistochemical features suggesting rhabdoid tumour, 7 kept INI1 uniformly and
-  none of the 7 carried an INI1 mutation (*Pathology* 2008;40(7); doi:10.1080/00313020802436451).
+  none of the 7 carried an INI1 mutation (Wu X, et al. *Pathology* 2008;40(7):664–670; doi:10.1080/00313020802436451).
   Vokuhl 2016 (p. 927) found one tumour in 23 that kept both INI1 and SMARCA4 with no mutation, and
   suggested other genetic changes; it is the exception, not the rule.
 
