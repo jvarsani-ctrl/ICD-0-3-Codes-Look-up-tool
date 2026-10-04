@@ -5,8 +5,8 @@ Tumors and Neoplasms of Gonads.
 Group 10 build contract (docs/group_10_build_contract.md) §2: morphology_entries[] is
 GENERATED from ICCC-2017.sqlite joined to icdo32.sqlite by build_inventory(), never
 transcribed from the REDCap option file or the Diagnostic Pathway document. The hand-written
-content is the annotation layer in DECISIONS below, plus the four lists that say which tree
-emits which (code, behaviour) pair.
+content is the annotation layer in DECISIONS below. Which tree emits which (code, behaviour)
+pair is read off the trees themselves (tree_pairs()), never listed by hand.
 
 The decision trees are authored in build/group10_tree.py and written beside the entries by
 this script, so one command reproduces the whole file:
@@ -34,6 +34,7 @@ deeper than the vault-relative defaults assume.
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import os
 import re
@@ -83,38 +84,71 @@ GENERATED_NOTE = (
 FIELD_ORDER = bd.MORPHOLOGY_FIELDS
 
 HISTOLOGY = ("Histology",)
+HIST_IHC = ["Histology", "IHC"]
 
 class GenerationError(Exception):
     """An input does not match the contract; main() reports it and exits 2."""
 
 
-def pairs(text: str) -> tuple:
-    return tuple(p.strip() for p in text.split(",") if p.strip())
+# --------------------------------------------------------------------------------------
+# Which (code, behaviour) pairs each tree emits, read off the trees: every branch or rule
+# that carries morphology_code and behavior_code, and every node's nos_fallback. The
+# generator fails when an emitted pair is absent from the inventory or has no DECISIONS
+# entry, and when a DECISIONS entry names a pair no tree emits.
+# --------------------------------------------------------------------------------------
+def _emissions(obj):
+    """Yield (code, behaviour, is_checklist_rule, rule) for every emission under a node."""
+    if isinstance(obj, dict):
+        if obj.get("node_type") == "ihc_checklist":
+            for rule in obj.get("resolution_logic") or []:
+                if rule.get("morphology_code"):
+                    yield rule["morphology_code"], rule["behavior_code"], True, rule
+            fb = obj.get("nos_fallback")
+            if isinstance(fb, dict) and fb.get("code"):
+                yield fb["code"], fb["behavior_code"], False, fb
+            for k, v in obj.items():
+                if k not in ("resolution_logic", "nos_fallback"):
+                    yield from _emissions(v)
+            return
+        if obj.get("morphology_code") and obj.get("behavior_code"):
+            yield obj["morphology_code"], obj["behavior_code"], False, obj
+        fb = obj.get("nos_fallback")
+        if isinstance(fb, dict) and fb.get("code"):
+            yield fb["code"], fb["behavior_code"], False, fb
+        for k, v in obj.items():
+            if k != "nos_fallback":
+                yield from _emissions(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _emissions(v)
 
 
-# --------------------------------------------------------------------------------------
-# Which (code, behaviour) pairs each tree emits. The trees in group10_tree.py emit exactly
-# these; the generator fails when a pair is absent from the inventory or has no DECISIONS
-# entry.
-# --------------------------------------------------------------------------------------
-TREE_PAIRS = {
-    "g10_cns": pairs(
-        "9064/3, 9080/0, 9080/3, 9080/1, 9084/0, 9084/3, 9070/3, 9072/3, 9071/3, 9100/3, "
-        "9101/3, 9081/3, 9082/3, 9083/3, 9085/3, 9065/3"),
-    "g10_ovary": pairs(
-        "9060/3, 9064/3, 9065/3, 9071/3, 9070/3, 9072/3, 9100/3, 9101/3, 9102/3, 9081/3, "
-        "9082/3, 9083/3, 9085/3, 9080/3, 9084/3, 9090/3, 8044/3, 8460/3, 8461/3, 8441/3, "
-        "8480/3, 8470/3, 8380/3, 8310/3, 8474/3, 8020/3, 8140/3, 8010/3, 8620/3, 8631/3, "
-        "8634/3, 8640/3, 8650/3, 8670/3, 8600/3, 8000/3, 8001/3, 8002/3, 8003/3, 8004/3, "
-        "8005/3"),
-    "g10_testis": pairs(
-        "9061/3, 9062/3, 9063/3, 9064/3, 9065/3, 9070/3, 9072/3, 9071/3, 9100/3, 9101/3, "
-        "9102/3, 9105/3, 9080/3, 9084/3, 9081/3, 9082/3, 9083/3, 9085/3, 8631/3, 8640/3, "
-        "8650/3, 8010/3, 8000/3, 8001/3, 8002/3, 8003/3, 8004/3, 8005/3"),
-    "g10_extragonadal": pairs(
-        "9064/3, 9061/3, 9065/3, 9071/3, 9070/3, 9072/3, 9100/3, 9101/3, 9105/3, 9080/3, "
-        "9084/3, 9081/3, 9082/3, 9083/3, 9085/3, 9086/3"),
-}
+def tree_pairs(trees: list) -> dict:
+    """{tree_id: (pair, ...)} in first-emission order."""
+    out = {}
+    for t in trees:
+        seen = []
+        for code, beh, _rule, _holder in _emissions(t.get("nodes") or []):
+            p = key(code, beh)
+            if p not in seen:
+                seen.append(p)
+        out[t["tree_id"]] = tuple(seen)
+    return out
+
+
+def checklist_markers(trees: list) -> dict:
+    """{pair: [marker, ...]}: the positive markers of every checklist rule emitting the pair,
+    in rule order. These are the pairs whose entries require IHC (Group 8 precedent)."""
+    out: dict = {}
+    for t in trees:
+        for code, beh, is_rule, rule in _emissions(t.get("nodes") or []):
+            if not is_rule:
+                continue
+            markers = out.setdefault(key(code, beh), [])
+            for m in rule.get("positive") or []:
+                if m not in markers:
+                    markers.append(m)
+    return out
 
 OFF_TREE_NOTE = "In the inventory, not on the tree: reachable by search where aliased."
 MOLE_NOTE = (
@@ -132,20 +166,34 @@ def d14(report_says: str, extra: str = "") -> tuple:
 
 
 # --------------------------------------------------------------------------------------
-# The annotation layer: (design decisions, sentence) per emitted pair. The entry's
-# coding_note is GENERATED_NOTE, the name and behaviour, the sentence, and the trees that
-# emit the pair. Sentences state what the design document decides, no more.
+# The annotation layer: (design decisions, sentence[, overrides]) per emitted pair. The
+# entry's coding_note is GENERATED_NOTE, the name and behaviour, the sentence, and the trees
+# that emit the pair. Sentences state what the design document decides, no more.
+#
+# The optional third element overrides entry fields, limited to OVERRIDABLE. Every pair a
+# germ cell checklist rule emits requires Histology and IHC and lists the markers of the
+# rules that emit it (Group 8's 9364 precedent); check_ihc_overrides() fails the run when an
+# override and the trees disagree, so the lists below cannot drift from the rules.
 # --------------------------------------------------------------------------------------
+OVERRIDABLE = ("diagnostic_tests_required", "ihc_markers_required", "who_version")
+GERMINOMA_FAMILY_MARKERS = ["OCT3/4", "CD117", "SOX17", "D2-40"]
+IHC_FAMILY = {"diagnostic_tests_required": HIST_IHC,
+              "ihc_markers_required": GERMINOMA_FAMILY_MARKERS}
+IHC_SENTENCE = ("The germ cell stain panel emits it on OCT3/4 with CD117, SOX17 or D2-40 "
+                "and CD30 not positive (Siegmund 2022, pp. 36-37).")
+
 DECISIONS: dict[str, tuple] = {
     # --- germinoma family --------------------------------------------------------------
     "9060/3": ("D1, D3",
                "A tumour reported as dysgerminoma is coded here. Where an immunohistochemistry "
                "panel identifies the germinoma family without a name, the ovary tree falls to "
-               "this code (D3). A tumour reported as germinoma, at any site, is 9064/3 (D1)."),
+               "this code (D3). %s A tumour reported as germinoma, at any site, is 9064/3 "
+               "(D1)." % IHC_SENTENCE, IHC_FAMILY),
     "9061/3": ("D3",
                "Coded as the report writes it. Where an immunohistochemistry panel identifies "
                "the germinoma family without a name, the testis tree falls to this code; the "
-               "extragonadal tree offers it as the report writes it."),
+               "extragonadal tree offers it as the report writes it. %s" % IHC_SENTENCE,
+               IHC_FAMILY),
     "9062/3": ("D3", "A report of anaplastic seminoma is coded here as written."),
     "9063/3": ("D3", "A report of a spermatocytic tumour is coded here as written."),
     "9064/3": ("D1, D2, D3, D4",
@@ -155,7 +203,8 @@ DECISIONS: dict[str, tuple] = {
                "basis of diagnosis 4, for a tumour shown on imaging with human chorionic "
                "gonadotropin raised and alpha-fetoprotein not raised (D4). Where an "
                "immunohistochemistry panel identifies the family without a name, the central "
-               "nervous system and extragonadal trees use this code (D3)."),
+               "nervous system and extragonadal trees use this code (D3). %s" % IHC_SENTENCE,
+               IHC_FAMILY),
     "9065/3": ("D2, D4",
                "Registered without tissue, at basis of diagnosis 4, when imaging shows a "
                "tumour and the report calls alpha-fetoprotein raised for the patient's age "
@@ -165,10 +214,20 @@ DECISIONS: dict[str, tuple] = {
     # --- embryonal carcinoma, yolk sac, polyembryoma -----------------------------------
     "9070/3": ("D6",
                "Embryonal carcinoma alone. A report naming embryonal carcinoma and teratoma "
-               "and nothing else is 9081/3 (D6)."),
+               "and nothing else is 9081/3 (D6). The germ cell stain panel emits it on OCT3/4 "
+               "with CD30 (CD117 and SOX17 not positive) or with SOX2 (SOX17 not positive) "
+               "(Siegmund 2022, p. 37).",
+               {"diagnostic_tests_required": HIST_IHC,
+                "ihc_markers_required": ["OCT3/4", "CD30", "SOX2"]}),
     "9071/3": ("D4",
                "Coded when the report names a yolk sac tumour. A raised alpha-fetoprotein "
-               "alone does not name one: the evidence route codes it 9065/3 (D4)."),
+               "alone does not name one: the evidence route codes it 9065/3 (D4). The germ "
+               "cell stain panel emits it on glypican-3, a tissue alpha-fetoprotein stain or "
+               "HNF1-beta with OCT3/4 not positive (Siegmund 2022, p. 38; Rougemont 2018, "
+               "p. 26).",
+               {"diagnostic_tests_required": HIST_IHC,
+                "ihc_markers_required": ["Glypican-3", "Alpha-fetoprotein (tissue stain)",
+                                         "HNF1-beta"]}),
     "9072/3": ("D7",
                "%s, Table 3, pp. 464-465, prints polyembryoma at 9085/3; ICD-O-3.2 prints "
                "9072/3 and governs (D7)." % MOCH),
@@ -268,8 +327,10 @@ DECISIONS: dict[str, tuple] = {
     "8000/3": ("D4, D13",
                "The gonadal fallback: ICCC-2017 range 117 places 8000-8005 at C56.9 and C62 "
                "in Xe (D13). Imaging that shows a tumour, with no marker the report calls "
-               "raised, is registered here at basis of diagnosis 2 (%s, rule 5, p. 03; D4)."
-               % VISSER),
+               "raised, is registered here at basis of diagnosis 2, and a note that states a "
+               "malignant tumour at basis of diagnosis 1 (%s, rule 5, p. 03; D4). The central "
+               "nervous system and extragonadal trees refer the same findings to Groups III "
+               "and XII." % VISSER),
 }
 for _beh in ("8001", "8002", "8003", "8004", "8005"):
     DECISIONS["%s/3" % _beh] = (
@@ -401,15 +462,45 @@ def load_obs(icdo_path: Path) -> dict:
             if any(obs for _, obs in terms.values())}
 
 
-def emitted_by(code: str, behaviour: str) -> list:
-    return [t for t, plist in TREE_PAIRS.items() if key(code, behaviour) in plist]
+def emitted_by(code: str, behaviour: str, pairs_by_tree: dict) -> list:
+    return [t for t, plist in pairs_by_tree.items() if key(code, behaviour) in plist]
+
+
+def check_ihc_overrides(markers_by_pair: dict) -> None:
+    """Every pair a checklist rule emits requires Histology and IHC and lists exactly the
+    markers of the rules that emit it; no other pair claims ihc_markers_required."""
+    problems = []
+    for k, d in DECISIONS.items():
+        over = d[2] if len(d) > 2 else {}
+        bad = set(over) - set(OVERRIDABLE)
+        if bad:
+            problems.append("%s overrides %s, which is not overridable"
+                            % (k, ", ".join(sorted(bad))))
+        if k in markers_by_pair:
+            if over.get("diagnostic_tests_required") != HIST_IHC:
+                problems.append("%s is emitted by a stain panel rule but does not require "
+                                "Histology and IHC" % k)
+            if over.get("ihc_markers_required") != markers_by_pair[k]:
+                problems.append("%s ihc_markers_required is %r; the rules that emit it "
+                                "read %r" % (k, over.get("ihc_markers_required"),
+                                             markers_by_pair[k]))
+        elif "ihc_markers_required" in over:
+            problems.append("%s lists ihc_markers_required but no stain panel rule emits it"
+                            % k)
+    missing = sorted(set(markers_by_pair) - set(DECISIONS))
+    if missing:
+        problems.append("stain panel rule(s) emit %s, which DECISIONS does not annotate"
+                        % ", ".join(missing))
+    if problems:
+        raise GenerationError("; ".join(problems))
 
 
 def join_and(items: list) -> str:
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
 
-def build_entry(recs: list, redcap: dict, obs: dict, codes: list) -> dict:
+def build_entry(recs: list, redcap: dict, obs: dict, codes: list,
+                pairs_by_tree: dict) -> dict:
     first = recs[0]
     code, beh = first["morphology_code"], first["behavior_code"]
     name = first["preferred_term"]
@@ -447,9 +538,11 @@ def build_entry(recs: list, redcap: dict, obs: dict, codes: list) -> dict:
         e["topography_dependent"] = True
 
     k = key(code, beh)
-    trees = emitted_by(code, beh)
+    trees = emitted_by(code, beh, pairs_by_tree)
     if k in DECISIONS:
-        refs, sentence = DECISIONS[k]
+        refs, sentence = DECISIONS[k][:2]
+        if len(DECISIONS[k]) > 2:
+            e.update(copy.deepcopy(DECISIONS[k][2]))
         e["coding_note"] = note(
             GENERATED_NOTE,
             "ICD-O-3.2 preferred term at /%s is %r." % (beh, name),
@@ -501,7 +594,8 @@ def build_entry(recs: list, redcap: dict, obs: dict, codes: list) -> dict:
     return e
 
 
-def build_entries(payload: dict, redcap: dict, obs: dict, codes: list) -> list:
+def build_entries(payload: dict, redcap: dict, obs: dict, codes: list,
+                  trees: list) -> list:
     records = payload["records"]
     if len(records) != EXPECTED_RECORDS:
         raise GenerationError("the inventory holds %d (code, behaviour) records, the "
@@ -515,7 +609,8 @@ def build_entries(payload: dict, redcap: dict, obs: dict, codes: list) -> list:
 
     inventory = {key(c, b) for c, b in grouped}
     annotated = set(DECISIONS) | set(OFF_TREE_SPECIAL)
-    emitted = {p for plist in TREE_PAIRS.values() for p in plist}
+    pairs_by_tree = tree_pairs(trees)
+    emitted = {p for plist in pairs_by_tree.values() for p in plist}
     problems = []
     if emitted - inventory:
         problems.append("a tree names pair(s) outside the inventory: %s"
@@ -531,8 +626,10 @@ def build_entries(payload: dict, redcap: dict, obs: dict, codes: list) -> list:
                         % ", ".join(sorted(set(DECISIONS) - emitted)))
     if problems:
         raise GenerationError("; ".join(problems))
+    check_ihc_overrides(checklist_markers(trees))
 
-    return [build_entry(grouped[k], redcap, obs, codes) for k in sorted(grouped)]
+    return [build_entry(grouped[k], redcap, obs, codes, pairs_by_tree)
+            for k in sorted(grouped)]
 
 
 def build_metadata(entries: list, summary: dict, trees: list) -> dict:
@@ -590,11 +687,15 @@ def run(argv=None) -> int:
     ap.add_argument("--out", default=str(OUT_PATH))
     args = ap.parse_args(argv)
 
+    try:
+        trees = group10_tree.trees()
+    except group10_tree.TreeError as exc:
+        raise GenerationError(str(exc)) from None
     payload = gi.build_inventory(ICCC_PATH, ICDO_PATH, ICCC_GROUP)
-    entries = build_entries(payload, load_redcap_options(), load_obs(ICDO_PATH), lookup_codes())
+    entries = build_entries(payload, load_redcap_options(), load_obs(ICDO_PATH), lookup_codes(),
+                            trees)
 
     out_path = Path(args.out)
-    trees = group10_tree.trees()
     existing = None
     if out_path.exists():
         try:
