@@ -1473,6 +1473,10 @@ defects follow:
    the third ventricle.
 4. No route reaches `g10_cns`. It is built and swept by the engine gate.
 
+The same holds outside the central nervous system: Groups VII, VIII and IX refer germ cell tumours
+to Group X from the liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x), and none of those
+topographies lists Group 10 (`docs/group_10_registrar_review.md` B2).
+
 **To close.** The registrar chooses. (a) Add Group 10 to the candidate groups of the central
 nervous system codes where germ cell tumours arise (`C75.1`–`C75.3` at least). On its own this
 sends a "Mass / swelling" presentation at those sites straight to Group X, because that

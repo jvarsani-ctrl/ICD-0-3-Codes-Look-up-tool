@@ -280,7 +280,7 @@ places it in Xb6 only. Built in the extragonadal tree.
 
 ## D18. Group III is not changed — design, with open defects
 
-Twelve branches in Groups III, VII and VIII refer to Group X; nine are Group III's. An
+Thirteen branches in Groups III, VII, VIII and IX refer to Group X; nine are Group III's. An
 `app.js` referral is a terminal screen: the clerk starts a new case. Group III's own defects,
 found on 4 October 2026 and left for the registrar because Group III must stay byte-identical
 to `main`:

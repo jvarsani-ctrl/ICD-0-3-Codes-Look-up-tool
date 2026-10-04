@@ -174,7 +174,9 @@ codes to take Group IX's lookup additions.
 `docs/group_10_registrar_review.md`, ordered by cost. The first three:
 
 - **B1. No route reaches `g10_cns`.** It is built and verified; every central nervous system
-  topography lists Group III only, and the search box now stops there.
+  topography lists Group III only (and Group XI at C75.1), and the search box now stops there. The
+  same holds for the germ cell referrals Groups VII, VIII and IX make from the liver, bone and soft
+  tissue (B2).
 - **A1. Juvenile granulosa cell tumour is not registered** — the commonest paediatric sex
   cord–stromal tumour, excluded by ICD-O-3.2's behaviour.
 - **A2–A3. Germ cell tumour of unnamed type and the marker route code to `9064/3`, which prints as

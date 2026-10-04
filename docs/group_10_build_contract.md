@@ -59,7 +59,7 @@ ICCC range entries 327 · distinct codes 290 · absent from ICD-O-3.2 159 · usa
 ```
 
 171 records collapse to **136 distinct (code, behaviour) pairs**: 18 pairs repeat across
-subgroups. By subgroup: Xa 22 (incl. five below `/3`), Xb 19, Xc 22, Xd 96, Xe 14 records.
+subgroups. By subgroup: Xa 22 (incl. five below `/3`), Xb 19, Xc 20, Xd 96, Xe 14 records.
 
 ### 0.3 What ICD-O-3.2 changed in this group
 
@@ -107,7 +107,7 @@ choriocarcinoma of the placenta + human chorionic gonadotropin → `9100/3`; bas
 | File | Kind | Task |
 |---|---|---|
 | `build/generate_group10_entries.py` | new — entries, metadata, writes the dt.json | T1 |
-| `build/group10_tree.py` | new — the five trees | T2 |
+| `build/group10_tree.py` | new — the trees (five; four after the merge of `main`) | T2 |
 | `data/database/group_10_dt.json` | generated | T1, T2 |
 | `data/shared/presentation_router.json` | edit | T3 |
 | `data/shared/topography_codes.json` | edit | T3 |
@@ -264,8 +264,8 @@ site-unstated trees; record the choice in the tree's `coding_note`-equivalent co
 > `p_clinical_alias` (nothing on file) and `p_clinical_alias_cytology` (`["Cytology"]`);
 > `p_imaging` (`["Imaging"]`), `p_imaging_markers` (`["Imaging","Tumour markers"]`) and
 > `p_imaging_cytology` (`["Cytology","Imaging"]`). Non-diagnostic cytology splits on whether an
-> imaging report is on file. Each site tree has 11 common nodes, not 8; the five trees hold 63
-> nodes. A walk of 3,240 terminals finds `evidence_tests` equal to the reports the clerk said are
+> imaging report is on file. Each site tree has 11 common nodes, not 8; the five trees held 63
+> nodes (four trees and 57 nodes after `g10_site_unstated` was removed). A walk of 3,240 terminals finds `evidence_tests` equal to the reports the clerk said are
 > on file on every path. The yolk sac immunohistochemistry rules became two-marker rules (§4.2
 > table below, rules 6–8) because glypican-3 also stains choriocarcinoma and teratoma (Siegmund
 > 2023 Table 1, p. 34; p. 38).
@@ -592,7 +592,7 @@ The doc conflicts are append-only on both sides: keep both on merge. Rebuild
 ## 10. Tasks
 
 - [x] T1 `build/generate_group10_entries.py` → `group_10_dt.json` entries and metadata (stub tree)
-- [x] T2 `build/group10_tree.py`, the five trees; regenerate; `induce_flow.py`
+- [x] T2 `build/group10_tree.py`, the five trees (four after the merge of `main`); regenerate; `induce_flow.py`
 - [x] T3 router and topography (§3)
 - [x] T4 `build_database.py` registration, the four §5 rules, `negative_controls_group10.py`
 - [x] T5 `aliases_group_10.json`

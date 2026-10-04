@@ -89,6 +89,12 @@ The ICD-O matrix principle would allow a `/3` that ICD-O-3.2 does not print, for
 `8590/3`. Standing rule 1 forbids building an unprinted code. **Built:** the term as ICD-O-3.2
 prints it. This is the same question as Group VIII review A1; one answer serves both groups.
 
+### A11. Gonadal carcinomas on the tree (D14)
+
+The ovary tree offers twelve carcinoma terms, including small cell carcinoma of the ovary,
+hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystadenomas. The other
+84 Xd codes are in the inventory and reachable by search only.
+
 ### A12. Three teratoma searches find nothing (D21)
 
 "Also called" lists aliases by four-digit code, so an alias true of one behaviour shows on every
@@ -96,12 +102,6 @@ behaviour's output. Group X emits `9080` at `/0`, `/1` and `/3` and `9084` at `/
 neither carries an ICD-O-3.2 term as an alias, only the neutral "Teratoma". Searching "Mature
 teratoma", "Immature teratoma" or "Dermoid" finds nothing; "Teratoma" finds them. An engine change
 keying aliases by behaviour (`docs/TODO.md` §30) would lift this.
-
-### A11. Gonadal carcinomas on the tree (D14)
-
-The ovary tree offers twelve carcinoma terms, including small cell carcinoma of the ovary,
-hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystadenomas. The other
-84 Xd codes are in the inventory and reachable by search only.
 
 ---
 
@@ -148,6 +148,14 @@ C76.3 with candidate groups 9 and 10. Two questions: does the registry record a 
 tumour at C76.3 *Pelvis, NOS* (the pathway's choice; no Layer 1 file records the ICD-O-3 index
 entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to declare C76.3?
 
+**Referrals from other sites also lead nowhere.** Groups VII, VIII and IX refer germ cell tumours
+to Group X: Group VII "at any site including the liver", Group VIII from a bone deposit, Group IX
+from soft tissue. The liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x) do not list
+Group 10, so the front door never offers Group X there, and the search box stops with the same
+untrue message as at C71.0 (B1). Group VII's own alias "Yolk sac tumour of the liver" leads straight
+into it. The same three options as B1 apply; option (a) here means listing Group 10 at the sites
+where extragonadal germ cell tumours arise — the build added only C38.1, C38.3, C48.0 and C76.3.
+
 ### B3. The subgroup line (D20)
 
 Each code shared across sites carries its gonadal subgroup (Xc) as its own and rules for the
@@ -172,11 +180,12 @@ The literature file's references 3, 8, 16 and 19 (Al-Obaidy 2021, Wong 2023, Ron
 2024) are not on disk; no code decision depended on them. `Journal of Microscopy - 2024 -
 Kallogjerovic …pdf` in `Group 10 Papers/` is unrelated to Group X (Pathway §8 item 6).
 
-### C3. A correction for `docs/group_baseline_documents.md`
+### C3. A correction made in `docs/group_baseline_documents.md`
 
-It says "kidney" appears zero times in Pfister 2022's full text. The PDF on disk
-(`Group 4 Papers/331.pdf`) has four hits, including a Kidney section in Table 3 (p. 342). The
-conclusion about Group VI may still stand; the count does not.
+It said "kidney" appears zero times in Pfister 2022's full text. The PDF on disk
+(`Group 4 Papers/331.pdf`) has four hits, all in Table 3 (pp. 342–343); the zero came from the
+PubMed Central text, where Table 3 is an image. The correction is applied on this branch, and the
+Group VI conclusion stands. Nothing to decide.
 
 ---
 
