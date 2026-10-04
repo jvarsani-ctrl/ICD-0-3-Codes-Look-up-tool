@@ -239,7 +239,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **III** | `topo_code` | — | — | `710, Cerebrum` | Open — §1.1 above | same |
 | **IV** | `iv_morph` | **3** — picks 10, 12, 20 | **8** — picks 1, 4, 6, 9, 14, 16, 17, 19 | **0** | Ready to review, not applied | `ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` |
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
-| **VII** | `vii_morph` | **9** — picks 1, 3, 39, 46, 47, 60, 83, 102, 103 | **27**, and pick 2 (`8975`) awaiting a ruling | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
+| **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid
@@ -1331,9 +1331,51 @@ the engine is itself guarded only by a procedure in a document.
 No action proposed. Recorded because the shape is familiar: both defects it now catches survived
 precisely because the thing that would have caught them was not part of anything automatic.
 
+
 ---
 
-*Last updated 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
+## 22. ❓ FOR THE REGISTRAR — Group VII items still open
+
+**Raised 4 October 2026, after Group VII merged (pull request #2).** The full reasoning for each is in
+`docs/group_07_open_questions.md` under the number given; the build contract section is named there.
+Items 2–7 were ruled on 3 October 2026 and are built.
+
+**Coding rulings owed**
+
+| Open question | Today | Decide |
+|---|---|---|
+| **1** Baseline document | Built on the International Pediatric Liver Tumors Consensus Classification — López-Terrada 2014 (*Modern Pathology*) and 2025 (*Virchows Archiv*, Table 1, p. 24) — because Nagtegaal 2019 does not cover hepatoblastoma | Confirm López-Terrada 2025 as the Group VII baseline in `docs/group_baseline_documents.md` |
+| **8** `8148/2` high-grade biliary intraepithelial neoplasia | Behaviour exclusion headed "In situ"; REDCap has a pick for it | Register it on that pick, or treat it as not cancer and retire the pick with the other in situ picks. Kept open 3 October 2026 |
+| **18** A report that *diagnoses* malignant rhabdoid tumour | `8963/3` on the diagnosis alone, IHC outstanding when not recorded | Confirm, or route it through INI1 and SMARCA4 like the rest |
+| **19** Fibrolamellar carcinoma's basis of diagnosis | `DNAJB1::PRKACA` fusion basis 8; PRKAR1A loss basis 7 | Keep 8 for the fusion or drop it to 7 (it also occurs in oncocytic pancreatic and biliary neoplasms, López-Terrada 2025, p. 29); confirm 7 for PRKAR1A |
+| **20** Consensus table versus text on small cell undifferentiated hepatoblastoma | The tool follows the text (p. 25): INI1-lost tumours are malignant rhabdoid tumours | Confirm |
+| **22** Behaviour of `8975` is not recorded | The tool gives `8975/1` or `8975/3`, but the headline shows `8975` and REDCap has no behaviour field, so one pick serves both | Whether REDCap records behaviour (a field, or two picks — a REDCap Registry change), and whether the headline shows the digit when a code carries two behaviours (an engine change for every group) |
+
+**REDCap.** Open questions 9 and 21 are the Group VII repair package, indexed in §7 above. Nothing
+applied. Pick 113, fibrolamellar carcinoma `8171/3`, matters most.
+
+**Shared layers and engine**
+
+| Open question | Item |
+|---|---|
+| **10** | Router rule `8158,8290` sends both codes to Group XI everywhere except C75.1; ICCC-2017 puts `8158` in VIIb at the liver and `8290` in VIb at the kidney. Splitting it is a Group III-owned rule |
+| **11** | A search alias that exists in two groups enters the first (`hit.groups[0]`); and the REDCap-framed output's "REDCap value" row shows the ICD-O code, not the pick number, for the pick-number groups (III, IV, VII, VIII) |
+| **12** | `alias_index.json` is over its ~30 KB guideline (Architecture §4C), and Groups VIII and IX will add more |
+| **13** | Confirm the engine changes made on this branch for every group: the behaviour-exclusion heading names the behaviour digit (behaviour 0 reads "Benign neoplasm (benign tumour)", which changes Groups IV–VI); `outstanding_tests[]`; `non_reportable_heading`. The Decision Tree master file §3F, in the vault, needs a line for the two fields |
+
+**Documents and scope**
+
+| Open question | Item |
+|---|---|
+| **14** | The Group 7 Diagnostic Pathway and Alias Build Instructions predate the 4 September rulings; revise to v2, or leave the build contract as the record |
+| **15** | Hepatoblastoma subtype, PRETEXT stage and specimen timing are not captured — whether the registry wants any of them recorded |
+| **16** | Hepatocellular carcinoma subtypes without their own ICD-O-3.2 code are coded `8170/3`; the WHO digestive volume would confirm (`docs/sources-requested.md` item 12) |
+| **17** | C23.9 and C24.x have no row in `topography_codes.json`, so a gallbladder or extrahepatic bile duct primary cannot reach Group VII — whether to add them |
+
+---
+
+*Last updated 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch

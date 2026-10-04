@@ -123,8 +123,8 @@ derives `redcap_option_verified` and `awaiting_layer1` from Layer 1 instead of w
 ## 5. Layer 1 — forty-two findings
 
 `vii_morph` stores a pick number, 1–112, translated by `vii_code`; new options can only be appended.
-`docs/group_07_layer1_repair.md` lists every pick: **9 relabel, 27 retire, 8 append (picks 113–120),
-1 held for your ruling (`8975`)**. The ten relabels include `8970` "Hepatoblastoma", which is not an
+`docs/group_07_layer1_repair.md` lists every pick: **10 relabel, 27 retire, 8 append (picks 113–120)**
+— pick 2, `8975`, joined the relabels on the ruling of 3 October 2026 (§11). The relabels include `8970` "Hepatoblastoma", which is not an
 ICD-O-3.2 term, and two obsolete synonyms used as labels (`8162` "Klatskin tumor", `8482`). Seven labels
 carry pasted transcription notes. Nothing has been applied.
 
