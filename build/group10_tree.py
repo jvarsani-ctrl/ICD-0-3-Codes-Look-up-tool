@@ -12,7 +12,7 @@ histology node is the site's own germinoma-family and teratoma options, then the
 germ_cell_core(), then the site's other tumour lines. The router's tree_routing picks the tree
 from the captured topography. Every entry into Group X carries one: the front door records it
 at Stage 1, and the express lane asks the site before it enters a group whose data reads the
-site (registrar, 4 October 2026). There is no site-unstated tree.
+site (registrar, 4 October 2026).
 
 Clerk-facing text lives in `question`, `hint`, `label`, `reason` and `upgrade_path`.
 `coding_note` is author-facing and never rendered. No clerk-facing string names a node id or a

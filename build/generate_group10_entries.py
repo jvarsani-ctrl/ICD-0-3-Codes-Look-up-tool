@@ -378,6 +378,20 @@ def lookup_codes() -> list:
     return sorted(codes, key=topo3)
 
 
+def entering_codes() -> set:
+    """The lookup codes at which app.js can enter Group X: candidate_groups lists 10, or is not
+    a list (C80.9, route_by_morphology), which narrowBySite() and afterSearchSite() leave
+    unfiltered. A LOOKUP_ADDITIONS code absent from the lookup counts as one, so no note
+    claims Group X cannot be entered at a code whose candidate groups are unknown."""
+    lookup = json.loads(LOOKUP_PATH.read_text(encoding="utf-8"))["topography_lookup"]
+    out = {c for c in LOOKUP_ADDITIONS if c not in lookup}
+    for code, row in lookup.items():
+        groups = row.get("candidate_groups") if isinstance(row, dict) else None
+        if not isinstance(groups, list) or GROUP in groups:
+            out.add(code)
+    return out
+
+
 def subgroups_of(recs: list) -> dict:
     """{subgroup_id: {"name": ..., "topography": [display, ...]}} in subgroup-id order."""
     out: dict = {}
@@ -410,8 +424,17 @@ def default_subgroup(subs: dict) -> str:
     raise GenerationError("no default subgroup among %s" % ", ".join(subs))
 
 
-def routing(subs: dict, default: str, codes: list) -> tuple:
-    """(rules, note) for a pair that ICCC-2017 places in more than one subgroup."""
+# Where each site family lies, for the topography_routing_note. ICCC-2017 defines Xa by the
+# central nervous system sites, Xc by the gonads, and Xb as every other site it lists.
+FAMILY_WHERE = {"Xa": "in the central nervous system",
+                "Xb": "outside the central nervous system and the gonads",
+                "Xc": "in the ovary and testis"}
+
+
+def routing(subs: dict, default: str, codes: list, entering: set, germ_cell_sites: list) -> tuple:
+    """(rules, note) for a pair that ICCC-2017 places in more than one subgroup. The note is two
+    sentences: where the default and each rule apply, then what the output shows at a lookup
+    code outside this pair's site ranges and whether Group X can be entered there."""
     rules = []
     for sid, sub in subs.items():
         if sid == default:
@@ -421,26 +444,36 @@ def routing(subs: dict, default: str, codes: list) -> tuple:
             raise GenerationError("subgroup %s covers no code in the topography lookup" % sid)
         rules.append({"topography_in": listed, "iccc3_subgroup_id": sid,
                       "iccc3_subgroup_name": sub["name"]})
-    where = "; ".join("%s at %s" % (sid, ", ".join(t.replace("–", "-")
-                                                  for t in sub["topography"]))
-                      for sid, sub in subs.items())
-    others = " and ".join(r["iccc3_subgroup_id"] for r in rules)
-    text = ("ICCC-2017 places this (code, behaviour) in %d subgroups by site: %s. The entry's "
-            "own subgroup, %s, is the default (design D20): it shows when no topography was "
-            "captured and at its own sites. The ordered rules override it to %s when the "
-            "captured topography is one of the listed codes."
-            % (len(subs), where, default, others))
+
+    def ranges(sid):
+        return ", ".join(t.replace("–", "-") for t in subs[sid]["topography"])
+
+    named = " and the ".join("%s sites %s (%s)" % (r["iccc3_subgroup_id"],
+                                                   FAMILY_WHERE[r["iccc3_subgroup_id"][:2]],
+                                                   ranges(r["iccc3_subgroup_id"]))
+                             for r in rules)
+    text = ("The entry's own subgroup, %s, is the default (design D20) and applies at its sites "
+            "%s (%s); the ordered rules name the %s, where ICCC-2017 places this (code, "
+            "behaviour) instead."
+            % (default, FAMILY_WHERE[default[:2]], ranges(default), named))
     uncovered = [c for c in codes
                  if not any(covers(sub["topography"], topo3(c)) for sub in subs.values())]
     if uncovered:
-        if len(uncovered) <= 3:
-            at = "At %s" % join_and(uncovered)
+        outside = ("outside every Group X germ cell site range"
+                   if not any(covers(germ_cell_sites, topo3(c)) for c in uncovered)
+                   else "outside this code's site ranges")
+        one = len(uncovered) == 1
+        at = (uncovered[0] if one else
+              "the %d lookup codes %s (e.g. %s)" % (len(uncovered), outside, uncovered[0]))
+        text += (" At %s%s, ICCC-2017 places this code in no Group X subgroup and the output "
+                 "shows the default %s"
+                 % (at, (", " + outside) if one else "", default))
+        if not set(uncovered) & entering:
+            text += ("; Group X is not entered at %s, because %s candidate groups do not "
+                     "list 10." % (uncovered[0] if one else "any of them",
+                                   "its" if one else "their"))
         else:
-            at = ("At every lookup code outside the %s ranges (%d codes, e.g. %s)"
-                  % (join_and(list(subs)), len(uncovered), uncovered[0]))
-        text += (" %s, ICCC-2017 places this code in no Group X subgroup; the output shows "
-                 "the default %s there, and REDCap computes x_subgroup itself."
-                 % (at, default))
+            text += "."
     return rules, text
 
 
@@ -501,7 +534,8 @@ def join_and(items: list) -> str:
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
 
-def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict) -> dict:
+def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict, entering: set,
+                germ_cell_sites: list) -> dict:
     first = recs[0]
     code, beh = first["morphology_code"], first["behavior_code"]
     name = first["preferred_term"]
@@ -535,7 +569,8 @@ def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict) -> dict
     })
     rules = None
     if len(subs) > 1:
-        rules, e["topography_routing_note"] = routing(subs, default, codes)
+        rules, e["topography_routing_note"] = routing(subs, default, codes, entering,
+                                                      germ_cell_sites)
         e["topography_dependent"] = True
 
     k = key(code, beh)
@@ -601,7 +636,12 @@ def build_entries(payload: dict, obs: dict, codes: list, trees: list) -> list:
         raise GenerationError("; ".join(problems))
     check_ihc_overrides(checklist_markers(trees))
 
-    return [build_entry(grouped[k], obs, codes, pairs_by_tree) for k in sorted(grouped)]
+    # The germ cell site ranges: Xa, Xb and Xc. Xd and Xe ranges 114 and 116 run C00.0-C80.9.
+    germ_cell_sites = sorted({t for r in records if r["iccc3_subgroup_id"][:2] in DEFAULT_ORDER
+                              for t in r["topography"]})
+    entering = entering_codes()
+    return [build_entry(grouped[k], obs, codes, pairs_by_tree, entering, germ_cell_sites)
+            for k in sorted(grouped)]
 
 
 def build_metadata(entries: list, summary: dict, trees: list) -> dict:
