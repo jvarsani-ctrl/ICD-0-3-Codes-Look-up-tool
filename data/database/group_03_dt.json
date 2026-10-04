@@ -2343,14 +2343,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "awaiting_layer1": {
-        "reason": "9476 Medulloblastoma, SHH-activated and TP53-mutant is absent from the REDCap `iii_morph` option list (verified against the live data dictionary export, 2026-09-14 — it is the only Group III code missing). Built anyway under registrar ruling 3 of 4 Sep 2026: the tree may run ahead of the dropdown so long as the two stay reconcilable in writing. ICD-O-3.2 carries the code and the term; ICCC-2017 places it in IIIc1.",
-        "missing_from": [
-          "REDCap Group 3 option list"
-        ]
-      },
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9477",
@@ -5973,7 +5966,7 @@
               },
               "entity_annotation": {
                 "who_cns5_entity": "Medulloblastoma, SHH-activated and TP53-mutant",
-                "code_status": "awaiting_layer1",
+                "code_status": "own_code",
                 "shared_with": [],
                 "evidence": "SHH surrogate panel plus a demonstrated pathogenic TP53 variant on sequencing.",
                 "provisional": false

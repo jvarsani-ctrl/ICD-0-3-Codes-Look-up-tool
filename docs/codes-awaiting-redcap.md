@@ -4,12 +4,12 @@ Registrar ruling 3, 4 Sep 2026: a code missing from the REDCap option list is st
 the decision tree. It is reported, and it goes on this list. The tree is allowed to run ahead of
 the dropdown; this file is what keeps the two reconcilable.
 
-The build reads this file. A code carrying `awaiting_layer1` in `group_NN_dt.json` and **not**
-listed here is a build failure, and so is a code listed here that no longer needs to be.
-
-**`awaiting_layer1` is also what the output block reads**, so it has to mean one thing only: Layer 1
-carries no option for this code. See *"Two banners, and the flag that separates them"* at the foot of
-this file before adding or removing it anywhere.
+> **4 October 2026 — nothing in the tool reads this file any more.** Standing rule 16: the tool does
+> not verify REDCap. `awaiting_layer1` and `redcap_option_verified` were removed from every group's
+> data and generator, the two checks that tied them to this file (`check_awaiting_layer1`,
+> `check_redcap_banner_signal`) were removed from `build/build_database.py`, and the output block shows
+> no REDCap banner. This file stays as the detailed REDCap-side record behind `docs/TODO.md` §7, which
+> is the index of what REDCap owes. Nothing below changes what the tool emits.
 
 Every term below is verified against the IARC ICD-O-3.2 morphology table, converted to
 `ICD coding/ICD-O-3.2/icdo32.sqlite`. Where a code is also outside the ICCC-2017 ranges, adding

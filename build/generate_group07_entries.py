@@ -8,13 +8,8 @@ never transcribed from the REDCap option file or the diagnostic pathway document
 (code, behaviour) records come straight from build_inventory(). The hand-authored part is the
 annotation layer in ANNOTATIONS below, keyed by code.
 
-Two fields are DERIVED from Layer 1 at generation time rather than written by hand, because a
-boolean maintained by hand drifts from the data it describes (memory/data.md §3, §5A):
-
-  * redcap_option_verified — True when the REDCap option file carries this code under a
-    string character-identical to the ICD-O-3.2 preferred term, else False;
-  * awaiting_layer1 — set when the REDCap option file does not carry the code at all
-    (registrar ruling 3, 4 September 2026).
+No REDCap fields are written: the tool does not verify REDCap (standing rule 16, registrar,
+4 October 2026). The codes with no REDCap option are listed in docs/TODO.md §7.
 
 Like build/generate_group06_entries.py, this script never destroys a tree already on disk:
 decision_trees[] is carried across unchanged unless --reset-tree is passed.
@@ -444,23 +439,7 @@ def build_entry(rec: dict, redcap: dict, obs: dict) -> dict:
     if code == "8171":
         entry["code_neutral_molecular"] = False     # contract §3.2: a negative test can move it
 
-    out = {f: entry[f] for f in FIELD_ORDER}
-    names = redcap.get(code)
-    if names is None:
-        out["redcap_option_verified"] = False
-        out["awaiting_layer1"] = {
-            "reason": (
-                "ICD-O-3.2 code %s/3 '%s', verified against icdo32.sqlite and inside ICCC-2017 "
-                "range %s, is not an option in RedCap Options/Group 7- Hepatic Tumors.md. "
-                "Built under registrar rulings 1-3 of 4 September 2026 (contract §2B)."
-                % (code, rec["preferred_term"], iccc_range_row(code, rec["iccc3_subgroup_id"]))
-            ),
-            "needs": ["REDCap Group 7 option list"],
-            "todo": "docs/codes-awaiting-redcap.md",
-        }
-    else:
-        out["redcap_option_verified"] = rec["preferred_term"] in names
-    return out
+    return {f: entry[f] for f in FIELD_ORDER}
 
 
 # Registrar ruling, 3 October 2026 (open question 2): calcifying nested stromal-epithelial
@@ -474,7 +453,6 @@ CNSET_TERM = "Calcifying nested stromal-epithelial tumor"
 
 def build_ruled_8975(redcap: dict) -> list:
     out = []
-    names = redcap.get("8975") or []
     for behaviour, note in (
         ("1", "Registrar ruling, 3 October 2026 (open question 2): registered in Group VII at its "
               "ICD-O-3.2 behaviour, uncertain whether benign or malignant, although ICCC-3 Group VII "
@@ -498,24 +476,7 @@ def build_ruled_8975(redcap: dict) -> list:
             code_neutral_molecular=True, redcap_value="8975", primary_sites=["C00.0-C80.9"],
             topography_dependent=False, topography_routing_note="",
         )
-        e = {f: entry[f] for f in FIELD_ORDER}
-        e["redcap_option_verified"] = CNSET_TERM in names
-        # build_entry() declares awaiting_layer1 for a code the option file does not carry
-        # (ruling 3, 4 September 2026). These two entries are built by hand and skipped
-        # that, so if REDCap pick 2 ever goes they would read as merely unverified and
-        # drop off docs/codes-awaiting-redcap.md without anything saying so.
-        if not names:
-            e["awaiting_layer1"] = {
-                "reason": (
-                    "ICD-O-3.2 code 8975/%s '%s', registered in Group VII by the registrar's "
-                    "ruling of 3 October 2026 (open question 2), is not an option in "
-                    "RedCap Options/Group 7- Hepatic Tumors.md. Built under registrar "
-                    "rulings 1-3 of 4 September 2026 (contract §2B)." % (behaviour, CNSET_TERM)
-                ),
-                "needs": ["REDCap Group 7 option list"],
-                "todo": "docs/codes-awaiting-redcap.md",
-            }
-        out.append(e)
+        out.append({f: entry[f] for f in FIELD_ORDER})
     return out
 
 
@@ -572,11 +533,6 @@ def main(argv=None) -> int:
         print("usable entries: %d" % len(entries))
         for sub, n in sorted(Counter(e["iccc3_subgroup_id"] for e in entries).items()):
             print("  %s: %d" % (sub, n))
-        print("awaiting_layer1: %s" % ", ".join(
-            e["morphology_code"] for e in entries if e.get("awaiting_layer1")))
-        print("name drifts from REDCap: %s" % ", ".join(
-            e["morphology_code"] for e in entries
-            if e["redcap_option_verified"] is False and not e.get("awaiting_layer1")))
         return 0
 
     out_path = Path(args.out)

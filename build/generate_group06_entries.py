@@ -153,41 +153,9 @@ TIER_B_ADDENDA = {
     ),
 }
 
-# --------------------------------------------------------------------------------------
-# Ruling 3, 4 Sep 2026 (memory/registrar-rulings.md; precedent: Group 2's 9715/9749/9819,
-# docs/codes-awaiting-redcap.md): a code the REDCap option list lacks is still built, and
-# is declared `awaiting_layer1` so build_database.py's check_awaiting_layer1() can cross-
-# reference it against docs/codes-awaiting-redcap.md. That file ALREADY carries a
-# "## Group 6 — open" section for these three codes (contract §2B; present on disk before
-# this script ran -- not written by this task, which may not edit docs/). Leaving these
-# three entries without the flag is a build FAIL ("still lists 8023 as open, but the
-# entry no longer carries awaiting_layer1"), not merely a stylistic gap.
-# --------------------------------------------------------------------------------------
-AWAITING_LAYER1 = {
-    "8023": ("Nuclear protein in testis (NUT)-associated carcinoma"),
-    "8054": ("Warty carcinoma"),
-    "8482": ("Mucinous carcinoma, gastric type"),
-}
-
-
-def awaiting_layer1_note(code: str) -> dict:
-    name = AWAITING_LAYER1[code]
-    return {
-        "reason": (
-            "ICD-O-3.2 addition (%s), verified against ICD coding/ICD-O-3.2/"
-            "icdo32.sqlite. Not yet an option in the Group 6 REDCap list "
-            "(RedCap Options/Group 6 - Renal Tumors.md). Already inside the "
-            "ICCC-2017 VIb carcinoma range at C64.9, behaviour 3, so only the "
-            "REDCap option is missing, not the classification range. Built under "
-            "registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides "
-            "whether a code is built, and a code the option list lacks is reported "
-            "and put on the to-do list rather than withheld (contract §2B). "
-            "Reachable only by direct code entry -- no decision-tree branch is "
-            "built for it (contract §0.3)." % name
-        ),
-        "needs": ["REDCap Group 6 option list"],
-        "todo": "docs/codes-awaiting-redcap.md",
-    }
+# No REDCap fields: the tool does not verify REDCap (standing rule 16, registrar, 4 October
+# 2026). The three codes with no REDCap option (8023, 8054, 8482) are listed for the REDCap
+# side in docs/TODO.md §7.
 
 
 def drift_note(code: str) -> str:
@@ -796,24 +764,7 @@ def build_entry(rec: dict, obs_flags: dict) -> dict:
                rec["iccc3_subgroup_name"])
         ) + drift_note(code) + TIER_B_ADDENDA.get(code, "")
 
-    out = {f: entry[f] for f in FIELD_ORDER}
-    # redcap_option_verified, appended after the canonical field list -- the same
-    # placement group_05_dt.json (this file's schema exemplar) uses. Mechanical, keyed
-    # off the same three buckets check_redcap_exact_names itself computes: an entry
-    # with no REDCap option at all (awaiting_layer1), a known string drift (contract
-    # §2C, eight codes), or a clean match (everything else). Carrying this field
-    # accurately -- rather than omitting it -- also avoids ~80 "flag is stale, should
-    # be true" WARNs the build emits when it is absent on a code the option list does
-    # carry, and is required (not optional) on the three awaiting_layer1 codes: the
-    # check FAILs if awaiting_layer1 is set while this is not exactly False.
-    if code in AWAITING_LAYER1:
-        out["redcap_option_verified"] = False
-        out["awaiting_layer1"] = awaiting_layer1_note(code)
-    elif code in ALL_DRIFT_CODES:
-        out["redcap_option_verified"] = False
-    else:
-        out["redcap_option_verified"] = True
-    return out
+    return {f: entry[f] for f in FIELD_ORDER}
 
 
 # --------------------------------------------------------------------------------------

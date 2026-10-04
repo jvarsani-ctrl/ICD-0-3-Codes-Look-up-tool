@@ -3186,3 +3186,36 @@ Observed in the browser on commit `1cb7a27` and corrected in `2580cdb`. After th
 path rendered "Borderline or uncertain behaviour — outside this group's declared behaviour".
 At the merge with `main` (4 October 2026) the Group VII fix replaced it; the path now renders
 "Uncertain whether benign or malignant — outside this group's declared behaviour".
+
+## REDCap flags removed from every group, 4 October 2026
+
+Standing rule 16: the tool does not verify REDCap. `redcap_option_verified` and `awaiting_layer1`
+were removed from Groups 1–8 (Group 9 already wrote neither) and from the Group 6, 7 and 8
+generators. Group 3's one `code_status: "awaiting_layer1"` annotation became `own_code`, which
+renders "Has its own ICD-O-3.2 code". Each generator was rerun to a scratch file: its output equals
+the committed data minus the two keys, byte for byte for Groups 7, 8 and 9. For Group 6 the
+original generator's output minus the two keys equals the edited generator's. Group 6's data also
+carries hand corrections from 22 September 2026 that its generator never reproduced, before and
+after this change.
+
+Removed from `build/build_database.py`: `check_redcap_banner_signal` and `check_awaiting_layer1`,
+whose only job was to keep the flags consistent with the REDCap option files.
+
+Changed: `check_codes_against_source_of_truth` no longer consults the REDCap list. A code passes when
+the ICCC classification for its group carries it (the markdown table, or `ICCC-2017.sqlite`, which
+the table lacks for Group VII), or when ICD-O-3.2 carries its (code, behaviour) pair. Anything else
+FAILs. `check_redcap_exact_names` reads no flag and no longer warns that REDCap lacks a code. It still
+compares Groups 1 and 2's names with the option strings, pending the registrar. Group 5 moved to
+`check_icdo32_round_trip()`, which it passes.
+
+Controls, run against the working tree of `claude/remove-redcap-flags`:
+
+| Control | Expected | Result |
+|---|---|---|
+| baseline: Groups 1–9 through the code guard | no FAIL | ok |
+| A fabricated `9999/3` in Group 7 | FAIL | ok: "morphology_code 9999/3 is in neither the ICCC classification table for group 7 nor icdo32.sqlite" |
+| B `8140/9`, a behaviour ICD-O-3.2 lacks, outside every Group IX range | FAIL | ok |
+| C probe: `8140/3`, valid ICD-O-3.2 outside every Group IX range | NOTE, no FAIL | ok |
+| D `ICCC-2017.sqlite` withheld | Group 7's ruled `8975/3` FAILs, so the database is what verifies it | ok |
+| E Group 2 `9597` renamed | the exact-name check FAILs | ok |
+| F probe: Group 1 baseline | the `9898` sibling exemption holds without any flag | ok |
