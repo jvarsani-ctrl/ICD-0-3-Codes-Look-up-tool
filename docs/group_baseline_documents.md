@@ -4,9 +4,8 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7**. Built and awaiting
-merge: **8** on `claude/group-8-tumor-pathway-64edbc` and **9** on
-`claude/group-9-tumor-pathway-911c69`. Remaining: **10, 11, 12**.
+Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7, 8, 9**. In progress and
+not merged: **10** on `claude/group-10-tumor-pathway-3a99f7`. Not started: **11, 12**.
 
 ---
 
