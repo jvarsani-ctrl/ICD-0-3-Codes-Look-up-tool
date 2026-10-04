@@ -347,9 +347,16 @@ function fixtures(ctx) {
    appear in the site's candidate_groups decide it: exactly one enters that
    group with the topography captured; none or several stop the case with
    nothing entered. Each pair is tapped through `handleOption` — alias, organ
-   system, region — the handlers the rendered buttons call. The single-group
-   terms are the control: a fix that asks every term for its site passes the
-   rest and fails this. */
+   system, region — the handlers the rendered buttons call.
+
+   A term filed under ONE group is asked its site too when that group's data
+   reads the site — the router routes its trees from the topography, or a
+   `when` in its trees names `topography` — computed here from the router and
+   the group files, not from the engine (registrar, 4 October 2026). Without
+   the site those rules fail open: "Rhabdoid tumour", a Group IX-only
+   spelling, coded a renal rhabdoid tumour in Group IX. The single-group terms
+   of a group that reads no site are the control: a fix that asks every term
+   for its site passes the rest and fails this. */
 async function expressLane(ctx, out) {
   const SHARED = path.join(ROOT, 'data', 'shared');
   const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
@@ -378,6 +385,15 @@ async function expressLane(ctx, out) {
     }
   };
   const fail = (m) => out.fails.push(m);
+  const hasSiteWhen = (o) => !!o && typeof o === 'object' && (Array.isArray(o) ? o.some(hasSiteWhen) :
+    ((o.when && typeof o.when === 'object' && o.when.topography !== undefined) || Object.values(o).some(hasSiteWhen)));
+  const readsSite = (g) => {
+    const meta = (router.groups || {})[String(g)] || {};
+    if (!meta.built) return false;
+    if (meta.tree_routing) return true;
+    const c = ctx.groupCache.get(g);
+    return !!c && hasSiteWhen(c.dt.decision_trees);
+  };
   for (const term of Object.keys(index).sort()) {
     const groups = index[term];
     /* A term outranked in the top eight by shorter matches cannot be tapped.
@@ -388,14 +404,14 @@ async function expressLane(ctx, out) {
       if (groups.length > 1) fail('"' + term + '" ' + JSON.stringify(groups) + ' cannot be reached from the search results');
       continue;
     }
-    if (groups.length === 1) {
+    if (groups.length === 1 && !readsSite(groups[0])) {
       out.single++;
       if (ctx.state.stage === 'site' || ctx.state.group !== groups[0]) {
         fail('"' + term + '" ' + JSON.stringify(groups) + ' was asked the site or entered group ' + ctx.state.group);
       }
       continue;
     }
-    out.terms++;
+    groups.length > 1 ? out.terms++ : out.siteSingles++;
     if (ctx.state.stage !== 'site' || ctx.state.group !== null) {
       fail('"' + term + '" ' + JSON.stringify(groups) + ' reached stage ' + ctx.state.stage + ', group ' + ctx.state.group + ', not the site question');
       continue;
@@ -491,7 +507,15 @@ async function expressLane(ctx, out) {
   for (const term of singles) {
     const g = index[term][0];
     if (routedGroups.has(g) || !ctx.groupMeta(g).tree_routing) continue;
-    if (!(await enter(term)) || !(await rewindTo('Tree'))) continue;
+    if (!(await enter(term))) continue;
+    /* A routed group reads the site, so its term is asked it first: answer
+       with a site that keeps the group, then step back to the Tree entry. */
+    if (ctx.state.stage === 'site') {
+      const keep = codes.find((c) => expectAt([g], c).length === 1);
+      if (!keep) continue;
+      await pickSite(keep);
+    }
+    if (!(await rewindTo('Tree'))) continue;
     routedGroups.add(g);
     await tap('guided', 0);
     for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site', 'site_region'].includes(ctx.state.stage); k++) {
@@ -567,10 +591,10 @@ console.log('\nExpress lane — a term filed under several groups is settled by 
 {
   /* An engine that throws inside a scenario fails the section by name rather
      than ending the run with a stack trace. */
-  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, terms: 0, skipped: 0, rewinds: 0, fails: [] };
+  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, siteSingles: 0, terms: 0, skipped: 0, rewinds: 0, fails: [] };
   try { await expressLane(ctx, r); } catch (e) { r.fails.push('the engine threw: ' + e.message); }
-  console.log('  %s  %d multi-group term(s) x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) enter their group; %d stepped-back case(s); %d term(s) not reachable from the results',
-    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.routed, r.mismatch, r.tie, r.single, r.rewinds, r.skipped);
+  console.log('  %s  %d multi-group term(s) and %d single-group term(s) whose group reads the site, x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) of a group that reads no site enter it directly; %d stepped-back case(s); %d term(s) not reachable from the results',
+    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.siteSingles, r.routed, r.mismatch, r.tie, r.single, r.rewinds, r.skipped);
   for (const f of r.fails.slice(0, Math.max(SHOW, 5))) console.log('        ' + f);
   if (r.fails.length > Math.max(SHOW, 5)) console.log('        ... and ' + (r.fails.length - Math.max(SHOW, 5)) + ' more');
   bad += r.fails.length;

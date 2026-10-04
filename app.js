@@ -479,7 +479,9 @@ function renderSite() {
   var origin = state.captured.tumour_origin;
   return panel('Stage 1 · organ system', 'Which organ system does the tumour arise in?',
     state.searchTerm
-      ? 'The search term “' + state.searchTerm + '” is filed under more than one group, and the primary site decides which. Code the primary, not the biopsy site.'
+      ? (arr((state.aliasIndex || {})[state.searchTerm]).length > 1
+          ? 'The search term “' + state.searchTerm + '” is filed under more than one group, and the primary site decides which. Code the primary, not the biopsy site.'
+          : 'The primary site decides how “' + state.searchTerm + '” is coded, so it is asked first. Code the primary, not the biopsy site.')
       : state.archetype.site_capture === false
       ? 'Site is fixed for this presentation — one tap confirms which system to record.'
       : (origin
@@ -561,7 +563,7 @@ function renderSearchUnresolved() {
   return banner('info', none ? 'The term and the site point to different groups' : 'The site does not decide the group',
       'The search term “' + state.searchTerm + '” is filed under ' + named(term) + '. ' +
       (none
-        ? 'The site recorded, ' + siteName + ', belongs to none of them. Check the primary site in the report and change it in the trail. If the site is right, refer the case to the registrar.'
+        ? 'The site recorded, ' + siteName + (term.length > 1 ? ', belongs to none of them.' : ', is not a site that group codes this term at.') + ' Check the primary site in the report and change it in the trail. If the site is right, refer the case to the registrar.'
         : (!Array.isArray(t.candidate_groups)
             ? 'The site recorded, ' + siteName + ', names no group, so the site cannot choose between them. '
             : (left.length === term.length
@@ -1927,39 +1929,11 @@ function renderOutput() {
     h += '<div class="headline"><div class="headline__code">' + esc(r.code) + '</div>' +
       '<div class="headline__name">' + esc(e.morphology_name) + '</div></div>';
   }
-  /* Ruling 3: the tree is allowed to run ahead of the REDCap option list, but
-     never silently. A clerk who cannot find the row has to be told why before
-     they go looking, and in BOTH views — the code is just as unselectable
-     outside the REDCap host as inside it.
-
-     TWO DIFFERENT FACTS RODE ON ONE FLAG, AND THE BANNER STATED THE WRONG ONE.
-     `redcap_option_verified: false` means the option string was not verified to
-     match. It does NOT mean no option exists — and this banner asserted the
-     stronger claim for both, so entries whose option is merely mislabelled were
-     telling the clerk the row was missing. Sending a clerk away from a row that
-     is there is the same class of defect as sending them to one that is not.
-
-     `awaiting_layer1` is the signal that separates them, it is checked to
-     separate them exactly, and check_redcap_banner_signal() in
-     build/build_database.py keys off Layer 1 to keep it that way — so this
-     branch cannot drift from the option file behind the engine's back. Which
-     entries were affected, and why the flag now means one thing only:
-     docs/codes-awaiting-redcap.md, "Two banners, and the flag that separates
-     them". */
-  if (e.redcap_option_verified === false) {
-    var aw = e.awaiting_layer1;
-    if (aw) {
-      h += banner('warn', 'Not yet a REDCap option',
-        'This code has no option in the registry dropdown, so it cannot be selected yet.' +
-        (arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
-        ' Record the case against the nearest available option and flag it for re-coding.');
-    } else {
-      h += banner('warn', 'The REDCap label for this code is out of date',
-        'The dropdown does carry an option for this code, so the case can be entered. ' +
-        'Its label is not the current term shown above — match on the four-digit code, ' +
-        'not on the words, and flag the option for re-labelling.');
-    }
-  }
+  /* No REDCap banner. The tool does not verify REDCap (standing rule 16,
+     registrar, 4 October 2026): it does not connect to it, and a banner about
+     what the dropdown holds costs the clerk attention without changing the
+     code. Codes REDCap cannot record, and labels it holds out of date, are
+     listed for the REDCap side in docs/TODO.md §7. */
   /* Behaviour is shown only where it is not the reportable /3 default: a case
      whose code carries the other behaviour reads as an ordinary malignancy
      otherwise, and under ?host=redcap the option string names the /3 disease. */
@@ -2150,8 +2124,20 @@ function handleOption(act, el) {
          settles it instead (afterSearchSite), and the clerk is not asked for
          a group (registrar, 4 October 2026). */
       if (hit.groups.length > 1) { state.stage = 'site'; return; }
-      state.group = hit.groups[0];
-      return afterGroup();
+      /* A term filed under ONE group is still asked its site when that
+         group's data reads the site: a tree routed from the topography, or a
+         rule keyed on it. Entered without one, every such rule fails open —
+         a renal rhabdoid tumour searched by a Group IX-only spelling coded in
+         Group IX because the kidney referral could never match (registrar,
+         4 October 2026). afterSearchSite() then keeps the group only if the
+         site carries it, and stops for the registrar if it does not. */
+      var only = hit.groups[0];
+      if (!groupMeta(only).built) { state.group = only; return afterGroup(); }
+      return loadGroupData(only).then(function () {
+        if (groupReadsSite(only)) { state.stage = 'site'; return; }
+        state.group = only;
+        return afterGroup();
+      });
     }
     case 'archetype': {
       var a = state.router.archetypes[i];
@@ -2530,6 +2516,22 @@ function afterSite() {
   if (!cands.length) { state.error = 'No candidate group survives this presentation, origin and site.'; return; }
   state.stage = 'group';
 }
+/* Does this group's data read the recorded topography? True when the router
+   routes its trees from the topography, or when any `when` in its trees names
+   `topography`. Structural only: it reads the shape of the JSON, never a code,
+   a site or a group number. Needs the group's file loaded. */
+function groupReadsSite(g) {
+  if (groupMeta(g).tree_routing) return true;
+  var found = false;
+  (function walk(o) {
+    if (found || !o || typeof o !== 'object') return;
+    if (Array.isArray(o)) { o.forEach(walk); return; }
+    if (o.when && typeof o.when === 'object' && o.when.topography !== undefined) { found = true; return; }
+    Object.keys(o).forEach(function (k) { walk(o[k]); });
+  })(trees());
+  return found;
+}
+
 /* The express lane's site step. The groups the search term is filed under
    are intersected with the groups the topography carries, and only one
    survivor enters a tree — routed, not asked, and recorded in the trail so the

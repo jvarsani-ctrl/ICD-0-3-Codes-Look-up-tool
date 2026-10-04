@@ -283,3 +283,26 @@ checked by checksum:
 | before the fix | LOST ×5 | FAIL: the click is lost, the box stays enabled | OK | FAIL: focus goes to the page |
 | `change` ignored for every control, an over-broad fix | OK | FAIL: no redraw | FAIL: Continue stays disabled | OK |
 | fix | OK | OK | OK | OK |
+
+## A single-group term is asked its site when its group reads the site
+
+Registrar, 4 October 2026: the site must be asked. A term filed under one group entered that
+group's tree with no topography, so every rule keyed on the topography failed open. "Rhabdoid
+tumour", a Group IX-only spelling, coded a renal rhabdoid tumour as `8963/3` IXd3, because the
+Group IX referral to Group VI at C64.9 could never match. The express lane now asks the site of a
+single-group term whenever that group's data reads it, meaning the router routes its trees from the
+topography or a `when` in its trees names `topography` (`groupReadsSite()` in `app.js`, a test of
+the JSON's shape only). `afterSearchSite()` then keeps the group if the site carries it and stops
+for the registrar if it does not. On this data that is Groups III, IV and IX.
+
+The gate computes the same set from the router and the group files, never from the engine. Two
+controls, each run against the working tree with `app.js` edited and then restored by checksum
+(`25760bfcd9b1` before and after):
+
+| Control | Engine edit | Gate result |
+|---|---|---|
+| the defect | the single-group site branch removed | FAIL: `"ACTH-producing tumor" [3] reached stage node, group 3, not the site question` |
+| over-broad fix | `groupReadsSite()` returns true for every group | FAIL: `"5q- syndrome" [1] was asked the site or entered group null` |
+| fix | — | OK: 55 multi-group and 483 single-group terms settled by the site; 848 single-group terms of a group that reads no site enter it directly |
+
+`build/drive_first_tap.mjs` still passes every tap with real input.

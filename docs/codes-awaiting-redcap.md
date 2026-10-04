@@ -334,65 +334,6 @@ list stay reconcilable.
 
 ---
 
-## Group 9 — open
-
-Four ICD-O-3.2 codes the generated inventory carries and `Group 9- Soft Tissue And Other
-Extraosseous Sarcomas.md` does not offer. All four are inside an ICCC-2017 Group IX range at
-behaviour 3, so only the REDCap option is missing. Each has a decision-tree leaf (Group 9 build
-contract §0.3, §1). Added 2 October 2026.
-
-### 8714/3 — Perivascular epithelioid tumor, malignant
-
-| | |
-|---|---|
-| ICD-O-3.2 | `8714/3` Preferred; synonym *PEComa, malignant* |
-| REDCap | **Absent**. IXd11 lists `8710`–`8713`, skipping `8714` |
-| ICCC-2017 | In range. IXd11 runs `8710-8714` at any site, behaviour 3 |
-| Reached from | `st_uncertain`, "Perivascular epithelioid cell tumour (PEComa), malignant" |
-| Carried by until now | Nothing |
-
-**Paediatric relevance.** PEComa is in the paediatric soft tissue list of Pfister SM, et al.
-*Cancer Discovery* 2022;12(2):331–355, Table 2.
-
-### 9045/3 — Biphenotypic sinonasal sarcoma
-
-| | |
-|---|---|
-| ICD-O-3.2 | `9045/3` Preferred, site reference C30.0, C31 |
-| REDCap | **Absent**. IXd7 runs `9040`–`9044` |
-| ICCC-2017 | In range. IXd11 lists `9045` at any site, behaviour 3 |
-| Reached from | `st_uncertain`, "Biphenotypic sinonasal sarcoma" |
-| Carried by until now | Nothing |
-
-**Paediatric relevance.** An adult sinonasal sarcoma. Built because ICD-O-3.2 and ICCC-2017 both
-carry it and the registry's upper age bound is unwritten (registrar questions G2).
-
-### 9137/3 — Intimal sarcoma
-
-| | |
-|---|---|
-| ICD-O-3.2 | `9137/3` Preferred |
-| REDCap | **Absent**. IXd8 runs `9135`, `9136`, `9141`, skipping `9137` |
-| ICCC-2017 | In range. IXd8 runs `9135-9138` at any site, behaviour 3 |
-| Reached from | `st_uncertain`, "Intimal sarcoma" |
-| Carried by until now | Nothing |
-
-**Paediatric relevance.** An adult sarcoma of large vessels (Sbaraglia M, et al. *Pathologica*
-2021;113(2):70–84, Table XI). Built for the same reason as `9045`.
-
-### 9542/3 — Malignant peripheral nerve sheath tumor, epithelioid
-
-| | |
-|---|---|
-| ICD-O-3.2 | `9542/3` Preferred; synonym *Epithelioid MPNST* |
-| REDCap | **Absent**. IXb2 lists `9540`, `9541`, `9550`, skipping `9542` |
-| ICCC-2017 | In range. IXb2 runs `9540-9571` at any site, behaviour 3 |
-| Reached from | `st_nerve_sheath`, "Epithelioid malignant peripheral nerve sheath tumour" |
-| Carried by until now | `9540` Malignant peripheral nerve sheath tumor, the less specific code |
-
-**Paediatric relevance.** A subtype of malignant peripheral nerve sheath tumour, which Pfister 2022
-names among the non-rhabdomyosarcoma soft tissue sarcomas most frequent in children.
-
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block
@@ -414,6 +355,11 @@ the same code, which is worth knowing but is not a relabelling.
 ---
 
 ## Two banners, and the flag that separates them
+
+> **Both banners were removed from `app.js` on 4 October 2026.** Standing rule 16: the tool does not
+> verify REDCap, and a banner about what the dropdown holds costs the clerk attention without changing
+> the code. The flags below no longer reach the screen. Group IX writes none; its owed options are in
+> `docs/TODO.md` §7.
 
 **Found 22 September 2026, on the output block, driving the Group VI carcinoma branch in a browser.**
 

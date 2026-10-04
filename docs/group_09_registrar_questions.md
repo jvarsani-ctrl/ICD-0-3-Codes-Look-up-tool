@@ -249,3 +249,12 @@ DFSP and melanomas. **The build:** a descriptive spindle cell tumour with H3K27m
 Hung YP, et al. (*Histopathology* 2018;73:634–644, p. 634): "highly sensitive but not entirely
 specific". **The build:** pan-TRK sets `8814/3` only at age under 2; spindle cell rhabdomyosarcoma
 (myogenin) is asked first. **For you:** confirm the age gate.
+
+## K. Desmoplastic myxoid tumour of the pineal region, SMARCB1-mutant (added 4 October 2026)
+
+The ruling of 14 September 2026 places this WHO CNS5 entity in Group IX, and Group III refers it
+here. ICD-O-3.2 has no code for it, and the Group III pathway (Revision 2 §4.13) left the code to the
+registrar, with `8000/1` as an annotation default. Behaviour 1 is outside Group IX, which declares
+behaviour 3 only. **The build:** the Group III referral tells the clerk to record the topography and
+refer the morphology to the registrar; the Group IX tree has no option for it. **For you:** which
+code, at which behaviour, should Group IX emit?

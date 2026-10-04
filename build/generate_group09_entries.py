@@ -368,38 +368,10 @@ ANNOTATIONS = {
                  tests=H, nos="8800", topo=SOFT_VS_BONE),
 }
 
-# REDCap option strings that are not the ICD-O-3.2 preferred term at /3 (contract §2).
-REDCAP_DRIFT = {
-    "8811": "Fibromyxosarcoma", "9364": "Peripheral neuroectodermal tumor",
-    "8963": "Malignant rhabdoid tumor", "9133": "Epithelioid hemangioendothelioma, malignant",
-    "9187": "Intraosseous well differentiated osteosarcoma",
-    "8921": "Rhabdomyosarcoma with ganglionic differentiation",
-    "8825": "Myofibroblastoma", "8832": "Dermatofibrosarcoma, NOS", "9220": "Chondroma, NOS",
-    "9540": "Malignant peripheral nerve sheath tumor", "8851": "Liposarcoma, well differentiated",
-    "9186": "Central osteosarcoma", "8842": "Ossifying fibromyxoid tumor",
-    "8804": "Epithelioid sarcoma",
-}
-
-# Ruling 3: built, reported, declared awaiting_layer1 (contract §0.3).
-AWAITING_LAYER1 = {
-    "8714": "Perivascular epithelioid tumor, malignant",
-    "9045": "Biphenotypic sinonasal sarcoma",
-    "9137": "Intimal sarcoma",
-    "9542": "Malignant peripheral nerve sheath tumor, epithelioid",
-}
-
-
-def awaiting_layer1_note(code: str) -> dict:
-    return {
-        "reason": (
-            "ICD-O-3.2 code (%s), verified against ICD coding/ICD-O-3.2/icdo32.sqlite and inside "
-            "an ICCC-2017 Group IX range at behaviour 3. Not an option in RedCap Options/Group 9- "
-            "Soft Tissue And Other Extraosseous Sarcomas.md. Built under registrar rulings 1-3 of "
-            "4 Sep 2026 (contract §0.3)." % AWAITING_LAYER1[code]
-        ),
-        "needs": ["REDCap Group 9 option list"],
-        "todo": "docs/codes-awaiting-redcap.md",
-    }
+# No REDCap fields. The tool does not verify REDCap (standing rule 16, registrar, 4 October
+# 2026): the REDCap changes owed for this group — the drifted labels and the four codes with
+# no option, 8714, 9045, 9137 and 9542 — are listed in docs/TODO.md §7 and
+# docs/group_09_layer1_repair.md, not flagged in the data.
 
 
 def obs_clause(flags: dict) -> str:
@@ -439,10 +411,6 @@ def build_entry(rec: dict, names: dict, obs_flags: dict) -> dict:
                  else "No decision-tree leaf; reachable by direct code entry only (contract §1).")
     if a.get("note"):
         parts.append(a["note"])
-    if code in REDCAP_DRIFT:
-        parts.append("Layer 1 drift: the REDCap option string is %r, not the ICD-O-3.2 preferred "
-                     "term; recorded in docs/group_09_layer1_repair.md (contract §2)."
-                     % REDCAP_DRIFT[code])
     nos = a.get("nos")
     entry = {
         "morphology_code": code,
@@ -466,13 +434,7 @@ def build_entry(rec: dict, names: dict, obs_flags: dict) -> dict:
         "topography_dependent": bool(a.get("topo")),
         "topography_routing_note": a.get("topo"),
     }
-    out = {f: entry[f] for f in FIELD_ORDER}
-    if code in AWAITING_LAYER1:
-        out["redcap_option_verified"] = False
-        out["awaiting_layer1"] = awaiting_layer1_note(code)
-    else:
-        out["redcap_option_verified"] = code not in REDCAP_DRIFT
-    return out
+    return {f: entry[f] for f in FIELD_ORDER}
 
 
 def build_metadata(n_entries: int, summary: dict, n_nodes: int, tree_ids: list) -> dict:

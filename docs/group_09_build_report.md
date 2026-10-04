@@ -260,3 +260,17 @@ tumour", "SMARCB1-deficient rhabdoid tumour") still enter from the search box wi
 site referrals in `st_epithelioid_ihc` cannot fire and a kidney or liver case codes `8963/3` IXd3.
 The express-lane ruling leaves single-group terms unchanged; asking the site for them is the
 registrar's decision.
+
+## 14. The registrar's instructions of 4 October 2026, applied
+
+| Instruction | Change |
+|---|---|
+| The express lane must ask the site for the rhabdoid terms | `app.js` asks the site of a single-group term whenever its group's data reads it (the router routes its trees from the topography, or a `when` names `topography`). "Rhabdoid tumour" at the kidney now stops and refers; at the thigh it enters Group IX at C49.2 and codes `8963/3`. On this data the site is asked for Groups III, IV and IX; the engine gate computes the same set from the data and has two controls (`docs/engine_flow_negative_controls.md`). |
+| Group III must stop saying Group IX is not built | `md_pineal_ihc`'s referral now says ICD-O-3.2 and the Group IX tree have no code for desmoplastic myxoid tumour of the pineal region, so the morphology goes to the registrar. The code is registrar question K. |
+| Group III's 9473 note must stop promising Group IX routing | `9473` is `topography_dependent: false`, and its note says IIIc2 at every site, with the peripheral PNET wordings at `9364/3`. |
+| REDCap has nothing to do with this tool (standing rule 16) | Both REDCap banners are gone from `app.js`. Group IX writes no `redcap_option_verified`, no `awaiting_layer1` and no REDCap drift sentence; its section of `docs/codes-awaiting-redcap.md` is removed. The REDCap changes owed stay in `docs/TODO.md` §7 and `docs/group_09_layer1_repair.md`. Groups I–VIII still carry the flags in their data, now unread by the engine. |
+
+Build passes (939 checks, 0 FAIL); 49 Group 9 controls behave as expected; browser: "Rhabdoid
+tumour" at the kidney stops and at the thigh codes `8963/3` at C49.2 with no REDCap banner;
+"Kaposi sarcoma" searched and placed at C44.7 enters "Tree: Skin (C44)" and codes `9140/3` at basis 1;
+"5q- syndrome" (Group I) enters directly.
