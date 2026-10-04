@@ -221,7 +221,7 @@
       },
       "ask_before_site": true,
       "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass in muscle, fat or connective tissue with the bone intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
-      "authoring_note": "Group VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules."
+      "authoring_note": "Group VIII vs Group IX split for 9364 Ewing sarcoma and 9365 Askin tumour. ICD-O-3.2 deleted 9260/3 and moved Ewing sarcoma to 9364/3. See dual_group_rules."
     }
   },
   "site_to_group": {
@@ -662,15 +662,33 @@
     },
     "7": {
       "name": "Hepatic Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g7_hepatic",
+          "entry_node": "hp_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 7,
+        "tree_id": "g7_hepatic",
+        "entry_node": "hp_document_inventory"
+      }
     },
     "8": {
       "name": "Malignant Bone Tumors",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g8_bone",
+          "entry_node": "bn_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 8,
+        "tree_id": "g8_bone",
+        "entry_node": "bn_document_inventory"
+      }
     },
     "9": {
       "name": "Soft Tissue and Other Extraosseous Sarcomas",
@@ -979,9 +997,47 @@
       },
       "cns_topography_scope_note": "Extended 2026-09-18 to the full C70.0-C72.9 CNS range (all 21 codes topography_codes.json's brain_cns crosswalk enumerates), now that Group III was authored 2026-09-16. Previously covered only the NOS-level codes C70.9/C71.9/C72.9, so a medulloepithelioma at a specific CNS subsite (e.g. C71.6) fell through to the default and misrouted to Group 4. ICCC-3 gives 9501-9504 to Group III (IIIc3) across the whole of C70.0-C72.9, Group 4 only outside it. Group 4 build contract §2.5."
     },
-    "8158,8290": {
+    "8158": {
       "codes": [
-        "8158",
+        "8158"
+      ],
+      "label": "ACTH-producing tumour",
+      "topography_dependent": true,
+      "discriminator": "site",
+      "branches": [
+        {
+          "when": {
+            "topography_in": [
+              "C75.1"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIe1"
+          }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIb"
+          },
+          "note": "At the liver (C22.0, C22.1) an ACTH-producing tumour is ICCC-3 Group VII, subgroup VIIb, hepatic carcinomas.",
+          "authoring_note": "ICCC-2017 range 70 lists 8158 among the C22 carcinomas at sites 220,221, behaviour 3, subgroup VIIb, and group_07_dt.json carries 8158/3 'ACTH-producing tumor' as a VIIb entry. 8158 shared a rule with 8290 until 4 October 2026; the two no longer route alike, because ICCC-2017 gives 8290 no Group VII row and its XIf10 site list excludes 220-238, so 8158 was split into this rule. Without the branch a hepatic ACTH-producing tumour took the shared rule's group 11 default and never reached Group VII -- the same defect the Group VII build corrected for 8170 (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
+        }
+      ],
+      "default": {
+        "group": 11,
+        "subgroup": null
+      }
+    },
+    "8290": {
+      "codes": [
         "8290"
       ],
       "label": "Pituitary tumour, NOS",
@@ -1005,11 +1061,48 @@
         "subgroup": null
       }
     },
-    "9260": {
+    "9364": {
       "codes": [
-        "9260"
+        "9364"
       ],
       "label": "Ewing sarcoma",
+      "topography_dependent": true,
+      "discriminator": "tumour_origin",
+      "branches": [
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "bone"
+          },
+          "result": {
+            "group": 8,
+            "subgroup": "VIIIc2"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "tumour_origin",
+            "equals": "soft_tissue"
+          },
+          "result": {
+            "group": 9,
+            "subgroup": "IXd2"
+          }
+        }
+      ],
+      "default": {
+        "group": null,
+        "subgroup": null,
+        "requires_disambiguation": true,
+        "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
+      },
+      "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
+    },
+    "9365": {
+      "codes": [
+        "9365"
+      ],
+      "label": "Askin tumour",
       "topography_dependent": true,
       "discriminator": "tumour_origin",
       "branches": [
@@ -1039,7 +1132,8 @@
         "subgroup": null,
         "requires_disambiguation": true,
         "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
-      }
+      },
+      "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
     },
     "8963": {
       "codes": [
@@ -1091,6 +1185,20 @@
             "group": 6,
             "subgroup": "VIa2"
           }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIa2"
+          },
+          "note": "At the liver (C22.0, C22.1) a rhabdoid tumour is ICCC-3 Group VII, subgroup VIIa2, rhabdoid hepatic tumour.",
+          "authoring_note": "ICCC-2017 range 68: 8963 at sites 220,221, behaviour 3, is VIIa2. Without this branch a hepatic rhabdoid tumour fell to the Group IX IXd3 default, whose site list (000-218,239-639,659-699,739-768,809) excludes 220-238. Added by the Group VII build, 2 October 2026 (Group 7 build contract Sec.7.1)."
         }
       ],
       "default": {
@@ -1098,6 +1206,35 @@
         "subgroup": "IXd3"
       },
       "cns_topography_extended_note": "Extended from the three NOS-level codes C70.9/C71.9/C72.9 to all 21 codes in C70.0-C72.9 during the Group VI build, 22 September 2026. The note this replaces said to extend it \"when Group III is authored\"; Group III was authored on 16 September 2026 and topography_codes.json now enumerates every CNS subsite, so the note's premise was false on its face (docs/TODO.md Sec.12, Group 6 build contract Sec.7.2b). Before this, a case at a SPECIFIC CNS subsite -- C71.6 cerebellum, say -- missed the branch and fell to the default, which ICCC-2017 does not admit at a CNS site at all. For 8963 the default is Group IX IXd3, whose ICCC-2017 site list (000-218,239-639,659-699,739-768,809) excludes 700-729 entirely, so a rhabdoid tumour at a specific CNS subsite named a group ICCC-2017 does not admit there and never reached 9508/3 Atypical teratoid/rhabdoid tumour."
+    },
+    "8991": {
+      "codes": [
+        "8991"
+      ],
+      "label": "Embryonal sarcoma",
+      "topography_dependent": true,
+      "discriminator": "site",
+      "branches": [
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIa3"
+          },
+          "note": "At the liver (C22.0, C22.1) an embryonal sarcoma is ICCC-3 Group VII, subgroup VIIa3, embryonal sarcoma of liver.",
+          "authoring_note": "ICCC-2017 range 69: 8991 at sites 220,221, behaviour 3, is VIIa3 (Group 7 build contract Sec.0.2 point 2, Sec.7.1)."
+        }
+      ],
+      "default": {
+        "group": 9,
+        "subgroup": "IXa"
+      },
+      "default_note": "ICCC-2017 range 91 places 8991 in IXa, rhabdomyosarcomas, at sites 000-218,239-809 -- every site except the liver. Rule added by the Group VII build, 2 October 2026; ownership agreed with the Group IX session the same day."
     },
     "8170": {
       "codes": [
@@ -1121,9 +1258,10 @@
         }
       ],
       "default": {
-        "group": 11,
-        "subgroup": null
-      }
+        "group": 7,
+        "subgroup": "VIIb"
+      },
+      "default_corrected_note": "Default changed from group 11 to group 7 VIIb during the Group VII build, 2 October 2026. ICCC-2017 range 71 places 8160-8162 and 8170-8180 in VIIb at sites 000-809, any site, and no Group XI range carries 8170 at all, so the group 11 default had no basis in the recode (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
     },
     "8000-8005": {
       "codes": [
@@ -1183,6 +1321,44 @@
             "subgroup": "VIc"
           },
           "note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C40.0",
+              "C40.1",
+              "C40.2",
+              "C40.3",
+              "C40.8",
+              "C40.9",
+              "C41.0",
+              "C41.1",
+              "C41.2",
+              "C41.3",
+              "C41.4",
+              "C41.8",
+              "C41.9"
+            ]
+          },
+          "result": {
+            "group": 8,
+            "subgroup": "VIIIe"
+          },
+          "authoring_note": "ICCC-2017 range 71: 8000-8005 at sites 400-419, behaviour 3, is subgroup VIIIe, Unspecified malignant bone tumors; XIIb (range 143) excludes 400-419. The branch records the ICCC-3 fact; it changes nothing on screen, because app.js reads resolveGroup() only for `note` and this branch has none, and nothing reads the routed group (the bone tree's own 8000 entry already carries VIIIe). Added in the Group VIII build, 2 October 2026; Group VII appends a disjoint C22 branch."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIc"
+          },
+          "note": "At the liver (C22.0, C22.1) a malignant neoplasm with no specific type is ICCC-3 Group VII, subgroup VIIc, unspecified malignant hepatic tumours.",
+          "authoring_note": "ICCC-2017 range 72: 8000-8005 at sites 220,221, behaviour 3, is VIIc. Without this branch a liver case coded 8000/3 fell to the Group XII default, whose XIIb site list excludes 220-238. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5 (Group 7 build contract Sec.0.6, Sec.7.1)."
         }
       ],
       "default": {

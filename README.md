@@ -167,6 +167,12 @@ cross-layer references, and the checks that exist because their absence would be
   one field that can make a case look better worked up than it is. A typo never matches (the
   suppression quietly does nothing); a value the code does not require is an inert no-op that
   still reads as a live claim.
+- **`outstanding_tests` guard** — the reverse field: a branch names tests its finding leaves owed,
+  which `app.js` adds to the outstanding-workup rows. Same closed vocabulary; it must sit on a
+  code-emitting branch and never repeat a value from `satisfies_tests`.
+- **`non_reportable_heading` guard** — a non-reportable terminal may name what the lesion is
+  ("Benign neoplasm (benign tumour)") in place of the generic banner; the field must sit on a
+  `non_reportable` branch and be a non-empty string, or `app.js` silently ignores it.
 - **`refer_group` shape** — a referral must name a different ICCC-3 group, carry no
   morphology code, and put its clerk-facing text in `reason` (`coding_note` is not rendered).
 
@@ -184,9 +190,11 @@ green build.
 
 ## Status
 
-**Groups 1 to 6 are built and passing.** `data/database/` carries `group_01_dt.json` through
-`group_06_dt.json` with an alias file for each. The router declares Groups 7 to 12
-`built: false` and the tool says "not yet available" rather than throwing.
+**Groups 1 to 7 are built and passing.** `data/database/` carries `group_01_dt.json` through
+`group_07_dt.json` with an alias file for each. The router declares Groups 8 to 12
+`built: false` and the tool says "not yet available" rather than throwing. Group 7, hepatic
+tumours, was built on `claude/group-7-tumor-pathway-a88513`; its build report is
+`docs/group_07_build_report.md` and its open registrar questions `docs/group_07_open_questions.md`.
 `python3 build/build_database.py` reports `BUILD PASSED`.
 
 Group 1's 15 `refer_group` branches resolve — building Group II cleared that debt.

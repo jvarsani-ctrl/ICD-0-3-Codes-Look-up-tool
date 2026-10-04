@@ -33,12 +33,18 @@
       "organ": "bone",
       "topography_range": "C40-C41",
       "codes": [
+        "C40.0",
+        "C40.1",
+        "C40.2",
+        "C40.3",
+        "C40.8",
         "C40.9",
         "C41.0",
         "C41.1",
         "C41.2",
         "C41.3",
         "C41.4",
+        "C41.8",
         "C41.9"
       ],
       "candidate_groups": [
@@ -471,6 +477,51 @@
         6
       ]
     },
+    "C40.0": {
+      "code": "C40.0",
+      "label": "Long bones of upper limb, scapula and associated joints",
+      "redcap_code": "400",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
+    "C40.1": {
+      "code": "C40.1",
+      "label": "Short bones of upper limb and associated joints",
+      "redcap_code": "401",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
+    "C40.2": {
+      "code": "C40.2",
+      "label": "Long bones of lower limb and associated joints",
+      "redcap_code": "402",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
+    "C40.3": {
+      "code": "C40.3",
+      "label": "Short bones of lower limb and associated joints",
+      "redcap_code": "403",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
+    "C40.8": {
+      "code": "C40.8",
+      "label": "Overlapping lesion of bones, joints and articular cartilage of limbs",
+      "redcap_code": "408",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
     "C40.9": {
       "code": "C40.9",
       "label": "Bone of limb, NOS",
@@ -520,6 +571,15 @@
       "code": "C41.4",
       "label": "Pelvic bones, sacrum, coccyx and associated joints",
       "redcap_code": "414",
+      "coarse_organ": "bone",
+      "candidate_groups": [
+        8
+      ]
+    },
+    "C41.8": {
+      "code": "C41.8",
+      "label": "Overlapping lesion of bones, joints and articular cartilage",
+      "redcap_code": "418",
       "coarse_organ": "bone",
       "candidate_groups": [
         8

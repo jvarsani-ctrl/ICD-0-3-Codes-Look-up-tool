@@ -193,6 +193,25 @@ criteria in build contract §4.2 rather than leaving them resting on a single no
 
 ---
 
+## Group 7 — Hepatic Tumours, requested 2 October 2026
+
+### 11. WHO Classification of Tumours, Paediatric Tumours (volume 7) — the liver chapter, or Pfister 2022 Table 3
+
+Pfister SM, et al. *Cancer Discovery* 2022;12(2):331–355 is held in full text (PMC9401511), but its Table 3,
+*Classification of pediatric solid tumors*, is published as an image and could not be read. **What it would
+settle:** whether the WHO paediatric volume assigns an ICD-O code to *hepatocellular malignant neoplasm, NOS*
+(the consensus HCN-NOS category). ICD-O-3.2 has no term for it, so the tool records `8000/3` until the
+registrar rules between `8970/3` and `8170/3` (Group 7 build contract §3.3).
+
+### 12. WHO Classification of Tumours, Digestive System Tumours (volume 1, 2019) — the liver chapter
+
+Nagtegaal 2019, the summary, names no hepatocellular carcinoma subtype and prints no code. **What it would
+settle:** which WHO 2019 hepatocellular carcinoma subtypes carry their own ICD-O-3.2 code (`8171`–`8175` are
+built from ICD-O-3.2 itself), and the WHO code for hepatic mucinous cystic neoplasm with an associated
+invasive carcinoma, which the tree records at `8470/3` or `8161/3` by the report's wording (contract §3.5).
+
+---
+
 ## One paper already on disk that nobody listed
 
 **Mudassar M, et al.** *Sub-categorization of Pediatric Small Round Blue Cell Tumors using
