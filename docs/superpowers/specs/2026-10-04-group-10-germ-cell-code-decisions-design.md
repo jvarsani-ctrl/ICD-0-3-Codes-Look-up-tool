@@ -189,8 +189,8 @@ the file; who should be screened is a clinical question (ruling 9).
 | Malignant Leydig cell tumour | `8650/3` |
 | Malignant steroid cell tumour | `8670/3` |
 | Malignant thecoma | `8600/3` |
-| Malignant androblastoma | `8630/3` |
 | Sex cord-stromal tumour, type not stated | exclusion `8590/1` |
+| Malignant androblastoma | not on the tree: ICD-O-3.2 marks *Androblastoma, malignant* `[obs]`; the entry `8630/3` stays in the inventory |
 | Any other benign or borderline sex cord–stromal tumour | its own exclusion |
 
 **The registrar question.** Juvenile granulosa cell tumour is the commonest sex cord–stromal
