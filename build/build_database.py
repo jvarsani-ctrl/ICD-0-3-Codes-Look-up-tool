@@ -754,6 +754,10 @@ GROUP7 = 7
 # GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs the name at module load time.
 GROUP8 = 8
 
+# Group 10 build contract §5 — Germ Cell, Trophoblastic and Gonadal Tumours. Defined here for
+# the same reason as GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs the name at module load time.
+GROUP10 = 10
+
 # Which groups have ADOPTED behaviour_exclusion, and what each one's ICCC-3 behaviour
 # declaration actually is. Read by check_behaviour_exclusion(), whose "subtle clause"
 # fails a block naming a behaviour the group DOES admit — so this table decides the
@@ -780,12 +784,20 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     # GROUP8 added 2 October 2026 (Group 8 build contract §0.2, §7). ICCC-2017.sqlite
     # ranges 59-71 (main_group VIII) declare icdo3_behavior "3" on every row.
     GROUP8: {"3"},
+    # GROUP10 added 4 October 2026 (Group 10 build contract §5). ICCC-2017.sqlite ranges
+    # 100-117 (Xb, Xc, Xd, Xe) declare behaviour 3 only; ranges 94-99 (Xa, the central
+    # nervous system) also admit behaviours 0 and 1. This row is the declaration outside the
+    # central nervous system, where every behaviour_exclusion sits. Behaviour per site is
+    # enforced by check_group10_codes_fit_site() (rule 1), which reads the ranges themselves.
+    GROUP10: {"3"},
 }
 
 # Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip()
 # INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
 # this one set: a group in one and not the other would get neither name check.
-ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP7, GROUP8}
+# GROUP10 joins on its build contract §5: morphology_name is the ICD-O-3.2 preferred term,
+# and x_morph drifts from it on 64 codes.
+ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP7, GROUP8, GROUP10}
 
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
@@ -2859,8 +2871,8 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
                        "carries that ICD-O-3.2 does not, where this check would have "
                        "inherited them. Group 7 joins on its own contract §2E, for ten "
                        "drifts; Group 8 on its contract §2, whose viii_morph offers "
-                       "Ewing sarcoma on the retired number 9260. Groups 1 and 2 are "
-                       "unaffected."
+                       "Ewing sarcoma on the retired number 9260; Group 10 on its "
+                       "contract §5. Groups 1 and 2 are unaffected."
                        % ctx.group)]
     options = redcap_options.get(ctx.group)
     if not options:
@@ -6220,6 +6232,7 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     """
     # GROUP8 joins the guard (Group 8 build contract §1, §7): morphology_name is the
     # ICD-O-3.2 preferred term and viii_morph drifts from it on nine codes (§2).
+    # GROUP10 joins on the same ground (Group 10 build contract §5).
     if ctx.group not in ROUND_TRIP_GROUPS:
         return []
     index, err = load_icdo32(layer1)
@@ -9244,6 +9257,531 @@ def check_group8_ewing_requires_partner(ctx: DTContext):
     return out
 
 
+# --------------------------------------------------------------------------------------
+# Group 10 build contract §5 — Germ Cell, Trophoblastic and Gonadal Tumours. Four rules,
+# scoped to Group 10 and a no-op on every other group's file. GROUP10 is defined beside
+# GROUP8, above BEHAVIOUR_DECLARED_BY_GROUP.
+#
+# ICCC-3 Group X places one (code, behaviour) in up to three subgroups by site: Xa in the
+# central nervous system (ranges 94-99, behaviours 0, 1 and 3), Xb at every other
+# extragonadal site (100-105), Xc in the gonads (106-112). The ranges are read from
+# ICCC-2017.sqlite on every build; nothing below types a range.
+# --------------------------------------------------------------------------------------
+
+GROUP10_SITE_UNSTATED_TREE = "g10_site_unstated"
+GROUP10_EXTRAGONADAL_TREE = "g10_extragonadal"
+# Contract §3.1. ICCC-2017 fixes which topographies are Xa, Xb and Xc; the Xc topographies
+# (569, 620-629) are split between the two gonad trees by their ICD-O-3 topography heading,
+# C56 Ovary and C62 Testis.
+GROUP10_TREE_BY_SITE_FAMILY = {"Xa": "g10_cns", "Xb": "g10_extragonadal"}
+GROUP10_GONAD_TREE_BY_HEADING = {"C56": "g10_ovary", "C62": "g10_testis"}
+# Contract §0.5. Visser O, et al. Front Oncol 2023;13:1250549: rule 5 (p. 03) registers a
+# case without pathology as 8000/3 at basis 1 or 2; Table 4 (p. 06) registers a germ cell
+# tumour with a raised human chorionic gonadotropin as 9064/3, with a raised
+# alpha-fetoprotein as 9065/3, and choriocarcinoma of the placenta with a raised human
+# chorionic gonadotropin as 9100/3, at basis 4; rule 6 (p. 05) makes basis 4 need a clinical
+# investigation that shows the tumour.
+GROUP10_TISSUE_TESTS = {"Histology", "Cytology"}
+GROUP10_MARKER_EVIDENCE = {"Imaging", "Tumour markers"}
+GROUP10_NO_TISSUE_CLINICAL_PAIRS = {("8000", "3")}
+GROUP10_MARKER_PAIRS = {("9064", "3"), ("9065", "3")}
+GROUP10_PLACENTAL_MARKER_PAIR = ("9100", "3")
+# Design D21 builds "Teratoma" as the behaviour-neutral alias of 9080 and 9084. Rule 3 reads
+# "Teratoma" as ICD-O-3.2's "Teratoma, NOS" (9080/1), because it reads "X" and "X, NOS" as
+# one term, so without this entry D21's own built alias fails it. The exemption covers that
+# string mapped to exactly those two codes and nothing else; the same string mapped to any
+# other code set is checked as usual.
+GROUP10_D21_NEUTRAL_ALIASES = {"teratoma": frozenset({"9080", "9084"})}
+
+_ICCC_X_CACHE: dict = {}
+
+
+def _iccc_spans(raw):
+    """ICCC-2017 raw token string -> [(lo, hi)]: '000-559,809' -> [(0, 559), (809, 809)]."""
+    spans = []
+    for token in str(raw or "").split(","):
+        token = token.strip()
+        if not token:
+            continue
+        lo, _, hi = token.partition("-")
+        spans.append((int(lo), int(hi or lo)))
+    return spans
+
+
+def _in_spans(spans, value):
+    return any(lo <= value <= hi for lo, hi in spans)
+
+
+def _group10_iccc_ranges(layer1):
+    """
+    Every ICCC-2017 range for main group X, read from ICCC-2017.sqlite: a list of
+    {range_id, subgroup, codes, sites, behaviours}, where codes and sites are (lo, hi) spans
+    of the four-digit morphology and the three-digit topography, and behaviours is the set
+    the range declares ('0-1,3' -> {'0', '1', '3'}). Returns (ranges, error_or_None).
+    """
+    path = _iccc_path(layer1)
+    if path is None or not path.exists():
+        return [], "ICCC-2017.sqlite not found at %s" % path
+    key = str(path)
+    if key in _ICCC_X_CACHE:
+        return _ICCC_X_CACHE[key], None
+    ranges = []
+    con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
+    try:
+        for range_id, subgroup, hist, sites, beh in con.execute(
+                "SELECT cr.range_id, g.group_code, cr.icdo3_histology_raw, "
+                "cr.icdo3_primary_site_raw, cr.icdo3_behavior FROM code_ranges cr "
+                "JOIN groups g ON g.group_id = cr.group_id WHERE g.main_group = 'X' "
+                "ORDER BY cr.range_id"):
+            behaviours = set()
+            for lo, hi in _iccc_spans(beh):
+                behaviours.update(str(b) for b in range(lo, hi + 1))
+            ranges.append({"range_id": range_id, "subgroup": str(subgroup),
+                           "codes": _iccc_spans(hist), "sites": _iccc_spans(sites),
+                           "behaviours": behaviours})
+    finally:
+        con.close()
+    if not ranges:
+        return [], "ICCC-2017.sqlite at %s holds no range for main group X" % path
+    _ICCC_X_CACHE[key] = ranges
+    return ranges, None
+
+
+def _group10_fitting_ranges(ranges, code, behaviour, sites):
+    """The Group X ranges that contain the code, declare the behaviour and cover at least one
+    of the three-digit topographies in `sites`."""
+    if not code or not str(code).isdigit() or behaviour is None:
+        return []
+    return [r for r in ranges
+            if _in_spans(r["codes"], int(code)) and str(behaviour) in r["behaviours"]
+            and any(_in_spans(r["sites"], s) for s in sites)]
+
+
+def _group10_behaviour(value):
+    return None if value is None else str(value).strip()
+
+
+def _group10_emissions(ctx: DTContext):
+    """
+    Yield (node_id, where, code, behaviour) for every (code, behaviour) a node can emit: code
+    branches on options, resolution_logic (the immunohistochemistry rules), bands and
+    override_when; an imaging_pathway node's own code; and the nos_fallback code.
+    """
+    for node_id, node in ctx.nodes.items():
+        for holder, where in _branch_containers(node):
+            code = as_code(holder.get("morphology_code"))
+            if code:
+                what = holder.get("label") or holder.get("finding") or holder.get("positive")
+                yield (node_id, "%s %r" % (where, what), code,
+                       _group10_behaviour(holder.get("behavior_code")))
+        if node.get("node_type") == "imaging_pathway" and as_code(node.get("morphology_code")):
+            yield (node_id, "imaging_pathway", as_code(node.get("morphology_code")),
+                   _group10_behaviour(node.get("behavior_code")))
+        fb = node.get("nos_fallback")
+        if isinstance(fb, dict) and as_code(fb.get("code")):
+            yield (node_id, "nos_fallback", as_code(fb.get("code")),
+                   _group10_behaviour(fb.get("behavior_code")))
+
+
+def _group10_exclusions(ctx: DTContext):
+    """Yield (node_id, where, code, behaviour) for every behaviour_exclusion block."""
+    for node_id, node in ctx.nodes.items():
+        for holder, where in walk_dicts(node):
+            be = holder.get("behaviour_exclusion")
+            if isinstance(be, dict):
+                yield (node_id, "%s %r" % (where, holder.get("label")),
+                       as_code(be.get("icdo_code")),
+                       _group10_behaviour(be.get("icdo_behaviour")))
+
+
+def _group10_route(tree_routing, topo):
+    """app.js routedTree(): the first tree_routing rule whose topography_in holds the code,
+    else the default. Matches literally, as firstTopographyMatch() does."""
+    for rule in tree_routing.get("rules") or []:
+        if isinstance(rule, dict) and topo in (rule.get("topography_in") or []):
+            return rule.get("tree_id")
+    return (tree_routing.get("default") or {}).get("tree_id")
+
+
+def _group10_tree_routing(repo: Path):
+    """(groups["10"].tree_routing or None, topography_lookup, findings) from the router and
+    data/shared/topography_codes.json."""
+    router, found = load_json(Path(repo) / "data" / "shared" / "presentation_router.json")
+    lookup, found_t = _load_topography_lookup(repo)
+    findings = [f for f in found + found_t if f[0] == FAIL]
+    group = ((router or {}).get("groups") or {}).get(str(GROUP10)) if isinstance(router, dict) \
+        else None
+    tr = group.get("tree_routing") if isinstance(group, dict) else None
+    return (tr if isinstance(tr, dict) else None), lookup, findings
+
+
+def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
+    """
+    GROUP 10 RULE 1 (contract §5) — every code a site tree emits is a Group X code at that
+    tree's site, every behaviour exclusion is not, and g10_site_unstated emits nothing.
+
+    Source: ICCC-2017.sqlite, ranges 94-117 (main group X), read on every build. Xa admits
+    behaviours 0, 1 and 3 in the central nervous system; every other range admits 3 only.
+    So 9080/0 is a Group X code in g10_cns and a behaviour exclusion everywhere else, and the
+    reverse of either is a defect.
+
+    A tree's site is the set of topographies the router sends to it: every code in
+    topography_codes.json's lookup, and every code a tree_routing rule names, resolved the
+    way app.js routedTree() resolves it (first rule whose topography_in holds the code, else
+    the default). The router is what puts a case in a tree, so the tree's own `topography`
+    field is not read. Rule 4 holds the router to ICCC-2017 (Xa to g10_cns, Xb to
+    g10_extragonadal), so the extragonadal tree's site is the Xb ranges.
+
+    An emission (code branch, immunohistochemistry rule, nos_fallback) fits when some Group X
+    range contains the code, declares the behaviour, and covers at least one topography of
+    the tree that holds the node. A behaviour_exclusion fails when any such range exists:
+    it hides a code the group registers. g10_site_unstated routes by cross-tree next_node
+    and holds neither.
+    """
+    if ctx.group != GROUP10:
+        return []
+    ranges, err = _group10_iccc_ranges(layer1)
+    if err:
+        return [(WARN, "GROUP 10 RULE 1 could not read the ICCC-2017 Group X ranges: %s. No "
+                       "emitted code is checked against its site" % err)]
+    tr, lookup, out = _group10_tree_routing(repo)
+    if tr is None:
+        return out + [(FAIL, "GROUP 10 RULE 1: presentation_router.json has no "
+                             "groups[\"10\"].tree_routing, so no tree has a site and no code "
+                             "can be checked against one")]
+    topos = set(lookup)
+    for rule in tr.get("rules") or []:
+        if isinstance(rule, dict):
+            topos.update(t for t in rule.get("topography_in") or [] if isinstance(t, str))
+    sites_by_tree: dict = {}
+    for topo in topos:
+        if _TOPO_RE.match(topo):
+            sites_by_tree.setdefault(_group10_route(tr, topo), set()).add(_topo_index(topo))
+
+    def holders(code):
+        hit = [r for r in ranges if code and code.isdigit() and _in_spans(r["codes"], int(code))]
+        return ", ".join("%d (%s, behaviour %s)" % (r["range_id"], r["subgroup"],
+                                                    ",".join(sorted(r["behaviours"])))
+                         for r in hit) or "none"
+
+    checked, excluded = 0, 0
+    for node_id, where, code, beh in _group10_emissions(ctx):
+        tree = ctx.node_tree.get(node_id)
+        if tree == GROUP10_SITE_UNSTATED_TREE:
+            out.append((FAIL, "%s %s: %s emits %s/%s. %s routes by cross-tree next_node and "
+                              "emits nothing (contract §4.5)"
+                        % (tree, node_id, where, code, beh, GROUP10_SITE_UNSTATED_TREE)))
+            continue
+        checked += 1
+        sites = sites_by_tree.get(tree, set())
+        if not _group10_fitting_ranges(ranges, code, beh, sites):
+            out.append((FAIL, "%s %s: %s emits %s/%s, which no ICCC-2017 Group X range admits "
+                              "at the %d topography code(s) the router sends to this tree. "
+                              "Ranges holding %s: %s"
+                        % (tree, node_id, where, code, beh, len(sites), code, holders(code))))
+    for node_id, where, code, beh in _group10_exclusions(ctx):
+        tree = ctx.node_tree.get(node_id)
+        if tree == GROUP10_SITE_UNSTATED_TREE:
+            out.append((FAIL, "%s %s: %s excludes %s/%s. %s routes by cross-tree next_node "
+                              "and holds no terminal (contract §4.5)"
+                        % (tree, node_id, where, code, beh, GROUP10_SITE_UNSTATED_TREE)))
+            continue
+        excluded += 1
+        fit = _group10_fitting_ranges(ranges, code, beh, sites_by_tree.get(tree, set()))
+        if fit:
+            out.append((FAIL, "%s %s: %s excludes %s/%s, but ICCC-2017 range %d (%s) admits "
+                              "it at this tree's site, so the exclusion hides a Group X code"
+                        % (tree, node_id, where, code, beh, fit[0]["range_id"],
+                           fit[0]["subgroup"])))
+    if not checked:
+        out.append((FAIL, "GROUP 10 RULE 1 found no emitted code in any site tree"))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 10 RULE 1: %d emission(s) each lie in an ICCC-2017 Group X "
+                        "range covering the tree's routed site at that behaviour; %d behaviour "
+                        "exclusion(s) lie in none; %s emits nothing"
+                        % (checked, excluded, GROUP10_SITE_UNSTATED_TREE)))
+    return out
+
+
+def check_group10_no_pathology_codes(ctx: DTContext):
+    """
+    GROUP 10 RULE 2 (contract §5) — a terminal reached with neither histology nor cytology in
+    the file registers what Visser 2023 allows and nothing more specific.
+
+    Source: Visser O, et al. Front Oncol 2023;13:1250549. Rule 5 (p. 03): without pathology,
+    8000/3 at basis 1 or 2. Table 4 (p. 06): a germ cell tumour with a raised human chorionic
+    gonadotropin is 9064/3, with a raised alpha-fetoprotein 9065/3, and choriocarcinoma of
+    the placenta with a raised human chorionic gonadotropin 9100/3, all at basis 4. Rule 6
+    (p. 05): basis 4 needs a clinical investigation showing the tumour, here an imaging
+    report. Rule 4 (p. 03): "possible" is not registrable.
+
+    So on such a path: basis 1 and 2 emit only 8000/3; basis 4 emits only 9064/3 or 9065/3,
+    or 9100/3 in g10_extragonadal, and only where the path's evidence holds both Imaging and
+    Tumour markers; no other basis is reachable.
+
+    Keyed off the PATH. The walk (_group8_terminals_by_evidence, which reads only the tree)
+    starts at each tree's entry and carries evidence_tests the way app.js capture() does,
+    each capture replacing the last, so a terminal's evidence is what the clerk said is on
+    file on the way to it. Neither the branch's own basis_of_diagnosis nor the
+    basis_evidence_tier flag can make a terminal pass.
+    """
+    if ctx.group != GROUP10:
+        return []
+    out, checked = [], 0
+    for node_id, b, ev in _group8_terminals_by_evidence(ctx):
+        if ev is not None and GROUP10_TISSUE_TESTS & set(ev):
+            continue
+        checked += 1
+        code = as_code(b.get("morphology_code"))
+        src = b
+        if b.get("_fallback"):
+            src = ctx.nodes[node_id].get("nos_fallback") or {}
+        beh = _group10_behaviour(src.get("behavior_code"))
+        basis = src.get("basis_of_diagnosis")
+        try:
+            basis = int(basis)
+        except (TypeError, ValueError):
+            pass
+        tree = ctx.node_tree.get(node_id)
+        label = b.get("label") or b.get("finding") or ("nos_fallback" if b.get("_fallback")
+                                                       else node_id)
+        held = list(ev) if ev is not None else []
+        where = "%s %s: %r, reached with evidence %s" % (tree, node_id, label, held)
+        if basis in (1, 2):
+            if (code, beh) not in GROUP10_NO_TISSUE_CLINICAL_PAIRS:
+                out.append((FAIL, "%s, emits %s/%s at basis %d. Without pathology Group X "
+                                  "registers 8000/3 at basis 1 or 2 (Visser 2023 rule 5, "
+                                  "p. 03)" % (where, code, beh, basis)))
+        elif basis == 4:
+            allowed = set(GROUP10_MARKER_PAIRS)
+            if tree == GROUP10_EXTRAGONADAL_TREE:
+                allowed.add(GROUP10_PLACENTAL_MARKER_PAIR)
+            if (code, beh) not in allowed:
+                out.append((FAIL, "%s, emits %s/%s at basis 4. Basis 4 registers 9064/3 or "
+                                  "9065/3, and 9100/3 for choriocarcinoma of the placenta in "
+                                  "%s only (Visser 2023 Table 4, p. 06)"
+                            % (where, code, beh, GROUP10_EXTRAGONADAL_TREE)))
+            elif not GROUP10_MARKER_EVIDENCE <= set(held):
+                out.append((FAIL, "%s, emits %s/%s at basis 4 without both Imaging and Tumour "
+                                  "markers on the path. Basis 4 needs a marker result and a "
+                                  "clinical investigation showing the tumour (Visser 2023 "
+                                  "Table 4, p. 06; rule 6, p. 05)" % (where, code, beh)))
+        else:
+            out.append((FAIL, "%s, emits %s/%s at basis %r with no histology or cytology in the "
+                              "file. Without pathology Group X registers at basis 1, 2 or 4 "
+                              "only (Visser 2023 rules 5-6, Table 4)"
+                        % (where, code, beh, basis)))
+    if not checked:
+        return [(FAIL, "GROUP 10 RULE 2 found no terminal reachable without histology or "
+                       "cytology: the referral, imaging and marker routes are missing or the "
+                       "walk is broken")]
+    if not out:
+        out.append((OK, "GROUP 10 RULE 2: %d terminal(s) reachable without histology or "
+                        "cytology, each emitting 8000/3 at basis 1 or 2, or a Visser Table 4 "
+                        "code at basis 4 with Imaging and Tumour markers on the path" % checked))
+    return out
+
+
+def _group10_term_key(text):
+    """Comparison form for an alias or an ICD-O-3.2 term: case and whitespace folded,
+    'tumour' read as 'tumor', and a trailing ', NOS' dropped, so "Mature teratoma" meets
+    ICD-O-3.2's "Mature teratoma, NOS"."""
+    key = " ".join(str(text).lower().split()).replace("tumour", "tumor")
+    return key[:-len(", nos")] if key.endswith(", nos") else key
+
+
+def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: Path):
+    """
+    GROUP 10 RULE 3 (contract §5, §6) — an alias that is an ICD-O-3.2 term says what
+    ICD-O-3.2 says, at every behaviour the group emits.
+
+    Source: icdo32.sqlite, every level (Preferred, Synonym, Related), [obs] terms excluded;
+    design D21. app.js lists aliases under "Also called" by four-digit code, so an alias on
+    9080 appears on every 9080 output whatever its behaviour. For every alias in
+    aliases_group_10.json whose text equals an ICD-O-3.2 term (case folded, tumour/tumor
+    normalised, a trailing ", NOS" dropped):
+
+      * every code the alias maps to is a code ICD-O-3.2 files that term under;
+      * the group emits that code at the term's behaviour and at no other (D21). The
+        emitted set is read from the trees (code branches, immunohistochemistry rules,
+        nos_fallback), not from the entries.
+
+    And no alias containing "germinoma" but not "dysgerminoma" maps to 9060 Dysgerminoma:
+    ICD-O-3.2 files Germinoma under 9064.
+
+    One exemption, GROUP10_D21_NEUTRAL_ALIASES: D21 builds "Teratoma" on 9080 and 9084 as
+    the behaviour-neutral alias. With the alias file absent (Task T5 has not run) this
+    returns a NOTE and checks nothing.
+    """
+    if ctx.group != GROUP10:
+        return []
+    path = Path(repo) / "data" / "aliases" / "aliases_group_10.json"
+    if not path.exists():
+        return [(NOTE, "GROUP 10 RULE 3: %s is not present (contract Task T5 writes it); no "
+                       "alias is checked against icdo32.sqlite" % path.name)]
+    aliases, found = load_json(path)
+    out = [f for f in found if f[0] == FAIL]
+    if isinstance(aliases, dict):
+        aliases = aliases.get("aliases")
+    if not isinstance(aliases, list):
+        return out + [(FAIL, "GROUP 10 RULE 3: %s holds no alias list, so no alias could be "
+                             "checked" % path.name)]
+    index, err = load_icdo32(layer1)
+    if err:
+        return out + [(WARN, "GROUP 10 RULE 3 could not read icdo32.sqlite: %s. No alias is "
+                             "checked against ICD-O-3.2" % err)]
+    terms: dict = {}
+    for (code, beh), bucket in index.items():
+        for term, (_level, obs) in bucket.items():
+            if not obs:
+                terms.setdefault(_group10_term_key(term), {})[(code, beh)] = term
+    emitted: dict = {}
+    for _node, _where, code, beh in _group10_emissions(ctx):
+        emitted.setdefault(code, set()).add(beh)
+
+    matched, neutral = 0, 0
+    for a in aliases:
+        if not isinstance(a, dict):
+            continue
+        text = a.get("alias")
+        maps = [str(c) for c in a.get("maps_to_morphology_codes") or []]
+        low = str(text).lower()
+        if "germinoma" in low and "dysgerminoma" not in low and "9060" in maps:
+            out.append((FAIL, "alias %r maps to 9060 Dysgerminoma. ICD-O-3.2 files Germinoma "
+                              "under 9064" % text))
+        key = _group10_term_key(text)
+        hits = terms.get(key)
+        if not hits:
+            continue
+        if key in GROUP10_D21_NEUTRAL_ALIASES and set(maps) == GROUP10_D21_NEUTRAL_ALIASES[key]:
+            neutral += 1
+            continue
+        matched += 1
+        term_codes = {c for c, _b in hits}
+        named = "; ".join("%r at %s/%s" % (t, c, b) for (c, b), t in sorted(hits.items()))
+        for m in maps:
+            if m not in term_codes:
+                out.append((FAIL, "alias %r is the ICD-O-3.2 term %s, and maps to %s, a code "
+                                  "ICD-O-3.2 does not file it under" % (text, named, m)))
+        for c in sorted(term_codes & set(maps)):
+            term_behs = {b for cc, b in hits if cc == c}
+            em = emitted.get(c, set())
+            if not em or not em <= term_behs:
+                out.append((FAIL, "D21 — alias %r is the ICD-O-3.2 term %s, and Group X emits "
+                                  "%s at behaviour(s) %s. \"Also called\" lists aliases by "
+                                  "four-digit code, so the alias would stand on outputs it is "
+                                  "not true of (design D21)"
+                            % (text, named, c, ", ".join(sorted(em)) or "none")))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 10 RULE 3: %d alias(es) in %s; %d equal an ICD-O-3.2 term and "
+                        "map to its code, which Group X emits at that term's behaviour only; "
+                        "%d D21 behaviour-neutral alias(es); no germinoma alias maps to 9060"
+                        % (len(aliases), path.name, matched, neutral)))
+    return out
+
+
+def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path):
+    """
+    GROUP 10 RULE 4 (contract §5, design D16, D20) — the subgroup the tool shows and the tree
+    the router picks agree with ICCC-2017 at every topography the lookup holds.
+
+    Sources: ICCC-2017.sqlite ranges 94-117; data/shared/presentation_router.json
+    groups["10"].tree_routing; data/shared/topography_codes.json topography_lookup.
+
+    Subgroups. For every entry and every lookup topography where ICCC-2017 places the entry's
+    (code, behaviour) in Group X, the subgroup app.js subgroupFor() shows (the first
+    iccc3_subgroup_by_topography rule whose topography_in holds the code, else the entry's
+    own iccc3_subgroup_id) is a subgroup ICCC-2017 gives that pair at that topography.
+
+    Routing. The router, resolved as app.js routedTree() resolves it, sends every Xa
+    topography (ICCC-2017 ranges 94-99) to g10_cns, every Xc topography under C56 to
+    g10_ovary and under C62 to g10_testis (ranges 106-112), every Xb topography (ranges
+    100-105) to g10_extragonadal, and every other lookup topography to the default, which is
+    g10_site_unstated.
+    """
+    if ctx.group != GROUP10:
+        return []
+    ranges, err = _group10_iccc_ranges(layer1)
+    if err:
+        return [(WARN, "GROUP 10 RULE 4 could not read the ICCC-2017 Group X ranges: %s. "
+                       "Subgroups and routing are NOT checked against the recode" % err)]
+    tr, lookup, out = _group10_tree_routing(repo)
+    topos = sorted(t for t in lookup if isinstance(t, str) and _TOPO_RE.match(t))
+    if not topos:
+        return out + [(FAIL, "GROUP 10 RULE 4: topography_codes.json enumerates no topography "
+                             "code, so no subgroup or route can be checked")]
+
+    pairs, entries_checked = 0, 0
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        beh = _group10_behaviour(entry.get("behavior_code"))
+        rules = entry.get("iccc3_subgroup_by_topography") or []
+        wrong = []
+        for topo in topos:
+            want = {r["subgroup"] for r in
+                    _group10_fitting_ranges(ranges, code, beh, {_topo_index(topo)})}
+            if not want:
+                continue
+            pairs += 1
+            got = entry.get("iccc3_subgroup_id")
+            for rule in rules if isinstance(rules, list) else []:
+                if isinstance(rule, dict) and topo in (rule.get("topography_in") or []):
+                    got = rule.get("iccc3_subgroup_id")
+                    break
+            if got not in want:
+                wrong.append((topo, got, "/".join(sorted(want))))
+        entries_checked += 1
+        if wrong:
+            topo, got, want = wrong[0]
+            out.append((FAIL, "morphology_entries[%d] %s/%s shows subgroup %r at %s, where "
+                              "ICCC-2017 places it in %s; %d lookup topography code(s) "
+                              "disagree in all (%s)"
+                        % (i, code, beh, got, topo, want, len(wrong),
+                           ", ".join(t for t, _g, _w in wrong[:6])
+                           + (", ..." if len(wrong) > 6 else ""))))
+
+    if tr is None:
+        out.append((FAIL, "GROUP 10 RULE 4: presentation_router.json has no "
+                          "groups[\"10\"].tree_routing (contract §3.1)"))
+    else:
+        default = (tr.get("default") or {}).get("tree_id")
+        if default != GROUP10_SITE_UNSTATED_TREE:
+            out.append((FAIL, "GROUP 10 RULE 4: groups[\"10\"].tree_routing.default is %r; a "
+                              "case with no topography, or one outside the Group X germ cell "
+                              "site ranges, goes to %s (contract §3.1, design D16)"
+                        % (default, GROUP10_SITE_UNSTATED_TREE)))
+        family_sites: dict = {}
+        for r in ranges:
+            family = r["subgroup"][:2]
+            if family in ("Xa", "Xb", "Xc"):
+                family_sites.setdefault(family, []).extend(r["sites"])
+        for topo in topos:
+            n = _topo_index(topo)
+            family = next((f for f in ("Xa", "Xb", "Xc")
+                           if _in_spans(family_sites.get(f, []), n)), None)
+            if family == "Xc":
+                want = GROUP10_GONAD_TREE_BY_HEADING.get(topo[:3])
+            elif family:
+                want = GROUP10_TREE_BY_SITE_FAMILY[family]
+            else:
+                want = GROUP10_SITE_UNSTATED_TREE
+            got = _group10_route(tr, topo)
+            if got != want:
+                out.append((FAIL, "GROUP 10 RULE 4: the router sends %s to %r; ICCC-2017 "
+                                  "makes it %s, which goes to %r (contract §3.1)"
+                            % (topo, got, ("an %s topography" % family) if family
+                               else "a topography outside the Group X germ cell site ranges",
+                               want)))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 10 RULE 4: %d entries show the ICCC-2017 subgroup at each of "
+                        "%d (entry, topography) pair(s) ICCC-2017 places in Group X, and the "
+                        "router sends all %d lookup topography codes to the tree ICCC-2017's "
+                        "site ranges give them" % (entries_checked, pairs, len(topos))))
+    return out
+
+
 def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
                                         classification: dict):
     """
@@ -10864,6 +11402,12 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group8_no_retired_ewing_code, ctx, layer1, repo)  # rule 1
         report.run(check_group8_no_pathology_codes, ctx)                   # rule 2
         report.run(check_group8_ewing_requires_partner, ctx)               # rule 3
+        # Group 10 build contract §5 — Germ Cell, Trophoblastic and Gonadal Tumours. Four
+        # rules, scoped to Group 10 and a no-op on any other group's file.
+        report.run(check_group10_codes_fit_site, ctx, layer1, repo)            # rule 1
+        report.run(check_group10_no_pathology_codes, ctx)                      # rule 2
+        report.run(check_group10_alias_terms_match_icdo32, ctx, layer1, repo)  # rule 3
+        report.run(check_group10_subgroups_and_routing, ctx, layer1, repo)     # rule 4
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_redcap_banner_signal, ctx, redcap_options)
