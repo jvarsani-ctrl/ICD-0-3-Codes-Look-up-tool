@@ -205,7 +205,7 @@ On a code-emitting branch or a terminal.
 }
 ```
 
-- `code_status` — `shares_code` | `no_code` | `awaiting_layer1`.
+- `code_status` — `shares_code` | `no_code` | `own_code` (`own_code` replaced `awaiting_layer1` on 4 October 2026: the tool does not verify REDCap, standing rule 16).
 - `no_code` covers the CNS5 entities with no ICD-O-3.2 code at all: PLNTY, MVNT, DLGNT, DGONC,
   CNS neuroblastoma FOXR2-activated, CNS tumour with BCOR ITD, HGAP, infant-type hemispheric
   glioma, diffuse hemispheric glioma H3 G34-mutant, diffuse astrocytoma MYB/MYBL1-altered,

@@ -41,7 +41,6 @@
       ],
       "topography_dependent": false,
       "topography_routing_note": null,
-      "redcap_option_verified": true,
       "upgrade_path": "The only more specific codes in this group — 9511 differentiated, 9512 undifferentiated, 9513 diffuse — are read off an enucleation or exenteration pathology report. Enucleation is a TREATMENT decision, not an outstanding investigation: biopsy of an eye that still contains the tumour is contraindicated and risks spreading it outside the eye. Do not record this case as incompletely worked up because no histology exists, and do not request tissue on account of this code."
     },
     {
@@ -69,8 +68,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9512",
@@ -97,8 +95,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9513",
@@ -125,8 +122,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     }
   ],
   "decision_trees": [

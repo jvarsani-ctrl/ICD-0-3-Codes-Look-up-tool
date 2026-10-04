@@ -68,7 +68,7 @@ var GRADE_SYSTEM_LABELS = { roman: 'Roman numerals', arabic: 'Arabic numerals' }
 var UNIT_LABELS = { per_mm2: 'per mm²', per_10_hpf: 'per 10 HPF',
   per_hpf: 'per HPF', percent: 'percent' };
 var CODE_STATUS_LABELS = { shares_code: 'Shares its code with other entities',
-  no_code: 'No code exists for this entity', awaiting_layer1: 'Awaiting a Layer 1 option' };
+  no_code: 'No code exists for this entity', own_code: 'Has its own ICD-O-3.2 code' };
 var RL_SCALE = ['I', 'II', 'III', 'IV', 'V'];
 
 /* Cleared per case. No localStorage — the iframe reloads between patients

@@ -241,6 +241,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
 | **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
+| **VI** | `vi_morph` | **8** label drifts (contract §2C) | — | **3** — `8023/3`, `8054/3`, `8482/3` | Ready to review, not applied | `docs/group_06_layer1_repair.md`; `docs/codes-awaiting-redcap.md` |
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 | **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
 | **IX** | `topo_code` | — | — | `444, Skin of scalp and neck` | Open — Group 9 registrar questions H2 | same, §7 |
@@ -1435,3 +1436,18 @@ engine gate and §19 closed by the registrar the same day. Previously 22 Septemb
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
+
+## 27. Groups I and II: morphology names are validated against nothing
+
+**Opened 4 October 2026.** The registrar removed `check_redcap_exact_names` (standing rule 16), the
+only check that compared Groups I and II's `morphology_name` strings with anything; it compared them
+with the REDCap option file. Every other group's names go through `check_icdo32_round_trip()`.
+Groups I and II's are REDCap wordings and fail it (33 in Group I, 31 in Group II). Each build prints
+a NOTE for both groups until this closes.
+
+The work: move each name to its ICD-O-3.2 preferred term, keep the REDCap wording as an alias, and
+add GROUP1 and GROUP2 to `ROUND_TRIP_GROUPS`. The pairs ICD-O-3.2 does not carry at all need the
+registrar first. These are Group I's 9826/3, 9836/3, 9991/3 and 9992/3, and Group II's 9670/3,
+9673/3, 9725/3, 9765/3, 9767/3, 9768/3, 9769/3, 9823/3, 9970/3 and 9971/3. To reproduce the full list,
+add the group to `ROUND_TRIP_GROUPS` temporarily and run the build. Handed to the Group 1 and Group 2
+sessions on 4 October 2026.

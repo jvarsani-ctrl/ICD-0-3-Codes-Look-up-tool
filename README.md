@@ -184,9 +184,9 @@ Every check is proved with a **negative control** — break the data, watch it f
 For the engine gate the same method runs against a copy of a pre-fix `app.js` via
 `APP=<path>`, because a check only ever proved against code that passes has not been
 proved at all.
-The exact-string check is keyed off Layer 1, never off `redcap_option_verified`: a flag
+No REDCap flag is kept in the data (standing rule 16, 4 October 2026). Before that, a flag
 authored to mean "not yet checked" was once read as "exempt", and six drifted names passed a
-green build.
+green build; checks key off Layer 1, never off a flag in the file being checked.
 
 ## Status
 
@@ -243,11 +243,13 @@ place each came from.
 
 **The answer always names the code's aliases** (ruling 6), on every path.
 
-**Three ICD-O-3.2 codes are built ahead of REDCap** (rulings 1-3): `9715` ALCL ALK negative,
-`9749` Erdheim-Chester disease, `9819` B lymphoblastic leukemia/lymphoma BCR-ABL1-like. Each
-carries `awaiting_layer1` and is listed in `docs/codes-awaiting-redcap.md`; the build fails if
-those two facts disagree. Every term is verified against the IARC ICD-O-3.2 table, converted
-to `icdo32.sqlite` inside Layer 1 (`../../ICD coding/ICD-O-3.2/` when the vault is present).
+**Codes are built ahead of REDCap** (rulings 1-3), for example Group II's `9715` ALCL ALK
+negative, `9749` Erdheim-Chester disease and `9819` B lymphoblastic leukemia/lymphoma
+BCR-ABL1-like. The tool does not verify REDCap (standing rule 16): the data carries no REDCap
+flag, the output shows no REDCap banner, and what REDCap owes is listed in `docs/TODO.md` §7.
+Every code is verified against the ICCC-2017 classification or the IARC ICD-O-3.2 table,
+converted to `icdo32.sqlite` inside Layer 1 (`../../ICD coding/ICD-O-3.2/` when the vault is
+present).
 
 **9754 is retired** (ruling 8). ICD-O-3.2 does not list it; the REDCap row for it carries
 9751's name and 9751's change note. LCH resolves to 9751 with the behaviour split.

@@ -39,8 +39,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8001",
@@ -66,8 +65,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8002",
@@ -94,8 +92,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8003",
@@ -121,8 +118,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8004",
@@ -148,8 +144,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8005",
@@ -175,8 +170,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8800",
@@ -202,8 +196,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8801",
@@ -229,8 +222,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8803",
@@ -256,8 +248,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8804",
@@ -283,8 +274,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8805",
@@ -310,8 +300,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8810",
@@ -337,8 +326,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8811",
@@ -364,8 +352,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8812",
@@ -391,8 +378,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8830",
@@ -418,8 +404,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9180",
@@ -451,8 +436,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9181",
@@ -480,8 +464,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9182",
@@ -509,8 +492,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9183",
@@ -538,8 +520,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9184",
@@ -567,8 +548,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9185",
@@ -596,8 +576,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9186",
@@ -625,8 +604,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9187",
@@ -654,8 +632,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9192",
@@ -683,8 +660,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9193",
@@ -712,8 +688,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9194",
@@ -741,8 +716,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9195",
@@ -770,8 +744,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9220",
@@ -799,8 +772,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9221",
@@ -826,8 +798,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9230",
@@ -853,8 +824,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9231",
@@ -880,8 +850,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9240",
@@ -909,8 +878,7 @@
         "C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9242",
@@ -936,8 +904,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9243",
@@ -963,8 +930,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9250",
@@ -990,8 +956,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9261",
@@ -1017,8 +982,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9270",
@@ -1044,8 +1008,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9290",
@@ -1071,8 +1034,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9302",
@@ -1098,8 +1060,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9310",
@@ -1125,8 +1086,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9330",
@@ -1152,8 +1112,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9341",
@@ -1179,8 +1138,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9342",
@@ -1206,8 +1164,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9364",
@@ -1237,8 +1194,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9365",
@@ -1265,8 +1221,7 @@
         "C40.0-C41.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9370",
@@ -1292,8 +1247,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9371",
@@ -1319,8 +1273,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9372",
@@ -1346,8 +1299,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     }
   ],
   "decision_trees": [

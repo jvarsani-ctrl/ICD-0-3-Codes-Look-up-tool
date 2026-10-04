@@ -35,7 +35,6 @@
       "coding_note": "Root chain-termination code for the whole group (Pathway §7.4) — nos_fallback_code is null by design, and every other chain in this file terminates here or at one of the four IId roots (9740, 9750, 9751, 9758/9759). Tier 1 terminal: a referral note or clinical letter saying only 'lymphoma', with no Hodgkin/non-Hodgkin split. LOW by definition — Xia 2022 found the referral diagnosis wrong or uncertain in 57% of NLPHL cases. Also the nos_fallback of the main tree's lineage node (§7.4). Do NOT route an inadequate FNA here: Pathway §2.4 makes 'inadequate' a fourth outcome state that goes to a repeat-or-escalate node, because 2 of 11 subsequent biopsies in Richardson's cohort reclassified an initially non-diagnostic FNA. Record why the case is NOS via workup_status.",
       "code_neutral_molecular": false,
       "redcap_value": "9590",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -64,7 +63,6 @@
       "coding_note": "Tier 1 terminal for a referral note or an FNAC smear reporting 'NHL' with no cell block and no lineage marker. LOW and it cannot be raised: Alemu 2026 gives an FNAC call of NHL a PPV of 71.4% with a 27% false-positive rate, and FNAC misses about 1 in 5 Hodgkin lymphomas (FNR 22.2%), so this code is as often wrong about Hodgkin-vs-NHL as it is about lineage. The ONLY code in the restricted band (000-419, 422, 440-779) permitted to carry C80.9 unknown primary — contract §2.4; no other restricted code may, and adding C80.9 elsewhere is a build failure. Dual-group: see topography_routing_note. Prefer 9590 when the referral does not even say non-Hodgkin.",
       "code_neutral_molecular": false,
       "redcap_value": "9591",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -102,7 +100,6 @@
       "coding_note": "Two distinct lymphomas, one Hodgkin and one non-Hodgkin, demonstrated in the same specimen. Pathway §2.4: excisional or incisional biopsy is REQUIRED — a core or cell block cannot establish a composite lymphoma, and neither can flow. Also the conventional carrier for mediastinal gray zone lymphoma (§5.2): ICC's rule is mediastinal site + high tumour-cell density + ≥2 strongly expressed B-cell markers. That mapping is convention, not an ICD-O assignment, which is why the ceiling is medium and not high — §5.3 maps ICC provisional entities to a medium-confidence flag. Two boundaries the tree must hold: nodular-sclerosis CHL with variable CD20 remains CHL (9663), and gray-zone morphology OUTSIDE the mediastinum is 9680, not 9596.",
       "code_neutral_molecular": false,
       "redcap_value": "9596",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -138,7 +135,6 @@
       "coding_note": "Primary cutaneous follicle centre lymphoma. Carried because Layer 1 carries it; named nowhere in Pathway §3, §4 or §6, and the cutaneous tree (contract §4) covers only the T-cell and LPD codes 9700, 9701, 9709, 9718, 9725, 9726 — so terminal_reachable is false and no branch in this build emits it. If a future author wires a cutaneous B-cell branch, note that PCFCL is BCL2-negative and that the paediatric differential is the PTFL spectrum (§3.5), not adult FL.",
       "code_neutral_molecular": false,
       "redcap_value": "9597",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -167,7 +163,6 @@
       "coding_note": "Family-level Hodgkin terminal and the nos_fallback of the Hodgkin node (Pathway §7.4). Reached at Tier 2 on H&E alone — Reed-Sternberg cells with no IHC (§6) — which is why the ceiling is medium and not high: without CD30/CD15/PAX5/CD20 the CHL subtype is not established, NLPHL is not excluded, and in an HIV/immune-dysregulation setting nodal TFH lymphoma and IDD-associated LPDs mimic CHL (§3.1). Subtype from here to 9651–9655 or 9663–9667 once the panel is available; WHO-HAEM5 and ICC both retain CHL subtyping for epidemiology even though it has lost prognostic weight. Miranda 2024 adds one cheap safeguard the tree should carry: test HTLV-1 in any classic Hodgkin lymphoma with atypical background lymphoid cells, because ATLL can masquerade as CHL (§3.7).",
       "code_neutral_molecular": false,
       "redcap_value": "9650",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -209,7 +204,6 @@
       "coding_note": "The third corner of the NLPHL/THRLBL/LRCHL triangle (§3.1) and the one the earlier draft omitted. Distinguishing evidence is architectural, not just phenotypic: HRS cells with CD30 strong and homogeneous, MUM1 strong, PAX5 dim, CD20/CD79a negative-or-variable, sitting inside a COMPACT, TIGHT, INTACT CD21/CD23 FDC meshwork around eccentric regressed germinal centres — against 9659's expanded, fragmented, irregular meshwork. Fascin and/or GATA3 positive (± STAT6) are the newer tiebreakers toward 9651; Fascin− GATA3− MEF2B+ points back to 9659. Two hard anti-miscoding rules from §3.1: CD30 weak or variable in LP-type cells with OCT2 strong is STILL 9659, and CD30+ immunoblasts in the background are not LP cells and must not be read as 9651. Flow cytometry is useless here — the phenotypes are near-identical; this is an excisional-biopsy-and-IHC diagnosis only.",
       "code_neutral_molecular": false,
       "redcap_value": "9651",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -249,7 +243,6 @@
       "coding_note": "Classic Hodgkin lymphoma, mixed cellularity — the commonest CHL subtype in EBV-endemic and HIV-prevalent settings. EBER prior matters at this node and belongs in the tree as prior_probability, not here: expected EBER positivity is 70–80% in mixed cellularity and >90% in HIV-related CHL (§4.3), so a positive EBER is EXPECTED and weakly informative — it must never be read as confirming the subtype. Latency III (LMP1+ and EBNA2+) EXCLUDES CHL; latency II (LMP1+, EBNA2−) is compatible (§3.1). An EBV+ lesion with a strong uniform B-cell programme is EBV+ DLBCL (9680), not CHL.",
       "code_neutral_molecular": false,
       "redcap_value": "9652",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -289,7 +282,6 @@
       "coding_note": "Classic Hodgkin lymphoma, lymphocyte depletion, NOS. Parent of the two morphological variants Layer 1 carries separately (9654 diffuse fibrosis, 9655 reticular), which is why both fall back here rather than straight to 9650. Rare in children and over-diagnosed on small samples — an HIV-associated CHL is frequently lymphocyte-depleted, so confirm the CD30/CD15/PAX5 dim/CD20− phenotype before accepting it, and consider ATLL masquerading as CHL where the background lymphoid cells are atypical (§3.7).",
       "code_neutral_molecular": false,
       "redcap_value": "9653",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -329,7 +321,6 @@
       "coding_note": "Morphological variant of lymphocyte-depleted CHL (diffuse fibrosis pattern). Retained for epidemiology only — WHO-HAEM5 and ICC both dropped the variant from the classification while ICD-O kept the code, and it carries no prognostic weight (§3.1). Emit it only when the report names the pattern; otherwise 9653.",
       "code_neutral_molecular": false,
       "redcap_value": "9654",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -369,7 +360,6 @@
       "coding_note": "Morphological variant of lymphocyte-depleted CHL (reticular pattern). Same standing as 9654: retained for epidemiology, no prognostic weight, emit only on a named pattern.",
       "code_neutral_molecular": false,
       "redcap_value": "9655",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -416,7 +406,6 @@
       "coding_note": "NLPHL. LP 'popcorn' cells CD20+/CD79a+/PAX5+ (weaker than background B)/OCT2 STRONG/BOB1+/PU.1+/BCL6+/CD45+, MUM1−, CD10−, inside an EXPANDED, FRAGMENTED, IRREGULAR CD21/CD23 meshwork with PD-1 rosettes and CD4>CD8 background. Requires an EXCISIONAL biopsy (§2.4) — nodularity and meshwork architecture cannot be judged on a core. EBER ISH is in ihc_markers_exclude deliberately: NLPHL is EBV-negative regardless of geography (pooled 4%, 0/18 Kenyan cases), so unlike everywhere else in this group a positive EBER here is DISCRIMINATING against the diagnosis, not confirmatory (§4.3). Three false-positive guards from §3.1 and §4.5: a diffuse THRLBL-like area with focal residual nodules or traces of meshwork is 9659 (Fan pattern E), not 9688; PTGC (mantle-zone-expanded follicles, IgD+ rim, no LP cells) is NOT neoplastic and exits to the non-reportable terminal; increased TFH cells alone must never be coded 9659. §5.3 keeps 9659 in IIa — ICC's 'nodular lymphocyte predominant B-cell lymphoma' is a synonym for the alias file, not a re-parenting, because ICCC-3 is built on ICD-O. §4.6: transformation to DLBCL occurs in 5–10% and a new mass needs re-biopsy — that one IS a new primary code (9680), unlike the other three longitudinal recodes.",
       "code_neutral_molecular": false,
       "redcap_value": "9659",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -445,7 +434,6 @@
       "coding_note": "Obsolete ICD-O term (Hodgkin granuloma) with no WHO-HAEM5 or ICC counterpart. Carried because Layer 1 carries it and the clerk may meet it on a historical file; terminal_reachable is false — no branch in this build emits it, and a granulomatous node is a not-lymphoma-gate question (§2.3: granulomas have the lowest specificity of any TB test and are neither a TB diagnosis nor an exclusion of lymphoma), not a Hodgkin subtype. Historical wording is handled by the alias file, never by editing the name.",
       "code_neutral_molecular": false,
       "redcap_value": "9661",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -474,7 +462,6 @@
       "coding_note": "Obsolete ICD-O term (Hodgkin sarcoma) with no WHO-HAEM5 or ICC counterpart; the concept it named is now lymphocyte-depleted CHL. Carried for Layer 1 completeness, terminal_reachable false, alias-handled.",
       "code_neutral_molecular": false,
       "redcap_value": "9662",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -514,7 +501,6 @@
       "coding_note": "Classic Hodgkin lymphoma, nodular sclerosis — the commonest CHL subtype in adolescents and the parent of the three graded/variant codes Layer 1 carries (9664 cellular phase, 9665 BNLI grade 1, 9667 BNLI grade 2), which fall back here rather than to 9650. Architecture (fibrous bands, nodularity) sets 9663 against 9652 (§6: '9652 / 9663 by architecture'). Boundary to hold: an anterior mediastinal mass in an adolescent with variable CD20 is still CHL, whereas high tumour-cell density with ≥2 strongly expressed B-cell markers is mediastinal gray zone lymphoma → 9596 (§3.4).",
       "code_neutral_molecular": false,
       "redcap_value": "9663",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -554,7 +540,6 @@
       "coding_note": "Nodular-sclerosis CHL, cellular phase. Retained for epidemiology; emit only when the report names the pattern, otherwise 9663.",
       "code_neutral_molecular": false,
       "redcap_value": "9664",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -594,7 +579,6 @@
       "coding_note": "Nodular-sclerosis CHL, BNLI grade 1. Grading is reported inconsistently and has lost prognostic weight in both WHO-HAEM5 and ICC; retained for epidemiology (§3.1). Emit only on an explicitly graded report, otherwise 9663.",
       "code_neutral_molecular": false,
       "redcap_value": "9665",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -634,7 +618,6 @@
       "coding_note": "Nodular-sclerosis CHL, BNLI grade 2. Same standing as 9665 — emit only on an explicitly graded report, otherwise 9663.",
       "code_neutral_molecular": false,
       "redcap_value": "9667",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -668,7 +651,6 @@
       "coding_note": "Family-level small B-cell terminal — the honest landing code when a small B-cell lymphoma is established but the entity is not, which is exactly WHO-HAEM5's own fallback rule (apply the family-level label when resources or specimen quality are insufficient for the entity, §2.5). Ingersoll 2019 puts FNA + cell block accuracy for small B-cell lymphoma at 79.2%, so this is a realistic tier here. Chain parent for 9823 (CLL/SLL) and 9673 (mantle cell): when CD5/CD23/cyclin D1 do not resolve, fall back here rather than guessing between them. Ceiling medium by construction.",
       "code_neutral_molecular": false,
       "redcap_value": "9670",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -702,7 +684,6 @@
       "coding_note": "Lymphoplasmacytic lymphoma. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness and as the chain parent for 9761 Waldenström macroglobulinemia.",
       "code_neutral_molecular": false,
       "redcap_value": "9671",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -739,7 +720,6 @@
       "coding_note": "Mantle cell lymphoma — cyclin D1 is the code-defining stain and SOX11 rescues the cyclin D1-negative variant. Two boundaries the tree must hold, both from §5.2 and §4.5. (1) A DLBCL with CCND1 rearrangement is **9680, not 9673** — cyclin D1 positivity alone does not make a large-cell tumour mantle cell. (2) IN SITU MANTLE CELL NEOPLASIA is an incidental low-risk lesion and exits to the non-reportable terminal; registering it as systemic lymphoma records a cancer that does not exist. Ingersoll 2019 puts FNA + cell block accuracy for MCL at only 50%, so a cell-block-only case should fall back to 9670 rather than be committed here.",
       "code_neutral_molecular": false,
       "redcap_value": "9673",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -768,7 +748,6 @@
       "coding_note": "Obsolete Working Formulation term (malignant lymphoma, mixed small and large cell, diffuse) with no WHO-HAEM5 or ICC counterpart. Carried for Layer 1 completeness; terminal_reachable false. Historical reports using this wording are retargeted in the alias file, not by editing the name.",
       "code_neutral_molecular": false,
       "redcap_value": "9675",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -805,7 +784,6 @@
       "coding_note": "Primary effusion lymphoma. **HHV-8 LANA-1 is a hard gate — 9678 cannot be assigned without it** (§3.4, §6); a LANA-1-negative CD20−/CD138+ plasmablastic tumour is 9735, and LANA-1+ with cytoplasmic IgM lambda, CD138 NEGATIVE and multicentric Castleman disease is 9738. Do not let the code NAME mislead the clerk: the extracavitary/solid variant exists and presents as a tissue mass with no effusion, so a solid tumour with the right phenotype is still 9678. Effusion cytology with flow is a full evidence tier here (§2.4) — no tissue block is required. HIV-driven, so yield tracks local HIV prevalence (§2.6 item 9). EBER is supportive, not definitional.",
       "code_neutral_molecular": false,
       "redcap_value": "9678",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -844,7 +822,6 @@
       "coding_note": "Primary mediastinal large B-cell lymphoma. The prior to carry into this node (Goldman & Cairo 2023, the only paediatric-population source): paediatric mature B-cell lymphoma runs Burkitt → germinal-centre DLBCL → PMBCL, so PMBCL is the LEAST likely of the three overall but the most likely once the mass is anterior mediastinal and the patient adolescent — the site and age do the work, not the base rate (§3.4). Donzel 2023 (n=49): fibrous background with clear or retracted cytoplasm, Hodgkin-like cells in 65%, BCL6+ 96%, MUM1+ 82%, CD30+ 88%, **CD23+ 75% — CD23 is the marker the earlier draft lacked** and the one that separates this from CHL and from DLBCL NOS. Boundary: high tumour-cell density with ≥2 strongly expressed B-cell markers in the mediastinum is gray zone lymphoma → 9596; nodular-sclerosis CHL with variable CD20 stays CHL; gray-zone morphology outside the mediastinum is 9680.",
       "code_neutral_molecular": false,
       "redcap_value": "9679",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -878,7 +855,6 @@
       "coding_note": "Family-level large B-cell terminal and the nos_fallback of the mature-B node (§7.4). Ceiling is MEDIUM and that is deliberate, not an oversight: 9680 is a residual category whose commonest occupants are entities with no ICD-O code and no locally available test — HGBL-MYC/BCL2 (±BCL6) and HGBL NOS, LBCL with IRF4 rearrangement, EBV+ polymorphic B-cell LPD, fibrin-associated and chronic-inflammation DLBCL, primary bone DLBCL, DLBCL with CCND1-R — so a case can be fully worked up to the limit of this registry and still not be a *confirmed* DLBCL NOS (§4.2, §5.2). §2.5's Tier 3 high-confidence list does not include it, and §6 gives 'large B-cell, no further work → 9680, Medium'. **Pathway §4.2 requires every 9680 in a child with LOCALISED head-and-neck disease to carry a visible provisional naming LBCL-IRF4** (CD10 + BCL6 + strong homogeneous MUM1/IRF4, median age 8, Waldeyer's ring or tonsil, BCL2 expressed in 86% without t(14;18), IRF4 FISH cryptic in ~10%) — that is a provisional_pending on the branch, not a confidence downgrade. who_version is ICC-2022 because §5.3 arbitrates this code's upper boundary to ICC: a TdT-POSITIVE high-grade or diffuse large B-cell lymphoma stays MATURE with TdT noted and must not be reclassified as lymphoblastic — that reverses 2016 WHO and is the actionable rule. EBV+ DLBCL NOS requires >80% of viable malignant cells EBER+, and a CD20-POSITIVE plasmablastic-looking EBV+ tumour is 9680, not 9735 (§3.4). MYC IHC is not a FISH surrogate: in the 30–50% band the result is unusable, and on CORE biopsies there is no significant association with MYC rearrangement at all.",
       "code_neutral_molecular": true,
       "redcap_value": "9680",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -911,7 +887,6 @@
       "coding_note": "Immunoblastic variant of DLBCL — a morphological descriptor ICD-O kept and WHO-HAEM5 does not retain as a coded variant. Carried for Layer 1 completeness; terminal_reachable false, since Pathway §3.4 subclassifies large B-cell disease by phenotype (PMBCL, plasmablastic, PEL, HHV8-MCD, ALK+) rather than by immunoblastic morphology. An immunoblastic-looking CD20− tumour is far more likely 9735.",
       "code_neutral_molecular": false,
       "redcap_value": "9684",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -949,7 +924,6 @@
       "coding_note": "Burkitt lymphoma. **Cytogenetics/FISH is deliberately NOT in diagnostic_tests_required** — §3.3 gives four independently validated routes that reach 9687 WITHOUT FISH (tissue IHC: BL morphology + CD20+ + BCL2− + Ki-67 ≥90% + TdT−, optionally CD10+/BCL6+; the Tsagarakis flow signature CD38>90% + CD10>80% + CD10 MFI ratio >10 + BCL2<30% + Ki-67>70% on marrow, blood, CSF, effusion or node aspirate; the Chamba three-antibody tissue panel; and the plasma ctDNA model, AUC 0.95, turnaround 6.5 days against 46.8), so listing FISH would invent a phantom outstanding test on every correctly worked-up case. A flow-route or ctDNA-route branch must declare satisfies_tests: [\"IHC\"] rather than this entry naming Flow cytometry. **What FISH's absence DOES cost is handled on the branch, not here: Pathway §4.2 makes provisional_pending MANDATORY on every 9687 terminal reached without a FISH result, reason 'MYC status unknown; HG/LBCL-11q and HGBL-DH not excluded'.** Two mimics are phenotypically indistinguishable and both are silently absorbed here: HG/LBCL with 11q aberration (coarse apoptotic bodies, MYC expression weak 20–60%, MYC-R ABSENT, LMO2 clone SP51 positive in 46% where Burkitt is LMO2-negative — the one IHC discriminator available) and **B-ALL with MYC rearrangement, which must NEVER be coded 9687** — it goes to the B-lymphoblastic range (9811). A prior history of mature B-cell lymphoma is a hard exclusion for the latter. **Absence of MYC does not exclude Burkitt**: Ogwang's own definition allows no c-MYC signal by FISH, so the fallback is not 'not Burkitt' but 9687 flagged. EBER: endemic ~100%, sporadic 10–80%, AIDS-associated 30–40%, ~90% in Arboleda's African cohort — an EBER-NEGATIVE endemic-pattern case is a reason to reconsider the diagnosis. WHO-HAEM5's EBV+/EBV− subtypes and ICC's refusal to adopt them are both codeless; capture eber_status regardless (§5.3). ICD-O-3.2 moves 9826 Burkitt cell leukaemia here, which lets leukaemic-phase Burkitt land in IIc and creates a time-series discontinuity (§5.4). A Burkitt-like lymphoma in a child with neurological signs or telangiectasia is a stop-and-check for ataxia-telangiectasia (§5.5) — those patients cannot tolerate standard regimens.",
       "code_neutral_molecular": true,
       "redcap_value": "9687",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -990,7 +964,6 @@
       "coding_note": "T-cell/histiocyte-rich large B-cell lymphoma — the second corner of the NLPHL/THRLBL/LRCHL triangle (§3.1). Positively defined by three ABSENCES that must all be documented: background small B cells ABSENT, CD21/CD23 FDC meshwork ABSENT, and background T cells CD8 > CD4 (the reverse of NLPHL). Requires an EXCISIONAL biopsy — the distinction from 9659 is architectural and flow cytometry is useless because the large-cell phenotypes are near-identical. **The single most important guard: a diffuse THRLBL-like area with focal residual nodules, loose LP-cell clusters on CD20/OCT2, a few residual small B cells, or traces of FDC meshwork is 9659 (Fan pattern E), NOT 9688** — the codes carry very different treatment.",
       "code_neutral_molecular": false,
       "redcap_value": "9688",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1026,7 +999,6 @@
       "coding_note": "Splenic marginal zone B-cell lymphoma. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness. A splenic small B-cell lesion in a child should fall back to 9699 or 9670 rather than be committed here.",
       "code_neutral_molecular": false,
       "redcap_value": "9689",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1061,7 +1033,6 @@
       "coding_note": "Follicular lymphoma NOS, and — far more important in this registry — the declared fallback for THREE uncoded paediatric entities that must NOT be graded or treated as adult FL (§5.2, §3.5). (1) **Paediatric-type follicular lymphoma**: expanded serpiginous follicles of monotonous centroblasts, starry sky, GC markers positive, **BCL2 NEGATIVE**, with BCL2-R, BCL6-R, MYC-R and IRF4-R all absent — it looks high-grade, is indolent, and is cured by conservative management; mis-grading it as 9698 drives inappropriate intensive chemotherapy. (2) **Paediatric nodal marginal zone lymphoma is now regarded as part of the PTFL spectrum → 9690, NOT 9699.** (3) Testicular FL in boys, same conservative-management logic. Also the landing code for BCL2-R-negative CD23+ follicle centre lymphoma. Ceiling medium: the entities above are distinguished from true FL only by FISH that is not locally available (§4.2), so the code is knowingly a bucket. IN SITU FOLLICULAR NEOPLASIA and duodenal-type FL are incidental low-risk lesions and exit to the non-reportable terminal (§3.5, §4.5). MNDA and IRTA1 favour marginal zone over follicular when CD10 is negative and BCL2 ambiguous.",
       "code_neutral_molecular": true,
       "redcap_value": "9690",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1096,7 +1067,6 @@
       "coding_note": "Follicular lymphoma, grade 2. Grading is a live WHO/ICC divergence and the grade field is uninterpretable without the system that produced it: ICC retains grades 1-2 / 3A / 3B as MANDATORY, while WHO-HAEM5 merges 1+2+3A into classic FL with grading OPTIONAL and renames 3B 'follicular large B-cell lymphoma'. §5.3's ruling is to capture the grade AND `classification_used`, not to follow one classification — so who_version stays WHO-HAEM5 and the grade is recorded as a captured variable. **Ki-67 is explicitly NOT part of grading.** Grading requires an EXCISIONAL biopsy — Cheson 2014 and Hupp 2018 rule out core needle for FL grade (§2.4). Above all: a paediatric follicular lesion must not be graded by adult rules at all (§3.5) — if the case is PTFL it belongs at 9690 ungraded.",
       "code_neutral_molecular": false,
       "redcap_value": "9691",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1131,7 +1101,6 @@
       "coding_note": "Follicular lymphoma, grade 1. Grading is a live WHO/ICC divergence and the grade field is uninterpretable without the system that produced it: ICC retains grades 1-2 / 3A / 3B as MANDATORY, while WHO-HAEM5 merges 1+2+3A into classic FL with grading OPTIONAL and renames 3B 'follicular large B-cell lymphoma'. §5.3's ruling is to capture the grade AND `classification_used`, not to follow one classification — so who_version stays WHO-HAEM5 and the grade is recorded as a captured variable. **Ki-67 is explicitly NOT part of grading.** Grading requires an EXCISIONAL biopsy — Cheson 2014 and Hupp 2018 rule out core needle for FL grade (§2.4). Above all: a paediatric follicular lesion must not be graded by adult rules at all (§3.5) — if the case is PTFL it belongs at 9690 ungraded.",
       "code_neutral_molecular": false,
       "redcap_value": "9695",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1166,7 +1135,6 @@
       "coding_note": "Follicular lymphoma, grade 3 (ICC grade 3B / WHO-HAEM5 follicular large B-cell lymphoma — both map here, §5.3). **This is the code PTFL is most dangerously mis-assigned to**: §4.2 names 'absorbed into 9690 — or worse, graded as 9698' as the consequence of no FISH, and the treatment cost is intensive chemotherapy for a disease cured conservatively. Before accepting 9698 in a child, confirm BCL2 expression and that BCL2-R/BCL6-R/IRF4-R were tested or explicitly unavailable. Grading is a live WHO/ICC divergence and the grade field is uninterpretable without the system that produced it: ICC retains grades 1-2 / 3A / 3B as MANDATORY, while WHO-HAEM5 merges 1+2+3A into classic FL with grading OPTIONAL and renames 3B 'follicular large B-cell lymphoma'. §5.3's ruling is to capture the grade AND `classification_used`, not to follow one classification — so who_version stays WHO-HAEM5 and the grade is recorded as a captured variable. **Ki-67 is explicitly NOT part of grading.** Grading requires an EXCISIONAL biopsy — Cheson 2014 and Hupp 2018 rule out core needle for FL grade (§2.4). Above all: a paediatric follicular lesion must not be graded by adult rules at all (§3.5) — if the case is PTFL it belongs at 9690 ungraded.",
       "code_neutral_molecular": false,
       "redcap_value": "9698",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1202,7 +1170,6 @@
       "coding_note": "Marginal zone B-cell lymphoma NOS — a diagnosis of exclusion (CD20+ small B cells with CD5, CD10 and cyclin D1 all negative), which is why the ceiling is medium. §2.6 lists 9699 among the codes a Tier 0 morphology-only site can reach; the tree does that with a morphology_only node, and the engine's cap at medium while IHC is outstanding coincides with this ceiling. **Do NOT auto-code a paediatric nodal marginal zone referral here — pNMZL is now regarded as part of the PTFL spectrum and goes to 9690** (§3.5, §5.2). Primary cutaneous MZL splits into an IgM+/CXCR3+ subtype and a class-switched subtype and only the IgM+ subtype disseminates; both stay 9699 with the subtype in free text. MNDA and IRTA1 favour marginal zone over follicular when CD10 is negative and BCL2 ambiguous.",
       "code_neutral_molecular": false,
       "redcap_value": "9699",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1237,7 +1204,6 @@
       "coding_note": "Mycosis fungoides. Ceiling is MEDIUM, not high, and the reason is definitional rather than technical: MF is a clinicopathological diagnosis — Willemze 2019 records SS/MF histology as non-specific in as many as one-third of biopsies, so a pathology report alone cannot establish it and a negative skin biopsy does not exclude it. §2.5's Tier 3 high-confidence list does not include it. **Anti-miscoding rule from Miranda 2024 (§3.7): TCRγδ expression occurs in rare cases of otherwise classic mycosis fungoides or lymphomatoid papulosis, and those cases run an indolent course and 'should be diagnosed as MF or LyP, irrespective of phenotype' — a γδ result must NEVER by itself divert a case to 9726.** Chain parent for 9701: an erythrodermic CTCL that fails the Sézary blood criteria is MF, not Sézary syndrome.",
       "code_neutral_molecular": false,
       "redcap_value": "9700",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1274,7 +1240,6 @@
       "coding_note": "Sézary syndrome. **Definitionally clinical + haematological + molecular — a pathology report can never establish it alone** (§3.7), which is why all four modalities are required: Molecular/PCR carries the identical T-cell clone in blood AND skin, and Flow cytometry carries the blood thresholds. Requires the clone plus ONE of: CD4+CD26− ≥30% of CD4s, CD4+CD7− ≥40%, CD4/CD8 ratio ≥10, Sézary cells ≥1000/µL on smear, or CD4+CD7− or CD4+CD26− ≥1000/µL (Willemze 2019 corroborates independently). **KIR3DL2+ Sézary cells ≥200/µL or ≥10% of lymphocytes performs better (sens 88.6%, spec 96.3%) and rescues the LYMPHOPENIC case, where the absolute-count criteria fail** — all 5 such patients met the KIR3DL2 rule while 4 of 5 failed CD7 and 3 of 5 failed CD26. Conversely 8 of 154 controls had CD4+CD26− ≥1000/µL, so CD26 alone OVER-CALLS. Skin histology is non-specific in up to a third of biopsies — a negative biopsy does not exclude it.",
       "code_neutral_molecular": false,
       "redcap_value": "9701",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1306,7 +1271,6 @@
       "coding_note": "Peripheral / mature T-cell lymphoma NOS — the nos_fallback of the mature-T node (§7.4) and by a wide margin the highest-volume default in IIb3. Ceiling medium by construction. It is the declared destination for a long list of situations, and the tree must reach it deliberately rather than by omission: CD30+ large-cell lymphoma with **ALK not done** (§3.6 — the upgrade path is ONE antibody); a mature T-cell lymphoma with **HTLV-1 not done** (§3.7 — never default to 9827); an NK/T-phenotype case with **no EBER** (§3.7 — without EBER the ceiling is 9702, not 9719); a panniculitic infiltrate without βF1 and CD56 (§3.7 — the 9708/9726 split); the OUTSIDE-the-boundary half of 9709 (generalised lesions, >30% large pleomorphic cells, or a high proliferative fraction → 9702/3, §4.1); and four uncoded entities from §5.2 — primary nodal EBV+ T/NK lymphoma, primary cutaneous acral CD8+ T-cell lymphoma (indolent, 5-y DSS 100%, do NOT treat as aggressive AECTCL), indolent T-cell lymphoma of the GI tract, and **primary cutaneous T-cell lymphoma NOS — for which 9709 is explicitly NOT the fallback; use 9702 with site=skin**. **The single highest-volume correction in this subgroup runs the other way: a PTCL expressing ≥2 TFH markers (CD10, PD-1/CD279, ICOS, CXCL13, BCL6) must be reclassified as nodal TFH lymphoma → 9705, not left at 9702** (Miranda 2024, §3.7). Indolent NK-cell LPD of the GI tract is a NON-REPORTABLE exit, not a 9702.",
       "code_neutral_molecular": false,
       "redcap_value": "9702",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1344,7 +1308,6 @@
       "coding_note": "Nodal TFH-cell lymphoma, angioimmunoblastic type. WHO-HAEM5 renames the family and collapses three former entities into one — angioimmunoblastic T-cell lymphoma, follicular T-cell lymphoma and PTCL with a TFH phenotype become nodal TFH lymphoma, angioimmunoblastic-type / follicular-type / NOS — **all three must be aliased to 9705 or the clerk will not find them** (§3.7). Criteria are countable, which is unusual in this branch: **≥2 TFH markers**, preferably strongly expressed, from the five-marker working panel CD10, PD-1/CD279, ICOS, CXCL13, BCL6 (CXCR5, SAP, c-MAF and CD200 are other reported markers, NOT part of the panel), PLUS high-endothelial venule proliferation with bulging cuboidal endothelium and hyalinised basement membranes and/or expanded FDC meshworks (CD21, CD23, CD35). Marginal cost is low where 9709's panel is already stocked — PD-1 and BCL6 are shared; add CD10 plus CXCL13 or ICOS. **Trap: clonal IGH/IGK occurs in ~30% and is EXPECTED — a clonal B-cell result here must not re-route the case to a B-cell code.** RHOA p.G17V and IDH2 R172 are captured for the record and change no code.",
       "code_neutral_molecular": true,
       "redcap_value": "9705",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1383,7 +1346,6 @@
       "coding_note": "Subcutaneous panniculitis-like T-cell lymphoma. **βF1 plus CD56 is the minimum panel, and without them a lobular panniculitic infiltrate cannot be coded beyond 9702** (§3.7). SPTCL is αβ (βF1 POSITIVE), CD4−/CD8+, **CD56 NEGATIVE**, cytotoxic+, EBV negative; 9726 is γδ (βF1 negative, TCRδ positive), CD8 variable, **CD56 POSITIVE**. **That one stain carries a 5-year disease-specific survival of 87% against 11% — the largest consequence of a single antibody anywhere in this group.** Miranda 2024 confirms CD56 is not in the SPTCL phenotype at all, making it a clean discriminator rather than a variable one, and adds the trap that runs the other way: **a subset of REACTIVE T cells in SPTCL expresses TCR γ/δ, so a γδ-positive population in a panniculitic infiltrate is not sufficient for 9726 — the γδ cells must be the neoplastic ones.** Willemze states no histological depth criterion separating the two. Haemophagocytic syndrome is what drives the poor outcomes within this otherwise favourable entity — a prognostic flag for the tree, not a discriminator. Germline HAVCR2 mutations in 25% (up to 85% in Asian populations; base rate in African patients unstated) are captured and change no code.",
       "code_neutral_molecular": true,
       "redcap_value": "9708",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1421,7 +1383,6 @@
       "coding_note": "Primary cutaneous CD4+ small/medium T-cell LYMPHOPROLIFERATIVE DISORDER. **behavior_code is '1' and this file contains exactly ONE 9709 entry — 9709/3 does not exist and emitting it is the single most likely invalid code this group can produce (contract §1, §3.5; Pathway §7.5). The /1 places the case OUTSIDE ICCC-3 Group II.** This is an ENTITY BOUNDARY, not a behaviour split: crossing the line does not flip a behaviour on the same code, it moves the case to a different code — 9702/3, peripheral T-cell lymphoma NOS (§4.1, §7.3 item 5). Inside the entity (Willemze 2019): a SOLITARY plaque or tumour, typically face, neck or upper trunk; dense nodular-to-diffuse dermal infiltrate of small-to-medium CD4+ pleomorphic T cells; **large pleomorphic cells <30%**; **proliferation low, <5% to at most 20%**; CD3+, CD4+, CD8−, consistently PD-1/CD279+, BCL6+, CXCL13+. Outside: generalised lesions, large rapidly growing tumours, >30% large pleomorphic cells and/or a high proliferative fraction. It is the **only one of the four ICD-O-3.2 /1 codes a pathology report can settle unaided** — the criterion is morphometric, not clinical, which is why it takes entity_boundary and not behaviour_resolution. 5-year disease-specific survival 100%; staging is not recommended in typical cases and lesions may regress after the biopsy itself. **9709 is NOT the fallback for the new WHO-HAEM5 category 'primary cutaneous T-cell lymphoma, NOS' — that is 9702 with site=skin** (§5.2).",
       "code_neutral_molecular": false,
       "redcap_value": "9709",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1454,7 +1415,6 @@
       "coding_note": "Intravascular large B-cell lymphoma. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness.",
       "code_neutral_molecular": false,
       "redcap_value": "9712",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1487,7 +1447,6 @@
       "coding_note": "Anaplastic large cell lymphoma. **The single highest-yield rule in the group: ALK is IHC, not FISH** (§3.6) — one antibody, clone ALK-1, no molecular test needed. **ALK-negative systemic ALCL now codes to 9715, not here.** 9714 keeps its ICD-O-3.2 Preferred name, verified against the IARC table: 'Anaplastic large cell lymphoma, T-cell and Null-cell type', with 'Anaplastic large cell lymphoma, ALK positive' only a Related term — so the relabelling proposed in Changes Made/Aug 2026 is not required and is not applied (contract §1; Pathway §7.5 also flags that 9714's name must eventually change to 'Anaplastic large cell lymphoma, ALK-positive' — that relabelling is NOT applied here). Because >95% of paediatric ALCL is ALK-positive, an ALK-negative result in a child is a RE-REVIEW TRIGGER, not a default. **CD3 is absent in more than 75% of ALCL** — CD3 negativity does not exclude it and a 'null cell' phenotype is marker loss, not a separate code. Miranda 2024 widens the indication: stain ALK on EVERY T-cell lymphoma with even a minor CD30+ component. A CUTANEOUS CD30+ lesion that is ALK-positive or t(2;5)-positive is secondary involvement by systemic ALCL → 9714, not primary cutaneous 9718 — and that rule must be applied BEFORE the waxing/waning history question, because systemic ALK+ ALCL also waxes and wanes (§4.1). DUSP22-R (45% of ALK-negative cases) and TP63-R (2%) have no codes; record as variables — their unavailability costs nothing at code level. DUSP22-R and TP63-R sit with 9715 and still have no codes of their own.",
       "code_neutral_molecular": true,
       "redcap_value": "9714",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1522,7 +1481,6 @@
       "coding_note": "Hepatosplenic T-cell lymphoma. Marrow involvement is virtually constant and **the PATTERN is the finding: CD3 highlights neoplastic lymphocytes DISTENDING THE SINUSES — 'highly characteristic'** (§3.7). Phenotype CD2, CD3, CD7; TCR-delta 75% / TCR-beta 20% / TCR-silent 5%; CD56 positive; **CD8 in only 20%, so CD8-negativity does not exclude it**; TIA-1 95%, perforin and granzyme B 40%. Two traps that matter to this registry specifically: the cells can be **blastoid and mimic acute leukaemia**, which is a Group I/II MISASSIGNMENT and not merely a subtype error; and they may be accompanied by dyspoietic haematopoiesis mimicking MDS. About 20% of patients are immunosuppressed (autoimmune therapy or post-transplant). i(7q) and trisomy 8 are captured and change no code. Presentation is usually stage IV.",
       "code_neutral_molecular": true,
       "redcap_value": "9716",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1556,7 +1514,6 @@
       "coding_note": "Intestinal T-cell lymphoma — **ONE ICD-O code covering TWO diseases, so the distinction is a captured variable, not a branch** (§3.7). EATL: near-constant coeliac association with HLA-DQ2/DQ8, large PLEOMORPHIC cells with eosinophils and histiocytes, usually CD8− and CD56−, TCRαβ, CD103. MEITL: **no coeliac association**, Asians and Hispanics, MONOMORPHIC medium cells with marked epitheliotropism, **CD8+ and CD56+ in most**, TCR-delta ~50%, nuclear MATK, cytoplasmic SYK, CD20 in ~20%. **Where coeliac disease is uncommon — which includes this registry's population — an intestinal T-cell lymphoma is far more likely MEITL than EATL**, and Miranda does not state which entity 9717 maps to, so code both here and record the subtype. Unclassifiable cases are intestinal T-cell lymphoma NOS. SETD2 (~90%) and JAK-STAT (80–90%) in MEITL are captured and change no code. Boundary: **indolent NK-cell LPD of the GI tract is EBV-NEGATIVE, superficial, well-circumscribed and moderately atypical — it is a NON-REPORTABLE exit, not 9717 and not 9719** (§3.7, §4.3).",
       "code_neutral_molecular": true,
       "redcap_value": "9717",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1590,7 +1547,6 @@
       "coding_note": "Primary cutaneous ALCL — the /3 half and the ANCHOR of the behaviour split: its morphology_name is Layer 1 verbatim and redcap_option_verified is true, which is what earns the /1 sibling its exemption from the exact-string check (contract §2.3). Drift this name and BOTH halves fail. **Behaviour split (§4.1, contract §2.3): one morphology, two behaviours, separated by a CLINICAL fact the pathology report cannot supply — does each individual lesion regress spontaneously within weeks to months while new lesions appear?** /1 is lymphomatoid papulosis, which ICD-O-3.2 codes /1 and which therefore sits OUTSIDE ICCC-3 Group II; /3 is primary cutaneous anaplastic large cell lymphoma, which needs CD30 in ≥75% of tumour cells (Kempf's figure — Willemze gives no CD30 threshold and no lesion-count or regression-time cut-off) and staging showing no extracutaneous disease. **When the behaviour is not established from the file the branch must resolve to /3 — defaulting an unknown behaviour to /1 silently deletes a reportable cancer.** **Rule ordering is load-bearing: because systemic ALK+ ALCL also waxes and wanes, the waxing/waning question may be asked ONLY AFTER ALK-negativity and absence of extracutaneous disease are established** — an ALK-positive or t(2;5)-positive cutaneous CD30+ lesion is secondary systemic ALCL → 9714. LyP types A (>80%), B (<5%), C (10%), D (<5%), E (<5%) and the DUSP22-IRF4-rearranged type (<5%) have differing CD4/CD8 phenotypes but 'no therapeutic or prognostic implications' — a free-text variable, never a branch. LyP type C is histologically identical to PCALCL and the consensus concedes the distinction can be impossible. A γδ phenotype in otherwise classic LyP is still LyP (§3.7).",
       "code_neutral_molecular": true,
       "redcap_value": "9718",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1624,7 +1580,6 @@
       "coding_note": "Lymphomatoid papulosis — the /1 half of the behaviour split. **morphology_name is deliberately NOT the Layer 1 string: it names the /1 entity, and redcap_option_verified is false because this half has no REDCap option of its own.** The exemption in build_database.py check_redcap_exact_names holds only while all three conditions hold — this entry flagged false, a sibling sharing morphology_code 9718 with a DIFFERENT behavior_code, and that sibling's name character-identical to the Layer 1 option. **ICD-O-3.2 codes LyP /1, which places it OUTSIDE ICCC-3 Group II — it is not reportable to this registry as a Group II case.** **Behaviour split (§4.1, contract §2.3): one morphology, two behaviours, separated by a CLINICAL fact the pathology report cannot supply — does each individual lesion regress spontaneously within weeks to months while new lesions appear?** /1 is lymphomatoid papulosis, which ICD-O-3.2 codes /1 and which therefore sits OUTSIDE ICCC-3 Group II; /3 is primary cutaneous anaplastic large cell lymphoma, which needs CD30 in ≥75% of tumour cells (Kempf's figure — Willemze gives no CD30 threshold and no lesion-count or regression-time cut-off) and staging showing no extracutaneous disease. **When the behaviour is not established from the file the branch must resolve to /3 — defaulting an unknown behaviour to /1 silently deletes a reportable cancer.** **Rule ordering is load-bearing: because systemic ALK+ ALCL also waxes and wanes, the waxing/waning question may be asked ONLY AFTER ALK-negativity and absence of extracutaneous disease are established** — an ALK-positive or t(2;5)-positive cutaneous CD30+ lesion is secondary systemic ALCL → 9714. LyP types A (>80%), B (<5%), C (10%), D (<5%), E (<5%) and the DUSP22-IRF4-rearranged type (<5%) have differing CD4/CD8 phenotypes but 'no therapeutic or prognostic implications' — a free-text variable, never a branch. LyP type C is histologically identical to PCALCL and the consensus concedes the distinction can be impossible. A γδ phenotype in otherwise classic LyP is still LyP (§3.7).",
       "code_neutral_molecular": true,
       "redcap_value": "9718",
-      "redcap_option_verified": false,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1663,7 +1618,6 @@
       "coding_note": "Extranodal NK/T-cell lymphoma, nasal type. CD2+, **surface CD3 NEGATIVE but cytoplasmic CD3ε POSITIVE**, CD56+, cytotoxic (granzyme B / TIA-1 / perforin)+, and **EBER POSITIVE — 'demonstration of EBV infection is a requisite'; without EBER the ceiling is 9702, not 9719** (§3.7, §5.5). T-lineage origin (10–40% of cases) does not change the code. EBER+ cells in a marrow trephine ESTABLISH marrow involvement. Non-nasal presentations require exclusion of an occult nasal primary by PET-CT or, failing that, random blind nasal and nasopharyngeal biopsies — where neither is available the 'non-nasal' designation is unverifiable, so code 9719 with a site caveat rather than inventing a non-nasal category. **Two entities must not land here.** Primary nodal EBV+ T/NK lymphoma is NOT the nodal counterpart of 9719 — no nasal involvement, median age 61–64, CD56 usually NEGATIVE, T-lineage far commoner than NK, necrosis and angioinvasion uncommon, worse prognosis; its fallback is 9702 (§3.7, §5.2). And **indolent NK-cell LPD of the gastrointestinal tract is EBV-NEGATIVE, and that is precisely what stops it being over-called as 9719 — it is a non-reportable exit** (§4.3). That makes the not_assessable state carry more weight at this node than anywhere else in the tree: a negative EBER WITHOUT A PASSING CONTROL is not a negative. Aggressive NK-cell leukaemia is a separate entity with no code in this group and is a haemophagocytic emergency — refer to Group I.",
       "code_neutral_molecular": false,
       "redcap_value": "9719",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1696,7 +1650,6 @@
       "coding_note": "Systemic EBV-positive T-cell lymphoma of childhood. **EBER ISH is a hard gate — the code is unassignable without it** (§5.5). One of four members of the childhood EBV+ T/NK family (Miranda 2024): this entity, systemic chronic active EBV disease, severe mosquito-bite allergy, and hydroa vacciniforme LPD (9725) — **the last two classified as CUTANEOUS FORMS of CAEBV**. Overlap is extensive enough that Miranda makes clinicopathological correlation MANDATORY: the pathology report alone cannot separate them. CAEBV itself is IM-like symptoms persisting >3 months plus raised blood EBV-DNA or EBER+ T/NK cells in affected organs, with immunodeficiency, malignancy and autoimmune disease excluded. This is the /3 destination of the 9725 progression path (§4.6) — a recode on follow-up, NOT a new primary.",
       "code_neutral_molecular": false,
       "redcap_value": "9724",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1730,7 +1683,6 @@
       "coding_note": "Hydroa vacciniforme-like lymphoma — the /3 half and the ANCHOR of the behaviour split: morphology_name is Layer 1 verbatim and redcap_option_verified is true, which is what earns the /1 sibling its exemption from the exact-string check (contract §2.3). Drift this name and BOTH halves fail. **Behaviour split and the only DEFERRABLE one (§4.1, §7.3 item 1, contract §2.3): the deciding fact — fever, lymphadenopathy, hepatosplenomegaly, or frank systemic EBV+ T-cell lymphoma — arrives MONTHS after accession, so ICCC group membership cannot be settled at accession and the branch needs a follow_up_review string saying what re-opens the case.** /1 is skin-limited hydroa vacciniforme LPD (outside Group II); /3 is systemic progression. Unresolved must resolve to /3. WHO-EORTC 2018 places HV-like LPD and hypersensitivity to mosquito bites together as *cutaneous chronic active EBV disease*, with a risk of progression to systemic EBV+ T- or NK-cell lymphoma; phenotype splits them — HV-like LPD is usually CD8+ T-cell, mosquito-bite hypersensitivity more often NK-cell. Classic HV is a papulovesicular eruption on sun-exposed skin, often seasonal; severe cases extend to non-exposed skin with facial swelling, ulceration, fever, wasting, lymphadenopathy and hepatosplenomegaly. Patients may have recurrent skin lesions for many years before progression. Two settled negatives: **clonality is NOT a gate — no retained source makes T-cell clonality a requirement, so a negative TCRγ must not block the code**; and **no progression rate exists in this corpus and that is now a settled finding, not a gap — the 53.8%/36-month figure went with Han 2020 at registrar review, and both Miranda 2024 and García-González 2025 were checked specifically for a replacement and supply none. Stop looking.** The recode node (9725 → 9724 / 9719, §4.6) is justified by the EXISTENCE of the progression path, which two retained sources state; it does not need a rate.",
       "code_neutral_molecular": false,
       "redcap_value": "9725",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1764,7 +1716,6 @@
       "coding_note": "Skin-limited hydroa vacciniforme LPD — the /1 half of the behaviour split. **morphology_name is deliberately NOT the Layer 1 string: it names the /1 entity (the WHO-HAEM5 term is 'hydroa vacciniforme LPD'), and redcap_option_verified is false because this half has no REDCap option of its own** — the single Layer 1 option, 'Hydroa vacciniforme-like lymphoma', is spoken for by the /3 sibling. **/1 places the case OUTSIDE ICCC-3 Group II, and this is the DEFERRABLE split: the case must be re-opened on follow-up, because progression to systemic disease is what moves it to /3 and therefore into Group II.** **Behaviour split and the only DEFERRABLE one (§4.1, §7.3 item 1, contract §2.3): the deciding fact — fever, lymphadenopathy, hepatosplenomegaly, or frank systemic EBV+ T-cell lymphoma — arrives MONTHS after accession, so ICCC group membership cannot be settled at accession and the branch needs a follow_up_review string saying what re-opens the case.** /1 is skin-limited hydroa vacciniforme LPD (outside Group II); /3 is systemic progression. Unresolved must resolve to /3. WHO-EORTC 2018 places HV-like LPD and hypersensitivity to mosquito bites together as *cutaneous chronic active EBV disease*, with a risk of progression to systemic EBV+ T- or NK-cell lymphoma; phenotype splits them — HV-like LPD is usually CD8+ T-cell, mosquito-bite hypersensitivity more often NK-cell. Classic HV is a papulovesicular eruption on sun-exposed skin, often seasonal; severe cases extend to non-exposed skin with facial swelling, ulceration, fever, wasting, lymphadenopathy and hepatosplenomegaly. Patients may have recurrent skin lesions for many years before progression. Two settled negatives: **clonality is NOT a gate — no retained source makes T-cell clonality a requirement, so a negative TCRγ must not block the code**; and **no progression rate exists in this corpus and that is now a settled finding, not a gap — the 53.8%/36-month figure went with Han 2020 at registrar review, and both Miranda 2024 and García-González 2025 were checked specifically for a replacement and supply none. Stop looking.** The recode node (9725 → 9724 / 9719, §4.6) is justified by the EXISTENCE of the progression path, which two retained sources state; it does not need a rate.",
       "code_neutral_molecular": false,
       "redcap_value": "9725",
-      "redcap_option_verified": false,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1801,7 +1752,6 @@
       "coding_note": "Primary cutaneous gamma-delta T-cell lymphoma. Separated from 9708 by ONE antibody pair — γδ (**βF1 NEGATIVE, TCRδ POSITIVE**), CD4−, CD8− or variable, **CD56 POSITIVE**, cytotoxic+, EBV negative — against SPTCL's βF1+/CD8+/CD56−. **5-year disease-specific survival 11% against SPTCL's 87%: the largest consequence of a single stain anywhere in this group** (§3.7). Miranda 2024 splits it by TCR Vδ chain: Vδ1 is epitheliotropic (epidermis and adnexa with dermal extension); **Vδ2 involves subcutaneous tissue, ulcerates more, and CAN RESEMBLE SPTCL — i.e. the Vδ2 form is precisely the one that will be mistaken for 9708**. Both behave aggressively. HLH 'seems to be exclusively associated with the deeper tumours expressing Vδ2' — a prognostic flag, not a discriminator. **Two guards against over-calling 9726: a subset of REACTIVE T cells in SPTCL expresses TCR γ/δ, so the γδ cells must be the neoplastic ones; and TCRγδ expression in otherwise classic mycosis fungoides or lymphomatoid papulosis does not convert those cases — they 'should be diagnosed as MF or LyP, irrespective of phenotype'. Clinical presentation outranks the phenotype here.**",
       "code_neutral_molecular": false,
       "redcap_value": "9726",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1833,7 +1783,6 @@
       "coding_note": "Family-level precursor terminal and the nos_fallback of the precursor node (§7.4). TdT+ blastic tissue mass with lineage untested or unresolved (§6). Ceiling is medium BY CONSTRUCTION — the code exists precisely because lineage was not established; resolving it moves the case to 9811 or 9837, so a 'high' here would be incoherent. Three traps §3.2 puts on this code. (1) TdT NEGATIVE BY FLOW DOES NOT EXCLUDE T-LBL — Bhaker 2015 had TdT negative by flow in 7 of 15 cases and positive by cell-block immunocytochemistry in all seven; always reflex to cell-block ICC before settling here. (2) ICC reverses the 2016 WHO rule: a TdT-POSITIVE high-grade or diffuse large B-cell lymphoma must NOT be reclassified as lymphoblastic — report it as a mature lymphoma with TdT noted. That rule blocks 9727 and 9811 for TdT+ HGBCL/DLBCL and the registry follows ICC on this axis (§5.3). (3) Indolent T-lymphoblastic proliferation — TdT+ cells distorting but not obliterating architecture, less atypical than lymphoblasts, no monoclonal TCR — is a tumour-like lesion and exits to the non-reportable terminal (§4.5). TCR and IGH clonality must never be used for lineage assignment (Duffield 2022).",
       "code_neutral_molecular": false,
       "redcap_value": "9727",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1868,7 +1817,6 @@
       "coding_note": "Family-level plasma cell terminal and the chain parent for 9732, 9734, 9765 and 9769. A clonal plasma cell tumour that has not been resolved into myeloma versus solitary extramedullary disease — resolving it requires the §3.4 workup (SPEP with immunofixation, serum free light chains, skeletal survey and a marrow), which is why the ceiling is medium here and high on 9732/9734.",
       "code_neutral_molecular": false,
       "redcap_value": "9731",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1906,7 +1854,6 @@
       "coding_note": "Multiple myeloma. The rule that closes the plasmablastic/myeloma fork (Rajkumar 2014, restated by Malard 2024, §3.4): myeloma requires **≥10% clonal bone-marrow plasma cells or a biopsy-proven plasmacytoma, PLUS at least one myeloma-defining event** — classic CRAB (hypercalcaemia, renal insufficiency, anaemia, lytic bone lesions) or one of the added biomarkers of imminent organ damage. Below that threshold the case is not myeloma. **In a child, a plasmablastic tumour with no marrow plasmacytosis and no CRAB is 9735, not 9732/9734** — that is the error this entry exists to prevent. Imaging is a genuine requirement (skeletal survey for lytic lesions), not padding. A cyclin D1-positive plasmablastic tumour favours myeloma over 9735.",
       "code_neutral_molecular": false,
       "redcap_value": "9732",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1941,7 +1888,6 @@
       "coding_note": "Plasma cell leukemia. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness. Note that Layer 1's option line for this code is merged onto the 9732 line — see G2_OPEN_ITEMS.md.",
       "code_neutral_molecular": false,
       "redcap_value": "9733",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -1977,7 +1923,6 @@
       "coding_note": "Solitary extramedullary plasmacytoma. Reachable only after myeloma has been exonerated by the §3.4 workup — SPEP with immunofixation, serum free light chains, skeletal survey (the Imaging requirement) and a marrow. In a child with a CD20−/CD138+ tumour the far likelier answer is 9735 plasmablastic lymphoma; do not settle here without the negative marrow.",
       "code_neutral_molecular": false,
       "redcap_value": "9734",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2017,7 +1962,6 @@
       "coding_note": "Plasmablastic lymphoma. One of four HIV-cluster codes separated by three stains (§3.4): CD20−/CD138+/MUM1+/BLIMP1+/CD38+/PAX5−/Ki-67 high with **LANA-1 NEGATIVE and ALK NEGATIVE** — LANA-1+ with an effusion is 9678, LANA-1+ with cytoplasmic IgM lambda and CD138− in multicentric Castleman disease is 9738, ALK+ with CD30− is 9737, and a CD20-POSITIVE plasmablastic-looking EBV+ tumour is 9680. EBER is SUPPORTIVE, NOT DEFINITIONAL — EBER+ in only 66–70%, and an EBER-negative case is still PBL. **LMP1 IHC must not be used in plasmablastic lymphoma.** Myeloma must be exonerated before this code is closed (see 9732's note for the Rajkumar threshold). Paediatric PBL is rare and almost exclusively HIV-associated, so a paediatric plasmablastic tumour is an automatic HIV test — but carry Miranda's caution into the tree: 'HIV infection and younger age do not invariably support a diagnosis of PBL, especially in high HIV burden countries.' HIV serology and skeletal survey are management and exclusion steps, deliberately NOT added to diagnostic_tests_required — the code itself is made by histology plus the IHC panel, and padding the list would invent a phantom outstanding test on a fully worked-up case (DT master §2).",
       "code_neutral_molecular": false,
       "redcap_value": "9735",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2055,7 +1999,6 @@
       "coding_note": "ALK-positive large B-cell lymphoma. **ALK IHC is a hard gate — 9737 cannot be assigned without it** (§3.4, §5.5). Granular cytoplasmic ALK positivity with CD20 negative, **CD30 NEGATIVE** and absent pan-B markers; the CD30-negativity is what separates it from ALCL (9714), which is CD30 strong. ALK here is IHC, not FISH (§3.6). Sits inside the plasmablastic differential — see 9735's note for the four-way split.",
       "code_neutral_molecular": false,
       "redcap_value": "9737",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2091,7 +2034,6 @@
       "coding_note": "Large B-cell lymphoma arising in HHV8-associated multicentric Castleman disease. **HHV-8 LANA-1 is a hard gate — 9738 cannot be assigned without it** (§3.4, §5.5). Separated from 9678 (PEL) by cytoplasmic **IgM lambda** and **CD138 NEGATIVE** in the setting of multicentric Castleman disease; PEL is CD138-positive. Note the asymmetry for the tree: Castleman disease WITHOUT a large B-cell proliferation is a non-reportable exit (§4.5), so the branch that reaches 9738 must document the malignant population, not merely the Castleman diagnosis.",
       "code_neutral_molecular": false,
       "redcap_value": "9738",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2124,7 +2066,6 @@
       "coding_note": "Mastocytoma. Chain-termination root for the mast cell family — nos_fallback_code is null by design. Requires only skin morphology plus tryptase/KIT IHC (§3.8, §6), which makes it reachable at a low tier; ceiling medium because a cutaneous mast cell lesion cannot establish systemic disease. **Solitary mastocytoma versus 2–3 lesions is an explicit lesion-count split** — capture the count. **Critical negative: a skin-only case with NO marrow is 'mastocytosis in the skin', formally unclassified, and exits to the NON-REPORTABLE terminal (§4.5) — it is not 9741 and it is not automatically 9740 either; 9740 needs a documented mastocytoma.** ICD-O carries this code at /1 for mastocytoma NOS and reserves /3 for mast cell sarcoma; behavior_code is '3' here only because every ICCC-2017 Group II range requires behaviour 3 (§4.1) and contract §1 restricts applied behaviour changes to 9718/9725/9751 — flagged in G2_OPEN_ITEMS.md. Inverted rule worth encoding: **a positive KIT D816V argues AGAINST mast cell sarcoma.**",
       "code_neutral_molecular": false,
       "redcap_value": "9740",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2161,7 +2102,6 @@
       "coding_note": "Indolent systemic mastocytosis. **Adopt the harmonized 2024 criteria: SM requires 1 major + 1 minor, or ≥3 minor. ICC's position that the major criterion ALONE suffices is a live conflict and Valent's panel recommends against it — so `criteria_set_used` must be captured or ICC-diagnosed cases will be silently miscoded** (§3.8, §5.3). Minor criteria: >25% atypical or spindled mast cells; any activating KIT mutation at codon 816 or other critical regions (the Molecular/PCR requirement); **CD2 and/or CD25 and/or CD30 — CD30 is NEW, and a legacy CD25-only panel misses well-differentiated SM entirely**; basal serum tryptase ≥20 ng/mL (does not count when an associated myeloid neoplasm is present; divide by 1 + extra TPSAB1 copies in hereditary alpha-tryptasaemia). **Do NOT code 9741 without a marrow** — a skin-only case is 'mastocytosis in the skin' and exits non-reportable. This code also carries mast cell sarcoma, aggressive SM, SM-AHN and well-differentiated SM as free text (§5.2), none of which has its own code. ICD-O-3.2 carries this term at /1; see 9740's note and G2_OPEN_ITEMS.md.",
       "code_neutral_molecular": false,
       "redcap_value": "9741",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2190,7 +2130,6 @@
       "coding_note": "Mast cell leukemia. **≥20% mast cells on a bone marrow or peripheral blood smear — a MORPHOLOGY COUNT, achievable anywhere a smear can be read**, which is why §2.6 lists 9742 among the codes a Tier 0 morphology-only site can reach and why diagnostic_tests_required is Histology alone: adding IHC or molecular here would invent a phantom outstanding test on a case that is already complete by the criterion that defines it (DT master §2). Ceiling high for the same reason. Falls back to 9741 when the count is not met but systemic disease is documented.",
       "code_neutral_molecular": false,
       "redcap_value": "9742",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2225,7 +2164,6 @@
       "coding_note": "Malignant histiocytosis. **Chain-termination root for the histiocytic/dendritic family — nos_fallback_code is null by design — and the subject of the group's biggest open registry decision.** Goyal 2026 describes 'malignant histiocytosis' as 'historically serving as a wastebasket category until its removal in the 2016 WHO revision', and its named endpoint for an ambiguous case is **MHN-NOS, which has no ICD-O-3 code**. §5.2 marks this P0 and offers two options: repurpose 9750 as the MHN-NOS carrier with a coding note, or leave the cases uncoded. **This build takes the first option** — 9750 is the MHN-NOS carrier — because the alternative loses about half of everything that arrives under this label: only **52% of cases referred as 'malignant histiocytosis' were confirmed on expert review**. MHN-NOS is a LEGITIMATE endpoint, not a failure (DX-01), acceptable after adequate exclusion of mimics, with ≥2 specific markers where possible; such cases should go to expert review with strong consideration for molecular evaluation, and an expanded myeloid panel (CD117, CD34, MPO, CD13, CD68 KP1 ≫ CD68 PGM1) is called ESSENTIAL to exclude myeloid sarcoma. **Do NOT default an unclassified histiocytic infiltrate here** — that is the abuse the category is famous for; reach it deliberately, after the Goyal panel has been run and has failed to resolve lineage. **Erdheim-Chester disease has its own code, 9749, from 4 Sep 2026 — it no longer terminates here.** Built 4 Sep 2026 under registrar rulings 1-3: paediatric occurrence decides whether a code exists in the tree, and a code the REDCap option list lacks is reported and put on docs/codes-awaiting-redcap.md rather than withheld. The output block says the option is missing so the clerk knows to expect it. (contract §1; Pathway §3.2/§7.3 item 2). ECD criteria have relaxed and matter for a resource-limited site: bilateral leg osteosclerosis is no longer required (5–10% have no bone lesions), foamy histiocytes and Touton cells are not required, S100 is weakly positive in 20–30%, and **plain radiographs of the tibiae and femora are an accepted modality — the one ECD criterion executable without cross-sectional imaging.** BRAF V600E is present in ~50–69% and is treatment-changing but code-neutral; VE1 IHC alone is not sufficiently sensitive or specific (assays must detect below a 10% mutant allele fraction), so record the assay used. **Secondary MHN is where the paediatric signal is** (DX-03 to DX-05): MHN following acute leukaemia or lymphoma is more common in children than adults — 82% male, mean age 6.6 years, presenting during ALL maintenance, bone the commonest site (65%) — so a histiocytic tumour in a child on ALL maintenance is a second-primary-versus-transdifferentiation decision BY DEFAULT, and `prior_haematopoietic_malignancy` is a required field, not an optional one. Goyal 2026 PATH-04: CD163, CD1a, CD207/langerin and S100 are required on every suspected malignant histiocytic neoplasm, and PATH-05 requires at least two lineage-specific markers on the malignant cells; a case missing any of the four cannot reach this code.",
       "code_neutral_molecular": true,
       "redcap_value": "9750",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2260,7 +2198,6 @@
       "coding_note": "Langerhans cell histiocytosis, disseminated — ICD-O-3.2's own term for 9751/3. Multisystem disease, two or more organs or organ systems. The reportable half in ICCC-2017 IId. 9754 was the pre-2010 code for the same disease and is absent from ICD-O-3.2; it is retired here under registrar ruling 8 of 4 Sep 2026. Langerhans cell histiocytosis — the /3 half and the ANCHOR of the behaviour split: morphology_name is Layer 1 verbatim and redcap_option_verified is true, which is what earns the /1 sibling its exemption from the exact-string check (contract §2.3). Drift this name and BOTH halves fail. This is also the default landing code when extent is unknown. **Behaviour split (§4.1, contract §2.3) and the highest-impact one in the group: /1 is unifocal, single-system multifocal or single-system pulmonary disease (outside Group II); /3 is multisystem (≥2 organs or organ systems). The criterion is IMAGING-DEPENDENT — established by vertex-to-toes FDG-PET/CT, and a skull-to-mid-thigh scan is explicitly inadequate** — which is why Imaging is in diagnostic_tests_required. **Without PET-CT the single-system versus multisystem call is indeterminate for most LCH cases, so the tool must default to 9751 with an `extent_unknown` flag rather than guessing, and record which imaging was actually done. The realistic substitute — skeletal survey plus abdominal ultrasound plus chest X-ray — will UNDER-CALL multisystem disease and therefore bias cases OUT of Group II: a systematic ascertainment bias that must be documented, not silently absorbed.** Phenotype: S100+, CD1a+, CD207/langerin+ with grooved or reniform nuclei, CD68 Golgi-dot, cyclin D1+, and the staining is DIFFUSE (patchy CD1a/CD207 with overtly malignant cytology is 9756 Langerhans cell sarcoma). **CD1a ALONE is insufficient — it mistakes an indeterminate dendritic cell tumour for LCH; that entity is S100+/CD1a+/CD207 negative-to-≤5%, has NO code, and must be coded neither 9751 nor 9756** (§5.2). **ALK-positive histiocytosis (KIF5B::ALK, systemic form in INFANTS, ALK-inhibitor-responsive) must never be coded 9751 or 9750** — and it needs its own ALK clone: Goyal says AVOID ALK (D5F3) in a histiocytic lesion because it stains normal macrophages. MAPK-pathway mutations, most commonly BRAF, are found in MOST LCH cases; BRAF V600E may be shown by immunostaining rather than sequencing and can select vemurafenib, but it changes no code — record the assay. Diabetes insipidus carries the §5.5 alert. Goyal 2026 explicitly EXCLUDES LCH from the malignant histiocytic neoplasm category (it retains the morphology of native dendritic cells and lacks overtly malignant cytology), which is why this code's nos_fallback is null rather than 9750 — falling back from LCH to the MHN-NOS carrier would upgrade a lesion without malignant cytology into the malignant bucket.",
       "code_neutral_molecular": true,
       "redcap_value": "9751",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2295,7 +2232,6 @@
       "coding_note": "Langerhans cell histiocytosis, single-system. ICD-O-3.2 names this behaviour 9751/1 'Langerhans cell histiocytosis, NOS' (monostotic and polyostotic are Related terms on it) and reserves 9751/3 for 'Langerhans cell histiocytosis, disseminated'. The REDCap option list carries ONE 9751 row, so morphology_name is that row verbatim for both behaviours and the behaviour is what separates them. A /1 case falls outside ICCC-2017 Group II, which is why the extent question is asked against the imaging that was actually done. Registrar ruling 8 of 4 Sep 2026 retired 9754 from this tool: ICD-O-3.2 does not list 9754 at all, and the REDCap row for it carries 9751's name and 9751's change note. Removing the 9754 option from REDCap is on the to-do list. Unifocal, single-system multifocal or single-system pulmonary LCH — the /1 half of the behaviour split. **morphology_name is deliberately NOT the Layer 1 string: it names the /1 extent, and redcap_option_verified is false because this half has no REDCap option of its own** — the single Layer 1 option, 'Langerhans cell histiocytosis, NOS', is spoken for by the /3 sibling. **/1 places the case OUTSIDE ICCC-3 Group II. Reach it ONLY on positive imaging evidence of single-system disease, never by default: without vertex-to-toes PET-CT the extent is unknown and the case belongs at 9751/3 with an `extent_unknown` flag, because defaulting an unestablished extent to /1 silently deletes a reportable cancer.** **Behaviour split (§4.1, contract §2.3) and the highest-impact one in the group: /1 is unifocal, single-system multifocal or single-system pulmonary disease (outside Group II); /3 is multisystem (≥2 organs or organ systems). The criterion is IMAGING-DEPENDENT — established by vertex-to-toes FDG-PET/CT, and a skull-to-mid-thigh scan is explicitly inadequate** — which is why Imaging is in diagnostic_tests_required. **Without PET-CT the single-system versus multisystem call is indeterminate for most LCH cases, so the tool must default to 9751 with an `extent_unknown` flag rather than guessing, and record which imaging was actually done. The realistic substitute — skeletal survey plus abdominal ultrasound plus chest X-ray — will UNDER-CALL multisystem disease and therefore bias cases OUT of Group II: a systematic ascertainment bias that must be documented, not silently absorbed.** Phenotype: S100+, CD1a+, CD207/langerin+ with grooved or reniform nuclei, CD68 Golgi-dot, cyclin D1+, and the staining is DIFFUSE (patchy CD1a/CD207 with overtly malignant cytology is 9756 Langerhans cell sarcoma). **CD1a ALONE is insufficient — it mistakes an indeterminate dendritic cell tumour for LCH; that entity is S100+/CD1a+/CD207 negative-to-≤5%, has NO code, and must be coded neither 9751 nor 9756** (§5.2). **ALK-positive histiocytosis (KIF5B::ALK, systemic form in INFANTS, ALK-inhibitor-responsive) must never be coded 9751 or 9750** — and it needs its own ALK clone: Goyal says AVOID ALK (D5F3) in a histiocytic lesion because it stains normal macrophages. MAPK-pathway mutations, most commonly BRAF, are found in MOST LCH cases; BRAF V600E may be shown by immunostaining rather than sequencing and can select vemurafenib, but it changes no code — record the assay. Diabetes insipidus carries the §5.5 alert. Goyal 2026 explicitly EXCLUDES LCH from the malignant histiocytic neoplasm category (it retains the morphology of native dendritic cells and lacks overtly malignant cytology), which is why this code's nos_fallback is null rather than 9750 — falling back from LCH to the MHN-NOS carrier would upgrade a lesion without malignant cytology into the malignant bucket.",
       "code_neutral_molecular": true,
       "redcap_value": "9751",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2332,7 +2268,6 @@
       "coding_note": "Histiocytic sarcoma. Goyal 2026's algorithm, once overt malignant cytology is established and ≥2 histiocytic markers are present: **CD163+ plus one further macrophage/monocyte marker (CD68, CD4, CD14), with CD1a and CD207 NEGATIVE**. Two corrections the older text got wrong. (1) **The histiocytic-sarcoma branch is CD163-POSITIVE, not triple-negative, and PATCHY S100 IS EXPECTED — Goyal lists S100 within the monocyte-macrophage phenotype. Do not read a positive S100 as excluding 9755; read CD1a and CD207 for that.** S100 is what separates 9757 from 9755, not S100-negativity. (2) **Mitotic count, atypical mitoses and Ki-67 are 'not needed for diagnosis' and the consensus declines to define a number for any of them; the requirement is OVERT MALIGNANT CYTOLOGY, described qualitatively** — epithelioid ≫ spindled, intermediate-to-large cells with abundant pink cytoplasm, pleomorphism, enlarged nuclei with round to lobulated contours, vesicular or clumped chromatin, conspicuous nucleoli. The previously required 'clinical evidence of rapid tumour progression' is REMOVED. Haemophagocytosis and emperipolesis are explicitly NON-SPECIFIC — they also occur in Rosai-Dorfman and ALK-positive histiocytosis. PU.1 is the consensus tie-breaker in hard cases and for excluding undifferentiated pleomorphic sarcoma. Goyal 2026 PATH-04: CD163, CD1a, CD207/langerin and S100 are required on every suspected malignant histiocytic neoplasm, and PATH-05 requires at least two lineage-specific markers on the malignant cells; a case missing any of the four cannot reach this code.",
       "code_neutral_molecular": false,
       "redcap_value": "9755",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2366,7 +2301,6 @@
       "coding_note": "Langerhans cell sarcoma. S100+/CD1a+/CD207+ **with overtly malignant cytology, and CD1a/CD207 staining that may be PATCHY — unlike LCH's diffuse pattern**; histiocytic markers variable (§3.8). The patchy-versus-diffuse distinction plus malignant cytology is the whole separation from 9751, since the marker profile is otherwise identical. **The adjacent no-code entity: S100+/CD1a+ with CD207 ≤5% is a high-grade indeterminate dendritic cell tumour, which has NO ICD-O code and must be coded neither 9756 nor 9751** (§5.2) — and ≤5% langerin is the ONLY percentage threshold Goyal 2026 adopts; PATH-06 explicitly declines to set thresholds for any other lineage marker, so do not invent one and do not treat CD207 as a clean binary. Goyal 2026 PATH-04: CD163, CD1a, CD207/langerin and S100 are required on every suspected malignant histiocytic neoplasm, and PATH-05 requires at least two lineage-specific markers on the malignant cells; a case missing any of the four cannot reach this code.",
       "code_neutral_molecular": false,
       "redcap_value": "9756",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2404,7 +2338,6 @@
       "coding_note": "Interdigitating dendritic cell sarcoma. **S100+ with CD1a and CD207 NEGATIVE, melanocytic markers negative, PU.1 recommended** (Goyal 2026). Two warnings the algorithm makes explicit: **melanoma must be excluded — the paper states this entity lacks any defining marker**, so the diagnosis rests on S100 positivity plus the absence of everything else; and **S100 is what separates 9757 from 9755**, which the older shorthand 'subtype 9750 by S100/CD1a/CD207' understated. Histiocytic markers are variable here, and patchy S100 in 9755 means a weak S100 does not by itself make the case 9757. Goyal 2026 PATH-04: CD163, CD1a, CD207/langerin and S100 are required on every suspected malignant histiocytic neoplasm, and PATH-05 requires at least two lineage-specific markers on the malignant cells; a case missing any of the four cannot reach this code.",
       "code_neutral_molecular": false,
       "redcap_value": "9757",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2439,7 +2372,6 @@
       "coding_note": "Follicular dendritic cell sarcoma. Chain-termination root — nos_fallback_code is null by design, because Goyal 2026 EXCLUDES stroma-derived neoplasms from the malignant histiocytic neoplasm category by name, so falling back to 9750 would misclassify the lineage. Diagnosis needs **≥1 FDC marker — CD21, CD23, CD35, clusterin or CXCL13 — with spindled/epithelioid cells and lymphocytes WITHOUT plasma cells**; clusterin has 100% sensitivity and 93% specificity. **The practical warning that matters most: CD21/CD23/CD35 are NOT in routine lymphoma panels, which makes 9758 the most likely UNDER-ASCERTAINED code in the group** (§3.8) — a spindle-cell nodal tumour reported as 'undifferentiated' without these three stains is the commonest way this code is missed. Under ICD-O-3.2/WHO-HAEM5 this code covers TWO entities WHO-HAEM5 separated — FDC sarcoma and EBV-positive inflammatory FDC sarcoma — so record the subtype as free text against the shared code (§5.2); ICC additionally calls the EBV+ inflammatory lesion a 'tumour' rather than a 'sarcoma', which has a behaviour-code implication that is unresolved (§5.3). **WHO-HAEM5 moves 9758 and 9759 out of the histiocytic/dendritic family into 'stroma-derived neoplasms of lymphoid tissues'; the registry KEEPS both in IId regardless** — ICCC-3 subgroup membership is a function of the ICD-O code, not of which WHO chapter the entity now sits in, and moving them would break the time series for no analytic gain (§5.3, §9.1 item 3). Record the WHO placement as a synonym note.",
       "code_neutral_molecular": false,
       "redcap_value": "9758",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2476,7 +2408,6 @@
       "coding_note": "Fibroblastic reticular cell tumour. Chain-termination root — nos_fallback_code is null by design, for the same reason as 9758: stroma-derived, excluded from the malignant histiocytic neoplasm category by name, so a fallback to 9750 would misclassify the lineage, and there is no family-level NOS code for stroma-derived neoplasms. Separated from 9758 by the ABSENCE of FDC markers (CD21, CD23, CD35) with cytokeratin and smooth muscle actin expression. Reclassified by WHO-HAEM5 into 'stroma-derived neoplasms of lymphoid tissues' alongside 9758; **the registry keeps it in IId regardless** (§5.3, §9.1 item 3). Rare, and rarer still in children — but the code is carried in the histiocytic tree (contract §4) rather than dropped, because the alternative is losing the case entirely.",
       "code_neutral_molecular": false,
       "redcap_value": "9759",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2505,7 +2436,6 @@
       "coding_note": "Archaic ICD-O bucket (immunoproliferative disease NOS) retained because Layer 1 carries it. Named nowhere in Pathway §3 or §6 as an endpoint, so terminal_reachable is false — no branch should emit it. It survives here as the chain parent for 9762 heavy chain disease and 9764 IPSID, which are equally unreachable in a paediatric registry. If a future author wires a branch to it, the ceiling stays low: the term predates the B-cell/T-cell split and says nothing about lineage.",
       "code_neutral_molecular": false,
       "redcap_value": "9760",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2538,7 +2468,6 @@
       "coding_note": "Waldenström macroglobulinemia. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness.",
       "code_neutral_molecular": false,
       "redcap_value": "9761",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2570,7 +2499,6 @@
       "coding_note": "Heavy chain disease NOS. An adult entity, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness and as the chain parent for 9764 (IPSID is alpha heavy chain disease).",
       "code_neutral_molecular": false,
       "redcap_value": "9762",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2603,7 +2531,6 @@
       "coding_note": "Immunoproliferative small intestinal disease (alpha heavy chain disease). A young-adult entity of the Middle East and North Africa, named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness. An intestinal lymphoid infiltrate in a child is far likelier the T-cell disease of §3.7 (9717) or an indolent NK-cell LPD of the GI tract, which is a NON-REPORTABLE exit.",
       "code_neutral_molecular": false,
       "redcap_value": "9764",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2632,7 +2559,6 @@
       "coding_note": "Monoclonal gammopathy of undetermined significance. **Not a reportable malignancy** — ICD-O carries this concept at /1, and it falls below the Rajkumar threshold that defines myeloma (§3.4). Carried only because Layer 1 carries it; terminal_reachable false and no branch should emit it. behavior_code is '3' here solely because every ICCC-2017 Group II range requires behaviour 3 (§4.1) and contract §1 restricts applied behaviour changes to 9718/9725/9751 — that mismatch is flagged in G2_OPEN_ITEMS.md for the registrar, not resolved here.",
       "code_neutral_molecular": false,
       "redcap_value": "9765",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2666,7 +2592,6 @@
       "coding_note": "Lymphomatoid granulomatosis. **The ICD-O name — 'Angiocentric immunoproliferative lesion' — is archaic and no clerk will recognise it; it is kept character-identical to Layer 1 on purpose and the modern term is carried in the alias file, never by editing this name.** Angiocentric EBV+ B cells with **lung involvement required by definition (100% of cases)**, which is why Imaging is a genuine requirement; nodal or marrow involvement is a hard exclusion that should raise an alternative diagnosis. Under ICC 2022 a CNS-only or GI-only EBV+ LYG-like lesion is NO LONGER LYG. **Grade is a captured variable, not a code**: EBER+ cells per hpf — grade 1 <5, grade 2 5–20, grade 3 >50 and often >100 — and grade determines drug class outright. EBER is seen in only about half of grade 1 lesions, so a negative EBER on a grade-1-looking lesion means RE-BIOPSY, not exclusion. Grade may change in either direction on re-biopsy without a new primary (§4.6). ICD-O-3.2 restricts 9766/3 to grade 3 — that relabelling is NOT applied tonight (contract §1) and is the registrar's call.",
       "code_neutral_molecular": false,
       "redcap_value": "9766",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2695,7 +2620,6 @@
       "coding_note": "Angioimmunoblastic lymphadenopathy — the archaic pre-neoplastic term for what is now nodal TFH lymphoma, angioimmunoblastic type (9705). Carried for Layer 1 completeness; terminal_reachable false, and historical wording is retargeted in the alias file rather than by editing this name. Any case reaching this description should be worked up against the ≥2-TFH-marker rule and coded 9705.",
       "code_neutral_molecular": false,
       "redcap_value": "9767",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2727,7 +2651,6 @@
       "coding_note": "T-gamma lymphoproliferative disease — archaic term for what is now T-cell large granular lymphocytic leukaemia, which sits in Group I (9831), not here. Carried for Layer 1 completeness; terminal_reachable false, alias-handled.",
       "code_neutral_molecular": false,
       "redcap_value": "9768",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2758,7 +2681,6 @@
       "coding_note": "Immunoglobulin deposition disease. An adult entity and, like MGUS, at /1 in ICD-O; named nowhere in Pathway §3 or §6; terminal_reachable false, carried for Layer 1 completeness. See 9765's note and G2_OPEN_ITEMS.md for the behaviour-code mismatch.",
       "code_neutral_molecular": false,
       "redcap_value": "9769",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -2797,7 +2719,6 @@
       "coding_note": "B-lineage lymphoblastic disease. Lineage per Tembhare 2025: ≥1 of CD19, CD22, cCD79a, PAX5, PLUS a required immaturity element (TdT+ and CD34+, or bright CD10 with low CD45, low/absent CD20 and absent surface Ig) — immaturity is not optional. **9728 (precursor B-cell lymphoblastic lymphoma) is retired at the tool layer** (contract §1, Pathway §5.4): it has no morphology_entries object in this file and every route that would have reached it reaches 9811 instead; the archaic term is retargeted in the alias file. After that retirement the Group I/II split for lymphoblastic disease is carried ENTIRELY by topography — see topography_routing_note. **Ph-like B-ALL now resolves to 9819 through the genetic layer at g2_molecular (registrar ruling 4, 4 Sep 2026). It reaches 9811 only when the signature test was negative, not done or unreadable** — record that CRLF2 flow screening or a 7-probe FISH panel was attempted, and that BCR::ABL1 and ETV6::RUNX1 were excluded first (§3.2). Also the landing code for B-ALL with MYC rearrangement (CD20−, sIg−, CD19+, PAX5+, CD10+, MUM1+, Ki-67 100%, IG::MYC with i(1)(q10)/tetrasomy 1q, TdT and CD34 may be ABSENT) — both WHO and ICC route it to the B-lymphoblastic range and **9687 must never be used** (§3.3, §4.2, §5.2), and for iAMP21 (§5.2). KMT2A-rearranged BCP-ALL is characteristically CD10 dim/negative with weak cCD22/cCD79a and must not fall out of the B-lineage algorithm into AML or MPAL. Where lineage_count is 2 or none, the case is MPAL/ALAL/AUL, which has no Group II code — refer to Group I (§4.4).",
       "code_neutral_molecular": true,
       "redcap_value": "9811",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -2839,7 +2760,6 @@
       "coding_note": "t(9;22) BCR::ABL1. TKI-actionable, which is why Tembhare calls it 'paramount' in the three-probe priority panel (ETV6::RUNX1 + BCR::ABL1 + KMT2A) where FISH is scarce (§3.2). Record p190 versus p210. Distinguish from CML in lymphoid blast phase — a documented preceding chronic phase makes it 9875 in Group I, not 9812. Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9812",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -2881,7 +2801,6 @@
       "coding_note": "KMT2A (MLL) break-apart FISH required. Phenotype trap carried over from §3.2 and Group 1: KMT2A-rearranged BCP-ALL is characteristically CD10 dim/negative and CD24 negative with weak cCD22/cCD79a, so it can drop out of the B-lineage algorithm altogether — do not let it default to AML or MPAL. Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9813",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -2923,7 +2842,6 @@
       "coding_note": "CRYPTIC — detectable by FISH or RT-PCR only, never by karyotype. A 'normal karyotype' result must route to a FISH-status prompt and must never terminate to 9811 (§3.2; Group 1 Pathway §4.4, §7.5). The clinical_alert is carried verbatim from the Group 1 entry for the same code so the two files cannot drift. Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9814",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -2965,7 +2883,6 @@
       "coding_note": "Modal number >50 chromosomes, or DNA index. Tembhare names DNA ploidy by flow or FISH as the cheap, available test where broad cytogenetics is not (§3.2). TRAP: masked hypodiploidy — a hypodiploid clone that has doubled reads as apparent hyperdiploidy on karyotype. SNP array or DNA index unmasks it; misreading it inverts the prognosis, so a doubled clone is 9816, not 9815. Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9815",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3007,7 +2924,6 @@
       "coding_note": "Low-hypodiploid 32–39 chromosomes or near-haploid 24–31. Check for masked hypodiploidy presenting as apparent hyperdiploidy before accepting 9815 instead. Low-hypodiploid B-ALL triggers germline TP53 testing — about half of paediatric TP53 mutations here are germline (Li-Fraumeni); record via the germline predisposition variable, it does not change the code (§3.2). Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9816",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3049,7 +2965,6 @@
       "coding_note": "t(5;14) IL3::IGH. Clinical clue worth carrying into the tree: peripheral eosinophilia in a lymphoblastic case should prompt testing for t(5;14) before the eosinophilia is attributed to a myeloid/lymphoid neoplasm with eosinophilia. Ceiling is medium rather than high, matching the Group 1 entry for the same code — the association is made on karyotype plus FISH and the entity is rare enough that a single positive probe is usually reviewed before acceptance. Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9817",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3091,7 +3006,6 @@
       "coding_note": "t(1;19) TCF3::PBX1. Phenotypic prompt only, never a code substitute: CD9 strong with CD34 negative (§3.2, Group 1 §3.1). Reached from the Group II side only when the disease is a nodal or extranodal lymphoblastic lymphoma; a marrow-primary case is Group I (see topography_routing_note). diagnostic_tests_required names Cytogenetics/FISH because FISH is the modality Pathway §3.2 prioritises (ETV6::RUNX1 + BCR::ABL1 + KMT2A break-apart, then ploidy). RT-PCR substitutes for FISH on several of these; the list has no OR semantics, so the branch that captured an RT-PCR result must declare satisfies_tests: [\"Cytogenetics/FISH\"] rather than this entry dropping the requirement (DT master §2). Group 1 carries the same code with Flow cytometry in place of IHC — that is a specimen difference (marrow aspirate vs tissue block), not a disagreement.",
       "code_neutral_molecular": false,
       "redcap_value": "9818",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3127,7 +3041,6 @@
       "coding_note": "Small lymphocytic lymphoma — the Group II (nodal) half of a dual-group code whose Group I (leukaemic) half is CLL in Ia2. See topography_routing_note; the clinical_alert is carried verbatim from the Group 1 entry for the same code so the two files cannot drift. Requires the ERIC/ESCCA core panel (CD19, CD5, CD20 dim, CD23, kappa, lambda); borderline cases add CD43, CD79b, CD81, CD200, CD10, ROR1. Retained in the code set despite being adult-only — do not remove.",
       "code_neutral_molecular": false,
       "redcap_value": "9823",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3164,7 +3077,6 @@
       "coding_note": "Adult T-cell leukemia/lymphoma. **HTLV-1 serology is the ABSOLUTE gate: without it the code is unassignable and the case falls to 9702, 9700 or 9709** (§3.7, §5.5). Serology is recorded under Molecular/PCR because that is the closest member of this schema's closed test vocabulary — the same convention the Group 1 entry for this code uses; a branch capturing a serology result must declare satisfies_tests: [\"Molecular/PCR\"]. In a low-prevalence country — which is most of the world outside southwestern Japan, the Caribbean basin, parts of West and Central Africa, and parts of South America — a negative serology is a cheap definitive exclusion and **this code should be near-empty; a populated 9827 warrants review**. Miranda 2024 widens the indication in a way that matters where Hodgkin volume is high: test HTLV-1 in every case suggestive of ATLL AND in **classic Hodgkin lymphoma with atypical background lymphoid cells**, because ATLL can masquerade as CHL. Shimoyama subtyping (acute / lymphomatous / chronic / smouldering) needs blood counts, LDH, calcium, skin examination and nodal status together — the pathology report cannot subtype, and the subtype is code-neutral. The Shimoyama numeric criteria are NOT in this corpus (§8). Primary cutaneous tumoral ATL has been REMOVED from the smouldering group and now requires aggressive treatment. Dual-group — see topography_routing_note.",
       "code_neutral_molecular": false,
       "redcap_value": "9827",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3203,7 +3115,6 @@
       "coding_note": "T-lineage lymphoblastic disease: surface and/or cytoplasmic CD3, with the required immaturity element (TdT+ and CD1a+, or CD34+ — CD34 is positive in only about a third of T-LL, so CD34− does not exclude) (§3.2). **9729 (precursor T-cell lymphoblastic lymphoma) is retired at the tool layer** (contract §1, Pathway §5.4): no morphology_entries object exists for it and every route that would have reached it reaches 9837; the archaic term is retargeted in the alias file. Landing code for ETP-ALL (cCD3+, CD1a <5%, CD8 <5%, CD5 absent-or-dim, ≥1 myeloid/stem marker at ≥25%, MPO <3%) — it has NO separate code. Two hard rules: TdT negative by flow does not exclude T-LBL (reflex to cell-block ICC — 7 of 15 in Bhaker 2015), and cCD3+/sCD3− is a flow phenotype that IHC usually cannot make, so an IHC-only tier cannot fully resolve T-lineage (Cortelazzo 2011). Marrow and CSF were negative and blood counts normal in all 15 of Bhaker's mediastinal cases — a normal haemogram does not argue against T-LBL. Do not hard-code the MPO percentage at the MPAL boundary; proposals run 3% to 28% and no consensus exists (§4.4). Group 1 carries this code with Flow cytometry where this entry names IHC — a specimen difference, not a disagreement.",
       "code_neutral_molecular": true,
       "redcap_value": "9837",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C41.9",
@@ -3234,7 +3145,6 @@
       "coding_note": "Lymphoproliferative disorder NOS. Family-level terminal for a lymphoid proliferation that is not demonstrably a lymphoma and not demonstrably reactive — and the chain parent for 9971. Ceiling low. The commonest reason to be here is an immune-dysregulation setting (HIV, post-transplant) where §4.5's non-reportable inventory has NOT been excluded: EBV reactivation with preserved architecture, non-destructive PTLD, HIV-associated persistent generalised lymphadenopathy, Castleman disease and IgG4-related disease all belong at the non-reportable terminal, not here. Use this code when a clonal or destructive process is documented but unclassifiable, not as a soft landing for an unexcluded mimic.",
       "code_neutral_molecular": false,
       "redcap_value": "9970",
-      "redcap_option_verified": true,
       "terminal_reachable": false,
       "primary_sites": [
         "C00.0-C80.9"
@@ -3266,7 +3176,6 @@
       "coding_note": "Post-transplant lymphoproliferative disorder NOS. **Tissue biopsy with WHO classification is the gold standard; EBV DNA load is a screening and monitoring tool, NOT a diagnostic one — it cannot on its own reach 9971** (§3.4). Two rules retained at registrar review after Allen 2019 was withdrawn: a material proportion of PTLD is EBV-NEGATIVE, so a negative EBER does not exclude it; and a small number of EBV-positive cells in a graft recipient is not by itself evidence of PTLD. Under ICD-O-3.2 polymorphic PTLD becomes 9971/1 and monomorphic PTLD codes to the specific lymphoma — that behaviour change is NOT applied tonight (contract §1; Pathway §7.6 notes 9971 takes one entry, not a behaviour-split pair). NON-DESTRUCTIVE PTLD is a non-reportable exit (§4.5). Where paediatric solid-organ transplantation is not performed locally, a populated 9971 warrants review before acceptance.",
       "code_neutral_molecular": true,
       "redcap_value": "9971",
-      "redcap_option_verified": true,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
@@ -3299,21 +3208,12 @@
       "coding_note": "Systemic anaplastic large cell lymphoma with ALK negative by IHC. Term verified against the IARC ICD-O-3.2 table (ICD coding/ICD-O-3.2/icdo32.sqlite, 9715/3 Preferred); breast implant-associated ALCL is a Related term on the same code. Two things the registrar must know. First, 9715 is NOT in the ICCC-2017 IIb3 range (9700-9702,9705,9708,9709,9714,9716-9719,9724-9726,9767,9768) — it falls in the gap between 9714 and 9716, so the ICCC recode returns nothing and the case drops out of Group II unless the range is extended. Second, it is not yet an option in the Group 2 REDCap list. Both are on the to-do list. Clinically: >95% of paediatric ALCL is ALK-positive, so an ALK-negative result in a child is a re-review trigger, not a default. The same IARC table keeps 9714/3 as 'Anaplastic large cell lymphoma, T-cell and Null-cell type' with 'ALK positive' only as a Related term, so the relabelling of 9714 that Changes Made/Aug 2026 proposed is NOT required and is not applied.",
       "code_neutral_molecular": false,
       "redcap_value": "9715",
-      "redcap_option_verified": false,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 code verified against the IARC table at ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 2 REDCap list and not in the ICCC-2017 Group II ranges. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld.",
-        "needs": [
-          "REDCap Group 2 option list",
-          "ICCC-2017 recode range"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9749",
@@ -3342,21 +3242,12 @@
       "coding_note": "Erdheim-Chester disease. Term verified against the IARC ICD-O-3.2 table (9749/3 Preferred, single row). Not in the ICCC-2017 IId range (9740-9742,9750,9751,9754-9759) and not in the Group 2 REDCap list — both on the to-do list. Registered here under registrar ruling 1 of 4 Sep 2026: paediatric occurrence, not the ICCC range, decides whether a code is built. ECD is a disease of middle age (mean 49.6 y) with about twenty documented paediatric cases (mean 9.6 y, youngest 3.5 y), and there is a published proposal that some paediatric CNS juvenile xanthogranuloma carrying BRAF V600E is paediatric ECD. Diagnostic criteria are executable without cross-sectional imaging: plain radiographs of the tibiae and femora showing symmetrical diaphyseal osteosclerosis are an accepted modality. Bilateral leg osteosclerosis is no longer required (5-10% have no bone lesion), foamy histiocytes and Touton cells are not required, S100 is weakly positive in 20-30%. BRAF V600E is present in ~50-69%, is treatment-changing and code-neutral; VE1 IHC alone is not sufficient, so record the assay.",
       "code_neutral_molecular": true,
       "redcap_value": "9749",
-      "redcap_option_verified": false,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 code verified against the IARC table at ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 2 REDCap list and not in the ICCC-2017 Group II ranges. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld.",
-        "needs": [
-          "REDCap Group 2 option list",
-          "ICCC-2017 recode range"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9819",
@@ -3385,21 +3276,12 @@
       "coding_note": "B-lymphoblastic leukaemia/lymphoma with a BCR-ABL1-like (Ph-like) signature, presenting as a lymphoma. Term verified against the IARC ICD-O-3.2 table (9819/3 Preferred) — note the hyphen form BCR-ABL1-like, not BCR::ABL1-like. Registrar ruling 4 of 4 Sep 2026: one code, two groups. The identical entry exists in group_01_dt.json under Ia1 for the leukaemic presentation; ICCC-2017 separates them by topography, restricting 9811-9818 and 9837 away from C42.0 blood, C42.1 marrow and C42.3 RES in Group II and confining them to those sites in Group I. Requires a documented Ph-like signature — CRLF2 rearrangement, an ABL-class fusion or a JAK-STAT lesion — by FISH or RNA-seq, with BCR::ABL1 itself negative. About 15% of childhood ALL, rising through adolescence. Not in the ICCC-2017 IIb1 range (9811-9818,9837) and not in the Group 2 REDCap list, though it IS already in the Group 1 REDCap list. Both gaps are on the to-do list.",
       "code_neutral_molecular": false,
       "redcap_value": "9819",
-      "redcap_option_verified": false,
       "terminal_reachable": true,
       "primary_sites": [
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 code verified against the IARC table at ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 2 REDCap list and not in the ICCC-2017 Group II ranges. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld.",
-        "needs": [
-          "REDCap Group 2 option list",
-          "ICCC-2017 recode range"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     }
   ],
   "decision_trees": [
