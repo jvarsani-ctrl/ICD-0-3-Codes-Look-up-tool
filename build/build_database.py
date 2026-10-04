@@ -8858,16 +8858,33 @@ def _g7_iccc_subgroups(layer1, code, topo):
 
 
 def _g7_router_resolve(router, code, topo):
-    """app.js resolveGroup(), transcribed: first rule naming the code; `always`, else the
-    first branch whose topography_in holds the site, else `default`."""
+    """app.js resolveGroup() for the topography-keyed branch shape: first rule naming the
+    code; `always`, else the first branch whose topography_in holds the site, else
+    `default`.
+
+    This is a PARTIAL transcription, and says so rather than reading as a full one.
+    app.js branchMatches() also evaluates `captured_variable` branches against the
+    captured state, and four live rules use that shape (9811-9819, 9823, 9827, 9260).
+    Every Group VII code branches on topography alone, so the shapes agree here; a
+    captured_variable branch raises instead of being silently read as "no match", which
+    is what would make this helper quietly disagree with the engine it stands in for.
+    Report.run() turns the raise into a FAIL."""
     for key, rule in (router.get("dual_group_rules") or {}).items():
         if not isinstance(rule, dict) or str(code) not in [str(c) for c in rule.get("codes") or []]:
             continue
         if rule.get("always"):
             return rule["always"], key
         for branch in rule.get("branches") or []:
-            if topo in ((branch.get("when") or {}).get("topography_in") or []):
-                return branch.get("result"), key
+            when = branch.get("when") or {}
+            if "topography_in" in when:
+                if topo in (when.get("topography_in") or []):
+                    return branch.get("result"), key
+            elif when.get("captured_variable"):
+                raise ValueError(
+                    "_g7_router_resolve: rule %r has a captured_variable branch (%r), a shape "
+                    "this helper does not evaluate although app.js branchMatches() does; the "
+                    "two would disagree on %s at %s"
+                    % (key, when.get("captured_variable"), code, topo))
         return rule.get("default"), key
     return None, None
 
@@ -8905,10 +8922,93 @@ def check_group7_router_c22(repo: Path, layer1: Path):
                 out.append((FAIL, "RULE 9 — router rule %r sends %s at %s to %r; ICCC-2017 "
                                   "row 67/71 places %s in Group VII at any site "
                                   "(contract §0.2 point 3)" % (rule, code, topo, got, code)))
+    # The two lists above are written out by hand, so they only ever cover the codes
+    # whoever wrote them thought of. 8158 'ACTH-producing tumor' is a VIIb entry that
+    # ICCC-2017 range 70 puts at 220,221, and it shared the pituitary rule with 8290 and
+    # took that rule's group 11 default at the liver — in neither list, so nothing here
+    # saw it (found 4 October 2026, fixed by splitting the rule). This third pass asks
+    # the question of EVERY Group VII entry another group's rule happens to name, keyed
+    # off the entry file and the recode, so a code that acquires a rule later is covered
+    # the day it does rather than when someone remembers to extend a tuple.
+    dt_path = repo / "data" / "database" / "group_07_dt.json"
+    dt, _ = load_json(dt_path) if dt_path.exists() else (None, None)
+    swept = 0
+    for entry in ((dt or {}).get("morphology_entries") or []):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if not code or code in GROUP7_ROUTER_C22_CODES or code in GROUP7_ANY_SITE_CODES:
+            continue
+        for topo in ("C22.0", "C22.1"):
+            got, rule = _g7_router_resolve(router, code, topo)
+            if rule is None:
+                continue
+            want = [sg for main, sg in (_g7_iccc_subgroups(layer1, code, topo) or [])
+                    if main == "VII"]
+            if not want:
+                continue
+            swept += 1
+            if not got or got.get("group") != 7 or got.get("subgroup") not in want:
+                out.append((FAIL, "RULE 9 — router rule %r sends %s at %s to %r, but "
+                                  "ICCC-2017 places %s at that site in Group VII %s. A "
+                                  "Group VII entry that another group's rule names must "
+                                  "still reach Group VII (contract §7.1)"
+                            % (rule, code, topo, got, code, "/".join(want))))
     if not out:
         out.append((OK, "RULE 9 — the router sends 8963, 8991 and 8000-8005 at C22.0/C22.1 "
-                        "to the ICCC-2017 Group VII subgroup, and every rule naming an "
-                        "any-site Group VII code resolves to group 7"))
+                        "to the ICCC-2017 Group VII subgroup, every rule naming an "
+                        "any-site Group VII code resolves to group 7, and %d further "
+                        "(Group VII entry, liver) pair(s) that another group's rule names "
+                        "resolve to the subgroup ICCC-2017 gives them" % swept))
+    return out
+
+
+def check_group7_subgroup_declaration(ctx: DTContext, layer1: Path):
+    """
+    GROUP 7 RULE 11 — every entry declares the ICCC-3 subgroup ICCC-2017 gives its code at
+    the liver.
+
+    Nothing asked this before. check_iccc_subgroup_ranges() asks it for most groups, but it
+    reads the markdown table in Layer 1, which carries no rows for group 7 (nor group 5), so
+    it returns a NOTE, "range report skipped", and checks nothing; check_group7_code_set()
+    validates the (code, behaviour) pair against the generated inventory and never looks at
+    iccc3_subgroup_id. Between them a Group VII entry could name any subgroup at all and the
+    build stayed green: 8970 hepatoblastoma refiled as VIIb, hepatic carcinomas, passed all
+    635 checks with 0 FAIL (negative control, 4 October 2026).
+
+    The subgroup is what the registry records as the ICCC classification, and the recode
+    disagreeing with the tool is the defect ruling 1 is about, so this is keyed off
+    ICCC-2017.sqlite directly — the same source check_group7_router_c22() uses — and not off
+    the entry file or the generator that wrote it.
+    """
+    if ctx.group != GROUP7:
+        return []
+    if _iccc_path(layer1) is None or not _iccc_path(layer1).exists():
+        return [(WARN, "RULE 11 — ICCC-2017.sqlite not found; Group 7 subgroup declarations "
+                       "are NOT checked against the recode")]
+    out, seen = [], 0
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if not code:
+            continue
+        # Behaviour 3 is what the recode classifies; the two ruled 8975 entries are
+        # anchored on 8975/3's row by the same ruling that built them (contract §0.2).
+        want = sorted({sg for main, sg in (_g7_iccc_subgroups(layer1, code, "C22.0") or [])
+                       if main == "VII"})
+        if not want:
+            continue
+        seen += 1
+        if entry.get("iccc3_subgroup_id") not in want:
+            out.append((FAIL, "RULE 11 — morphology_entries[%d] %s/%s declares ICCC-3 subgroup "
+                              "%r, but ICCC-2017 places %s at C22.0 in Group VII %s — the "
+                              "recode will disagree with the tool (contract §0.2)"
+                        % (i, code, entry.get("behavior_code"),
+                           entry.get("iccc3_subgroup_id"), code, "/".join(want))))
+    if not out:
+        out.append((OK, "RULE 11 — all %d Group VII entries declare the ICCC-3 subgroup "
+                        "ICCC-2017 gives their code at C22.0" % seen))
     return out
 
 
@@ -10526,6 +10626,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group7_imaging_constellation, ctx)            # rule 7
         report.run(check_group7_fibrolamellar, ctx)                    # rule 8
         report.run(check_group7_cnset, ctx, layer1)                    # rule 10
+        report.run(check_group7_subgroup_declaration, ctx, layer1)     # rule 11
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_redcap_banner_signal, ctx, redcap_options)

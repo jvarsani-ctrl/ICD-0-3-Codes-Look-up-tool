@@ -350,6 +350,19 @@ for _c in ("8001", "8002", "8003", "8004", "8005"):
         topography_routing_note=ROUTER_8000,
     )
 
+# build_entry() rebuilds every entry as {f: entry[f] for f in FIELD_ORDER}, so a key in
+# ANNOTATIONS that FIELD_ORDER does not carry is dropped without a word -- a typo'd
+# `nos_fallback` for `nos_fallback_code` would take the fallback off the entry and leave
+# the build green. Checked at import, where the names are, rather than trusted.
+_UNKNOWN_ANNOTATION_FIELDS = {
+    code: sorted(set(ann) - set(FIELD_ORDER))
+    for code, ann in ANNOTATIONS.items() if set(ann) - set(FIELD_ORDER)
+}
+if _UNKNOWN_ANNOTATION_FIELDS:
+    raise SystemExit(
+        "generate_group07_entries.py: ANNOTATIONS carries field(s) absent from FIELD_ORDER, "
+        "which build_entry() would silently drop: %s" % _UNKNOWN_ANNOTATION_FIELDS)
+
 # Tier B: the adult-type VIIb carcinomas, reachable by direct code entry only.
 TIER_B_NOTE = (
     " One of the adult-type carcinomas in ICCC-3 subgroup %s (%s) at C22.0/C22.1: reachable by "
@@ -487,6 +500,21 @@ def build_ruled_8975(redcap: dict) -> list:
         )
         e = {f: entry[f] for f in FIELD_ORDER}
         e["redcap_option_verified"] = CNSET_TERM in names
+        # build_entry() declares awaiting_layer1 for a code the option file does not carry
+        # (ruling 3, 4 September 2026). These two entries are built by hand and skipped
+        # that, so if REDCap pick 2 ever goes they would read as merely unverified and
+        # drop off docs/codes-awaiting-redcap.md without anything saying so.
+        if not names:
+            e["awaiting_layer1"] = {
+                "reason": (
+                    "ICD-O-3.2 code 8975/%s '%s', registered in Group VII by the registrar's "
+                    "ruling of 3 October 2026 (open question 2), is not an option in "
+                    "RedCap Options/Group 7- Hepatic Tumors.md. Built under registrar "
+                    "rulings 1-3 of 4 September 2026 (contract §2B)." % (behaviour, CNSET_TERM)
+                ),
+                "needs": ["REDCap Group 7 option list"],
+                "todo": "docs/codes-awaiting-redcap.md",
+            }
         out.append(e)
     return out
 
