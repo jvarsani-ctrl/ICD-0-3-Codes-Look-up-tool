@@ -119,7 +119,7 @@ group to match, the option becomes "obtain the imaging report".
    I added the fence; no text changed, and the file still matches the 1 October dictionary
    snapshot. Revert it if you would rather Layer 1 files change only by your hand.
 8. **`ICCC-2017.sqlite` range 60 ends in a trailing comma** (`9210,9220,9240,`). Not fixed
-   (TODO §24).
+   (TODO §25).
 
 ---
 
@@ -128,14 +128,14 @@ group to match, the option becomes "obtain the imaging report".
 1. **Group IV and Group VIII disagree on CD99.** Group IV refers a CD99-positive,
    PHOX2B-negative, synaptophysin-negative bone tumour here and tells the clerk it is `9364/3`.
    Group VIII codes `9364/3` only with NKX2-2, a fusion, or the report's own diagnosis; CD99
-   alone gives `8002/3`. Which threshold do you want? (TODO §22, which extends §14.)
+   alone gives `8002/3`. Which threshold do you want? (TODO §23, which extends §14.)
 2. **The tool called every excluded tumour benign. Fixed.** The behaviour-exclusion banner
    read "Benign" whatever the behaviour, so giant cell tumour of bone (`9250/1`) and
    chondrosarcoma grade 1 (`9222/1`) were announced as benign. It now follows the ICD-O
-   behaviour digit. This also corrects Group V's `9514/1` and Group VI's `8960/1` screens,
-   which are on `main`.
-3. **The alias index is over its size guideline** (33 KB against ~30 KB), and Groups VII and
-   IX will add more (TODO §23).
+   behaviour digit. The Group VII build fixed the same defect on `main` with your wording
+   ("Benign neoplasm (benign tumour)" for behaviour 0), and the merge kept `main`'s version.
+3. **The alias index is over its size guideline** (34.9 KB against ~30 KB after the merge with `main`), and Groups VII and
+   IX will add more (TODO §24).
 4. **Coordination with the Group VII and IX sessions.** Agreed on 2 October 2026: Group VIII
    owns the Ewing and extraskeletal-bone router rules; Group IX codes soft-tissue Ewing
    `9364/3`, round cell sarcomas `8803/3` and soft-tissue undifferentiated pleomorphic sarcoma

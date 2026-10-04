@@ -249,7 +249,7 @@ def main() -> int:
             "to ICD-O-3.2 by the Group 8 build (design D1-D15)."
             % (", NCIt " + nci if nci else ""))
     # The express-lane search is a substring match, so 'X, NOS' adds nothing to an index
-    # that already holds 'X' for the same code; it only grows the startup index (TODO §23).
+    # that already holds 'X' for the same code; it only grows the startup index (TODO §24).
     bare = {(a["alias"].lower(), tuple(a["maps_to_morphology_codes"])) for a in out}
     out = [a for a in out if not (a["alias"].endswith(", NOS") and
                                   (a["alias"][:-5].lower(), tuple(a["maps_to_morphology_codes"]))

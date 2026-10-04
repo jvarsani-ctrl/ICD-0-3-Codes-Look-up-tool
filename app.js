@@ -1414,17 +1414,17 @@ var BASIS_LABELS = {
   2: 'Clinical investigation without tissue', 4: 'Specific tumour markers',
   5: 'Cytology', 7: 'Histology', 8: 'Cytogenetic or molecular', 9: 'Unknown'
 };
-/* ICD-O's own meaning of the behaviour digit, for the behaviour-exclusion
-   banner. The title used to read "Benign" whatever the digit, so a giant cell
-   tumour of bone (9250/1) or a spontaneously regressed retinoblastoma (9514/1)
-   was announced as benign — a fact neither the data nor ICD-O states. */
-var BEHAVIOUR_TITLES = {
-  0: 'Benign — outside this group’s declared behaviour',
-  1: 'Borderline or uncertain behaviour — outside this group’s declared behaviour'
+/* The ICD-O behaviour digit, named. Vocabulary of the classification, not clinical
+   content. The behaviour-exclusion panel read "Benign" for every exclusion until
+   2 October 2026, which mislabelled the /1 ones — 8975/1 calcifying nested
+   stromal-epithelial tumour, 8960/1 mesoblastic nephroma, 9514/1 regressed
+   retinoblastoma — as benign when ICD-O-3.2 calls them uncertain. Behaviour 0
+   reads "Benign neoplasm (benign tumour)" since 3 October 2026, the registrar's
+   wording: ICD-O behaviour 0 is a benign neoplasm. */
+var BEHAVIOUR_LABELS = {
+  '0': 'Benign neoplasm (benign tumour)', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
+  '3': 'Malignant', '6': 'Metastatic', '9': 'Malignant, uncertain whether primary or metastatic'
 };
-function behaviourExclusionTitle(b) {
-  return BEHAVIOUR_TITLES[String(b)] || 'Outside this group’s declared behaviour';
-}
 function basisCode(v) {
   var n = Number(v);
   if (v === '' || v === null || v === undefined || isNaN(n) || BASIS_CODES.indexOf(n) === -1) {
@@ -1559,7 +1559,8 @@ function advance(target, label, value, before) {
   state.firedAlert = null;
   if (target.morphology_code) return finish(target, label);
   if (target.refer_group) return refer(target);
-  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert);
+  if (target.non_reportable) return exclude(target.reason || 'Not a reportable malignancy', target.clinical_alert,
+    target.non_reportable_heading);
   /* Group 4 build contract §3, ruling D1: a real ICD-O-3.2 entity whose
      BEHAVIOUR sits outside this group's own declaration — a ganglioneuroma
      is 9490/0, and ICCC-3 Group IV admits behaviour 3 only. Checked before
@@ -1625,6 +1626,16 @@ function finish(target, basis) {
   if (pending && pending.resolving_test && missing.indexOf(pending.resolving_test) === -1) {
     missing = missing.concat([pending.resolving_test]);
   }
+  /* `outstanding_tests[]` is the reverse of `satisfies_tests[]`: the tests a
+     branch's own finding leaves owed, whatever the entry requires. A code's
+     required-test list is fixed per code, so without this a branch that
+     reaches a code on a partial panel — INI1 retained, SMARCA4 never done —
+     renders "Complete — no outstanding tests" above an upgrade line naming
+     the test that was skipped. Added for Group 7, 3 October 2026, on the
+     registrar's decision; group-agnostic, and it can only add a row. */
+  arr(target.outstanding_tests).forEach(function (t) {
+    if (missing.indexOf(t) === -1) missing = missing.concat([t]);
+  });
   state.workup = missing.map(function (t) {
     var prior = state.workup.filter(function (w) { return w.test === t; })[0];
     return { test: t, status: prior ? prior.status : WORKUP_STATES[0] };
@@ -1700,9 +1711,13 @@ function refer(target) {
 
 /* A clean terminal that emits NO malignant code. Marked "not a reportable
    malignancy" and removed from the malignant registry (nodes.md §4). */
-function exclude(reason, alert) {
+/* `non_reportable_heading` lets a branch name what the lesion IS — "Benign
+   neoplasm (benign tumour)" — where the generic heading would lump a
+   haemangioma with an abscess. Text only; the outcome is the same. Added for
+   Group 7, 3 October 2026, on the registrar's wording. */
+function exclude(reason, alert, heading) {
   state.workup = []; state.pending = null;
-  state.result = { excluded: true, reason: reason, alert: alert || null };
+  state.result = { excluded: true, reason: reason, alert: alert || null, heading: heading || null };
   state.stage = 'output';
 }
 
@@ -1821,7 +1836,7 @@ function renderOutput() {
   }
   if (r.excluded) {
     return '<div class="node--live">' +
-      banner('info', 'Not a reportable malignancy', r.reason) +
+      banner('info', r.heading || 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
       '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
       outActions() + '</div>';
@@ -1835,7 +1850,8 @@ function renderOutput() {
      always carries a registrar flag alongside the clerk-facing reason. */
   if (r.behaviourExcluded) {
     return '<div class="node--live">' +
-      banner('info', behaviourExclusionTitle(r.icdoBehaviour), r.reason) +
+      banner('info', (BEHAVIOUR_LABELS[String(r.icdoBehaviour)] || 'Behaviour ' + r.icdoBehaviour) +
+        ' — outside this group’s declared behaviour', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
       orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
       orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +

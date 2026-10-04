@@ -239,6 +239,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **III** | `topo_code` | — | — | `710, Cerebrum` | Open — §1.1 above | same |
 | **IV** | `iv_morph` | **3** — picks 10, 12, 20 | **8** — picks 1, 4, 6, 9, 14, 16, 17, 19 | **0** | Ready to review, not applied | `ICD Look Up tool/Group 4 — Layer 1 Repair Package (REDCap iv_morph).md` |
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
+| **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 
@@ -1316,9 +1317,52 @@ the engine is itself guarded only by a procedure in a document.
 No action proposed. Recorded because the shape is familiar: both defects it now catches survived
 precisely because the thing that would have caught them was not part of anything automatic.
 
+
 ---
 
-## 22. ❓ FOR THE REGISTRAR — Group IV refers CD99-positive cases to Group VIII expecting Ewing sarcoma; Group VIII asks for more
+## 22. ❓ FOR THE REGISTRAR — Group VII items still open
+
+**Raised 4 October 2026, after Group VII merged (pull request #2).** The full reasoning for each is in
+`docs/group_07_open_questions.md` under the number given; the build contract section is named there.
+Items 2–7 were ruled on 3 October 2026 and are built.
+
+**Coding rulings owed**
+
+| Open question | Today | Decide |
+|---|---|---|
+| **1** Baseline document | Built on the International Pediatric Liver Tumors Consensus Classification — López-Terrada 2014 (*Modern Pathology*) and 2025 (*Virchows Archiv*, Table 1, p. 24) — because Nagtegaal 2019 does not cover hepatoblastoma | Confirm López-Terrada 2025 as the Group VII baseline in `docs/group_baseline_documents.md` |
+| **8** `8148/2` high-grade biliary intraepithelial neoplasia | Behaviour exclusion headed "In situ"; REDCap has a pick for it | Register it on that pick, or treat it as not cancer and retire the pick with the other in situ picks. Kept open 3 October 2026 |
+| **18** A report that *diagnoses* malignant rhabdoid tumour | `8963/3` on the diagnosis alone, IHC outstanding when not recorded | Confirm, or route it through INI1 and SMARCA4 like the rest |
+| **19** Fibrolamellar carcinoma's basis of diagnosis | `DNAJB1::PRKACA` fusion basis 8; PRKAR1A loss basis 7 | Keep 8 for the fusion or drop it to 7 (it also occurs in oncocytic pancreatic and biliary neoplasms, López-Terrada 2025, p. 29); confirm 7 for PRKAR1A |
+| **20** Consensus table versus text on small cell undifferentiated hepatoblastoma | The tool follows the text (p. 25): INI1-lost tumours are malignant rhabdoid tumours | Confirm |
+| **22** Behaviour of `8975` is not recorded | The tool gives `8975/1` or `8975/3`, but the headline shows `8975` and REDCap has no behaviour field, so one pick serves both | Whether REDCap records behaviour (a field, or two picks — a REDCap Registry change), and whether the headline shows the digit when a code carries two behaviours (an engine change for every group) |
+
+**REDCap.** Open questions 9 and 21 are the Group VII repair package, indexed in §7 above. Nothing
+applied. Pick 113, fibrolamellar carcinoma `8171/3`, matters most.
+
+**Shared layers and engine**
+
+| Open question | Item |
+|---|---|
+| **10** | Router rule `8158,8290` sends both codes to Group XI everywhere except C75.1; ICCC-2017 puts `8158` in VIIb at the liver and `8290` in VIb at the kidney. Splitting it is a Group III-owned rule |
+| **11** | A search alias that exists in two groups enters the first (`hit.groups[0]`); and the REDCap-framed output's "REDCap value" row shows the ICD-O code, not the pick number, for the pick-number groups (III, IV, VII, VIII) |
+| **12** | `alias_index.json` is over its ~30 KB guideline (Architecture §4C), and Groups VIII and IX will add more |
+| **13** | Confirm the engine changes made on this branch for every group: the behaviour-exclusion heading names the behaviour digit (behaviour 0 reads "Benign neoplasm (benign tumour)", which changes Groups IV–VI); `outstanding_tests[]`; `non_reportable_heading`. The Decision Tree master file §3F, in the vault, needs a line for the two fields |
+
+**Documents and scope**
+
+| Open question | Item |
+|---|---|
+| **14** | The Group 7 Diagnostic Pathway and Alias Build Instructions predate the 4 September rulings; revise to v2, or leave the build contract as the record |
+| **15** | Hepatoblastoma subtype, PRETEXT stage and specimen timing are not captured — whether the registry wants any of them recorded |
+| **16** | Hepatocellular carcinoma subtypes without their own ICD-O-3.2 code are coded `8170/3`; the WHO digestive volume would confirm (`docs/sources-requested.md` item 12) |
+| **17** | C23.9 and C24.x have no row in `topography_codes.json`, so a gallbladder or extrahepatic bile duct primary cannot reach Group VII — whether to add them |
+
+---
+
+---
+
+## 23. ❓ FOR THE REGISTRAR — Group IV refers CD99-positive cases to Group VIII expecting Ewing sarcoma; Group VIII asks for more
 
 **Found 2 October 2026 building Group VIII.** `group_04_dt.json` `op_ewing_site`, option "Bone",
 tells the clerk: *"CD99 positive, PHOX2B and synaptophysin negative … an Ewing-family tumour,
@@ -1338,7 +1382,7 @@ from the Group VIII tree", or the registrar rules that CD99 with PHOX2B and syna
 negative is enough for `9364/3`, and Group VIII's rule 11 and `check_group8_ewing_requires_partner`
 change with it.
 
-## 23. `alias_index.json` is over the Architecture §4C size guideline
+## 24. `alias_index.json` is over the Architecture §4C size guideline
 
 **Found 2 October 2026.** With Group VIII's 127 aliases the index is 33,383 bytes against
 Architecture §4C's "keep it under ~30 KB". The build WARNs. Groups VII and IX are being built in
@@ -1346,7 +1390,7 @@ parallel and will add more. It is a budget for the whole tool, not a defect in o
 either the guideline is raised, or the index is split per group and loaded with the group,
 which `app.js`'s lazy loading (data.md §7) already does for the decision trees.
 
-## 24. `ICCC-2017.sqlite` range 60 ends in a trailing comma
+## 25. `ICCC-2017.sqlite` range 60 ends in a trailing comma
 
 **Found 2 October 2026.** Range 60 (VIIIb) reads `9210,9220,9240,`. The build reports an
 unreadable range token for Group VIII (WARN). The three codes still classify through the other
@@ -1355,7 +1399,7 @@ as the broken Group I row in `docs/codes-awaiting-redcap.md`.
 
 ---
 
-## 25. ❓ FOR THE REGISTRAR — Group VIII codes the REDCap dropdown does not offer correctly
+## 26. ❓ FOR THE REGISTRAR — Group VIII codes the REDCap dropdown does not offer correctly
 
 **Found 2 October 2026; recorded here 4 October 2026 by the registrar's direction.** The tool
 is a data-entry aid. It does not connect to REDCap and does not verify what REDCap holds, so
@@ -1375,7 +1419,8 @@ items 1–3, carries the proposed REDCap repair.
 
 ---
 
-*Last updated 4 October 2026, on the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): §25 added. Previously 2 October 2026, on the same branch: §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`), §7 gains the Group VIII row, §20 recounted, §22–§24 added. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
+*Last updated 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch

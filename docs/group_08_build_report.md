@@ -100,7 +100,8 @@ Agreed with the Group VII and Group IX sessions before any edit:
   sarcoma arise, could not be selected at all.
 - **`build_database.py`:** `GROUP8` registered in the behaviour, round-trip and exact-name
   guards; three Group 8 rules.
-- **`app.js`:** the behaviour-exclusion title fix (§7).
+- **`app.js`:** no change after the merge with `main`. This branch's behaviour-exclusion title fix
+  (§7) was superseded: the Group VII build fixed the same defect on `main` with the registrar's wording (`BEHAVIOUR_LABELS`), and the merge of 4 October 2026 took `main`'s version.
 
 ## 6. Rules this group adds
 
@@ -133,7 +134,8 @@ than it was:
 
 1. **Every behaviour exclusion was titled "Benign".** Giant cell tumour of bone, atypical
    cartilaginous tumour and chondrosarcoma grade 1 are behaviour 1. Fixed in `app.js` from the
-   behaviour digit; Group V's `9514/1` and Group VI's `8960/1` screens inherit the fix.
+   behaviour digit; at the merge, the Group VII build fixed the same defect on `main` with the registrar's wording (`BEHAVIOUR_LABELS`), and the merge of 4 October 2026 took `main`'s version. The banner now reads "Uncertain whether
+   benign or malignant — outside this group's declared behaviour".
 2. **`8002/3` said "workup complete"** on a panel that stopped before NKX2-2. It now requires
    IHC, so the missing stain shows as pending.
 
@@ -160,4 +162,4 @@ threshold between Groups IV and VIII (D1).
 - Page citations: 35 cited claims located on their printed pages with PyMuPDF. Two corrected:
   the telangiectatic diversion is Menendez pp. 109–110, not p. 109, and the 47% chondrosarcoma
   grade mismatch is Ardakani et al. 2020 as cited by Sharif 2021, p. 4.
-- New WARNs, both recorded: the alias index size (TODO §23) and ICCC-2017 range 60 (TODO §24).
+- New WARNs, both recorded: the alias index size (TODO §24) and ICCC-2017 range 60 (TODO §25).
