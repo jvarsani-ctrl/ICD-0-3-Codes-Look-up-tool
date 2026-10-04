@@ -288,12 +288,38 @@ def n_document_inventory(node_id, targets, note):
         EVIDENCE_TIER, note)
 
 
-def n_clinical_alias(site):
+# The evidence a clerk has said is on file, per context. app.js capture() REPLACES
+# evidence_tests, so a node reached with two different evidence sets cannot add a report with
+# one static capture without erasing or inventing another. Each context therefore has its own
+# node, built by the same function: evidence_tests on every path names exactly the reports the
+# clerk said are on file, and never one the clerk said is absent.
+CLINICAL_CONTEXTS = {
+    "referral": {"suffix": "", "evidence": [],
+                 "hint": "No imaging report, marker result or tissue report is in the file."},
+    "cytology": {"suffix": "_cytology", "evidence": ["Cytology"],
+                 "hint": "The cytology report is not diagnostic, and no imaging report, marker "
+                         "result or histology report is in the file."},
+}
+IMAGING_CONTEXTS = {
+    "imaging": {"suffix": "", "evidence": ["Imaging"],
+                "question": "No tissue is in the file. What does the imaging report "
+                            "conclude?"},
+    "markers": {"suffix": "_markers", "evidence": ["Imaging", "Tumour markers"],
+                "question": "Neither tumour marker is raised, and no tissue is in the file. "
+                            "What does the imaging report conclude?"},
+    "cytology": {"suffix": "_cytology", "evidence": ["Cytology", "Imaging"],
+                 "question": "The cytology report is not diagnostic, and no histology report "
+                             "is in the file. What does the imaging report conclude?"},
+}
+
+
+def n_clinical_alias(site, ctx="referral"):
+    c = CLINICAL_CONTEXTS[ctx]
     return node(
-        nid(site, "clinical_alias"), "clinical_alias", 2, "Referral wording",
+        nid(site, "clinical_alias" + c["suffix"]), "clinical_alias", 2 if ctx == "referral"
+        else 3, "Referral wording",
         "What does the referral letter or clinical note say?",
-        "No imaging report, marker result or tissue report is in the file. A note alone never "
-        "establishes a germ cell tumour's type.",
+        "%s A note alone never establishes a germ cell tumour's type." % c["hint"],
         [
             unspecified(site, "The note states a malignant tumour as the diagnosis, or as "
                               "probable", 1, "8000",
@@ -306,13 +332,17 @@ def n_clinical_alias(site):
             nonrep("The note says only possible or suspected", NOT_REGISTRABLE_POSSIBLE,
                    {"workup_status": "not registrable",
                     "basis_evidence_tier": "referral_nondiagnostic"}),
-            go("An imaging report is in the file after all", nid(site, "imaging"),
-               copy.deepcopy(TIER_CAPTURES["imaging"])),
+            go("An imaging report is in the file after all",
+               nid(site, "imaging" + IMAGING_CONTEXTS[ctx if ctx == "cytology"
+                                                      else "imaging"]["suffix"]),
+               {"evidence_tests": c["evidence"] + ["Imaging"], "workup_status": "incomplete",
+                "basis_evidence_tier": "imaging"}),
         ],
         EVIDENCE_TIER,
         "Contract §4.2. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rules 4 and 5, "
         "p. 03: 8000/3 at basis 1 when cancer is at least probable. 8000/3 is Group X only at "
-        "the gonads (ICCC-2017 range 117); elsewhere the branch refers (D4).")
+        "the gonads (ICCC-2017 range 117); elsewhere the branch refers (D4). Evidence context "
+        "%r: reached with evidence_tests %r." % (ctx, c["evidence"]))
 
 
 def n_markers(site):
@@ -346,8 +376,9 @@ def n_markers(site):
              "a histology report gives the type." % (rec("9064", "3", 4), VISSER),
              {"workup_status": "incomplete", "basis_evidence_tier": "markers_hcg"},
              note="D2, D4. Visser Table 4, p. 06."),
-        go("Neither marker is raised", nid(site, "imaging"),
-           {"basis_evidence_tier": "markers_not_raised"}),
+        go("Neither marker is raised", nid(site, "imaging_markers"),
+           {"basis_evidence_tier": "markers_not_raised"},
+           note="evidence_tests stays Imaging and Tumour markers."),
         nonrep("A marker is raised, but the imaging shows no tumour",
                "A raised tumour marker is not registered unless a clinical investigation shows "
                "the tumour (%s, rule 6)." % VISSER,
@@ -366,17 +397,18 @@ def n_markers(site):
         "re-gated numerically (Group III's md_gct_* gates stay in Group III).")
 
 
-def n_imaging(site):
+def n_imaging(site, ctx="imaging"):
+    c = IMAGING_CONTEXTS[ctx]
     return node(
-        nid(site, "imaging"), "morphology_only", 2, "Imaging conclusion",
-        "No tissue is in the file. What does the imaging report conclude?",
+        nid(site, "imaging" + c["suffix"]), "morphology_only", 2 if ctx == "imaging" else 3,
+        "Imaging conclusion", c["question"],
         "Answer from the radiologist's own conclusion. Imaging alone never establishes a germ "
         "cell tumour's type.",
         [
             unspecified(site, "Imaging shows a malignant tumour, at least probable", 2, "8000",
                         "Imaging alone does not establish a germ cell tumour (%s, rule 5)."
                         % VISSER,
-                        {"evidence_tests": ["Imaging"], "workup_status": "incomplete",
+                        {"workup_status": "incomplete",
                          "basis_evidence_tier": "imaging_malignant"},
                         after="A histology report gives the specific code."),
             nonrep("Imaging calls it possible only, or describes a benign lesion",
@@ -384,18 +416,14 @@ def n_imaging(site):
                    {"workup_status": "not registrable",
                     "basis_evidence_tier": "imaging_nondiagnostic"}),
             go("A histology report is in the file", nid(site, "histology"),
-               {"evidence_tests": ["Imaging", "Histology"], "workup_status": "incomplete",
+               {"evidence_tests": c["evidence"] + ["Histology"], "workup_status": "incomplete",
                 "basis_evidence_tier": "histology"}),
-            go("No imaging report in the file either — only a referral letter or clinical note",
-               nid(site, "clinical_alias"), copy.deepcopy(TIER_CAPTURES["referral"]),
-               note="Reached from non-diagnostic cytology with no imaging report. Without this "
-                    "option the only code here claims imaging as evidence (Group 8 "
-                    "bn_imaging_line precedent)."),
         ],
         EVIDENCE_TIER,
         "D4. Visser 2023 has no germ cell row in Table 3, so imaging alone is 8000/3 at basis 2 "
         "(rule 5, p. 03); in the central nervous system and at extragonadal sites that code is "
-        "not Group X and the branch refers.")
+        "not Group X and the branch refers. Evidence context %r: every path into this node "
+        "already names Imaging, so the code branch captures no evidence_tests." % ctx)
 
 
 def n_cytology(site):
@@ -434,10 +462,19 @@ def n_cytology(site):
                     "Cytology establishes malignant cells but no tumour type.",
                     {"workup_status": "incomplete",
                      "basis_evidence_tier": "cytology_malignant"}),
-        go("No malignant cells, scant material, or a non-diagnostic report",
-           nid(site, "imaging"),
-           {"workup_status": "incomplete", "basis_evidence_tier": "cytology_nondiagnostic"},
+        go("No malignant cells, scant material, or a non-diagnostic report — and an imaging "
+           "report is in the file", nid(site, "imaging_cytology"),
+           {"evidence_tests": ["Cytology", "Imaging"], "workup_status": "incomplete",
+            "basis_evidence_tier": "cytology_nondiagnostic"},
            note="Non-diagnostic cytology leaves imaging as the best evidence."),
+        go("No malignant cells, scant material, or a non-diagnostic report — and no imaging "
+           "report is in the file", nid(site, "clinical_alias_cytology"),
+           {"evidence_tests": ["Cytology"], "workup_status": "incomplete",
+            "basis_evidence_tier": "cytology_nondiagnostic"},
+           note="Non-diagnostic cytology and no imaging leave the note as the best evidence. "
+                "Group 8's bn_cytology sends this case to its imaging node, whose 'no imaging "
+                "report' option captures Referral only and so erases Cytology; this split "
+                "keeps it."),
     ]
     return node(
         nid(site, "cytology"), "morphology_only", 2, "Cytology",
@@ -498,7 +535,7 @@ IHC_MARKER_GROUPS = [
      "markers": ["CD117", "SOX17", "D2-40"]},
     {"group_label": "Embryonal carcinoma", "markers": ["CD30", "SOX2"]},
     {"group_label": "Yolk sac tumour",
-     "markers": ["Glypican-3", "Alpha-fetoprotein (tissue stain)", "HNF1-beta"]},
+     "markers": ["Glypican-3", "Alpha-fetoprotein (tissue stain)", "HNF1-beta (nuclear)"]},
 ]
 
 
@@ -539,7 +576,11 @@ def n_ihc(site):
              satisfies=["IHC"], key="positive",
              note="Rule 4. Siegmund 2022 p. 37 (Nonaka): SOX17 diffuse in 100% of seminomas, "
                   "negative in 100% of embryonal carcinomas and in choriocarcinoma; variable "
-                  "in yolk sac tumour and teratoma, both OCT3/4 negative (Table 1, p. 34)."),
+                  "in yolk sac tumour and teratoma, both OCT3/4 negative (Table 1, p. 34). No "
+                  "CD30 negative: a panel with OCT3/4, SOX17 and CD30 positive fires this rule "
+                  "(rule 1 requires SOX17 not positive), because SOX17 is negative in every "
+                  "embryonal carcinoma and CD30 focally stains up to half of seminomas "
+                  "(p. 37)."),
         code(["OCT3/4", "D2-40"], fam, "3", 7,
              "OCT3/4 and D2-40 are positive and CD30 is not: the seminoma pattern (%s, pp. "
              "36-37). %s" % (SIEGMUND, fam_reason),
@@ -549,53 +590,72 @@ def n_ihc(site):
                   "contract's rule, so focal D2-40 in an embryonal carcinoma does not read as "
                   "seminoma. p. 37: KIT/D2-40/SOX17 mark seminoma, CD30/SOX2 embryonal "
                   "carcinoma."),
-        code(["Glypican-3"], "9071", "3", 7,
-             "Glypican-3 is positive and OCT3/4 is not: the yolk sac tumour pattern (%s, p. 38; "
-             "Wu 2020, Table 2). %s" % (SIEGMUND, rec("9071")),
+        code(["Glypican-3", "Alpha-fetoprotein (tissue stain)"], "9071", "3", 7,
+             "Glypican-3 and alpha-fetoprotein both stain the tumour and OCT3/4 is not "
+             "positive: the yolk sac tumour pattern (%s, p. 38; Wu 2020, Tables 1-2). %s"
+             % (SIEGMUND, rec("9071")),
              satisfies=["IHC"], key="positive", negative=["OCT3/4"],
-             note="Rule 6. Siegmund 2022 p. 38: glypican-3 in 100% of yolk sac tumours, not "
-                  "detected in seminoma; choriocarcinoma 33-100%, teratoma 20-38%, embryonal "
-                  "carcinoma 0-8%. Wu P, et al. Pediatr Surg Int 2020 "
-                  "(doi:10.1007/s00383-020-04652-w; the PDF prints no page numbers), Table 2: "
-                  "22/22 paediatric yolk sac tumours, 1/10 mature teratomas (weak, 3% of "
-                  "cells). OCT3/4 negative in yolk sac tumour, Table 1, p. 34."),
-        code(["Alpha-fetoprotein (tissue stain)"], "9071", "3", 7,
-             "Alpha-fetoprotein stains the tumour and OCT3/4 is not positive: the yolk sac "
-             "tumour pattern (%s, p. 38; Wu 2020, Table 1). %s" % (SIEGMUND, rec("9071")),
+             note="Rule 6. Siegmund 2022 p. 38: glypican-3 in 100% of yolk sac tumours and "
+                  "tissue alpha-fetoprotein in 55-100%; a subset of yolk sac tumours "
+                  "co-expresses alpha-fetoprotein and glypican-3 (Nogales). Choriocarcinoma, "
+                  "glypican-3 positive in 33-100%, is rarely alpha-fetoprotein positive (p. 38; "
+                  "Table 1, p. 34). Wu P, et al. Pediatr Surg Int 2020 "
+                  "(doi:10.1007/s00383-020-04652-w; the PDF prints no page numbers), Tables "
+                  "1-2: alpha-fetoprotein 21/22 and glypican-3 22/22 paediatric yolk sac "
+                  "tumours. OCT3/4 negative in yolk sac tumour, Table 1, p. 34."),
+        code(["Glypican-3", "HNF1-beta (nuclear)"], "9071", "3", 7,
+             "Glypican-3 and nuclear HNF1-beta are positive and OCT3/4 is not: the yolk sac "
+             "tumour pattern (Rougemont 2018, Table 2, p. 29). %s" % rec("9071"),
              satisfies=["IHC"], key="positive", negative=["OCT3/4"],
-             note="Rule 7. Siegmund 2022 p. 38: tissue alpha-fetoprotein in 55-100% of yolk "
-                  "sac tumours, patchy; embryonal carcinoma 21% (OCT3/4 positive, excluded); "
-                  "teratoma 0-27%. Wu 2020 Table 1: 21/22 paediatric yolk sac tumours, 2/10 "
-                  "mature teratomas weakly (2% of cells)."),
-        code(["HNF1-beta"], "9071", "3", 7,
-             "HNF1-beta is positive and OCT3/4 is not: the yolk sac tumour pattern (Rougemont "
-             "2018, p. 26; %s, p. 38). %s" % (SIEGMUND, rec("9071")),
-             satisfies=["IHC"], key="positive", negative=["OCT3/4"],
-             note="Rule 8. Rougemont AL, Tille JC. Human Pathology 2018;81:26-36, p. 26: "
-                  "nuclear HNF1-beta in the yolk sac component of 49/49 tumours; embryonal "
-                  "carcinoma 0/32 and seminoma 0/6 negative; choriocarcinoma cytoplasmic only; "
-                  "enteric-type teratoma glands 11/16 (specificity 80%). p. 31: every yolk sac "
-                  "tumour SALL4 positive and OCT4 negative. Table 5, p. 33."),
+             note="Rule 7. Rougemont AL, Tille JC. Human Pathology 2018;81:26-36: Table 2, "
+                  "p. 29, glypican-3 positive in 42 of the 44 nuclear HNF1-beta positive yolk "
+                  "sac components it lists; p. 34, glypican-3 positive in 43/45; p. 35, "
+                  "recommends a panel combining SALL4, HNF1-beta, glypican-3 and OCT4. "
+                  "Choriocarcinoma shows cytoplasmic HNF1-beta only, never nuclear (p. 26; "
+                  "Table 5, p. 33), so the nuclear stain excludes it. p. 31: every yolk sac "
+                  "tumour SALL4 positive and OCT4 negative."),
     ]
     return node(
         nid(site, "ihc"), "ihc_checklist", 4, "Germ cell stain panel",
         "Answer each stain as the report states it.",
         "The report calls the tumour a germ cell tumour without naming its type. Answer 'Not "
         "done or not readable' for a stain the report does not mention. A tumour with more than "
-        "one germ cell component is coded at the mixed germ cell tumour step instead. Human "
+        "one germ cell component is coded at the mixed germ cell tumour step instead. One yolk "
+        "sac marker alone does not establish a yolk sac tumour: glypican-3, alpha-fetoprotein "
+        "and HNF1-beta each stain some teratomas (%s, p. 38; Rougemont 2018, p. 26). Human "
         "chorionic gonadotropin staining does not establish choriocarcinoma: it also stains the "
-        "syncytiotrophoblastic cells found in seminoma (%s, p. 38)." % SIEGMUND,
+        "syncytiotrophoblastic cells found in seminoma (%s, p. 38)." % (SIEGMUND, SIEGMUND),
         None, [],
         "Contract §4.2, each rule verified against the printed page. Siegmund SE, Mehra R, "
         "Acosta AM. Human Pathology 2023;133:32-55 (online 2022): Table 1, p. 34; KIT and "
         "D2-40, p. 36; CD30, OCT3/4, SOX2 and SOX17, p. 37; glypican-3, alpha-fetoprotein, "
-        "human chorionic gonadotropin and HNF1-beta, p. 38. Wu 2020, Tables 1-3. Rougemont "
-        "2018, pp. 26, 31, 33. All eight contract rules are kept; rules 1, 3 and 5 carry "
-        "negatives the contract's table did not, so a panel with markers of both seminoma and "
-        "embryonal carcinoma falls to the fallback instead of a definite type. SALL4 is "
-        "declared and asked by no rule: it marks germ cell lineage, not type (Siegmund p. 36). "
-        "Choriocarcinoma is not coded from immunohistochemistry (contract §4.2). Fallback "
-        "9064/3 per D2.",
+        "human chorionic gonadotropin and HNF1-beta, p. 38. Wu 2020, Tables 1-2. Rougemont "
+        "2018, pp. 26, 29, 31, 33-35. Contract rules 1-5 are kept; rules 1, 3 and 5 carry "
+        "negatives the contract's table did not, so a seminoma with focal CD30, or an "
+        "embryonal carcinoma with CD117 or D2-40, does not take the other's code. With "
+        "OCT3/4 positive, a positive SOX17 decides the panel for the germinoma family "
+        "whatever CD30 or SOX2 show (rule 4; a panel with OCT3/4, SOX17 and CD30 fires it), "
+        "because SOX17 is negative in every embryonal carcinoma (Siegmund p. 37). Without "
+        "SOX17, a panel positive for CD30 and for CD117 or D2-40 falls to the fallback unless "
+        "SOX2 settles it (rule 2). "
+        "Contract rules 6-8 (one yolk sac marker each) are replaced by two pairs, OCT3/4 not "
+        "positive in each: glypican-3 with alpha-fetoprotein, and glypican-3 with nuclear "
+        "HNF1-beta. A single yolk sac marker falls to the fallback. The pair "
+        "alpha-fetoprotein with HNF1-beta is not built: no source on disk reports the two "
+        "stains on the same tumours (Rougemont did not stain alpha-fetoprotein, p. 28; "
+        "Siegmund p. 38 compares their accuracy, not their co-expression). "
+        "Residual risk, teratoma: glypican-3 stains 20-38% and tissue alpha-fetoprotein 0-27% "
+        "of teratomas (Siegmund p. 38); nuclear HNF1-beta stains enteric-type teratoma glands "
+        "in 11/16 (Rougemont p. 26; Table 5, p. 33); Wu Tables 1-2 found glypican-3 in 1/10 "
+        "and alpha-fetoprotein in 2/10 mature teratomas, weak and in 2-3% of cells. No source "
+        "reports how often a teratoma expresses both markers of a pair; one that does is "
+        "coded 9071/3. Residual risk, choriocarcinoma: OCT3/4 negative and glypican-3 positive "
+        "in 33-100% (Table 1, p. 34; p. 38); each pair needs a second marker the sources "
+        "report choriocarcinoma rarely or never shows (alpha-fetoprotein, p. 38; nuclear "
+        "HNF1-beta, Rougemont p. 26). "
+        "SALL4 is declared and asked by no rule: it marks germ cell lineage, not type "
+        "(Siegmund p. 36). Choriocarcinoma is not coded from immunohistochemistry (contract "
+        "§4.2). Fallback 9064/3 per D2.",
         marker_groups=copy.deepcopy(IHC_MARKER_GROUPS),
         resolution_logic=rules,
         nos_fallback={
@@ -872,7 +932,15 @@ def n_teratoma_extragonadal():
 
 
 def n_gonadoblastoma(site):
-    family_label = {"ovary": "dysgerminoma", "testis": "seminoma"}[site]
+    def invasive(term_, morph):
+        """D3: the invasive germinoma-family tumour is coded as the report writes it. ICCC-2017
+        range 106 (Xc1) holds 9060-9065 at both C56.9 and C62."""
+        own = term_ == FAMILY_TERM[site]
+        return named("Gonadoblastoma with an invasive %s" % term_, morph,
+                     None if own else "%s A report that uses the term %s is coded as written."
+                     % (rec(morph), term_),
+                     upgrade=IHC_CONFIRMS, note="D10, D3%s." % ("" if own else ", D1"
+                                                                if morph == "9064" else ""))
     return node(
         nid(site, "gonadoblastoma"), "histology_subclassification", 4, "Gonadoblastoma",
         "What does the report find with the gonadoblastoma?",
@@ -888,13 +956,9 @@ def n_gonadoblastoma(site):
             excl_outside("Mixed germ cell–sex cord-stromal tumour, with no invasive tumour",
                          "mixed germ cell-sex cord-stromal tumour", "8594", "1", decision=True,
                          note="D10, provisional. New in ICD-O-3.2."),
-            named("Gonadoblastoma with an invasive %s" % family_label, SITES[site]["family"],
-                  upgrade=IHC_CONFIRMS, note="D10, D3."),
-            named("Gonadoblastoma with an invasive germinoma", "9064",
-                  "%s A report that uses the term germinoma is coded as written." % rec("9064"),
-                  upgrade=IHC_CONFIRMS,
-                  note="D1, D10. The contract's single 'dysgerminoma, seminoma or germinoma' "
-                       "option is split so a report that says germinoma gets 9064/3 (D1)."),
+            invasive("dysgerminoma", "9060"),
+            invasive("seminoma", "9061"),
+            invasive("germinoma", "9064"),
             named("Gonadoblastoma with an invasive yolk sac tumour", "9071",
                   upgrade=IHC_CONFIRMS, note="D10."),
             named("Gonadoblastoma with an invasive embryonal carcinoma", "9070",
@@ -1112,7 +1176,8 @@ def n_other_extragonadal():
 # Assembly
 # ------------------------------------------------------------------------------------------
 def common(site):
-    """The eight nodes every site tree carries, in tree order."""
+    """The eleven nodes every site tree carries, in tree order: the contract's eight,
+    plus the clinical-note and imaging nodes for the cytology and marker evidence contexts."""
     p = SITES[site]["prefix"]
     targets = {t: p + TIER_NODE[t] for t in TIERS}
     histology = {"cns": n_histology_cns, "ovary": n_histology_ovary,
@@ -1122,8 +1187,9 @@ def common(site):
         n_document_inventory(p + "document_inventory", targets,
                              "Contract §4.2: five evidence tiers. Every Group X tree carries "
                              "the same tiers; the router's site capture chose this tree."),
-        n_clinical_alias(site), n_markers(site), n_imaging(site), n_cytology(site),
-        histology(), n_mixed(site), n_ihc(site),
+        n_clinical_alias(site), n_clinical_alias(site, "cytology"), n_markers(site),
+        n_imaging(site), n_imaging(site, "markers"), n_imaging(site, "cytology"),
+        n_cytology(site), histology(), n_mixed(site), n_ihc(site),
     ]
 
 

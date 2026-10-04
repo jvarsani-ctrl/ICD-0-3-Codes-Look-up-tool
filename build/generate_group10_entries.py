@@ -179,20 +179,23 @@ OVERRIDABLE = ("diagnostic_tests_required", "ihc_markers_required", "who_version
 GERMINOMA_FAMILY_MARKERS = ["OCT3/4", "CD117", "SOX17", "D2-40"]
 IHC_FAMILY = {"diagnostic_tests_required": HIST_IHC,
               "ihc_markers_required": GERMINOMA_FAMILY_MARKERS}
-IHC_SENTENCE = ("The germ cell stain panel emits it on OCT3/4 with CD117, SOX17 or D2-40 "
-                "and CD30 not positive (Siegmund 2022, pp. 36-37).")
+IHC_SENTENCE = ("The germ cell stain panel emits it on OCT3/4 with CD117 or D2-40 and CD30 "
+                "not positive, or on OCT3/4 with SOX17 (Siegmund 2022, pp. 36-37).")
 
 DECISIONS: dict[str, tuple] = {
     # --- germinoma family --------------------------------------------------------------
     "9060/3": ("D1, D3",
-               "A tumour reported as dysgerminoma is coded here. Where an immunohistochemistry "
-               "panel identifies the germinoma family without a name, the ovary tree falls to "
-               "this code (D3). %s A tumour reported as germinoma, at any site, is 9064/3 "
-               "(D1)." % IHC_SENTENCE, IHC_FAMILY),
+               "A tumour reported as dysgerminoma is coded here: the ovary tree offers it at "
+               "histology and cytology, and both gonadal trees for an invasive dysgerminoma in "
+               "a gonadoblastoma. Where an immunohistochemistry panel identifies the germinoma "
+               "family without a name, the ovary tree falls to this code (D3). %s A tumour "
+               "reported as germinoma, at any site, is 9064/3 (D1)." % IHC_SENTENCE,
+               IHC_FAMILY),
     "9061/3": ("D3",
-               "Coded as the report writes it. Where an immunohistochemistry panel identifies "
-               "the germinoma family without a name, the testis tree falls to this code; the "
-               "extragonadal tree offers it as the report writes it. %s" % IHC_SENTENCE,
+               "Coded as the report writes it: the testis and extragonadal trees offer it at "
+               "histology and cytology, and both gonadal trees for an invasive seminoma in a "
+               "gonadoblastoma. Where an immunohistochemistry panel identifies the germinoma "
+               "family without a name, the testis tree falls to this code. %s" % IHC_SENTENCE,
                IHC_FAMILY),
     "9062/3": ("D3", "A report of anaplastic seminoma is coded here as written."),
     "9063/3": ("D3", "A report of a spermatocytic tumour is coded here as written."),
@@ -222,12 +225,13 @@ DECISIONS: dict[str, tuple] = {
     "9071/3": ("D4",
                "Coded when the report names a yolk sac tumour. A raised alpha-fetoprotein "
                "alone does not name one: the evidence route codes it 9065/3 (D4). The germ "
-               "cell stain panel emits it on glypican-3, a tissue alpha-fetoprotein stain or "
-               "HNF1-beta with OCT3/4 not positive (Siegmund 2022, p. 38; Rougemont 2018, "
-               "p. 26).",
+               "cell stain panel emits it on glypican-3 with a tissue alpha-fetoprotein stain "
+               "or with nuclear HNF1-beta, OCT3/4 not positive (Siegmund 2022, p. 38; Wu "
+               "2020, Tables 1-2; Rougemont 2018, Table 2, p. 29); one yolk sac marker alone "
+               "falls to 9064/3.",
                {"diagnostic_tests_required": HIST_IHC,
                 "ihc_markers_required": ["Glypican-3", "Alpha-fetoprotein (tissue stain)",
-                                         "HNF1-beta"]}),
+                                         "HNF1-beta (nuclear)"]}),
     "9072/3": ("D7",
                "%s, Table 3, pp. 464-465, prints polyembryoma at 9085/3; ICD-O-3.2 prints "
                "9072/3 and governs (D7)." % MOCH),
