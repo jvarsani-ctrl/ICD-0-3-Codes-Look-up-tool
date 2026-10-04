@@ -3,9 +3,10 @@
 **2 October 2026** · a **REDCap-project** document. The lookup tool does not depend on it: it
 generates its inventory from `icdo32.sqlite` and `ICCC-2017.sqlite` directly. Nothing here gates
 `group_07_dt.json`. **Nothing has been applied to the live form.**
-**Scale:** 112 picks on 91 codes. **9 relabel, 27 retire, 1 registrar
-decision, 8 append, 75 keep.** *(Revised 3 October 2026 after review: pick 89 moved from relabel to
-retire, and its behaviour-3 term is appended as pick 120 — see §3.)*
+**Scale:** 112 picks on 91 codes. **10 relabel, 27 retire, 8 append, 75 keep.** *(Revised 3 October
+2026 after review: pick 89 moved from relabel to retire, and its behaviour-3 term is appended as pick
+120 — see §3. Revised again the same day: pick 2, `8975`, moved from registrar decision to relabel,
+on the ruling that keeps it.)*
 
 ---
 

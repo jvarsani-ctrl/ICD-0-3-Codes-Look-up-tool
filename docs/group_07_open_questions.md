@@ -161,8 +161,8 @@ keep "Not a reportable malignancy". **Still open:** whether high-grade biliary i
 
 ### 9. REDCap repairs — `docs/group_07_layer1_repair.md`
 
-9 relabels, 27 retires, 8 appends (picks 113–120: `8171`–`8175`, `8023`, `8054`, `8504/3`), pick 2 held for
-item 2. `vii_morph` stores a pick number, so new options go at the end only. **Pick 113, fibrolamellar
+10 relabels (pick 2, `8975`, joined them when item 2 was ruled), 27 retires, 8 appends (picks 113–120:
+`8171`–`8175`, `8023`, `8054`, `8504/3`). `vii_morph` stores a pick number, so new options go at the end only. **Pick 113, fibrolamellar
 carcinoma `8171/3`, matters most:** until it exists a fibrolamellar carcinoma can only be entered as
 `8170`. Nothing has been applied.
 
