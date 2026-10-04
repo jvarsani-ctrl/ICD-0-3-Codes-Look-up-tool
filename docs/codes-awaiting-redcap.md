@@ -334,6 +334,90 @@ list stay reconcilable.
 
 ---
 
+## Group 10 — open
+
+Six ICD-O-3.2 codes the inventory carries and `Group 10- Germ Cell Tumors, Trophoblastic Tumors And
+Neoplasms Of Gonads.md` (`x_morph`) does not offer. Five are Xd carcinomas reached by search only;
+`9102/3` is on the ovary and testis trees. The file's full classification is
+`docs/group_10_layer1_repair.md`. Per standing rule 16 the tool does not act on this list.
+
+### 8023/3 — Nuclear protein in testis (NUT)-associated carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8023/3` Preferred, new in ICD-O-3.2 (IARC, *3.1 to 3.2 — New codes and their terms*, p. 1) |
+| REDCap | **Absent.** The Xd list runs `8022`, `8030`, skipping `8023`–`8029` |
+| ICCC-2017 | In range. Range 113 runs `8010-8041,...` at C56.9 and C62, behaviour 3 (Xd) |
+| Reached from | Search only — no decision-tree leaf |
+| Carried by until now | Nothing. `8020` Carcinoma, undifferentiated, NOS is a different, less specific diagnosis |
+
+**Paediatric relevance.** None established in the Group 10 papers. Built because ICCC-2017 places the
+code in range and ICD-O-3.2 prints it (rulings 1–3 of 4 September 2026), not because a gonadal case
+is expected.
+
+### 8054/3 — Warty carcinoma
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8054/3` Preferred, new in ICD-O-3.2 (*New codes and their terms*, p. 1) |
+| REDCap | **Absent.** The Xd list runs `8053`, `8070`, skipping `8054`–`8069` |
+| ICCC-2017 | In range. Range 113 runs `8050-8075,...` at C56.9 and C62, behaviour 3 (Xd) |
+| Reached from | Search only |
+| Carried by until now | Nothing offered nearby names the same entity |
+
+**Paediatric relevance.** None established in the Group 10 papers.
+
+### 8230/3 — Solid carcinoma, NOS
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8230/3` Preferred |
+| REDCap | **Absent.** The Xd list runs `8221`, `8240`, skipping `8222`–`8239` |
+| ICCC-2017 | In range. Range 113 runs `8221-8241,...` at C56.9 and C62, behaviour 3 (Xd) |
+| Reached from | Search only |
+| Carried by until now | Nothing offered nearby names the same entity |
+
+**Paediatric relevance.** None established in the Group 10 papers.
+
+### 8231/3 — Carcinoma simplex
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8231/3` Preferred |
+| REDCap | **Absent.** Same gap as `8230` |
+| ICCC-2017 | In range, range 113 |
+| Reached from | Search only |
+| Carried by until now | Nothing offered nearby names the same entity |
+
+**Paediatric relevance.** None established in the Group 10 papers.
+
+### 8482/3 — Mucinous carcinoma, gastric type
+
+| | |
+|---|---|
+| ICD-O-3.2 | `8482/3` Preferred |
+| REDCap | **Absent.** The Xd list runs `8481`, `8490`, skipping `8482`–`8489` |
+| ICCC-2017 | In range. Range 113 runs `8480-8490,...` at C56.9 and C62, behaviour 3 (Xd) |
+| Reached from | Search only. The ovary tree reaches `8480/3` and `8470/3` for the mucinous carcinomas a report names |
+| Carried by until now | `8480`, whose option reads *Mucinous adenoma*, the behaviour-0 term (`docs/group_10_layer1_repair.md` §2.1). The tree emits `8480/3` *Mucinous adenocarcinoma* |
+
+**Paediatric relevance.** None established in the Group 10 papers.
+
+### 9102/3 — Malignant teratoma, trophoblastic
+
+| | |
+|---|---|
+| ICD-O-3.2 | `9102/3` Preferred |
+| REDCap | **Absent.** The Xc5 list runs `9101`, `9103`, skipping `9102` |
+| ICCC-2017 | In range. Range 110 runs `9100-9105` at C56.9 and C62, behaviour 3 (Xc5) |
+| Reached from | `ov_mixed` and `ts_mixed`, when the report names malignant teratoma, trophoblastic (design D6) |
+| Carried by until now | Nothing. `9101` *Choriocarcinoma combined with other germ cell elements* is the adjacent option, on a different number |
+
+**Why this one matters most of the six.** It is the only one of the six a tree emits. A case that
+reaches it ends on a code the dropdown cannot record.
+
+---
+
 ## Also owed to Layer 1, from the same review
 
 These are name faults in the Group 2 option list rather than missing codes, so they do not block

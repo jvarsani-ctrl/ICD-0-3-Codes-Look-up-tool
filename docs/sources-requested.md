@@ -212,6 +212,25 @@ invasive carcinoma, which the tree records at `8470/3` or `8161/3` by the report
 
 ---
 
+## Group 10 — Germ Cell, Trophoblastic Tumours and Neoplasms of Gonads, requested 4 October 2026
+
+### 13. McCluggage WG, Singh N, Gilks CB. *Key changes to the World Health Organization (WHO) classification of female genital tumours introduced in the 5th edition (2020).* Histopathology 2022;80(5):762–778
+
+[10.1111/his.14609](https://doi.org/10.1111/his.14609) · PMID 34996131 · **not in PubMed Central.** The
+natural baseline paper for the ovary. The assigned baseline, Höhn AK, et al. *Geburtshilfe und
+Frauenheilkunde* 2021;81(10):1145–1153, covers the vulva, vagina and cervix only: its full text
+(PMC8494521, read 4 October 2026) has no ovary or placenta section and prints no ICD-O code. **What
+it would settle:** whether WHO 2020 changes any ovarian code from the ICD-O-3.2 term the Group X
+tree emits, and which ovarian germ cell, sex cord–stromal and epithelial entities the volume keeps.
+The Group X build rests on ICD-O-3.2 for every ovarian code and on Pfister SM, et al. *Cancer
+Discovery* 2022;12(2):331–355, Table 3 (pp. 342–343), for which paediatric ovarian entities are
+current. A paper that confirms or contradicts them is the missing second source (two-source
+verification, `docs/group_baseline_documents.md` §2). **What it costs to go without:** the ovarian
+decisions in the code-decisions design (D11 sex cord–stromal tumours, D14 gonadal carcinomas, D22)
+carry one source each, and `docs/group_baseline_documents.md` lists the ovary as provisional.
+
+---
+
 ## One paper already on disk that nobody listed
 
 **Mudassar M, et al.** *Sub-categorization of Pediatric Small Round Blue Cell Tumors using
