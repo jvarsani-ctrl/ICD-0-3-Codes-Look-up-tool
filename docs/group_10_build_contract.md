@@ -255,6 +255,18 @@ immunohistochemistry 7.
 Use whatever `topography` value format the validator accepts for the extragonadal and
 site-unstated trees; record the choice in the tree's `coding_note`-equivalent comment.
 
+> **Amended 4 October 2026, after spec review of T2.** `app.js` *replaces* a captured
+> `evidence_tests` list rather than merging it, so one node reached with two evidence sets
+> loses one of them on its exit. Each site tree therefore carries one node per evidence context:
+> `p_clinical_alias` (nothing on file) and `p_clinical_alias_cytology` (`["Cytology"]`);
+> `p_imaging` (`["Imaging"]`), `p_imaging_markers` (`["Imaging","Tumour markers"]`) and
+> `p_imaging_cytology` (`["Cytology","Imaging"]`). Non-diagnostic cytology splits on whether an
+> imaging report is on file. Each site tree has 11 common nodes, not 8; the five trees hold 63
+> nodes. A walk of 3,240 terminals finds `evidence_tests` equal to the reports the clerk said are
+> on file on every path. The yolk sac immunohistochemistry rules became two-marker rules (§4.2
+> table below, rules 6–8) because glypican-3 also stains choriocarcinoma and teratoma (Siegmund
+> 2023 Table 1, p. 34; p. 38).
+
 ### 4.2 Nodes common to the four site trees (prefix `p`)
 
 **`p_document_inventory`** (`document_inventory`), "What is in the file for this tumour?"
