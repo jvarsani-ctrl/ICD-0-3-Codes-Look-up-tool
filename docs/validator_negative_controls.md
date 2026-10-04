@@ -3219,3 +3219,10 @@ Controls, run against the working tree of `claude/remove-redcap-flags`:
 | D `ICCC-2017.sqlite` withheld | Group 7's ruled `8975/3` FAILs, so the database is what verifies it | ok |
 | E Group 2 `9597` renamed | the exact-name check FAILs | ok |
 | F probe: Group 1 baseline | the `9898` sibling exemption holds without any flag | ok |
+
+**Later the same day, the registrar's ruling: `check_redcap_exact_names` is removed.** Groups 1 and 2,
+the only groups it still compared, now have no name check. `check_icdo32_round_trip()` reports that
+in a NOTE for each group outside `ROUND_TRIP_GROUPS`, so the gap shows in every build. Moving their
+names to ICD-O-3.2 terms, which today fails the round trip 64 times (33 in Group 1, 31 in Group 2),
+was handed to the Group 1 and Group 2 sessions. Control E above no longer applies; control F's
+exemption went with the check.

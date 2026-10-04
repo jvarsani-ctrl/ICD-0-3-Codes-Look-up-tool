@@ -790,9 +790,11 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     GROUP9: {"3"},
 }
 
-# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip()
-# INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
-# this one set: a group in one and not the other would get neither name check.
+# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip().
+# The REDCap exact-name check was removed on 4 October 2026 (standing rule 16; registrar), so a
+# group outside this set has no name check at all, and the round trip says so in a NOTE. Groups
+# 1 and 2 are outside it until their names move to ICD-O-3.2 terms, handed to those groups'
+# sessions the same day.
 ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9}
 
 ROMAN_BY_GROUP = {
@@ -2794,158 +2796,6 @@ def check_satisfies_tests(ctx: DTContext):
 # --------------------------------------------------------------------------------------
 # B3. The four checks that did not exist before (data.md §5)
 # --------------------------------------------------------------------------------------
-
-def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
-    """
-    NEW CHECK 1 — exact-string match of morphology_name to the REDCap options file.
-
-    The tool is ADVISORY: the clerk finds the row in REDCap by matching the WHOLE option
-    string, not four digits (redcap.md §2, §5). Any drift between morphology_name and the
-    REDCap option's name half therefore breaks the model.
-
-    This check used to key off `redcap_option_verified` alone — only entries claiming
-    `true` were compared, and `false` was a bare WARN. That left a hole wide enough to
-    drive six codes through: an entry could be flagged `false` while Layer 1 DID carry an
-    option string for its code, so its morphology_name was free to drift from a string
-    sitting right there in the source of truth, and the build still passed.
-
-    The rule is now keyed off Layer 1, not off the flag:
-
-        code HAS an option string in Layer 1  ->  the name must be character-identical,
-                                                  and a mismatch is a FAIL, whatever the
-                                                  flag says.
-        code has NO option string in Layer 1  ->  nothing to compare, and nothing
-                                                  reported (standing rule 16).
-
-    No flag is read (4 October 2026). `redcap_option_verified` and `awaiting_layer1` were
-    removed from every group: the tool does not verify REDCap (standing rule 16), so whether
-    REDCap carries a code is not reported. What remains, for Groups 1 and 2 only, is the
-    name comparison where an option exists, pending the registrar's ruling on whether those
-    two groups' names move to the ICD-O-3.2 round trip like every other group's.
-
-    ONE exemption, deliberately narrow — the behaviour-overloaded code. 9898 has a single
-    option string and that string names one of the two entities (ML-DS, /3); the sibling
-    it does not name (TAM, /1) genuinely has no option string of its own. An entry is
-    exempt only when BOTH:
-        * another entry shares its morphology_code with a DIFFERENT behavior_code, AND
-        * that sibling's morphology_name IS character-identical to the option.
-    i.e. the option is demonstrably spoken for by the sibling. Anything less than all
-    three and the mismatch is a FAIL — the exemption can never absorb ordinary drift.
-
-    GROUPS 3, 4 AND 6 ARE OUT OF SCOPE, and are validated by something stronger (Group 3
-    build contract §5.2; Group 4 build contract §1.1a; Group 6 build contract §8, all
-    three adopting the same rule for the same reason — §0.3 lists four Group IV
-    divergences and §2C lists EIGHT Group VI divergences, the largest Layer 1 split of
-    any group built so far, between the REDCap option strings and the ICD-O-3.2
-    preferred terms). For those groups Layer 1 for code identity is ICD-O-3.2, not the
-    REDCap option file: check_icdo32_round_trip() requires every (code, name, behaviour)
-    triple the engine can emit to exist verbatim in icdo32.sqlite. That is a superset of
-    this check's question, because the option list itself carries (code, term) pairs the
-    database does not — matching them would inherit the errors rather than catch them.
-    The option strings are not dropped; they move to the alias file and are checked the
-    other way round (every alias resolves to a valid triple; no alias is ever emitted).
-
-    GROUP 5 MOVED TO THE ROUND TRIP on 4 October 2026: its four names are ICD-O-3.2
-    preferred terms and pass check_icdo32_round_trip() with no failure.
-
-    Nothing about Groups 1 and 2 changes. Their Layer 1 is still the option file, the
-    sibling exemption still works exactly as described above, and the scoping below is a
-    single equality on the group number — which comes from the FILENAME and is
-    cross-checked against metadata.group_id by check_top_level_keys(), so it is not a
-    flag in the file exempting itself (rule 8).
-    """
-    out = []
-    if ctx.group in ROUND_TRIP_GROUPS:
-        return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
-                       "against icdo32.sqlite instead of against the REDCap option file "
-                       "(contract §5.2 for Group 3; §1.1a for Group 4; Group 6 build "
-                       "contract §8 for Group 6, whose eight REDCap-string drifts — "
-                       "§2C, two of them naming a different lesion entirely — would "
-                       "otherwise FAIL this check on correct data; Group 9 build contract "
-                       "§8 for Group 9, whose fourteen string drifts include three labels "
-                       "naming a benign lesion on a malignant code). That is the "
-                       "stronger question — it rejects (code, term) pairs the option list "
-                       "carries that ICD-O-3.2 does not, where this check would have "
-                       "inherited them. Group 7 joins on its own contract §2E, for ten "
-                       "drifts; Group 8 on its contract §2, whose viii_morph offers "
-                       "Ewing sarcoma on the retired number 9260. Groups 1 and 2 are "
-                       "unaffected."
-                       % ctx.group)]
-    options = redcap_options.get(ctx.group)
-    if not options:
-        return [(NOTE, "no REDCap options parsed for group %d — exact-string check skipped"
-                 % ctx.group)]
-
-    def variants_of(option):
-        return option.get("names") or [option["name"]]
-
-    # code -> [entries], so the behaviour-overload exemption can see an entry's siblings.
-    by_code: dict[str, list] = {}
-    for entry in ctx.entries:
-        if not isinstance(entry, dict):
-            continue
-        code = as_code(entry.get("morphology_code"))
-        if code is not None:
-            by_code.setdefault(code, []).append(entry)
-
-    def sibling_claims_option(entry, code, variants):
-        """True when a DIFFERENT-behaviour entry on this code already matches the option."""
-        mine = entry.get("behavior_code")
-        for other in by_code.get(code, []):
-            if other is entry:
-                continue
-            if other.get("behavior_code") == mine:
-                continue
-            if isinstance(other.get("morphology_name"), str) \
-                    and other["morphology_name"] in variants:
-                return True
-        return False
-
-    compared = matched = 0
-    for entry in ctx.entries:
-        if not isinstance(entry, dict):
-            continue
-        code = as_code(entry.get("morphology_code"))
-        name = entry.get("morphology_name")
-        if code is None:
-            continue
-        option = options.get(code)
-        if option is None:
-            # Whether REDCap carries the code is not this tool's question (standing rule 16).
-            continue
-
-        # Layer 1 carries an option for this code — the name MUST match it.
-        variants = variants_of(option)
-        compared += 1
-        if isinstance(name, str) and name in variants:
-            matched += 1
-            continue
-
-        if sibling_claims_option(entry, code, variants):
-            # Behaviour-overloaded code: the one option string is spoken for by the
-            # sibling behaviour. This entry has no option string of its own.
-            compared -= 1
-            out.append((NOTE, "entry %s/%s (%r) is the unnamed half of a behaviour-"
-                              "overloaded code — the single REDCap option names the "
-                              "%s behaviour; no option string of its own"
-                        % (code, entry.get("behavior_code"), name,
-                           next((o.get("behavior_code") for o in by_code.get(code, [])
-                                 if o is not entry
-                                 and isinstance(o.get("morphology_name"), str)
-                                 and o["morphology_name"] in variants), "?"))))
-            continue
-
-        out.append((FAIL, "entry %s: a REDCap option EXISTS for this code and "
-                          "morphology_name is not character-identical to it.\n"
-                          "               dt.json : %r\n"
-                          "               REDCap  : %s"
-                    % (code, name, " | ".join(repr(v) for v in variants))))
-
-    if compared:
-        out.append((OK, "%d/%d morphology_name(s) whose code HAS a REDCap option are "
-                        "character-identical to it" % (matched, compared)))
-    return out
-
 
 def check_raw_hex_ban(repo: Path):
     """
@@ -6212,15 +6062,16 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     # GROUP8 joins the guard (Group 8 build contract §1, §7): morphology_name is the
     # ICD-O-3.2 preferred term and viii_morph drifts from it on nine codes (§2).
     if ctx.group not in ROUND_TRIP_GROUPS:
-        return []
+        return [(NOTE, "group %d: morphology_name is not validated against any source. The "
+                       "REDCap exact-name check was removed on 4 October 2026 (standing rule "
+                       "16), and this group's names are REDCap wordings that do not yet "
+                       "round-trip to icdo32.sqlite; moving them is the group's own pending "
+                       "work" % ctx.group)]
     index, err = load_icdo32(layer1)
     if err:
         return [(WARN, "RULE 13 could not run: %s. morphology_name is NOT validated for "
-                       "this group — check_redcap_exact_names() steps aside for Group 3, "
-                       "Group 4 and Group 6 (contract §5.2, §1.1a, Group 6 build "
-                       "contract §8) on the understanding that this check replaces it, "
-                       "so with the database absent nothing is checking the names at all"
-                 % err)]
+                       "this group — this check is the only name check, so with the database "
+                       "absent nothing is checking the names at all" % err)]
 
     out, checked, matched = [], 0, 0
     exempt_pairs = set(ICDO32_SOURCE_TERM_EXEMPTIONS)
@@ -11122,8 +10973,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         # to Group 6 only and a no-op on any other group's file. check_behaviour_
         # exclusion() above already covers this group's behaviour_exclusion blocks
         # (BEHAVIOUR_DECLARED_BY_GROUP now carries GROUP6), and check_icdo32_round_
-        # trip() / check_redcap_exact_names() above already carry the Group 6
-        # extension described in contract §8 — neither needs a new call here.
+        # trip() above already carries the Group 6 extension described in contract
+        # §8 — neither needs a new call here.
         report.run(check_group6_code_set, ctx)                         # rule 1
         report.run(check_group6_absent_codes, ctx)                     # rule 2
         report.run(check_group6_behaviour_declaration, ctx, layer1)    # rule 3
@@ -11162,7 +11013,6 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group9_obs_unreachable, ctx)                  # rule 9
         report.run(check_group9_leaf_claims, ctx)                      # rule 10
         # the four new checks (three of them are per-file)
-        report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)
         report.run(check_mpal_rule_ordering, ctx)
         # the 4 Sep 2026 registrar rulings
