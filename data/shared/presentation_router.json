@@ -717,7 +717,7 @@
         }
       ],
       "tree_routing": {
-        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16). The search box enters the group with no topography and reaches g10_site_unstated, which asks for the evidence and then the site, and hands the case on by cross-tree next_node into the site trees. A code outside every Group X range, such as C77.9, also reaches that default.",
+        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16). The search box enters the group with no topography and reaches g10_site_unstated, which asks for the evidence and then the site, and hands the case on by cross-tree next_node into the site trees. A topography code outside every Group X range, such as C77.9, also reaches that default.",
         "variable": "topography",
         "rules": [
           {

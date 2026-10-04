@@ -650,7 +650,7 @@
         10
       ],
       "candidate_groups_advisory": true,
-      "note": "Group 10 added 4 October 2026 (design decision D19). The Group 10 Diagnostic Pathway (section 2A) names C76.3 as the site of a sacrococcygeal germ cell tumour, the commonest extragonadal site. REDCap offers this site as Pelvis, NOS (763); no Layer 1 file records how the ICD-O-3 topography index files the sacrococcygeal region."
+      "note": "Group 10 added 4 October 2026 (design decision D19). The Group 10 Diagnostic Pathway (section 2A) names C76.3 as the site of a sacrococcygeal germ cell tumour, the commonest extragonadal site. REDCap offers this site as Pelvis, NOS (763). Group 9 is listed because soft-tissue sarcomas of the pelvis are ICCC Group IX. The registrar confirms the site code (docs/group_10_registrar_review.md B2)."
     },
     "C69.9": {
       "code": "C69.9",
