@@ -188,3 +188,40 @@ alveolar rhabdomyosarcoma (D1); the basis-1 cutaneous Kaposi sarcoma route (E1).
   osteosarcoma subtypes at soft tissue sites, and codes with no WHO 2020 soft tissue entity.
 - **The Visser imaging subtype rows (`8850`, `8890`, `9120`) are built** pending registrar
   question F.
+
+## 12. Rerun on the merged engine, 4 October 2026
+
+`origin/main` at `dbe5fd4` (Groups VII and VIII merged, standing rule 16) was merged into this
+branch as `ece5a6c`. Five files conflicted and every conflict kept both sides: the `GROUP7`,
+`GROUP8` and `GROUP9` constants and behaviour rows, the three groups' check blocks and their
+`run_build` calls, and the Group sections of `clinical-warnings.md`, `codes-awaiting-redcap.md`
+and `group_baseline_documents.md`. Group 8 had replaced the hard-coded round-trip guards with
+`ROUND_TRIP_GROUPS`; `GROUP9` joins that set. The router and topography files merged without
+conflict: `dual_group_rules["8963"]` now carries Group 7's liver branch, `"9260"` is re-keyed to
+`"9364"` and `"9365"`, and `"9473"` stays removed.
+
+1. `python3 build/induce_flow.py` changes no file; every rule has a witness.
+2. `python3 build/build_database.py` → **BUILD PASSED**, 939 checks, 0 FAIL. Group 9's ten rules
+   pass, its warnings are the same as before the merge, and the engine gate passes.
+3. The 44 Group 9 negative controls behave as expected against the merged code.
+4. Nine paths driven at `http://localhost:8819`, no console errors:
+
+| Path | Result |
+|---|---|
+| Thigh mass → named desmoid fibromatosis | `8821/1` panel titled "Uncertain whether benign or malignant" (Group VII's `BEHAVIOUR_LABELS`) |
+| Thigh mass → lipoblastoma | `8881/0` panel titled "Benign neoplasm (benign tumour)" |
+| Thigh mass → DFSP without fibrosarcomatous change | `8832/1`, behaviour 1 |
+| Thigh mass → named Ewing sarcoma | `9364/3`, IXd2 |
+| Thigh mass → round cell stains, CD99 and NKX2.2 positive | `9364/3` after eight stains |
+| Lymphadenopathy → C77.9 → LANA-positive Kaposi sarcoma | `9140/3`, IXc, C77.9 |
+| Cutaneous lesion → C44.7 → clinical note | `9140/3` at basis 1, the authored upgrade line |
+| Thigh mass → named rhabdoid tumour → SMARCB1 loss | `8963/3`, IXd3 |
+| Incidental imaging → retroperitoneum → sarcoma likely | `8800/3` at basis 2 |
+
+The mass route now asks Group VIII's tumour-origin question (bone or soft tissue) before the
+site, and the soft tissue answer reaches the Group IX tree.
+
+Standing rule 16 (the tool never verifies REDCap) asks every REDCap change owed to be listed in
+`docs/TODO.md` §7. Group IX's rows were added there, pointing at
+`docs/group_09_layer1_repair.md`. The `redcap_option_verified` flags and the out-of-date-label
+banner are left as Groups VI–VIII on `main` have them.
