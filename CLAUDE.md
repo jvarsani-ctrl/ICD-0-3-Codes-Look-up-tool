@@ -136,7 +136,10 @@ codes, option-string names and ICCC groups are checked only by
 `build_database.py`, which needs Layer 1 and stays a local step before merging
 any change to data or to the build. Registrar's decision, 4 October 2026: Layer 1
 does not go on GitHub, because each code is verified when it is built and again on
-every local build.
+every local build. The check is not required: this is a private repository on a
+free personal account, where GitHub offers no branch protection, so a red cross
+shows on a failing pull request and does not block the merge. The local build
+before merging is the safeguard.
 
 ## Run it
 
