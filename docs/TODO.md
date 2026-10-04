@@ -1436,3 +1436,18 @@ engine gate and §19 closed by the registrar the same day. Previously 22 Septemb
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
+
+## 27. Groups I and II: morphology names are validated against nothing
+
+**Opened 4 October 2026.** The registrar removed `check_redcap_exact_names` (standing rule 16), the
+only check that compared Groups I and II's `morphology_name` strings with anything; it compared them
+with the REDCap option file. Every other group's names go through `check_icdo32_round_trip()`.
+Groups I and II's are REDCap wordings and fail it (33 in Group I, 31 in Group II). Each build prints
+a NOTE for both groups until this closes.
+
+The work: move each name to its ICD-O-3.2 preferred term, keep the REDCap wording as an alias, and
+add GROUP1 and GROUP2 to `ROUND_TRIP_GROUPS`. The pairs ICD-O-3.2 does not carry at all need the
+registrar first. These are Group I's 9826/3, 9836/3, 9991/3 and 9992/3, and Group II's 9670/3,
+9673/3, 9725/3, 9765/3, 9767/3, 9768/3, 9769/3, 9823/3, 9970/3 and 9971/3. To reproduce the full list,
+add the group to `ROUND_TRIP_GROUPS` temporarily and run the build. Handed to the Group 1 and Group 2
+sessions on 4 October 2026.
