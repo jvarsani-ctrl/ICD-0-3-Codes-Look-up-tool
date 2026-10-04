@@ -193,8 +193,8 @@ DECISIONS: dict[str, tuple] = {
                "Teratoma with somatic-type malignancy (ICD-O-3.2 synonym; %s, Table 1, "
                "p. 1235)." % LOUIS),
     "9090/3": ("D5",
-               "Malignant struma ovarii; ICCC-2017 range 107 places it at the ovary only. "
-               "Benign struma ovarii, 9090/0, is a behaviour exclusion."),
+               "ICCC-2017 range 107 (Xc2) covers the ovary and the testis. Struma ovarii is "
+               "ovarian tissue, so only the ovary tree emits it."),
     # --- mixed -------------------------------------------------------------------------
     "9085/3": ("D6",
                "Mixed germ cell tumour, components listed or not. Also teratoma and seminoma "
