@@ -97,7 +97,8 @@ class GenerationError(Exception):
 # entry, and when a DECISIONS entry names a pair no tree emits.
 # --------------------------------------------------------------------------------------
 def _emissions(obj):
-    """Yield (code, behaviour, is_checklist_rule, rule) for every emission under a node."""
+    """Yield (code, behaviour, from_checklist_rule, holder) for every emission under a node.
+    from_checklist_rule is True only for an ihc_checklist resolution_logic rule."""
     if isinstance(obj, dict):
         if obj.get("node_type") == "ihc_checklist":
             for rule in obj.get("resolution_logic") or []:
@@ -128,7 +129,7 @@ def tree_pairs(trees: list) -> dict:
     out = {}
     for t in trees:
         seen = []
-        for code, beh, _rule, _holder in _emissions(t.get("nodes") or []):
+        for code, beh, _from_checklist, _holder in _emissions(t.get("nodes") or []):
             p = key(code, beh)
             if p not in seen:
                 seen.append(p)
@@ -141,8 +142,8 @@ def checklist_markers(trees: list) -> dict:
     in rule order. These are the pairs whose entries require IHC (Group 8 precedent)."""
     out: dict = {}
     for t in trees:
-        for code, beh, is_rule, rule in _emissions(t.get("nodes") or []):
-            if not is_rule:
+        for code, beh, from_checklist, rule in _emissions(t.get("nodes") or []):
+            if not from_checklist:
                 continue
             markers = out.setdefault(key(code, beh), [])
             for m in rule.get("positive") or []:
@@ -175,12 +176,12 @@ def d14(report_says: str, extra: str = "") -> tuple:
 # rules that emit it (Group 8's 9364 precedent); check_ihc_overrides() fails the run when an
 # override and the trees disagree, so the lists below cannot drift from the rules.
 # --------------------------------------------------------------------------------------
-OVERRIDABLE = ("diagnostic_tests_required", "ihc_markers_required", "who_version")
+OVERRIDABLE = ("diagnostic_tests_required", "ihc_markers_required")
 GERMINOMA_FAMILY_MARKERS = ["OCT3/4", "CD117", "SOX17", "D2-40"]
 IHC_FAMILY = {"diagnostic_tests_required": HIST_IHC,
               "ihc_markers_required": GERMINOMA_FAMILY_MARKERS}
 IHC_SENTENCE = ("The germ cell stain panel emits it on OCT3/4 with CD117 or D2-40 and CD30 "
-                "not positive, or on OCT3/4 with SOX17 (Siegmund 2022, pp. 36-37).")
+                "not positive, or on OCT3/4 with SOX17 (Siegmund 2023, pp. 36-37).")
 
 DECISIONS: dict[str, tuple] = {
     # --- germinoma family --------------------------------------------------------------
@@ -219,14 +220,14 @@ DECISIONS: dict[str, tuple] = {
                "Embryonal carcinoma alone. A report naming embryonal carcinoma and teratoma "
                "and nothing else is 9081/3 (D6). The germ cell stain panel emits it on OCT3/4 "
                "with CD30 (CD117 and SOX17 not positive) or with SOX2 (SOX17 not positive) "
-               "(Siegmund 2022, p. 37).",
+               "(Siegmund 2023, p. 37).",
                {"diagnostic_tests_required": HIST_IHC,
                 "ihc_markers_required": ["OCT3/4", "CD30", "SOX2"]}),
     "9071/3": ("D4",
                "Coded when the report names a yolk sac tumour. A raised alpha-fetoprotein "
                "alone does not name one: the evidence route codes it 9065/3 (D4). The germ "
                "cell stain panel emits it on glypican-3 with a tissue alpha-fetoprotein stain "
-               "or with nuclear HNF1-beta, OCT3/4 not positive (Siegmund 2022, p. 38; Wu "
+               "or with nuclear HNF1-beta, OCT3/4 not positive (Siegmund 2023, p. 38; Wu "
                "2020, Tables 1-2; Rougemont 2018, Table 2, p. 29); one yolk sac marker alone "
                "falls to 9064/3.",
                {"diagnostic_tests_required": HIST_IHC,
@@ -472,7 +473,7 @@ def emitted_by(code: str, behaviour: str, pairs_by_tree: dict) -> list:
 
 def check_ihc_overrides(markers_by_pair: dict) -> None:
     """Every pair a checklist rule emits requires Histology and IHC and lists exactly the
-    markers of the rules that emit it; no other pair claims ihc_markers_required."""
+    markers of the rules that emit it; no other pair claims IHC or ihc_markers_required."""
     problems = []
     for k, d in DECISIONS.items():
         over = d[2] if len(d) > 2 else {}
@@ -488,9 +489,12 @@ def check_ihc_overrides(markers_by_pair: dict) -> None:
                 problems.append("%s ihc_markers_required is %r; the rules that emit it "
                                 "read %r" % (k, over.get("ihc_markers_required"),
                                              markers_by_pair[k]))
-        elif "ihc_markers_required" in over:
-            problems.append("%s lists ihc_markers_required but no stain panel rule emits it"
-                            % k)
+        else:
+            if "ihc_markers_required" in over:
+                problems.append("%s lists ihc_markers_required but no stain panel rule emits "
+                                "it" % k)
+            if "IHC" in (over.get("diagnostic_tests_required") or []):
+                problems.append("%s requires IHC but no stain panel rule emits it" % k)
     missing = sorted(set(markers_by_pair) - set(DECISIONS))
     if missing:
         problems.append("stain panel rule(s) emit %s, which DECISIONS does not annotate"
