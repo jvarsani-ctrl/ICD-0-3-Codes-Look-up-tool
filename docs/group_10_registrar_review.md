@@ -104,7 +104,7 @@ hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystaden
 `g10_cns` is built: eleven nodes, swept by the engine gate, and every code it emits checked
 against ICCC-2017 range declarations by validator rule 1. No clerk can reach it:
 
-- Every central nervous system topography lists only Group III in `topography_codes.json`, so the
+- Every central nervous system topography lists only Group III (and Group XI at C75.1) in `topography_codes.json`, so the
   front door never offers Group X there.
 - Since your ruling of 4 October 2026 (`main` commit `9c63a5f`), the search box asks the site and
   keeps a group only if the site lists it. A search for a germ cell term at the pineal stops for

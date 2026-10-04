@@ -289,7 +289,7 @@ to `main`:
 2. `pf_imaging_no_tissue` option 0 can never fire (`docs/TODO.md` §10).
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    third ventricle.
-4. Every central nervous system topography lists only Group III in `topography_codes.json`, so
+4. Every central nervous system topography lists only Group III (and Group XI at C75.1) in `topography_codes.json`, so
    the front door never offers Group X there, and since the registrar's ruling of 4 October 2026
    the search box stops a Group X term at a central nervous system site for referral.
    **`g10_cns` is built and verified by the engine gate, and no route reaches it.** Opening one is
