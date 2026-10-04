@@ -1451,7 +1451,7 @@ behaviour 3, seven more drift from ICD-O-3.2 on such a number, and `8474` repeat
 label. Five options sit on numbers ICD-O-3.2 deleted. The tool's output names each code by the
 ICD-O-3.2 preferred term, and the clerk matches on the four-digit number.
 
-## 28. FOR THE REGISTRAR — a central nervous system germ cell tumour reaches Group X only through the search box
+## 28. FOR THE REGISTRAR — no route reaches Group X's central nervous system tree
 
 **Found 4 October 2026 while building Group X** (design D18;
 `docs/group_10_registrar_review.md` B1). Group III must stay byte-identical to `main` on the Group X
@@ -1460,20 +1460,25 @@ branch, so none of this is fixed there.
 Every central nervous system topography in `data/shared/topography_codes.json` lists Group III
 alone, so the front door never offers Group X at a pineal, suprasellar or other intracranial site.
 Group III refers to Group X in nine places, and a referral is a terminal screen: nothing carries
-into the target group, and the clerk starts a new case. Four defects follow:
+into the target group, and the clerk starts a new case. Since the registrar's ruling of 4 October
+2026 (`main` commit `9c63a5f`) the search box asks the site and keeps a group only if the site
+lists it, so a Group X term searched at a central nervous system site stops for referral. Four
+defects follow:
 
 1. A biopsy-proven germinoma with normal markers has no route to Group X from `g3_midline`.
 2. `pf_imaging_no_tissue` option 0, the elevated-marker referral to Group X, can never fire — the
    defect in §10 above. Closing §10 is the precondition for this one.
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    the third ventricle.
-4. The search box is the only way into `g10_cns`.
+4. No route reaches `g10_cns`. It is built and swept by the engine gate.
 
-**To close.** The registrar chooses one of three. (a) Add Group 10 to the candidate groups of the
-midline central nervous system codes (`C75.1`–`C75.3`, `C71.5`, `C72.x`): a new choice at every
-Group III case at those sites. (b) Let a referral to a built group offer "continue in that group",
-carrying the topography: an `app.js` change that affects every group. (c) Keep search as the route
-and add germ cell routes to Group III's own trees, on a Group III branch.
+**To close.** The registrar chooses. (a) Add Group 10 to the candidate groups of the central
+nervous system codes where germ cell tumours arise (`C75.1`–`C75.3` at least). On its own this
+sends a "Mass / swelling" presentation at those sites straight to Group X, because that
+presentation lists 10 and not 3, so Group 3 joins that presentation too; the clerk then chooses
+Group III or Group X there. (b) Let a referral to a built group offer "continue in that group",
+carrying the topography: an `app.js` change that serves every group. (c) Add germ cell routes to
+Group III's own trees, on a Group III branch, with (a) or (b) for the referral to lead somewhere.
 
 ## 29. Group VIII cytology capture drops the cytology report from `evidence_tests`
 
@@ -1502,27 +1507,16 @@ behaviour-neutral alias *Teratoma* only; terms such as *Mature teratoma* are the
 of `9080`. **To close:** key aliases by `(code, behaviour)` in the alias schema and in
 `aliasesFor`; then the restriction can be lifted. Related: §17, the dead alias fields.
 
-## 31. Group X's router rule must list the Group 9 topography codes before the branches merge
+## 31. ~~Group X's router rule must list the Group 9 topography codes before the branches merge~~ — CLOSED 4 October 2026
 
-**Found 4 October 2026.** Group 9 is merged on `origin/main` (`2cd8e9f`); the Group X branch was cut
-at `dbe5fd4`, before it. Group 9 adds 39 lookup codes to `data/shared/topography_codes.json`
-(448 lines of JSON): `C24.0`, `C24.8`, `C24.9`; `C44.0`–`C44.9` (nine); `C51.0`, `C51.1`, `C51.2`,
-`C51.8`, `C51.9`; `C52.9`; `C53.0`, `C53.1`, `C53.8`, `C53.9`; `C61.9`; `C63.0`, `C63.1`, `C63.2`,
-`C63.7`, `C63.8`, `C63.9`; `C67.0`–`C67.9` (ten). All 39 fall in ICCC-2017's extragonadal Group X
-topography, and none is in the `g10_extragonadal` rule of `groups["10"].tree_routing`. Left alone,
-each reaches `g10_site_unstated` instead, and the routing rule of the Group X build contract §5
-(`check_group10_subgroups_and_routing`) fails.
-
-**To close** when the branches merge: recompute the extragonadal `topography_in` list from the
-merged lookup against ICCC-2017's Xb ranges (never type it). Group 9 already lists group 10 in the
-candidate groups of `C51.x`, `C52.9`, `C53.x` and `C63.x` (16 codes). The two branches' other
-`topography_codes.json` edits touch different lines: Group 9 changes `C77.9`, `C11.x` and `C69.6`;
-Group X changes `C38.1`, `C38.3` and `C48.0` and adds `C62.0`, `C62.1` and `C76.3`. Rebuild
-`alias_index.json` after the merge.
+Closed by merging `main` (`334c586`) into the Group X branch. The extragonadal `topography_in`
+list was recomputed from the merged lookup against ICCC-2017's Xb ranges: 114 codes, including
+all 39 Group 9 added. `check_group10_subgroups_and_routing` passes. `g10_site_unstated`, which
+those codes would have reached, was removed in the same change (design D16, revised).
 
 ---
 
-*Last updated 4 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 how a central nervous system germ cell tumour reaches Group X, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge, and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+*Last updated 4 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
 Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with

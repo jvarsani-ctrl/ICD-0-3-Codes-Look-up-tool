@@ -9,6 +9,15 @@ lines both branches touch.
 `docs/superpowers/specs/2026-10-04-group-10-germ-cell-code-decisions-design.md` and are not
 repeated here. Everything that needs the registrar goes to `docs/group_10_registrar_review.md`.
 
+> **Amended after merging `main` (`334c586`) on 4 October 2026.** `main` carried the registrar's
+> rulings of that day (commit `9c63a5f`): the data holds no REDCap fields (standing rule 16), and the
+> search box asks the site of any group whose data reads it, keeping the group only if the site
+> lists it. So the entries carry no `redcap_option_verified`, `awaiting_layer1` or drift sentence
+> (§2 item 7), `docs/codes-awaiting-redcap.md` has no Group 10 section, and `g10_site_unstated` was
+> removed: Group X is always entered with a recorded topography, and the router's default is
+> `g10_extragonadal` (§3.1, §4.1, §4.5, §5). `g10_cns` is built and no route reaches it until the
+> registrar opens one (registrar review B1). Group 9's 39 lookup codes all fall in Xb.
+
 > **Standing rule, inherited.** The tool must never overstate its evidence. Group X has two sharp
 > instances. REDCap's `x_morph` offers `9064` as "Intratubular malignant germ cells", the in situ
 > term, for the number ICD-O-3.2 calls *Germinoma*. And `9100` reads "Hydatidiform mole, NOS",
@@ -78,7 +87,8 @@ term at its (code, behaviour). Also:
 - Router `tree_routing` entries must be `document_inventory` nodes (`build_database.py`
   ~L10168).
 - A referral is a terminal screen; nothing carries into the target group (D18).
-- The search box enters a group with no topography, so `tree_routing.default` receives it.
+- The search box asks the site of a group with `tree_routing` and keeps the group only if the
+  site lists it (registrar, 4 October 2026), so Group X is always entered with a topography.
 - "Also called" lists aliases by four-digit code (D21).
 
 ### 0.5 ★ Visser Table 4 — what may be registered without tissue
@@ -147,15 +157,9 @@ environment, falling back to the module defaults.
    `coding_note` naming the D-number and the node(s) that emit it. Pairs the tree never emits get
    the templated note "In the inventory, not on the tree: reachable by search where aliased."
    The five Xa pairs below `/3` that the tree does not emit (`9100/0`, `9100/1`) say why (D8).
-7. **REDCap.** Parse the Group 10 option file with `build_database.parse_redcap_options` (or the
-   same parsing) — the build reads that markdown, not the REDCap snapshot. For each entry:
-   - option present and its label equal to `morphology_name` → `redcap_option_verified: true`;
-   - present with a different label → `redcap_option_verified: false`, and `coding_note` gains
-     `Layer 1: x_morph offers <code> as "<label>"; ICD-O-3.2's preferred term at /<b> is "<name>".`
-     (the Group 8 `REDCAP_DRIFT` pattern, computed, not typed);
-   - absent → `redcap_option_verified: false` and `awaiting_layer1:
-     {"reason": ..., "needs": ["REDCap Group 10 option list"], "todo": "docs/codes-awaiting-redcap.md"}`.
-     `9102` is one; compute the rest. T6 lists every one under `## Group 10 — open`.
+7. **REDCap.** *Superseded on 4 October 2026 (standing rule 16; registrar, `main` commit
+   `9c63a5f`):* the entries carry no REDCap fields. What REDCap owes is listed in `docs/TODO.md`
+   §7 and §27 and in `docs/group_10_layer1_repair.md`, never flagged in the data.
 8. `metadata`: `group_id` 10, `group_name` "Germ Cell, Trophoblastic Tumors and Neoplasms of
    Gonads", `iccc3_version`, `icdo_version`, `total_morphology_entries` 136,
    `total_decision_nodes`, `decision_trees` (the five tree ids in §4 order),
@@ -181,8 +185,7 @@ environment, falling back to the module defaults.
     {"tree_id": "g10_cns", "entry_node": "cn_document_inventory"},
     {"tree_id": "g10_ovary", "entry_node": "ov_document_inventory"},
     {"tree_id": "g10_testis", "entry_node": "ts_document_inventory"},
-    {"tree_id": "g10_extragonadal", "entry_node": "eg_document_inventory"},
-    {"tree_id": "g10_site_unstated", "entry_node": "su_document_inventory"}
+    {"tree_id": "g10_extragonadal", "entry_node": "eg_document_inventory"}
   ],
   "tree_routing": {
     "_comment": "...D16...",
@@ -193,9 +196,9 @@ environment, falling back to the module defaults.
       {"topography_in": ["C62.0", "C62.1", "C62.9"], "tree_id": "g10_testis", "entry_node": "ts_document_inventory", "label": "Testis"},
       {"topography_in": [every lookup code in ICCC Xb ranges], "tree_id": "g10_extragonadal", "entry_node": "eg_document_inventory", "label": "Any other site"}
     ],
-    "default": {"tree_id": "g10_site_unstated", "entry_node": "su_document_inventory", "label": "Site not recorded", "reason": "..."}
+    "default": {"tree_id": "g10_extragonadal", "entry_node": "eg_document_inventory", "label": ..., "reason": "every lookup code that lists Group 10 is named by a rule; app.js requires a default"}
   },
-  "handoff": {"group": 10, "tree_id": "g10_site_unstated", "entry_node": "su_document_inventory"}
+  "handoff": {"group": 10, "tree_id": "g10_extragonadal", "entry_node": "eg_document_inventory"}
 }
 ```
 
@@ -251,7 +254,6 @@ immunohistochemistry 7.
 | `g10_ovary` | `ov_` | C56.9 | the eight above, plus teratoma, gonadoblastoma, sex_cord, epithelial, unspecified, other |
 | `g10_testis` | `ts_` | C62.0–C62.9 | the eight, plus teratoma, gonadoblastoma, sex_cord, unspecified, other |
 | `g10_extragonadal` | `eg_` | the Xb ranges | the eight, plus teratoma, other |
-| `g10_site_unstated` | `su_` | none — default | document_inventory and five `site_resolution` nodes; **no terminals** |
 
 Use whatever `topography` value format the validator accepts for the extragonadal and
 site-unstated trees; record the choice in the tree's `coding_note`-equivalent comment.
@@ -455,17 +457,10 @@ type the report names → `refer(12)`.
 lymphoma → `refer(2)`; a deposit of a tumour that began elsewhere → `nonrep`; another tumour
 type the report names → `refer(12)`.
 
-### 4.5 `g10_site_unstated`
+### 4.5 `g10_site_unstated` — removed
 
-`su_document_inventory` (`document_inventory`) carries the same five options and captures as
-`p_document_inventory`, each going to `su_site_referral`, `su_site_markers`, `su_site_imaging`,
-`su_site_cytology` or `su_site_histology`. Each of those is a `site_resolution` node, "Where is
-the tumour?", hint "The topography was not recorded at Stage 1. Record it on the case as well.",
-with four options capturing `{"gct_site": "cns" | "ovary" | "testis" | "other"}` and going by
-cross-tree `next_node` to `cn_`, `ov_`, `ts_` or `eg_` + the same tier node (`clinical_alias`,
-`markers`, `imaging`, `cytology`, `histology`). Labels: "Brain or spinal cord, including the
-pineal and suprasellar regions"; "Ovary"; "Testis"; "Any other site — sacrococcygeal region,
-mediastinum, retroperitoneum or elsewhere". No terminal in this tree.
+Removed on 4 October 2026 after the merge of `main`: the search box now records the site before
+entering Group X, so no case reaches a tree without a topography (D16, revised).
 
 After the tree is written, run the entries generator, then `python3 build/induce_flow.py`, and
 confirm every `ihc_checklist` rule has a witness.
@@ -484,10 +479,10 @@ Registration in `build/build_database.py`:
 
 | # | Function | Asserts | Keyed off |
 |---|---|---|---|
-| 1 | `check_group10_codes_fit_site` | For each site tree, every emitted (code, behaviour) — code branches, IHC rules, `nos_fallback` — lies in a Group X ICCC range whose topography covers the tree's site and whose behaviour declaration includes the behaviour; every `behaviour_exclusion` lies in **no** such range; `g10_site_unstated` emits nothing | `ICCC-2017.sqlite` ranges 94–117 |
+| 1 | `check_group10_codes_fit_site` | For each site tree, every emitted (code, behaviour) — code branches, IHC rules, `nos_fallback` — lies in a Group X ICCC range whose topography covers the tree's site and whose behaviour declaration includes the behaviour; every `behaviour_exclusion` lies in **no** such range | `ICCC-2017.sqlite` ranges 94–117 |
 | 2 | `check_group10_no_pathology_codes` | On paths whose captured `evidence_tests` hold neither Histology nor Cytology: basis 1 and 2 emit only `8000/3`; basis 4 emits only `9064/3` or `9065/3`, or `9100/3` in `g10_extragonadal`, and only where the path's evidence holds both Imaging and Tumour markers; no such path reaches basis 5, 7 or 8 | the path (Group 8 `_group8_terminals_by_evidence`), Visser Table 4 |
 | 3 | `check_group10_alias_terms_match_icdo32` | Every Group 10 alias equal (case-insensitive; tumour/tumor normalised) to an ICD-O-3.2 term maps to that term's code; the group emits that code at that term's behaviour and at no other (D21); no alias containing "germinoma" but not "dysgerminoma" maps to `9060` | `icdo32.sqlite` |
-| 4 | `check_group10_subgroups_and_routing` | For every entry and every code in `topography_codes.json`, the subgroup `app.js` would show (`iccc3_subgroup_by_topography`, first match, else the entry's default) equals ICCC-2017's subgroup wherever ICCC places the pair in Group X at that topography; `groups["10"].tree_routing` sends every Xa topography to `g10_cns`, C56.9 to `g10_ovary`, C62.x to `g10_testis`, every Xb topography to `g10_extragonadal`, and defaults to `g10_site_unstated` | `ICCC-2017.sqlite`, router, topography lookup |
+| 4 | `check_group10_subgroups_and_routing` | For every entry and every code in `topography_codes.json`, the subgroup `app.js` would show (`iccc3_subgroup_by_topography`, first match, else the entry's default) equals ICCC-2017's subgroup wherever ICCC places the pair in Group X at that topography; `groups["10"].tree_routing` sends every Xa topography to `g10_cns`, C56.9 to `g10_ovary`, C62.x to `g10_testis`, every Xb topography to `g10_extragonadal`; every lookup code from which Group X can be entered is named by a rule; the default is `g10_extragonadal` | `ICCC-2017.sqlite`, router, topography lookup |
 
 `build/negative_controls_group10.py` (modelled on `negative_controls_group08.py`): a
 correct-data probe per rule, then at least these mutations, each expected CAUGHT:
@@ -498,7 +493,6 @@ correct-data probe per rule, then at least these mutations, each expected CAUGHT
 | R1-B | `ov_teratoma` mature cystic teratoma emits code `9080/0` |
 | R1-C | `ts_mixed` gains a `9086/3` branch (ICCC-2017 range 105: Xb6 only) |
 | R1-D | `eg_mixed` gains a `9102/3` branch |
-| R1-E | `su_site_histology` gains a code branch |
 | R2-A | `cn_markers` alpha-fetoprotein option emits `9071/3` basis 4 |
 | R2-B | **the path, not the flag:** `ov_document_inventory`'s histology option captures `["Imaging"]` |
 | R2-C | the markers option of `eg_document_inventory` captures `["Tumour markers"]` only |
@@ -538,7 +532,7 @@ Trophoblastic and Gonadal Tumours (4 October 2026)`, Group 8's format.
 Not aliased: "GCT" (germ cell or granulosa cell — the Alias Build Instructions' own collision),
 any excluded-behaviour term (D9, D10, D11). Before writing, check `data/aliases/alias_index.json`
 for strings another group holds; an alias shared with a lower-numbered group enters that group.
-`tree_entry_node` is `su_document_inventory`, `ihc_tree_id` `g10_site_unstated`.
+`ihc_tree_id` and `tree_entry_node` follow Group 9's convention for a group with `tree_routing`.
 
 ---
 
@@ -567,8 +561,7 @@ The doc conflicts are append-only on both sides: keep both on merge. Rebuild
   ICD-O-3.2 (exact preferred term at an emitted behaviour; valid term not preferred; drift; a
   benign or borderline term at a number the tool emits at `/3`; "Label not found"; numbers
   absent). The three sharpest first: `9064`, `9100`, `9086`.
-- `docs/codes-awaiting-redcap.md`: `## Group 10 — open`, one `### NNNN/B — Name` per
-  `awaiting_layer1` entry, matching T1's output exactly.
+- `docs/codes-awaiting-redcap.md`: no Group 10 section (superseded, standing rule 16).
 - `docs/TODO.md`: §27 "Group X codes the REDCap dropdown does not offer correctly", a §7 index
   row, the footer note; and the Group III inbound defects (D18) as an open item.
 - `docs/group_baseline_documents.md`: Group X row and a provisional-table row — Höhn 2021 does not
@@ -584,13 +577,14 @@ The doc conflicts are append-only on both sides: keep both on merge. Rebuild
 2. `python3 build/induce_flow.py --check` → every rule has a witness.
 3. `python3 build/negative_controls_group10.py` → every control CAUGHT, every probe passes.
 4. `node build/check_engine_flow.mjs` → pass.
-5. Drive in the browser (`python3 -m http.server 8811`): a pineal tumour found by search
-   ("germinoma") through `g10_site_unstated` to `9064/3`; an ovarian mature cystic teratoma to its
-   behaviour exclusion; a central nervous system mature teratoma to `9080/0`; a sacrococcygeal
-   immature teratoma to `9080/3` Xb2; a testicular mixed tumour with choriocarcinoma to `9101/3`;
-   the markers route to `9065/3` basis 4; an adult granulosa cell tumour of the ovary to `8620/3`.
-   On each output read the subgroup line and the "Also called" row.
-6. Groups 1–8 data and alias files, `app.js`, `index.html`, `uccf-tool.css` byte-identical to
+5. Drive in the browser (`python3 -m http.server 8811`): an ovarian dysgerminoma found by search
+   ("dysgerminoma") at C56.9 to `9060/3` Xc1; an ovarian mature cystic teratoma to its behaviour
+   exclusion; a sacrococcygeal immature teratoma to `9080/3` Xb2; a testicular mixed tumour with
+   choriocarcinoma to `9101/3`; the markers route to `9065/3` basis 4; an adult granulosa cell
+   tumour of the ovary to `8620/3`; a search for "germinoma" at C75.3 stops for referral (B1).
+   On each output read the subgroup line and the "Also called" row. `g10_cns` has no route in
+   (B1); the engine gate sweeps it.
+6. Groups 1–9 data and alias files, `app.js`, `index.html`, `uccf-tool.css` byte-identical to
    `main`.
 
 ---

@@ -247,7 +247,7 @@ prepubertal and postpubertal types enter only where they change the code: as the
 for a testicular teratoma (D5). Serum and cerebrospinal fluid markers enter through the
 evidence route (D4), not as captured variables.
 
-## D16. The site resolver is the router plus one small tree — design
+## D16. The site resolver is the router — design (revised 4 October 2026)
 
 The same code sits in Xa, Xb and Xc by site (Pathway §0.1, §7.1). The schema allows one entry
 per (code, behaviour), so each shared entry carries `iccc3_subgroup_by_topography`, which
@@ -260,13 +260,17 @@ Trees, routed by the router's `tree_routing` on the Stage 1 topography:
 | `g10_cns` | `cn_` | C70.0–C72.9, C75.1–C75.3 |
 | `g10_ovary` | `ov_` | C56.9 |
 | `g10_testis` | `ts_` | C62.0, C62.1, C62.9 |
-| `g10_extragonadal` | `eg_` | every other code in `topography_codes.json` that ICCC-2017 places in Xb |
-| `g10_site_unstated` | `su_` | the default: no topography captured, or one no rule names |
+| `g10_extragonadal` | `eg_` | every other code in `topography_codes.json` that ICCC-2017 places in Xb; also the router's default |
 
-The search box enters a group with no topography, so it reaches `g10_site_unstated`. That tree
-asks the evidence, then the site, and hands on by cross-tree `next_node` into the site trees, as
-Groups 1–3 already do. No node type is added. The pathway's `site_resolution` node is used as
-the closed vocabulary already defines it.
+**Revised after the merge of `main` on 4 October 2026.** The first design added a fifth tree,
+`g10_site_unstated`, for the search box, which then entered a group with no topography. The
+registrar's ruling of the same day (`main` commit `9c63a5f`) makes the search box ask the site of
+any group whose data reads it, and keep the group only if the site lists it. Group X is therefore
+always entered with a recorded topography, the fifth tree could not be reached, and it was
+removed. The router's `tree_routing` is the whole site resolver. Its default is
+`g10_extragonadal`, required by `app.js`; every lookup code that lists Group 10 is named by a
+rule, so the default is reached only by a topography outside the Xa, Xb and Xc site ranges.
+No node type is added.
 
 ## D17. `9086/3` is a real code — settled
 
@@ -286,7 +290,10 @@ to `main`:
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    third ventricle.
 4. Every central nervous system topography lists only Group III in `topography_codes.json`, so
-   the front door never offers Group X there. The search box is the only way into `g10_cns`.
+   the front door never offers Group X there, and since the registrar's ruling of 4 October 2026
+   the search box stops a Group X term at a central nervous system site for referral.
+   **`g10_cns` is built and verified by the engine gate, and no route reaches it.** Opening one is
+   a front-door decision for the registrar (`docs/group_10_registrar_review.md` B1).
 
 ## D19. Front-door reach outside the central nervous system — provisional
 
@@ -299,11 +306,12 @@ the sacrococcygeal region — the registrar confirms. Add Group 10 to the candid
 that lists group 4, and Group IV's file stays byte-identical to `main`. This adds one choice at
 those sites and changes no other group's tree.
 
-## D20. A case with no topography shows the entry's default subgroup — design
+## D20. The entry's own subgroup is the gonadal one — design (revised 4 October 2026)
 
-An entry's own `iccc3_subgroup_id` is what the output shows when no topography was captured.
-Each shared entry defaults to its gonadal subgroup (Xc) where one exists, else its extragonadal
-subgroup (Xb), else Xa. REDCap computes `x_subgroup` itself from `x_morph` and `topo_code`, so the
+Each shared entry's own `iccc3_subgroup_id` is its gonadal subgroup (Xc) where one exists, else
+its extragonadal subgroup (Xb), else Xa; the `iccc3_subgroup_by_topography` rules name the other
+sites. Group X is always entered with a recorded topography (D16), so the own subgroup shows at
+the ovary and testis. REDCap computes `x_subgroup` itself from `x_morph` and `topo_code`, so the
 tool's subgroup line is advisory.
 
 ## D21. An alias maps to a code only if it is true of every behaviour the group emits — design

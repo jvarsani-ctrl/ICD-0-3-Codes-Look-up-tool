@@ -99,23 +99,37 @@ hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystaden
 
 ## B. Routing and reach
 
-### B1. A central nervous system germ cell tumour can reach Group X only through the search box (D18)
+### B1. No route reaches the central nervous system tree (D18) — the most consequential open item
 
-Every central nervous system topography lists only Group III, so the front door never offers
-Group X there. Group III refers to Group X in nine places, and a referral ends the case. Group
-III also has four defects, left untouched because Group III must stay byte-identical to `main`:
+`g10_cns` is built: eleven nodes, swept by the engine gate, and every code it emits checked
+against ICCC-2017 range declarations by validator rule 1. No clerk can reach it:
+
+- Every central nervous system topography lists only Group III in `topography_codes.json`, so the
+  front door never offers Group X there.
+- Since your ruling of 4 October 2026 (`main` commit `9c63a5f`), the search box asks the site and
+  keeps a group only if the site lists it. A search for a germ cell term at the pineal stops for
+  referral.
+- Group III refers to Group X in nine places, and a referral ends the case.
+
+Group III also has three defects of its own, left untouched because Group III stays
+byte-identical to `main`:
 
 1. A biopsy-proven germinoma with normal markers has no route to Group X from `g3_midline`.
 2. `pf_imaging_no_tissue` option 0 can never fire (`docs/TODO.md` §10).
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    third ventricle.
-4. The search box is the only way into `g10_cns`.
 
-**Options:** (a) add Group 10 to the candidate groups of the midline central nervous system codes
-(C75.1–C75.3, C71.5, C72.x) — this adds a choice to every Group III case at those sites; (b) let a
-referral to a built group offer "continue in that group", carrying the topography — an `app.js`
-change for every group; (c) keep search as the route, and add germ cell routes to Group III's
-trees on a Group III branch.
+**Options:**
+- **(a)** List Group 10 on the central nervous system topographies where germ cell tumours arise
+  (C75.1–C75.3 at least; ICCC-2017 Xa covers all 24). On its own this sends a "Mass / swelling"
+  presentation at those sites straight to Group X, because that presentation lists 10 and not 3;
+  it needs Group 3 added to that presentation as well. The clerk then chooses Group III or Group X
+  at those sites for mass, incidental and unsure presentations; an organ-functional presentation
+  still goes to Group III alone.
+- **(b)** Let a referral to a built group offer "continue in that group", carrying the topography —
+  an `app.js` change that serves every group's referrals.
+- **(c)** Add germ cell routes to Group III's trees, on a Group III branch, that end in a referral
+  — and choose (a) or (b) for the referral to lead somewhere.
 
 ### B2. Front-door candidate groups outside the central nervous system (D19)
 
@@ -124,11 +138,12 @@ C76.3 with candidate groups 9 and 10. Two questions: does the registry record a 
 tumour at C76.3 *Pelvis, NOS* (the pathway's choice; no Layer 1 file records the ICD-O-3 index
 entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to declare C76.3?
 
-### B3. The subgroup line when no topography was captured (D20)
+### B3. The subgroup line (D20)
 
-A case entered from the search box has no topography; the output shows the entry's default
-subgroup, which is the gonadal one (Xc) for the 18 codes shared across sites. REDCap computes
-`x_subgroup` itself from `x_morph` and `topo_code`.
+Each code shared across sites carries its gonadal subgroup (Xc) as its own and rules for the
+central nervous system (Xa) and extragonadal (Xb) sites. Group X is always entered with a recorded
+topography, so the line follows the site. REDCap computes `x_subgroup` itself from `x_morph` and
+`topo_code`. Nothing to decide unless you want the tool to show no subgroup at all.
 
 ---
 
