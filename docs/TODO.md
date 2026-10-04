@@ -1458,7 +1458,8 @@ ICD-O-3.2 preferred term, and the clerk matches on the four-digit number.
 branch, so none of this is fixed there.
 
 Every central nervous system topography in `data/shared/topography_codes.json` lists Group III
-alone, so the front door never offers Group X at a pineal, suprasellar or other intracranial site.
+(and Group XI at `C75.1`), so the front door never offers Group X at a pineal, suprasellar or other
+intracranial site.
 Group III refers to Group X in nine places, and a referral is a terminal screen: nothing carries
 into the target group, and the clerk starts a new case. Since the registrar's ruling of 4 October
 2026 (`main` commit `9c63a5f`) the search box asks the site and keeps a group only if the site

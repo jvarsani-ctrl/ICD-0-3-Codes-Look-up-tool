@@ -36,7 +36,7 @@ before building.** A pathway is not designed on secondary sources or on recall.
 
 Baseline list supplied by the registrar, 16 September 2026, and **every entry verified against
 PubMed** the same day: each DOI was resolved to its PubMed record and the citation checked against
-the returned metadata. Only Group III's paper is held on disk. **Five entries are provisional — see below.**
+the returned metadata. On 16 September only Group III's paper was held on disk; by 4 October Pfister 2022 (Group IV, `Group 4 Papers/331.pdf`) and Moch 2022 (Groups VI and X, `Group 6 Papers/`) are too. **Five entries are provisional — see below.**
 
 ### ⚠️ Five entries are provisional and await the registrar's verification
 

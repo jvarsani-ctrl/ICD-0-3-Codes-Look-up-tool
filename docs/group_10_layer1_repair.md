@@ -235,9 +235,9 @@ behaviour-3 term on these numbers, so none of them can be a Group X cancer.
 | `9073` | Gonadoblastoma | `9073/1` Preferred | exclusion in `g10_ovary`, `g10_testis` |
 | `8442` | Serous cystadenoma, borderline malignancy | `8442/1` Synonym | exclusion in `g10_ovary` |
 | `8472` | Mucinous cystic tumor of borderline malignancy | `8472/1` Preferred | exclusion in `g10_ovary` |
-| `8590` | Sex cord-gonadal stromal tumor, NOS | `8590/1` Preferred | exclusion in `g10_ovary`, `g10_testis` |
+| `8590` | Sex cord-gonadal stromal tumor, NOS | `8590/1` Preferred | `8590/1` exclusion in `g10_ovary`, `g10_testis`; the `8590/0` exclusion, a different term (*Sex cord-stromal tumor, benign*), in `g10_ovary` |
 | `8592` | Sex cord-gonadal stromal tumor, mixed forms | `8592/1` Preferred | exclusion in `g10_testis` |
-| `8622` | Granulosa cell tumor, juvenile | `8622/1` Preferred | exclusion in `g10_ovary` |
+| `8622` | Granulosa cell tumor, juvenile | `8622/1` Preferred | `8622/1` exclusion in `g10_ovary`; the `8622/0` exclusion, a different term (*Granulosa cell tumor of testis, juvenile*), in `g10_testis` |
 | `8623` | Sex cord tumor with annular tubules | `8623/1` Preferred | exclusion in `g10_ovary` |
 | `8632` | Gynandroblastoma | `8632/1` Preferred | exclusion in `g10_ovary` |
 | `8633` | Sertoli-Leydig cell tumor, retiform | `8633/1` Preferred | exclusion in `g10_ovary` |
