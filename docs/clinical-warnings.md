@@ -1954,3 +1954,37 @@ was checked against the paper held in `Group 7 Papers/`, not against the build c
 | A child with obstructive jaundice and a bile duct mass | ⚠️ **Embryonal rhabdomyosarcoma of the biliary tree is the commonest malignant cause of obstructive jaundice in childhood**, median age 3. It is a Group IX case, not a cholangiocarcinoma. Associations include DICER1, Costello, NF1, Noonan and Beckwith–Wiedemann syndromes. | López-Terrada 2025, **p. 38** |
 | A solid and cystic liver mass in an infant under two | ⚠️ **Mesenchymal hamartoma is benign but can transform to undifferentiated embryonal sarcoma**, and its alpha-fetoprotein can be moderately raised. | López-Terrada 2025, **p. 39** |
 | Fine-needle aspiration offered as the diagnostic specimen for a liver tumour | ⚠️ **Fine-needle aspiration is not recommended.** It samples too little tissue to classify paediatric liver tumours; core or wedge biopsy before chemotherapy is the standard. | Ng K, Mogul DB. *Clinics in Liver Disease* 2018;22(4):753–772, **PDF p. 7** |
+
+---
+
+# Group VIII — Malignant Bone Tumours
+
+**Added 2026-10-02 with the Group 8 build.** Registrar ruling 9 was in force throughout, so
+`clinical_alert` is `null` on every Group VIII node and every morphology entry, and
+`check_no_clinical_alerts()` confirms it on every build. The Diagnostic Pathway (13 June 2026)
+wrote `clinical_alert` strings for 9180, 9200, 9250, 9260 and 9370 (§4A–§4H); none was put in
+the tree. The first table was checked against the primary sources during the build. The second
+is carried over from the Diagnostic Pathway's own summary and **was not re-read against the
+primaries**, so treat it as a lead, not a finding.
+
+### Checked against the primary source
+
+| Trigger | Warning | Source |
+|---|---|---|
+| A small round cell tumour of bone called Ewing sarcoma on CD99 alone | ⚠️ **CD99 is not specific.** *"CD99 is not specific for sarcomas such as Ewing sarcoma; it is also expressed in many acute leukemias."* Lymphoblastic leukaemia/lymphoma (TdT), neuroblastoma (PHOX2B) and rhabdomyosarcoma (desmin, then myogenin and MyoD1) are the exclusions to make first. Ewing sarcoma *"almost invariably expresses CD99 in a strong, diffuse membranous pattern"*, and NKX2-2 is *"highly sensitive but only moderately specific"*. | Kallen ME, Hornick JL. *From the ashes of "Ewing-like" sarcoma.* Seminars in Diagnostic Pathology 2022;39(1):29–37, **pp. 30–31** |
+| A round cell tumour with islands of cartilage, NKX2-2 positive | ⚠️ **Mesenchymal chondrosarcoma also expresses NKX2-2.** The cartilage, not the stain, separates it from Ewing sarcoma. | Kallen & Hornick 2022, **p. 33** (figure caption) |
+| CIC-rearranged sarcoma or sarcoma with BCOR alteration recorded under a round cell sarcoma code | ⚠️ **These are not Ewing sarcoma, and the code does not say so.** CIC-rearranged sarcomas *"have a markedly worse prognosis than Ewing sarcoma."* ICD-O-3.2 has no code of its own for either; the tool records `8803/3`, so the entity survives only in the report. | Anderson WJ, Doyle LA. *Updates from the 2020 World Health Organization Classification of Soft Tissue and Bone Tumours.* Histopathology 2021;78(5):644–657, **pp. 650–651** |
+| H3.3 G34W positive giant cell tumour of bone read as benign | ⚠️ **G34W does not establish benignity.** *"G34W positivity is not synonymous with benignity, as malignant giant cell tumour of bone can harbour the same mutation."* | Anderson & Doyle 2021, **p. 653** |
+| A clival or upper cervical tumour in a child with SMARCB1 (INI1) loss | ⚠️ **Consider poorly differentiated chordoma.** It *"typically occurs in the base of the skull or the upper cervical spine of children"*, is positive for keratins and brachyury, and shows loss of INI-1 (SMARCB1). Group III's atypical teratoid/rhabdoid tumour also loses SMARCB1; brachyury separates them. | Anderson & Doyle 2021, **pp. 653–654** |
+| A high-grade sarcoma at a chordoma site with brachyury negative | ⚠️ **Dedifferentiated chordoma loses brachyury** in its dedifferentiated component, so a negative stain there does not exclude chordoma. | Anderson & Doyle 2021, **p. 654** |
+| A child's cartilage tumour graded on MRI | ⚠️ **Adult MRI grading does not transfer to children.** In 17 paediatric central chondrosarcomas MRI-predicted and surgical grade mismatched in 47%; paediatric enchondromas are often expansile; *"some of the MRI features used to differentiate high-grade CS from ACT in adults cannot be applied to children."* This is why the tool codes no chondrosarcoma on imaging alone. | Sharif B, Lindsay D, Saifuddin A. *The role of imaging in differentiating low-grade and high-grade central chondral tumours.* European Journal of Radiology 2021;137:109579, **p. 4**, citing Ardakani A, et al., Skeletal Radiology 2020 |
+| An imaging report with cartilage-type "rings and arcs" matrix, or fluid–fluid levels | ⚠️ **Neither is the osteosarcoma constellation.** Chondroblastic osteosarcoma *"may show a matrix with the 'arcs and rings' calcification pattern typical of lesions with a cartilaginous matrix"*; telangiectatic osteosarcoma can be mistaken for an aneurysmal bone cyst. Tissue decides both. | Menendez N, et al. *Pediatric Osteosarcoma: Pearls and Pitfalls.* Seminars in Ultrasound, CT and MRI 2022;43(1):97–114, **p. 99** and **p. 109** |
+
+### From the Diagnostic Pathway, not re-checked against the primary
+
+| Trigger | Warning as the pathway states it | Source the pathway cites |
+|---|---|---|
+| A FOS, brachyury or H3.3 G34W stain negative on a long-decalcified bone specimen | Acid decalcification for more than three days abolishes FOS; brachyury is weakened by decalcification and tissue age; G34W can be attenuated. A negative stain on such a block is non-contributory, not exclusion. | Lam SW, et al. Virchows Arch 2020;476(3):455–463 · Dridi M, et al. Ann Diagn Pathol 2021;53:151760 (Diagnostic Pathway §4A) |
+| Giant cell tumour of bone after denosumab | Denosumab induces new bone formation that can mimic a bone-forming tumour and obscure the giant cell tumour histology. | Larousserie F, et al. Ann Pathol 2022;42(3):214–226 (Diagnostic Pathway §4C) |
+| Osteochondroma with a thick cartilage cap | A cap thicker than 2 cm in an adult or 3 cm in a child raises secondary peripheral chondrosarcoma. | Engel H, et al. Fortschr Röntgenstr 2021;193(3):262–274 (Diagnostic Pathway §4B) |
+| Osteosarcoma coded on imaging | Imaging-sufficient coding is a registry allowance, not a biopsy waiver; biopsy remains standard before treatment. | Dietz MS, et al. JNCCN 2024 · Mavrogenis AF, et al. 2015 (Diagnostic Pathway §2B, §4H) |

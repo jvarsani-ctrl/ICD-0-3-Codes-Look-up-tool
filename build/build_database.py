@@ -750,6 +750,10 @@ GROUP6 = 6
 # GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs it at module load time.
 GROUP7 = 7
 
+# Group 8 build contract §7 — Malignant Bone Tumours. Defined here for the same reason as
+# GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs the name at module load time.
+GROUP8 = 8
+
 # Which groups have ADOPTED behaviour_exclusion, and what each one's ICCC-3 behaviour
 # declaration actually is. Read by check_behaviour_exclusion(), whose "subtle clause"
 # fails a block naming a behaviour the group DOES admit — so this table decides the
@@ -773,7 +777,15 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     # GROUP7 added 2 October 2026 (Group 7 build contract §8). Every ICCC-2017.sqlite
     # range for main_group='VII' (rows 67-72) declares behaviour 3 and nothing else.
     GROUP7: {"3"},
+    # GROUP8 added 2 October 2026 (Group 8 build contract §0.2, §7). ICCC-2017.sqlite
+    # ranges 59-71 (main_group VIII) declare icdo3_behavior "3" on every row.
+    GROUP8: {"3"},
 }
+
+# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip()
+# INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
+# this one set: a group in one and not the other would get neither name check.
+ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP7, GROUP8}
 
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
@@ -2836,7 +2848,7 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
     flag in the file exempting itself (rule 8).
     """
     out = []
-    if ctx.group in (GROUP3, GROUP4, GROUP6, GROUP7):
+    if ctx.group in ROUND_TRIP_GROUPS:
         return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
                        "against icdo32.sqlite instead of against the REDCap option file "
                        "(contract §5.2 for Group 3; §1.1a for Group 4; Group 6 build "
@@ -2846,7 +2858,9 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
                        "stronger question — it rejects (code, term) pairs the option list "
                        "carries that ICD-O-3.2 does not, where this check would have "
                        "inherited them. Group 7 joins on its own contract §2E, for ten "
-                       "drifts. Groups 1 and 2 are unaffected."
+                       "drifts; Group 8 on its contract §2, whose viii_morph offers "
+                       "Ewing sarcoma on the retired number 9260. Groups 1 and 2 are "
+                       "unaffected."
                        % ctx.group)]
     options = redcap_options.get(ctx.group)
     if not options:
@@ -6204,7 +6218,9 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     Fix the typo upstream and the third condition fails, so the exemption FAILS rather than
     quietly outliving its reason. An exemption that cannot collapse is a hole (data.md §5A).
     """
-    if ctx.group not in (GROUP3, GROUP4, GROUP6, GROUP7):
+    # GROUP8 joins the guard (Group 8 build contract §1, §7): morphology_name is the
+    # ICD-O-3.2 preferred term and viii_morph drifts from it on nine codes (§2).
+    if ctx.group not in ROUND_TRIP_GROUPS:
         return []
     index, err = load_icdo32(layer1)
     if err:
@@ -9012,6 +9028,222 @@ def check_group7_subgroup_declaration(ctx: DTContext, layer1: Path):
     return out
 
 
+# --------------------------------------------------------------------------------------
+# Group 8 build contract §8 — Malignant Bone Tumours. Three rules, scoped to Group 8 and a
+# no-op on every other group's file. GROUP8 is defined beside GROUP6, above
+# BEHAVIOUR_DECLARED_BY_GROUP.
+# --------------------------------------------------------------------------------------
+
+# §0.6 / design D10 — Visser O, et al. Front Oncol 2023;13:1250549, Table 3 (pp. 04-05) gives
+# osteosarcoma and chondrosarcoma basis 2 at C40/C41; this build uses osteosarcoma only, and
+# rule 5 (p. 03) makes everything else without pathology 8000/3.
+GROUP8_NO_TISSUE_CODES = {"9180", "8000"}
+GROUP8_TISSUE_TESTS = {"Histology", "Cytology"}
+GROUP8_RETIRED_CODE = "9260"
+GROUP8_EWING_CODE = "9364"
+# Markers that, with CD99, make a Ewing sarcoma immunophenotype or prove it outright
+# (Kallen ME, Hornick JL. Semin Diagn Pathol 2022;39(1):29-37, p. 31 and Table 2).
+GROUP8_EWING_PARTNER_TOKENS = ("NKX2-2", "FET::ETS")
+
+
+def check_group8_no_retired_ewing_code(ctx: DTContext, layer1: Path, repo: Path):
+    """
+    GROUP 8 RULE 1 (contract §8.1) — nothing in Group VIII names 9260 at a behaviour
+    ICD-O-3.2 does not carry.
+
+    ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3; 9260 survives only as
+    9260/0 Aneurysmal bone cyst. viii_morph pick 33 still offers "9260 - Ewing sarcoma", so
+    the number is one careless copy away from every Ewing branch. Keyed off icdo32.sqlite:
+    the set of behaviours 9260 actually has is read from the database, not written here, so
+    the one legitimate use — the aneurysmal bone cyst behaviour exclusion — passes because
+    the database carries 9260/0, and nothing else can.
+
+    Swept: every morphology_code, nos_fallback code, behaviour_exclusion icdo_code and
+    refer_code in the tree; every entry's morphology_code and nos_fallback_code; every
+    alias target in aliases_group_08.json (no alias may name 9260 at all — 9260/0 is benign
+    and the alias layer carries only codes the group emits).
+    """
+    if ctx.group != GROUP8:
+        return []
+    index, err = load_icdo32(layer1)
+    if err:
+        return [(WARN, "GROUP 8 RULE 1 could not read icdo32.sqlite: %s" % err)]
+    carried = {b for (c, b) in index if c == GROUP8_RETIRED_CODE}
+    out, seen = [], 0
+    pairs = (("morphology_code", "behavior_code"), ("code", "behavior_code"),
+             ("icdo_code", "icdo_behaviour"), ("refer_code", None), ("nos_fallback_code", None))
+    for tree in ctx.trees:
+        for holder, where in walk_dicts(tree):
+            for key, bkey in pairs:
+                if as_code(holder.get(key)) != GROUP8_RETIRED_CODE:
+                    continue
+                seen += 1
+                beh = holder.get(bkey) if bkey else None
+                if beh is None or str(beh) not in carried:
+                    out.append((FAIL, "%s: %s names %s/%s. ICD-O-3.2 carries %s only at "
+                                      "behaviour(s) %s — Ewing sarcoma is %s/3 (IARC 'Deleted "
+                                      "codes and their terms', 9 Oct 2020, p. 6)"
+                                % (tree.get("tree_id"), where or key, GROUP8_RETIRED_CODE, beh,
+                                   GROUP8_RETIRED_CODE, ", ".join(sorted(carried)) or "none",
+                                   GROUP8_EWING_CODE)))
+    for entry in ctx.entries:
+        for key in ("morphology_code", "nos_fallback_code"):
+            if as_code(entry.get(key)) == GROUP8_RETIRED_CODE:
+                seen += 1
+                out.append((FAIL, "morphology entry names %s in %s — no Group VIII entry may "
+                                  "carry the retired Ewing sarcoma number"
+                            % (GROUP8_RETIRED_CODE, key)))
+    # Both alias-file shapes, as check_alias_cross_references() reads them. A missing file
+    # is load_json()'s NOTE and is skipped; only a FAIL is carried.
+    alias_path = Path(repo) / "data" / "aliases" / "aliases_group_08.json"
+    aliases, found = load_json(alias_path)
+    out.extend(f for f in found if f[0] == FAIL)
+    if isinstance(aliases, dict):
+        aliases = aliases.get("aliases")
+    if aliases is not None and not isinstance(aliases, list):
+        return out + [(FAIL, "GROUP 8 RULE 1: %s holds no alias list, so no alias could be "
+                             "checked" % alias_path.name)]
+    for a in aliases or []:
+        if isinstance(a, dict) and GROUP8_RETIRED_CODE in [
+                str(c) for c in a.get("maps_to_morphology_codes") or []]:
+            seen += 1
+            out.append((FAIL, "alias %r maps to %s, the retired Ewing sarcoma number; "
+                              "Ewing sarcoma is %s"
+                        % (a.get("alias"), GROUP8_RETIRED_CODE, GROUP8_EWING_CODE)))
+    # The router held the stale 9260 rule until this build (docs/TODO.md §8.1, closed).
+    router, found = load_json(Path(repo) / "data" / "shared" / "presentation_router.json")
+    out.extend(f for f in found if f[0] == FAIL)
+    for key, rule in sorted(((router or {}).get("dual_group_rules") or {}).items()):
+        if isinstance(rule, dict) and GROUP8_RETIRED_CODE in [str(c) for c in
+                                                              rule.get("codes") or []]:
+            seen += 1
+            out.append((FAIL, "presentation_router.json dual_group_rules[%r] routes %s, the "
+                              "retired Ewing sarcoma number; Ewing sarcoma is %s"
+                        % (key, GROUP8_RETIRED_CODE, GROUP8_EWING_CODE)))
+    if not out:
+        out.append((OK, "GROUP 8 RULE 1: %d reference(s) to %s, all at a behaviour ICD-O-3.2 "
+                        "carries (%s); no entry or alias names the retired Ewing sarcoma "
+                        "number" % (seen, GROUP8_RETIRED_CODE, ", ".join(sorted(carried)))))
+    return out
+
+
+def _group8_terminals_by_evidence(ctx: DTContext):
+    """
+    Walk every tree from its entry, carrying the clerk's evidence_tests the way app.js's
+    capture() does (each capture REPLACES the value), and yield
+    (node_id, branch, evidence_after_branch) for every code-emitting branch.
+
+    The evidence a terminal is reached with is a property of the PATH, not of anything the
+    terminal says about itself, which is why rule 2 reads it here rather than trusting the
+    branch's own basis_of_diagnosis.
+    """
+    def after(holder, ev):
+        cap = holder.get("captures") if isinstance(holder.get("captures"), dict) else {}
+        return tuple(cap["evidence_tests"]) if "evidence_tests" in cap else ev
+
+    for tree in ctx.trees:
+        seen, stack = set(), [(tree.get("entry_node"), None)]
+        while stack:
+            node_id, ev = stack.pop()
+            node = ctx.nodes.get(node_id)
+            if node is None or (node_id, ev) in seen:
+                continue
+            seen.add((node_id, ev))
+            for b, _ in _branch_containers(node):
+                ev_b = after(b, ev)
+                if as_code(b.get("morphology_code")):
+                    yield node_id, b, ev_b
+                if isinstance(b.get("next_node"), str):
+                    stack.append((b["next_node"], ev_b))
+            # imaging_pathway is its own terminal when the features hold, and falls through
+            # to insufficient_next_node with the evidence it arrived with when they do not.
+            if node.get("node_type") == "imaging_pathway":
+                if as_code(node.get("morphology_code")):
+                    yield node_id, node, after(node, ev)
+                if isinstance(node.get("insufficient_next_node"), str):
+                    stack.append((node["insufficient_next_node"], ev))
+            fb = node.get("nos_fallback")
+            if isinstance(fb, dict) and as_code(fb.get("code")):
+                yield node_id, {"morphology_code": fb.get("code"), "_fallback": True}, ev
+
+
+def check_group8_no_pathology_codes(ctx: DTContext):
+    """
+    GROUP 8 RULE 2 (contract §8.2) — a terminal reached with no tissue in the file emits
+    9180/3 or 8000/3, at basis 1 or 2, and basis 1 only with 8000/3.
+
+    Visser 2023 Table 3 licenses osteosarcoma and chondrosarcoma at C40/C41 on clinical
+    investigation; this build licenses osteosarcoma only (design D10, Sharif 2021 p. 4), and
+    rule 5 makes everything else 8000/3. A specific code at basis 2, or any code at basis 7
+    with no tissue, makes a case look better evidenced than it is — the class of defect the
+    project tests first.
+
+    Keyed off the PATH (the evidence_tests in force when the terminal is reached), so a
+    branch cannot pass by declaring a basis it was not reached with.
+    """
+    if ctx.group != GROUP8:
+        return []
+    out, checked = [], 0
+    for node_id, b, ev in _group8_terminals_by_evidence(ctx):
+        if ev is not None and GROUP8_TISSUE_TESTS & set(ev):
+            continue
+        checked += 1
+        code = as_code(b.get("morphology_code"))
+        basis = b.get("basis_of_diagnosis")
+        label = b.get("label") or b.get("finding") or ("nos_fallback" if b.get("_fallback")
+                                                       else node_id)
+        if code not in GROUP8_NO_TISSUE_CODES:
+            out.append((FAIL, "%s: %r emits %s with no tissue in the file. Without pathology "
+                              "Group VIII may emit only %s (Visser 2023 rule 5, Table 3; "
+                              "design D10)" % (node_id, label, code,
+                                               " or ".join(sorted(GROUP8_NO_TISSUE_CODES)))))
+        elif basis not in (1, 2):
+            out.append((FAIL, "%s: %r emits %s with no tissue in the file at basis %r; a "
+                              "no-tissue terminal is basis 1 or 2" % (node_id, label, code, basis)))
+        elif basis == 1 and code != "8000":
+            out.append((FAIL, "%s: %r emits %s at basis 1; only 8000/3 may be registered on "
+                              "clinical information alone (Visser 2023 rule 5)"
+                        % (node_id, label, code)))
+    if not checked:
+        return [(FAIL, "GROUP 8 RULE 2 found no no-tissue terminal at all — the imaging and "
+                       "referral routes are missing or the walk is broken")]
+    if not out:
+        out.append((OK, "GROUP 8 RULE 2: %d terminal(s) reachable with no tissue, every one "
+                        "emitting 9180/3 or 8000/3 at basis 1 or 2" % checked))
+    return out
+
+
+def check_group8_ewing_requires_partner(ctx: DTContext):
+    """
+    GROUP 8 RULE 3 (contract §8.3) — no marker rule emits Ewing sarcoma on CD99 alone.
+
+    CD99 "is not specific for sarcomas such as Ewing sarcoma; it is also expressed in many
+    acute leukemias" (Kallen & Hornick 2022, p. 30). A 9364 rule must also require NKX2-2 or
+    a FET::ETS fusion. Keyed off the rule's own positive[] — its CONDITION — so a rule that
+    reaches 9364 by a weaker condition fails even though its destination is right.
+    """
+    if ctx.group != GROUP8:
+        return []
+    out, checked = [], 0
+    for node_id, node in ctx.nodes.items():
+        for i, rule in enumerate(node.get("resolution_logic") or []):
+            if not isinstance(rule, dict) or as_code(rule.get("morphology_code")) != GROUP8_EWING_CODE:
+                continue
+            checked += 1
+            pos = [str(m) for m in rule.get("positive") or []]
+            if not any(tok in m for m in pos for tok in GROUP8_EWING_PARTNER_TOKENS):
+                out.append((FAIL, "%s resolution_logic[%d] emits %s on %s without NKX2-2 or a "
+                                  "FET::ETS fusion (Kallen & Hornick 2022, pp. 30-31)"
+                            % (node_id, i, GROUP8_EWING_CODE, pos or "no positive marker")))
+    if not checked:
+        return [(FAIL, "GROUP 8 RULE 3 found no marker rule emitting %s; the round cell panel "
+                       "is missing" % GROUP8_EWING_CODE)]
+    if not out:
+        out.append((OK, "GROUP 8 RULE 3: %d marker rule(s) emit %s, each requiring NKX2-2 or a "
+                        "FET::ETS fusion" % (checked, GROUP8_EWING_CODE)))
+    return out
+
+
 def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
                                         classification: dict):
     """
@@ -10627,6 +10859,11 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group7_fibrolamellar, ctx)                    # rule 8
         report.run(check_group7_cnset, ctx, layer1)                    # rule 10
         report.run(check_group7_subgroup_declaration, ctx, layer1)     # rule 11
+        # Group 8 build contract §8 — Malignant Bone Tumours. Three rules, scoped to
+        # Group 8 and a no-op on any other group's file.
+        report.run(check_group8_no_retired_ewing_code, ctx, layer1, repo)  # rule 1
+        report.run(check_group8_no_pathology_codes, ctx)                   # rule 2
+        report.run(check_group8_ewing_requires_partner, ctx)               # rule 3
         # the four new checks (three of them are per-file)
         report.run(check_redcap_exact_names, ctx, redcap_options)
         report.run(check_redcap_banner_signal, ctx, redcap_options)
