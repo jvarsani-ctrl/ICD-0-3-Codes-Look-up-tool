@@ -128,6 +128,16 @@ node build/check_engine_flow.mjs
 
 Negative controls for it are in `docs/engine_flow_negative_controls.md`.
 
+GitHub runs this engine gate, and only this, on every pull request
+(`.github/workflows/engine-gate.yml`, named "engine gate (no Layer 1)"). It
+needs Node and nothing from the vault. A green check there means `app.js` still
+behaves against the committed data. It does not mean the data was verified:
+codes, option-string names and ICCC groups are checked only by
+`build_database.py`, which needs Layer 1 and stays a local step before merging
+any change to data or to the build. Registrar's decision, 4 October 2026: Layer 1
+does not go on GitHub, because each code is verified when it is built and again on
+every local build.
+
 ## Run it
 
 ```bash
