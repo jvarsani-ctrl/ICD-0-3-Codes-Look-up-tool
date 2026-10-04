@@ -804,7 +804,7 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
 # INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
 # this one set: a group in one and not the other would get neither name check.
 # GROUP10 joins on its build contract §5: morphology_name is the ICD-O-3.2 preferred term,
-# and x_morph drifts from it on 64 codes.
+# and x_morph drifts from it on 67 codes (docs/group_10_layer1_repair.md).
 ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP7, GROUP8, GROUP9, GROUP10}
 
 ROMAN_BY_GROUP = {
@@ -9668,7 +9668,7 @@ def check_group9_leaf_claims(ctx: DTContext):
 # --------------------------------------------------------------------------------------
 # Group 10 build contract §5 — Germ Cell, Trophoblastic and Gonadal Tumours. Four rules,
 # scoped to Group 10 and a no-op on every other group's file. GROUP10 is defined beside
-# GROUP8, above BEHAVIOUR_DECLARED_BY_GROUP.
+# GROUP9, above BEHAVIOUR_DECLARED_BY_GROUP.
 #
 # ICCC-3 Group X places one (code, behaviour) in up to three subgroups by site: Xa in the
 # central nervous system (ranges 94-99, behaviours 0, 1 and 3), Xb at every other
@@ -9680,6 +9680,7 @@ GROUP10_EXTRAGONADAL_TREE = "g10_extragonadal"
 # Contract §3.1. ICCC-2017 fixes which topographies are Xa, Xb and Xc; the Xc topographies
 # (569, 620-629) are split between the two gonad trees by their ICD-O-3 topography heading,
 # C56 Ovary and C62 Testis.
+GROUP10_GERM_CELL_FAMILIES = ("Xa", "Xb", "Xc")
 GROUP10_TREE_BY_SITE_FAMILY = {"Xa": "g10_cns", "Xb": "g10_extragonadal"}
 GROUP10_GONAD_TREE_BY_HEADING = {"C56": "g10_ovary", "C62": "g10_testis"}
 # Contract §0.5. Visser O, et al. Front Oncol 2023;13:1250549: rule 5 (p. 03) registers a
@@ -10120,6 +10121,13 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
     g10_extragonadal: app.js requires a default, and every Group X entry carries a captured
     topography (the express lane asks the site first, registrar, 4 October 2026).
 
+    Each site tree's rules name exactly the lookup codes ICCC-2017 places in its site family:
+    the Xa sites for g10_cns, 569 for g10_ovary, 620-629 for g10_testis, the Xb sites for
+    g10_extragonadal. A lookup code missing from its tree's rules, or a code its rules name
+    that ICCC-2017 does not place in that family, is a FAIL by name. Without this the
+    destination check alone passes a Xb rule stripped of every code the default also sends to
+    g10_extragonadal, and one that names C77.9.
+
     Every lookup topography from which app.js can enter Group X is named by a rule, so none
     reaches the default: a code whose candidate_groups lists 10, and a code whose
     candidate_groups is not a list (C80.9, route_by_morphology), which narrowBySite() and
@@ -10195,18 +10203,30 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
         family_sites: dict = {}
         for r in ranges:
             family = r["subgroup"][:2]
-            if family in ("Xa", "Xb", "Xc"):
+            if family in GROUP10_GERM_CELL_FAMILIES:
                 family_sites.setdefault(family, []).extend(r["sites"])
+        # The lookup codes each site tree's rules must name, and the family each tree holds.
+        expected = {t: set() for t in list(GROUP10_TREE_BY_SITE_FAMILY.values())
+                    + list(GROUP10_GONAD_TREE_BY_HEADING.values())}
+        holds = dict({t: f for f, t in GROUP10_TREE_BY_SITE_FAMILY.items()},
+                     **{t: "Xc under %s" % h for h, t in GROUP10_GONAD_TREE_BY_HEADING.items()})
         for topo in topos:
             n = _topo_index(topo)
-            family = next((f for f in ("Xa", "Xb", "Xc")
+            family = next((f for f in GROUP10_GERM_CELL_FAMILIES
                            if _in_spans(family_sites.get(f, []), n)), None)
             if family == "Xc":
                 want = GROUP10_GONAD_TREE_BY_HEADING.get(topo[:3])
+                if want is None:
+                    out.append((FAIL, "GROUP 10 RULE 4: ICCC-2017 makes %s an Xc topography, "
+                                      "but no gonad tree holds the %s heading (contract §3.1)"
+                                % (topo, topo[:3])))
+                    continue
             elif family:
                 want = GROUP10_TREE_BY_SITE_FAMILY[family]
             else:
                 want = GROUP10_EXTRAGONADAL_TREE
+            if family:
+                expected[want].add(topo)
             got = _group10_route(tr, topo)
             if got != want:
                 out.append((FAIL, "GROUP 10 RULE 4: the router sends %s to %r; ICCC-2017 "
@@ -10214,14 +10234,39 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                             % (topo, got, ("an %s topography" % family) if family
                                else "a topography outside the Group X germ cell site ranges",
                                want)))
+        named_by_tree: dict = {}
+        for i, rule in enumerate(tr.get("rules") or []):
+            if not isinstance(rule, dict):
+                continue
+            tree = rule.get("tree_id")
+            if tree not in expected:
+                out.append((FAIL, "GROUP 10 RULE 4: tree_routing.rules[%d] routes to %r, which "
+                                  "is not a Group X site tree (contract §3.1)" % (i, tree)))
+                continue
+            named_by_tree.setdefault(tree, set()).update(
+                t for t in rule.get("topography_in") or [] if isinstance(t, str))
+        for tree, want_codes in expected.items():
+            got_codes = named_by_tree.get(tree, set())
+            missing, extra = sorted(want_codes - got_codes), sorted(got_codes - want_codes)
+            if missing:
+                out.append((FAIL, "GROUP 10 RULE 4: the %s rule omits %d lookup code(s) "
+                                  "ICCC-2017 places in %s: %s (contract §3.1)"
+                            % (tree, len(missing), holds[tree], ", ".join(missing))))
+            if extra:
+                out.append((FAIL, "GROUP 10 RULE 4: the %s rule names %d code(s) ICCC-2017 "
+                                  "does not place in %s: %s (contract §3.1)"
+                            % (tree, len(extra), holds[tree], ", ".join(extra))))
     if not [f for f in out if f[0] == FAIL]:
         out.append((OK, "GROUP 10 RULE 4: %d of %d entries are placed in Group X by ICCC-2017 "
                         "at some lookup topography, and each shows the ICCC-2017 subgroup at "
                         "every one of the %d (entry, topography) pair(s) so placed; the router "
                         "sends all %d lookup topography codes to the tree ICCC-2017's site "
-                        "ranges give them, and a rule names each of the %d from which app.js "
+                        "ranges give them; each site tree's rules name exactly the lookup codes "
+                        "of its family (%s), and a rule names each of the %d from which app.js "
                         "can enter Group X"
-                        % (entries_checked, len(ctx.entries), pairs, len(topos), len(enters))))
+                        % (entries_checked, len(ctx.entries), pairs, len(topos),
+                           ", ".join("%s %d" % (holds[t], len(c)) for t, c in expected.items()),
+                           len(enters))))
     return out
 
 

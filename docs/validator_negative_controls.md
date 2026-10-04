@@ -3197,9 +3197,9 @@ lookup and the alias list to a temporary directory, runs one rule, and expects F
 counts as caught only when a FAIL message carries the fragments the runner names for it; a FAIL
 for another reason prints WRONG REASON. Before the controls, each rule runs on the unmutated data
 and must pass, and rule 3 must return a NOTE when the alias file is absent. Nothing on disk
-changes. Task T5 has not yet written `data/aliases/aliases_group_10.json`, so the runner checks
-rule 3 against seven correct aliases it holds itself, and reads the file once it exists. Exit
-status 0 on 4 October 2026: **22 of 22 caught for the expected reason, 5 of 5 probes pass.**
+changes. The runner checks rule 3 against `data/aliases/aliases_group_10.json` (112 aliases,
+Task T5); when the file is absent it uses seven correct aliases it holds itself. Exit status 0 on
+4 October 2026: **24 of 24 caught for the expected reason, 5 of 5 probes pass.**
 R3-E, R3-F and R3-G were added the same day with the spec-review fixes to rule 3; run against
 rule 3 as committed in `4a1c0eb`, before those fixes, all three are MISSED. R1-F, R2-E and R4-D
 were added at code review, so that the nos_fallback clause of rule 1, the placental scoping of
@@ -3214,6 +3214,15 @@ Group X, a code whose `candidate_groups` lists 10 or is not a list, to be named 
 the default on the extragonadal tree, dropping an Xb code from the rules no longer changes its
 tree, so R4-C is now caught by that clause, and R4-E removes a second such code, `C38.1`, from
 every rule.
+
+**Rule 4 then checked destinations only, and code review found the gap.** A code the rules drop
+reaches the default, which is the extragonadal tree, so an Xb rule stripped of every code that
+cannot enter Group X passed, and so did an Xb rule naming `C77.9`. Rule 4 now requires each site
+tree's rules to name exactly the lookup codes ICCC-2017 places in its family (Xa for `g10_cns`,
+569 for `g10_ovary`, 620–629 for `g10_testis`, Xb for `g10_extragonadal`) and names every missing
+and every extra code. R4-F and R4-G test the two directions; run against rule 4 as committed in
+`aa0dbb1`, before the fix, both are MISSED. R4-F drops `C11.0`, whose candidate groups are 4, 9
+and 11: the lookup holds no `C00.0`, the first code of the Xb range.
 
 Each rule reads its source on every build. Rules 1 and 4 read ICCC-2017.sqlite ranges 94–117.
 Rule 1 takes a tree's site from the router: the topography codes `groups["10"].tree_routing`
@@ -3251,12 +3260,14 @@ nothing must not pass (R3-G).
 | R3-D | the D21 exemption stretched by code | alias "Teratoma" → `["9080"]` alone | rule 3: "D21 — alias 'Teratoma' is the ICD-O-3.2 term 'Teratoma, NOS' at 9080/1, and Group X emits 9080 at behaviour(s) 0, 1, 3" |
 | R3-E | the D21 exemption stretched by text | alias "Teratoma, NOS" → `["9080", "9084"]` | rule 3: "alias 'Teratoma, NOS' is the ICD-O-3.2 term 'Teratoma, NOS' at 9080/1, and maps to 9084, a code ICD-O-3.2 does not file it under" |
 | R3-F | an obsolete term on the wrong code | alias "Granulosa cell carcinoma" → `["9064"]` | rule 3: "alias 'Granulosa cell carcinoma' is the ICD-O-3.2 term 'Granulosa cell carcinoma [obs]' at 8620/3, and maps to 9064, a code ICD-O-3.2 does not file it under" |
-| R3-G | an alias file that checks nothing | every alias's text moved from the `alias` key to `term` | rule 3: "none of the 7 alias(es) in aliases_group_10.json outside the D21 exemption equals an ICD-O-3.2 term, so the rule checked nothing" |
+| R3-G | an alias file that checks nothing | every alias's text moved from the `alias` key to `term` | rule 3: "none of the 112 alias(es) in aliases_group_10.json outside the D21 exemption equals an ICD-O-3.2 term, so the rule checked nothing" |
 | R4-A | a central nervous system subgroup lost | entry `9071/3` loses its `Xa4` rule | rule 4: "9071/3 shows subgroup 'Xc4' at C70.0, where ICCC-2017 places it in Xa4; 24 lookup topography code(s) disagree in all" |
 | R4-B | a testis routed to the ovary | `C62.0` moves from the testis routing rule to the ovary rule | rule 4: "the router sends C62.0 to 'g10_ovary'; ICCC-2017 makes it an Xc topography, which goes to 'g10_testis'" |
 | R4-C | the sacrococcygeal site unrouted | `C76.3` dropped from the extragonadal routing rule | rule 4: "C76.3 can enter Group X (its candidate_groups is [9, 10]) but no groups["10"].tree_routing rule names it, so it reaches the default instead of the tree ICCC-2017's site ranges give it" |
 | R4-D | the default moved off the extragonadal tree | `tree_routing.default` → `g10_cns` | rule 4: "groups["10"].tree_routing.default is 'g10_cns'; a topography outside the Group X germ cell site ranges goes to g10_extragonadal" |
 | R4-E | a mediastinal site unrouted | `C38.1` removed from every routing rule | rule 4: "C38.1 can enter Group X (its candidate_groups is [2, 4, 10]) but no groups["10"].tree_routing rule names it, so it reaches the default" |
+| R4-F | an Xb site that cannot enter Group X unrouted | `C11.0` dropped from the extragonadal routing rule | rule 4: "the g10_extragonadal rule omits 1 lookup code(s) ICCC-2017 places in Xb: C11.0" |
+| R4-G | a site outside every germ cell range routed | `C77.9` added to the extragonadal routing rule | rule 4: "the g10_extragonadal rule names 1 code(s) ICCC-2017 does not place in Xb: C77.9" |
 
 **R2-B is the one that matters.** The mutation leaves the option's `basis_evidence_tier`
 reading "histology" and every terminal under `ov_histology` reading basis 7; only the captured

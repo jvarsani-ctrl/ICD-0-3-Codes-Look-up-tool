@@ -68,6 +68,9 @@ LOOKUP_ADDITIONS = ("C62.0", "C62.1", "C76.3")
 # extragonadal subgroup, else Xa. Group 3's 9380 entry sets the convention for the rule
 # list: the default subgroup carries no rule of its own, only the overrides do.
 DEFAULT_ORDER = ("Xc", "Xb", "Xa")
+# The germ cell site families. ICCC-2017 places a germ cell (code, behaviour) in one of them
+# by site; Xd and Xe, the gonadal carcinomas and stromal tumours, are not site families.
+GERM_CELL_FAMILIES = ("Xa", "Xb", "Xc")
 
 VISSER = "Visser O, et al. Frontiers in Oncology 2023;13:1250549"
 MOCH = "Moch H, et al. European Urology 2022;82(5):458-468"
@@ -371,19 +374,22 @@ def covers(displays: list, number: int) -> bool:
     return False
 
 
-def lookup_codes() -> list:
+def load_lookup() -> dict:
+    """data/shared/topography_codes.json's topography_lookup, read once per run."""
+    return json.loads(LOOKUP_PATH.read_text(encoding="utf-8"))["topography_lookup"]
+
+
+def lookup_codes(lookup: dict) -> list:
     """Every code the front door can capture, plus LOOKUP_ADDITIONS, in numeric order."""
-    lookup = json.loads(LOOKUP_PATH.read_text(encoding="utf-8"))["topography_lookup"]
     codes = set(lookup) | set(LOOKUP_ADDITIONS)
     return sorted(codes, key=topo3)
 
 
-def entering_codes() -> set:
+def entering_codes(lookup: dict) -> set:
     """The lookup codes at which app.js can enter Group X: candidate_groups lists 10, or is not
     a list (C80.9, route_by_morphology), which narrowBySite() and afterSearchSite() leave
     unfiltered. A LOOKUP_ADDITIONS code absent from the lookup counts as one, so no note
     claims Group X cannot be entered at a code whose candidate groups are unknown."""
-    lookup = json.loads(LOOKUP_PATH.read_text(encoding="utf-8"))["topography_lookup"]
     out = {c for c in LOOKUP_ADDITIONS if c not in lookup}
     for code, row in lookup.items():
         groups = row.get("candidate_groups") if isinstance(row, dict) else None
@@ -414,7 +420,7 @@ def default_subgroup(subs: dict) -> str:
     families = {}
     for sid in subs:
         family = sid[:2]
-        if family not in DEFAULT_ORDER or family in families:
+        if family not in GERM_CELL_FAMILIES or family in families:
             raise GenerationError("subgroups %s are not one per Xa/Xb/Xc family"
                              % ", ".join(subs))
         families[family] = sid
@@ -432,9 +438,10 @@ FAMILY_WHERE = {"Xa": "in the central nervous system",
 
 
 def routing(subs: dict, default: str, codes: list, entering: set, germ_cell_sites: list) -> tuple:
-    """(rules, note) for a pair that ICCC-2017 places in more than one subgroup. The note is two
-    sentences: where the default and each rule apply, then what the output shows at a lookup
-    code outside this pair's site ranges and whether Group X can be entered there."""
+    """(rules, note) for a pair that ICCC-2017 places in more than one subgroup. The note's first
+    sentence says where the default and each rule apply. A second sentence follows only when
+    some lookup code falls outside the pair's site ranges: what the output shows there, and
+    whether Group X can be entered there."""
     rules = []
     for sid, sub in subs.items():
         if sid == default:
@@ -603,7 +610,7 @@ def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict, enterin
     return e
 
 
-def build_entries(payload: dict, obs: dict, codes: list, trees: list) -> list:
+def build_entries(payload: dict, obs: dict, codes: list, entering: set, trees: list) -> list:
     records = payload["records"]
     if len(records) != EXPECTED_RECORDS:
         raise GenerationError("the inventory holds %d (code, behaviour) records, the "
@@ -637,9 +644,9 @@ def build_entries(payload: dict, obs: dict, codes: list, trees: list) -> list:
     check_ihc_overrides(checklist_markers(trees))
 
     # The germ cell site ranges: Xa, Xb and Xc. Xd and Xe ranges 114 and 116 run C00.0-C80.9.
-    germ_cell_sites = sorted({t for r in records if r["iccc3_subgroup_id"][:2] in DEFAULT_ORDER
+    germ_cell_sites = sorted({t for r in records
+                              if r["iccc3_subgroup_id"][:2] in GERM_CELL_FAMILIES
                               for t in r["topography"]})
-    entering = entering_codes()
     return [build_entry(grouped[k], obs, codes, pairs_by_tree, entering, germ_cell_sites)
             for k in sorted(grouped)]
 
@@ -694,7 +701,9 @@ def run(argv=None) -> int:
     except group10_tree.TreeError as exc:
         raise GenerationError(str(exc)) from None
     payload = gi.build_inventory(ICCC_PATH, ICDO_PATH, ICCC_GROUP)
-    entries = build_entries(payload, load_obs(ICDO_PATH), lookup_codes(), trees)
+    lookup = load_lookup()
+    entries = build_entries(payload, load_obs(ICDO_PATH), lookup_codes(lookup),
+                            entering_codes(lookup), trees)
 
     out_path = Path(args.out)
     existing = None

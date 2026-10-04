@@ -206,6 +206,10 @@ def r4e(r):
     for x in rules_of(r):
         if "C38.1" in x["topography_in"]:
             x["topography_in"].remove("C38.1")
+# C11.0 lists groups 4, 9 and 11 and not 10, so neither the destination check (the default
+# also lands in g10_extragonadal) nor the naming clause for enterable codes sees it go.
+def r4f(r): rule_for(r, "g10_extragonadal")["topography_in"].remove("C11.0")
+def r4g(r): rule_for(r, "g10_extragonadal")["topography_in"].append("C77.9")
 ctl("R4-A 9071/3 loses its Xa rule", bd.check_group10_subgroups_and_routing,
     ["9071/3 shows subgroup 'Xc4' at C70.0", "places it in Xa4"], r4a)
 ctl("R4-B C62.0 moves to the ovary routing rule", bd.check_group10_subgroups_and_routing,
@@ -220,6 +224,14 @@ ctl("R4-D the tree_routing default becomes g10_cns",
 ctl("R4-E C38.1, which lists Group 10, removed from every routing rule",
     bd.check_group10_subgroups_and_routing,
     ["C38.1 can enter Group X", "[2, 4, 10]", "reaches the default"], router_mutate=r4e)
+ctl("R4-F C11.0, which does not list Group 10, dropped from the Xb rule",
+    bd.check_group10_subgroups_and_routing,
+    ["the g10_extragonadal rule omits 1 lookup code(s) ICCC-2017 places in Xb: C11.0"],
+    router_mutate=r4f)
+ctl("R4-G C77.9, outside every germ cell site range, added to the Xb rule",
+    bd.check_group10_subgroups_and_routing,
+    ["the g10_extragonadal rule names 1 code(s) ICCC-2017 does not place in Xb: C77.9"],
+    router_mutate=r4g)
 
 print("Rule 3 alias list: %s" % ALIAS_SOURCE)
 wrong = caught = probes = 0
