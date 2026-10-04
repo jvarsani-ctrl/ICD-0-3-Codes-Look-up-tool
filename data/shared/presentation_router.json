@@ -697,12 +697,43 @@
         {
           "tree_id": "g9_soft_tissue",
           "entry_node": "st_document_inventory"
+        },
+        {
+          "tree_id": "g9_skin",
+          "entry_node": "sk_document_inventory"
         }
       ],
       "handoff": {
         "group": 9,
         "tree_id": "g9_soft_tissue",
         "entry_node": "st_document_inventory"
+      },
+      "tree_routing": {
+        "_comment": "Group IX at a skin site (C44) enters g9_skin, the one entry holding Visser 2023 Table 3's basis-1 row for Kaposi sarcoma of the skin; every other topography, and an uncaptured one, enters g9_soft_tissue, where a clinical note cannot register Kaposi sarcoma. Code review, 4 October 2026 (Group 9 build report §13).",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C44.0",
+              "C44.1",
+              "C44.2",
+              "C44.3",
+              "C44.5",
+              "C44.6",
+              "C44.7",
+              "C44.8",
+              "C44.9"
+            ],
+            "tree_id": "g9_skin",
+            "entry_node": "sk_document_inventory",
+            "label": "Skin (C44)"
+          }
+        ],
+        "default": {
+          "tree_id": "g9_soft_tissue",
+          "entry_node": "st_document_inventory",
+          "label": "Soft tissue and every other site"
+        }
       }
     },
     "10": {

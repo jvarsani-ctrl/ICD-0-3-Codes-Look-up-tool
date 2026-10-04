@@ -9399,14 +9399,52 @@ def check_group9_ewing_code(ctx: DTContext):
     return out
 
 
-def check_group9_basis_rows(ctx: DTContext):
+def _g9_routed_entries(ctx: DTContext, router: dict):
+    """(entry_node, topographies or None) for every entry the router's tree_routing gives
+    Group 9; None means the default, which takes every topography the rules do not name,
+    an uncaptured one included. Without tree_routing, each declared tree entry is a default."""
+    tr = ((router.get("groups") or {}).get("9") or {}).get("tree_routing") or {}
+    if not tr:
+        return [(e, None) for e in ctx.entry_nodes()]
+    out = [(r.get("entry_node"), set(r.get("topography_in") or [])) for r in tr.get("rules") or []]
+    if tr.get("default"):
+        out.append((tr["default"].get("entry_node"), None))
+    return out
+
+
+def _g9_reachable(ctx: DTContext, start):
+    edges: dict = {}
+    for src, dst, _m, _w in ctx.transitions():
+        edges.setdefault(src, set()).add(dst)
+    seen, todo = set(), [start]
+    while todo:
+        n = todo.pop()
+        if n in seen or n not in ctx.nodes:
+            continue
+        seen.add(n)
+        todo.extend(edges.get(n, ()))
+    return seen
+
+
+def check_group9_basis_rows(ctx: DTContext, repo: Path, router: dict | None = None):
     """GROUP 9 RULE 4 (contract §0.7, §8 rule 4) — basis 1 and basis 2 are Visser Table 3
-    rows. Basis 1 only on a branch emitting 9140 that captures skin lesions (Kaposi sarcoma
-    of the skin, C44); basis 2 only on a branch emitting 8800, 8850, 8890 or 9120. Neither
+    rows. Basis 1 only on a branch emitting 9140 in a node that the router's tree_routing
+    reaches from at least one entry, and only from entries whose topographies are all C44
+    (Kaposi sarcoma of the skin). Keyed off the routing the engine follows, not off a
+    capture the branch sets about itself (standing rule 10): an option cannot read the
+    recorded topography, so the entry the router picks is what confines it. Basis 2 only on a branch emitting 8800, 8850, 8890 or 9120. Neither
     on a branch that emits nothing: a basis claimed on the way to another question would
     raise every code below it to a clinical basis nobody asserted for that code."""
     if ctx.group != GROUP9:
         return []
+    if router is None:
+        try:
+            router = json.loads((repo / "data" / "shared" / "presentation_router.json")
+                                .read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            return [(FAIL, "RULE 4 — presentation_router.json could not be read: %s" % exc)]
+    entries = [(e, t, _g9_reachable(ctx, e)) for e, t in _g9_routed_entries(ctx, router)]
+    node_of = {id(h): nid for nid, node in ctx.nodes.items() for h, _w in walk_dicts(node)}
     out = []
     seen = 0
     for holder, path in walk_dicts(ctx.data):
@@ -9419,10 +9457,14 @@ def check_group9_basis_rows(ctx: DTContext):
             out.append((FAIL, "RULE 4 — %s asserts basis %d but emits no code" % (path, basis)))
             continue
         if basis == 1:
-            skin = (holder.get("captures") or {}).get("lesion_site") == "skin"
-            if code not in GROUP9_VISSER_BASIS1 or not skin:
-                why = ("" if code not in GROUP9_VISSER_BASIS1 or skin
-                       else " without capturing lesion_site 'skin'")
+            nid = node_of.get(id(holder))
+            via = [t for _e, t, reach in entries if nid in reach]
+            skin_only = bool(via) and all(
+                t is not None and t and all(str(c).startswith("C44") for c in t) for t in via)
+            if code not in GROUP9_VISSER_BASIS1 or not skin_only:
+                why = ("" if code not in GROUP9_VISSER_BASIS1
+                       else " in node %s, which tree_routing does not reach from C44-only "
+                            "entries alone" % nid)
                 out.append((FAIL, "RULE 4 — %s emits %s at basis 1%s. Visser Table 3 gives "
                                   "basis 1 only to Kaposi sarcoma of the skin, C44 (contract "
                                   "§0.7)" % (path, code, why)))
@@ -11231,7 +11273,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group9_code_set, ctx)                         # rule 1
         report.run(check_group9_absent_codes, ctx)                     # rule 2
         report.run(check_group9_ewing_code, ctx)                       # rule 3
-        report.run(check_group9_basis_rows, ctx)                       # rule 4
+        report.run(check_group9_basis_rows, ctx, repo)                 # rule 4
         report.run(check_group9_kaposi_hhv8, ctx)                      # rule 5
         report.run(check_group9_8963_site, ctx, repo)                  # rule 6
         report.run(check_group9_no_imaging_sufficient, ctx)            # rule 7

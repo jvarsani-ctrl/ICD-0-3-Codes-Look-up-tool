@@ -58,9 +58,16 @@ def control(name, check, mutate, expect_fail, extra=(), contains=None):
 
 
 R = REPO
+ROUTER = json.loads((REPO / "data" / "shared" / "presentation_router.json").read_text())
+
+
+def router_with(edit):
+    r = copy.deepcopy(ROUTER)
+    edit(r["groups"]["9"])
+    return r
 # ---------------------------------------------------------------- baseline (false-FAIL control)
 for chk, extra in [(bd.check_group9_code_set, ()), (bd.check_group9_absent_codes, ()),
-                   (bd.check_group9_ewing_code, ()), (bd.check_group9_basis_rows, ()),
+                   (bd.check_group9_ewing_code, ()), (bd.check_group9_basis_rows, (R,)),
                    (bd.check_group9_kaposi_hhv8, ()), (bd.check_group9_8963_site, (R,)),
                    (bd.check_group9_no_imaging_sufficient, ()), (bd.check_group9_no_flow_cytometry, ()),
                    (bd.check_group9_obs_unreachable, ()), (bd.check_group9_leaf_claims, ())]:
@@ -97,16 +104,22 @@ control("3p PROBE: 'Ewing-like' label emitting 8803 is not a FAIL", bd.check_gro
         lambda d: opt(d, "st_round_cell", "Undifferentiated round cell").__setitem__(
             "label", "Ewing-like undifferentiated round cell sarcoma"), False)
 # ---------------------------------------------------------------- RULE 4
-control("4a cutaneous KS basis 1 without skin capture", bd.check_group9_basis_rows,
-        lambda d: opt(d, "st_clinical_alias", "Kaposi sarcoma recognised")["captures"].__setitem__("lesion_site", "non_skin"), True)
+control("4a router sends C77.9 (lymph node) to the skin entry too", bd.check_group9_basis_rows, None, True,
+        (R, router_with(lambda g: g["tree_routing"]["rules"][0]["topography_in"].append("C77.9"))),
+        contains="C44-only entries")
+control("4e basis-1 Kaposi option put back in the default tree's st_clinical_alias", bd.check_group9_basis_rows,
+        lambda d: opt(d, "st_clinical_alias", "Kaposi sarcoma recognised").update(
+            {"morphology_code": "9140", "behavior_code": "3", "basis_of_diagnosis": 1}), True, (R,), contains="C44-only entries")
+control("4f router's tree_routing removed: the skin tree is entered whatever the site", bd.check_group9_basis_rows, None, True,
+        (R, router_with(lambda g: g.pop("tree_routing"))), contains="C44-only entries")
 control("4b basis 1 on 8800", bd.check_group9_basis_rows,
-        lambda d: opt(d, "st_imaging_report", "soft tissue sarcoma is likely").__setitem__("basis_of_diagnosis", 1), True)
+        lambda d: opt(d, "st_imaging_report", "soft tissue sarcoma is likely").__setitem__("basis_of_diagnosis", 1), True, (R,))
 control("4c basis 2 on 8910 (no Visser row)", bd.check_group9_basis_rows,
-        lambda d: opt(d, "st_rms", "Embryonal").__setitem__("basis_of_diagnosis", 2), True)
+        lambda d: opt(d, "st_rms", "Embryonal").__setitem__("basis_of_diagnosis", 2), True, (R,))
 control("4d basis 2 on a next_node branch", bd.check_group9_basis_rows,
-        lambda d: opt(d, "st_report_contents", "Routine (H&E)").__setitem__("basis_of_diagnosis", 2), True)
+        lambda d: opt(d, "st_report_contents", "Routine (H&E)").__setitem__("basis_of_diagnosis", 2), True, (R,))
 control("4p PROBE: basis 2 on 9120 (a Visser row) is not a FAIL", bd.check_group9_basis_rows,
-        lambda d: opt(d, "st_vascular", "Angiosarcoma").__setitem__("basis_of_diagnosis", 2), False)
+        lambda d: opt(d, "st_vascular", "Angiosarcoma").__setitem__("basis_of_diagnosis", 2), False, (R,))
 # ---------------------------------------------------------------- RULE 5
 control("5a KS option records HHV-8 negative", bd.check_group9_kaposi_hhv8,
         lambda d: opt(d, "st_vascular", "not tested or not reported")["captures"].__setitem__("hhv8_lana", "negative"), True)

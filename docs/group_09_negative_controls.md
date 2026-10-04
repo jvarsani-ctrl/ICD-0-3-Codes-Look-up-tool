@@ -181,3 +181,26 @@ after the fix:   ok   6p PROBE: kidney referral with a scalar topography (engine
 ```
 
 Controls `6a`–`6e` still fail for the reasons recorded above.
+
+## Changed 4 October 2026 — RULE 4 keys basis 1 off the router's tree_routing
+
+The basis-1 Kaposi sarcoma answer could be reached at any topography, and RULE 4 accepted it
+because the branch captured `lesion_site: "skin"` about itself, a flag in the data under test.
+Basis 1 now lives only in `sk_clinical_alias`, in the `g9_skin` tree, which the router's
+`tree_routing` enters only from C44 topographies; every other topography, and an uncaptured one,
+enters `g9_soft_tissue`. RULE 4 reads the router and allows basis 1 only in a node reached from
+C44-only entries. Control 4a (the lesion_site flag) is replaced by three controls on the routing,
+run against the working tree on `2bd1432` plus this change:
+
+```
+ok   4a router sends C77.9 (lymph node) to the skin entry too               check_group9_basis_rows                expect FAIL
+        RULE 4 — decision_trees[1].nodes[1].options[0] emits 9140 at basis 1 in node sk_clinical_alias, which tree_routing does not reach from C44-only entries alone. …
+ok   4e basis-1 Kaposi option put back in the default tree's st_clinical_alias check_group9_basis_rows                expect FAIL
+        RULE 4 — decision_trees[0].nodes[1].options[0] emits 9140 at basis 1 in node st_clinical_alias, which tree_routing does not reach from C44-only entries alone. …
+ok   4f router's tree_routing removed: the skin tree is entered whatever the site check_group9_basis_rows                expect FAIL
+        RULE 4 — decision_trees[1].nodes[1].options[0] emits 9140 at basis 1 in node sk_clinical_alias, which tree_routing does not reach from C44-only entries alone. …
+
+49 control(s), 0 not behaving as expected
+```
+
+The baseline and probe 4p pass on the unmodified data.

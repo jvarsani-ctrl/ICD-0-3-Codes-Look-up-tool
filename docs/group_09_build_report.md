@@ -225,3 +225,38 @@ Standing rule 16 (the tool never verifies REDCap) asks every REDCap change owed 
 `docs/TODO.md` §7. Group IX's rows were added there, pointing at
 `docs/group_09_layer1_repair.md`. The `redcap_option_verified` flags and the out-of-date-label
 banner are left as Groups VI–VIII on `main` have them.
+
+## 13. Basis 1 confined to skin sites, and the express-lane engine change, 4 October 2026
+
+**The express-lane work is taken over.** The session "Ask which group when an express-lane term is
+shared" left its change uncommitted in worktree `practical-taussig-9c3fff`; it is committed here as
+`2bd1432` at the registrar's instruction. A term filed under several groups now asks for the site
+and enters the one group the term and the site share, or stops and refers (registrar's ruling,
+4 October 2026); a typed box no longer loses the first tap. On this branch the shared rhabdoid terms
+reach Group 6 at the kidney and Group 9 at soft tissue, and stop at the liver.
+
+**Kaposi sarcoma at basis 1 is now confined to C44.** Visser 2023 Table 3 (p. 04) grants basis 1
+only to Kaposi sarcoma of the skin, but the answer sat in `st_clinical_alias`, reachable at a lymph
+node, a soft tissue site or from the search box with no site. An answer cannot read the recorded
+topography, so the fix uses the router: `groups["9"].tree_routing` sends C44 to a second tree,
+`g9_skin`, whose two nodes (`sk_document_inventory`, `sk_clinical_alias`) are the only place the
+basis-1 answer exists; every other route continues into `g9_soft_tissue`. Every other topography,
+and an uncaptured one, enters `g9_soft_tissue`, where the same answer refers to Group XII at
+`8000/3` and tells the clerk to record the skin site if the lesions are on the skin. RULE 4 now
+checks this against the router (`docs/group_09_negative_controls.md`).
+
+Driven at `http://localhost:8819`, no console errors:
+
+| Path | Result |
+|---|---|
+| Cutaneous lesion → C44.7 → clinical note → Kaposi sarcoma of the skin | `9140/3`, basis 1; trail "Tree: Skin (C44)" |
+| Lymphadenopathy → C77.9 → clinical note → the same answer | Group XII, `8000/3` |
+| Search "Kaposi sarcoma" (no site) → clinical note → the same answer | Group XII, `8000/3`, with the advice to record the skin site through guided entry |
+| C44.7 → histology → LANA-positive Kaposi sarcoma | `9140/3`, basis 7, continuing from `g9_skin` into `g9_soft_tissue` |
+| Thigh C49.2 → desmoid fibromatosis | `8821/1` exclusion; trail "Tree: Soft tissue and every other site" |
+
+**Still open.** The Group 9-only rhabdoid spellings ("Rhabdoid tumour", "INI1-deficient rhabdoid
+tumour", "SMARCB1-deficient rhabdoid tumour") still enter from the search box with no site, so the
+site referrals in `st_epithelioid_ihc` cannot fire and a kidney or liver case codes `8963/3` IXd3.
+The express-lane ruling leaves single-group terms unchanged; asking the site for them is the
+registrar's decision.
