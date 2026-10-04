@@ -125,15 +125,18 @@
     },
     {
       "organ": "gonad_sacrococcygeal_midline",
-      "topography_range": "C56,C62",
+      "topography_range": "C56,C62,C76.3",
       "codes": [
         "C56.9",
-        "C62.9"
+        "C62.0",
+        "C62.1",
+        "C62.9",
+        "C76.3"
       ],
       "candidate_groups": [
         10
       ],
-      "label": "Ovary and testis"
+      "label": "Ovary, testis and sacrococcygeal region"
     },
     {
       "organ": "brain_cns",
@@ -563,6 +566,24 @@
         10
       ]
     },
+    "C62.0": {
+      "code": "C62.0",
+      "label": "Undescended testis (site of neoplasm, Retained testis (site of neoplasm), Ectopic testis (site of neoplasm))",
+      "redcap_code": "620",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        10
+      ]
+    },
+    "C62.1": {
+      "code": "C62.1",
+      "label": "Descended testis (Scrotal testis)",
+      "redcap_code": "621",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        10
+      ]
+    },
     "C62.9": {
       "code": "C62.9",
       "label": "Testis, NOS",
@@ -618,6 +639,19 @@
         3,
         11
       ]
+    },
+    "C76.3": {
+      "code": "C76.3",
+      "label": "Pelvis, NOS",
+      "redcap_code": "763",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        4,
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Group 10 added 4 October 2026 (design decision D19). The Group 10 Diagnostic Pathway (section 2A) names C76.3 as the site of a sacrococcygeal germ cell tumour, the commonest extragonadal site. REDCap offers this site as Pelvis, NOS (763); no Layer 1 file records how the ICD-O-3 topography index files the sacrococcygeal region."
     },
     "C69.9": {
       "code": "C69.9",
@@ -803,7 +837,8 @@
       "candidate_groups": [
         2,
         4,
-        9
+        9,
+        10
       ],
       "candidate_groups_advisory": true,
       "note": "Retroperitoneum carries three families in a child: neuroblastoma of the sympathetic chain (IV), soft tissue sarcoma (IX), and lymphoma presenting as a retroperitoneal nodal mass (II)."
@@ -1270,7 +1305,8 @@
       "coarse_organ": "mediastinum",
       "candidate_groups": [
         2,
-        4
+        4,
+        10
       ],
       "candidate_groups_advisory": true
     },
@@ -1292,7 +1328,8 @@
       "coarse_organ": "mediastinum",
       "candidate_groups": [
         2,
-        4
+        4,
+        10
       ],
       "candidate_groups_advisory": true
     },
