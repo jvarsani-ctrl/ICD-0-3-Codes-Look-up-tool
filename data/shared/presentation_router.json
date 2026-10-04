@@ -1004,9 +1004,47 @@
       },
       "cns_topography_scope_note": "Extended 2026-09-18 to the full C70.0-C72.9 CNS range (all 21 codes topography_codes.json's brain_cns crosswalk enumerates), now that Group III was authored 2026-09-16. Previously covered only the NOS-level codes C70.9/C71.9/C72.9, so a medulloepithelioma at a specific CNS subsite (e.g. C71.6) fell through to the default and misrouted to Group 4. ICCC-3 gives 9501-9504 to Group III (IIIc3) across the whole of C70.0-C72.9, Group 4 only outside it. Group 4 build contract §2.5."
     },
-    "8158,8290": {
+    "8158": {
       "codes": [
-        "8158",
+        "8158"
+      ],
+      "label": "ACTH-producing tumour",
+      "topography_dependent": true,
+      "discriminator": "site",
+      "branches": [
+        {
+          "when": {
+            "topography_in": [
+              "C75.1"
+            ]
+          },
+          "result": {
+            "group": 3,
+            "subgroup": "IIIe1"
+          }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C22.0",
+              "C22.1"
+            ]
+          },
+          "result": {
+            "group": 7,
+            "subgroup": "VIIb"
+          },
+          "note": "At the liver (C22.0, C22.1) an ACTH-producing tumour is ICCC-3 Group VII, subgroup VIIb, hepatic carcinomas.",
+          "authoring_note": "ICCC-2017 range 70 lists 8158 among the C22 carcinomas at sites 220,221, behaviour 3, subgroup VIIb, and group_07_dt.json carries 8158/3 'ACTH-producing tumor' as a VIIb entry. 8158 shared a rule with 8290 until 4 October 2026; the two no longer route alike, because ICCC-2017 gives 8290 no Group VII row and its XIf10 site list excludes 220-238, so 8158 was split into this rule. Without the branch a hepatic ACTH-producing tumour took the shared rule's group 11 default and never reached Group VII -- the same defect the Group VII build corrected for 8170 (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
+        }
+      ],
+      "default": {
+        "group": 11,
+        "subgroup": null
+      }
+    },
+    "8290": {
+      "codes": [
         "8290"
       ],
       "label": "Pituitary tumour, NOS",
