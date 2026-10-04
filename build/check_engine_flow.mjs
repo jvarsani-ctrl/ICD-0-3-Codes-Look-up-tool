@@ -334,6 +334,225 @@ function fixtures(ctx) {
   return out;
 }
 
+/* ------------------------------------------------------------ express lane */
+/* A term the alias index files under more than one group is settled by the
+   primary site, never by the index's order and never by asking the clerk for
+   a group (registrar, 4 October 2026). Before that day the engine took
+   `hit.groups[0]`, so "PPNET" entered Group IV and "RCC" entered Group I
+   whatever the site.
+
+   The expected outcome of every (term, topography) pair is computed here
+   from alias_index.json and topography_codes.json — the sources of truth —
+   and never read off a flag the engine sets. The term's groups that also
+   appear in the site's candidate_groups decide it: exactly one enters that
+   group with the topography captured; none or several stop the case with
+   nothing entered. Each pair is tapped through `handleOption` — alias, organ
+   system, region — the handlers the rendered buttons call. The single-group
+   terms are the control: a fix that asks every term for its site passes the
+   rest and fails this. */
+async function expressLane(ctx, out) {
+  const SHARED = path.join(ROOT, 'data', 'shared');
+  const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
+  const topo = JSON.parse(fs.readFileSync(path.join(SHARED, 'topography_codes.json'), 'utf8'));
+  const index = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'aliases', 'alias_index.json'), 'utf8'));
+  for (const name of fs.readdirSync(DB)) {
+    const m = /^group_(\d+)_dt\.json$/.exec(name);
+    if (m) ctx.groupCache.set(Number(m[1]), { dt: JSON.parse(fs.readFileSync(path.join(DB, name), 'utf8')), aliases: [] });
+  }
+  const rows = topo.coarse_organ_crosswalk;
+  const codes = Object.keys(topo.topography_lookup).filter((c) => rows.some((r) => r.codes.includes(c)));
+  const tap = (act, i) => ctx.handleOption(act, { getAttribute: (k) => (k === 'data-i' ? String(i) : null), value: '' });
+  const enter = async (term) => {
+    ctx.reset();
+    ctx.state.router = router; ctx.state.topography = topo; ctx.state.aliasIndex = index; ctx.state.query = term;
+    const i = ctx.searchAlias(term).findIndex((h) => h.alias === term);
+    if (i < 0) return false;
+    await tap('alias', i);
+    return true;
+  };
+  const pickSite = async (code) => {
+    const r = ctx.systemRows().findIndex((row) => row.codes.includes(code));
+    await tap('site', r);
+    if (ctx.state.stage === 'site_region') {
+      await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
+    }
+  };
+  const fail = (m) => out.fails.push(m);
+  for (const term of Object.keys(index).sort()) {
+    const groups = index[term];
+    /* A term outranked in the top eight by shorter matches cannot be tapped.
+       A single-group one is counted; a multi-group one would go untested, so
+       it fails. */
+    if (!(await enter(term))) {
+      out.skipped++;
+      if (groups.length > 1) fail('"' + term + '" ' + JSON.stringify(groups) + ' cannot be reached from the search results');
+      continue;
+    }
+    if (groups.length === 1) {
+      out.single++;
+      if (ctx.state.stage === 'site' || ctx.state.group !== groups[0]) {
+        fail('"' + term + '" ' + JSON.stringify(groups) + ' was asked the site or entered group ' + ctx.state.group);
+      }
+      continue;
+    }
+    out.terms++;
+    if (ctx.state.stage !== 'site' || ctx.state.group !== null) {
+      fail('"' + term + '" ' + JSON.stringify(groups) + ' reached stage ' + ctx.state.stage + ', group ' + ctx.state.group + ', not the site question');
+      continue;
+    }
+    let screen = '';
+    try { screen = ctx.renderSite(); } catch (e) { fail('"' + term + '" site screen throws: ' + e.message); continue; }
+    if (screen.indexOf(ctx.esc(term)) < 0) fail('"' + term + '" site screen does not name the term');
+    for (const code of codes) {
+      await enter(term);
+      try { await pickSite(code); } catch (e) { fail('"' + term + '" at ' + code + ' throws: ' + e.message); continue; }
+      const cg = topo.topography_lookup[code].candidate_groups;
+      const expect = Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
+      const st = ctx.state, at = '"' + term + '" ' + JSON.stringify(groups) + ' at ' + code + ' ' + JSON.stringify(cg);
+      if (st.captured.topography !== code) { fail(at + ': topography captured as ' + st.captured.topography); continue; }
+      if (expect.length === 1) {
+        out.routed++;
+        if (st.group !== expect[0] || st.stage === 'search_unresolved') {
+          fail(at + ': expected Group ' + expect[0] + ', got stage ' + st.stage + ', group ' + st.group);
+        } else if (!st.trail.some((t) => t.label === 'Group')) {
+          fail(at + ': entered Group ' + expect[0] + ' with no trail entry');
+        }
+        continue;
+      }
+      expect.length ? out.tie++ : out.mismatch++;
+      if (st.stage !== 'search_unresolved' || st.group !== null) {
+        fail(at + ': expected a stop (' + (expect.length ? 'tie ' + JSON.stringify(expect) : 'no group') + '), got stage ' + st.stage + ', group ' + st.group);
+        continue;
+      }
+      const html = ctx.renderSearchUnresolved();
+      if (html.indexOf(ctx.esc(term)) < 0 || html.indexOf(code) < 0) fail(at + ': stop screen does not name the term and the site');
+    }
+  }
+
+  /* Stepping back. A trail entry restores the snapshot taken when it was
+     pushed, and the Tree entry's snapshot is taken after the express lane has
+     set its term and group. Two faults lived there, both found by review on
+     4 Oct 2026 and both invisible to the walks above, which start every case
+     clean:
+       R1  rewind a routed express-lane case to its Tree entry and pick a site
+           that stops: the stop screen must hold no group, the app bar must
+           not name one, and the trail must not keep the earlier site, group
+           or tree;
+       R2  rewind a single-group express-lane case to its Tree entry and take
+           the guided route instead: the case must not carry the search term,
+           or the guided site step becomes the express lane's. */
+  const expectAt = (groups, code) => {
+    const cg = topo.topography_lookup[code].candidate_groups;
+    return Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
+  };
+  const rewindTo = async (label) => {
+    const i = ctx.state.trail.map((t) => t.label).lastIndexOf(label);
+    if (i < 0) return false;
+    await tap('rewind', i);
+    return true;
+  };
+  for (const term of Object.keys(index).sort()) {
+    const groups = index[term];
+    if (groups.length < 2) continue;
+    for (const row of rows) {
+      const routed = row.codes.find((c) => expectAt(groups, c).length === 1 && ctx.groupMeta(expectAt(groups, c)[0]).tree_routing);
+      if (!routed) continue;
+      /* Back at the Tree entry the clerk is on this row's region screen, or
+         on the organ-system screen when the row holds one code. */
+      for (const code of row.codes.length > 1 ? row.codes : codes) {
+        await enter(term); await pickSite(routed);
+        if (!(await rewindTo('Tree'))) { fail('R1 "' + term + '" at ' + routed + ': routed with no Tree entry'); break; }
+        if (ctx.state.stage === 'site_region') {
+          await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
+        } else {
+          await pickSite(code);
+        }
+        out.rewinds++;
+        const expect = expectAt(groups, code), st = ctx.state;
+        const at = 'R1 "' + term + '" ' + JSON.stringify(groups) + ' at ' + routed + ', back to Tree, then ' + code;
+        /* The trail must describe this case only: the site answered once, and
+           no group or tree left over from the case before the step back. */
+        const labels = st.trail.map((t) => t.label);
+        const twice = ['Organ system', 'Topography'].filter((l) => labels.filter((x) => x === l).length > 1);
+        const stale = expect.length === 1 ? [] : labels.filter((l) => l === 'Group' || l === 'Tree');
+        if (twice.length || stale.length) {
+          fail(at + ': the trail still carries the case before the step back: ' + JSON.stringify(st.trail.map((t) => t.label + ': ' + t.value)));
+        }
+        if (expect.length === 1) {
+          if (st.group !== expect[0]) fail(at + ': expected Group ' + expect[0] + ', got group ' + st.group);
+        } else if (st.stage !== 'search_unresolved' || st.group !== null || ctx.contextLabel() !== 'New case') {
+          fail(at + ': expected a stop with no group, got stage ' + st.stage + ', group ' + st.group + ', app bar "' + ctx.contextLabel() + '"');
+        }
+      }
+    }
+  }
+  const singles = Object.keys(index).sort().filter((t) => index[t].length === 1);
+  const routedGroups = new Set();
+  for (const term of singles) {
+    const g = index[term][0];
+    if (routedGroups.has(g) || !ctx.groupMeta(g).tree_routing) continue;
+    if (!(await enter(term)) || !(await rewindTo('Tree'))) continue;
+    routedGroups.add(g);
+    await tap('guided', 0);
+    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site', 'site_region'].includes(ctx.state.stage); k++) {
+      await tap(ctx.state.stage, 0);
+    }
+    out.rewinds++;
+    if (ctx.state.searchTerm || ctx.state.stage === 'search_unresolved') {
+      fail('R2 "' + term + '" [' + g + '], back to Tree, then the guided route: the case still carries the search term (stage ' +
+        ctx.state.stage + ', term ' + JSON.stringify(ctx.state.searchTerm) + ')');
+    }
+  }
+  if (!routedGroups.size) fail('R2 found no single-group term whose group routes its tree — the scenario did not run');
+
+  /* R3  the guided route, same defect: a tree routed from the topography is
+         an automatic trail entry. Every presentation × organ system is walked
+         (first option wherever a choice remains); where a Tree entry appears,
+         the clerk steps back to it and answers again, and the trail must not
+         hold the earlier answers twice. */
+  let guidedRewinds = 0;
+  /* A screen with an option to tap. An unbuilt group's handoff is a banner. */
+  const asks = (st) => ['discriminator', 'site_region', 'group'].includes(st) ||
+    (st === 'handoff' && ctx.groupMeta(ctx.state.group).built && !!ctx.groupMeta(ctx.state.group).tree_selection);
+  const walk = async (a, r) => {
+    ctx.reset(); ctx.state.router = router; ctx.state.topography = topo; ctx.state.aliasIndex = index;
+    await tap('guided', 0); await tap('archetype', a);
+    for (let k = 0; k < 8 && ctx.state.stage !== 'node'; k++) {
+      const st = ctx.state.stage;
+      if (st === 'site') await tap('site', r);
+      else if (asks(st)) await tap(st, 0);
+      else break;
+    }
+  };
+  for (let a = 0; a < router.archetypes.length; a++) {
+    await walk(a, 0);
+    const nrows = ctx.state.archetype ? ctx.systemRows().length : 0;
+    for (let r = 0; r < nrows; r++) {
+      await walk(a, r);
+      const trail = ctx.state.trail, t = trail.map((x) => x.label).lastIndexOf('Tree');
+      /* Routed, by the router's own declaration — not by any flag the engine
+         keeps on the trail entry. */
+      if (t < 0 || !ctx.groupMeta(ctx.state.group).tree_routing) continue;
+      await tap('rewind', t);
+      for (let k = 0; k < 8 && ctx.state.stage !== 'node'; k++) {
+        const st = ctx.state.stage;
+        if (st === 'site' || asks(st)) await tap(st, st === 'site' ? r : 0);
+        else break;
+      }
+      guidedRewinds++;
+      const labels = ctx.state.trail.map((x) => x.label);
+      const twice = [...new Set(labels)].filter((l) => labels.filter((x) => x === l).length > 1);
+      if (twice.length) {
+        fail('R3 guided, presentation ' + a + ', organ system ' + r + ', back to Tree and answered again: the trail holds ' +
+          twice.join(', ') + ' twice: ' + JSON.stringify(ctx.state.trail.map((x) => x.label + ': ' + x.value)));
+      }
+    }
+  }
+  if (!guidedRewinds) fail('R3 found no guided case with a routed tree — the scenario did not run');
+  out.rewinds += guidedRewinds;
+  return out;
+}
+
 /* ---------------------------------------------------------------------- main */
 const ctx = loadEngine();
 let bad = 0, partial = 0;
@@ -342,6 +561,19 @@ console.log('Fixtures — the defect, and the controls that keep a fix honest\n'
 for (const r of fixtures(ctx)) {
   console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name);
   if (!r.ok) { console.log('        ' + r.detail); bad++; }
+}
+
+console.log('\nExpress lane — a term filed under several groups is settled by the site\n');
+{
+  /* An engine that throws inside a scenario fails the section by name rather
+     than ending the run with a stack trace. */
+  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, terms: 0, skipped: 0, rewinds: 0, fails: [] };
+  try { await expressLane(ctx, r); } catch (e) { r.fails.push('the engine threw: ' + e.message); }
+  console.log('  %s  %d multi-group term(s) x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) enter their group; %d stepped-back case(s); %d term(s) not reachable from the results',
+    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.routed, r.mismatch, r.tie, r.single, r.rewinds, r.skipped);
+  for (const f of r.fails.slice(0, Math.max(SHOW, 5))) console.log('        ' + f);
+  if (r.fails.length > Math.max(SHOW, 5)) console.log('        ... and ' + (r.fails.length - Math.max(SHOW, 5)) + ' more');
+  bad += r.fails.length;
 }
 
 console.log('\nSweep — every ihc_checklist node in every group\n');
