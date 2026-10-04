@@ -3143,7 +3143,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3292,7 +3292,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3441,7 +3441,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3590,7 +3590,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3739,7 +3739,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3888,7 +3888,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa1 at C70.0-C72.9, C75.1-C75.3; Xb1 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc1 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc1, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa1 and Xb1 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc1 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4037,7 +4037,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa3 at C70.0-C72.9, C75.1-C75.3; Xb3 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc3 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc3, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa3 and Xb3 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa3 at C70.0-C72.9, C75.1-C75.3; Xb3 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc3 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc3, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa3 and Xb3 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc3 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4186,7 +4186,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa4 at C70.0-C72.9, C75.1-C75.3; Xb4 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc4 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc4, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa4 and Xb4 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa4 at C70.0-C72.9, C75.1-C75.3; Xb4 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc4 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc4, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa4 and Xb4 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc4 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4335,7 +4335,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa3 at C70.0-C72.9, C75.1-C75.3; Xb3 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc3 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc3, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa3 and Xb3 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa3 at C70.0-C72.9, C75.1-C75.3; Xb3 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc3 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc3, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa3 and Xb3 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc3 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4540,7 +4540,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc2 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4689,7 +4689,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc2 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4838,7 +4838,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc2 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4987,7 +4987,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc2 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5164,7 +5164,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa2 at C70.0-C72.9, C75.1-C75.3; Xb2 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc2 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc2, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa2 and Xb2 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc2 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5313,7 +5313,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa6 at C70.0-C72.9, C75.1-C75.3; Xb6 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc6 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc6, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa6 and Xb6 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa6 at C70.0-C72.9, C75.1-C75.3; Xb6 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc6 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc6, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa6 and Xb6 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc6 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5506,7 +5506,7 @@
       "nos_fallback_code": null,
       "nos_fallback_name": null,
       "clinical_alert": null,
-      "coding_note": "Generated by build/generate_group10_entries.py from ICCC-2017.sqlite joined to icdo32.sqlite (build_inventory, group X), never transcribed from the REDCap option file or the Diagnostic Pathway document (contract §2). Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity lives at this behaviour: Louis 2021 Table 1 lists choriocarcinoma and no mole (D8). In the inventory, off the tree.",
+      "coding_note": "Generated by build/generate_group10_entries.py from ICCC-2017.sqlite joined to icdo32.sqlite (build_inventory, group X), never transcribed from the REDCap option file or the Diagnostic Pathway document (contract §2). Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity lives at this behaviour: Louis 2021 Table 1, p. 1235, lists choriocarcinoma and no mole (D8). In the inventory, off the tree.",
       "code_neutral_molecular": true,
       "redcap_value": "9100",
       "primary_sites": [
@@ -5534,7 +5534,7 @@
       "nos_fallback_code": null,
       "nos_fallback_name": null,
       "clinical_alert": null,
-      "coding_note": "Generated by build/generate_group10_entries.py from ICCC-2017.sqlite joined to icdo32.sqlite (build_inventory, group X), never transcribed from the REDCap option file or the Diagnostic Pathway document (contract §2). Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity lives at this behaviour: Louis 2021 Table 1 lists choriocarcinoma and no mole (D8). In the inventory, off the tree. Layer 1: x_morph offers 9100 as \"Hydatidiform mole, NOS\"; ICD-O-3.2's preferred term at /1 is \"Invasive hydatidiform mole\".",
+      "coding_note": "Generated by build/generate_group10_entries.py from ICCC-2017.sqlite joined to icdo32.sqlite (build_inventory, group X), never transcribed from the REDCap option file or the Diagnostic Pathway document (contract §2). Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity lives at this behaviour: Louis 2021 Table 1, p. 1235, lists choriocarcinoma and no mole (D8). In the inventory, off the tree. Layer 1: x_morph offers 9100 as \"Hydatidiform mole, NOS\"; ICD-O-3.2's preferred term at /1 is \"Invasive hydatidiform mole\".",
       "code_neutral_molecular": true,
       "redcap_value": "9100",
       "primary_sites": [
@@ -5578,7 +5578,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa5 at C70.0-C72.9, C75.1-C75.3; Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa5 and Xb5 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa5 at C70.0-C72.9, C75.1-C75.3; Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa5 and Xb5 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc5 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5727,7 +5727,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa5 at C70.0-C72.9, C75.1-C75.3; Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa5 and Xb5 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 3 subgroups by site: Xa5 at C70.0-C72.9, C75.1-C75.3; Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xa5 and Xb5 when the captured topography is one of the listed codes. At C77.9, ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc5 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5909,7 +5909,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 2 subgroups by site: Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xb5 when the captured topography is one of the listed codes.",
+      "topography_routing_note": "ICCC-2017 places this (code, behaviour) in 2 subgroups by site: Xb5 at C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9; Xc5 at C56.9, C62.0-C62.9. The entry's own subgroup, Xc5, is the default (design D20): it shows when no topography was captured and at its own sites. The ordered rules override it to Xb5 when the captured topography is one of the listed codes. At every lookup code outside the Xb5 and Xc5 ranges (25 codes, e.g. C70.0), ICCC-2017 places this code in no Group X subgroup; the output shows the default Xc5 there, and REDCap computes x_subgroup itself.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [

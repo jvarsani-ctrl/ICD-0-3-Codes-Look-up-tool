@@ -12,8 +12,11 @@ The decision trees are authored in build/group10_tree.py and written beside the 
 this script, so one command reproduces the whole file:
 
     python3 build/generate_group10_entries.py          # writes group_10_dt.json
-    python3 build/generate_group10_entries.py --check  # writes nothing; exit 1 if the file would change
+    python3 build/generate_group10_entries.py --check  # writes nothing; exit 1 if it would change
     python3 build/induce_flow.py                       # then re-induce branch_sequence
+
+An error (an inventory that does not match the contract, a missing option file, a tree or
+note naming a pair outside the inventory) exits 2.
 
 induce_flow.py writes `branch_sequence` into every ihc_checklist. This script carries an
 existing `branch_sequence` across when the node's rules are unchanged, so a regeneration
@@ -43,6 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_database as bd  # noqa: E402
 import generate_group_inventory as gi  # noqa: E402
 import group10_tree  # noqa: E402
+from generate_group08_entries import carry_branch_sequences  # noqa: E402
 
 OUT_PATH = REPO / "data" / "database" / "group_10_dt.json"
 LOOKUP_PATH = REPO / "data" / "shared" / "topography_codes.json"
@@ -55,8 +59,9 @@ ICCC_GROUP = "X"
 EXPECTED_RECORDS = 171
 EXPECTED_ENTRIES = 136
 
-# Task T3 adds these three codes to data/shared/topography_codes.json (design D19). The
-# routing lists include them now so the entries do not change when T3 lands.
+# C62.0, C62.1 and C76.3 are added to data/shared/topography_codes.json on this branch
+# (design D19). The routing lists include them whether or not that edit has landed, so the
+# entries are the same before and after it.
 LOOKUP_ADDITIONS = ("C62.0", "C62.1", "C76.3")
 
 # Design D20: a shared entry defaults to its gonadal subgroup where one exists, else its
@@ -79,13 +84,18 @@ FIELD_ORDER = bd.MORPHOLOGY_FIELDS
 
 HISTOLOGY = ("Histology",)
 
+class GenerationError(Exception):
+    """An input does not match the contract; main() reports it and exits 2."""
+
+
 def pairs(text: str) -> tuple:
     return tuple(p.strip() for p in text.split(",") if p.strip())
 
 
 # --------------------------------------------------------------------------------------
-# Which (code, behaviour) pairs each tree emits. Task T2's trees must emit exactly these;
-# the generator fails when a pair is absent from the inventory or has no DECISIONS entry.
+# Which (code, behaviour) pairs each tree emits. The trees in group10_tree.py emit exactly
+# these; the generator fails when a pair is absent from the inventory or has no DECISIONS
+# entry.
 # --------------------------------------------------------------------------------------
 TREE_PAIRS = {
     "g10_cns": pairs(
@@ -109,7 +119,8 @@ TREE_PAIRS = {
 OFF_TREE_NOTE = "In the inventory, not on the tree: reachable by search where aliased."
 MOLE_NOTE = (
     "Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity "
-    "lives at this behaviour: Louis 2021 Table 1 lists choriocarcinoma and no mole (D8). "
+    "lives at this behaviour: Louis 2021 Table 1, p. 1235, lists choriocarcinoma and no "
+    "mole (D8). "
     "In the inventory, off the tree."
 )
 OFF_TREE_SPECIAL = {"9100/0": MOLE_NOTE, "9100/1": MOLE_NOTE}
@@ -218,9 +229,9 @@ DECISIONS: dict[str, tuple] = {
                "A report of malignant teratoma, trophoblastic: ovary and testis only "
                "(ICCC-2017 range 110)."),
     "9105/3": ("D8",
-               "A report of epithelioid trophoblastic tumour is coded here. Placental site trophoblastic tumour is "
-               "9104/1 in ICD-O-3.2 and is a behaviour exclusion pending the registrar's "
-               "decision."),
+               "A report of epithelioid trophoblastic tumour is coded here. Placental site "
+               "trophoblastic tumour is 9104/1 in ICD-O-3.2 and is a behaviour exclusion "
+               "pending the registrar's decision."),
     # --- gonadal carcinomas (D14) -------------------------------------------------------
     "8044/3": d14("small cell carcinoma, hypercalcaemic type",
                   "ICD-O-3.2 gives that term as a related term of this code; the code is "
@@ -296,7 +307,7 @@ def covers(displays: list, number: int) -> bool:
 
 
 def lookup_codes() -> list:
-    """Every code the front door can capture, plus the three T3 adds, in numeric order."""
+    """Every code the front door can capture, plus LOOKUP_ADDITIONS, in numeric order."""
     lookup = json.loads(LOOKUP_PATH.read_text(encoding="utf-8"))["topography_lookup"]
     codes = set(lookup) | set(LOOKUP_ADDITIONS)
     return sorted(codes, key=topo3)
@@ -309,7 +320,7 @@ def subgroups_of(recs: list) -> dict:
         sub = out.setdefault(r["iccc3_subgroup_id"],
                              {"name": r["iccc3_subgroup_name"], "topography": []})
         if sub["name"] != r["iccc3_subgroup_name"]:
-            raise SystemExit("ERROR: subgroup %s carries two names for %s/%s"
+            raise GenerationError("subgroup %s carries two names for %s/%s"
                              % (r["iccc3_subgroup_id"], r["morphology_code"],
                                 r["behavior_code"]))
         for t in r["topography"]:
@@ -325,13 +336,13 @@ def default_subgroup(subs: dict) -> str:
     for sid in subs:
         family = sid[:2]
         if family not in DEFAULT_ORDER or family in families:
-            raise SystemExit("ERROR: subgroups %s are not one per Xa/Xb/Xc family"
+            raise GenerationError("subgroups %s are not one per Xa/Xb/Xc family"
                              % ", ".join(subs))
         families[family] = sid
     for family in DEFAULT_ORDER:
         if family in families:
             return families[family]
-    raise SystemExit("ERROR: no default subgroup among %s" % ", ".join(subs))
+    raise GenerationError("no default subgroup among %s" % ", ".join(subs))
 
 
 def routing(subs: dict, default: str, codes: list) -> tuple:
@@ -342,7 +353,7 @@ def routing(subs: dict, default: str, codes: list) -> tuple:
             continue
         listed = [c for c in codes if covers(sub["topography"], topo3(c))]
         if not listed:
-            raise SystemExit("ERROR: subgroup %s covers no code in the topography lookup" % sid)
+            raise GenerationError("subgroup %s covers no code in the topography lookup" % sid)
         rules.append({"topography_in": listed, "iccc3_subgroup_id": sid,
                       "iccc3_subgroup_name": sub["name"]})
     where = "; ".join("%s at %s" % (sid, ", ".join(t.replace("–", "-")
@@ -354,6 +365,17 @@ def routing(subs: dict, default: str, codes: list) -> tuple:
             "captured and at its own sites. The ordered rules override it to %s when the "
             "captured topography is one of the listed codes."
             % (len(subs), where, default, others))
+    uncovered = [c for c in codes
+                 if not any(covers(sub["topography"], topo3(c)) for sub in subs.values())]
+    if uncovered:
+        if len(uncovered) <= 3:
+            at = "At %s" % join_and(uncovered)
+        else:
+            at = ("At every lookup code outside the %s ranges (%d codes, e.g. %s)"
+                  % (join_and(list(subs)), len(uncovered), uncovered[0]))
+        text += (" %s, ICCC-2017 places this code in no Group X subgroup; the output shows "
+                 "the default %s there, and REDCap computes x_subgroup itself."
+                 % (at, default))
     return rules, text
 
 
@@ -364,7 +386,7 @@ def load_redcap_options() -> dict:
     options, _findings = bd.parse_redcap_options(LAYER1)
     group = options.get(GROUP)
     if not group:
-        raise SystemExit("ERROR: no Group 10 REDCap options parsed from %s — set ICD_LAYER1"
+        raise GenerationError("no Group 10 REDCap options parsed from %s — set ICD_LAYER1"
                          % LAYER1)
     return group
 
@@ -373,7 +395,7 @@ def load_obs(icdo_path: Path) -> dict:
     """{(code, behaviour): [level, ...]} for the terms ICD-O-3.2 marks [obs]."""
     index, err = bd.load_icdo32(icdo_path.parent.parent)
     if err:
-        raise SystemExit("ERROR: %s" % err)
+        raise GenerationError(err)
     return {k: [level for level, obs in terms.values() if obs]
             for k, terms in index.items()
             if any(obs for _, obs in terms.values())}
@@ -392,7 +414,7 @@ def build_entry(recs: list, redcap: dict, obs: dict, codes: list) -> dict:
     code, beh = first["morphology_code"], first["behavior_code"]
     name = first["preferred_term"]
     if not name:
-        raise SystemExit("ERROR: %s has no Preferred term in icdo32.sqlite" % key(code, beh))
+        raise GenerationError("%s has no Preferred term in icdo32.sqlite" % key(code, beh))
     subs = subgroups_of(recs)
     default = default_subgroup(subs)
 
@@ -482,13 +504,13 @@ def build_entry(recs: list, redcap: dict, obs: dict, codes: list) -> dict:
 def build_entries(payload: dict, redcap: dict, obs: dict, codes: list) -> list:
     records = payload["records"]
     if len(records) != EXPECTED_RECORDS:
-        raise SystemExit("ERROR: the inventory holds %d (code, behaviour) records, the "
+        raise GenerationError("the inventory holds %d (code, behaviour) records, the "
                          "contract expects %d" % (len(records), EXPECTED_RECORDS))
     grouped: dict = defaultdict(list)
     for r in records:
         grouped[(r["morphology_code"], r["behavior_code"])].append(r)
     if len(grouped) != EXPECTED_ENTRIES:
-        raise SystemExit("ERROR: the records collapse to %d (code, behaviour) pairs, the "
+        raise GenerationError("the records collapse to %d (code, behaviour) pairs, the "
                          "contract expects %d" % (len(grouped), EXPECTED_ENTRIES))
 
     inventory = {key(c, b) for c, b in grouped}
@@ -508,7 +530,7 @@ def build_entries(payload: dict, redcap: dict, obs: dict, codes: list) -> list:
         problems.append("DECISIONS entry for pair(s) no tree emits: %s"
                         % ", ".join(sorted(set(DECISIONS) - emitted)))
     if problems:
-        raise SystemExit("ERROR: " + "; ".join(problems))
+        raise GenerationError("; ".join(problems))
 
     return [build_entry(grouped[k], redcap, obs, codes) for k in sorted(grouped)]
 
@@ -534,23 +556,8 @@ def build_metadata(entries: list, summary: dict, trees: list) -> dict:
         "total_morphology_entries": len(entries),
         "total_decision_nodes": n_nodes,
         "decision_trees": [t["tree_id"] for t in trees],
-        "basis_of_diagnosis_declarations": {"ihc_counts_as": 7, "methylation_counts_as": 8},
+        "basis_of_diagnosis_declarations": dict(bd.BASIS_DECLARED_GAPS),
     }
-
-
-def carry_branch_sequences(new_trees: list, old_trees: list) -> None:
-    """Keep induce_flow.py's branch_sequence where a node's rules did not change."""
-    def sig(n):
-        return json.dumps([n.get("resolution_logic"), n.get("marker_groups")], sort_keys=True)
-
-    old = {n["node_id"]: (sig(n), n["branch_sequence"])
-           for t in old_trees or [] for n in t.get("nodes") or []
-           if n.get("branch_sequence") is not None}
-    for t in new_trees:
-        for n in t.get("nodes") or []:
-            prior = old.get(n["node_id"])
-            if n.get("node_type") == "ihc_checklist" and prior and prior[0] == sig(n):
-                n["branch_sequence"] = prior[1]
 
 
 def report(entries: list) -> None:
@@ -562,13 +569,21 @@ def report(entries: list) -> None:
           % (len(entries), sum(1 for e in entries if e["topography_dependent"])))
     print("redcap_option_verified true: %d · false: %d (label drift %d, awaiting_layer1 %d)"
           % (verified, len(entries) - verified, len(drift), len(awaiting)))
-    print("awaiting_layer1 (T6 lists each under '## Group 10 — open' in "
+    print("awaiting_layer1 (list each under '## Group 10 — open' in "
           "docs/codes-awaiting-redcap.md):")
     for e in awaiting:
         print("  %s/%s %s" % (e["morphology_code"], e["behavior_code"], e["morphology_name"]))
 
 
 def main(argv=None) -> int:
+    try:
+        return run(argv)
+    except GenerationError as exc:
+        print("ERROR: %s" % exc, file=sys.stderr)
+        return 2
+
+
+def run(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
                     help="write nothing; exit 1 when the file on disk would change")
