@@ -38,15 +38,18 @@ These apply to every session and every subagent working in this repository.
    verified stops the work and goes to the registrar. The build fails on an unverifiable code by
    design — do not route around it.
 2. **The tool codes to ICD-O-3.2.** ICD-O-4 is out of scope: no five-digit
-   codes in the data, no migration TODOs, corroboration at most.
+   codes in the data, no migration TODOs, corroboration at most. ICD-O-3.2 and
+   the group's WHO paper settle whether a code is current. A registry's
+   grouping table (CBTRUS, FCDS) does not: it keeps a code because it holds
+   cases coded to it, and this registry began operating in 2025 with none.
 3. **ICCC-2017 is the grouping convention only.** It predates ICD-O-3.2, so a
    valid code outside every range still belongs to its major group. Only a code
    ICCC places in a different group is a conflict.
 4. **Jay is the registrar.** Their ruling settles any coding conflict. The
    thirteen rulings of 4 September 2026 are in `README.md`, which is in this
    repository, and in full in `../memory/registrar-rulings.md` when the vault is
-   present: ICCC ranges govern, the latest document wins, and the tool shows no
-   warnings.
+   present: paediatric verification governs rather than the ICCC range, the
+   latest document wins, and the tool shows no warnings.
 5. **Never put clinical logic in `app.js`.** No codes, no marker names, no
    `if (group === X)`. Anything that varies by group lives in the JSON. A new
    kind of question is one new `node_type`, not a group-specific branch.
@@ -54,12 +57,21 @@ These apply to every session and every subagent working in this repository.
    invent a type: validation rejects unknown types and the engine throws.
 7. **Author-facing text stays out of the UI.** `coding_note` and
    `topography_routing_note` are for whoever builds the JSON. Clerk-facing text
-   belongs in `reason`, `hint` or `clinical_alert`.
+   belongs in `question`, `hint` or a branch's `label` and `reason`. A
+   `refer_group` branch renders its `reason`, so referral text left in
+   `coding_note` reaches the clerk with no explanation. No `clinical_alert`
+   carries text: the warnings live in `docs/clinical-warnings.md` (4 September
+   ruling 9). The grey sub-line under an answer option does not come back,
+   from `coding_note` or from a new field (registrar, 4 October 2026).
 8. **The tool is advisory and must never overstate its evidence.** Every defect
    that reached the browser made a case look better evidenced than it was. Test
    that class of fault first. The abstractor confirms every code.
 9. **The tool is global, not LMIC-specific.** UCI is one site among many. A
-   site profile is a template anyone fills in, never UCI's inventory.
+   site profile is a template anyone fills in, never UCI's inventory. Keep
+   resource-level nodes symmetrical, so a site at the top of the scale is as
+   ordinary a case as one at the bottom, and keep low-resource framing out of
+   clerk-facing and architectural text. Where a source paper is itself about
+   resource-limited practice, cite it as that paper's scope.
 10. **Prove every check with a negative control.** Break the data or the code on
     purpose, watch the check fail for the right reason, restore, watch it pass.
     Key a check off the source of truth, never off a flag in the thing being
@@ -70,7 +82,12 @@ These apply to every session and every subagent working in this repository.
     the engine gate into existence sat in the seam between them. Drive the UI
     before believing a pass.
 12. **Build every part before verifying.** Finish the whole piece, then verify
-    once. Per-part checks spend time on failures a later part removes.
+    once. Per-part checks spend time on failures a later part removes: on
+    Group 1, validating between trees gave 132, then 88, then 4 failures that
+    were all "a later tree does not exist yet". A spec that says to validate
+    after each part is overridden by this rule. Between parts, do only what
+    the next part needs: a blocking ruling, or a defect that every remaining
+    part would copy.
 13. **Several sessions share this working tree.** Run `git status` before
     editing, and pin negative controls to a pre-fix commit, never `HEAD`. A
     parallel agent gets its own git worktree and branch under `.claude/worktrees/`.
@@ -82,6 +99,14 @@ These apply to every session and every subagent working in this repository.
     serving this repo with no build step, and `app.js` falls back to `{}` on a
     missing index — so an untracked index makes express-lane search return
     nothing for every term, silently.
+16. **The tool never verifies REDCap.** Registrar's ruling, 4 October 2026. It
+    does not connect to REDCap; it helps with data entry. Write no check, flag
+    or fix that tests what REDCap has or lacks. When a code the tool emits has
+    no correct REDCap option, record it in the latest REDCap-side list in
+    `docs/TODO.md` and move on. A review finding that only makes the tool
+    verify REDCap is skipped. The clerk reads the answer and picks the option
+    by hand, so anything that costs attention without changing the emitted
+    code has no benefit.
 
 ## Before you push
 

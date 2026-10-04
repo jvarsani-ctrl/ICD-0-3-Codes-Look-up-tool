@@ -4,8 +4,9 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Built: **1, 2, 3**, then **4** and **5** on their own branches, and **6** in progress on
-`group-06-renal`. Remaining: **7, 8, 9, 10, 11, 12**.
+Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7**. Built and awaiting
+merge: **8** on `claude/group-8-tumor-pathway-64edbc` and **9** on
+`claude/group-9-tumor-pathway-911c69`. Remaining: **10, 11, 12**.
 
 ---
 
