@@ -1,0 +1,32 @@
+# Runs build/check_engine_flow.mjs on every pull request.
+#
+# This is a partial gate and says so in its name. It drives the shipped app.js
+# against the committed data and needs nothing outside the repository.
+#
+# It does NOT verify morphology codes, names against the REDCap option strings,
+# ICCC groups or any cross-layer reference. Those checks live in
+# build/build_database.py and need Layer 1 (the vault's ICD coding folder and
+# ICCC-2017.sqlite), which is deliberately kept out of this repository. Run the
+# full build locally before merging a change to data or to the build. A green
+# check here means the engine still behaves against the data. It does not mean
+# the data was verified.
+name: engine gate (no Layer 1)
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  engine-gate:
+    name: engine gate (no Layer 1)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Drive app.js through every guided flow
+        run: node build/check_engine_flow.mjs
