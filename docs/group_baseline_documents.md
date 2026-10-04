@@ -4,10 +4,8 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7**. Built and awaiting
-merge: **8** on `claude/group-8-tumor-pathway-64edbc`, **9** on
-`claude/group-9-tumor-pathway-911c69` and **10** on `claude/group-10-tumor-pathway-3a99f7`.
-Remaining: **11, 12**.
+Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7, 8, 9**. Built and
+awaiting merge: **10** on `claude/group-10-tumor-pathway-3a99f7`. Remaining: **11, 12**.
 
 ---
 
@@ -109,6 +107,14 @@ That is the registrar's call and is not assumed here.
 > 2025, the latest document, with López-Terrada 2014 behind it and Nagtegaal 2019 for the adult
 > carcinomas.** Neither López-Terrada paper prints ICD-O codes; codes are settled term by term against
 > `icdo32.sqlite`. Pending the registrar's confirmation — `docs/group_07_open_questions.md` item 1.
+
+> **Group IX, 2 October 2026 — the baseline was retrieved and read, and Pfister does cover this
+> group.** Sbaraglia 2021 (PMC8167394) was read in full from Europe PMC. Its twelve tables list the
+> WHO 2020 soft tissue entities by category and print no ICD-O code, so code currency for Group IX
+> rests on ICD-O-3.2 and the IARC change documents. Unlike Groups V and VI, **Pfister 2022 has a
+> *Soft-Tissue and Bone Tumors* section and a Table 2 of paediatric soft tissue entities**, which
+> the Group 9 build uses as its paediatric-occurrence evidence (ruling 1). The bone half of that
+> table may serve Group VIII the same way. Full working: `docs/group_09_build_contract.md` §0.4.
 
 ### Two things to carry into the builds
 

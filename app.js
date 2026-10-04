@@ -80,6 +80,7 @@ var state = {
   archetype: null, group: null, treeId: null, nodeId: null,
   organSystem: null,     /* the crosswalk row picked at Stage 1, before the region */
   candidates: [],        /* groups still possible — narrowed, never asked for blind */
+  searchTerm: null,      /* the express-lane alias that set the candidates, if one did */
   dt: null, aliases: null,
   captured: {},          /* every resolution_logic[].when variable reads here */
   markers: {},
@@ -124,6 +125,7 @@ function snapshot() {
   return JSON.stringify({
     stage: state.stage, archetype: state.archetype, group: state.group,
     organSystem: state.organSystem, candidates: state.candidates,
+    searchTerm: state.searchTerm || null,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
@@ -141,9 +143,17 @@ function restore(snap, upto) {
 /* `before` is the snapshot taken BEFORE the answer was applied, so clicking a
    trail entry rewinds to the moment that question was asked. Trail entries are
    clickable in BOTH shells — a wrong answer is one tap from correction
-   (engine.md §3). */
-function pushTrail(label, value, before) {
-  state.trail.push({ label: label, value: value, before: before });
+   (engine.md §3).
+
+   An AUTOMATIC entry records a step the engine took on its own — a tree routed
+   from the topography, a group routed from the express-lane site — and asked
+   nothing. Its snapshot is the state after the answer that triggered it, so
+   rewinding to it would show that answer's screen again with the old answer
+   still in the trail, and the trail would then name a group or tree the case
+   is no longer in. Rewinding to an automatic entry rewinds to the clerk's
+   answer that produced it instead (see 'rewind'). */
+function pushTrail(label, value, before, automatic) {
+  state.trail.push({ label: label, value: value, before: before, automatic: !!automatic });
 }
 
 /* --------------------------------------------------------------- fetching */
@@ -295,7 +305,10 @@ function render() {
 
 function contextLabel() {
   if (state.error) return 'Error';
-  if (state.dt && state.dt.metadata) {
+  /* Keyed to the group the case is in, not the last group file loaded: the
+     file outlives a step back to the family question and a new case, and the
+     bar would name a group the clerk has not chosen. */
+  if (state.group && state.dt && state.dt.metadata) {
     return esc(state.dt.metadata.group_name) + (state.result ? ' · case complete' : '');
   }
   return state.router ? 'New case' : 'Loading…';
@@ -310,7 +323,7 @@ function renderRail() {
          '<b>' + esc(t.label) + '</b><span>' + esc(t.value) + '</span></button>';
   });
   h += '<div class="rail__row rail__row--now"><b>' + esc(currentLabel()) +
-       '</b><span>… in progress</span></div>';
+       '</b><span>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : '… in progress') + '</span></div>';
   if (!state.result) h += '<div class="rail__row rail__row--todo"><b>Output</b><span>not yet</span></div>';
   return h;
 }
@@ -328,6 +341,7 @@ function currentLabel() {
   if (state.pending) return 'Behaviour';
   var n = node();
   if (n) return n.step_label || n.node_type.replace(/_/g, ' ');
+  if (state.stage === 'search_unresolved') return 'Refer to registrar';
   return state.stage.replace(/_/g, ' ');
 }
 
@@ -342,6 +356,7 @@ function renderStage() {
     case 'site_region': return renderSiteRegion();
     case 'discriminator': return renderDiscriminator();
     case 'group':     return renderGroupSelect();
+    case 'search_unresolved': return renderSearchUnresolved();
     case 'handoff':   return renderHandoff();
     case 'node':      return renderLiveNode();
     case 'behaviour': return renderBehaviour();
@@ -434,7 +449,7 @@ function renderArchetype() {
    twenty-one soft-tissue codes; the crosswalk carried two. */
 function systemRows() {
   var a = state.archetype, cross = arr(state.topography.coarse_organ_crosswalk);
-  if (a.auto_topography) {
+  if (a && a.auto_topography) {
     var stem = String(a.auto_topography).replace(/x$/, '');
     var only = cross.filter(function (c) {
       return arr(c.codes).some(function (code) { return code.indexOf(stem) === 0; });
@@ -463,7 +478,11 @@ function regionOptions(row) {
 function renderSite() {
   var origin = state.captured.tumour_origin;
   return panel('Stage 1 · organ system', 'Which organ system does the tumour arise in?',
-    state.archetype.site_capture === false
+    state.searchTerm
+      ? (arr((state.aliasIndex || {})[state.searchTerm]).length > 1
+          ? 'The search term “' + state.searchTerm + '” is filed under more than one group, and the primary site decides which. Code the primary, not the biopsy site.'
+          : 'The primary site decides how “' + state.searchTerm + '” is coded, so it is asked first. Code the primary, not the biopsy site.')
+      : state.archetype.site_capture === false
       ? 'Site is fixed for this presentation — one tap confirms which system to record.'
       : (origin
           ? 'Systems matching the origin you recorded are listed first. The others are still here — an abdominal mass is soft tissue and may still be renal or hepatic.'
@@ -528,6 +547,33 @@ function renderGroupSelect() {
     })));
 }
 
+/* The express lane's stop, reached when the site leaves no group or more than
+   one for the search term. It names the term, its groups and the site — the
+   three facts the registrar needs — and enters nothing. */
+function renderSearchUnresolved() {
+  var code = state.captured.topography;
+  var t = (state.topography.topography_lookup || {})[code] || {};
+  var siteName = code + ' ' + (t.region_label || t.label || '');
+  var named = function (gs) {
+    return gs.map(function (g) { return 'Group ' + g + ' — ' + (groupMeta(g).name || ''); }).join('; ');
+  };
+  var term = arr((state.aliasIndex || {})[state.searchTerm]);
+  var none = !arr(state.candidates).length;
+  var left = arr(state.candidates);
+  return banner('info', none ? 'The term and the site point to different groups' : 'The site does not decide the group',
+      'The search term “' + state.searchTerm + '” is filed under ' + named(term) + '. ' +
+      (none
+        ? 'The site recorded, ' + siteName + (term.length > 1 ? ', belongs to none of them.' : ', is not a site that group codes this term at.') + ' Check the primary site in the report and change it in the trail. If the site is right, refer the case to the registrar.'
+        : (!Array.isArray(t.candidate_groups)
+            ? 'The site recorded, ' + siteName + ', names no group, so the site cannot choose between them. '
+            : (left.length === term.length
+                ? (left.length === 2 ? 'Both occur' : 'All of them occur')
+                : named(left) + (left.length === 2 ? ' both occur' : ' all occur')) +
+              ' at ' + siteName + ', so the site cannot choose between them. ') +
+          'Refer the case to the registrar with the topography recorded.')) +
+    '<div class="actions"><button class="btn btn--ghost" data-act="restart">Start again</button></div>';
+}
+
 /* The handoff into a group tree. For a multi-tree group the router carries a
    one-tap data-level selector; each option names tree_id + that tree's
    document_inventory entry node (DT master §3B). */
@@ -538,7 +584,8 @@ function renderHandoff() {
        they can write down; the group and the topography are the two facts the
        case can still be registered on while the tree is missing. */
     return banner('info', 'Group ' + state.group + ' — ' + (meta.name || ''),
-        'The presentation, origin and site place this case in Group ' + state.group +
+        (state.searchTerm ? 'The search term “' + state.searchTerm + '” places this case in Group ' :
+          'The presentation, origin and site place this case in Group ') + state.group +
         (meta.name ? ', ' + meta.name : '') + '. No decision tree for that group is in this ' +
         'build yet, so the tool cannot reach a morphology code. Record the topography (' +
         esc(state.captured.topography || 'not captured') + ') and refer the morphology to the registrar.') +
@@ -1882,39 +1929,11 @@ function renderOutput() {
     h += '<div class="headline"><div class="headline__code">' + esc(r.code) + '</div>' +
       '<div class="headline__name">' + esc(e.morphology_name) + '</div></div>';
   }
-  /* Ruling 3: the tree is allowed to run ahead of the REDCap option list, but
-     never silently. A clerk who cannot find the row has to be told why before
-     they go looking, and in BOTH views — the code is just as unselectable
-     outside the REDCap host as inside it.
-
-     TWO DIFFERENT FACTS RODE ON ONE FLAG, AND THE BANNER STATED THE WRONG ONE.
-     `redcap_option_verified: false` means the option string was not verified to
-     match. It does NOT mean no option exists — and this banner asserted the
-     stronger claim for both, so entries whose option is merely mislabelled were
-     telling the clerk the row was missing. Sending a clerk away from a row that
-     is there is the same class of defect as sending them to one that is not.
-
-     `awaiting_layer1` is the signal that separates them, it is checked to
-     separate them exactly, and check_redcap_banner_signal() in
-     build/build_database.py keys off Layer 1 to keep it that way — so this
-     branch cannot drift from the option file behind the engine's back. Which
-     entries were affected, and why the flag now means one thing only:
-     docs/codes-awaiting-redcap.md, "Two banners, and the flag that separates
-     them". */
-  if (e.redcap_option_verified === false) {
-    var aw = e.awaiting_layer1;
-    if (aw) {
-      h += banner('warn', 'Not yet a REDCap option',
-        'This code has no option in the registry dropdown, so it cannot be selected yet.' +
-        (arr(aw.needs).length ? ' Outstanding: ' + arr(aw.needs).join(' · ') + '.' : '') +
-        ' Record the case against the nearest available option and flag it for re-coding.');
-    } else {
-      h += banner('warn', 'The REDCap label for this code is out of date',
-        'The dropdown does carry an option for this code, so the case can be entered. ' +
-        'Its label is not the current term shown above — match on the four-digit code, ' +
-        'not on the words, and flag the option for re-labelling.');
-    }
-  }
+  /* No REDCap banner. The tool does not verify REDCap (standing rule 16,
+     registrar, 4 October 2026): it does not connect to it, and a banner about
+     what the dropdown holds costs the clerk attention without changing the
+     code. Codes REDCap cannot record, and labels it holds out of date, are
+     listed for the REDCap side in docs/TODO.md §7. */
   /* Behaviour is shown only where it is not the reportable /3 default: a case
      whose code carries the other behaviour reads as an ordinary malignancy
      otherwise, and under ?host=redcap the option string names the /3 disease. */
@@ -2083,15 +2102,42 @@ function outActions() {
 function handleOption(act, el) {
   var n = node(), before = snapshot(), i = +el.getAttribute('data-i');
   switch (act) {
-    case 'guided': state.stage = 'archetype'; break;
+    /* A step back through the trail can return to the landing screen from an
+       express-lane case, and the snapshot it restores carries that case's
+       search term and group. The guided route starts without them, or its
+       site step would become the express lane's. */
+    case 'guided':
+      state.searchTerm = null; state.group = null; state.candidates = [];
+      state.stage = 'archetype'; break;
     case 'query': state.query = el.value; break;
     case 'alias': {
       var hit = searchAlias(state.query)[i];
       pushTrail('Search', hit.alias, before);
-      state.group = hit.groups[0];
+      state.searchTerm = hit.alias;
+      state.candidates = hit.groups.slice();
+      state.group = null;
       /* The express lane bypasses the clinical scaffold and enters at the
-         evidence gate — but a multi-tree group still needs its tree picked. */
-      return afterGroup();
+         evidence gate — but a multi-tree group still needs its tree picked.
+         A term the index files under more than one group is never settled by
+         the index's order: the lowest-numbered group is not evidence, and its
+         tree may capture a site the case does not have. The primary site
+         settles it instead (afterSearchSite), and the clerk is not asked for
+         a group (registrar, 4 October 2026). */
+      if (hit.groups.length > 1) { state.stage = 'site'; return; }
+      /* A term filed under ONE group is still asked its site when that
+         group's data reads the site: a tree routed from the topography, or a
+         rule keyed on it. Entered without one, every such rule fails open —
+         a renal rhabdoid tumour searched by a Group IX-only spelling coded in
+         Group IX because the kidney referral could never match (registrar,
+         4 October 2026). afterSearchSite() then keeps the group only if the
+         site carries it, and stops for the registrar if it does not. */
+      var only = hit.groups[0];
+      if (!groupMeta(only).built) { state.group = only; return afterGroup(); }
+      return loadGroupData(only).then(function () {
+        if (groupReadsSite(only)) { state.stage = 'site'; return; }
+        state.group = only;
+        return afterGroup();
+      });
     }
     case 'archetype': {
       var a = state.router.archetypes[i];
@@ -2251,7 +2297,11 @@ function handleOption(act, el) {
       pushTrail('Override', code + ' — ' + reason, before);
       return finish({ morphology_code: code, upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
     }
-    case 'rewind': return restore(state.trail[i].before, i);
+    case 'rewind': {
+      var j = i;
+      while (j > 0 && state.trail[j].automatic) j--;
+      return restore(state.trail[j].before, j);
+    }
     case 'restart': return reset();
     case 'retry': state.error = null; return boot();
     default: throw new Error('Unknown action: ' + act);
@@ -2455,6 +2505,7 @@ function afterSystem() {
   return afterSite();
 }
 function afterSite() {
+  if (state.searchTerm) return afterSearchSite();
   narrowBySite();
   var d = discriminator();
   if (d && !d.ask_before_site && state.captured[d.variable] === undefined) {
@@ -2464,6 +2515,50 @@ function afterSite() {
   if (cands.length === 1) { state.group = cands[0]; return afterGroup(); }
   if (!cands.length) { state.error = 'No candidate group survives this presentation, origin and site.'; return; }
   state.stage = 'group';
+}
+/* Does this group's data read the recorded topography? True when the router
+   routes its trees from the topography, or when any `when` in its trees names
+   `topography`. Structural only: it reads the shape of the JSON, never a code,
+   a site or a group number. Needs the group's file loaded. */
+function groupReadsSite(g) {
+  if (groupMeta(g).tree_routing) return true;
+  var found = false;
+  (function walk(o) {
+    if (found || !o || typeof o !== 'object') return;
+    if (Array.isArray(o)) { o.forEach(walk); return; }
+    if (o.when && typeof o.when === 'object' && o.when.topography !== undefined) { found = true; return; }
+    Object.keys(o).forEach(function (k) { walk(o[k]); });
+  })(trees());
+  return found;
+}
+
+/* The express lane's site step. The groups the search term is filed under
+   are intersected with the groups the topography carries, and only one
+   survivor enters a tree — routed, not asked, and recorded in the trail so the
+   clerk can see which group the case went to and step back to change the
+   site. Registrar, 4 October 2026: no survivor (the term and the site point
+   to different groups) and several survivors (the site does not separate
+   them) both stop the case for referral; neither asks the clerk for a group.
+
+   Stricter than narrowBySite on purpose. That one takes the site's list when
+   the intersection is empty, which here would enter a group whose tree does
+   not hold the searched term. The term's groups are re-read from the index
+   rather than from `candidates`, so a step back through the trail and a new
+   site start from the full list. */
+function afterSearchSite() {
+  var t = (state.topography.topography_lookup || {})[state.captured.topography];
+  var site = t && t.candidate_groups;
+  var term = arr((state.aliasIndex || {})[state.searchTerm]);
+  state.candidates = Array.isArray(site)
+    ? term.filter(function (g) { return site.indexOf(g) !== -1; })
+    : term.slice();
+  /* `group` is cleared because a step back to a Tree entry restores the group
+     the case was routed to, and a stop must not name it. */
+  if (state.candidates.length !== 1) { state.group = null; state.stage = 'search_unresolved'; return; }
+  var before = snapshot();
+  state.group = state.candidates[0];
+  pushTrail('Group', groupMeta(state.group).name || ('Group ' + state.group), before, true);
+  return afterGroup();
 }
 /* A group whose trees are keyed to a fact the router has ALREADY captured
    does not ask the clerk to pick one. Asking would be redundant, and worse
@@ -2501,7 +2596,7 @@ function afterGroup() {
   if (meta.tree_routing) {
     var before = snapshot();
     var hit = routedTree(meta);
-    pushTrail('Tree', hit.label || String(hit.tree_id).replace(/_/g, ' '), before);
+    pushTrail('Tree', hit.label || String(hit.tree_id).replace(/_/g, ' '), before, true);
     return enterGroup(state.group, hit.tree_id, hit.entry_node);
   }
   if (meta.tree_selection) { state.stage = 'handoff'; return; }
@@ -2525,7 +2620,7 @@ function enterGroup(group, treeId, entryNode) {
 
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
-  state.organSystem = null; state.candidates = [];
+  state.organSystem = null; state.candidates = []; state.searchTerm = null;
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
@@ -2586,16 +2681,28 @@ document.addEventListener('DOMContentLoaded', function () {
     ev.preventDefault();
     run(el.getAttribute('data-act'), el);
   });
+  /* A box the clerk types into — the search box, a number, free text — is
+     read on every keystroke and never re-renders the screen. Its 'change'
+     fires when focus leaves it, which happens on the mousedown of whatever
+     the clerk clicks next; a re-render there replaced that button before the
+     mouseup, the browser fired no click, and the first tap on a search result
+     or on Continue under a typed answer was lost. Checkboxes and selects keep
+     'change': it fires on their own click, and the screen changes with them. */
+  function typedInto(el) {
+    return el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !/^(checkbox|radio)$/.test(el.type));
+  }
   slot.addEventListener('change', function (ev) {
     var el = ev.target.closest('[data-act]');
-    if (!el) return;
+    if (!el || typedInto(el)) return;
     run(el.getAttribute('data-act'), el);
   });
   slot.addEventListener('input', function (ev) {
     var el = ev.target.closest('[data-act]');
-    if (!el || el.getAttribute('data-act') !== 'query') return;
-    state.query = el.value;
-    byId('slot').querySelector('.results').innerHTML = renderSearchResults();
+    if (!el || !typedInto(el)) return;
+    try { handleOption(el.getAttribute('data-act'), el); } catch (err) { return fail(err); }
+    if (el.getAttribute('data-act') === 'query') {
+      byId('slot').querySelector('.results').innerHTML = renderSearchResults();
+    }
   });
   boot();
 });

@@ -99,6 +99,119 @@
       ]
     },
     {
+      "organ": "skin",
+      "topography_range": "C44",
+      "codes": [
+        "C44.0",
+        "C44.1",
+        "C44.2",
+        "C44.3",
+        "C44.5",
+        "C44.6",
+        "C44.7",
+        "C44.8",
+        "C44.9"
+      ],
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "label": "Skin",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Kaposi sarcoma of the skin is the one soft tissue sarcoma Visser 2023 Table 3 registers at basis 1, at C44 (Group 9 build contract §0.7). Topography Redcap.md offers no 444 (C44.4, skin of scalp and neck), so that code is not listed (registrar questions H2)."
+    },
+    {
+      "organ": "urinary_bladder",
+      "topography_range": "C67",
+      "codes": [
+        "C67.0",
+        "C67.1",
+        "C67.2",
+        "C67.3",
+        "C67.4",
+        "C67.5",
+        "C67.6",
+        "C67.7",
+        "C67.8",
+        "C67.9"
+      ],
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "label": "Urinary bladder",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Bladder and prostate are classic sites of embryonal rhabdomyosarcoma in young children (ICCC-3 IXa at any site)."
+    },
+    {
+      "organ": "prostate",
+      "topography_range": "C61.9",
+      "codes": [
+        "C61.9"
+      ],
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "label": "Prostate gland",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Prostatic rhabdomyosarcoma, ICCC-3 IXa at any site."
+    },
+    {
+      "organ": "female_genital_lower",
+      "topography_range": "C51-C53",
+      "codes": [
+        "C51.0",
+        "C51.1",
+        "C51.2",
+        "C51.8",
+        "C51.9",
+        "C52.9",
+        "C53.0",
+        "C53.1",
+        "C53.8",
+        "C53.9"
+      ],
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "label": "Vulva, vagina and cervix",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Botryoid embryonal rhabdomyosarcoma of the vagina and cervix (ICCC-3 IXa); yolk sac tumour of the vagina is Group X; carcinoma is Group XI."
+    },
+    {
+      "organ": "male_genital_paratesticular",
+      "topography_range": "C63",
+      "codes": [
+        "C63.0",
+        "C63.1",
+        "C63.2",
+        "C63.7",
+        "C63.8",
+        "C63.9"
+      ],
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "label": "Epididymis, spermatic cord and scrotum",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Paratesticular rhabdomyosarcoma, ICCC-3 IXa at any site. The testis itself (C62) stays in the gonad row."
+    },
+    {
+      "organ": "biliary_extrahepatic",
+      "topography_range": "C24",
+      "codes": [
+        "C24.0",
+        "C24.8",
+        "C24.9"
+      ],
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "label": "Extrahepatic bile duct and biliary tract",
+      "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Botryoid embryonal rhabdomyosarcoma of the bile ducts, ICCC-3 IXa. The liver and intrahepatic bile duct (C22) stay in the liver row."
+    },
+    {
       "organ": "adrenal_paraspinal",
       "topography_range": "C74",
       "codes": [
@@ -200,7 +313,7 @@
         5
       ],
       "label": "Eye",
-      "note": "Expanded from C69.9 alone to all nine C69 codes, Group 5 build contract §7.1 -- without C69.2 (Retina), the topography Visser Table 3 names for retinoblastoma, a retina-sited retinoblastoma could not reach Group V at all. C69.4 (Ciliary body) alone carries an additional candidate group in topography_lookup -- [5, 4] -- because intraocular medulloepithelioma at that site is an ICCC-3 Group IV tumour and a genuine leukocoria mimic (contract §5.3). Orbital rhabdomyosarcoma (Group 9) and ocular melanoma (Group 11) also arise at C69 and belong in the relevant per-code candidate_groups once those groups are built; not added now."
+      "note": "Expanded from C69.9 alone to all nine C69 codes, Group 5 build contract §7.1 -- without C69.2 (Retina), the topography Visser Table 3 names for retinoblastoma, a retina-sited retinoblastoma could not reach Group V at all. C69.4 (Ciliary body) alone carries an additional candidate group in topography_lookup -- [5, 4] -- because intraocular medulloepithelioma at that site is an ICCC-3 Group IV tumour and a genuine leukocoria mimic (contract §5.3). Orbital rhabdomyosarcoma (Group 9) and ocular melanoma (Group 11) also arise at C69 and belong in the relevant per-code candidate_groups once those groups are built; not added now. C69.6 orbit also lists Group 9 (orbital rhabdomyosarcoma)."
     },
     {
       "organ": "lymph_node",
@@ -209,7 +322,8 @@
         "C77.9"
       ],
       "candidate_groups": [
-        2
+        2,
+        9
       ],
       "label": "Lymph nodes"
     },
@@ -239,6 +353,7 @@
       ],
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "label": "Nasopharynx",
@@ -512,6 +627,454 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C44.0": {
+      "code": "C44.0",
+      "label": "Skin of lip, NOS (Skin of lower lip, Skin of upper lip)",
+      "redcap_code": "440",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.1": {
+      "code": "C44.1",
+      "label": "Eyelid",
+      "redcap_code": "441",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.2": {
+      "code": "C44.2",
+      "label": "External ear",
+      "redcap_code": "442",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.3": {
+      "code": "C44.3",
+      "label": "Skin of other and unspecified parts of face",
+      "redcap_code": "443",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.5": {
+      "code": "C44.5",
+      "label": "Skin of trunk",
+      "redcap_code": "445",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.6": {
+      "code": "C44.6",
+      "label": "Skin of upper limb and shoulder",
+      "redcap_code": "446",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.7": {
+      "code": "C44.7",
+      "label": "Skin of lower limb and hip",
+      "redcap_code": "447",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.8": {
+      "code": "C44.8",
+      "label": "Overlapping lesion of skin",
+      "redcap_code": "448",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C44.9": {
+      "code": "C44.9",
+      "label": "Skin, NOS (skin of labia majora, skin of vulva, skin of penis, and skin of scrotum)",
+      "redcap_code": "449",
+      "coarse_organ": "skin",
+      "candidate_groups": [
+        9,
+        2,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.0": {
+      "code": "C67.0",
+      "label": "Trigone of bladder",
+      "redcap_code": "670",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.1": {
+      "code": "C67.1",
+      "label": "Dome of bladder",
+      "redcap_code": "671",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.2": {
+      "code": "C67.2",
+      "label": "Lateral wall of bladder",
+      "redcap_code": "672",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.3": {
+      "code": "C67.3",
+      "label": "Anterior wall of bladder",
+      "redcap_code": "673",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.4": {
+      "code": "C67.4",
+      "label": "Posterior wall of bladder",
+      "redcap_code": "674",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.5": {
+      "code": "C67.5",
+      "label": "Bladder neck (Internal urethral orifice)",
+      "redcap_code": "675",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.6": {
+      "code": "C67.6",
+      "label": "Ureteric orifice",
+      "redcap_code": "676",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.7": {
+      "code": "C67.7",
+      "label": "Urachus",
+      "redcap_code": "677",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.8": {
+      "code": "C67.8",
+      "label": "Overlapping lesion of bladder",
+      "redcap_code": "678",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C67.9": {
+      "code": "C67.9",
+      "label": "Bladder, NOS (Bladder wall, NOS, Urinary bladder, NOS)",
+      "redcap_code": "679",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C61.9": {
+      "code": "C61.9",
+      "label": "Prostate gland (Prostate, NOS)",
+      "redcap_code": "619",
+      "coarse_organ": "prostate",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C51.0": {
+      "code": "C51.0",
+      "label": "Labium majus (Labia majora, NOS, Bartholin gland, Skin of labia majora)",
+      "redcap_code": "510",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C51.1": {
+      "code": "C51.1",
+      "label": "Labium minus (Labia minora)",
+      "redcap_code": "511",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C51.2": {
+      "code": "C51.2",
+      "label": "Clitoris",
+      "redcap_code": "512",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C51.8": {
+      "code": "C51.8",
+      "label": "Overlapping lesion of vulva",
+      "redcap_code": "518",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C51.9": {
+      "code": "C51.9",
+      "label": "Vulva, NOS (External female genitalia, Fourchette, Labia, NOS, Labium, NOS, Mons pubis, Mons veneris, Pudendum, Skin of vulva)",
+      "redcap_code": "519",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C52.9": {
+      "code": "C52.9",
+      "label": "Vagina, NOS (Vaginal vault, Fornix of vagina, Gartner duct, Hymen)",
+      "redcap_code": "529",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C53.0": {
+      "code": "C53.0",
+      "label": "Endocervix (Internal os, Cervical canal, Endocervical canal, Endocervical gland, Nabothian gland)",
+      "redcap_code": "530",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C53.1": {
+      "code": "C53.1",
+      "label": "Exocervix (External os)",
+      "redcap_code": "531",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C53.8": {
+      "code": "C53.8",
+      "label": "Overlapping lesion of cervix uteri (Cervical stump, Squamocolumnar junction of cervix)",
+      "redcap_code": "538",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C53.9": {
+      "code": "C53.9",
+      "label": "Cervix uteri (Cervix, NOS, Uterine cervix)",
+      "redcap_code": "539",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.0": {
+      "code": "C63.0",
+      "label": "Epididymis",
+      "redcap_code": "630",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.1": {
+      "code": "C63.1",
+      "label": "Spermatic cord (Vas deferens)",
+      "redcap_code": "631",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.2": {
+      "code": "C63.2",
+      "label": "Scrotum, NOS (Skin of scrotum)",
+      "redcap_code": "632",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.7": {
+      "code": "C63.7",
+      "label": "Other specified parts of male genital organs (Seminal vesicle, Tunica vaginalis)",
+      "redcap_code": "637",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.8": {
+      "code": "C63.8",
+      "label": "Overlapping lesion of male genital organs",
+      "redcap_code": "638",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C63.9": {
+      "code": "C63.9",
+      "label": "Male genital organs, NOS",
+      "redcap_code": "639",
+      "coarse_organ": "male_genital_paratesticular",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C24.0": {
+      "code": "C24.0",
+      "label": "Extrahepatic bile duct (Bile duct, NOS, Biliary duct, NOS, Choledochal duct, Common bile duct, Common duct, Cystic bile duct, Cystic duct, Hepatic bile duct, Hepatic duct, Sphincter of Oddi)",
+      "redcap_code": "240",
+      "coarse_organ": "biliary_extrahepatic",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C24.8": {
+      "code": "C24.8",
+      "label": "Overlapping lesion of biliary tract",
+      "redcap_code": "248",
+      "coarse_organ": "biliary_extrahepatic",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C24.9": {
+      "code": "C24.9",
+      "label": "Biliary tract, NOS",
+      "redcap_code": "249",
+      "coarse_organ": "biliary_extrahepatic",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C74.0": {
       "code": "C74.0",
       "label": "Cortex of adrenal gland",
@@ -667,8 +1230,10 @@
       "redcap_code": "779",
       "coarse_organ": "lymph_node",
       "candidate_groups": [
-        2
-      ]
+        2,
+        9
+      ],
+      "note": "Group 9 added 2 October 2026: Kaposi sarcoma in a lymph node is ICCC-3 IXc at any site, and lymphadenopathic Kaposi sarcoma is the dominant childhood form in KSHV-endemic settings (Group 9 build contract §3.5)."
     },
     "C80.9": {
       "code": "C80.9",
@@ -1148,6 +1713,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true
@@ -1159,6 +1725,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true
@@ -1170,6 +1737,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true
@@ -1181,6 +1749,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true,
@@ -1193,6 +1762,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true
@@ -1204,6 +1774,7 @@
       "coarse_organ": "nasopharynx",
       "candidate_groups": [
         4,
+        9,
         11
       ],
       "candidate_groups_advisory": true
@@ -1414,9 +1985,10 @@
       "redcap_code": "696",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        9
       ],
-      "note": "Topography Redcap.md line 696 renders the last item of this pick's parenthetical synonym list as \"So! tissue of orbit\" -- ligature damage, the same defect class as line 56 (docs/TODO.md §1.3). Written here as \"Soft tissue of orbit\", per Group 5 build contract §7.1. The REDCap source file itself was not edited."
+      "note": "Topography Redcap.md line 696 renders the last item of this pick's parenthetical synonym list as \"So! tissue of orbit\" -- ligature damage, the same defect class as line 56 (docs/TODO.md §1.3). Written here as \"Soft tissue of orbit\", per Group 5 build contract §7.1. The REDCap source file itself was not edited. Group 9 added 2 October 2026: the orbit is a classic site of embryonal rhabdomyosarcoma, ICCC-3 IXa at any site, and ICCC-2017 range 89 admits extraskeletal osteosarcoma at 696 (Group 9 build contract §7.4)."
     },
     "C69.8": {
       "code": "C69.8",

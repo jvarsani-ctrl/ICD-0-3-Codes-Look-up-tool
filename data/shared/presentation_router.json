@@ -47,16 +47,19 @@
       "label": "Lymphadenopathy",
       "typical_groups": [
         2,
-        1
+        1,
+        9
       ],
       "site_capture": true,
       "candidate_groups": [
         2,
-        1
+        1,
+        9
       ],
       "candidate_groups_advisory": true,
       "scaffold": "site (nodal vs extranodal) → tissue gate",
-      "dual_group_discriminator": "primary_compartment"
+      "dual_group_discriminator": "primary_compartment",
+      "notes": "Group 9 added 2 October 2026 (Group 9 build contract §3.5). In a KSHV-endemic paediatric population the dominant form of Kaposi sarcoma is lymphadenopathic, often with few or no skin lesions (Kamiyango W, et al. Cancer and Metastasis Reviews 2019). A lymph node biopsy diagnosed as Kaposi sarcoma (9140/3, ICCC-3 IXc at any site) must be able to reach Group IX by the presentation path, not only by the alias lane."
     },
     {
       "archetype_id": "organ_functional_sign",
@@ -253,10 +256,12 @@
       11
     ],
     "C69": [
-      5
+      5,
+      9
     ],
     "C77": [
-      2
+      2,
+      9
     ],
     "abdomen-bowel/nodal": [
       2
@@ -687,9 +692,49 @@
     },
     "9": {
       "name": "Soft Tissue and Other Extraosseous Sarcomas",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g9_soft_tissue",
+          "entry_node": "st_document_inventory"
+        },
+        {
+          "tree_id": "g9_skin",
+          "entry_node": "sk_document_inventory"
+        }
+      ],
+      "handoff": {
+        "group": 9,
+        "tree_id": "g9_soft_tissue",
+        "entry_node": "st_document_inventory"
+      },
+      "tree_routing": {
+        "_comment": "Group IX at a skin site (C44) enters g9_skin, the one entry holding Visser 2023 Table 3's basis-1 row for Kaposi sarcoma of the skin; every other topography, and an uncaptured one, enters g9_soft_tissue, where a clinical note cannot register Kaposi sarcoma. Code review, 4 October 2026 (Group 9 build report §13).",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C44.0",
+              "C44.1",
+              "C44.2",
+              "C44.3",
+              "C44.5",
+              "C44.6",
+              "C44.7",
+              "C44.8",
+              "C44.9"
+            ],
+            "tree_id": "g9_skin",
+            "entry_node": "sk_document_inventory",
+            "label": "Skin (C44)"
+          }
+        ],
+        "default": {
+          "tree_id": "g9_soft_tissue",
+          "entry_node": "st_document_inventory",
+          "label": "Soft tissue and every other site"
+        }
+      }
     },
     "10": {
       "name": "Germ Cell, Trophoblastic Tumors and Neoplasms of Gonads",
@@ -1100,36 +1145,6 @@
         "group": 3,
         "subgroup": "IIId2"
       }
-    },
-    "9473": {
-      "codes": [
-        "9473"
-      ],
-      "label": "Primitive neuroectodermal tumour (PNET)",
-      "topography_dependent": true,
-      "discriminator": "site",
-      "branches": [
-        {
-          "when": {
-            "topography_in": [
-              "C70.9",
-              "C71.9",
-              "C72.9"
-            ]
-          },
-          "result": {
-            "group": 3,
-            "subgroup": "IIIc2"
-          },
-          "note": "Intracranial."
-        }
-      ],
-      "default": {
-        "group": 9,
-        "subgroup": null,
-        "note": "Peripheral / soft tissue PNET."
-      },
-      "cns_topography_scope_note": "Uses NOS-level CNS topography codes (C70.9/C71.9/C72.9) because topography_codes.json does not yet enumerate finer CNS subsites -- that granularity belongs to Group III's own build (not yet started). Extend both files together when Group III is authored."
     },
     "9501-9504": {
       "codes": [
