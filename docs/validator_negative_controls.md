@@ -3199,9 +3199,11 @@ for another reason prints WRONG REASON. Before the controls, each rule runs on t
 and must pass, and rule 3 must return a NOTE when the alias file is absent. Nothing on disk
 changes. Task T5 has not yet written `data/aliases/aliases_group_10.json`, so the runner checks
 rule 3 against seven correct aliases it holds itself, and reads the file once it exists. Exit
-status 0 on 4 October 2026: **19 of 19 caught for the expected reason, 5 of 5 probes pass.**
+status 0 on 4 October 2026: **22 of 22 caught for the expected reason, 5 of 5 probes pass.**
 R3-E, R3-F and R3-G were added the same day with the spec-review fixes to rule 3; run against
-rule 3 as committed in `4a1c0eb`, before those fixes, all three are MISSED.
+rule 3 as committed in `4a1c0eb`, before those fixes, all three are MISSED. R1-F, R2-E and R4-D
+were added at code review, so that the nos_fallback clause of rule 1, the placental scoping of
+rule 2 and the default-tree clause of rule 4 each have a control.
 
 Each rule reads its source on every build. Rules 1 and 4 read ICCC-2017.sqlite ranges 94–117.
 Rule 1 takes a tree's site from the router: the topography codes `groups["10"].tree_routing`
@@ -3227,10 +3229,12 @@ nothing must not pass (R3-G).
 | R1-C | an extragonadal-only code in the testis | `ts_mixed` gains a `9086/3` branch | rule 1: "emits 9086/3 … Ranges holding 9086: 105 (Xb6, behaviour 3)" |
 | R1-D | a gonadal-only code outside the gonads | `eg_mixed` gains a `9102/3` branch | rule 1: "emits 9102/3 … at the 75 topography code(s) the router sends to this tree. Ranges holding 9102: 110 (Xc5, behaviour 3)" |
 | R1-E | the site resolver emits | `su_site_histology` gains a `9064/3` branch | rule 1: "g10_site_unstated routes by cross-tree next_node and emits nothing (contract §4.5)" |
+| R1-F | a fallback off its site | `ov_ihc` `nos_fallback.code` `9064` → `9086` | rule 1: "g10_ovary ov_ihc: nos_fallback emits 9086/3, which no ICCC-2017 Group X range admits at the 1 topography code(s) the router sends to this tree (C56.9). Ranges holding 9086: 105 (Xb6, behaviour 3)" |
 | R2-A | a histology from a marker | `cn_markers` alpha-fetoprotein option emits `9071/3` at basis 4 | rule 2: "emits 9071/3 at basis 4. Basis 4 registers 9064/3 or 9065/3, and 9100/3 for choriocarcinoma of the placenta in g10_extragonadal only (Visser 2023 Table 4, p. 06)" |
 | R2-B | **the path, not the flag** | `ov_document_inventory`'s histology option captures `["Imaging"]` instead of `["Histology"]` | rule 2: "g10_ovary ov_histology: 'Dysgerminoma', reached with evidence ['Imaging'], emits 9060/3 at basis 7 with no histology or cytology in the file" |
 | R2-C | basis 4 without imaging | `eg_document_inventory`'s markers option captures `["Tumour markers"]` only | rule 2: "eg_markers … reached with evidence ['Tumour markers'], emits 9065/3 at basis 4 without both Imaging and Tumour markers on the path (… rule 6, p. 05)" |
 | R2-D | a histology from imaging | `ts_imaging` emits `9061/3` at basis 2 | rule 2: "emits 9061/3 at basis 2. Without pathology Group X registers 8000/3 at basis 1 or 2 (Visser 2023 rule 5, p. 03)" |
+| R2-E | the placental code outside the extragonadal tree | `ov_markers` gains a `9100/3` branch at basis 4 | rule 2: "g10_ovary ov_markers … emits 9100/3 at basis 4. Basis 4 registers 9064/3 or 9065/3, and 9100/3 for choriocarcinoma of the placenta in g10_extragonadal only". Rule 1 passes it: 9100/3 is Xc5 at C56.9 |
 | R3-A | germinoma filed as dysgerminoma | alias "Germinoma" → `["9060"]` | rule 3: "alias 'Germinoma' maps to 9060 Dysgerminoma. ICD-O-3.2 files Germinoma under 9064" |
 | R3-B | **D21's own example** | alias "Mature teratoma" → `["9080"]` | rule 3: "D21 — alias 'Mature teratoma' is the ICD-O-3.2 term 'Mature teratoma, NOS' at 9080/0, and Group X emits 9080 at behaviour(s) 0, 1, 3" |
 | R3-C | an in situ term on an invasive code | alias "Germ cell neoplasia in situ" → `["9064"]` | rule 3: "D21 — … 'Germ cell neoplasia in situ' at 9064/2, and Group X emits 9064 at behaviour(s) 3" |
@@ -3241,6 +3245,7 @@ nothing must not pass (R3-G).
 | R4-A | a central nervous system subgroup lost | entry `9071/3` loses its `Xa4` rule | rule 4: "9071/3 shows subgroup 'Xc4' at C70.0, where ICCC-2017 places it in Xa4; 24 lookup topography code(s) disagree in all" |
 | R4-B | a testis routed to the ovary | `C62.0` moves from the testis routing rule to the ovary rule | rule 4: "the router sends C62.0 to 'g10_ovary'; ICCC-2017 makes it an Xc topography, which goes to 'g10_testis'" |
 | R4-C | the sacrococcygeal site unrouted | `C76.3` dropped from the extragonadal routing rule | rule 4: "the router sends C76.3 to 'g10_site_unstated'; ICCC-2017 makes it an Xb topography, which goes to 'g10_extragonadal'" |
+| R4-D | the site resolver bypassed | `tree_routing.default` → `g10_extragonadal` | rule 4: "groups["10"].tree_routing.default is 'g10_extragonadal'; a case with no topography, or one outside the Group X germ cell site ranges, goes to g10_site_unstated" |
 
 **R2-B is the one that matters.** The mutation leaves the option's `basis_evidence_tier`
 reading "histology" and every terminal under `ov_histology` reading basis 7; only the captured

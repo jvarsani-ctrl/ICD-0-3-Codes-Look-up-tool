@@ -120,6 +120,7 @@ def r1b(d):
 def r1c(d): node(d, "ts_mixed")["options"].append(code_branch("Control 9086", "9086", "3"))
 def r1d(d): node(d, "eg_mixed")["options"].append(code_branch("Control 9102", "9102", "3"))
 def r1e(d): node(d, "su_site_histology")["options"].append(code_branch("Control", "9064", "3"))
+def r1f(d): node(d, "ov_ihc")["nos_fallback"]["code"] = "9086"
 ctl("R1-A cn_histology mature teratoma becomes excl 9080/0", bd.check_group10_codes_fit_site,
     ["excludes 9080/0", "range 95 (Xa2)", "hides a Group X code"], r1a)
 ctl("R1-B ov_teratoma mature cystic teratoma emits 9080/0", bd.check_group10_codes_fit_site,
@@ -130,11 +131,16 @@ ctl("R1-D eg_mixed gains 9102/3", bd.check_group10_codes_fit_site,
     ["g10_extragonadal eg_mixed", "emits 9102/3", "110 (Xc5"], r1d)
 ctl("R1-E su_site_histology gains a code branch", bd.check_group10_codes_fit_site,
     ["g10_site_unstated su_site_histology", "emits nothing"], r1e)
+ctl("R1-F ov_ihc nos_fallback becomes 9086/3", bd.check_group10_codes_fit_site,
+    ["g10_ovary ov_ihc: nos_fallback emits 9086/3", "(C56.9)", "105 (Xb6"], r1f)
 
 
 def r2a(d): option(d, "cn_markers", "Imaging shows a tumour and the report calls alpha")["morphology_code"] = "9071"
 def r2b(d): option(d, "ov_document_inventory", "A histology report")["captures"]["evidence_tests"] = ["Imaging"]
 def r2c(d): option(d, "eg_document_inventory", "An imaging report and")["captures"]["evidence_tests"] = ["Tumour markers"]
+def r2e(d):
+    node(d, "ov_markers")["options"].insert(0, code_branch(
+        "Control: a placental tumour with human chorionic gonadotropin raised", "9100", "3", 4))
 def r2d(d):
     o = option(d, "ts_imaging", "Imaging shows a malignant tumour")
     o["morphology_code"] = "9061"; o["behavior_code"] = "3"; o["basis_of_diagnosis"] = 2
@@ -148,6 +154,9 @@ ctl("R2-C eg_document_inventory markers option captures Tumour markers only",
                                           "without both Imaging and Tumour markers"], r2c)
 ctl("R2-D ts_imaging emits 9061/3 at basis 2", bd.check_group10_no_pathology_codes,
     ["ts_imaging", "emits 9061/3 at basis 2", "rule 5"], r2d)
+ctl("R2-E ov_markers gains a 9100/3 basis-4 branch (placental code outside g10_extragonadal)",
+    bd.check_group10_no_pathology_codes,
+    ["g10_ovary ov_markers", "emits 9100/3 at basis 4", "in g10_extragonadal only"], r2e)
 
 ctl("R3-A alias Germinoma maps to 9060", bd.check_group10_alias_terms_match_icdo32,
     ["alias 'Germinoma' maps to 9060 Dysgerminoma"], alias_add=alias("Germinoma", "9060"))
@@ -193,6 +202,9 @@ def r4b(r):
     rule_for(r, "g10_testis")["topography_in"].remove("C62.0")
     rule_for(r, "g10_ovary")["topography_in"].append("C62.0")
 def r4c(r): rule_for(r, "g10_extragonadal")["topography_in"].remove("C76.3")
+def r4d(r):
+    r["groups"]["10"]["tree_routing"]["default"].update(
+        tree_id="g10_extragonadal", entry_node="eg_document_inventory")
 ctl("R4-A 9071/3 loses its Xa rule", bd.check_group10_subgroups_and_routing,
     ["9071/3 shows subgroup 'Xc4' at C70.0", "places it in Xa4"], r4a)
 ctl("R4-B C62.0 moves to the ovary routing rule", bd.check_group10_subgroups_and_routing,
@@ -201,6 +213,9 @@ ctl("R4-C C76.3 dropped from the extragonadal routing rule",
     bd.check_group10_subgroups_and_routing,
     ["sends C76.3 to 'g10_site_unstated'", "an Xb topography", "goes to 'g10_extragonadal'"],
     router_mutate=r4c)
+ctl("R4-D the tree_routing default becomes g10_extragonadal",
+    bd.check_group10_subgroups_and_routing,
+    ["tree_routing.default is 'g10_extragonadal'"], router_mutate=r4d)
 
 print("Rule 3 alias list: %s" % ALIAS_SOURCE)
 wrong = caught = probes = 0

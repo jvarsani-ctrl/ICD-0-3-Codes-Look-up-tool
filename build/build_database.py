@@ -9149,6 +9149,9 @@ def _group8_terminals_by_evidence(ctx: DTContext):
     The evidence a terminal is reached with is a property of the PATH, not of anything the
     terminal says about itself, which is why rule 2 reads it here rather than trusting the
     branch's own basis_of_diagnosis.
+
+    The walk reads only the tree and is group-agnostic: Group 10 rule 2
+    (check_group10_no_pathology_codes) uses it unchanged.
     """
     def after(holder, ev):
         cap = holder.get("captures") if isinstance(holder.get("captures"), dict) else {}
@@ -9327,21 +9330,25 @@ def _group10_iccc_ranges(layer1):
     if key in _ICCC_X_CACHE:
         return _ICCC_X_CACHE[key], None
     ranges = []
-    con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
     try:
-        for range_id, subgroup, hist, sites, beh in con.execute(
-                "SELECT cr.range_id, g.group_code, cr.icdo3_histology_raw, "
-                "cr.icdo3_primary_site_raw, cr.icdo3_behavior FROM code_ranges cr "
-                "JOIN groups g ON g.group_id = cr.group_id WHERE g.main_group = 'X' "
-                "ORDER BY cr.range_id"):
-            behaviours = set()
-            for lo, hi in _iccc_spans(beh):
-                behaviours.update(str(b) for b in range(lo, hi + 1))
-            ranges.append({"range_id": range_id, "subgroup": str(subgroup),
-                           "codes": _iccc_spans(hist), "sites": _iccc_spans(sites),
-                           "behaviours": behaviours})
-    finally:
-        con.close()
+        con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
+        try:
+            for range_id, subgroup, hist, sites, beh in con.execute(
+                    "SELECT cr.range_id, g.group_code, cr.icdo3_histology_raw, "
+                    "cr.icdo3_primary_site_raw, cr.icdo3_behavior FROM code_ranges cr "
+                    "JOIN groups g ON g.group_id = cr.group_id WHERE g.main_group = 'X' "
+                    "ORDER BY cr.range_id"):
+                behaviours = set()
+                for lo, hi in _iccc_spans(beh):
+                    behaviours.update(str(b) for b in range(lo, hi + 1))
+                ranges.append({"range_id": range_id, "subgroup": str(subgroup),
+                               "codes": _iccc_spans(hist), "sites": _iccc_spans(sites),
+                               "behaviours": behaviours})
+        finally:
+            con.close()
+    except (sqlite3.Error, ValueError) as exc:
+        return [], "ICCC-2017.sqlite at %s could not be read: %s: %s" % (
+            path, type(exc).__name__, exc)
     if not ranges:
         return [], "ICCC-2017.sqlite at %s holds no range for main group X" % path
     _ICCC_X_CACHE[key] = ranges
@@ -9476,10 +9483,13 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
         checked += 1
         sites = sites_by_tree.get(tree, set())
         if not _group10_fitting_ranges(ranges, code, beh, sites):
+            shown = [_topo_from_index(n) for n in sorted(sites)]
             out.append((FAIL, "%s %s: %s emits %s/%s, which no ICCC-2017 Group X range admits "
-                              "at the %d topography code(s) the router sends to this tree. "
-                              "Ranges holding %s: %s"
-                        % (tree, node_id, where, code, beh, len(sites), code, holders(code))))
+                              "at the %d topography code(s) the router sends to this tree "
+                              "(%s). Ranges holding %s: %s"
+                        % (tree, node_id, where, code, beh, len(sites),
+                           ", ".join(shown[:6]) + (", ..." if len(shown) > 6 else "")
+                           or "none", code, holders(code))))
     for node_id, where, code, beh in _group10_exclusions(ctx):
         tree = ctx.node_tree.get(node_id)
         if tree == GROUP10_SITE_UNSTATED_TREE:
@@ -9562,7 +9572,7 @@ def check_group10_no_pathology_codes(ctx: DTContext):
                                   "9065/3, and 9100/3 for choriocarcinoma of the placenta in "
                                   "%s only (Visser 2023 Table 4, p. 06)"
                             % (where, code, beh, GROUP10_EXTRAGONADAL_TREE)))
-            elif not GROUP10_MARKER_EVIDENCE <= set(held):
+            elif not (GROUP10_MARKER_EVIDENCE <= set(held)):
                 out.append((FAIL, "%s, emits %s/%s at basis 4 without both Imaging and Tumour "
                                   "markers on the path. Basis 4 needs a marker result and a "
                                   "clinical investigation showing the tumour (Visser 2023 "
@@ -9597,8 +9607,9 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
     ICD-O-3.2 says, at every behaviour the group emits.
 
     Source: icdo32.sqlite, every level (Preferred, Synonym, Related), [obs] terms included:
-    an alias equal to an obsolete term still names that term's code; design D21. app.js lists aliases under "Also called" by four-digit code, so an alias on
-    9080 appears on every 9080 output whatever its behaviour. For every alias in
+    an alias equal to an obsolete term still names that term's code; design D21. app.js
+    lists aliases under "Also called" by four-digit code, so an alias on 9080 appears on
+    every 9080 output whatever its behaviour. For every alias in
     aliases_group_10.json whose text equals an ICD-O-3.2 term (case folded, tumour/tumor
     normalised, a trailing ", NOS" dropped):
 
@@ -9663,6 +9674,8 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
         if set(maps) == GROUP10_D21_NEUTRAL_ALIASES.get(exact):
             neutral += 1
             continue
+        if not maps:
+            continue
         matched += 1
         term_codes = {c for c, _b in hits}
         named = "; ".join("%r at %s/%s" % (t, c, b) for (c, b), t in sorted(hits.items()))
@@ -9673,12 +9686,13 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
         for c in sorted(term_codes & set(maps)):
             term_behs = {b for cc, b in hits if cc == c}
             em = emitted.get(c, set())
-            if not em or not em <= term_behs:
+            if not em or not (em <= term_behs):
                 out.append((FAIL, "D21 — alias %r is the ICD-O-3.2 term %s, and Group X emits "
                                   "%s at behaviour(s) %s. \"Also called\" lists aliases by "
                                   "four-digit code, so the alias would stand on outputs it is "
                                   "not true of (design D21)"
-                            % (text, named, c, ", ".join(sorted(em)) or "none")))
+                            % (text, named, c,
+                               ", ".join(sorted(str(b) for b in em)) or "none")))
     if not matched:
         out.append((FAIL, "GROUP 10 RULE 3: none of the %d alias(es) in %s outside the D21 "
                           "exemption equals an ICD-O-3.2 term, so the rule checked nothing. "
@@ -9730,13 +9744,13 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
         code = as_code(entry.get("morphology_code"))
         beh = _group10_behaviour(entry.get("behavior_code"))
         rules = entry.get("iccc3_subgroup_by_topography") or []
-        wrong = []
+        wrong, entry_pairs = [], 0
         for topo in topos:
             want = {r["subgroup"] for r in
                     _group10_fitting_ranges(ranges, code, beh, {_topo_index(topo)})}
             if not want:
                 continue
-            pairs += 1
+            entry_pairs += 1
             got = entry.get("iccc3_subgroup_id")
             for rule in rules if isinstance(rules, list) else []:
                 if isinstance(rule, dict) and topo in (rule.get("topography_in") or []):
@@ -9744,7 +9758,8 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                     break
             if got not in want:
                 wrong.append((topo, got, "/".join(sorted(want))))
-        entries_checked += 1
+        pairs += entry_pairs
+        entries_checked += bool(entry_pairs)
         if wrong:
             topo, got, want = wrong[0]
             out.append((FAIL, "morphology_entries[%d] %s/%s shows subgroup %r at %s, where "
@@ -9787,10 +9802,12 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                                else "a topography outside the Group X germ cell site ranges",
                                want)))
     if not [f for f in out if f[0] == FAIL]:
-        out.append((OK, "GROUP 10 RULE 4: %d entries show the ICCC-2017 subgroup at each of "
-                        "%d (entry, topography) pair(s) ICCC-2017 places in Group X, and the "
-                        "router sends all %d lookup topography codes to the tree ICCC-2017's "
-                        "site ranges give them" % (entries_checked, pairs, len(topos))))
+        out.append((OK, "GROUP 10 RULE 4: %d of %d entries are placed in Group X by ICCC-2017 "
+                        "at some lookup topography, and each shows the ICCC-2017 subgroup at "
+                        "every one of the %d (entry, topography) pair(s) so placed; the router "
+                        "sends all %d lookup topography codes to the tree ICCC-2017's site "
+                        "ranges give them"
+                        % (entries_checked, len(ctx.entries), pairs, len(topos))))
     return out
 
 
