@@ -100,7 +100,7 @@ patient's age.
 | Teratoma, postpubertal type | `9080/3` | Moch 2022 Table 3, p. 464 |
 | Teratoma with somatic-type malignancy | `9084/3` | ICD-O-3.2 synonym; Louis 2021 Table 1 |
 | Struma ovarii, benign | `9090/0` | ICD-O-3.2 |
-| Struma ovarii, malignant | `9090/3` | ICD-O-3.2; ICCC-2017 range 107, ovary only |
+| Struma ovarii, malignant | `9090/3` | ICD-O-3.2; ICCC-2017 range 107 (Xc2, ovary and testis). Struma ovarii is ovarian, so only the ovary tree offers it |
 | Strumal carcinoid | `9091/1` | ICD-O-3.2 has no `9091/3` |
 
 **Where the behaviour digit is reportable.** ICCC-2017 ranges 94–99 (Xa, central nervous

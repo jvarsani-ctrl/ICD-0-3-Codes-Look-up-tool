@@ -483,7 +483,7 @@ correct-data probe per rule, then at least these mutations, each expected CAUGHT
 |---|---|
 | R1-A | `cn_histology` mature teratoma becomes `excl 9080/0` |
 | R1-B | `ov_teratoma` mature cystic teratoma emits code `9080/0` |
-| R1-C | `ts_teratoma` postpubertal emits `9090/3` |
+| R1-C | `ts_mixed` gains a `9086/3` branch (ICCC-2017 range 105: Xb6 only) |
 | R1-D | `eg_mixed` gains a `9102/3` branch |
 | R1-E | `su_site_histology` gains a code branch |
 | R2-A | `cn_markers` alpha-fetoprotein option emits `9071/3` basis 4 |
