@@ -141,3 +141,43 @@ Same day, same method.
 
 The last row is why the exemption had to go with the rule. With `9473` still named, restoring the
 defective rule would have been downgraded to a WARN and the build would have passed.
+
+## Added 4 October 2026 — RULE 3 reads marker rules
+
+`check_group9_ewing_code` read only branch labels, so the `st_round_cell_ihc` rule that emits
+`9364` was never checked (code review, 4 October 2026). It now holds a marker rule emitting `9364`
+to NKX2.2 positive with no CIC, BCOR or non-ETS marker, the partner Group 8 rule 3 requires for
+bone. Two controls were added to `build/group09_negative_controls.py`, run against the working
+tree on the merged branch (`96beb55` plus the uncommitted review fixes; neither touches the
+`9364` rule):
+
+```
+ok   3d 9364 marker rule on a CIC-rearranged profile (WT1, ETV4)            check_group9_ewing_code                expect FAIL
+        RULE 3 — st_round_cell_ihc (resolution_logic[6]) emits 9364 on ['WT1', 'ETV4']; a marker rule for Ewing sarcoma requires NKX2.2 positive and no CIC, BCOR or non-ETS marker (contract §0.5, §3.2)
+ok   3e 9364 marker rule on CD99 alone                                      check_group9_ewing_code                expect FAIL
+        RULE 3 — st_round_cell_ihc (resolution_logic[6]) emits 9364 on ['CD99']; a marker rule for Ewing sarcoma requires NKX2.2 positive and no CIC, BCOR or non-ETS marker (contract §0.5, §3.2)
+
+46 control(s), 0 not behaving as expected
+```
+
+On the unmodified data RULE 3 now counts five branches, the four labelled options and the marker
+rule, and reports OK.
+
+## Added 4 October 2026 — RULE 6 reads a scalar topography
+
+`check_group9_8963_site` built its covered-site set with `set(when.topography)`, which turns a
+string such as `"C64.9"` into a set of characters. The engine accepts a scalar `when` value
+(`whenValueOk`), so a kidney referral written that way worked in the tool and failed the check.
+The check now treats a scalar as a one-item list, and finds the 8963 rule's position by identity
+instead of `list.index()`, which returned the first equal rule. Probe `6p` writes the kidney
+referral as a string:
+
+```
+before the fix:  FAIL  RULE 6 — st_epithelioid_ihc: the 8963 rule is not preceded by a SMARCB1-loss rule referring C64.9 to Group 6
+after the fix:   ok   6p PROBE: kidney referral with a scalar topography (engine form) is not a FAIL
+                         RULE 6 — 1 8963 emission(s), each a SMARCB1-loss rule after the CNS, kidney and liver referrals
+
+47 control(s), 0 not behaving as expected
+```
+
+Controls `6a`–`6e` still fail for the reasons recorded above.

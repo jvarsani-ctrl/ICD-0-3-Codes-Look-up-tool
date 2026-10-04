@@ -9286,6 +9286,7 @@ GROUP9_OBS_ONLY = ("9560", "8853")
 _G9_EWING_RE = re.compile(r"\bEwing\b(?!-like)", re.I)
 _G9_EWING_LIKE_RE = re.compile(r"\bCIC\b|\bBCOR\b|non-ETS", re.I)
 _G9_LABEL_KEYS = ("label", "finding", "descriptor", "site")
+_G9_EWING_PARTNER = "NKX2.2"
 
 
 def _g9_label(holder) -> str:
@@ -9364,6 +9365,18 @@ def check_group9_ewing_code(ctx: DTContext):
     out = []
     checked = 0
     for code, holder, node_id, where in ctx.emissions():
+        if code == "9364" and "resolution_logic" in where:
+            # A marker rule has no label; its positive markers are what it asserts. Ewing
+            # sarcoma needs NKX2.2 beside CD99 (st_round_cell_ihc hint; Group 8 rule 3 holds
+            # bone to the same partner), and never a Ewing-like family's marker.
+            checked += 1
+            pos = [str(t).split(":")[0] for t in holder.get("positive") or []]
+            if _G9_EWING_PARTNER not in pos or any(_G9_EWING_LIKE_RE.search(t) for t in pos):
+                out.append((FAIL, "RULE 3 — %s (%s) emits 9364 on %s; a marker rule for Ewing "
+                                  "sarcoma requires %s positive and no CIC, BCOR or non-ETS "
+                                  "marker (contract §0.5, §3.2)"
+                            % (node_id, where, pos or "no positive marker", _G9_EWING_PARTNER)))
+            continue
         label = _g9_label(holder)
         if not label:
             continue
@@ -9381,7 +9394,8 @@ def check_group9_ewing_code(ctx: DTContext):
                             % (node_id, where, code)))
     if not out:
         out.append((OK, "RULE 3 — %d code-emitting branch(es) naming Ewing sarcoma or a "
-                        "Ewing-like family carry the right code" % checked))
+                        "Ewing-like family, or emitting 9364 from a marker rule, carry the "
+                        "right code" % checked))
     return out
 
 
@@ -9484,7 +9498,9 @@ def check_group9_8963_site(ctx: DTContext, repo: Path):
         n += 1
         node = ctx.nodes.get(node_id) or {}
         rules = node.get("resolution_logic") or []
-        if "resolution_logic" not in where or holder not in rules:
+        # By identity, not equality: two identical rules must not share one position.
+        pos = next((i for i, r in enumerate(rules) if r is holder), None)
+        if "resolution_logic" not in where or pos is None:
             out.append((FAIL, "RULE 6 — %s (%s) emits 8963 outside an ihc_checklist rule; a "
                               "rhabdoid tumour must pass the SMARCB1 (INI1) site fork "
                               "(contract §3.6)" % (node_id, where)))
@@ -9492,7 +9508,7 @@ def check_group9_8963_site(ctx: DTContext, repo: Path):
         if "SMARCB1 (INI1) loss" not in [str(t) for t in holder.get("positive") or []]:
             out.append((FAIL, "RULE 6 — %s (%s) emits 8963 without SMARCB1 (INI1) loss"
                         % (node_id, where)))
-        earlier = rules[:rules.index(holder)]
+        earlier = rules[:pos]
         for group, sites, label in need:
             covered = set()
             for r in earlier:
@@ -9500,7 +9516,9 @@ def check_group9_8963_site(ctx: DTContext, repo: Path):
                     continue
                 if "SMARCB1 (INI1) loss" not in [str(t) for t in r.get("positive") or []]:
                     continue
-                covered |= set(((r.get("when") or {}).get("topography")) or [])
+                # The engine accepts a scalar `when` value as well as a list (whenValueOk).
+                topo = (r.get("when") or {}).get("topography")
+                covered |= set(topo if isinstance(topo, list) else [topo] if topo else [])
             if not sites <= covered:
                 out.append((FAIL, "RULE 6 — %s: the 8963 rule is not preceded by a SMARCB1-loss "
                                   "rule referring %s to Group %d (missing %s)"

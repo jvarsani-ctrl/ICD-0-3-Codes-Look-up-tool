@@ -2703,6 +2703,14 @@
               "captures": {
                 "imaging_conclusion": "benign_or_indeterminate"
               }
+            },
+            {
+              "label": "No imaging report in the file",
+              "next_node": "st_clinical_alias",
+              "reason": "With no usable specimen and no imaging report, the case is coded from the referral letter or clinical note.",
+              "captures": {
+                "imaging_conclusion": "none"
+              }
             }
           ],
           "nos_fallback": null
@@ -2856,11 +2864,25 @@
               "basis_of_diagnosis": 8
             },
             {
-              "label": "Histology and a FISH, RT-PCR or sequencing result identifying the defining fusion, with no immunohistochemistry reported",
+              "label": "Histology and a FISH result identifying the tumour's defining fusion or rearrangement, with no immunohistochemistry reported",
               "next_node": "st_lineage",
               "captures": {
                 "evidence_tests": [
-                  "Histology"
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "incomplete",
+                "basis_evidence_tier": "histology_fish"
+              },
+              "basis_of_diagnosis": 8
+            },
+            {
+              "label": "Histology and an RT-PCR or sequencing result identifying the tumour's defining fusion, with no immunohistochemistry reported",
+              "next_node": "st_lineage",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
                 ],
                 "workup_status": "incomplete",
                 "basis_evidence_tier": "histology_molecular"
@@ -3167,9 +3189,6 @@
               "behavior_code": "3",
               "basis_of_diagnosis": 8,
               "reason": "A FOXO1 fusion defines alveolar rhabdomyosarcoma (Pfister 2022). Recorded as Alveolar rhabdomyosarcoma (8920/3), at basis 8.",
-              "satisfies_tests": [
-                "IHC"
-              ],
               "captures": {
                 "foxo1_status": "positive"
               }
@@ -3494,11 +3513,11 @@
               }
             },
             {
-              "label": "Solitary fibrous tumour, malignant — including malignant haemangiopericytoma",
+              "label": "Solitary fibrous tumour, malignant or WHO grade 3 — including malignant haemangiopericytoma",
               "morphology_code": "8815",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Solitary fibrous tumor, malignant (8815/3). Haemangiopericytoma was merged into solitary fibrous tumour in ICD-O-3.2, so the older code 9150 is no longer used.",
+              "reason": "Solitary fibrous tumor, malignant (8815/3). Haemangiopericytoma was merged into solitary fibrous tumour in ICD-O-3.2, so the older code 9150 is no longer used. ICD-O-3.2 codes solitary fibrous tumour/haemangiopericytoma, grade 3, at 8815/3 as well.",
               "captures": {
                 "fibroblastic_diagnosis": "sft_malignant"
               }
@@ -3552,17 +3571,31 @@
               }
             },
             {
-              "label": "Solitary fibrous tumour not stated to be malignant",
+              "label": "Solitary fibrous tumour, WHO grade 2, or not stated to be malignant and given no grade",
               "behaviour_exclusion": {
                 "icdo_code": "8815",
                 "icdo_behaviour": "1",
                 "icdo_term": "Solitary fibrous tumor, NOS",
                 "group_declares": "3",
-                "reason": "Solitary fibrous tumour, NOS is coded at behaviour 1 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
+                "reason": "Solitary fibrous tumour, NOS, and solitary fibrous tumour/haemangiopericytoma, grade 2, are coded at behaviour 1 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
                 "registrar_decision_required": true
               },
               "captures": {
                 "fibroblastic_diagnosis": "sft_nos"
+              }
+            },
+            {
+              "label": "Solitary fibrous tumour, WHO grade 1",
+              "behaviour_exclusion": {
+                "icdo_code": "8815",
+                "icdo_behaviour": "0",
+                "icdo_term": "Solitary fibrous tumor/Hemangiopericytoma, grade 1",
+                "group_declares": "3",
+                "reason": "Solitary fibrous tumour/haemangiopericytoma, grade 1, is coded at behaviour 0 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
+                "registrar_decision_required": true
+              },
+              "captures": {
+                "fibroblastic_diagnosis": "sft_grade1"
               }
             },
             {
@@ -3900,6 +3933,9 @@
                 "vascular_diagnosis": "kaposi_sarcoma",
                 "hhv8_lana": "not_done"
               },
+              "outstanding_tests": [
+                "IHC"
+              ],
               "upgrade_path": "HHV-8 (LANA-1) immunohistochemistry would confirm Kaposi sarcoma. It would not change the code."
             },
             {
@@ -3951,7 +3987,7 @@
               }
             },
             {
-              "label": "Kaposiform haemangioendothelioma, or tufted angioma",
+              "label": "Kaposiform haemangioendothelioma",
               "behaviour_exclusion": {
                 "icdo_code": "9130",
                 "icdo_behaviour": "1",
@@ -3962,6 +3998,20 @@
               },
               "captures": {
                 "vascular_diagnosis": "khe"
+              }
+            },
+            {
+              "label": "Tufted angioma (tufted haemangioma)",
+              "behaviour_exclusion": {
+                "icdo_code": "9161",
+                "icdo_behaviour": "0",
+                "icdo_term": "Acquired tufted hemangioma",
+                "group_declares": "3",
+                "reason": "Tufted angioma is coded at behaviour 0 in ICD-O-3.2, as Acquired tufted hemangioma. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
+                "registrar_decision_required": true
+              },
+              "captures": {
+                "vascular_diagnosis": "tufted_angioma"
               }
             },
             {
@@ -4906,20 +4956,20 @@
           "node_type": "histology_subclassification",
           "step_number": 6,
           "step_label": "Solitary fibrous tumour",
-          "question": "STAT6 is positive: this is a solitary fibrous tumour. Does the report call it malignant?",
+          "question": "STAT6 is positive: this is a solitary fibrous tumour. Does the report call it malignant, or give it a WHO grade?",
           "hint": "Only a malignant solitary fibrous tumour is registered in this group.",
           "clinical_alert": null,
-          "coding_note": "ICD-O-3.2: 8815/3 Solitary fibrous tumor, malignant; 8815/1 Solitary fibrous tumor, NOS. Sbaraglia section Pericytic (perivascular) tumours: STAT6 staining and a risk scheme, not mitotic count alone.",
+          "coding_note": "ICD-O-3.2: 8815/3 Solitary fibrous tumor, malignant; 8815/1 Solitary fibrous tumor, NOS; ICD-O-3.2 related terms put grade 3 at 8815/3 and grade 2 at 8815/1, and grade 1 is 8815/0 (Preferred 'Solitary fibrous tumor/Hemangiopericytoma, grade 1'). Sbaraglia section Pericytic (perivascular) tumours: STAT6 staining and a risk scheme, not mitotic count alone.",
           "captured_variables": [
             "sft_behaviour"
           ],
           "options": [
             {
-              "label": "Yes — malignant solitary fibrous tumour",
+              "label": "Yes — malignant solitary fibrous tumour, or WHO grade 3",
               "morphology_code": "8815",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
-              "reason": "Solitary fibrous tumor, malignant (8815/3).",
+              "reason": "Solitary fibrous tumor, malignant (8815/3). ICD-O-3.2 codes solitary fibrous tumour/haemangiopericytoma, grade 3, at 8815/3 as well.",
               "satisfies_tests": [
                 "IHC"
               ],
@@ -4928,17 +4978,31 @@
               }
             },
             {
-              "label": "No, or the report does not say",
+              "label": "WHO grade 2, or not called malignant and given no grade",
               "behaviour_exclusion": {
                 "icdo_code": "8815",
                 "icdo_behaviour": "1",
                 "icdo_term": "Solitary fibrous tumor, NOS",
                 "group_declares": "3",
-                "reason": "Solitary fibrous tumour, NOS is coded at behaviour 1 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
+                "reason": "Solitary fibrous tumour, NOS, and solitary fibrous tumour/haemangiopericytoma, grade 2, are coded at behaviour 1 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
                 "registrar_decision_required": true
               },
               "captures": {
                 "sft_behaviour": "not_malignant"
+              }
+            },
+            {
+              "label": "WHO grade 1",
+              "behaviour_exclusion": {
+                "icdo_code": "8815",
+                "icdo_behaviour": "0",
+                "icdo_term": "Solitary fibrous tumor/Hemangiopericytoma, grade 1",
+                "group_declares": "3",
+                "reason": "Solitary fibrous tumour/haemangiopericytoma, grade 1, is coded at behaviour 0 in ICD-O-3.2. ICCC-3 Group IX admits behaviour 3 only, so it is not registered in this group and no Group IX code is emitted. Record the finding and refer the case to the registrar.",
+                "registrar_decision_required": true
+              },
+              "captures": {
+                "sft_behaviour": "grade1"
               }
             }
           ],
@@ -4952,7 +5016,7 @@
           "question": "Record each stain as the report states it.",
           "hint": "Loss of SMARCB1 (INI1) is shared by rhabdoid tumour and epithelioid sarcoma, and by rhabdoid tumours of the brain, kidney and liver, which belong to other groups. The site and the morphology decide which. Nuclear TFE3 supports alveolar soft part sarcoma.",
           "clinical_alert": null,
-          "coding_note": "Contract §3.6; pathway §4E, §7.9 (Agaimy A. Advances in Anatomic Pathology 2014: INI1 loss alone does not set the code; site, age and morphology disambiguate). Site rules first: CNS → Group III (9508), C64.9 → Group VI, C22.0/C22.1 → Group VII, from state.captured.topography. Then morphology: epithelioid sarcoma → 8804, rhabdoid → 8963. Unspecified morphology with INI1 loss falls through. TFE3 → 9581 (Jaber OI, Kirby PA. Archives of Pathology & Laboratory Medicine 2015; RT-PCR more sensitive and specific). Fallback 8800 (registrar questions I1, I2).",
+          "coding_note": "Contract §3.6; pathway §4E, §7.9 (Agaimy A. Advances in Anatomic Pathology 2014: INI1 loss alone does not set the code; site, age and morphology disambiguate). Site rules first: CNS → Group III (9508), C64.9 → Group VI, C22.0/C22.1 → Group VII, from state.captured.topography. Then morphology: rhabdoid → 8963; epithelioid sarcoma is coded 8804 only when the report names it (st_uncertain), never from the stain. Unspecified morphology with INI1 loss falls through. TFE3 → 9581 (Jaber OI, Kirby PA. Archives of Pathology & Laboratory Medicine 2015; RT-PCR more sensitive and specific). Fallback 8800 (registrar questions I1, I2).",
           "captured_variables": [
             "topography",
             "epithelioid_morphology"

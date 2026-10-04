@@ -89,6 +89,10 @@ control("3b CIC option emits 9364", bd.check_group9_ewing_code,
         lambda d: opt(d, "st_round_cell", "CIC-rearranged").__setitem__("morphology_code", "9364"), True)
 control("3c BCOR option emits 9364", bd.check_group9_ewing_code,
         lambda d: opt(d, "st_round_cell", "BCOR").__setitem__("morphology_code", "9364"), True)
+control("3d 9364 marker rule on a CIC-rearranged profile (WT1, ETV4)", bd.check_group9_ewing_code,
+        lambda d: rule(d, "st_round_cell_ihc", code="9364").__setitem__("positive", ["WT1", "ETV4"]), True, contains="9364")
+control("3e 9364 marker rule on CD99 alone", bd.check_group9_ewing_code,
+        lambda d: rule(d, "st_round_cell_ihc", code="9364").__setitem__("positive", ["CD99"]), True, contains="NKX2.2")
 control("3p PROBE: 'Ewing-like' label emitting 8803 is not a FAIL", bd.check_group9_ewing_code,
         lambda d: opt(d, "st_round_cell", "Undifferentiated round cell").__setitem__(
             "label", "Ewing-like undifferentiated round cell sarcoma"), False)
@@ -131,6 +135,10 @@ def direct_8963(d):
 control("6d named rhabdoid option emits 8963 directly", bd.check_group9_8963_site, direct_8963, True, (R,), contains="outside an ihc_checklist")
 control("6e 8963 rule without SMARCB1 loss", bd.check_group9_8963_site,
         lambda d: rule(d, "st_epithelioid_ihc", code="8963").__setitem__("positive", ["TFE3"]), True, (R,))
+def scalar_kidney(d):
+    rule(d, "st_epithelioid_ihc", refer=6)["when"]["topography"] = "C64.9"
+control("6p PROBE: kidney referral with a scalar topography (engine form) is not a FAIL",
+        bd.check_group9_8963_site, scalar_kidney, False, (R,))
 # ---------------------------------------------------------------- RULE 7-9
 control("7a 8800 imaging_sufficient", bd.check_group9_no_imaging_sufficient,
         lambda d: [e for e in d["morphology_entries"] if e["morphology_code"] == "8800"][0].__setitem__("imaging_sufficient", True), True)
