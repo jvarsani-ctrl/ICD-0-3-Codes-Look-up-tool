@@ -391,7 +391,8 @@ def n_clinical_alias(site, ctx="referral"):
 def n_markers(site):
     opts = [
         code("Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or "
-             "without human chorionic gonadotropin", "9065", "3", 4,
+             "without human chorionic gonadotropin, and the file calls it a germ cell tumour",
+             "9065", "3", 4,
              "%s A germ cell tumour shown on imaging with a raised alpha-fetoprotein is "
              "registered to this code without tissue (%s, Table 4). The marker does not name "
              "the histological type; a histology report gives it." % (rec("9065", "3", 4),
@@ -403,16 +404,20 @@ def n_markers(site):
     ]
     if site == "extragonadal":
         opts.append(code(
-            "Imaging shows a tumour of the uterus or placenta after a pregnancy, and the "
-            "report calls human chorionic gonadotropin raised", "9100", "3", 4,
+            "Imaging shows a tumour of the uterus or placenta after a pregnancy, the report "
+            "calls human chorionic gonadotropin raised, and the file calls it "
+            "choriocarcinoma", "9100", "3", 4,
             "%s Choriocarcinoma of the placenta with a raised human chorionic gonadotropin is "
             "registered to this code without tissue (%s, Table 4)." % (rec("9100", "3", 4),
                                                                        VISSER),
             {"workup_status": "incomplete", "basis_evidence_tier": "markers_hcg_gestational"},
-            note="D4, extragonadal tree only. Visser Table 4, p. 06."))
+            note="D4, extragonadal tree only. Visser Table 4, p. 06, registers choriocarcinoma "
+                 "of the placenta, so the label asks for that diagnosis: a hydatidiform mole "
+                 "also raises human chorionic gonadotropin after a pregnancy."))
     opts += [
         code("Imaging shows a tumour and the report calls human chorionic gonadotropin raised; "
-             "alpha-fetoprotein is normal or not measured", "9064", "3", 4,
+             "alpha-fetoprotein is normal or not measured; the file calls it a germ cell "
+             "tumour", "9064", "3", 4,
              "%s ICD-O-3.2 files Germ cell tumor, NOS under this number, and a germ cell "
              "tumour with a raised human chorionic gonadotropin is registered to it without "
              "tissue (%s, Table 4). The record does not assert that a germinoma was diagnosed; "
@@ -433,11 +438,12 @@ def n_markers(site):
         "No tissue is in the file. What do the imaging report and the marker results show?",
         "Use the report's own words. The value must be called raised against the laboratory's "
         "range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. "
-        "These codes apply to a tumour the file calls a germ cell tumour (%s, Table 4)."
-        % VISSER,
+        "Each coded option also needs the diagnosis it names (%s, Table 4)." % VISSER,
         opts, EVIDENCE_TIER,
         "D4. The report's own statement against the age-specific range is read; nothing is "
-        "re-gated numerically (Group III's md_gct_* gates stay in Group III).")
+        "re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 "
+        "registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or "
+        "choriocarcinoma (9100/3); each coded label states that condition.")
 
 
 def n_imaging(site, ctx="imaging"):
@@ -916,10 +922,13 @@ def n_teratoma_testis():
                   "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
                   note="D5."),
             excl_outside("Mature teratoma, with prepubertal or postpubertal type not stated",
-                         "mature teratoma", "9080", "0", note="D5, settled."),
+                         "mature teratoma", "9080", "0", decision=True,
+                         note="D5; registrar review A5 open: code as written, or 9080/3 "
+                              "after puberty."),
             excl_outside("Teratoma, with maturity and type not stated",
-                         "a teratoma whose type is not stated", "9080", "1",
-                         note="D5, settled."),
+                         "a teratoma whose type is not stated", "9080", "1", decision=True,
+                         note="D5; registrar review A5 open: code as written, or 9080/3 "
+                              "after puberty."),
             named("Teratoma with a somatic-type malignancy", "9084",
                   "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
                   % rec("9084"), note="D5. Moch 2022 Table 3, p. 464."),

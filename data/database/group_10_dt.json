@@ -6742,9 +6742,9 @@
           "step_number": 2,
           "step_label": "Tumour markers",
           "question": "No tissue is in the file. What do the imaging report and the marker results show?",
-          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. These codes apply to a tumour the file calls a germ cell tumour (Visser 2023, European Network of Cancer Registries, Table 4).",
+          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. Each coded option also needs the diagnosis it names (Visser 2023, European Network of Cancer Registries, Table 4).",
           "clinical_alert": null,
-          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III).",
+          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or choriocarcinoma (9100/3); each coded label states that condition.",
           "captured_variables": [
             "evidence_tests",
             "workup_status",
@@ -6752,7 +6752,7 @@
           ],
           "options": [
             {
-              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin",
+              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin, and the file calls it a germ cell tumour",
               "morphology_code": "9065",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -6764,7 +6764,7 @@
               }
             },
             {
-              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured",
+              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured; the file calls it a germ cell tumour",
               "morphology_code": "9064",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -7573,9 +7573,9 @@
           "step_number": 2,
           "step_label": "Tumour markers",
           "question": "No tissue is in the file. What do the imaging report and the marker results show?",
-          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. These codes apply to a tumour the file calls a germ cell tumour (Visser 2023, European Network of Cancer Registries, Table 4).",
+          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. Each coded option also needs the diagnosis it names (Visser 2023, European Network of Cancer Registries, Table 4).",
           "clinical_alert": null,
-          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III).",
+          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or choriocarcinoma (9100/3); each coded label states that condition.",
           "captured_variables": [
             "evidence_tests",
             "workup_status",
@@ -7583,7 +7583,7 @@
           ],
           "options": [
             {
-              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin",
+              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin, and the file calls it a germ cell tumour",
               "morphology_code": "9065",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -7595,7 +7595,7 @@
               }
             },
             {
-              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured",
+              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured; the file calls it a germ cell tumour",
               "morphology_code": "9064",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -9123,9 +9123,9 @@
           "step_number": 2,
           "step_label": "Tumour markers",
           "question": "No tissue is in the file. What do the imaging report and the marker results show?",
-          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. These codes apply to a tumour the file calls a germ cell tumour (Visser 2023, European Network of Cancer Registries, Table 4).",
+          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. Each coded option also needs the diagnosis it names (Visser 2023, European Network of Cancer Registries, Table 4).",
           "clinical_alert": null,
-          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III).",
+          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or choriocarcinoma (9100/3); each coded label states that condition.",
           "captured_variables": [
             "evidence_tests",
             "workup_status",
@@ -9133,7 +9133,7 @@
           ],
           "options": [
             {
-              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin",
+              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin, and the file calls it a germ cell tumour",
               "morphology_code": "9065",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -9145,7 +9145,7 @@
               }
             },
             {
-              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured",
+              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured; the file calls it a germ cell tumour",
               "morphology_code": "9064",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -9877,10 +9877,10 @@
                 "icdo_behaviour": "0",
                 "icdo_term": "Teratoma, benign",
                 "group_declares": "3",
-                "reason": "ICD-O-3.2 codes mature teratoma as Teratoma, benign (9080/0), behaviour 0, benign. Outside the central nervous system ICCC-3 Group X registers behaviour 3 (malignant) only, so no Group X code is recorded. Whether the registry records it elsewhere is the registrar's decision.",
-                "registrar_decision_required": false
+                "reason": "ICD-O-3.2 codes mature teratoma as Teratoma, benign (9080/0), behaviour 0, benign. Outside the central nervous system ICCC-3 Group X registers behaviour 3 (malignant) only, so no Group X code is recorded. This exclusion awaits the registrar's decision.",
+                "registrar_decision_required": true
               },
-              "coding_note": "D5, settled."
+              "coding_note": "D5; registrar review A5 open: code as written, or 9080/3 after puberty."
             },
             {
               "label": "Teratoma, with maturity and type not stated",
@@ -9889,10 +9889,10 @@
                 "icdo_behaviour": "1",
                 "icdo_term": "Teratoma, NOS",
                 "group_declares": "3",
-                "reason": "ICD-O-3.2 codes a teratoma whose type is not stated as Teratoma, NOS (9080/1), behaviour 1, uncertain or borderline. Outside the central nervous system ICCC-3 Group X registers behaviour 3 (malignant) only, so no Group X code is recorded. Whether the registry records it elsewhere is the registrar's decision.",
-                "registrar_decision_required": false
+                "reason": "ICD-O-3.2 codes a teratoma whose type is not stated as Teratoma, NOS (9080/1), behaviour 1, uncertain or borderline. Outside the central nervous system ICCC-3 Group X registers behaviour 3 (malignant) only, so no Group X code is recorded. This exclusion awaits the registrar's decision.",
+                "registrar_decision_required": true
               },
-              "coding_note": "D5, settled."
+              "coding_note": "D5; registrar review A5 open: code as written, or 9080/3 after puberty."
             },
             {
               "label": "Teratoma with a somatic-type malignancy",
@@ -10401,9 +10401,9 @@
           "step_number": 2,
           "step_label": "Tumour markers",
           "question": "No tissue is in the file. What do the imaging report and the marker results show?",
-          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. These codes apply to a tumour the file calls a germ cell tumour (Visser 2023, European Network of Cancer Registries, Table 4).",
+          "hint": "Use the report's own words. The value must be called raised against the laboratory's range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. Each coded option also needs the diagnosis it names (Visser 2023, European Network of Cancer Registries, Table 4).",
           "clinical_alert": null,
-          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III).",
+          "coding_note": "D4. The report's own statement against the age-specific range is read; nothing is re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or choriocarcinoma (9100/3); each coded label states that condition.",
           "captured_variables": [
             "evidence_tests",
             "workup_status",
@@ -10411,7 +10411,7 @@
           ],
           "options": [
             {
-              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin",
+              "label": "Imaging shows a tumour and the report calls alpha-fetoprotein raised, with or without human chorionic gonadotropin, and the file calls it a germ cell tumour",
               "morphology_code": "9065",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
@@ -10423,19 +10423,19 @@
               }
             },
             {
-              "label": "Imaging shows a tumour of the uterus or placenta after a pregnancy, and the report calls human chorionic gonadotropin raised",
+              "label": "Imaging shows a tumour of the uterus or placenta after a pregnancy, the report calls human chorionic gonadotropin raised, and the file calls it choriocarcinoma",
               "morphology_code": "9100",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
               "reason": "Recorded as Choriocarcinoma, NOS (9100/3) at basis of diagnosis 4. Choriocarcinoma of the placenta with a raised human chorionic gonadotropin is registered to this code without tissue (Visser 2023, European Network of Cancer Registries, Table 4).",
-              "coding_note": "D4, extragonadal tree only. Visser Table 4, p. 06.",
+              "coding_note": "D4, extragonadal tree only. Visser Table 4, p. 06, registers choriocarcinoma of the placenta, so the label asks for that diagnosis: a hydatidiform mole also raises human chorionic gonadotropin after a pregnancy.",
               "captures": {
                 "workup_status": "incomplete",
                 "basis_evidence_tier": "markers_hcg_gestational"
               }
             },
             {
-              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured",
+              "label": "Imaging shows a tumour and the report calls human chorionic gonadotropin raised; alpha-fetoprotein is normal or not measured; the file calls it a germ cell tumour",
               "morphology_code": "9064",
               "behavior_code": "3",
               "basis_of_diagnosis": 4,
