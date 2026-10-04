@@ -290,10 +290,14 @@ to `main`:
 
 ## D19. Front-door reach outside the central nervous system — provisional
 
-Add `C62.0` (620), `C62.1` (621) and `C76.3` (763, which the ICD-O-3 topography index uses for
-the sacrococcygeal region) to `topography_codes.json`. Add Group 10 to the candidate groups of
-`C38.1`, `C38.3`, `C48.0` and the new `C76.3`, the extragonadal sites the pathway names (§2A).
-This adds one choice at those sites and changes no other group's tree.
+Add `C62.0` (620), `C62.1` (621) and `C76.3` (763) to `topography_codes.json`. The Diagnostic
+Pathway (§2A) names C76.3 as the sacrococcygeal site, the commonest extragonadal one; REDCap
+offers 763 as *Pelvis, NOS*, and no Layer 1 file records how the ICD-O-3 topography index files
+the sacrococcygeal region — the registrar confirms. Add Group 10 to the candidate groups of
+`C38.1`, `C38.3` and `C48.0`, the extragonadal sites the pathway names (§2A). C76.3 lists groups
+9 and 10. Group 4 is left off: its RULE 5 requires a Group IV tree to declare every topography
+that lists group 4, and Group IV's file stays byte-identical to `main`. This adds one choice at
+those sites and changes no other group's tree.
 
 ## D20. A case with no topography shows the entry's default subgroup — design
 

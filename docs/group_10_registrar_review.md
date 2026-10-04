@@ -120,7 +120,9 @@ trees on a Group III branch.
 ### B2. Front-door candidate groups outside the central nervous system (D19)
 
 **Built:** Group 10 added to C38.1, C38.3 and C48.0; C62.0, C62.1 and C76.3 added to the lookup,
-C76.3 with candidate groups 4, 9 and 10.
+C76.3 with candidate groups 9 and 10. Two questions: does the registry record a sacrococcygeal
+tumour at C76.3 *Pelvis, NOS* (the pathway's choice; no Layer 1 file records the ICD-O-3 index
+entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to declare C76.3?
 
 ### B3. The subgroup line when no topography was captured (D20)
 
