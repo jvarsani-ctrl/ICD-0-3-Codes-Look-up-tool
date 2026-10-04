@@ -91,8 +91,8 @@ Four trees, one per site family, written once in `build/group10_tree.py` as func
 parameterised by site. Each opens on a `document_inventory` evidence gate. Each evidence context
 has its own node — referral, referral after cytology, imaging, imaging after markers, imaging after
 cytology — because `app.js` replaces a captured `evidence_tests` list rather than merging it; a
-3,240-terminal walk finds the evidence on every path equal to the reports the clerk said are on
-file. The no-tissue routes emit only `8000/3` (basis 1 or 2) or the Visser Table 4 codes (basis 4).
+walk of every terminal (1,620 on the final trees) finds the evidence on every path equal to the
+reports the clerk said are on file. The no-tissue routes emit only `8000/3` (basis 1 or 2) or the Visser Table 4 codes (basis 4).
 
 Histology nodes offer each site's own terms (the ovary: dysgerminoma, struma ovarii, the
 sex cord–stromal and epithelial lists; the testis: the seminoma terms, prepubertal and
