@@ -5762,5 +5762,182 @@
     "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
     "notes": "Code 9801 carries THREE situations, disambiguated by workup_status + alal_subtype (Pathway 4.1, 5.7): (a) acute leukaemia, lineage not yet established — incomplete workup; (b) acute undifferentiated leukaemia (AUL) — comprehensive panel, <=1 lineage marker per lineage, mimics excluded; (c) ALAL-NOS — >=2 markers of one lineage but MPAL criteria not met. 9805 (MPAL NOS) is NOT AUL. Routes into tree_acute_leukemia for lineage assignment."
+  },
+  {
+    "alias": "Acute myeloid leukemia with biallelic mutations of CEBPA",
+    "full_form": "Acute myeloid leukemia with biallelic mutations of CEBPA -> Acute myeloid leukemia with biallelic mutation of CEBPA (9878)",
+    "also_known_as": [
+      "AML with biallelic CEBPA mutation",
+      "CEBPA-biallelic AML",
+      "AML with double-mutated CEBPA"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9878"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9878. The tool displays the ICD-O-3.2 term 'Acute myeloid leukemia with biallelic mutation of CEBPA'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 writes the mutation singular. WHO-HAEM5 narrows this entity to a bZIP in-frame mutation, which may be monoallelic, so a report naming only one CEBPA mutation does not by itself exclude the code — read the zygosity and the domain before falling back to 9861."
+  },
+  {
+    "alias": "Myeloid leukemia associated with Down Syndrome",
+    "full_form": "Myeloid leukemia associated with Down Syndrome -> Myeloid leukemia associated with Down syndrome (9898)",
+    "also_known_as": [
+      "ML-DS",
+      "Myeloid leukaemia of Down syndrome",
+      "AML in Down syndrome"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9898"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9898. The tool displays the ICD-O-3.2 term 'Myeloid leukemia associated with Down syndrome'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. Capitalisation only: ICD-O-3.2 lower-cases \"syndrome\". Separate from 9898/1 transient abnormal myelopoiesis, which carries the same code at behaviour /1 and is NOT reportable."
+  },
+  {
+    "alias": "Therapy related myeloid neoplasm",
+    "full_form": "Therapy related myeloid neoplasm -> Therapy-related myeloid neoplasm (9920)",
+    "also_known_as": [
+      "t-MN",
+      "Therapy-related myeloid neoplasm",
+      "t-AML",
+      "Therapy-related AML"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9920"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9920. The tool displays the ICD-O-3.2 term 'Therapy-related myeloid neoplasm'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 hyphenates \"Therapy-related\". Per Pathway §4.8 this is a QUALIFIER on the underlying neoplasm, not a separate entity: code the underlying subtype and set the qualifier rather than defaulting to 9920."
+  },
+  {
+    "alias": "Chronic eosinophilic leukemia, NOS",
+    "full_form": "Chronic eosinophilic leukemia, NOS -> Chronic eosinophilic leukemia (9964)",
+    "also_known_as": [
+      "CEL",
+      "CEL, NOS",
+      "Chronic eosinophilic leukaemia"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9964"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ic",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9964. The tool displays the ICD-O-3.2 term 'Chronic eosinophilic leukemia'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 carries no \", NOS\" on this term; the REDCap option does. Reached only after clonality is demonstrated and reactive and parasitic eosinophilia are excluded (Pathway §3.10) — in Uganda the commonest false positive in Group I."
+  },
+  {
+    "alias": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement",
+    "full_form": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement -> Myeloid or lymphoid neoplasm with PDGFRA rearrangement (9965)",
+    "also_known_as": [
+      "PDGFRA-rearranged myeloid neoplasm",
+      "FIP1L1-PDGFRA",
+      "Myeloid neoplasm with PDGFRA rearrangement"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9965"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9965. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with PDGFRA rearrangement'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 reads \"or\", singular \"neoplasm\"; the REDCap option reads \"and\", plural. FIP1L1-PDGFRA is cryptic on karyotype — FISH or RT-PCR is required before falling back to 9964."
+  },
+  {
+    "alias": "Myeloid neoplasms with PDGFRB rearrangement",
+    "full_form": "Myeloid neoplasms with PDGFRB rearrangement -> Myeloid neoplasm with PDGFRB rearrangement (9966)",
+    "also_known_as": [
+      "PDGFRB-rearranged myeloid neoplasm",
+      "ETV6-PDGFRB",
+      "t(5;12) myeloid neoplasm"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9966"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9966. The tool displays the ICD-O-3.2 term 'Myeloid neoplasm with PDGFRB rearrangement'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 uses the singular \"neoplasm\"; the REDCap option is plural."
+  },
+  {
+    "alias": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities",
+    "full_form": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities -> Myeloid or lymphoid neoplasm with FGFR1 abnormalities (9967)",
+    "also_known_as": [
+      "FGFR1-rearranged myeloid neoplasm",
+      "8p11 myeloproliferative syndrome",
+      "EMS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9967"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9967. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with FGFR1 abnormalities'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 reads \"or\", singular \"neoplasm\"; the REDCap option reads \"and\", plural."
+  },
+  {
+    "alias": "Myeloid/lymphoid neoplasm with PCM1-JAK2",
+    "full_form": "Myeloid/lymphoid neoplasm with PCM1-JAK2 -> Myeloid or lymphoid neoplasm with PCM1-JAK2 (9968)",
+    "also_known_as": [
+      "PCM1-JAK2",
+      "t(8;9)(p22;p24.1)",
+      "JAK2-rearranged myeloid neoplasm"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9968"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9968. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with PCM1-JAK2'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 spells it \"Myeloid or lymphoid\"; the REDCap option uses a solidus."
   }
 ]
