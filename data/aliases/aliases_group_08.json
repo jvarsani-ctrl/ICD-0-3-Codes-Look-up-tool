@@ -95,25 +95,6 @@
     "coding_note": "ICD-O-3.2 Preferred term on 8004/3, read from icdo32.sqlite."
   },
   {
-    "alias": "Malignant tumor, clear cell type",
-    "full_form": "Malignant tumor, clear cell type -> Malignant tumor, clear cell type (8005)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8005"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Malignant tumor, clear cell type, 8005/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8005/3, read from icdo32.sqlite."
-  },
-  {
     "alias": "Sarcoma, NOS",
     "full_form": "Sarcoma, NOS -> Sarcoma, NOS (8800)",
     "also_known_as": [],
@@ -129,7 +110,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Sarcoma, NOS, 8800/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Sarcoma, NOS, 8800/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8800/3, read from icdo32.sqlite."
   },
   {
@@ -148,7 +129,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Spindle cell sarcoma, 8801/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Spindle cell sarcoma, 8801/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8801/3, read from icdo32.sqlite."
   },
   {
@@ -167,7 +148,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Spindle cell sarcoma (8801/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "An ICD-O-3.2 synonym term for Spindle cell sarcoma (8801/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8801/3, read from icdo32.sqlite."
   },
   {
@@ -186,7 +167,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Small cell sarcoma, 8803/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Small cell sarcoma, 8803/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8803/3, read from icdo32.sqlite."
   },
   {
@@ -205,7 +186,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Small cell sarcoma (8803/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "An ICD-O-3.2 synonym term for Small cell sarcoma (8803/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8803/3, read from icdo32.sqlite."
   },
   {
@@ -224,65 +205,8 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Small cell sarcoma (8803/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "An ICD-O-3.2 synonym term for Small cell sarcoma (8803/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8803/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Epithelioid sarcoma, NOS",
-    "full_form": "Epithelioid sarcoma, NOS -> Epithelioid sarcoma, NOS (8804)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8804"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Epithelioid sarcoma, NOS, 8804/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
-    "coding_note": "ICD-O-3.2 Preferred term on 8804/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Epithelioid cell sarcoma",
-    "full_form": "Epithelioid cell sarcoma -> Epithelioid sarcoma, NOS (8804)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8804"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Epithelioid sarcoma, NOS (8804/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
-    "coding_note": "ICD-O-3.2 Synonym term on 8804/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Epithelioid sarcoma, undifferentiated",
-    "full_form": "Epithelioid sarcoma, undifferentiated -> Epithelioid sarcoma, NOS (8804)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8804"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Epithelioid sarcoma, NOS (8804/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
-    "coding_note": "ICD-O-3.2 Related term on 8804/3, read from icdo32.sqlite."
   },
   {
     "alias": "Undifferentiated sarcoma",
@@ -300,7 +224,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Undifferentiated sarcoma, 8805/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Undifferentiated sarcoma, 8805/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8805/3, read from icdo32.sqlite."
   },
   {
@@ -319,84 +243,8 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Fibrosarcoma, NOS, 8810/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXb1).",
+    "notes": "Fibrosarcoma, NOS, 8810/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8810/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Myxofibrosarcoma",
-    "full_form": "Myxofibrosarcoma -> Myxofibrosarcoma (8811)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8811"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIId1",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Myxofibrosarcoma, 8811/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXb1).",
-    "coding_note": "ICD-O-3.2 Preferred term on 8811/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Fibromyxosarcoma",
-    "full_form": "Fibromyxosarcoma -> Myxofibrosarcoma (8811)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8811"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIId1",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Myxofibrosarcoma (8811/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXb1).",
-    "coding_note": "ICD-O-3.2 Related term on 8811/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Periosteal fibrosarcoma",
-    "full_form": "Periosteal fibrosarcoma -> Periosteal fibrosarcoma (8812)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8812"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIId1",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Periosteal fibrosarcoma, 8812/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8812/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Periosteal sarcoma, NOS",
-    "full_form": "Periosteal sarcoma, NOS -> Periosteal fibrosarcoma (8812)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8812"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIId1",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Periosteal fibrosarcoma (8812/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8812/3, read from icdo32.sqlite."
   },
   {
     "alias": "Malignant fibrous histiocytoma",
@@ -414,7 +262,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Malignant fibrous histiocytoma, 8830/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "Malignant fibrous histiocytoma, 8830/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8830/3, read from icdo32.sqlite."
   },
   {
@@ -433,46 +281,8 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Malignant fibrous histiocytoma (8830/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "An ICD-O-3.2 synonym term for Malignant fibrous histiocytoma (8830/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8830/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Osteosarcoma, NOS",
-    "full_form": "Osteosarcoma, NOS -> Osteosarcoma, NOS (9180)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "WHO 2020",
-    "maps_to_morphology_codes": [
-      "9180"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIa",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Osteosarcoma, NOS, 9180/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
-    "coding_note": "ICD-O-3.2 Preferred term on 9180/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Osteogenic sarcoma, NOS",
-    "full_form": "Osteogenic sarcoma, NOS -> Osteosarcoma, NOS (9180)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "WHO 2020",
-    "maps_to_morphology_codes": [
-      "9180"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIa",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Osteosarcoma, NOS (9180/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
-    "coding_note": "ICD-O-3.2 Synonym term on 9180/3, read from icdo32.sqlite."
   },
   {
     "alias": "Osteoblastic sarcoma",
@@ -490,7 +300,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Osteosarcoma, NOS (9180/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "An ICD-O-3.2 synonym term for Osteosarcoma, NOS (9180/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 9180/3, read from icdo32.sqlite."
   },
   {
@@ -509,7 +319,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Osteosarcoma, NOS (9180/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "An ICD-O-3.2 synonym term for Osteosarcoma, NOS (9180/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 9180/3, read from icdo32.sqlite."
   },
   {
@@ -663,25 +473,6 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Small cell osteosarcoma (9185/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 9185/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Central osteosarcoma, NOS",
-    "full_form": "Central osteosarcoma, NOS -> Central osteosarcoma, NOS (9186)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "9186"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIa",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Central osteosarcoma, NOS, 9186/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 9186/3, read from icdo32.sqlite."
   },
   {
     "alias": "Conventional central osteosarcoma",
@@ -874,44 +665,6 @@
     "coding_note": "ICD-O-3.2 Preferred term on 9194/3, read from icdo32.sqlite."
   },
   {
-    "alias": "Intracortical osteosarcoma",
-    "full_form": "Intracortical osteosarcoma -> Intracortical osteosarcoma (9195)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "9195"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIa",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Intracortical osteosarcoma, 9195/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 9195/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Chondrosarcoma, NOS",
-    "full_form": "Chondrosarcoma, NOS -> Chondrosarcoma, NOS (9220)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "WHO 2020",
-    "maps_to_morphology_codes": [
-      "9220"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIb",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Chondrosarcoma, NOS, 9220/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
-    "coding_note": "ICD-O-3.2 Preferred term on 9220/3, read from icdo32.sqlite."
-  },
-  {
     "alias": "Fibrochondrosarcoma",
     "full_form": "Fibrochondrosarcoma -> Chondrosarcoma, NOS (9220)",
     "also_known_as": [],
@@ -927,7 +680,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3).",
     "coding_note": "ICD-O-3.2 Related term on 9220/3, read from icdo32.sqlite."
   },
   {
@@ -946,7 +699,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3).",
     "coding_note": "ICD-O-3.2 Related term on 9220/3, read from icdo32.sqlite."
   },
   {
@@ -965,7 +718,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "An ICD-O-3.2 related term for Chondrosarcoma, NOS (9220/3).",
     "coding_note": "ICD-O-3.2 Related term on 9220/3, read from icdo32.sqlite."
   },
   {
@@ -1007,44 +760,6 @@
     "coding_note": "ICD-O-3.2 Related term on 9221/3, read from icdo32.sqlite."
   },
   {
-    "alias": "Chondroblastoma, malignant",
-    "full_form": "Chondroblastoma, malignant -> Chondroblastoma, malignant (9230)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "9230"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIb",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Chondroblastoma, malignant, 9230/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 9230/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Myxoid chondrosarcoma",
-    "full_form": "Myxoid chondrosarcoma -> Myxoid chondrosarcoma (9231)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "9231"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIb",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Myxoid chondrosarcoma, 9231/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 9231/3, read from icdo32.sqlite."
-  },
-  {
     "alias": "Mesenchymal chondrosarcoma",
     "full_form": "Mesenchymal chondrosarcoma -> Mesenchymal chondrosarcoma (9240)",
     "also_known_as": [],
@@ -1060,7 +775,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Mesenchymal chondrosarcoma, 9240/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "Mesenchymal chondrosarcoma, 9240/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 9240/3, read from icdo32.sqlite."
   },
   {
@@ -1535,7 +1250,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Ewing sarcoma, 9364/3. Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "Ewing sarcoma, 9364/3. Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Preferred term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1554,7 +1269,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Synonym term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1573,7 +1288,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Synonym term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1592,7 +1307,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 related term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Related term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1611,7 +1326,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 related term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Related term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1630,7 +1345,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 synonym term for Ewing sarcoma (9364/3). Not 9260: ICD-O-3.2 moved Ewing sarcoma to 9364, and 9260 now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "ICD-O-3.2 Synonym term on 9364/3, read from icdo32.sqlite."
   },
   {
@@ -1649,27 +1364,8 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Askin tumor, 9365/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd1).",
+    "notes": "Askin tumor, 9365/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 9365/3, read from icdo32.sqlite."
-  },
-  {
-    "alias": "Chordoma, NOS",
-    "full_form": "Chordoma, NOS -> Chordoma, NOS (9370)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "WHO 2020",
-    "maps_to_morphology_codes": [
-      "9370"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIId2",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "Chordoma, NOS, 9370/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 9370/3, read from icdo32.sqlite."
   },
   {
     "alias": "Chondroid chordoma",
@@ -1729,25 +1425,6 @@
     "coding_note": "viii_morph option string with no verbatim ICD-O-3.2 match (contract §2)."
   },
   {
-    "alias": "Epithelioid sarcoma",
-    "full_form": "Epithelioid sarcoma -> Epithelioid sarcoma, NOS (8804)",
-    "also_known_as": [],
-    "alias_type": "local",
-    "origin_system": "Local registry option list",
-    "nci_concept_id": null,
-    "who_version_current": "N/A",
-    "maps_to_morphology_codes": [
-      "8804"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "The viii_morph option string for 8804. ICD-O-3.2's term is Epithelioid sarcoma, NOS. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
-    "coding_note": "viii_morph option string with no verbatim ICD-O-3.2 match (contract §2)."
-  },
-  {
     "alias": "Osteosarcoma",
     "full_form": "Osteosarcoma -> Osteosarcoma, NOS (9180)",
     "also_known_as": [],
@@ -1763,7 +1440,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "The commonest malignant bone tumour of adolescence. Coded Osteosarcoma, NOS (9180/3) unless the report names a subtype that has its own code. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "The commonest malignant bone tumour of adolescence. Coded Osteosarcoma, NOS (9180/3) unless the report names a subtype that has its own code.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9145, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1782,7 +1459,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Clinical shorthand for osteosarcoma. Confirm the report means osteosarcoma before using it: OS also abbreviates overall survival. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "Clinical shorthand for osteosarcoma. Confirm the report means osteosarcoma before using it: OS also abbreviates overall survival.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9145, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1801,7 +1478,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "The older name for osteosarcoma; coded Osteosarcoma, NOS (9180/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "The older name for osteosarcoma; coded Osteosarcoma, NOS (9180/3).",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9145, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1820,7 +1497,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "WHO 2020 codes conventional osteosarcoma 9180/3. A report that says central or medullary osteosarcoma is coded as written, 9186/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "WHO 2020 codes conventional osteosarcoma 9180/3. A report that says central or medullary osteosarcoma is coded as written, 9186/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C35870, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1839,27 +1516,8 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Chondrosarcoma grade 2 or 3, or with no grade stated, is 9220/3. Chondrosarcoma grade 1 is not coded here: ICD-O-3.2 puts it with atypical cartilaginous tumour at 9222/1, outside Group VIII, and the registrar has the question. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd9).",
+    "notes": "Chondrosarcoma grade 2 or 3, or with no grade stated, is 9220/3. Chondrosarcoma grade 1 is not coded here: ICD-O-3.2 puts it with atypical cartilaginous tumour at 9222/1, outside Group VIII, and the registrar has the question.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C2946, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
-  },
-  {
-    "alias": "Malignant chondroblastoma",
-    "full_form": "Malignant chondroblastoma -> Chondroblastoma, malignant (9230)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": "NCIT:C66799",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9230"
-    ],
-    "maps_to_iccc3_subgroup_id": "VIIIb",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g8_bone",
-    "tree_entry_node": "bn_document_inventory",
-    "clinical_alert": null,
-    "notes": "ICD-O-3.2 keeps 9230/3; WHO 2020 has no malignant chondroblastoma entity, so the tree has no branch to it. Coded as written.",
-    "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C66799, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
     "alias": "Ewing tumour",
@@ -1877,7 +1535,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Ewing sarcoma, coded 9364/3 since ICD-O-3.2. Not 9260: that number now means aneurysmal bone cyst, a benign lesion. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "Ewing sarcoma, coded 9364/3 since ICD-O-3.2. Not 9260: that number now means aneurysmal bone cyst, a benign lesion.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C4817, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1896,7 +1554,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Clinical shorthand for Ewing sarcoma, 9364/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "Clinical shorthand for Ewing sarcoma, 9364/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C4817, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1916,7 +1574,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An older umbrella for Ewing sarcoma, Askin tumour and peripheral neuroectodermal tumour. Ewing sarcoma and peripheral neuroectodermal tumour are 9364/3; a report using the term Askin tumour is 9365/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An older umbrella for Ewing sarcoma, Askin tumour and peripheral neuroectodermal tumour. Ewing sarcoma and peripheral neuroectodermal tumour are 9364/3; a report using the term Askin tumour is 9365/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C27291, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1935,7 +1593,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Peripheral neuroectodermal tumour of bone is Ewing sarcoma, 9364/3. PNET without 'peripheral' in a brain or spinal cord report is a different, Group III code. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "Peripheral neuroectodermal tumour of bone is Ewing sarcoma, 9364/3. PNET without 'peripheral' in a brain or spinal cord report is a different, Group III code.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9341, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1954,7 +1612,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 term on 9364/3, Ewing sarcoma. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd2).",
+    "notes": "An ICD-O-3.2 term on 9364/3, Ewing sarcoma.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9341, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1973,7 +1631,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Coded as written, 9365/3. A chest-wall tumour the report calls Ewing sarcoma is 9364/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd1).",
+    "notes": "Coded as written, 9365/3. A chest-wall tumour the report calls Ewing sarcoma is 9364/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C7542, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -1992,7 +1650,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Fibrosarcoma, NOS (8810/3), VIIId1 at a bone site. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXb1).",
+    "notes": "Fibrosarcoma, NOS (8810/3), VIIId1 at a bone site.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C3043, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2011,7 +1669,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "The older name for undifferentiated pleomorphic sarcoma of bone; coded 8830/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "The older name for undifferentiated pleomorphic sarcoma of bone; coded 8830/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C8563, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2030,7 +1688,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Malignant fibrous histiocytoma of bone, coded 8830/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "Malignant fibrous histiocytoma of bone, coded 8830/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C8563, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2049,7 +1707,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Coded 8830/3, the ICD-O-3.2 code carrying 'Undifferentiated high grade pleomorphic sarcoma of bone'. WHO 2020 prints 8802/3, which ICCC-3 has no bone range for; the registrar has the question. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "Coded 8830/3, the ICD-O-3.2 code carrying 'Undifferentiated high grade pleomorphic sarcoma of bone'. WHO 2020 prints 8802/3, which ICCC-3 has no bone range for; the registrar has the question.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C8563, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2068,7 +1726,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Undifferentiated pleomorphic sarcoma of bone, coded 8830/3. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXd5).",
+    "notes": "Undifferentiated pleomorphic sarcoma of bone, coded 8830/3.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C8563, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2258,7 +1916,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3), whose synonym is Round cell sarcoma, NOS. The registrar has the question. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3), whose synonym is Round cell sarcoma, NOS. The registrar has the question.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2277,7 +1935,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3).",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2296,7 +1954,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Sarcoma with BCOR genetic alterations; coded Small cell sarcoma (8803/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Sarcoma with BCOR genetic alterations; coded Small cell sarcoma (8803/3).",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2315,7 +1973,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3). At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "ICD-O-3.2 has no code for it. Coded Small cell sarcoma (8803/3).",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2334,7 +1992,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Coded Small cell sarcoma (8803/3) at a bone site. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Coded Small cell sarcoma (8803/3) at a bone site.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   },
   {
@@ -2410,7 +2068,7 @@
     "ihc_tree_id": "g8_bone",
     "tree_entry_node": "bn_document_inventory",
     "clinical_alert": null,
-    "notes": "Sarcoma, NOS (8800/3) when the report names no type; work through the tree if it does. At a bone site this is ICCC-3 Group VIII; off bone the same code is Group IX (IXe).",
+    "notes": "Sarcoma, NOS (8800/3) when the report names no type; work through the tree if it does.",
     "coding_note": "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026), NCIt NCIT:C9312, corrected to ICD-O-3.2 by the Group 8 build (design D1-D15)."
   }
 ]

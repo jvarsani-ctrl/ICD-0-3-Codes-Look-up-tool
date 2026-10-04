@@ -21,57 +21,55 @@ NOT_REGISTRABLE_POSSIBLE = (
     "Cancer is only possible on this evidence. Under the European registry rules a case "
     "that is only possibly cancer is not registered without pathology (%s, rule 4)." % VISSER)
 EVIDENCE_TIER = ["evidence_tests", "workup_status", "basis_evidence_tier"]
+# The conventional high-grade osteosarcoma radiograph, Menendez 2022, p. 99. The one copy:
+# the imaging node shows it and entry 9180 records it (generate_group08_entries.py).
+OSTEOSARCOMA_IMAGING_FEATURES = [
+    "A lesion inside the bone at the metaphysis of a long bone, with poorly defined "
+    "margins or permeative destruction",
+    "Cloud-like sclerotic (osteoid) matrix mineralisation",
+    "An aggressive periosteal reaction: sunburst spicules or a Codman triangle",
+]
 
 
-def code(label, morph, basis, reason, captures=None, satisfies=None, note=None, key="label"):
+def _tail(b, captures=None, note=None, negative=None):
+    """Append the optional keys every branch helper shares, in one fixed order."""
+    if note:
+        b["coding_note"] = note
+    if captures:
+        b["captures"] = captures
+    if negative:
+        b["negative"] = negative
+    return b
+
+
+def code(label, morph, basis, reason, captures=None, satisfies=None, note=None, key="label",
+         negative=None):
     b = {key: label, "morphology_code": morph, "behavior_code": "3",
          "basis_of_diagnosis": basis, "reason": reason}
     if satisfies:
         b["satisfies_tests"] = satisfies
-    if note:
-        b["coding_note"] = note
-    if captures:
-        b["captures"] = captures
-    return b
+    return _tail(b, captures, note, negative)
 
 
 def go(label, node, captures=None, note=None):
-    b = {"label": label, "next_node": node}
-    if note:
-        b["coding_note"] = note
-    if captures:
-        b["captures"] = captures
-    return b
+    return _tail({"label": label, "next_node": node}, captures, note)
 
 
 def excl(label, icdo, beh, term, reason, captures=None, note=None):
-    b = {"label": label,
-         "behaviour_exclusion": {"icdo_code": icdo, "icdo_behaviour": beh, "icdo_term": term,
-                                 "group_declares": "3", "reason": reason,
-                                 "registrar_decision_required": True}}
-    if note:
-        b["coding_note"] = note
-    if captures:
-        b["captures"] = captures
-    return b
+    return _tail({"label": label,
+                  "behaviour_exclusion": {"icdo_code": icdo, "icdo_behaviour": beh,
+                                          "icdo_term": term, "group_declares": "3",
+                                          "reason": reason,
+                                          "registrar_decision_required": True}},
+                 captures, note)
 
 
 def nonrep(label, reason, captures=None, note=None):
-    b = {"label": label, "non_reportable": True, "reason": reason}
-    if note:
-        b["coding_note"] = note
-    if captures:
-        b["captures"] = captures
-    return b
+    return _tail({"label": label, "non_reportable": True, "reason": reason}, captures, note)
 
 
 def refer(label, group, reason, captures=None, note=None, key="label"):
-    b = {key: label, "refer_group": group, "reason": reason}
-    if note:
-        b["coding_note"] = note
-    if captures:
-        b["captures"] = captures
-    return b
+    return _tail({key: label, "refer_group": group, "reason": reason}, captures, note)
 
 
 def node(node_id, node_type, step, step_label, question, hint, options, captured, note,
@@ -127,6 +125,15 @@ NODES = [
                 "basis_evidence_tier": "inadequate_specimen"},
                note="An inadequate specimen leaves the imaging as the best evidence; the "
                     "imaging line offers a route back to histology when tissue arrives."),
+            refer("The tumour arises in soft tissue, not bone — the mass is outside the bone "
+                  "and the cortex is intact", 9,
+                  "A sarcoma arising in soft tissue belongs to ICCC-3 Group IX, even where the "
+                  "same tumour in bone is Group VIII (Ewing sarcoma, fibrosarcoma, "
+                  "chondrosarcoma, osteosarcoma). Code the case from the Group IX (soft tissue "
+                  "sarcomas) tree.", {"tumour_origin": "soft_tissue"},
+                  note="Origin gate. The express lane enters at this node without asking the "
+                       "router's tumour_origin discriminator, and ICCC-2017 files many Group VIII "
+                       "codes in Group IX off bone (dual_group_rules 9364 and 9365)."),
         ],
         EVIDENCE_TIER,
         "Build contract §4. Five routes, the Group 6 rn_document_inventory idiom. Every "
@@ -193,6 +200,13 @@ NODES = [
             go("Tissue has since been obtained — a cytology report only", "bn_cytology",
                {"evidence_tests": ["Imaging", "Cytology"], "workup_status": "incomplete",
                 "basis_evidence_tier": "cytology"}),
+            go("No imaging report in the file either — only a referral letter or clinical note",
+               "bn_clinical_alias",
+               {"evidence_tests": ["Referral only"], "workup_status": "incomplete",
+                "basis_evidence_tier": "referral"},
+               note="Reached from an inadequate specimen or non-diagnostic cytology with no "
+                    "imaging report. Without this the only code here claimed Imaging as "
+                    "evidence; the referral node gives 8000/3 at basis 1 (Visser rule 5)."),
         ],
         EVIDENCE_TIER,
         "Visser Table 3 allows 9180/3 and 9220/3 at C40/C41 on clinical investigation; this "
@@ -211,12 +225,7 @@ NODES = [
         "Ultrasound CT MRI 2022;43(1):97-114, p. 99. Basis 2 per Visser 2023 Table 3. "
         "Histology stays outstanding on purpose: biopsy gives the subtype and is standard "
         "before treatment.",
-        imaging_features=[
-            "A lesion inside the bone at the metaphysis of a long bone, with poorly defined "
-            "margins or permeative destruction",
-            "Cloud-like sclerotic (osteoid) matrix mineralisation",
-            "An aggressive periosteal reaction: sunburst spicules or a Codman triangle",
-        ],
+        imaging_features=OSTEOSARCOMA_IMAGING_FEATURES,
         diversion_criteria=[
             {"feature": "The matrix shows cartilage-type 'rings and arcs' calcification",
              "reason": "Rings-and-arcs calcification is the cartilage-matrix pattern. "
@@ -324,12 +333,23 @@ NODES = [
                        "9120-9175, 000-809). WHO 2020 Table 1 lists epithelioid "
                        "haemangioendothelioma 9133/3, angiosarcoma 9120/3 and leiomyosarcoma "
                        "8890/3 in the bone chapter."),
-            refer("Lymphoma, plasmacytoma or Langerhans cell histiocytosis in bone", 2,
+            refer("Lymphoma or plasmacytoma in bone", 2,
                   "Haematolymphoid tumours of bone belong to ICCC-3 Group II at every site. "
                   "Code the case from the Group II (lymphomas) tree.",
                   {"tissue_line": "haematolymphoid"},
                   note="WHO 2020 Table 1 'Haematopoietic neoplasms of bone'; ICCC-2017 ranges "
                        "12-23 are site-independent for these codes."),
+            refer("Langerhans cell histiocytosis in bone (eosinophilic granuloma)", 2,
+                  "Langerhans cell histiocytosis is coded in ICCC-3 Group II, not here. It is not "
+                  "always malignant: ICD-O-3.2 codes a single bone lesion (monostotic) 9751/1 "
+                  "and disseminated disease 9751/3. Code the case from the Group II tree, which "
+                  "decides the behaviour.",
+                  {"tissue_line": "langerhans_cell_histiocytosis"},
+                  note="icdo32.sqlite: 9751/1 'Langerhans cell histiocytosis, NOS' with Related "
+                       "terms monostotic and polystotic; 9751/3 'disseminated'. group_02_dt.json "
+                       "carries both. The engine's refer() banner still says 'This case is a "
+                       "malignancy'; this reason corrects it beneath. Changing the banner is an "
+                       "engine-wide decision."),
             go("A metastatic deposit from a primary tumour elsewhere", "bn_metastasis",
                {"tissue_line": "metastasis"}),
             code("Sarcoma, type not stated", "8800", 7,
@@ -358,6 +378,10 @@ NODES = [
                  "high-grade osteosarcoma with no subtype named", "9180", 7,
                  "Recorded as Osteosarcoma, NOS (9180/3), WHO 2020's code for conventional "
                  "osteosarcoma."),
+            code("Central or medullary osteosarcoma (the report uses this term)", "9186", 7,
+                 "Recorded as Central osteosarcoma, NOS (9186/3), the report's own term.",
+                 note="Design D9: 'conventional' goes to 9180/3; 'central', 'conventional "
+                      "central' or 'medullary' is coded as written."),
             code("Chondroblastic osteosarcoma", "9181", 7,
                  "Recorded as Chondroblastic osteosarcoma (9181/3), the report's own term."),
             code("Fibroblastic osteosarcoma", "9182", 7,
@@ -436,9 +460,11 @@ NODES = [
                    % VISSER, {"workup_status": "not registrable"}),
         ],
         [],
-        "WHO 2020 Table 1 chondrogenic tumours: ACT 9222/1, chondrosarcoma grade 1 9222/3*, "
+        "WHO 2020 Table 1 chondrogenic tumours: atypical cartilaginous tumour 9222/1, "
+        "chondrosarcoma grade 1 9222/3*, "
         "grade 2 and 3 9220/3, periosteal 9221/3, clear cell 9242/3, mesenchymal 9240/3, "
-        "dedifferentiated 9243/3. Anderson & Doyle 2021, p. 652: ACT for the appendicular "
+        "dedifferentiated 9243/3. Anderson & Doyle 2021, p. 652: atypical cartilaginous "
+        "tumour for the appendicular "
         "skeleton, chondrosarcoma grade 1 for axial tumours.",
     ),
     node(
@@ -494,7 +520,8 @@ NODES = [
             code("Askin tumour (the report uses this term)", "9365", 7,
                  "Recorded as Askin tumor (9365/3), the report's own term. A chest-wall "
                  "tumour reported as Ewing sarcoma is coded Ewing sarcoma instead.",
-                 satisfies=["IHC"], note="Design D2."),
+                 note="Design D2. No satisfies_tests: the option asserts a term, not a "
+                      "stain, so IHC stays outstanding as on the 'Ewing sarcoma named' option."),
             code("CIC-rearranged sarcoma, sarcoma with a BCOR genetic alteration, or round "
                  "cell sarcoma with an EWSR1–non-ETS fusion", "8803", 7,
                  "Recorded as Small cell sarcoma (8803/3), whose ICD-O-3.2 synonym is Round "
@@ -586,21 +613,30 @@ NODES = [
             code(["ETV4"], "8803", 7,
                  "ETV4 is highly specific for CIC-rearranged sarcoma. Recorded as Small cell "
                  "sarcoma (8803/3); ICD-O-3.2 has no code of its own.", key="positive",
-                 note="Kallen & Hornick 2022, p. 34, figure caption."),
+                 note="Kallen & Hornick 2022, p. 34, figure caption. negative NKX2-2: "
+                      "CIC-rearranged sarcoma is NKX2-2 negative (p. 33), so a panel positive "
+                      "for both is discordant and falls to 8002.",
+                 negative=["NKX2-2"]),
             code(["BCOR"], "8803", 7,
                  "Diffuse nuclear BCOR marks sarcoma with BCOR genetic alteration. Recorded as "
                  "Small cell sarcoma (8803/3); ICD-O-3.2 has no code of its own.",
                  key="positive",
                  note="Kallen & Hornick 2022, p. 33: highly sensitive, moderately specific; "
                       "poorly differentiated synovial sarcoma also expresses BCOR, which the "
-                      "SS18::SSX rule above catches first when tested."),
+                      "SS18::SSX rule above catches first when tested. negative NKX2-2: "
+                      "Ewing sarcoma is BCOR negative (Table 2, p. 31), so a panel positive "
+                      "for both is discordant and falls to 8002.",
+                 negative=["NKX2-2"]),
             code(["CD99 (strong, diffuse, membranous)", "NKX2-2"], "9364", 7,
                  "Strong diffuse membranous CD99 with nuclear NKX2-2 is the Ewing sarcoma "
                  "immunophenotype. Recorded as Ewing sarcoma (9364/3).", satisfies=["IHC"],
                  key="positive",
                  note="Kallen & Hornick 2022, p. 31. Placed after every fusion rule: CD99 "
                       "and NKX2-2 are not exclusive to Ewing sarcoma, and a demonstrated "
-                      "non-ETS fusion overrides them (contract §4)."),
+                      "non-ETS fusion overrides them (contract §4). negative ETV4 and BCOR: "
+                      "Ewing sarcoma is negative for both (Table 2, p. 31), so a discordant "
+                      "panel falls to 8002.",
+                 negative=["ETV4", "BCOR"]),
         ],
         nos_fallback={
             "code": "8002", "behavior_code": "3", "name": "Malignant tumor, small cell type",
@@ -658,8 +694,8 @@ NODES = [
                  "8003", 7, "Recorded as Malignant tumor, giant cell type (8003/3)."),
         ],
         [],
-        "WHO 2020 Table 1 osteoclastic giant cell-rich tumours: GCTB 9250/1, GCTB malignant "
-        "9250/3. Anderson & Doyle 2021, p. 653: G34W positivity is not synonymous with "
+        "WHO 2020 Table 1 osteoclastic giant cell-rich tumours: giant cell tumour of bone "
+        "9250/1, giant cell tumour of bone, malignant 9250/3. Anderson & Doyle 2021, p. 653: G34W positivity is not synonymous with "
         "benignity.",
     ),
     node(
@@ -768,6 +804,17 @@ NODES = [
                   "tree."),
             refer("Renal tumour (Wilms tumour, clear cell sarcoma of the kidney)", 6,
                   "Code the primary renal tumour from the Group VI tree."),
+            refer("Retinoblastoma", 5, "Code the primary retinoblastoma from the Group V tree."),
+            refer("Liver tumour (hepatoblastoma, hepatocellular carcinoma)", 7,
+                  "Code the primary liver tumour from the Group VII tree."),
+            refer("Germ cell tumour", 10, "Code the primary germ cell tumour from the Group X "
+                  "tree."),
+            refer("Carcinoma or melanoma (for example nasopharyngeal carcinoma)", 11,
+                  "Code the primary carcinoma or melanoma from the Group XI tree."),
+            go("A bone sarcoma that has spread from another bone (osteosarcoma, Ewing sarcoma, "
+               "chondrosarcoma)", "bn_histology_line",
+               note="A bone sarcoma metastatic to bone is still Group VIII; code it by its "
+                    "line from the primary's histology."),
             refer("Primary not found, and the tumour type is not stated", 12,
                   "A metastasis whose primary is not found and whose type is not stated is "
                   "an unspecified malignancy of unknown primary site, which belongs to "

@@ -91,8 +91,10 @@ Agreed with the Group VII and Group IX sessions before any edit:
 
 - **Router:** `groups["8"]` built; `dual_group_rules["9260"]` was dead and is now
   `"9364"` and `"9365"`, closing TODO §8.1; `"8000-8005"` gains a C40–C41 → VIIIe branch,
-  without which a malignant bone neoplasm NOS fell to Group XII; the `tumour_origin` note
-  re-pointed to `9364`.
+  recording that 8000-8005 at a bone site is VIIIe; the `tumour_origin` note re-pointed to
+  `9364`. None of these rules changes what the tool shows: app.js reads resolveGroup() only
+  for its `note`, which these rules do not carry, and nothing reads the routed group. The
+  output's group and subgroup come from the tree and the entry.
 - **Topography:** six bone codes added: C40.0, C40.1, **C40.2**, C40.3, C40.8, C41.8.
   Before this, the long bones of the lower limb, where most paediatric osteosarcoma and Ewing
   sarcoma arise, could not be selected at all.

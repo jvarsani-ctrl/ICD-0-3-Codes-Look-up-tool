@@ -45,7 +45,7 @@ WHO 2020 has no Askin entity; it is chest-wall Ewing sarcoma. ICD-O-3.2 still ca
 | WHO 2020 Table 1 | Atypical cartilaginous tumour `9222/1` (appendicular); **Chondrosarcoma, grade 1 `9222/3`**, marked "approved by the IARC/WHO Committee for ICD-O at its meeting in January 2020" |
 | ICD-O-3.2 final, and IARC *New codes and their terms* p. 2 | `9222/1` carries both *Atypical cartilaginous tumor* and *Chondrosarcoma, grade 1 (C40._, C41._)*. **No `9222/3`.** |
 | ICCC-2017 range 61 | admits `9222` at behaviour 3 |
-| Anderson & Doyle 2021, p. 652 | ACT restricted to the appendicular skeleton; "chondrosarcoma, grade 1" for axial tumours |
+| Anderson & Doyle 2021, p. 652 | Atypical cartilaginous tumour restricted to the appendicular skeleton; "chondrosarcoma, grade 1" for axial tumours |
 
 Options:
 - **A — ICD-O-3.2 literally.** Grade 1 at any site → behaviour exclusion `9222/1`, registrar

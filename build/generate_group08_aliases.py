@@ -21,18 +21,19 @@ from __future__ import annotations
 
 import json
 import os
-import sqlite3
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_database as bd  # noqa: E402
 import generate_group_inventory as gi  # noqa: E402
+import group08_tree  # noqa: E402
 
 DT = REPO / "data" / "database" / "group_08_dt.json"
 OUT = REPO / "data" / "aliases" / "aliases_group_08.json"
 ICDO_PATH = Path(os.environ.get("ICDO_DB", str(gi.DEFAULT_ICDO)))
-TREE, ENTRY = "g8_bone", "bn_document_inventory"
+TREE, ENTRY = group08_tree.TREE_ID, group08_tree.ENTRY
 
 # ICD-O-3.2 terms on Group VIII stems that would mislead in a bone search.
 EXCLUDED_TERMS = {
@@ -49,11 +50,6 @@ EXCLUDED_TERMS = {
     "Malignant tumor, fusiform cell type": "generic descriptor",
     "Fibroxanthoma, malignant": "a soft tissue term",
 }
-
-# Codes whose aliases also carry a routing sentence: the same code is Group IX off bone.
-DUAL_GROUP = {"9364": "IXd2", "9365": "IXd1", "9180": "IXd9", "9220": "IXd9", "9240": "IXd9",
-              "8810": "IXb1", "8811": "IXb1", "8830": "IXd5", "8800": "IXe", "8801": "IXe",
-              "8803": "IXe", "8804": "IXe", "8805": "IXe"}
 
 # Appended to every ICD-O-3.2-term alias on the code.
 NOTE_SUFFIX = {
@@ -86,10 +82,6 @@ CURATED = [
      "Chondrosarcoma grade 2 or 3, or with no grade stated, is 9220/3. Chondrosarcoma grade 1 "
      "is not coded here: ICD-O-3.2 puts it with atypical cartilaginous tumour at 9222/1, "
      "outside Group VIII, and the registrar has the question."),
-    ("Malignant chondroblastoma", ["9230"], "descriptive", "ICD-O-3.2", "NCIT:C66799",
-     "historical",
-     "ICD-O-3.2 keeps 9230/3; WHO 2020 has no malignant chondroblastoma entity, so the tree "
-     "has no branch to it. Coded as written."),
     ("Ewing tumour", ["9364"], "eponym", "UK/East African clinical spelling", "NCIT:C4817",
      "WHO 2020",
      "Ewing sarcoma, coded 9364/3 since ICD-O-3.2. Not 9260: that number now means aneurysmal "
@@ -185,8 +177,6 @@ NEEDS_TREE = {"Bone cancer", "Bone tumour", "Malignant bone tumour", "Bone sarco
 REDCAP_ONLY = [
     ("Central osteosarcoma", "9186",
      "The viii_morph option string for 9186. ICD-O-3.2's term is Central osteosarcoma, NOS."),
-    ("Epithelioid sarcoma", "8804",
-     "The viii_morph option string for 8804. ICD-O-3.2's term is Epithelioid sarcoma, NOS."),
 ]
 
 
@@ -194,27 +184,26 @@ def main() -> int:
     dt = json.loads(DT.read_text(encoding="utf-8"))
     entries = {(e["morphology_code"], e["behavior_code"]): e for e in dt["morphology_entries"]}
     by_code = {c: e for (c, _), e in entries.items()}
-    con = sqlite3.connect("file:%s?mode=ro" % ICDO_PATH, uri=True)
-    terms = {}
-    for code4, beh, level, term, obs in con.execute(
-            "SELECT code4, behaviour, level, term, obs FROM icd_o_3_2_morphology "
-            "WHERE code4 IS NOT NULL ORDER BY source_row"):
-        if (str(code4), str(beh)) in entries:
-            terms.setdefault((str(code4), str(beh)), []).append((level, term, obs))
-    con.close()
+    # The express lane enters the tree, so an alias is useful only for a code the tree can
+    # emit. Codes kept off the tree (design D14) get no alias.
+    ctx = bd.DTContext(DT, dt, 8)
+    emitted = {code for code, *_ in ctx.emissions()} | {
+        bd.as_code(n["nos_fallback"].get("code")) for n in ctx.nodes.values()
+        if isinstance(n.get("nos_fallback"), dict)}
+    index, err = bd.load_icdo32(ICDO_PATH.parent.parent)
+    if err:
+        raise SystemExit("ERROR: %s" % err)
+    terms = {key: [(level, term, obs) for term, (level, obs) in index[key].items()]
+             for key in entries if key in index}
 
     out, seen = [], set()
 
     def add(alias, codes, alias_type, origin, nci, who, notes, coding_note, aka=None):
-        if alias.lower() in seen:
+        if not set(codes) <= emitted or alias.lower() in seen:
             return
         seen.add(alias.lower())
         e0 = by_code[codes[0]]
         names = " / ".join("%s (%s)" % (by_code[c]["morphology_name"], c) for c in codes)
-        route = ""
-        if codes[0] in DUAL_GROUP:
-            route = (" At a bone site this is ICCC-3 Group VIII; off bone the same code is "
-                     "Group IX (%s)." % DUAL_GROUP[codes[0]])
         out.append({
             "alias": alias,
             "full_form": "%s -> %s" % (alias, names),
@@ -229,7 +218,7 @@ def main() -> int:
             "ihc_tree_id": TREE,
             "tree_entry_node": ENTRY,
             "clinical_alert": None,
-            "notes": notes + route,
+            "notes": notes,
             "coding_note": coding_note,
         })
 
@@ -259,6 +248,12 @@ def main() -> int:
             "Curated from 'Group 8 — Alias Build Instructions.md' (14 May 2026)%s, corrected "
             "to ICD-O-3.2 by the Group 8 build (design D1-D15)."
             % (", NCIt " + nci if nci else ""))
+    # The express-lane search is a substring match, so 'X, NOS' adds nothing to an index
+    # that already holds 'X' for the same code; it only grows the startup index (TODO §23).
+    bare = {(a["alias"].lower(), tuple(a["maps_to_morphology_codes"])) for a in out}
+    out = [a for a in out if not (a["alias"].endswith(", NOS") and
+                                  (a["alias"][:-5].lower(), tuple(a["maps_to_morphology_codes"]))
+                                  in bare)]
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("wrote %s (%d aliases)" % (OUT, len(out)), file=sys.stderr)
     return 0

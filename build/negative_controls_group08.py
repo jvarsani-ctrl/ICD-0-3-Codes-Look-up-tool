@@ -10,7 +10,7 @@ broken data (Group 6 build contract §8.1). Nothing on disk is changed.
 
 Exit status 1 if any control is not caught or any probe fails.
 """
-import copy, json, os, shutil, sys, tempfile
+import copy, json, os, sys, tempfile
 from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "build"))
@@ -18,6 +18,7 @@ import build_database as bd
 LAYER1 = Path(os.environ["ICD_LAYER1"])
 base = json.loads((REPO / "data/database/group_08_dt.json").read_text())
 aliases = json.loads((REPO / "data/aliases/aliases_group_08.json").read_text())
+router = json.loads((REPO / "data/shared/presentation_router.json").read_text())
 
 def ctx_of(data):
     return bd.DTContext(REPO / "data/database/group_08_dt.json", data, 8)
@@ -25,41 +26,47 @@ def ctx_of(data):
 def node(d, nid):
     return next(n for t in d["decision_trees"] for n in t["nodes"] if n["node_id"] == nid)
 
-def run(check, data, alias_list=None):
-    tmp = Path(tempfile.mkdtemp())
-    (tmp / "data/aliases").mkdir(parents=True)
-    (tmp / "data/aliases/aliases_group_08.json").write_text(json.dumps(alias_list if alias_list is not None else aliases))
-    if check is bd.check_group8_no_retired_ewing_code:
-        res = check(ctx_of(data), LAYER1, tmp)
-    else:
-        res = check(ctx_of(data))
-    shutil.rmtree(tmp)
-    return res
+def run(check, data, alias_list=None, router_doc=None):
+    if check is not bd.check_group8_no_retired_ewing_code:
+        return check(ctx_of(data))
+    # Rule 1 alone reads files beside the tree: give it a throwaway repo holding them.
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        for rel, doc in (("data/shared/presentation_router.json", router_doc or router),
+                         ("data/aliases/aliases_group_08.json",
+                          alias_list if alias_list is not None else aliases)):
+            (tmp / rel).parent.mkdir(parents=True, exist_ok=True)
+            (tmp / rel).write_text(json.dumps(doc))
+        return check(ctx_of(data), LAYER1, tmp)
 
 controls = []
-def ctl(name, check, mutate, alias_mutate=None):
-    d = copy.deepcopy(base); a = copy.deepcopy(aliases)
-    mutate(d)
-    if alias_mutate: alias_mutate(a)
-    res = run(check, d, a)
+def ctl(name, check, mutate=None, alias_mutate=None, router_mutate=None):
+    d = copy.deepcopy(base); a = copy.deepcopy(aliases); r = copy.deepcopy(router)
+    if mutate: mutate(d)
+    if alias_mutate: a = alias_mutate(a) or a
+    if router_mutate: router_mutate(r)
+    res = run(check, d, a, r)
     fails = [m for lvl, m in res if lvl == bd.FAIL]
     controls.append((name, bool(fails), fails[0][:170] if fails else res[0][1][:170]))
 
-def m(f): return f
 # correct data first: every rule must pass
 for chk in (bd.check_group8_no_retired_ewing_code, bd.check_group8_no_pathology_codes, bd.check_group8_ewing_requires_partner):
     res = run(chk, copy.deepcopy(base))
     controls.append(("PROBE correct data: " + chk.__name__, any(l == bd.FAIL for l, _ in res), res[0][1][:170]))
 
 def r1a(d): node(d, "bn_round_cell")["options"][0]["morphology_code"] = "9260"
-def r1b(d): pass
 def r1b_a(a): next(x for x in a if x["alias"] == "Ewing sarcoma")["maps_to_morphology_codes"] = ["9260"]
 def r1c(d): next(o for o in node(d, "bn_giant_cell")["options"] if "behaviour_exclusion" in o and o["behaviour_exclusion"]["icdo_code"] == "9260")["behaviour_exclusion"]["icdo_behaviour"] = "3"
 def r1d(d): node(d, "bn_round_cell_ihc")["nos_fallback"]["code"] = "9260"
 ctl("R1-A a round cell option emits 9260", bd.check_group8_no_retired_ewing_code, r1a)
-ctl("R1-B the 'Ewing sarcoma' alias maps to 9260", bd.check_group8_no_retired_ewing_code, r1b, r1b_a)
+ctl("R1-B the 'Ewing sarcoma' alias maps to 9260", bd.check_group8_no_retired_ewing_code, alias_mutate=r1b_a)
 ctl("R1-C the aneurysmal bone cyst exclusion claims 9260/3", bd.check_group8_no_retired_ewing_code, r1c)
 ctl("R1-D the round cell fallback names 9260", bd.check_group8_no_retired_ewing_code, r1d)
+def r1e_a(a):
+    r1b_a(a); return {"aliases": a}
+def r1f_r(r): r["dual_group_rules"]["9260"] = copy.deepcopy(r["dual_group_rules"]["9364"]); r["dual_group_rules"]["9260"]["codes"] = ["9260"]
+ctl("R1-E dict-form alias file maps Ewing sarcoma to 9260", bd.check_group8_no_retired_ewing_code, alias_mutate=r1e_a)
+ctl("R1-F the router regains a 9260 dual-group rule", bd.check_group8_no_retired_ewing_code, router_mutate=r1f_r)
 
 def r2a(d): node(d, "bn_imaging_os")["morphology_code"] = "9364"
 def r2b(d): node(d, "bn_imaging_line")["options"][1]["basis_of_diagnosis"] = 7

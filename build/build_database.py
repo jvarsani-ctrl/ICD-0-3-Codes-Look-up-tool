@@ -763,6 +763,11 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     GROUP8: {"3"},
 }
 
+# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip()
+# INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
+# this one set: a group in one and not the other would get neither name check.
+ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP8}
+
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
     7: "VII", 8: "VIII", 9: "IX", 10: "X", 11: "XI", 12: "XII",
@@ -2668,7 +2673,7 @@ def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
     flag in the file exempting itself (rule 8).
     """
     out = []
-    if ctx.group in (GROUP3, GROUP4, GROUP6, GROUP8):
+    if ctx.group in ROUND_TRIP_GROUPS:
         return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
                        "against icdo32.sqlite instead of against the REDCap option file "
                        "(contract §5.2 for Group 3; §1.1a for Group 4; Group 6 build "
@@ -6033,7 +6038,7 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     """
     # GROUP8 joins the guard (Group 8 build contract §1, §7): morphology_name is the
     # ICD-O-3.2 preferred term and viii_morph drifts from it on nine codes (§2).
-    if ctx.group not in (GROUP3, GROUP4, GROUP6, GROUP8):
+    if ctx.group not in ROUND_TRIP_GROUPS:
         return []
     index, err = load_icdo32(layer1)
     if err:
@@ -8095,18 +8100,33 @@ def check_group8_no_retired_ewing_code(ctx: DTContext, layer1: Path, repo: Path)
                 out.append((FAIL, "morphology entry names %s in %s — no Group VIII entry may "
                                   "carry the retired Ewing sarcoma number"
                             % (GROUP8_RETIRED_CODE, key)))
+    # Both alias-file shapes, as check_alias_cross_references() reads them. A missing file
+    # is load_json()'s NOTE and is skipped; only a FAIL is carried.
     alias_path = Path(repo) / "data" / "aliases" / "aliases_group_08.json"
-    if alias_path.exists():
-        try:
-            aliases = json.loads(alias_path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError) as exc:
-            return out + [(FAIL, "GROUP 8 RULE 1 could not read %s: %s" % (alias_path.name, exc))]
-        for a in aliases if isinstance(aliases, list) else []:
-            if GROUP8_RETIRED_CODE in [str(c) for c in a.get("maps_to_morphology_codes") or []]:
-                seen += 1
-                out.append((FAIL, "alias %r maps to %s, the retired Ewing sarcoma number; "
-                                  "Ewing sarcoma is %s"
-                            % (a.get("alias"), GROUP8_RETIRED_CODE, GROUP8_EWING_CODE)))
+    aliases, found = load_json(alias_path)
+    out.extend(f for f in found if f[0] == FAIL)
+    if isinstance(aliases, dict):
+        aliases = aliases.get("aliases")
+    if aliases is not None and not isinstance(aliases, list):
+        return out + [(FAIL, "GROUP 8 RULE 1: %s holds no alias list, so no alias could be "
+                             "checked" % alias_path.name)]
+    for a in aliases or []:
+        if isinstance(a, dict) and GROUP8_RETIRED_CODE in [
+                str(c) for c in a.get("maps_to_morphology_codes") or []]:
+            seen += 1
+            out.append((FAIL, "alias %r maps to %s, the retired Ewing sarcoma number; "
+                              "Ewing sarcoma is %s"
+                        % (a.get("alias"), GROUP8_RETIRED_CODE, GROUP8_EWING_CODE)))
+    # The router held the stale 9260 rule until this build (docs/TODO.md §8.1, closed).
+    router, found = load_json(Path(repo) / "data" / "shared" / "presentation_router.json")
+    out.extend(f for f in found if f[0] == FAIL)
+    for key, rule in sorted(((router or {}).get("dual_group_rules") or {}).items()):
+        if isinstance(rule, dict) and GROUP8_RETIRED_CODE in [str(c) for c in
+                                                              rule.get("codes") or []]:
+            seen += 1
+            out.append((FAIL, "presentation_router.json dual_group_rules[%r] routes %s, the "
+                              "retired Ewing sarcoma number; Ewing sarcoma is %s"
+                        % (key, GROUP8_RETIRED_CODE, GROUP8_EWING_CODE)))
     if not out:
         out.append((OK, "GROUP 8 RULE 1: %d reference(s) to %s, all at a behaviour ICD-O-3.2 "
                         "carries (%s); no entry or alias names the retired Ewing sarcoma "
@@ -8124,33 +8144,34 @@ def _group8_terminals_by_evidence(ctx: DTContext):
     terminal says about itself, which is why rule 2 reads it here rather than trusting the
     branch's own basis_of_diagnosis.
     """
+    def after(holder, ev):
+        cap = holder.get("captures") if isinstance(holder.get("captures"), dict) else {}
+        return tuple(cap["evidence_tests"]) if "evidence_tests" in cap else ev
+
     for tree in ctx.trees:
-        nodes = {n.get("node_id"): n for n in tree.get("nodes") or [] if isinstance(n, dict)}
-        start = (tree.get("entry_node"), None)
-        seen, stack = set(), [start]
+        seen, stack = set(), [(tree.get("entry_node"), None)]
         while stack:
             node_id, ev = stack.pop()
-            if (node_id, ev) in seen or node_id not in nodes:
+            node = ctx.nodes.get(node_id)
+            if node is None or (node_id, ev) in seen:
                 continue
             seen.add((node_id, ev))
-            node = nodes[node_id]
-            branches = list(node.get("options") or []) + list(node.get("resolution_logic") or [])
-            if node.get("node_type") == "imaging_pathway":
-                branches.append(node)
-            fb = node.get("nos_fallback")
-            if isinstance(fb, dict):
-                branches.append({"morphology_code": fb.get("code"), "_fallback": True})
-            for b in branches:
-                if not isinstance(b, dict):
-                    continue
-                cap = b.get("captures") if isinstance(b.get("captures"), dict) else {}
-                after = tuple(cap["evidence_tests"]) if "evidence_tests" in cap else ev
+            for b, _ in _branch_containers(node):
+                ev_b = after(b, ev)
                 if as_code(b.get("morphology_code")):
-                    yield node_id, b, after
-                for nxt_key in ("next_node", "insufficient_next_node"):
-                    nxt = b.get(nxt_key)
-                    if isinstance(nxt, str) and (b is not node or nxt_key == "insufficient_next_node"):
-                        stack.append((nxt, after if b is not node else ev))
+                    yield node_id, b, ev_b
+                if isinstance(b.get("next_node"), str):
+                    stack.append((b["next_node"], ev_b))
+            # imaging_pathway is its own terminal when the features hold, and falls through
+            # to insufficient_next_node with the evidence it arrived with when they do not.
+            if node.get("node_type") == "imaging_pathway":
+                if as_code(node.get("morphology_code")):
+                    yield node_id, node, after(node, ev)
+                if isinstance(node.get("insufficient_next_node"), str):
+                    stack.append((node["insufficient_next_node"], ev))
+            fb = node.get("nos_fallback")
+            if isinstance(fb, dict) and as_code(fb.get("code")):
+                yield node_id, {"morphology_code": fb.get("code"), "_fallback": True}, ev
 
 
 def check_group8_no_pathology_codes(ctx: DTContext):

@@ -28,13 +28,13 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import sqlite3
 import sys
 from collections import Counter
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_database as bd  # noqa: E402
 import generate_group_inventory as gi  # noqa: E402
 import group08_tree  # noqa: E402
 
@@ -42,8 +42,6 @@ OUT_PATH = REPO / "data" / "database" / "group_08_dt.json"
 ICCC_PATH = Path(os.environ.get("ICCC_DB", str(gi.DEFAULT_ICCC)))
 ICDO_PATH = Path(os.environ.get("ICDO_DB", str(gi.DEFAULT_ICDO)))
 
-CONTRACT = "docs/group_08_build_contract.md"
-SPEC = "docs/superpowers/specs/2026-10-02-group-08-bone-code-decisions-design.md"
 WHO2020 = ("WHO Classification of Tumours Editorial Board, Soft Tissue and Bone Tumours, "
            "5th ed., 2020, Table 1, as reproduced with WHO/IARC permission in the ICCR "
            "dataset 'Primary tumour in bone - resection', histological tumour type note, "
@@ -62,13 +60,8 @@ GENERATED_NOTE = (
     "file or the Diagnostic Pathway document (contract §1)."
 )
 
-FIELD_ORDER = [
-    "morphology_code", "morphology_name", "iccc3_subgroup_id", "iccc3_subgroup_name",
-    "who_version", "behavior_code", "diagnostic_tests_required", "ihc_markers_required",
-    "ihc_markers_exclude", "imaging_sufficient", "imaging_features", "nos_fallback_code",
-    "nos_fallback_name", "clinical_alert", "coding_note", "code_neutral_molecular",
-    "redcap_value", "primary_sites", "topography_dependent", "topography_routing_note",
-]
+# Field order is the validator's own list (Decision tree master §2).
+FIELD_ORDER = bd.MORPHOLOGY_FIELDS
 
 # viii_morph option strings that differ from the ICD-O-3.2 preferred term at /3, or are
 # missing for a /3 code the tool emits (contract §2). Generated on 2 Oct 2026 by comparing
@@ -119,15 +112,8 @@ def note(*parts: str) -> str:
 ANNOTATIONS: dict[str, dict] = {
     "9180": {
         "who_version": "WHO 2020",
-        "diagnostic_tests_required": HISTOLOGY,
         "imaging_sufficient": True,
-        "imaging_features": [
-            "Intramedullary lesion of the metaphysis of a long bone with a wide zone of "
-            "transition (moth-eaten or permeative destruction) (Menendez, p. 99)",
-            "Sclerotic, cloud-like mineralised osteoid matrix (Menendez, p. 99)",
-            "Aggressive periosteal reaction: sunburst spiculation or a Codman triangle "
-            "(Menendez, p. 99)",
-        ],
+        "imaging_features": group08_tree.OSTEOSARCOMA_IMAGING_FEATURES,
         "coding_note": note(
             GENERATED_NOTE,
             "Osteosarcoma, NOS is the code for conventional osteosarcoma in WHO 2020 (%s:"
@@ -145,49 +131,39 @@ ANNOTATIONS: dict[str, dict] = {
             " outstanding - biopsy is standard before treatment and gives the subtype.",
         ),
     },
-    "9181": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9181": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Chondroblastic osteosarcoma: a conventional osteosarcoma subtype by"
                  " predominant matrix (%s, p. 99). WHO 2020 Table 1 does not print it"
                  " separately; ICD-O-3.2 keeps the code live, so a report naming the"
                  " subtype is coded here as written (design D8)." % MENENDEZ)},
-    "9182": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9182": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Fibroblastic osteosarcoma: a conventional osteosarcoma subtype by"
                  " predominant matrix (%s, p. 99). Coded as written (design D8)." % MENENDEZ)},
-    "9183": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9183": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Telangiectatic osteosarcoma. %s, p. 653: small cell and telangiectatic"
                  " osteosarcoma 'are now described as variants of osteosarcoma rather than"
                  " as separate entities', and WHO 2020 Table 1 lists the variant under"
                  " 9180/3. ICD-O-3.2 keeps 9183/3 live; coded as written (design D8)."
                  % ANDERSON)},
-    "9184": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9184": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Osteosarcoma in Paget disease of bone; ICD-O-3.2 synonym 'Secondary"
                  " osteosarcoma', WHO 2020 Table 1 'Secondary osteosarcoma 9184/3'. The"
                  " tree reaches it on the report's own term 'secondary osteosarcoma' or"
                  " 'osteosarcoma in Paget disease'.")},
-    "9185": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9185": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Small cell osteosarcoma: a small round cell tumour that makes osteoid,"
                  " the principal Ewing sarcoma mimic in bone (Diagnostic Pathway §4D)."
                  " WHO 2020 lists it under 9180/3 (%s, p. 653); coded as written (design"
                  " D8)." % ANDERSON)},
-    "9187": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9187": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Low grade central osteosarcoma, WHO 2020 Table 1 9187/3.")},
-    "9192": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Parosteal osteosarcoma, WHO 2020 Table 1"
+    "9192": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Parosteal osteosarcoma, WHO 2020 Table 1"
                                  " 9192/3; a surface osteosarcoma.")},
-    "9193": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Periosteal osteosarcoma, WHO 2020 Table 1"
+    "9193": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Periosteal osteosarcoma, WHO 2020 Table 1"
                                  " 9193/3; a surface osteosarcoma.")},
-    "9194": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "High grade surface osteosarcoma, WHO 2020"
+    "9194": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "High grade surface osteosarcoma, WHO 2020"
                                  " Table 1 9194/3.")},
-    "9220": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9220": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Chondrosarcoma, NOS. WHO 2020 Table 1 codes chondrosarcoma grade 2 and"
                  " grade 3 to 9220/3, and ICD-O-3.2 carries both as Related terms here."
                  " Chondrosarcoma grade 1 is NOT coded here: ICD-O-3.2 places it under"
@@ -195,23 +171,19 @@ ANNOTATIONS: dict[str, dict] = {
                  " chondrosarcoma of grade 2 or 3 is coded here too.",
                  "Not imaging-sufficient in this build despite %s Table 3 (design D10)."
                  % VISSER)},
-    "9221": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Periosteal chondrosarcoma, WHO 2020 Table"
+    "9221": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Periosteal chondrosarcoma, WHO 2020 Table"
                                  " 1 9221/3; ICD-O-3.2 Related term 'Juxtacortical"
                                  " chondrosarcoma'.")},
-    "9240": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "code_neutral_molecular": True,
+    "9240": {"who_version": "WHO 2020",
              "coding_note": note(GENERATED_NOTE,
                  "Mesenchymal chondrosarcoma, WHO 2020 Table 1 9240/3: small round cells"
                  " with islands of hyaline cartilage, the chondrosarcoma that occurs in"
                  " children (Diagnostic Pathway §3, VIIIb). NKX2-2 is also positive in it"
                  " (%s, p. 33, figure caption), so a round cell tumour with cartilage must"
                  " not be read as Ewing sarcoma on NKX2-2." % KALLEN)},
-    "9242": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Clear cell chondrosarcoma, WHO 2020 Table"
+    "9242": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Clear cell chondrosarcoma, WHO 2020 Table"
                                  " 1 9242/3.")},
-    "9243": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Dedifferentiated chondrosarcoma, WHO 2020"
+    "9243": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Dedifferentiated chondrosarcoma, WHO 2020"
                                  " Table 1 9243/3.")},
     "9364": {"who_version": "WHO 2020", "diagnostic_tests_required": HIST_IHC,
              "ihc_markers_required": ["CD99", "NKX2-2"],
@@ -230,14 +202,13 @@ ANNOTATIONS: dict[str, dict] = {
                  % KALLEN,
                  "code_neutral_molecular is false: a molecular result moves a round cell"
                  " tumour between 9364/3 and 8803/3 (design D6).")},
-    "9365": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HIST_IHC,
+    "9365": {"diagnostic_tests_required": HIST_IHC,
              "coding_note": note(GENERATED_NOTE,
                  "Askin tumor. WHO 2020 has no Askin entity; it is chest-wall Ewing"
                  " sarcoma. ICD-O-3.2 keeps 9365/3 as a preferred term, so a report that"
                  " uses the term is coded here as written (design D2, registrar review A5);"
                  " a chest-wall Ewing sarcoma reported as Ewing sarcoma is 9364/3.")},
-    "8803": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "code_neutral_molecular": False,
+    "8803": {"code_neutral_molecular": False,
              "coding_note": note(GENERATED_NOTE,
                  "Small cell sarcoma; ICD-O-3.2 synonym 'Round cell sarcoma, NOS'. Carries"
                  " the three WHO 2020 undifferentiated small round cell sarcomas that"
@@ -248,7 +219,7 @@ ANNOTATIONS: dict[str, dict] = {
                  % WHO2020,
                  "WHO 2020 classifies them separately from Ewing sarcoma (%s, p. 650)."
                  % ANDERSON)},
-    "8002": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HIST_IHC,
+    "8002": {"diagnostic_tests_required": HIST_IHC,
              "code_neutral_molecular": False,
              "coding_note": note(GENERATED_NOTE,
                  "Malignant tumor, small cell type: the fallback for a small round cell"
@@ -257,125 +228,102 @@ ANNOTATIONS: dict[str, dict] = {
                  " (%s, p. 30). IHC is a required test so that a panel that stopped short of"
                  " the deciding stain shows it as outstanding rather than 'workup complete'"
                  " (found driving the round cell panel in a browser, 2 Oct 2026)." % KALLEN)},
-    "9370": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9370": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Chordoma, NOS. WHO 2020 Table 1 codes both conventional and poorly"
                  " differentiated chordoma 9370/3 (design D7). Poorly differentiated"
                  " chordoma occurs in children at the skull base and upper cervical spine;"
                  " brachyury and keratin positive, SMARCB1 (INI1) lost (%s, pp. 653-654)."
                  " The Diagnostic Pathway's statement that it has no code is wrong."
                  % ANDERSON)},
-    "9371": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9371": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Chondroid chordoma. WHO 2020 Table 1 lists it under conventional chordoma"
                  " 9370/3; ICD-O-3.2 keeps 9371/3 live, so a report naming it is coded here"
                  " as written (design D8).")},
-    "9372": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9372": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Dedifferentiated chordoma, WHO 2020 Table 1 9372/3; brachyury is lost in"
                  " the dedifferentiated component (%s, p. 654)." % ANDERSON)},
-    "9250": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9250": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Giant cell tumor of bone, malignant, WHO 2020 Table 1 9250/3. Conventional"
                  " giant cell tumour of bone is 9250/1, outside Group VIII (design D11)."
                  " H3.3 G34W positivity 'is not synonymous with benignity, as malignant"
                  " giant cell tumour of bone can harbour the same mutation' (%s, p. 653), so"
                  " the marker never decides between /1 and /3." % ANDERSON)},
-    "8003": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "8003": {"coding_note": note(GENERATED_NOTE,
                  "Malignant tumor, giant cell type: the fallback for a malignant giant"
                  " cell-rich bone tumour whose entity is not established.")},
-    "8830": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "8830": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Malignant fibrous histiocytoma; ICD-O-3.2 synonym 'Undifferentiated high"
                  " grade pleomorphic sarcoma of bone (C40._, C41._)'. WHO 2020 Table 1"
                  " prints 'Pleomorphic sarcoma, undifferentiated 8802/3'; ICCC-2017 admits"
                  " 8830 at bone (VIIId1, range 66) and has no bone range for 8802, and"
                  " ICD-O-3.2 has the bone-specific term on 8830/3 (design D5, registrar"
                  " review A3). A diagnosis of exclusion (Diagnostic Pathway §3, VIIId1).")},
-    "8810": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Fibrosarcoma, NOS, WHO 2020 Table 1"
+    "8810": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE, "Fibrosarcoma, NOS, WHO 2020 Table 1"
                                  " 8810/3 (fibrogenic tumours of bone).")},
-    "8801": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Spindle cell sarcoma: a descriptor"
+    "8801": {"coding_note": note(GENERATED_NOTE, "Spindle cell sarcoma: a descriptor"
                                  " fallback, VIIIe at C40-C41.")},
-    "8805": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Undifferentiated sarcoma: a descriptor"
+    "8805": {"coding_note": note(GENERATED_NOTE, "Undifferentiated sarcoma: a descriptor"
                                  " fallback, VIIIe at C40-C41.")},
-    "8004": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Malignant tumor, spindle cell type: the"
+    "8004": {"coding_note": note(GENERATED_NOTE, "Malignant tumor, spindle cell type: the"
                                  " fallback when a malignant spindle cell tumour is not"
                                  " called a sarcoma.")},
-    "9261": {"who_version": "WHO 2020", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9261": {"who_version": "WHO 2020", "coding_note": note(GENERATED_NOTE,
                  "Adamantinoma of long bones, WHO 2020 Table 1 9261/3, with dedifferentiated"
                  " adamantinoma listed beneath it without its own code. The osteofibrous"
                  " dysplasia-like variant is intermediate (%s, p. 654) and is not coded"
                  " here (design D12)." % ANDERSON)},
-    "9270": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9270": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Odontogenic tumor, malignant; ICD-O-3.2 synonyms 'Ameloblastic carcinoma',"
                  " 'Odontogenic carcinoma', 'Odontogenic sarcoma', 'Primary intraosseous"
                  " carcinoma'. %s lists ameloblastic carcinoma, primary intraosseous"
                  " carcinoma NOS and sclerosing odontogenic carcinoma among the malignant"
                  " odontogenic tumours; the last has no ICD-O-3.2 term and is coded here"
                  " through 'Odontogenic carcinoma' (design D13, registrar review A7)." % SOLUK)},
-    "9290": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9290": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Ameloblastic odontosarcoma; ICD-O-3.2 synonyms 'Ameloblastic"
                  " fibro-odontosarcoma', 'Ameloblastic fibrodentinosarcoma'. One of the"
                  " odontogenic sarcomas in %s." % SOLUK)},
-    "9302": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9302": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Ghost cell odontogenic carcinoma, new in ICD-O-3.2 at /3 (IARC 'New codes"
                  " and their terms'); listed in %s." % SOLUK)},
-    "9310": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9310": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Ameloblastoma, metastasizing. WHO 2022 places metastasizing ameloblastoma"
                  " among the benign epithelial odontogenic tumours (%s); ICD-O-3.2 codes it"
                  " /3 because the tumour has metastasised (design D13, registrar review A6)."
                  " Ordinary ameloblastoma is 9310/0, outside Group VIII." % SOLUK)},
-    "9330": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9330": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Ameloblastic fibrosarcoma; ICD-O-3.2 synonyms 'Ameloblastic sarcoma',"
                  " 'Odontogenic fibrosarcoma'. One of the odontogenic sarcomas in %s."
                  % SOLUK)},
-    "9341": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "9341": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE,
                  "Clear cell odontogenic carcinoma. ICD-O-3.2 moved 'Clear cell odontogenic"
                  " tumor' from /1 to /3 (IARC 'Terms that are changing behaviour', p. 4);"
                  " listed in %s." % SOLUK)},
-    "9342": {"who_version": "WHO 2022", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE, "Odontogenic carcinosarcoma, listed in %s."
+    "9342": {"who_version": "WHO 2022", "coding_note": note(GENERATED_NOTE, "Odontogenic carcinosarcoma, listed in %s."
                                  % SOLUK)},
-    "8000": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "8000": {"coding_note": note(GENERATED_NOTE,
                  "Neoplasm, malignant: the group-wide fallback, VIIIe at C40-C41. Under %s"
                  " rule 5 (p. 03) a case diagnosed without pathology is 8000/3 unless Table"
                  " 3 names a specific code; for bone Table 3 names osteosarcoma and"
                  " chondrosarcoma, and this build uses osteosarcoma only (design D10). The"
-                 " router's 8000-8005 rule needs a bone branch to send this code to Group"
-                 " VIII rather than Group XII (contract §7)." % VISSER)},
-    "8001": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+                 " router's 8000-8005 rule carries a matching bone branch (contract §7); the"
+                 " engine does not read its group, so VIIIe on screen comes from this entry." % VISSER)},
+    "8001": {"coding_note": note(GENERATED_NOTE,
                  "Tumor cells, malignant: cytology showing malignant cells without a tissue"
                  " diagnosis, at basis 5 (%s, Table 1, p. 03)." % VISSER)},
-    "8800": {"who_version": "ICD-O-3.2", "diagnostic_tests_required": HISTOLOGY,
-             "coding_note": note(GENERATED_NOTE,
+    "8800": {"coding_note": note(GENERATED_NOTE,
                  "Sarcoma, NOS: a bone sarcoma whose line the report does not state.")},
 }
 
 
 def load_obs(icdo_path: Path) -> dict:
-    con = sqlite3.connect("file:%s?mode=ro" % icdo_path, uri=True)
-    out: dict = {}
-    for code4, beh, level, obs in con.execute(
-            "SELECT code4, behaviour, level, obs FROM icd_o_3_2_morphology "
-            "WHERE code4 IS NOT NULL AND behaviour IS NOT NULL"):
-        if obs:
-            out.setdefault((str(code4), str(beh)), []).append(str(level))
-    con.close()
-    return out
+    """{(code, behaviour): [level, ...]} for the terms ICD-O-3.2 marks [obs]."""
+    index, err = bd.load_icdo32(icdo_path.parent.parent)
+    if err:
+        raise SystemExit("ERROR: %s" % err)
+    return {key: [level for level, obs in terms.values() if obs]
+            for key, terms in index.items()
+            if any(obs for _, obs in terms.values())}
 
 
 def build_entry(rec: dict, obs: dict) -> dict:
@@ -404,15 +352,14 @@ def build_entry(rec: dict, obs: dict) -> dict:
             GENERATED_NOTE,
             "ICD-O-3.2 preferred term %r, behaviour 3%s. No WHO 2020 bone-chapter entity"
             " lives on this code at behaviour 3 (design D14), so the tree builds no branch"
-            " to it; the alias file reaches it on the report's own wording."
+            " to it and the alias file carries no alias for it."
             % (rec["preferred_term"],
                " (%s term(s) on the stem carry [obs])" % ", ".join(obs_levels)
                if obs_levels else ""))
     if code in REDCAP_DRIFT:
         e["coding_note"] = note(e["coding_note"], "Layer 1:", REDCAP_DRIFT[code])
-    out = {f: e[f] for f in FIELD_ORDER}
-    out["redcap_option_verified"] = code not in REDCAP_DRIFT
-    return out
+    e["redcap_option_verified"] = code not in REDCAP_DRIFT
+    return e
 
 
 def build_metadata(entries: list, summary: dict, trees: list) -> dict:
@@ -436,27 +383,23 @@ def build_metadata(entries: list, summary: dict, trees: list) -> dict:
         "total_morphology_entries": len(entries),
         "total_decision_nodes": n_nodes,
         "decision_trees": [t["tree_id"] for t in trees],
-        "basis_of_diagnosis_declarations": {"ihc_counts_as": 7, "methylation_counts_as": 8},
+        "basis_of_diagnosis_declarations": trees[0]["basis_of_diagnosis_defaults"],
     }
 
 
 def carry_branch_sequences(new_trees: list, old_trees: list) -> None:
     """Keep induce_flow.py's branch_sequence where a node's rules did not change."""
-    old = {}
-    for t in old_trees or []:
-        for n in t.get("nodes") or []:
-            if n.get("branch_sequence") is not None:
-                old[n["node_id"]] = (json.dumps(n.get("resolution_logic"), sort_keys=True),
-                                     json.dumps(n.get("marker_groups"), sort_keys=True),
-                                     n["branch_sequence"])
+    def sig(n):
+        return json.dumps([n.get("resolution_logic"), n.get("marker_groups")], sort_keys=True)
+
+    old = {n["node_id"]: (sig(n), n["branch_sequence"])
+           for t in old_trees or [] for n in t.get("nodes") or []
+           if n.get("branch_sequence") is not None}
     for t in new_trees:
         for n in t.get("nodes") or []:
-            if n.get("node_type") != "ihc_checklist":
-                continue
             prior = old.get(n["node_id"])
-            if prior and prior[0] == json.dumps(n.get("resolution_logic"), sort_keys=True) \
-                    and prior[1] == json.dumps(n.get("marker_groups"), sort_keys=True):
-                n["branch_sequence"] = prior[2]
+            if n.get("node_type") == "ihc_checklist" and prior and prior[0] == sig(n):
+                n["branch_sequence"] = prior[1]
 
 
 def main(argv=None) -> int:

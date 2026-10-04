@@ -1355,7 +1355,27 @@ as the broken Group I row in `docs/codes-awaiting-redcap.md`.
 
 ---
 
-*Last updated 2 October 2026, on the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`), §7 gains the Group VIII row, §20 recounted, §22–§24 added. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
+## 25. ❓ FOR THE REGISTRAR — Group VIII codes the REDCap dropdown does not offer correctly
+
+**Found 2 October 2026; recorded here 4 October 2026 by the registrar's direction.** The tool
+is a data-entry aid. It does not connect to REDCap and does not verify what REDCap holds, so
+these are listed here for the REDCap side to fix, not handled in the tool. Pick numbers are
+from `viii_morph`; the full table is `docs/group_08_layer1_repair.md`.
+
+| Code the tool emits | What `viii_morph` offers | Risk at data entry |
+|---|---|---|
+| `9220/3` Chondrosarcoma, NOS | No `/3` option. Picks 20 and 21 are `9220 - Chondroma, NOS` (`/0`) and `9220 - Chondromatosis, NOS` (`/1`) | A chondrosarcoma entered under a benign label |
+| `9302/3` Ghost cell odontogenic carcinoma | Pick 64 `9302 - Odontogenic ghost cell tumor`, the `/0` synonym | A carcinoma entered under a benign label |
+| `9310/3` Ameloblastoma, metastasizing | Two rows on 9310: `Ameloblastoma, NOS` (`/0`) and `Ameloblastoma, malignant` (pick 66) | The clerk must pick the second; the four-digit code alone does not decide |
+| `9364/3` Ewing sarcoma | Pick 33 `9260 - Ewing sarcoma` (9260 is now Aneurysmal bone cyst, `/0`); pick 35 `9364 - Peripheral neuroectodermal tumor` | Picking by name records the retired, benign number |
+
+For `9220` and `9302` the tool's output currently shows the "label is out of date — match on the
+four-digit code" banner, which points the clerk at the benign row. `docs/group_08_registrar_review.md` §C,
+items 1–3, carries the proposed REDCap repair.
+
+---
+
+*Last updated 4 October 2026, on the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): §25 added. Previously 2 October 2026, on the same branch: §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`), §7 gains the Group VIII row, §20 recounted, §22–§24 added. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch

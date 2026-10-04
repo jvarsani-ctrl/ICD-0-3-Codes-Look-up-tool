@@ -1269,7 +1269,7 @@
             "group": 8,
             "subgroup": "VIIIe"
           },
-          "authoring_note": "ICCC-2017 range 71: 8000-8005 at sites 400-419, behaviour 3, is subgroup VIIIe, Unspecified malignant bone tumors; XIIb (range 143) excludes 400-419. Without this branch a malignant bone neoplasm NOS fell to the Group XII default. Added in the Group VIII build, 2 October 2026; Group VII appends a disjoint C22 branch."
+          "authoring_note": "ICCC-2017 range 71: 8000-8005 at sites 400-419, behaviour 3, is subgroup VIIIe, Unspecified malignant bone tumors; XIIb (range 143) excludes 400-419. The branch records the ICCC-3 fact; it changes nothing on screen, because app.js reads resolveGroup() only for `note` and this branch has none, and nothing reads the routed group (the bone tree's own 8000 entry already carries VIIIe). Added in the Group VIII build, 2 October 2026; Group VII appends a disjoint C22 branch."
         }
       ],
       "default": {

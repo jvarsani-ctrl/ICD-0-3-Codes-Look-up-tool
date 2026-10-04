@@ -55,8 +55,9 @@ What follows from it:
 3. **`8802` has no bone range.** VIIIe skips it and IXe (range 93) excludes `400-419`. The
    ICD-O-3.2 bone term for undifferentiated pleomorphic sarcoma sits on `8830/3` (D5).
 4. **VIIIe is C40–C41 only.** `8000/3` at a bone site is VIIIe. The router's `8000-8005` rule
-   defaults to Group XII, and ICCC-2017's XIIb (range 143) excludes `400-419`, so the rule needs
-   a bone branch (§7).
+   defaults to Group XII, and ICCC-2017's XIIb (range 143) excludes `400-419`, so the rule gets
+   a bone branch (§7). The branch is a record, not a fix: app.js reads resolveGroup() only for
+   its `note`, and the group on screen comes from the tree and the entry.
 
 ### 0.3 ★ The inventory — 48 usable codes, generated
 
