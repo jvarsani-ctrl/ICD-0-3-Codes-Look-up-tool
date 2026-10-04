@@ -2243,8 +2243,8 @@
       "primary_sites": [
         "C00.0-C80.9"
       ],
-      "topography_dependent": true,
-      "topography_routing_note": "IIIc2 only while the primary is intracranial or intraspinal. 9473/3 carries 'Central primitive neuroectodermal tumor' and 'Supratentorial PNET' as Related terms and 'Primitive neuroectodermal tumor, NOS' / 'PNET, NOS' / 'CPNET' as Synonyms, so a file that says only 'PNET' may be a peripheral tumour: a peripheral PNET routes to Group IX (soft tissue) or Group VIII (bone) by site, not to IIIc2. Resolve the captured topography before emitting (Revision 2 §4.5)."
+      "topography_dependent": false,
+      "topography_routing_note": "IIIc2 at every site: ICCC-2017 range 29 is the only range carrying 9473, at sites 000-809. 9473/3 carries 'Central primitive neuroectodermal tumor' and 'Supratentorial PNET' as Related terms and 'Primitive neuroectodermal tumor, NOS' / 'PNET, NOS' / 'CPNET' as Synonyms. A peripheral PNET is not coded here: ICD-O-3.2 codes the peripheral wordings at 9364/3 Ewing sarcoma ('Peripheral primitive neuroectodermal tumor', 'PPNET'), Group VIII at bone and Group IX elsewhere. The router's former 9473 rule was removed on 2 October 2026 (Group 9 build contract §3.12)."
     },
     {
       "morphology_code": "9474",
@@ -19362,7 +19362,7 @@
                 "workup_status": "complete"
               },
               "refer_group": 9,
-              "reason": "Desmoplastic myxoid tumour of the pineal region, SMARCB1-mutant belongs to ICCC-3 Group IX (soft tissue and other extraosseous sarcomas), not Group III — registrar's ruling, 14 September 2026. Record the case under Group IX. Group IX is not yet built in this tool, so record the topography and refer the morphology to the registrar. Recognition: SMARCB1 (INI1) loss in a pineal region tumour with CD34-positive, EMA-positive, cytokeratin-negative, GFAP-negative and brachyury-negative staining, fewer than 1 mitosis per 20 high-power fields and no necrosis. Note that DNA methylation profiling FAILS on this entity — 5 of 6 cases scored below 0.9 and returned no match — so a 'no match' methylation result must never be read as excluding it."
+              "reason": "Desmoplastic myxoid tumour of the pineal region, SMARCB1-mutant belongs to ICCC-3 Group IX (soft tissue and other extraosseous sarcomas), not Group III — registrar's ruling, 14 September 2026. Record the case under Group IX. ICD-O-3.2 has no code for this entity, and the Group IX tree has none either, so record the topography and refer the morphology to the registrar. Recognition: SMARCB1 (INI1) loss in a pineal region tumour with CD34-positive, EMA-positive, cytokeratin-negative, GFAP-negative and brachyury-negative staining, fewer than 1 mitosis per 20 high-power fields and no necrosis. Note that DNA methylation profiling FAILS on this entity — 5 of 6 cases scored below 0.9 and returned no match — so a 'no match' methylation result must never be read as excluding it."
             },
             {
               "when": {

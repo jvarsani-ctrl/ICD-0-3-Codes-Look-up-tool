@@ -141,3 +141,168 @@ rendered buttons rather than calling the engine:
 
 Note the caching trap: `python3 -m http.server` plus the browser cache serves a stale
 `app.js` through a plain reload. `fetch('app.js', {cache:'reload'})` and then reload.
+
+## The express lane — a term filed under several groups is settled by the site
+
+`app.js` entered an express-lane hit with `state.group = hit.groups[0]`. When
+`alias_index.json` files a term under more than one group, the clerk went into the
+lowest-numbered group's tree without being asked. On `dbe5fd4` the index holds 34 such
+terms: "PPNET" (Groups 4 and 8) entered the neuroblastoma tree, "RCC" (Groups 1 and 6;
+refractory cytopenia of childhood and renal cell carcinoma) entered the leukaemia trees,
+and "Neoplasm, malignant" (Groups 3, 6 and 8) entered the CNS trees. A term shared by
+Groups 6 and 9 enters Group 6, whose entry node captures the kidney as the primary site
+on every option.
+
+Registrar's ruling, 4 October 2026: the express lane does not ask the clerk for a group.
+It asks for the primary site, with the guided route's organ system and region screens,
+and intersects the term's groups with the groups the topography carries
+(`topography_codes.json`, `candidate_groups`). One survivor is entered, routed rather
+than asked, and recorded as a Group entry in the trail. No survivor — the term and the
+site point to different groups — stops the case for referral. Several survivors — the
+site does not separate them — also stop the case for referral. The guided route's
+`narrowBySite` takes the site's list when the intersection is empty; the express lane
+does not, because that would enter a group whose tree does not hold the searched term.
+
+Consequence on `dbe5fd4` data: the 18 terms shared by Groups 1 and 2 (for example
+"Burkitt leukaemia", "ATLL", "CLL") stop at every blood and bone-marrow code, C42.0 to
+C42.4, because the topography carries both groups there. Unknown primary, C80.9, sits in
+no organ-system row and cannot be picked on either route.
+
+The engine gate's express-lane section reads `alias_index.json` and
+`topography_codes.json`, computes the expected outcome of every (term, topography) pair
+from those two files, and taps each pair through `handleOption` — alias, organ system,
+region. On `dbe5fd4` data: 34 terms × 100 selectable codes give 841 routed to one group,
+2469 stopped with no group and 90 stopped on a tie. The 1139 single-group terms must
+still enter their group with no site question.
+
+| engine | result |
+|---|---|
+| pre-fix, `git show dbe5fd4:app.js` | FAIL: "ATL" [1,2] reached stage handoff, group 1, not the site question |
+| the family-question version this replaced | FAIL: "ATL" [1,2] reached stage group, group null, not the site question |
+| mismatch falls back to the site's groups, as the guided route does | FAIL: "ATL" [1,2] at C64.9 [6]: expected a stop (no group), got stage node, group 6 |
+| a routed group recorded with no trail entry | FAIL: "ATL" [1,2] at C77.9 [2]: entered Group 2 with no trail entry |
+| a tie enters the first survivor | FAIL: "ATL" [1,2] at C42.0 [1,2]: expected a stop (tie [1,2]), got stage handoff, group 1 |
+| every term asked the site (`> 1` changed to `> 0`) | FAIL: "5q- syndrome" [1] was asked the site — the single-group control |
+| fix | OK |
+
+Driven in headless Chrome at 2× by clicking the rendered buttons: "RCC" at the kidney
+enters `g6_renal`; at bone marrow, C42.1, it enters Group 1 and asks the marrow pattern;
+at C40.2 it stops with "The term and the site point to different groups". "PPNET" at
+C40.2 enters `g8_bone`; at C74.0 it enters `g4_sympathoadrenal`. "Burkitt leukaemia" at
+C42.1 stops with "The site does not decide the group"; at the lymph nodes it enters
+Group 2. "Nephroblastoma" (Group 6 only) enters `g6_renal` with no site question.
+
+Driving it found a second fault. `contextLabel()` named the last group file loaded,
+which outlives a step back through the trail and a new case, so the app bar named a
+group the case was not in. It now names a group only once `state.group` is set.
+
+### Stepping back
+
+A review of the change and a screenshot of a stepped-back case found three faults that
+the walks above could not see, because every walk starts a case clean. All three come
+from automatic trail entries. A tree routed from the topography, and a group routed from
+the express-lane site, push a trail entry whose snapshot is the state after the answer
+that triggered it.
+
+1. **The trail kept the case before the step back.** Stepping back to an automatic Tree
+   entry showed the site screen again with the earlier site, group and tree still in the
+   trail. "Malignant tumor, giant cell type" routed to Group III at the pituitary, then
+   stepped back and re-sited to the blood, stopped under a trail reading "Group: CNS and
+   Miscellaneous Intracranial and Intraspinal Neoplasms". The guided route had the same
+   fault before this change: stepping back to a routed tree and answering again recorded
+   the Topography twice.
+2. **The stop screen kept the routed group.** The same rewind restored `state.group`, so
+   the app bar named Group III above a screen saying the site belongs to none of the
+   term's groups.
+3. **A search term leaked into a guided case.** Stepping back to the Tree entry of a
+   single-group term that routes its tree returned to the landing screen with the term
+   still set. A guided case started there took the express lane's site step.
+
+The fix marks an automatic entry when it is pushed. Stepping back to one goes to the
+clerk's answer that produced it. A stop clears `state.group`, and starting the guided
+route clears the express lane's term, group and candidates. The engine gate adds three
+scenarios that read the router and the two data files, not the engine's flag:
+
+- R1, every multi-group term × every organ system in which it routes to a group that
+  routes its tree: route, step back to the Tree entry, answer each site of that screen;
+- R2, a single-group term per tree-routing group: step back to the Tree entry, take the
+  guided route;
+- R3, every presentation × organ system on the guided route: where a tree is routed,
+  step back to it and answer again.
+
+1916 stepped-back cases on `dbe5fd4` data.
+
+| engine | result |
+|---|---|
+| before the review fixes | FAIL: 2570 R1, 2 R2, 51 R3 |
+| fixes, without the automatic-entry rewind | FAIL: 1863 R1 ("the trail still carries the case before the step back"), 51 R3 ("the trail holds Topography twice") |
+| fixes, without the automatic-entry rewind and without the guided clear | FAIL: 1863 R1, 2 R2, 51 R3 |
+| fixes, without clearing `group` on a stop, before the automatic-entry rewind | FAIL: R1 "expected a stop with no group, got … group 3, app bar CNS and Miscellaneous Intracranial and Intraspinal Neoplasms" |
+| fix | OK |
+
+The guided clear and the stop's `group` reset are now reached only through an automatic
+entry, which the rewind skips. They stay as a second line, and the third and fourth rows
+show each one doing its work when the first line is removed.
+
+## One tap must be enough
+
+A click that follows typing was lost. The first tap on an express-lane search result did
+nothing and the second worked, and the same held for Continue under a number or a
+free-text answer and for "Not documented" under a number. The value typed was kept, so no
+answer was misrecorded. The click was simply lost.
+
+The cause was the event wiring at the foot of `app.js`. The search box, the number box
+and the free-text box fire `change` when focus leaves them, and focus leaves on the
+mousedown of whatever the clerk clicks next. The `change` listener ran the action
+through `run()`, which re-renders the screen. The button under the pointer was replaced
+before the mouseup, so the browser fired no click. The event trace, from real input:
+
+```
+mousedown on alias (pressed button connected: true)
+change on query (pressed button connected: true)
+mouseup on alias (pressed button connected: false)
+```
+
+with no click after it. The keyboard showed the same fault: Tab from the search box
+re-rendered the screen and dropped focus to the page, so Enter on the first result did
+nothing.
+
+The fix reads a box the clerk types into on every keystroke (`input`), through the same
+`handleOption`, and never re-renders for it. Checkboxes and selects keep `change`,
+because it fires on their own click and the screen changes with them: "Not documented"
+disables the number box, and a dropdown finding enables Continue.
+
+`build/drive_first_tap.mjs` reproduces it. It drives headless Chrome with keystrokes and
+mouse presses, because a scripted `element.click()` never moves focus and cannot see the
+fault. It is not part of `build_database.py`, since it needs Chrome and a running server.
+Each run was made with the engine swapped into the served worktree, then restored and
+checked by checksum:
+
+| engine | single taps (search result ×3, Continue after a number, Continue after free text) | "Not documented" after a number | dropdown enables Continue | Tab then Enter |
+|---|---|---|---|---|
+| before the fix | LOST ×5 | FAIL: the click is lost, the box stays enabled | OK | FAIL: focus goes to the page |
+| `change` ignored for every control, an over-broad fix | OK | FAIL: no redraw | FAIL: Continue stays disabled | OK |
+| fix | OK | OK | OK | OK |
+
+## A single-group term is asked its site when its group reads the site
+
+Registrar, 4 October 2026: the site must be asked. A term filed under one group entered that
+group's tree with no topography, so every rule keyed on the topography failed open. "Rhabdoid
+tumour", a Group IX-only spelling, coded a renal rhabdoid tumour as `8963/3` IXd3, because the
+Group IX referral to Group VI at C64.9 could never match. The express lane now asks the site of a
+single-group term whenever that group's data reads it, meaning the router routes its trees from the
+topography or a `when` in its trees names `topography` (`groupReadsSite()` in `app.js`, a test of
+the JSON's shape only). `afterSearchSite()` then keeps the group if the site carries it and stops
+for the registrar if it does not. On this data that is Groups III, IV and IX.
+
+The gate computes the same set from the router and the group files, never from the engine. Two
+controls, each run against the working tree with `app.js` edited and then restored by checksum
+(`25760bfcd9b1` before and after):
+
+| Control | Engine edit | Gate result |
+|---|---|---|
+| the defect | the single-group site branch removed | FAIL: `"ACTH-producing tumor" [3] reached stage node, group 3, not the site question` |
+| over-broad fix | `groupReadsSite()` returns true for every group | FAIL: `"5q- syndrome" [1] was asked the site or entered group null` |
+| fix | — | OK: 55 multi-group and 483 single-group terms settled by the site; 848 single-group terms of a group that reads no site enter it directly |
+
+`build/drive_first_tap.mjs` still passes every tap with real input.

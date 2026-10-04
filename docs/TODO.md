@@ -242,6 +242,8 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
+| **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
+| **IX** | `topo_code` | — | — | `444, Skin of scalp and neck` | Open — Group 9 registrar questions H2 | same, §7 |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid
 
@@ -451,7 +453,7 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 
 ---
 
-## 12. ✅ MOSTLY CLOSED — router dual-group rules and the stale CNS topography scope
+## 12. ✅ CLOSED — router dual-group rules and the stale CNS topography scope
 
 > **Closed 22 September 2026 on the Group VI branch (`group-06-renal`) for `8963` and
 > `8000-8005`, the two rules Group VI owns, and for `9380` and `8158,8290`, which turned out to
@@ -477,6 +479,14 @@ two Group 3 nodes and no others in Groups 1, 2 or 4.
 > not any CNS code: a branch saying "the CNS" must name all of it, while `9380`'s single `C72.3`
 > is saying something narrower and is left alone. Four negative controls on the first check and
 > two on the second, all confirmed firing and restored.
+
+> **`9473` closed 2 October 2026 on the Group 9 branch.** Group IX's half of the "Group III/IX
+> decision" this item left open: ICCC-2017 range 29 is the only range carrying `9473`, at sites
+> `000-809`, resolving to IIIc2, and ICD-O-3.2 codes the peripheral PNET wordings at `9364/3`. Group
+> IX has no claim on `9473` at any site. The rule was removed, so `9473` is a single-group Group III
+> code, and its name was deleted from `check_router_cns_topography_completeness()` in the same
+> change; a stale-name clause cannot fire once the rule it names is gone (Group 9 build contract
+> §3.12; `docs/group_09_negative_controls.md`).
 
 **Found 18 September 2026 during the Group 4 build, extending the `9501-9504` rule. Fixed 22
 September 2026 on the Group VI branch, except for `9473`.**

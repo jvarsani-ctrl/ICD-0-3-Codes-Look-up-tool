@@ -356,6 +356,11 @@ the same code, which is worth knowing but is not a relabelling.
 
 ## Two banners, and the flag that separates them
 
+> **Both banners were removed from `app.js` on 4 October 2026.** Standing rule 16: the tool does not
+> verify REDCap, and a banner about what the dropdown holds costs the clerk attention without changing
+> the code. The flags below no longer reach the screen. Group IX writes none; its owed options are in
+> `docs/TODO.md` §7.
+
 **Found 22 September 2026, on the output block, driving the Group VI carcinoma branch in a browser.**
 
 A clerk who reaches a code the dropdown cannot record has to be told so before they go looking
