@@ -591,11 +591,11 @@ The doc conflicts are append-only on both sides: keep both on merge. Rebuild
 
 ## 10. Tasks
 
-- [ ] T1 `build/generate_group10_entries.py` → `group_10_dt.json` entries and metadata (stub tree)
-- [ ] T2 `build/group10_tree.py`, the five trees; regenerate; `induce_flow.py`
-- [ ] T3 router and topography (§3)
-- [ ] T4 `build_database.py` registration, the four §5 rules, `negative_controls_group10.py`
-- [ ] T5 `aliases_group_10.json`
-- [ ] T6 docs (§8)
-- [ ] T7 build, negative controls, engine gate, browser drive
-- [ ] T8 `docs/group_10_build_report.md`; `docs/group_10_registrar_review.md` complete
+- [x] T1 `build/generate_group10_entries.py` → `group_10_dt.json` entries and metadata (stub tree)
+- [x] T2 `build/group10_tree.py`, the five trees; regenerate; `induce_flow.py`
+- [x] T3 router and topography (§3)
+- [x] T4 `build_database.py` registration, the four §5 rules, `negative_controls_group10.py`
+- [x] T5 `aliases_group_10.json`
+- [x] T6 docs (§8)
+- [x] T7 build, negative controls, engine gate, browser drive
+- [x] T8 `docs/group_10_build_report.md`; `docs/group_10_registrar_review.md` complete

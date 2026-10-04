@@ -89,6 +89,14 @@ The ICD-O matrix principle would allow a `/3` that ICD-O-3.2 does not print, for
 `8590/3`. Standing rule 1 forbids building an unprinted code. **Built:** the term as ICD-O-3.2
 prints it. This is the same question as Group VIII review A1; one answer serves both groups.
 
+### A12. Three teratoma searches find nothing (D21)
+
+"Also called" lists aliases by four-digit code, so an alias true of one behaviour shows on every
+behaviour's output. Group X emits `9080` at `/0`, `/1` and `/3` and `9084` at `/0` and `/3`, so
+neither carries an ICD-O-3.2 term as an alias, only the neutral "Teratoma". Searching "Mature
+teratoma", "Immature teratoma" or "Dermoid" finds nothing; "Teratoma" finds them. An engine change
+keying aliases by behaviour (`docs/TODO.md` §30) would lift this.
+
 ### A11. Gonadal carcinomas on the tree (D14)
 
 The ovary tree offers twelve carcinoma terms, including small cell carcinoma of the ovary,
@@ -108,7 +116,9 @@ against ICCC-2017 range declarations by validator rule 1. No clerk can reach it:
   front door never offers Group X there.
 - Since your ruling of 4 October 2026 (`main` commit `9c63a5f`), the search box asks the site and
   keeps a group only if the site lists it. A search for a germ cell term at the pineal stops for
-  referral.
+  referral. Driven on 4 October 2026: "Germinoma" searched at C71.0 stops with "C71.0 … is not a
+  site that group codes this term at" — untrue, since ICCC-2017 range 94 places germinoma at C71.0
+  in Xa1. The message reads `candidate_groups`, not ICCC.
 - Group III refers to Group X in nine places, and a referral ends the case.
 
 Group III also has three defects of its own, left untouched because Group III stays
