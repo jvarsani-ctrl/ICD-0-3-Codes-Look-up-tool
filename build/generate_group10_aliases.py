@@ -18,15 +18,19 @@ output of a four-digit code, whatever the behaviour. So an alias is attached to 
 when it is true of every behaviour the group emits for that code. A term is used only if the
 group emits its code at the term's behaviour and at no other. Group X emits 9080 at /0, /1 and
 /3 and 9084 at /0 and /3, so neither code carries an ICD-O-3.2 term; both carry the neutral
-alias "Teratoma" (D21_NEUTRAL). A term of a behaviour the group does not emit (germ cell
+alias "Teratoma" (bd.GROUP10_D21_NEUTRAL_ALIASES). A term of a behaviour the group does not emit (germ cell
 neoplasia in situ 9064/2, gonadoblastoma 9073/1, juvenile granulosa cell tumour 8622/1, struma
 ovarii 9090/0, hydatidiform moles 9100/0 and 9100/1, placental site trophoblastic tumour
 9104/1, borderline and benign tumours) is never aliased: the express lane is for codes the
 tree emits.
 
-The D21 test and the term comparison use build_database._group10_term_key(), the function
-validator rule 3 (check_group10_alias_terms_match_icdo32) uses, so the generator and the rule
-agree on what "equal to an ICD-O-3.2 term" means. The rule remains the independent check.
+The generator and validator rule 3 (check_group10_alias_terms_match_icdo32) share two
+functions: build_database._group10_term_key(), which decides what "equal to an ICD-O-3.2 term"
+means, and build_database._group10_emissions(), which reads the emitted set from the trees. A
+fault in either is therefore invisible to the rule: on those two functions the rule is not
+independent of the generator. It is independent on everything else (the ICD-O-3.2 terms read
+from icdo32.sqlite, the D21 test itself, the neutral-alias exemption and the germinoma check),
+and negative_controls_group10.py proves it catches a wrong alias for the right reason.
 
 Not aliased: "GCT" (germ cell tumour or granulosa cell tumour; the Alias Build Instructions'
 own collision), and "Teratoma, postpubertal type" and "Immature teratoma" (each true of 9080/3
@@ -82,6 +86,10 @@ EXCLUDED_TERMS = {
     "Acinar adenocarcinoma, mucinous variant": "a prostate variant; the code is the mucinous "
                                                "adenocarcinoma stem",
     "Mucinous tubular and spindle cell carcinoma": "a kidney tumour, Group VI",
+    "Mucinous cystic neoplasm with an associated invasive carcinoma": "digestive-system "
+        "(pancreatic or hepatobiliary) mucinous cystic neoplasm wording; the code is the "
+        "ovarian mucinous cystadenocarcinoma stem",
+    "Mucinous cystic tumor with an associated invasive carcinoma": "as above",
     "Pseudomyxoma peritonei with unknown primary site": "names a peritoneal or appendiceal "
         "primary; Pseudomyxoma peritonei is 8480/6",
 }
@@ -97,15 +105,15 @@ NOTE_SUFFIX = {
             "cell tumor, NOS are behaviour exclusions (design D11).",
     "8640": " The malignant tumour. Sertoli cell tumor, NOS is 8640/1, a behaviour exclusion "
             "(design D11).",
-    "8650": " The malignant tumour. Leydig cell tumor, NOS is 8650/1, a behaviour exclusion "
-            "(design D11).",
+    "8650": " The malignant tumour. Leydig cell tumor of testis, NOS is 8650/1 and Leydig cell "
+            "tumor of ovary, NOS is 8650/0, behaviour exclusions (design D11).",
     "9100": " Choriocarcinoma only. Hydatidiform moles are 9100/0 and 9100/1, behaviour "
             "exclusions (design D8).",
 }
 
 # D21's behaviour-neutral aliases: exact alias text (lower case) -> the codes it maps to.
-# build_database.GROUP10_D21_NEUTRAL_ALIASES is the same exemption, read by rule 3.
-D21_NEUTRAL = {"teratoma": ["9080", "9084"]}
+# This is the exemption rule 3 reads, imported so the two cannot drift.
+D21_NEUTRAL = bd.GROUP10_D21_NEUTRAL_ALIASES
 
 SOURCE_1 = "ICD-O-3.2 term"
 SOURCE_2 = "REDCap option string"
@@ -225,12 +233,41 @@ def d21_codes(pairs, emitted, text):
     return ok
 
 
+def report_shared(out: list[dict]) -> None:
+    """Print every alias string another group's file also holds, with that group's codes."""
+    other: dict[str, list[tuple[int, list]]] = {}
+    for path in sorted((REPO / "data" / "aliases").glob("aliases_group_*.json")):
+        group = int(path.stem.rsplit("_", 1)[1])
+        if group == GROUP:
+            continue
+        for a in json.loads(path.read_text(encoding="utf-8")):
+            other.setdefault(a["alias"].strip().lower(), []).append(
+                (group, a.get("maps_to_morphology_codes") or []))
+    shared = [(a, other[a["alias"].strip().lower()]) for a in out
+              if a["alias"].strip().lower() in other]
+    print("%d alias string(s) shared with other groups (the site settles a shared term):"
+          % len(shared), file=sys.stderr)
+    for a, holders in shared:
+        print("  %r -> %s; also %s" % (
+            a["alias"], "/".join(a["maps_to_morphology_codes"]) or "no code",
+            ", ".join("Group %d -> %s" % (g, "/".join(c) or "no code") for g, c in holders)),
+            file=sys.stderr)
+
+
 def main() -> int:
     emitted, ihc, index, pairs, opts, handoff, entries = load()
     redcap_names = {key(n) for rec in opts.values() for n in rec["names"]}
 
+    def entry_at(code: str, beh: str) -> dict:
+        try:
+            return entries[(code, beh)]
+        except KeyError:
+            raise SystemExit("ERROR: the trees emit %s/%s but group_10_dt.json has no "
+                             "morphology entry for that pair; run "
+                             "build/generate_group10_entries.py" % (code, beh)) from None
+
     def entry_for(code: str) -> dict:
-        return entries[(code, max(emitted[code]))]
+        return entry_at(code, max(emitted[code]))
 
     def name_for(code: str) -> str:
         if len(emitted[code]) == 1:
@@ -266,7 +303,6 @@ def main() -> int:
             "clinical_alert": None,
             "notes": notes,
             "coding_note": coding_note,
-            "_source": source,
         })
 
     # 1. ICD-O-3.2 terms on the emitted pairs, subject to D21.
@@ -280,7 +316,7 @@ def main() -> int:
                 if code not in d21_codes(pairs, emitted, term):
                     continue
                 preferred = level == "Preferred"
-                name = entries[(code, beh)]["morphology_name"]
+                name = entry_at(code, beh)["morphology_name"]
                 add(SOURCE_1, term, [code],
                     "who_preferred" if preferred else "descriptive",
                     "ICD-O-3.2" if preferred else "ICD-O-3.2 %s" % (
@@ -321,8 +357,8 @@ def main() -> int:
     for alias, codes, alias_type, origin, nci, notes in CURATED:
         neutral = D21_NEUTRAL.get(" ".join(alias.lower().split()))
         if neutral is not None:
-            if codes != neutral:
-                raise SystemExit("ERROR: %r must map to %s (D21)" % (alias, neutral))
+            if set(codes) != set(neutral) or len(codes) != len(neutral):
+                raise SystemExit("ERROR: %r must map to %s (D21)" % (alias, sorted(neutral)))
         elif key(alias) in pairs:
             bad = [c for c in codes if c not in d21_codes(pairs, emitted, alias)]
             if bad:
@@ -333,21 +369,14 @@ def main() -> int:
             % ("Group 10 build contract §6", ", NCIt " + nci +
                " from 'Group 10 — Alias Build Instructions.md' (14 May 2026)" if nci else ""))
 
-    # The express-lane search is a substring match, so 'X, NOS' adds nothing to an index that
-    # already holds 'X' for the same code; it only grows the startup index (TODO §24).
-    bare = {(a["alias"].lower(), tuple(a["maps_to_morphology_codes"])) for a in out}
-    dropped = [a for a in out if a["alias"].endswith(", NOS") and
-               (a["alias"][:-5].lower(), tuple(a["maps_to_morphology_codes"])) in bare]
-    out = [a for a in out if a not in dropped]
-    for a in dropped:
-        by_source[a["_source"]] -= 1
-    for a in out:
-        del a["_source"]
-
+    # Every 'X, NOS' stays even where a bare 'X' exists for the same code: app.js
+    # searchAlias() matches key.indexOf(needle), so a clerk who types the exact ICD-O-3.2 or
+    # REDCap string must find an alias that holds it. The bare 'X' does not contain ', NOS'.
     OUT.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print("wrote %s (%d aliases: %s; %d 'X, NOS' dropped for a bare 'X')"
-          % (OUT, len(out), ", ".join("%d %s" % (n, s) for s, n in by_source.items()),
-             len(dropped)), file=sys.stderr)
+    print("wrote %s (%d aliases: %s)"
+          % (OUT, len(out), ", ".join("%d %s" % (n, s) for s, n in by_source.items())),
+          file=sys.stderr)
+    report_shared(out)
     return 0
 
 

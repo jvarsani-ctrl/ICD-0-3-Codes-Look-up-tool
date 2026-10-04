@@ -608,25 +608,6 @@
     "coding_note": "ICD-O-3.2 Preferred term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
   },
   {
-    "alias": "Mucinous cystic neoplasm with an associated invasive carcinoma",
-    "full_form": "Mucinous cystic neoplasm with an associated invasive carcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8470"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
-    "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
-  },
-  {
     "alias": "Papillary mucinous cystadenocarcinoma",
     "full_form": "Papillary mucinous cystadenocarcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
     "also_known_as": [],
@@ -701,25 +682,6 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
-  },
-  {
-    "alias": "Mucinous cystic tumor with an associated invasive carcinoma",
-    "full_form": "Mucinous cystic tumor with an associated invasive carcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 related term",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8470"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Mucinous cystadenocarcinoma, NOS (8470/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
   },
   {
     "alias": "Seromucinous carcinoma",
@@ -1022,7 +984,7 @@
     "ihc_tree_id": "g10_extragonadal",
     "tree_entry_node": "eg_document_inventory",
     "clinical_alert": null,
-    "notes": "Leydig cell tumor, malignant, 8650/3. The malignant tumour. Leydig cell tumor, NOS is 8650/1, a behaviour exclusion (design D11).",
+    "notes": "Leydig cell tumor, malignant, 8650/3. The malignant tumour. Leydig cell tumor of testis, NOS is 8650/1 and Leydig cell tumor of ovary, NOS is 8650/0, behaviour exclusions (design D11).",
     "coding_note": "ICD-O-3.2 Preferred term on 8650/3, read from icdo32.sqlite; D21 holds: Group X emits 8650 at /3 only."
   },
   {
@@ -1041,7 +1003,7 @@
     "ihc_tree_id": "g10_extragonadal",
     "tree_entry_node": "eg_document_inventory",
     "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Leydig cell tumor, malignant (8650/3). The malignant tumour. Leydig cell tumor, NOS is 8650/1, a behaviour exclusion (design D11).",
+    "notes": "An ICD-O-3.2 synonym term for Leydig cell tumor, malignant (8650/3). The malignant tumour. Leydig cell tumor of testis, NOS is 8650/1 and Leydig cell tumor of ovary, NOS is 8650/0, behaviour exclusions (design D11).",
     "coding_note": "ICD-O-3.2 Synonym term on 8650/3, read from icdo32.sqlite; D21 holds: Group X emits 8650 at /3 only."
   },
   {
@@ -1254,6 +1216,25 @@
     "coding_note": "ICD-O-3.2 Preferred term on 9065/3, read from icdo32.sqlite; D21 holds: Group X emits 9065 at /3 only. Also the REDCap option wording."
   },
   {
+    "alias": "Embryonal carcinoma, NOS",
+    "full_form": "Embryonal carcinoma, NOS -> Embryonal carcinoma, NOS (9070)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Embryonal carcinoma, NOS, 9070/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9070/3, read from icdo32.sqlite; D21 holds: Group X emits 9070 at /3 only. Also the REDCap option wording."
+  },
+  {
     "alias": "Embryonal adenocarcinoma",
     "full_form": "Embryonal adenocarcinoma -> Embryonal carcinoma, NOS (9070)",
     "also_known_as": [],
@@ -1271,6 +1252,25 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Embryonal carcinoma, NOS (9070/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 9070/3, read from icdo32.sqlite; D21 holds: Group X emits 9070 at /3 only."
+  },
+  {
+    "alias": "Yolk sac tumor, NOS",
+    "full_form": "Yolk sac tumor, NOS -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Yolk sac tumor, NOS, 9071/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only. Also the REDCap option wording."
   },
   {
     "alias": "Embryonal carcinoma, infantile",
