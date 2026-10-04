@@ -9676,7 +9676,6 @@ def check_group9_leaf_claims(ctx: DTContext):
 # ICCC-2017.sqlite on every build; nothing below types a range.
 # --------------------------------------------------------------------------------------
 
-GROUP10_SITE_UNSTATED_TREE = "g10_site_unstated"
 GROUP10_EXTRAGONADAL_TREE = "g10_extragonadal"
 # Contract §3.1. ICCC-2017 fixes which topographies are Xa, Xb and Xc; the Xc topographies
 # (569, 620-629) are split between the two gonad trees by their ICD-O-3 topography heading,
@@ -9831,7 +9830,7 @@ def _group10_tree_routing(repo: Path):
 def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
     """
     GROUP 10 RULE 1 (contract §5) — every code a site tree emits is a Group X code at that
-    tree's site, every behaviour exclusion is not, and g10_site_unstated emits nothing.
+    tree's site, and every behaviour exclusion is not.
 
     Source: ICCC-2017.sqlite, ranges 94-117 (main group X), read on every build. Xa admits
     behaviours 0, 1 and 3 in the central nervous system; every other range admits 3 only.
@@ -9843,13 +9842,14 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
     way app.js routedTree() resolves it (first rule whose topography_in holds the code, else
     the default). The router is what puts a case in a tree, so the tree's own `topography`
     field is not read. Rule 4 holds the router to ICCC-2017 (Xa to g10_cns, Xb to
-    g10_extragonadal), so the extragonadal tree's site is the Xb ranges.
+    g10_extragonadal, and the default to g10_extragonadal), so the extragonadal tree's site is
+    the Xb ranges plus any lookup topography outside every Group X site range, where no range
+    admits anything.
 
     An emission (code branch, immunohistochemistry rule, nos_fallback) fits when some Group X
     range contains the code, declares the behaviour, and covers at least one topography of
     the tree that holds the node. A behaviour_exclusion fails when any such range exists:
-    it hides a code the group registers. g10_site_unstated routes by cross-tree next_node
-    and holds neither.
+    it hides a code the group registers.
     """
     if ctx.group != GROUP10:
         return []
@@ -9880,11 +9880,6 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
     checked, excluded = 0, 0
     for node_id, where, code, beh in _group10_emissions(ctx):
         tree = ctx.node_tree.get(node_id)
-        if tree == GROUP10_SITE_UNSTATED_TREE:
-            out.append((FAIL, "%s %s: %s emits %s/%s. %s routes by cross-tree next_node and "
-                              "emits nothing (contract §4.5)"
-                        % (tree, node_id, where, code, beh, GROUP10_SITE_UNSTATED_TREE)))
-            continue
         checked += 1
         sites = sites_by_tree.get(tree, set())
         if not _group10_fitting_ranges(ranges, code, beh, sites):
@@ -9897,11 +9892,6 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
                            or "none", code, holders(code))))
     for node_id, where, code, beh in _group10_exclusions(ctx):
         tree = ctx.node_tree.get(node_id)
-        if tree == GROUP10_SITE_UNSTATED_TREE:
-            out.append((FAIL, "%s %s: %s excludes %s/%s. %s routes by cross-tree next_node "
-                              "and holds no terminal (contract §4.5)"
-                        % (tree, node_id, where, code, beh, GROUP10_SITE_UNSTATED_TREE)))
-            continue
         excluded += 1
         fit = _group10_fitting_ranges(ranges, code, beh, sites_by_tree.get(tree, set()))
         if fit:
@@ -9914,8 +9904,7 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
     if not [f for f in out if f[0] == FAIL]:
         out.append((OK, "GROUP 10 RULE 1: %d emission(s) each lie in an ICCC-2017 Group X "
                         "range covering the tree's routed site at that behaviour; %d behaviour "
-                        "exclusion(s) lie in none; %s emits nothing"
-                        % (checked, excluded, GROUP10_SITE_UNSTATED_TREE)))
+                        "exclusion(s) lie in none" % (checked, excluded)))
     return out
 
 
@@ -10128,7 +10117,14 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
     topography (ICCC-2017 ranges 94-99) to g10_cns, every Xc topography under C56 to
     g10_ovary and under C62 to g10_testis (ranges 106-112), every Xb topography (ranges
     100-105) to g10_extragonadal, and every other lookup topography to the default, which is
-    g10_site_unstated.
+    g10_extragonadal: app.js requires a default, and every Group X entry carries a captured
+    topography (the express lane asks the site first, registrar, 4 October 2026).
+
+    Every lookup topography from which app.js can enter Group X is named by a rule, so none
+    reaches the default: a code whose candidate_groups lists 10, and a code whose
+    candidate_groups is not a list (C80.9, route_by_morphology), which narrowBySite() and
+    afterSearchSite() both leave unfiltered. The default is the fallback for a code no rule
+    names, never a route the router relies on.
     """
     if ctx.group != GROUP10:
         return []
@@ -10179,11 +10175,23 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                           "groups[\"10\"].tree_routing (contract §3.1)"))
     else:
         default = (tr.get("default") or {}).get("tree_id")
-        if default != GROUP10_SITE_UNSTATED_TREE:
+        if default != GROUP10_EXTRAGONADAL_TREE:
             out.append((FAIL, "GROUP 10 RULE 4: groups[\"10\"].tree_routing.default is %r; a "
-                              "case with no topography, or one outside the Group X germ cell "
-                              "site ranges, goes to %s (contract §3.1, design D16)"
-                        % (default, GROUP10_SITE_UNSTATED_TREE)))
+                              "topography outside the Group X germ cell site ranges goes to "
+                              "%s (contract §3.1, design D16 as revised 4 October 2026)"
+                        % (default, GROUP10_EXTRAGONADAL_TREE)))
+        named = {t for rule in tr.get("rules") or [] if isinstance(rule, dict)
+                 for t in rule.get("topography_in") or [] if isinstance(t, str)}
+        enters = [t for t in topos
+                  if not isinstance((lookup.get(t) or {}).get("candidate_groups"), list)
+                  or GROUP10 in lookup[t]["candidate_groups"]]
+        for topo in enters:
+            if topo not in named:
+                out.append((FAIL, "GROUP 10 RULE 4: %s can enter Group X (its candidate_groups "
+                                  "is %r) but no groups[\"10\"].tree_routing rule names it, so "
+                                  "it reaches the default instead of the tree ICCC-2017's site "
+                                  "ranges give it (contract §3.1)"
+                            % (topo, (lookup.get(topo) or {}).get("candidate_groups"))))
         family_sites: dict = {}
         for r in ranges:
             family = r["subgroup"][:2]
@@ -10198,7 +10206,7 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
             elif family:
                 want = GROUP10_TREE_BY_SITE_FAMILY[family]
             else:
-                want = GROUP10_SITE_UNSTATED_TREE
+                want = GROUP10_EXTRAGONADAL_TREE
             got = _group10_route(tr, topo)
             if got != want:
                 out.append((FAIL, "GROUP 10 RULE 4: the router sends %s to %r; ICCC-2017 "
@@ -10211,8 +10219,9 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                         "at some lookup topography, and each shows the ICCC-2017 subgroup at "
                         "every one of the %d (entry, topography) pair(s) so placed; the router "
                         "sends all %d lookup topography codes to the tree ICCC-2017's site "
-                        "ranges give them"
-                        % (entries_checked, len(ctx.entries), pairs, len(topos))))
+                        "ranges give them, and a rule names each of the %d from which app.js "
+                        "can enter Group X"
+                        % (entries_checked, len(ctx.entries), pairs, len(topos), len(enters))))
     return out
 
 

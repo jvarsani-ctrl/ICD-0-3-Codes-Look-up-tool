@@ -755,14 +755,10 @@
         {
           "tree_id": "g10_extragonadal",
           "entry_node": "eg_document_inventory"
-        },
-        {
-          "tree_id": "g10_site_unstated",
-          "entry_node": "su_document_inventory"
         }
       ],
       "tree_routing": {
-        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16). The search box enters the group with no topography and reaches g10_site_unstated, which asks for the evidence and then the site, and hands the case on by cross-tree next_node into the site trees. A topography code outside the Xa, Xb and Xc site ranges, such as C77.9, also reaches that default.",
+        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16, as revised 4 October 2026). This tree_routing is the whole site resolver. Every entry into Group X carries a topography: the front door records it at Stage 1, and the express lane asks the site before it enters a group whose data reads the site (registrar, 4 October 2026). The rules list every lookup code in the ICCC-2017 Xa, Xc and Xb site ranges, computed from ICCC-2017.sqlite against topography_codes.json; check_group10_subgroups_and_routing() recomputes them on every build. A topography outside those ranges, such as C77.9, reaches the default; no such code lists Group 10 in its candidate_groups, so app.js does not enter Group X there.",
         "variable": "topography",
         "rules": [
           {
@@ -824,6 +820,9 @@
               "C11.9",
               "C22.0",
               "C22.1",
+              "C24.0",
+              "C24.8",
+              "C24.9",
               "C30.0",
               "C30.1",
               "C31.0",
@@ -853,6 +852,15 @@
               "C42.2",
               "C42.3",
               "C42.4",
+              "C44.0",
+              "C44.1",
+              "C44.2",
+              "C44.3",
+              "C44.5",
+              "C44.6",
+              "C44.7",
+              "C44.8",
+              "C44.9",
               "C47.0",
               "C47.1",
               "C47.2",
@@ -874,7 +882,34 @@
               "C49.6",
               "C49.8",
               "C49.9",
+              "C51.0",
+              "C51.1",
+              "C51.2",
+              "C51.8",
+              "C51.9",
+              "C52.9",
+              "C53.0",
+              "C53.1",
+              "C53.8",
+              "C53.9",
+              "C61.9",
+              "C63.0",
+              "C63.1",
+              "C63.2",
+              "C63.7",
+              "C63.8",
+              "C63.9",
               "C64.9",
+              "C67.0",
+              "C67.1",
+              "C67.2",
+              "C67.3",
+              "C67.4",
+              "C67.5",
+              "C67.6",
+              "C67.7",
+              "C67.8",
+              "C67.9",
               "C69.0",
               "C69.1",
               "C69.2",
@@ -898,16 +933,16 @@
           }
         ],
         "default": {
-          "tree_id": "g10_site_unstated",
-          "entry_node": "su_document_inventory",
-          "label": "Site not recorded",
-          "reason": "A Group X case with no topography, or one outside every ICCC-2017 Group X site range, reaches the tree that asks where the tumour is and then hands the case to the matching site tree."
+          "tree_id": "g10_extragonadal",
+          "entry_node": "eg_document_inventory",
+          "label": "Any other site",
+          "reason": "Every lookup code that lists Group 10 is named by a rule above, so the default is reached only by a topography outside the Xa, Xb and Xc site ranges. app.js routedTree() requires a default; the extragonadal tree is the one whose site family, Xb, ICCC-2017 defines as every site outside the central nervous system and the gonads."
         }
       },
       "handoff": {
         "group": 10,
-        "tree_id": "g10_site_unstated",
-        "entry_node": "su_document_inventory"
+        "tree_id": "g10_extragonadal",
+        "entry_node": "eg_document_inventory"
       }
     },
     "11": {

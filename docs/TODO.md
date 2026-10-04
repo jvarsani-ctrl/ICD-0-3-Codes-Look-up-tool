@@ -1441,7 +1441,7 @@ row and a relabel changes no stored value. The full classification of all 158 di
 | `9064/3` Germinoma | `9064 - Intratubular malignant germ cells`, the `/2` in situ term | A germinoma, or a germ cell tumour of unnamed type, entered as germ cell neoplasia in situ |
 | `9100/3` Choriocarcinoma, NOS | `9100 - Hydatidiform mole, NOS`, the `/0` term | A choriocarcinoma entered under a benign mole |
 | `9086/3` Germ cell tumor with associated hematological malignancy | The placeholder *Label not found in the provided "Cancer Morphology.pdf" source.* in the option file; no `9086` choice in the 1 October 2026 snapshot | A `9086` case has nothing to select, or a placeholder to select |
-| `9102/3` Malignant teratoma, trophoblastic | No option (`docs/codes-awaiting-redcap.md`) | A code a tree emits that the dropdown cannot record |
+| `9102/3` Malignant teratoma, trophoblastic | No option (`docs/group_10_layer1_repair.md` §7) | A code a tree emits that the dropdown cannot record |
 | `9080/3` Teratoma, malignant, NOS | `9080 - Teratoma, benign`, the `/0` term | An immature teratoma entered under a benign label. The central nervous system tree also registers `9080/0` and `9080/1` |
 | `8460/3` Low grade serous carcinoma, `8650/3` Leydig cell tumor, malignant | `8460 - Papillary serous cystadenoma, NOS`; `8650 - Leydig cell tumor, benign` | A carcinoma and a malignant stromal tumour entered under benign labels |
 | `8000/3` Neoplasm, malignant | `8000 - Neoplasm, benign` | The gonadal fallback entered as benign |

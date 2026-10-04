@@ -3205,11 +3205,22 @@ rule 3 as committed in `4a1c0eb`, before those fixes, all three are MISSED. R1-F
 were added at code review, so that the nos_fallback clause of rule 1, the placental scoping of
 rule 2 and the default-tree clause of rule 4 each have a control.
 
+**Revised the same day, after the merge of `main`.** The express lane now asks the site before
+it enters a group whose data reads the site (registrar, 4 October 2026), so every entry into
+Group X carries a topography and `g10_site_unstated` was removed. R1-E, which tested that the site
+resolver emitted nothing, went with it. Rule 4 now requires the default to be `g10_extragonadal`
+(R4-D, mutated to `g10_cns`) and requires every lookup topography from which `app.js` can enter
+Group X, a code whose `candidate_groups` lists 10 or is not a list, to be named by a rule. With
+the default on the extragonadal tree, dropping an Xb code from the rules no longer changes its
+tree, so R4-C is now caught by that clause, and R4-E removes a second such code, `C38.1`, from
+every rule.
+
 Each rule reads its source on every build. Rules 1 and 4 read ICCC-2017.sqlite ranges 94–117.
 Rule 1 takes a tree's site from the router: the topography codes `groups["10"].tree_routing`
 sends to that tree, resolved first-match as `app.js` `routedTree()` resolves them, not the tree's
 own `topography` field. Rule 4 holds the router to ICCC-2017, so the extragonadal tree's site is
-the Xb ranges. Rule 2 walks each tree from its entry and carries `evidence_tests` as `app.js`
+the Xb ranges and the one lookup code outside every Group X site range, `C77.9`, which reaches it
+as the default. Rule 2 walks each tree from its entry and carries `evidence_tests` as `app.js`
 `capture()` does (`_group8_terminals_by_evidence`, unchanged). Rule 3 reads every term in
 `icdo32.sqlite`, `[obs]` terms included: an alias equal to an obsolete term still names that
 term's code (R3-F). It compares an alias with a term after folding case, reading "tumour" as
@@ -3227,8 +3238,7 @@ nothing must not pass (R3-G).
 | R1-A | a central nervous system teratoma hidden | `cn_histology` "Mature teratoma" loses its code and carries `excl 9080/0` | rule 1: "excludes 9080/0, but ICCC-2017 range 95 (Xa2) admits it at this tree's site, so the exclusion hides a Group X code" |
 | R1-B | a benign ovarian teratoma registered | `ov_teratoma` "Mature cystic teratoma" emits `9080/0` instead of excluding it | rule 1: "emits 9080/0, which no ICCC-2017 Group X range admits at the 1 topography code(s) the router sends to this tree. Ranges holding 9080: 95 (Xa2, behaviour 0,1,3), 101 (Xb2, behaviour 3), 107 (Xc2, behaviour 3)" |
 | R1-C | an extragonadal-only code in the testis | `ts_mixed` gains a `9086/3` branch | rule 1: "emits 9086/3 … Ranges holding 9086: 105 (Xb6, behaviour 3)" |
-| R1-D | a gonadal-only code outside the gonads | `eg_mixed` gains a `9102/3` branch | rule 1: "emits 9102/3 … at the 75 topography code(s) the router sends to this tree. Ranges holding 9102: 110 (Xc5, behaviour 3)" |
-| R1-E | the site resolver emits | `su_site_histology` gains a `9064/3` branch | rule 1: "g10_site_unstated routes by cross-tree next_node and emits nothing (contract §4.5)" |
+| R1-D | a gonadal-only code outside the gonads | `eg_mixed` gains a `9102/3` branch | rule 1: "emits 9102/3 … at the 115 topography code(s) the router sends to this tree. Ranges holding 9102: 110 (Xc5, behaviour 3)" |
 | R1-F | a fallback off its site | `ov_ihc` `nos_fallback.code` `9064` → `9086` | rule 1: "g10_ovary ov_ihc: nos_fallback emits 9086/3, which no ICCC-2017 Group X range admits at the 1 topography code(s) the router sends to this tree (C56.9). Ranges holding 9086: 105 (Xb6, behaviour 3)" |
 | R2-A | a histology from a marker | `cn_markers` alpha-fetoprotein option emits `9071/3` at basis 4 | rule 2: "emits 9071/3 at basis 4. Basis 4 registers 9064/3 or 9065/3, and 9100/3 for choriocarcinoma of the placenta in g10_extragonadal only (Visser 2023 Table 4, p. 06)" |
 | R2-B | **the path, not the flag** | `ov_document_inventory`'s histology option captures `["Imaging"]` instead of `["Histology"]` | rule 2: "g10_ovary ov_histology: 'Dysgerminoma', reached with evidence ['Imaging'], emits 9060/3 at basis 7 with no histology or cytology in the file" |
@@ -3244,14 +3254,15 @@ nothing must not pass (R3-G).
 | R3-G | an alias file that checks nothing | every alias's text moved from the `alias` key to `term` | rule 3: "none of the 7 alias(es) in aliases_group_10.json outside the D21 exemption equals an ICD-O-3.2 term, so the rule checked nothing" |
 | R4-A | a central nervous system subgroup lost | entry `9071/3` loses its `Xa4` rule | rule 4: "9071/3 shows subgroup 'Xc4' at C70.0, where ICCC-2017 places it in Xa4; 24 lookup topography code(s) disagree in all" |
 | R4-B | a testis routed to the ovary | `C62.0` moves from the testis routing rule to the ovary rule | rule 4: "the router sends C62.0 to 'g10_ovary'; ICCC-2017 makes it an Xc topography, which goes to 'g10_testis'" |
-| R4-C | the sacrococcygeal site unrouted | `C76.3` dropped from the extragonadal routing rule | rule 4: "the router sends C76.3 to 'g10_site_unstated'; ICCC-2017 makes it an Xb topography, which goes to 'g10_extragonadal'" |
-| R4-D | the site resolver bypassed | `tree_routing.default` → `g10_extragonadal` | rule 4: "groups["10"].tree_routing.default is 'g10_extragonadal'; a case with no topography, or one outside the Group X germ cell site ranges, goes to g10_site_unstated" |
+| R4-C | the sacrococcygeal site unrouted | `C76.3` dropped from the extragonadal routing rule | rule 4: "C76.3 can enter Group X (its candidate_groups is [9, 10]) but no groups["10"].tree_routing rule names it, so it reaches the default instead of the tree ICCC-2017's site ranges give it" |
+| R4-D | the default moved off the extragonadal tree | `tree_routing.default` → `g10_cns` | rule 4: "groups["10"].tree_routing.default is 'g10_cns'; a topography outside the Group X germ cell site ranges goes to g10_extragonadal" |
+| R4-E | a mediastinal site unrouted | `C38.1` removed from every routing rule | rule 4: "C38.1 can enter Group X (its candidate_groups is [2, 4, 10]) but no groups["10"].tree_routing rule names it, so it reaches the default" |
 
 **R2-B is the one that matters.** The mutation leaves the option's `basis_evidence_tier`
 reading "histology" and every terminal under `ov_histology` reading basis 7; only the captured
 `evidence_tests` changes. A rule that read the flag, or each terminal's own basis, passes this
 file. Rule 2 walks from the entry and carries the evidence the way `app.js` does, so every ovarian
 histology terminal is now reached with an imaging report as the only evidence on file, and the
-first reported is "Dysgerminoma", 9060/3 at basis 7. The same terminals reached through
-`g10_site_unstated` with `["Histology"]` are not reported, because the walk keeps one state per
-(node, evidence) pair.
+first reported is "Dysgerminoma", 9060/3 at basis 7. The walk keeps one state per (node,
+evidence) pair, so a terminal reached by a correct path as well is reported only for the faulty
+one.

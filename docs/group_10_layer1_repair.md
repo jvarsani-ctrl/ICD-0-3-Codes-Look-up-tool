@@ -282,8 +282,8 @@ dropdown is the question Groups IV to VIII raised.
 
 ## 7. Class G — 6 codes the tool emits that no option names
 
-Each carries `awaiting_layer1` in `group_10_dt.json` and is listed under `## Group 10 — open` in
-`docs/codes-awaiting-redcap.md`. Append them at the end of the list (`docs/TODO.md` §7).
+The data carries no flag for them (standing rule 16, 4 October 2026): this table and
+`docs/TODO.md` §7 are the record. Append them at the end of the list.
 
 | Code | ICD-O-3.2 preferred term | ICCC-2017 | Reached from | Append |
 |---|---|---|---|---|
@@ -326,10 +326,10 @@ The three safe operations are unchanged (`docs/TODO.md` §7): relabel in place, 
 ## 9. What the lookup tool already does
 
 - Names every code by ICD-O-3.2's preferred term at its behaviour, never by the REDCap label.
-- Carries `redcap_option_verified` on each of its 136 entries. 61 are `true`: the 58 class A numbers,
-  and 3 entries below behaviour 3 (`9080/0`, `9084/0`, `9100/0`) whose number's single label equals the preferred term at that
-  lower behaviour. 75 are `false`, of which 6 carry `awaiting_layer1` (§7). The entries generator writes
-  the flag from the option file. Per standing rule 16 nothing in the tool tests REDCap.
+- Carries no REDCap field. Until 4 October 2026 the entries generator wrote `redcap_option_verified`
+  and `awaiting_layer1` from the option file; standing rule 16 removed both, so the drifted labels
+  and the six codes with no option are recorded here and in `docs/TODO.md` §7 only. Nothing in the
+  tool tests REDCap.
 
 ---
 

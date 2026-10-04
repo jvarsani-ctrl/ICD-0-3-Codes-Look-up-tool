@@ -119,7 +119,6 @@ def r1b(d):
     o.pop("behaviour_exclusion"); o.update(code_branch(o["label"], "9080", "0"))
 def r1c(d): node(d, "ts_mixed")["options"].append(code_branch("Control 9086", "9086", "3"))
 def r1d(d): node(d, "eg_mixed")["options"].append(code_branch("Control 9102", "9102", "3"))
-def r1e(d): node(d, "su_site_histology")["options"].append(code_branch("Control", "9064", "3"))
 def r1f(d): node(d, "ov_ihc")["nos_fallback"]["code"] = "9086"
 ctl("R1-A cn_histology mature teratoma becomes excl 9080/0", bd.check_group10_codes_fit_site,
     ["excludes 9080/0", "range 95 (Xa2)", "hides a Group X code"], r1a)
@@ -129,8 +128,6 @@ ctl("R1-C ts_mixed gains 9086/3 (range 105, Xb6 only)", bd.check_group10_codes_f
     ["g10_testis ts_mixed", "emits 9086/3", "105 (Xb6"], r1c)
 ctl("R1-D eg_mixed gains 9102/3", bd.check_group10_codes_fit_site,
     ["g10_extragonadal eg_mixed", "emits 9102/3", "110 (Xc5"], r1d)
-ctl("R1-E su_site_histology gains a code branch", bd.check_group10_codes_fit_site,
-    ["g10_site_unstated su_site_histology", "emits nothing"], r1e)
 ctl("R1-F ov_ihc nos_fallback becomes 9086/3", bd.check_group10_codes_fit_site,
     ["g10_ovary ov_ihc: nos_fallback emits 9086/3", "(C56.9)", "105 (Xb6"], r1f)
 
@@ -204,18 +201,25 @@ def r4b(r):
 def r4c(r): rule_for(r, "g10_extragonadal")["topography_in"].remove("C76.3")
 def r4d(r):
     r["groups"]["10"]["tree_routing"]["default"].update(
-        tree_id="g10_extragonadal", entry_node="eg_document_inventory")
+        tree_id="g10_cns", entry_node="cn_document_inventory")
+def r4e(r):
+    for x in rules_of(r):
+        if "C38.1" in x["topography_in"]:
+            x["topography_in"].remove("C38.1")
 ctl("R4-A 9071/3 loses its Xa rule", bd.check_group10_subgroups_and_routing,
     ["9071/3 shows subgroup 'Xc4' at C70.0", "places it in Xa4"], r4a)
 ctl("R4-B C62.0 moves to the ovary routing rule", bd.check_group10_subgroups_and_routing,
     ["sends C62.0 to 'g10_ovary'", "goes to 'g10_testis'"], router_mutate=r4b)
 ctl("R4-C C76.3 dropped from the extragonadal routing rule",
     bd.check_group10_subgroups_and_routing,
-    ["sends C76.3 to 'g10_site_unstated'", "an Xb topography", "goes to 'g10_extragonadal'"],
-    router_mutate=r4c)
-ctl("R4-D the tree_routing default becomes g10_extragonadal",
+    ["C76.3 can enter Group X", "no groups[\"10\"].tree_routing rule names it",
+     "reaches the default"], router_mutate=r4c)
+ctl("R4-D the tree_routing default becomes g10_cns",
     bd.check_group10_subgroups_and_routing,
-    ["tree_routing.default is 'g10_extragonadal'"], router_mutate=r4d)
+    ["tree_routing.default is 'g10_cns'", "goes to g10_extragonadal"], router_mutate=r4d)
+ctl("R4-E C38.1, which lists Group 10, removed from every routing rule",
+    bd.check_group10_subgroups_and_routing,
+    ["C38.1 can enter Group X", "[2, 4, 10]", "reaches the default"], router_mutate=r4e)
 
 print("Rule 3 alias list: %s" % ALIAS_SOURCE)
 wrong = caught = probes = 0

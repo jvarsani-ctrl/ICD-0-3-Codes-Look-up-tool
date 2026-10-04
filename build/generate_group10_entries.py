@@ -15,8 +15,8 @@ this script, so one command reproduces the whole file:
     python3 build/generate_group10_entries.py --check  # writes nothing; exit 1 if it would change
     python3 build/induce_flow.py                       # then re-induce branch_sequence
 
-An error (an inventory that does not match the contract, a missing option file, a tree or
-note naming a pair outside the inventory) exits 2.
+An error (an inventory that does not match the contract, a tree or note naming a pair outside
+the inventory) exits 2.
 
 induce_flow.py writes `branch_sequence` into every ihc_checklist. This script carries an
 existing `branch_sequence` across when the node's rules are unchanged, so a regeneration
@@ -27,9 +27,9 @@ One entry per (code, behaviour). ICCC-2017 places 18 pairs in up to three subgro
 (Xa, Xb, Xc); the schema allows one entry per pair, so each of those entries carries
 `iccc3_subgroup_by_topography`, resolved at output time by app.js subgroupFor() (design D16).
 
-Layer 1 paths. This script reads ICCC_DB, ICDO_DB and ICD_LAYER1 from the environment first,
-the same variables build_database.py reads, because a git worktree sits two directories
-deeper than the vault-relative defaults assume.
+Layer 1 paths. This script reads ICCC_DB and ICDO_DB from the environment first, the same
+variables build_database.py reads, because a git worktree sits two directories deeper than
+the vault-relative defaults assume. It reads no REDCap option file.
 """
 from __future__ import annotations
 
@@ -53,7 +53,6 @@ OUT_PATH = REPO / "data" / "database" / "group_10_dt.json"
 LOOKUP_PATH = REPO / "data" / "shared" / "topography_codes.json"
 ICCC_PATH = Path(os.environ.get("ICCC_DB", str(gi.DEFAULT_ICCC)))
 ICDO_PATH = Path(os.environ.get("ICDO_DB", str(gi.DEFAULT_ICDO)))
-LAYER1 = Path(os.environ.get("ICD_LAYER1", str(gi.DEFAULT_LAYER1)))
 
 GROUP = 10
 ICCC_GROUP = "X"
@@ -445,16 +444,11 @@ def routing(subs: dict, default: str, codes: list) -> tuple:
     return rules, text
 
 
-# --------------------------------------------------------------------------------------
-# REDCap. The build reads the option markdown, not a REDCap snapshot (contract §2.7).
-# --------------------------------------------------------------------------------------
-def load_redcap_options() -> dict:
-    options, _findings = bd.parse_redcap_options(LAYER1)
-    group = options.get(GROUP)
-    if not group:
-        raise GenerationError("no Group 10 REDCap options parsed from %s — set ICD_LAYER1"
-                         % LAYER1)
-    return group
+# No REDCap fields. The tool does not verify REDCap (standing rule 16, registrar, 4 October
+# 2026): the REDCap changes owed for this group — the x_morph labels that drift from the
+# ICD-O-3.2 preferred term and the six codes with no option, 8023, 8054, 8230, 8231, 8482 and
+# 9102 — are listed in docs/TODO.md §7 and docs/group_10_layer1_repair.md, not flagged in the
+# data.
 
 
 def load_obs(icdo_path: Path) -> dict:
@@ -507,8 +501,7 @@ def join_and(items: list) -> str:
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
 
-def build_entry(recs: list, redcap: dict, obs: dict, codes: list,
-                pairs_by_tree: dict) -> dict:
+def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict) -> dict:
     first = recs[0]
     code, beh = first["morphology_code"], first["behavior_code"]
     name = first["preferred_term"]
@@ -572,38 +565,10 @@ def build_entry(recs: list, redcap: dict, obs: dict, codes: list,
     if rules is not None:
         e["iccc3_subgroup_by_topography"] = rules
 
-    option = redcap.get(code)
-    if option is None:
-        e["redcap_option_verified"] = False
-        e["coding_note"] = note(
-            e["coding_note"],
-            "Layer 1: x_morph has no option for %s." % code)
-        e["awaiting_layer1"] = {
-            "reason": (
-                "ICD-O-3.2 code %s/%s %r, verified against icdo32.sqlite and placed in "
-                "ICCC-2017 subgroup %s, is not an option in RedCap Options/Group 10- Germ "
-                "Cell Tumors, Trophoblastic Tumors And Neoplasms Of Gonads.md (x_morph). %s "
-                "Built under registrar rulings 1-3 of 4 September 2026 (contract §2)."
-                % (code, beh, name, "/".join(subs),
-                   ("Emitted by %s." % join_and(trees))
-                   if trees else "No tree emits it; it is reachable by search where aliased.")),
-            "needs": ["REDCap Group 10 option list"],
-            "todo": "docs/codes-awaiting-redcap.md",
-        }
-    elif name in option["names"]:
-        e["redcap_option_verified"] = True
-    else:
-        e["redcap_option_verified"] = False
-        offered = " and ".join('"%s"' % n for n in option["names"])
-        e["coding_note"] = note(
-            e["coding_note"],
-            "Layer 1: x_morph offers %s as %s; ICD-O-3.2's preferred term at /%s is \"%s\"."
-            % (code, offered, beh, name))
     return e
 
 
-def build_entries(payload: dict, redcap: dict, obs: dict, codes: list,
-                  trees: list) -> list:
+def build_entries(payload: dict, obs: dict, codes: list, trees: list) -> list:
     records = payload["records"]
     if len(records) != EXPECTED_RECORDS:
         raise GenerationError("the inventory holds %d (code, behaviour) records, the "
@@ -636,8 +601,7 @@ def build_entries(payload: dict, redcap: dict, obs: dict, codes: list,
         raise GenerationError("; ".join(problems))
     check_ihc_overrides(checklist_markers(trees))
 
-    return [build_entry(grouped[k], redcap, obs, codes, pairs_by_tree)
-            for k in sorted(grouped)]
+    return [build_entry(grouped[k], obs, codes, pairs_by_tree) for k in sorted(grouped)]
 
 
 def build_metadata(entries: list, summary: dict, trees: list) -> dict:
@@ -666,18 +630,8 @@ def build_metadata(entries: list, summary: dict, trees: list) -> dict:
 
 
 def report(entries: list) -> None:
-    awaiting = [e for e in entries if e.get("awaiting_layer1")]
-    drift = [e for e in entries
-             if e["redcap_option_verified"] is False and not e.get("awaiting_layer1")]
-    verified = sum(1 for e in entries if e["redcap_option_verified"] is True)
     print("entries: %d · topography-dependent: %d"
           % (len(entries), sum(1 for e in entries if e["topography_dependent"])))
-    print("redcap_option_verified true: %d · false: %d (label drift %d, awaiting_layer1 %d)"
-          % (verified, len(entries) - verified, len(drift), len(awaiting)))
-    print("awaiting_layer1 (list each under '## Group 10 — open' in "
-          "docs/codes-awaiting-redcap.md):")
-    for e in awaiting:
-        print("  %s/%s %s" % (e["morphology_code"], e["behavior_code"], e["morphology_name"]))
 
 
 def main(argv=None) -> int:
@@ -700,8 +654,7 @@ def run(argv=None) -> int:
     except group10_tree.TreeError as exc:
         raise GenerationError(str(exc)) from None
     payload = gi.build_inventory(ICCC_PATH, ICDO_PATH, ICCC_GROUP)
-    entries = build_entries(payload, load_redcap_options(), load_obs(ICDO_PATH), lookup_codes(),
-                            trees)
+    entries = build_entries(payload, load_obs(ICDO_PATH), lookup_codes(), trees)
 
     out_path = Path(args.out)
     existing = None

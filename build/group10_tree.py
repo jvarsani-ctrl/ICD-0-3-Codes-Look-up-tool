@@ -5,13 +5,14 @@ together from one command (build/generate_group10_entries.py). Edit the trees HE
 the product. Architecture: docs/group_10_build_contract.md §4. Code decisions D1-D22:
 docs/superpowers/specs/2026-10-04-group-10-germ-cell-code-decisions-design.md.
 
-Five trees. Four site trees share one set of node builders, parameterised by SITES, so the
-histotype logic is written once: g10_cns (cn_), g10_ovary (ov_), g10_testis (ts_),
-g10_extragonadal (eg_). The evidence, cytology, mixed and stain panel nodes are one builder
-each; every histology node is the site's own germinoma-family and teratoma options, then the
-shared germ_cell_core(), then the site's other tumour lines. The fifth, g10_site_unstated (su_),
-is the router's default: it asks the evidence, then the site, and hands on by cross-tree
-next_node into the matching site tree. It emits nothing itself.
+Four site trees share one set of node builders, parameterised by SITES, so the histotype
+logic is written once: g10_cns (cn_), g10_ovary (ov_), g10_testis (ts_), g10_extragonadal
+(eg_). The evidence, cytology, mixed and stain panel nodes are one builder each; every
+histology node is the site's own germinoma-family and teratoma options, then the shared
+germ_cell_core(), then the site's other tumour lines. The router's tree_routing picks the tree
+from the captured topography. Every entry into Group X carries one: the front door records it
+at Stage 1, and the express lane asks the site before it enters a group whose data reads the
+site (registrar, 4 October 2026). There is no site-unstated tree.
 
 Clerk-facing text lives in `question`, `hint`, `label`, `reason` and `upgrade_path`.
 `coding_note` is author-facing and never rendered. No clerk-facing string names a node id or a
@@ -21,8 +22,7 @@ icdo32.sqlite when the trees are built (term()), never typed.
 
 Tree `topography` values are author-facing documentation. The validator reads them only for
 Groups 3 and 4, so this file writes the Group 8 range format, converted from the ICCC-2017
-range strings in TOPOGRAPHY_RAW. g10_site_unstated owns no topography: it is the router's
-default and the search box's entry, so its list is empty.
+range strings in TOPOGRAPHY_RAW.
 """
 from __future__ import annotations
 
@@ -226,35 +226,29 @@ def node(node_id, node_type, step, step_label, question, hint, options, captured
 # ------------------------------------------------------------------------------------------
 GONADS = ("ovary", "testis")
 # One record per site tree. family / family_term: the germinoma-family code and the name the
-# site's reports use for it (D3). fluid: what its cytology samples. gct_site / site_label: the
-# g10_site_unstated answer that leads here. yolk_sac / choriocarcinoma: the site's wording of
-# the shared germ cell options. where: the gonad, for the referral wording of the other node.
+# site's reports use for it (D3). fluid: what its cytology samples. yolk_sac /
+# choriocarcinoma: the site's wording of the shared germ cell options. where: the gonad, for
+# the referral wording of the other node.
 SITES = {
     "cns": {
         "prefix": "cn_", "tree": "g10_cns", "family": "9064", "family_term": "germinoma",
-        "fluid": "cerebrospinal fluid", "gct_site": "cns",
-        "site_label": "Brain or spinal cord, including the pineal and suprasellar regions",
+        "fluid": "cerebrospinal fluid",
         "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
         "choriocarcinoma": "Choriocarcinoma"},
     "ovary": {
         "prefix": "ov_", "tree": "g10_ovary", "family": "9060", "family_term": "dysgerminoma",
-        "fluid": "ascitic fluid or a fine-needle aspirate", "gct_site": "ovary",
-        "site_label": "Ovary", "where": "the ovary",
+        "fluid": "ascitic fluid or a fine-needle aspirate", "where": "the ovary",
         "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
         "choriocarcinoma": "Non-gestational choriocarcinoma"},
     "testis": {
         "prefix": "ts_", "tree": "g10_testis", "family": "9061", "family_term": "seminoma",
-        "fluid": "a fine-needle aspirate", "gct_site": "testis",
-        "site_label": "Testis", "where": "the testis",
+        "fluid": "a fine-needle aspirate", "where": "the testis",
         "yolk_sac": "Yolk sac tumour, prepubertal or postpubertal type",
         "yolk_sac_reason": "WHO 2022 codes both types 9071/3 (Moch 2022, Table 3, p. 464).",
         "choriocarcinoma": "Choriocarcinoma"},
     "extragonadal": {
         "prefix": "eg_", "tree": "g10_extragonadal", "family": "9064",
         "family_term": "germinoma", "fluid": "an effusion or a fine-needle aspirate",
-        "gct_site": "other",
-        "site_label": "Any other site — sacrococcygeal region, mediastinum, retroperitoneum or "
-                      "elsewhere",
         "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
         "choriocarcinoma": "Choriocarcinoma, gestational or non-gestational"},
 }
@@ -319,8 +313,6 @@ TIER_LABELS = {
     "histology": "A histology report — biopsy or resection",
 }
 TIERS = ("referral", "markers", "imaging", "cytology", "histology")
-TIER_NODE = {"referral": "clinical_alias", "markers": "markers", "imaging": "imaging",
-             "cytology": "cytology", "histology": "histology"}
 
 
 def n_document_inventory(node_id, targets, note):
@@ -1235,26 +1227,6 @@ def common(site):
     ]
 
 
-def site_unstated_nodes():
-    targets = {t: "su_site_" + t for t in TIERS}
-    nodes = [n_document_inventory(
-        "su_document_inventory", targets,
-        "Contract §4.5. The router's default: no topography captured, or one no rule names. "
-        "The search box enters here. Same five tiers and captures as the site trees.")]
-    for t in TIERS:
-        target = TIER_NODE[t]
-        nodes.append(node(
-            targets[t], "site_resolution", 2, "Tumour site",
-            "Where is the tumour?",
-            "The topography was not recorded at Stage 1. Record it on the case as well.",
-            [go(st["site_label"], nid(site, target), {"gct_site": st["gct_site"]})
-             for site, st in SITES.items()],
-            ["gct_site"],
-            "Contract §4.5. Cross-tree next_node into the site tree's %s node, which "
-            "check_orphan_nodes and app.js findNode both allow. No terminal here." % target))
-    return nodes
-
-
 TREE_LABELS = {
     "cns": "Germ cell tumours of the brain and spinal cord (C70.0-C72.9, C75.1-C75.3; ICCC-3 Xa "
            "admits behaviours 0, 1 and 3) - an evidence gate, a marker route, and a histology "
@@ -1286,13 +1258,9 @@ def _tree(tree_id, label, entry, topography, nodes):
 
 
 def trees() -> list:
-    """Return the five trees as a fresh structure that shares no object with any other call or
+    """Return the four trees as a fresh structure that shares no object with any other call or
     with itself (a JSON round trip), so callers may mutate it freely."""
     out = [_tree(st["tree"], TREE_LABELS[site], nid(site, "document_inventory"),
                  _topo(TOPOGRAPHY_RAW[site]), common(site) + SITE_NODES[site]())
            for site, st in SITES.items()]
-    out.append(_tree("g10_site_unstated",
-                     "Site not recorded - asks the evidence, then the site, and continues in "
-                     "the matching site tree; emits no code itself",
-                     "su_document_inventory", [], site_unstated_nodes()))
     return json.loads(json.dumps(out))
