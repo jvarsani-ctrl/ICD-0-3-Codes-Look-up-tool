@@ -9288,9 +9288,10 @@ GROUP10_MARKER_PAIRS = {("9064", "3"), ("9065", "3")}
 GROUP10_PLACENTAL_MARKER_PAIR = ("9100", "3")
 # Design D21 builds "Teratoma" as the behaviour-neutral alias of 9080 and 9084. Rule 3 reads
 # "Teratoma" as ICD-O-3.2's "Teratoma, NOS" (9080/1), because it reads "X" and "X, NOS" as
-# one term, so without this entry D21's own built alias fails it. The exemption covers that
-# string mapped to exactly those two codes and nothing else; the same string mapped to any
-# other code set is checked as usual.
+# one term, so without this entry D21's own built alias fails it. The key is the alias text
+# with case and whitespace folded and nothing else, so it matches "Teratoma" alone and never
+# "Teratoma, NOS" or "Teratomas"; the codes must be exactly these two. Any other spelling or
+# code set goes through the full check.
 GROUP10_D21_NEUTRAL_ALIASES = {"teratoma": frozenset({"9080", "9084"})}
 
 _ICCC_X_CACHE: dict = {}
@@ -9595,8 +9596,8 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
     GROUP 10 RULE 3 (contract §5, §6) — an alias that is an ICD-O-3.2 term says what
     ICD-O-3.2 says, at every behaviour the group emits.
 
-    Source: icdo32.sqlite, every level (Preferred, Synonym, Related), [obs] terms excluded;
-    design D21. app.js lists aliases under "Also called" by four-digit code, so an alias on
+    Source: icdo32.sqlite, every level (Preferred, Synonym, Related), [obs] terms included:
+    an alias equal to an obsolete term still names that term's code; design D21. app.js lists aliases under "Also called" by four-digit code, so an alias on
     9080 appears on every 9080 output whatever its behaviour. For every alias in
     aliases_group_10.json whose text equals an ICD-O-3.2 term (case folded, tumour/tumor
     normalised, a trailing ", NOS" dropped):
@@ -9610,8 +9611,13 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
     ICD-O-3.2 files Germinoma under 9064.
 
     One exemption, GROUP10_D21_NEUTRAL_ALIASES: D21 builds "Teratoma" on 9080 and 9084 as
-    the behaviour-neutral alias. With the alias file absent (Task T5 has not run) this
-    returns a NOTE and checks nothing.
+    the behaviour-neutral alias. It matches that exact text (case and whitespace folded,
+    before the ", NOS" step) mapped to exactly those two codes.
+
+    With the alias file absent (Task T5 has not run) this returns a NOTE and checks nothing.
+    With the file present, the rule FAILS when no alias outside the exemption equals an
+    ICD-O-3.2 term: an empty list, or alias text under the wrong key, would otherwise pass
+    a rule that checked nothing.
     """
     if ctx.group != GROUP10:
         return []
@@ -9633,8 +9639,8 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
     terms: dict = {}
     for (code, beh), bucket in index.items():
         for term, (_level, obs) in bucket.items():
-            if not obs:
-                terms.setdefault(_group10_term_key(term), {})[(code, beh)] = term
+            terms.setdefault(_group10_term_key(term), {})[(code, beh)] = (
+                "%s %s" % (term, obs) if obs else term)
     emitted: dict = {}
     for _node, _where, code, beh in _group10_emissions(ctx):
         emitted.setdefault(code, set()).add(beh)
@@ -9653,7 +9659,8 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
         hits = terms.get(key)
         if not hits:
             continue
-        if key in GROUP10_D21_NEUTRAL_ALIASES and set(maps) == GROUP10_D21_NEUTRAL_ALIASES[key]:
+        exact = " ".join(low.split())
+        if set(maps) == GROUP10_D21_NEUTRAL_ALIASES.get(exact):
             neutral += 1
             continue
         matched += 1
@@ -9672,6 +9679,11 @@ def check_group10_alias_terms_match_icdo32(ctx: DTContext, layer1: Path, repo: P
                                   "four-digit code, so the alias would stand on outputs it is "
                                   "not true of (design D21)"
                             % (text, named, c, ", ".join(sorted(em)) or "none")))
+    if not matched:
+        out.append((FAIL, "GROUP 10 RULE 3: none of the %d alias(es) in %s outside the D21 "
+                          "exemption equals an ICD-O-3.2 term, so the rule checked nothing. "
+                          "The list is empty, or the alias text is not under the 'alias' key"
+                    % (len(aliases), path.name)))
     if not [f for f in out if f[0] == FAIL]:
         out.append((OK, "GROUP 10 RULE 3: %d alias(es) in %s; %d equal an ICD-O-3.2 term and "
                         "map to its code, which Group X emits at that term's behaviour only; "

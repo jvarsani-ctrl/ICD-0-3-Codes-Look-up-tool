@@ -89,10 +89,11 @@ controls.append(("PROBE no alias file: rule 3 returns a NOTE", None,
                  [m for l, m in res if l != bd.NOTE], res[0][1]))
 
 
-def ctl(name, check, expect, mutate=None, alias_add=None, router_mutate=None):
+def ctl(name, check, expect, mutate=None, alias_add=None, router_mutate=None, alias_swap=None):
     d = copy.deepcopy(base); a = copy.deepcopy(aliases); r = copy.deepcopy(router)
     if mutate: mutate(d)
     if alias_add: a = a + [alias_add]
+    if alias_swap: a = alias_swap(a)
     if router_mutate: router_mutate(r)
     res = run(check, d, a, r)
     fails = [m for lvl, m in res if lvl == bd.FAIL]
@@ -163,6 +164,22 @@ ctl("R3-D alias Teratoma maps to 9080 alone (exemption is exact)",
     bd.check_group10_alias_terms_match_icdo32,
     ["D21", "'Teratoma, NOS' at 9080/1", "emits 9080 at behaviour(s) 0, 1, 3"],
     alias_add=alias("Teratoma", "9080"))
+ctl("R3-E alias Teratoma, NOS maps to 9080 and 9084 (exemption is exact text)",
+    bd.check_group10_alias_terms_match_icdo32,
+    ["alias 'Teratoma, NOS'", "'Teratoma, NOS' at 9080/1", "maps to 9084"],
+    alias_add=alias("Teratoma, NOS", "9080", "9084"))
+# An [obs] term still names its code: Granulosa cell carcinoma is 8620/3 [obs].
+ctl("R3-F alias Granulosa cell carcinoma ([obs] 8620/3) maps to 9064",
+    bd.check_group10_alias_terms_match_icdo32,
+    ["alias 'Granulosa cell carcinoma'", "[obs]' at 8620/3", "maps to 9064"],
+    alias_add=alias("Granulosa cell carcinoma", "9064"))
+# The alias text under the wrong key: every entry reads as no ICD-O-3.2 term at all.
+def r3g(a):
+    return [{("term" if k == "alias" else k): v for k, v in x.items()} for x in a]
+ctl("R3-G every alias carries its text under the wrong key",
+    bd.check_group10_alias_terms_match_icdo32,
+    ["none of the", "equals an ICD-O-3.2 term, so the rule checked nothing"],
+    alias_swap=r3g)
 
 
 def r4a(d):

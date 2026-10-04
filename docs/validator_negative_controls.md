@@ -3199,7 +3199,9 @@ for another reason prints WRONG REASON. Before the controls, each rule runs on t
 and must pass, and rule 3 must return a NOTE when the alias file is absent. Nothing on disk
 changes. Task T5 has not yet written `data/aliases/aliases_group_10.json`, so the runner checks
 rule 3 against seven correct aliases it holds itself, and reads the file once it exists. Exit
-status 0 on 4 October 2026: **16 of 16 caught for the expected reason, 5 of 5 probes pass.**
+status 0 on 4 October 2026: **19 of 19 caught for the expected reason, 5 of 5 probes pass.**
+R3-E, R3-F and R3-G were added the same day with the spec-review fixes to rule 3; run against
+rule 3 as committed in `4a1c0eb`, before those fixes, all three are MISSED.
 
 Each rule reads its source on every build. Rules 1 and 4 read ICCC-2017.sqlite ranges 94–117.
 Rule 1 takes a tree's site from the router: the topography codes `groups["10"].tree_routing`
@@ -3207,11 +3209,16 @@ sends to that tree, resolved first-match as `app.js` `routedTree()` resolves the
 own `topography` field. Rule 4 holds the router to ICCC-2017, so the extragonadal tree's site is
 the Xb ranges. Rule 2 walks each tree from its entry and carries `evidence_tests` as `app.js`
 `capture()` does (`_group8_terminals_by_evidence`, unchanged). Rule 3 reads every term in
-`icdo32.sqlite` not marked `[obs]`, and compares an alias with a term after folding case, reading
-"tumour" as "tumor" and dropping a trailing ", NOS". Without the last step R3-B matches nothing:
-ICD-O-3.2 carries "Mature teratoma, NOS", not "Mature teratoma". The same step reads "Teratoma" as
+`icdo32.sqlite`, `[obs]` terms included: an alias equal to an obsolete term still names that
+term's code (R3-F). It compares an alias with a term after folding case, reading "tumour" as
+"tumor" and dropping a trailing ", NOS". Without the last step R3-B matches nothing: ICD-O-3.2
+carries "Mature teratoma, NOS", not "Mature teratoma". The same step reads "Teratoma" as
 "Teratoma, NOS" (9080/1), so design D21's behaviour-neutral alias "Teratoma" → 9080, 9084 is
-exempt by name (`GROUP10_D21_NEUTRAL_ALIASES`) for that code set only, which R3-D proves.
+exempt by name (`GROUP10_D21_NEUTRAL_ALIASES`). The exemption matches the alias text with case
+and whitespace folded, before the ", NOS" step, mapped to exactly those two codes: R3-D changes
+the codes and R3-E the text, and both are checked in full. With the alias file present, rule 3
+fails when no alias outside the exemption equals an ICD-O-3.2 term, because a rule that checked
+nothing must not pass (R3-G).
 
 | | Control | Mutation | Caught by |
 |---|---|---|---|
@@ -3227,7 +3234,10 @@ exempt by name (`GROUP10_D21_NEUTRAL_ALIASES`) for that code set only, which R3-
 | R3-A | germinoma filed as dysgerminoma | alias "Germinoma" → `["9060"]` | rule 3: "alias 'Germinoma' maps to 9060 Dysgerminoma. ICD-O-3.2 files Germinoma under 9064" |
 | R3-B | **D21's own example** | alias "Mature teratoma" → `["9080"]` | rule 3: "D21 — alias 'Mature teratoma' is the ICD-O-3.2 term 'Mature teratoma, NOS' at 9080/0, and Group X emits 9080 at behaviour(s) 0, 1, 3" |
 | R3-C | an in situ term on an invasive code | alias "Germ cell neoplasia in situ" → `["9064"]` | rule 3: "D21 — … 'Germ cell neoplasia in situ' at 9064/2, and Group X emits 9064 at behaviour(s) 3" |
-| R3-D | the D21 exemption stretched | alias "Teratoma" → `["9080"]` alone | rule 3: "D21 — alias 'Teratoma' is the ICD-O-3.2 term 'Teratoma, NOS' at 9080/1, and Group X emits 9080 at behaviour(s) 0, 1, 3" |
+| R3-D | the D21 exemption stretched by code | alias "Teratoma" → `["9080"]` alone | rule 3: "D21 — alias 'Teratoma' is the ICD-O-3.2 term 'Teratoma, NOS' at 9080/1, and Group X emits 9080 at behaviour(s) 0, 1, 3" |
+| R3-E | the D21 exemption stretched by text | alias "Teratoma, NOS" → `["9080", "9084"]` | rule 3: "alias 'Teratoma, NOS' is the ICD-O-3.2 term 'Teratoma, NOS' at 9080/1, and maps to 9084, a code ICD-O-3.2 does not file it under" |
+| R3-F | an obsolete term on the wrong code | alias "Granulosa cell carcinoma" → `["9064"]` | rule 3: "alias 'Granulosa cell carcinoma' is the ICD-O-3.2 term 'Granulosa cell carcinoma [obs]' at 8620/3, and maps to 9064, a code ICD-O-3.2 does not file it under" |
+| R3-G | an alias file that checks nothing | every alias's text moved from the `alias` key to `term` | rule 3: "none of the 7 alias(es) in aliases_group_10.json outside the D21 exemption equals an ICD-O-3.2 term, so the rule checked nothing" |
 | R4-A | a central nervous system subgroup lost | entry `9071/3` loses its `Xa4` rule | rule 4: "9071/3 shows subgroup 'Xc4' at C70.0, where ICCC-2017 places it in Xa4; 24 lookup topography code(s) disagree in all" |
 | R4-B | a testis routed to the ovary | `C62.0` moves from the testis routing rule to the ovary rule | rule 4: "the router sends C62.0 to 'g10_ovary'; ICCC-2017 makes it an Xc topography, which goes to 'g10_testis'" |
 | R4-C | the sacrococcygeal site unrouted | `C76.3` dropped from the extragonadal routing rule | rule 4: "the router sends C76.3 to 'g10_site_unstated'; ICCC-2017 makes it an Xb topography, which goes to 'g10_extragonadal'" |
