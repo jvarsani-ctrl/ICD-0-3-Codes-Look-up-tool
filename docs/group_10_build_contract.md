@@ -215,7 +215,8 @@ sentence. Touch no other rule.
   neighbours (`C62.9`; the `C76.x` neighbours or end of the C7x block), **not** at the
   `C49.9`→`C74.0` boundary, where the Group 9 branch inserts 448 lines.
 - `C62.0`, `C62.1`: `candidate_groups: [10]`, crosswalk row `gonad_sacrococcygeal_midline`.
-- `C76.3`: `candidate_groups: [4, 9, 10]`, `candidate_groups_advisory: true`, a note that the
+- `C76.3`: `candidate_groups: [9, 10]` (amended: Group IV's RULE 5 would need a Group IV tree
+  to declare C76.3; D19), `candidate_groups_advisory: true`, a note that the
   ICD-O-3 topography index files the sacrococcygeal region under C76.3 *Pelvis, NOS* (verify
   the wording against the Layer 1 topography file; if the file does not say it, write only what it
   says). Crosswalk row: `gonad_sacrococcygeal_midline`, whose label becomes "Ovary, testis and
