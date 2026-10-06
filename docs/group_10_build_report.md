@@ -1,7 +1,8 @@
 # Group X — build report, 2026-10-04
 
 **Branch:** `claude/group-10-tumor-pathway-3a99f7`, cut from `main` at `dbe5fd4` and brought up to
-`main` at `334c586` (Group IX merged, the registrar's 4 October rulings). Not pushed, not merged.
+`main` at `334c586` (Group IX merged, the registrar's 4 October rulings). Merged to `main` by pull
+request #12 on 6 October 2026.
 Plan: `docs/group_10_build_contract.md`. Code decisions: `docs/superpowers/specs/2026-10-04-group-10-germ-cell-code-decisions-design.md`
 (D1–D22). Questions for the registrar: `docs/group_10_registrar_review.md`. REDCap-side list:
 `docs/group_10_layer1_repair.md` and `docs/TODO.md` §7 and §27.

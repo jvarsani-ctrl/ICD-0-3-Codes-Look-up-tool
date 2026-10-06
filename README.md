@@ -190,13 +190,14 @@ green build; checks key off Layer 1, never off a flag in the file being checked.
 
 ## Status
 
-**Groups 1 to 9 are built and passing.** `data/database/` carries `group_01_dt.json` through
-`group_09_dt.json` with an alias file for each. The router declares Groups 10 to 12
+**Groups 1 to 10 are built and passing.** `data/database/` carries `group_01_dt.json` through
+`group_10_dt.json` with an alias file for each. The router declares Groups 11 and 12
 `built: false` and the tool says "not yet available" rather than throwing. Each group from 7 on
 has its build report in `docs/`: `group_07_build_report.md` (hepatic tumours, open questions in
 `group_07_open_questions.md`), `group_08_build_report.md` (malignant bone tumours) and
 `group_09_build_report.md` (soft tissue sarcomas, registrar questions in
-`group_09_registrar_questions.md`).
+`group_09_registrar_questions.md`) and `group_10_build_report.md` (germ cell, trophoblastic and
+gonadal tumours, registrar review in `group_10_registrar_review.md`).
 `python3 build/build_database.py` reports `BUILD PASSED`.
 
 Group 1's 15 `refer_group` branches resolve — building Group II cleared that debt.
