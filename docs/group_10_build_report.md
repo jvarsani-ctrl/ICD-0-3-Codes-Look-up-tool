@@ -9,11 +9,11 @@ Plan: `docs/group_10_build_contract.md`. Code decisions: `docs/superpowers/specs
 | | |
 |---|---|
 | Entries | 136 (code, behaviour) pairs from 131 ICD-O-3.2 codes; 171 ICCC records |
-| Trees | `g10_cns` 16 nodes · `g10_ovary` 23 · `g10_testis` 22 · `g10_extragonadal` 19 — 80 nodes (a deposit node per gonadal and extragonadal tree, and per tree four laboratory screens and the mixed tumour's component checklist, added 6 October 2026) |
+| Trees | `g10_cns` 25 nodes · `g10_ovary` 23 · `g10_testis` 22 · `g10_extragonadal` 19 — 89 nodes (a deposit node per gonadal and extragonadal tree, and per tree four laboratory screens and the mixed tumour's component checklist, added 6 October 2026; the brain's nine marker nodes, an age question, six marker gates and two outcome screens, added the same day, registrar review E6) |
 | Emitted | 49 (code, behaviour) pairs on code branches; 36 behaviour exclusions |
 | Immunohistochemistry panels | 4, one per tree, 8 rules each, every rule with a witness |
 | Aliases | 123: each code emitted by at least one tree a search can reach, less five generic terms Group III holds (128 before they were left out, 46 under the earlier filter, which required every reachable tree to emit it; all 6 October 2026) |
-| Validator | four Group X rules; 24 negative controls, all caught |
+| Validator | four Group X rules and the brain marker cut-off check, which also covers Group III; 34 negative controls in `build/negative_controls_group10.py` and 7 in `build/negative_controls_group03.py`, all caught |
 
 ---
 
@@ -120,6 +120,12 @@ also stains choriocarcinoma and teratoma (Siegmund 2023 Table 1, p. 34; p. 38). 
 - **Recognition aids.** 70 one-sentence aids on the histology, teratoma, sex cord–stromal and epithelial
   screens, each with its source and page in a comment in `build/group10_tree.py`. The options left
   without one are listed in registrar review E5.
+- **Brain marker gates** (registrar review E6). The brain tree's marker tier opens on
+  `cn_marker_age`. From 24 months six `numeric_gate` screens read serum and cerebrospinal fluid
+  alpha-fetoprotein against 25 ng/mL and β-hCG against 50 IU/L, the SIOP cut-offs, and lead to
+  `cn_afp_raised` (9065/3), `cn_hcg_raised` (9064/3), the imaging question (neither raised) or
+  `cn_markers` (a value the decision needs is not entered). Under 24 months, or with no age, the case
+  takes the laboratory screen and `cn_markers` as before. Each number is typed once.
 
 ---
 
@@ -129,11 +135,12 @@ also stains choriocarcinoma and teratoma (Siegmund 2023 Table 1, p. 34; p. 38). 
 |---|---|
 | `presentation_router.json` | `groups["10"]` built, four trees, `tree_routing` (Xa 24 codes → `g10_cns`; C56.9 → `g10_ovary`; C62.0, C62.1, C62.9 → `g10_testis`; Xb 122 codes → `g10_extragonadal`; default `g10_extragonadal`); one `8000-8005` branch, C56.9 and C62 → group 10, Xe; Group 3 added to the "Mass / swelling (solid tumour)" presentation (registrar review B1, 6 October 2026) |
 | `topography_codes.json` | `C62.0`, `C62.1`, `C76.3` added; Group 10 added to `C38.1`, `C38.3`, `C48.0`; `C76.3` lists groups 9 and 10; Group 10 added to the 24 Xa codes C70.0–C72.9 and C75.1–C75.3 (registrar review B1, 6 October 2026) |
-| `build_database.py` | `GROUP10`; behaviour row `{"3"}`; `ROUND_TRIP_GROUPS`; four rules; the path walk behind Group VIII and Group X rule 2 (`_group8_terminals_by_evidence`) passes through a `lab_results` node by its `next_node` (6 October 2026). Without it the walk stopped at the laboratory screens and missed every terminal behind them: four tissue-free terminals instead of fifteen, and negative controls R2-B and R2-C went uncaught |
+| `group_03_dt.json` | the four `md_gct_*` gates read the SIOP cut-offs (above 25 ng/mL, above 50 IU/L, both compartments) in place of Hu 2016's; the cut-offs stated on `pf_imaging_no_tissue`, `pf_family_triage`, `un_imaging_only` and `un_imaging_incomplete` match; no routing changed (registrar review E6) |
+| `build_database.py` | `check_brain_marker_cutoffs` (Groups III and X, registrar review E6); `GROUP10`; behaviour row `{"3"}`; `ROUND_TRIP_GROUPS`; four rules; the path walk behind Group VIII and Group X rule 2 (`_group8_terminals_by_evidence`) passes through a `lab_results` node by its `next_node` (6 October 2026). Without it the walk stopped at the laboratory screens and missed every terminal behind them: four tissue-free terminals instead of fifteen, and negative controls R2-B and R2-C went uncaught |
 | `alias_index.json` | regenerated |
 
 `app.js`, `index.html`, `uccf-tool.css` and every Group I–IX data and alias file are
-byte-identical to `main`.
+byte-identical to `main`, except `group_03_dt.json` (above).
 
 ---
 
@@ -145,8 +152,9 @@ byte-identical to `main`.
 | `check_group10_no_pathology_codes` | tissue-free paths emit only `8000/3` at basis 1–2, or `9064/3`, `9065/3` (and `9100/3` extragonadal) at basis 4 with imaging and markers on the path | the walked path; Visser rules 4–6, Table 4 |
 | `check_group10_alias_terms_match_icdo32` | an alias equal to an ICD-O-3.2 term maps to its code and is true of every behaviour the group emits for it (D21); no germinoma alias on `9060` | `icdo32.sqlite` |
 | `check_group10_subgroups_and_routing` | the subgroup shown equals ICCC-2017's at every lookup code; each routing list equals exactly ICCC's site family | `ICCC-2017.sqlite`, router, lookup |
+| `check_brain_marker_cutoffs` | Group X: 324 combinations of age and the four marker values, walked through the brain marker tier with the engine's band rule, leave the codes the ruling gives. Group III: each `md_gct_*` gate refers above the cut-off and continues at it, at zero and with no value | the SIOP cut-offs (Calaminus 2017, Methods; Calaminus 2026, Table 2); Ferraro 2019, Table 3 |
 
-24 controls in `build/negative_controls_group10.py`, recorded in
+34 controls in `build/negative_controls_group10.py` (R5-A to R5-J for the brain marker gates), recorded in
 `docs/validator_negative_controls.md`; R2-B ("the path, not the flag") is the one that matters
 most. Five controls were added after review because the rules they test were missed by the
 earlier versions: three in rule 3 and two in rule 4, whose first version checked destinations only.
@@ -223,15 +231,16 @@ codes to take Group IX's lookup additions.
 
 | Gate | Result |
 |---|---|
-| `python3 build/build_database.py` | BUILD PASSED — 1092 checks, 0 FAIL, 79 WARN (6 October 2026, after the laboratory screens, component checklist and recognition aids) |
+| `python3 build/build_database.py` | BUILD PASSED — 1102 checks, 0 FAIL, 79 WARN (6 October 2026, after the brain marker gates and the Group III cut-offs) |
 | `python3 build/induce_flow.py --check` | every rule has a witness |
 | `python3 build/generate_group10_entries.py --check` | up to date |
-| `python3 build/negative_controls_group10.py` | 24 of 24 caught, 5 of 5 probes pass |
+| `python3 build/negative_controls_group10.py` | 34 of 34 caught, 6 of 6 probes pass |
+| `python3 build/negative_controls_group03.py` | 7 of 7 caught, 1 of 1 probe passes |
 | `python3 build/group09_negative_controls.py <repo>`, `negative_controls_group08.py` | unchanged |
 | `node build/check_engine_flow.mjs` | OK; its tick-list sweep drives the four Group X gates and the four component checklists |
 | `python3 build/negative_controls_ux.py` | every control behaves |
 | `python3 build/apply_evidence_documents.py --check …group_10…` | up to date |
-| Browser | seven cases on 4 October 2026 and seven walks on 6 October 2026, §7; on 6 October 2026 also an ovarian dysgerminoma with Histology and Lab Report ticked (laboratory screen, then the tumour type, the alpha-fetoprotein value on the result), the same with Histology alone (no laboratory screen), the dysgerminoma aid under the selected option, and a testicular mixed tumour ticked embryonal carcinoma and teratoma (`9081/3`) |
+| Browser | seven cases on 4 October 2026 and seven walks on 6 October 2026, §7; on 6 October 2026 also an ovarian dysgerminoma with Histology and Lab Report ticked (laboratory screen, then the tumour type, the alpha-fetoprotein value on the result), the same with Histology alone (no laboratory screen), the dysgerminoma aid under the selected option, and a testicular mixed tumour ticked embryonal carcinoma and teratoma (`9081/3`); and, after the brain marker gates, four pineal walks: age 120 months and serum alpha-fetoprotein 30 ng/mL gave 9065/3 at basis 4; serum 20 with cerebrospinal fluid not entered gave the report question; all four values under the cut-offs gave the imaging question; age 2 months took the laboratory screen and the report question; Group III with β-hCG 20 IU/L continued to the pineal route and 8000/1 at basis 2 |
 | Groups I–IX, `app.js`, `index.html`, `uccf-tool.css` | byte-identical to `main` |
 
 The seven Group X warnings: six search-only entries whose ICD-O-3.2 preferred term is marked

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Negative controls for the four Group 10 validation rules (build contract §5).
+"""Negative controls for the four Group 10 validation rules (build contract §5), and for the
+brain marker cut-offs (check_brain_marker_cutoffs, registrar's ruling of 6 October 2026).
 
 Each control mutates an in-memory copy of group_10_dt.json, of the router, or of the alias
 list, writes the router, the topography lookup and the alias list to a throwaway repo,
@@ -16,7 +17,7 @@ runner uses a small correct alias list held here; once the file exists, it uses 
 
 Exit status 1 if any control is not caught for its reason or any probe fails.
 """
-import copy, json, os, sys, tempfile
+import copy, json, os, subprocess, sys, tempfile
 from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "build"))
@@ -61,7 +62,7 @@ def option(d, nid, starts):
 
 
 def run(check, data, alias_list=aliases, router_doc=router):
-    if check is bd.check_group10_no_pathology_codes:
+    if check in (bd.check_group10_no_pathology_codes, bd.check_brain_marker_cutoffs):
         return check(ctx_of(data))
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
@@ -77,7 +78,8 @@ def run(check, data, alias_list=aliases, router_doc=router):
 
 controls = []
 RULES = (bd.check_group10_codes_fit_site, bd.check_group10_no_pathology_codes,
-         bd.check_group10_alias_terms_match_icdo32, bd.check_group10_subgroups_and_routing)
+         bd.check_group10_alias_terms_match_icdo32, bd.check_group10_subgroups_and_routing,
+         bd.check_brain_marker_cutoffs)
 
 # correct data first: every rule must pass
 for chk in RULES:
@@ -232,6 +234,68 @@ ctl("R4-G C77.9, outside every germ cell site range, added to the Xb rule",
     bd.check_group10_subgroups_and_routing,
     ["the g10_extragonadal rule names 1 code(s) ICCC-2017 does not place in Xb: C77.9"],
     router_mutate=r4g)
+
+
+# Brain marker gates (registrar's ruling, 6 October 2026). One control per gate: its cut-off
+# moved (to 250 for the six marker gates; to 12 months for the age gate, the "1 year" a
+# reader of Lahdenne's 17 ng/mL might pick), then the boundary convention flipped, a missing
+# value read as normal, and the brain tree as it stood before the gates, pinned to commit
+# PRE_GATES and never to HEAD (CLAUDE.md rule 13).
+PRE_GATES = "689d610"
+BRAIN = bd.check_brain_marker_cutoffs
+
+
+def recut(nid, old, new):
+    def mutate(d):
+        for b in node(d, nid)["bands"]:
+            if b["range"] in (">" + old, "<=" + old, "<" + old, ">=" + old):
+                b["range"] = b["range"].replace(old, new)
+    return mutate
+
+
+def flip_convention(d):
+    for b in node(d, "cn_afp_serum")["bands"]:
+        b["range"] = {">25": ">=25", "<=25": "<25"}.get(b["range"], b["range"])
+
+
+def missing_is_normal(d):
+    node(d, "cn_hcg_csf")["bands"][2]["next_node"] = "cn_imaging_markers"
+
+
+def at_pre_gates(d):
+    old = json.loads(subprocess.run(
+        ["git", "show", PRE_GATES + ":data/database/group_10_dt.json"], cwd=REPO,
+        capture_output=True, text=True, check=True).stdout)
+    d.clear(); d.update(old)
+
+
+AFP_RAISED = "the ruling gives alpha-fetoprotein raised"
+HCG_RAISED = "the ruling gives beta human chorionic gonadotropin raised"
+REPORT = "the ruling gives the report question"
+ctl("R5-A cn_marker_age boundary 24 -> 12 months", BRAIN,
+    ["patient_age_months 23", "reaches cn_afp_raised", REPORT], recut("cn_marker_age", "24", "12"))
+ctl("R5-B cn_afp_serum cut-off 25 -> 250 ng/mL", BRAIN,
+    ["afp_serum_ng_ml 25.01", AFP_RAISED], recut("cn_afp_serum", "25", "250"))
+ctl("R5-C cn_afp_csf cut-off 25 -> 250 ng/mL", BRAIN,
+    ["afp_serum_ng_ml 25, afp_csf_ng_ml 25.01", AFP_RAISED], recut("cn_afp_csf", "25", "250"))
+ctl("R5-D cn_afp_csf_no_serum cut-off 25 -> 250 ng/mL", BRAIN,
+    ["afp_serum_ng_ml not entered, afp_csf_ng_ml 25.01", "reaches cn_markers", AFP_RAISED],
+    recut("cn_afp_csf_no_serum", "25", "250"))
+ctl("R5-E cn_hcg_serum cut-off 50 -> 250 IU/L", BRAIN,
+    ["hcg_serum_iu_l 50.01", HCG_RAISED], recut("cn_hcg_serum", "50", "250"))
+ctl("R5-F cn_hcg_csf cut-off 50 -> 250 IU/L", BRAIN,
+    ["hcg_serum_iu_l 50, hcg_csf_iu_l 50.01", "reaches cn_imaging_markers", HCG_RAISED],
+    recut("cn_hcg_csf", "50", "250"))
+ctl("R5-G cn_hcg_csf_no_serum cut-off 50 -> 250 IU/L", BRAIN,
+    ["hcg_serum_iu_l not entered, hcg_csf_iu_l 50.01", "reaches cn_markers", HCG_RAISED],
+    recut("cn_hcg_csf_no_serum", "50", "250"))
+ctl("R5-H cn_afp_serum reads 'at or above' 25", BRAIN,
+    ["afp_serum_ng_ml 25, afp_csf_ng_ml not entered", "reaches cn_afp_raised", REPORT],
+    flip_convention)
+ctl("R5-I cn_hcg_csf reads a missing value as normal", BRAIN,
+    ["hcg_csf_iu_l not entered", "reaches cn_imaging_markers", REPORT], missing_is_normal)
+ctl("R5-J the brain tree at %s, before the gates" % PRE_GATES, BRAIN,
+    ["patient_age_months 24", "reaches cn_markers", AFP_RAISED], at_pre_gates)
 
 print("Rule 3 alias list: %s" % ALIAS_SOURCE)
 wrong = caught = probes = 0

@@ -51,7 +51,7 @@
             "cytology",
             "histology"
           ],
-          "rationale": "Routes through the laboratory screen to the marker question since 6 October 2026 (registrar): the tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "rationale": "Routes to the age question and the marker gates since the registrar's ruling of 6 October 2026 on the SIOP cut-offs; under 24 months or with no age in the file it routes through the laboratory screen to the marker question, as before. The tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
           "confidence": "medium"
         },
         {

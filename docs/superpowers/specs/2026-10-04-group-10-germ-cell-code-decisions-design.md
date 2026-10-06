@@ -87,6 +87,12 @@ reference range for the patient's age. It does not re-gate numerically. Group II
 alpha-fetoprotein is physiologically high; the hint says the report must call it raised for the
 patient's age.
 
+> **Superseded for the brain, 6 October 2026.** The registrar ruled that the brain reads the SIOP
+> cut-offs (alpha-fetoprotein above 25 ng/mL, β-hCG above 50 IU/L, serum or cerebrospinal fluid) in
+> Group III and Group X. From 24 months the brain marker route re-gates numerically; under 24 months
+> it keeps the report's own reading. The other sites keep the report's reading. The `md_gct_*`
+> cut-offs were Hu 2016's, not Takami 2022's. `docs/group_10_registrar_review.md` E6.
+
 ## D5. Teratoma — settled except where marked
 
 | Report says | Code | Source |

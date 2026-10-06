@@ -261,6 +261,8 @@ of the option the checklist resolves to (E4). Both keep the one word.
   and "not in the file".
 - The values appear on the result. The tool sets no cut-offs and does not interpret the values. No
   value chooses a code; the no-tissue routes keep coding on the report's own word "raised".
+- Changed for the brain the same day (E6): from 24 months the brain marker route reads the numbers
+  against the SIOP cut-offs, and its laboratory screen is kept for younger patients.
 - The screen is a new question type in the engine. It was handed to the "ICD Overall fixes"
   session on 6 October 2026.
 - Once the engine supports it, this branch places the screen at the start of each Group X tree,
@@ -369,3 +371,125 @@ Left without an aid:
   category options on the ovary's histology screen, and the teratoma-with-another-component routes.
 - **Not in this change:** the gonadoblastoma screen, the cytology screen and the mixed tumour's
   named-term screen.
+
+### E6. Brain tumour markers: the SIOP cut-offs decide "raised" (rulings of 6 October 2026)
+
+Evidence: `docs/group_10_lab_marker_evidence.md` §1, §4 and §5. Each number below carries the source
+that file gives for it.
+
+**Ruling 1 — the brain reads the SIOP cut-offs in Group III and in Group X.** Alpha-fetoprotein
+above 25 ng/mL and beta human chorionic gonadotropin (β-hCG) above 50 IU/L, in serum or in
+cerebrospinal fluid, count as raised.
+- SIOP CNS GCT 96 diagnosed a malignant non-germinomatous germ cell tumour without biopsy on
+  alpha-fetoprotein > 25 ng/mL or β-hCG > 50 IU/L in serum or cerebrospinal fluid (Calaminus 2017,
+  Methods and Results). SIOP CNS GCT II required alpha-fetoprotein < 25 ng/mL and β-hCG < 50 IU/L
+  in serum and cerebrospinal fluid for germinoma (Calaminus 2026, Table 2 and Results).
+- SIOP applies the serum cut-off to either compartment (Takami 2023, Results; Calaminus 2026,
+  Results).
+- The boundary is strict, as SIOP CNS GCT 96 prints it: a value equal to the cut-off is not raised.
+
+**Ruling 2 — ovary.** Alpha-fetoprotein above 1,000 ng/mL with teratoma histology does not change the
+code: the histology decides, and the value is only recorded on the laboratory screen. Paediatric
+practice reads such a value as a yolk sac component (Pashankar 2022, p. 68, citing Mann 2008), and
+adult guidance sets no threshold. No data change.
+
+**Ruling 3 — the Diagnostic Pathway's §2C "raised AFP → yolk sac tumour (9071)" is not supported.**
+Every immature teratoma in Takami 2023 raised alpha-fetoprotein (Results); a yolk sac component was
+found in 19 of 37 alpha-fetoprotein-raised patients in SIOP CNS GCT 96 (Calaminus 2017, Results);
+alpha-fetoprotein ≥ 10 ng/mL had a positive predictive value of 57.7% for any malignant
+non-germinomatous component (Takami 2022, Table 2, p. 5). The tree keeps 9065/3, Germ cell tumor,
+nonseminomatous, on the no-tissue route. The pathway file lives outside this repository and is not
+edited here.
+
+**Built in Group X (`build/group10_tree.py`, `brain_marker_nodes()`).** The brain tree's marker
+tier (Imaging and Lab Report ticked, no tissue) now opens on an age question and up to six marker
+screens, each a `numeric_gate`, instead of the laboratory screen:
+
+| Age at diagnosis | What decides |
+|---|---|
+| 24 completed months or more | The numbers. Any value above its cut-off, in either compartment, is raised. Alpha-fetoprotein raised leads to 9065/3. β-hCG raised, with alpha-fetoprotein at or below 25 ng/mL in both compartments, leads to 9064/3. All four values at or below the cut-offs leads to the imaging question, as "Neither marker is raised" did. Each coded option still needs imaging that shows the tumour and a file that calls it a germ cell tumour (Visser 2023, Table 4) |
+| Under 24 months, or not in the file | The laboratory screen records the values, then the report's own reading decides, as before this ruling |
+
+- **Each number is typed once.** From 24 months the gates replace the laboratory screen; under 24
+  months the gates are never asked. A gate asks only what can still change the code, as Group III's
+  `md_gct_*` gates do, so a value after the deciding one is not asked. The trail records each typed
+  value with the band it fell in. The laboratory block on the result is empty on the gate route.
+- **A value not entered never counts as normal.** "Not raised" needs both compartments entered and
+  at or below the cut-off. A value left empty, for any reason, sends the case to the report question.
+- **The age boundary is 24 months.** It is the first age at which every published upper reference
+  limit of serum alpha-fetoprotein in term infants is at or below 25 ng/mL: 12 and 15 ng/mL at
+  2 years (La'ulu 2011). Before it the limits run above 25: 27 ng/mL after 8 months (Lahdenne 1991),
+  41 and 38 ng/mL for girls at 1 year (La'ulu 2011), up to 87 ng/mL from day 180 to day 720 (Blohm
+  1998). All from Ferraro 2019, Table 3, aop pp. 8–9. A β-hCG number does not decide under 24
+  months either: the split between 9065/3 and 9064/3 needs the alpha-fetoprotein reading.
+- **Units.** The screens ask ng/mL for alpha-fetoprotein and IU/L for β-hCG, SIOP's units. The hint
+  says that µg/L is the same number as ng/mL and mIU/mL the same as IU/L (the evidence file's Units
+  paragraph). No conversion is built: a value in kU/L or IU/mL is left empty and goes to the report
+  question.
+- **The escape "Uncertain subtype — still a malignancy"** on each gate falls back to 9064/3 (Germ
+  cell tumor, NOS), the one Visser Table 4 code that names no type, as on the stain panel.
+- **Proof:** `check_brain_marker_cutoffs` walks 324 combinations of age and the four values through
+  the gates with the engine's own band rule. Ten negative controls in
+  `build/negative_controls_group10.py` (R5-A to R5-J) move each cut-off, flip the boundary, read a
+  missing value as normal, and run the tree at commit `689d610`, before the gates.
+
+**Changed in Group III (`data/database/group_03_dt.json`).** The four `md_gct_*` gates read the SIOP
+cut-offs; they read Hu 2016's, which separate any intracranial germ cell tumour from a non-germ-cell
+lesion rather than germinoma from a non-germinomatous tumour (evidence file §1):
+
+| Gate | Was | Now |
+|---|---|---|
+| `md_gct_afp_serum` | ≥ 25 ng/mL | > 25 ng/mL |
+| `md_gct_afp_csf` | ≥ 3.8 ng/mL | > 25 ng/mL |
+| `md_gct_hcg_csf` | ≥ 8.2 IU/L | > 50 IU/L |
+| `md_gct_hcg_serum` | ≥ 2.5 IU/L | > 50 IU/L |
+
+The four gates' hints and referral reasons, and the clerk-facing cut-offs on `pf_imaging_no_tissue`,
+`pf_family_triage`, `un_imaging_only` and `un_imaging_incomplete`, now state the same numbers. No
+routing changed. Seven negative controls in `build/negative_controls_group03.py`.
+
+**Traced: a pineal mass, imaging only, β-hCG 20 IU/L.** Before the ruling the gate referred it to
+Group X. Now it continues to the compartment question, the pineal route and the imaging-only node
+`md_pineal_imaging_only`. That node asks whether alpha-fetoprotein and β-hCG "have been measured and
+are not elevated" and diverts to tissue when either "is elevated, or was never measured"; it states
+no number. With alpha-fetoprotein measured and not elevated, and no other diversion, the case codes
+8000/1 (Neoplasm, uncertain whether benign or malignant) at basis 2. With alpha-fetoprotein never
+measured, it goes to "tissue required" and, with no tissue, the same 8000/1 at basis 2.
+
+**For the registrar:**
+1. **β-hCG above 50 IU/L with alpha-fetoprotein not raised.** SIOP CNS GCT 96 reads it as a
+   secreting, malignant non-germinomatous tumour (Calaminus 2017, Methods), which ICD-O-3.2 holds as
+   9065/3. The tree keeps Visser 2023 Table 4's 9064/3. Not chosen; your decision.
+2. **A raised value by the laboratory's range that is not raised by SIOP's** (β-hCG 5 to 50 IU/L,
+   alpha-fetoprotein 10 to 25 ng/mL) in a complete set of four values now reaches the imaging
+   question and, for a malignant tumour on imaging, Group III's 8000/3. Before the ruling the
+   report's word "raised" led to 9064/3 or 9065/3. This follows ruling 1; COG would read
+   alpha-fetoprotein above 10 ng/mL as raised (Goldman 2015; Fangusaro 2019).
+3. **A value equal to the cut-off** (25 ng/mL, 50 IU/L) is not raised under SIOP CNS GCT 96, and
+   SIOP CNS GCT II's "< 25" does not admit it to germinoma either.
+4. **Age limit of the SIOP cut-offs.** Ferraro 2019 states they were reported for patients older
+   than 4 years (aop p. 9); the evidence file did not confirm this against the trial text (§6 item
+   10). The tool applies them from 24 months, the reference-table age.
+5. **Cerebrospinal fluid alpha-fetoprotein in infants.** Coakley 2005 (abstract only) gives a 95th
+   centile of 12.5 kIU/L, about 15 ng/mL at 25 ng/mL = 20.8 kU/L (Calaminus 2026), from a corrected
+   age of 32 days, and all values under 3 kIU/L after 2 months. The tool asks chronological age
+   and no prematurity, so no earlier boundary for cerebrospinal fluid is built.
+6. **Preterm infants** run higher and fall more slowly (Lahdenne 1991, 1 year: 5–33 ng/mL); Table 3
+   has no preterm values at 2 years.
+7. **Group III has no age question.** An infant whose physiological serum alpha-fetoprotein exceeds
+   25 ng/mL is referred to Group X, where the age question sends the case to the report question.
+8. **`md_pineal_imaging_only` says "elevated" without a number**, in its question and in its
+   diversion. A clerk may read β-hCG 20 IU/L as elevated against the laboratory's range there.
+9. **The non-diagnostic cytology route into the marker question** still reads the report: its values
+   are typed on the cytology laboratory screen, which no gate can read.
+
+**For the engine session (not done here; `app.js` is unchanged):**
+- A gate that reads a `lab_results` value, or a laboratory screen that stores into the case
+  variables, would let the cytology route and the under-24-month route use the numbers without a
+  second entry.
+- A referral from Group III does not carry the typed marker values (`caseFacts()` keeps the case
+  facts only), so a Group III marker case enters its values again in Group X.
+- `numeric_gate` has no "given in another unit" answer: a value left empty for its unit shows as
+  "not documented" in the trail.
+- The "Uncertain subtype" escape asserts no basis of diagnosis; its result carries no basis row. The
+  gates' fallback names basis 4 for the validator's rule 2 only.

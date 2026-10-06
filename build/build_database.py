@@ -32,6 +32,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import itertools
 import shutil
 import subprocess
 import json
@@ -9839,6 +9840,247 @@ def check_group10_no_pathology_codes(ctx: DTContext):
     return out
 
 
+# --------------------------------------------------------------------------------------
+# Brain tumour-marker cut-offs — registrar's ruling, 6 October 2026. Group III and Group X
+# read serum and cerebrospinal fluid alpha-fetoprotein and beta human chorionic gonadotropin
+# against the SIOP cut-offs, the same in both compartments, "above" being strict:
+#   SIOP CNS GCT 96: > 25 ng/mL or > 50 IU/L in serum or cerebrospinal fluid diagnoses a
+#     malignant non-germinomatous germ cell tumour without biopsy (Calaminus G, et al. Neuro
+#     Oncol 2017;19:1661-1672, Methods).
+#   SIOP CNS GCT II: germinoma requires < 25 ng/mL and < 50 IU/L in serum and cerebrospinal
+#     fluid (Calaminus G, et al. Neuro Oncol 2026;28:2234-2247, Table 2 and Results).
+# Group X reads no marker number under 24 completed months: the first age at which every
+# published upper reference limit of serum alpha-fetoprotein in term infants is at or below
+# 25 ng/mL is 2 years (La'ulu 2011, 12 and 15 ng/mL; at 1 year girls reach 41 ng/mL, and
+# Blohm 1998 reaches 87 ng/mL up to day 720), all from Ferraro 2019, Table 3, aop pp. 8-9.
+# docs/group_10_lab_marker_evidence.md §1 and §4 hold the sources. The variable names are
+# the ones app.js stores each reading under (numeric_gate `variable`).
+# --------------------------------------------------------------------------------------
+BRAIN_MARKER_CUTOFFS = {
+    "afp_serum_ng_ml": (25, "ng_per_ml"), "afp_csf_ng_ml": (25, "ng_per_ml"),
+    "hcg_serum_iu_l": (50, "iu_per_l"), "hcg_csf_iu_l": (50, "iu_per_l"),
+}
+_BRAIN_UNIT_TEXT = {"ng_per_ml": "ng/mL", "iu_per_l": "IU/L"}
+BRAIN_AFP_VARIABLES = ("afp_serum_ng_ml", "afp_csf_ng_ml")
+BRAIN_HCG_VARIABLES = ("hcg_serum_iu_l", "hcg_csf_iu_l")
+BRAIN_AGE_VARIABLE = "patient_age_months"
+BRAIN_MIN_AGE_MONTHS = 24
+GROUP10_BRAIN_TREE = "g10_cns"
+# What the numbers leave the clerk to choose on the Group X brain marker route, as the set of
+# basis-4 codes still reachable (Visser 2023 Table 4, p. 06): a raised alpha-fetoprotein
+# leaves 9065/3, a raised beta human chorionic gonadotropin with alpha-fetoprotein not raised
+# leaves 9064/3 (the tree's outcome; SIOP's reading is with the registrar), neither raised
+# leaves no marker code, and an undecided case leaves both, the report question.
+_BRAIN_OUTCOMES = {
+    "afp": (frozenset({"9065/3"}), "alpha-fetoprotein raised (9065/3 only)"),
+    "hcg": (frozenset({"9064/3"}), "beta human chorionic gonadotropin raised (9064/3 only)"),
+    "neither": (frozenset(), "neither raised (no marker code)"),
+    "report": (frozenset({"9064/3", "9065/3"}), "the report question (9064/3 and 9065/3)"),
+}
+
+
+def _engine_in_band(rng, v):
+    """app.js inBand(), line for line: first matching band wins; 'not_documented' takes only
+    a missing reading, and a missing reading takes nothing else."""
+    if rng == "not_documented":
+        return v is None
+    if v is None or not isinstance(rng, str):
+        return False
+    for pat, test in ((r"^>=\s*([\d.]+)$", lambda a: v >= a), (r"^>\s*([\d.]+)$", lambda a: v > a),
+                      (r"^<=\s*([\d.]+)$", lambda a: v <= a), (r"^<\s*([\d.]+)$", lambda a: v < a)):
+        m = re.match(pat, rng)
+        if m:
+            return test(float(m.group(1)))
+    m = re.match(r"^([\d.]+)\s*-\s*([\d.]+)$", rng)
+    if m:
+        return float(m.group(1)) <= v < float(m.group(2)) + _band_step(m.group(2))
+    return False
+
+
+def _engine_band(node, v):
+    for b in node.get("bands") or []:
+        if isinstance(b, dict) and _engine_in_band(b.get("range"), v):
+            return b
+    return None
+
+
+def _brain_walk(ctx, start, values):
+    """Follow app.js from `start` with these readings: a numeric_gate takes its first matching
+    band (or its fallback edge), a lab_results screen its next_node. Returns the node the
+    numbers leave the clerk on, or a terminal branch, and the gates read on the way."""
+    nid, path = start, []
+    while True:
+        node = ctx.nodes.get(nid)
+        if node is None or nid in path or len(path) > 30:
+            return ("broken", nid, path)
+        path.append(nid)
+        nt = node.get("node_type")
+        if nt == "lab_results":
+            nid = node.get("next_node")
+            continue
+        if nt != "numeric_gate":
+            return ("node", nid, path)
+        dest = _engine_band(node, values.get(node.get("variable")))
+        if dest is None:
+            if node.get("insufficient_next_node"):
+                nid = node["insufficient_next_node"]
+                continue
+            return ("unresolved", nid, path)
+        if dest.get("refer_group") is not None:
+            return ("refer", dest.get("refer_group"), path)
+        if not isinstance(dest.get("next_node"), str):
+            return ("terminal", nid, path)
+        nid = dest["next_node"]
+
+
+def _basis4_reachable(ctx, start):
+    """Every code/behaviour emitted at basis 4 on any path from `start`."""
+    out, seen, stack = set(), set(), [start]
+    while stack:
+        nid = stack.pop()
+        node = ctx.nodes.get(nid)
+        if node is None or nid in seen:
+            continue
+        seen.add(nid)
+        for b, _ in _branch_containers(node):
+            if as_code(b.get("morphology_code")) and str(b.get("basis_of_diagnosis")) == "4":
+                out.add("%s/%s" % (as_code(b["morphology_code"]), b.get("behavior_code")))
+            if isinstance(b.get("next_node"), str):
+                stack.append(b["next_node"])
+        for key in ("next_node", "insufficient_next_node"):
+            if isinstance(node.get(key), str):
+                stack.append(node[key])
+    return frozenset(out)
+
+
+def _brain_expected(values):
+    """The ruling, applied to one case: no number read under 24 months or with no age; a value
+    above its cut-off in either compartment is raised; not raised needs both compartments
+    entered and at or below the cut-off; a value not entered never counts as normal."""
+    age = values.get(BRAIN_AGE_VARIABLE)
+    if age is None or age < BRAIN_MIN_AGE_MONTHS:
+        return "report"
+    for kind, names in (("afp", BRAIN_AFP_VARIABLES), ("hcg", BRAIN_HCG_VARIABLES)):
+        got = [values.get(v) for v in names]
+        if any(x is not None and x > BRAIN_MARKER_CUTOFFS[v][0] for x, v in zip(got, names)):
+            return kind
+        if any(x is None for x in got):
+            return "report"
+    return "neither"
+
+
+def _brain_case_text(values):
+    parts = []
+    for v in (BRAIN_AGE_VARIABLE,) + BRAIN_AFP_VARIABLES + BRAIN_HCG_VARIABLES:
+        parts.append("%s %s" % (v, "not entered" if values.get(v) is None else "%g" % values[v]))
+    return ", ".join(parts)
+
+
+def check_brain_marker_cutoffs(ctx: DTContext):
+    """
+    BRAIN MARKERS (registrar's ruling, 6 October 2026) — the SIOP cut-offs decide "raised" in
+    Group III's md_gct_* gates and on Group X's brain marker route.
+
+    Keyed off the cut-offs above and app.js's own band rule, never off a flag in the data:
+    every reading is put through the band matcher the engine runs.
+
+    Group III: every numeric_gate reading a brain marker variable refers to Group X for a
+    value just above its cut-off and for a high one, and continues for the cut-off itself,
+    for zero and for no value; its bands carry the marker's unit; and all four markers are
+    gated.
+
+    Group X: from the brain tree's marker tier (the evidence option that requires Imaging and
+    Lab Report and excludes Cytology and Histology), every combination of age (none, 23, 24,
+    120 months) and of each marker (not entered, at the cut-off, 0.01 above it) is walked
+    through the gates, and the basis-4 codes still reachable where the numbers stop must be
+    the ruling's: 9065/3 alone, 9064/3 alone, none, or both (the report question).
+    """
+    if ctx.group not in (GROUP3, GROUP10):
+        return []
+    out = []
+    gates = {nid: n for nid, n in ctx.nodes.items()
+             if n.get("node_type") == "numeric_gate" and n.get("variable") in BRAIN_MARKER_CUTOFFS}
+    for nid, node in sorted(gates.items()):
+        cut, unit = BRAIN_MARKER_CUTOFFS[node["variable"]]
+        for i, b in enumerate(node.get("bands") or []):
+            if isinstance(b, dict) and b.get("unit") != unit:
+                out.append((FAIL, "BRAIN MARKERS — %s bands[%d] (%r) is read in %r; the SIOP "
+                                  "cut-off for %s is %g %s" % (nid, i, b.get("range"),
+                                                               b.get("unit"), node["variable"],
+                                                               cut, _BRAIN_UNIT_TEXT[unit])))
+    if ctx.group == GROUP3:
+        for v in BRAIN_MARKER_CUTOFFS:
+            if not any(n["variable"] == v for n in gates.values()):
+                out.append((FAIL, "BRAIN MARKERS — no Group III numeric_gate reads %s" % v))
+        for nid, node in sorted(gates.items()):
+            cut, unit = BRAIN_MARKER_CUTOFFS[node["variable"]]
+            unit = _BRAIN_UNIT_TEXT[unit]
+            for val, want in ((round(cut + 0.01, 2), True), (cut * 100, True), (cut, False),
+                              (0, False), (None, False)):
+                b = _engine_band(node, val)
+                refers = bool(b) and b.get("refer_group") == GROUP10
+                if refers != want:
+                    shown = "no value" if val is None else "%g %s" % (val, unit)
+                    out.append((FAIL, "BRAIN MARKERS — %s: %s %s; the SIOP cut-off is above "
+                                      "%g %s (band %r)" % (
+                                          nid, shown, "does not refer to Group X" if want
+                                          else "refers to Group X", cut, unit,
+                                          b.get("range") if b else None)))
+        if not out:
+            out.append((OK, "BRAIN MARKERS — %d Group III gate(s) refer above the SIOP "
+                            "cut-offs (25 ng/mL, 50 IU/L) and continue at or below them and "
+                            "with no value" % len(gates)))
+        return out
+
+    tree = next((t for t in ctx.trees if t.get("tree_id") == GROUP10_BRAIN_TREE), None)
+    entry = ctx.nodes.get(tree.get("entry_node")) if tree else None
+    starts = [o.get("next_node") for o in (entry or {}).get("options") or []
+              if isinstance(o, dict) and isinstance(o.get("ticks"), dict)
+              and {"imaging", "lab"} <= set(o["ticks"].get("requires") or [])
+              and {"cytology", "histology"} <= set(o["ticks"].get("excludes") or [])]
+    if not starts:
+        return [(FAIL, "BRAIN MARKERS — %s has no marker tier: no entry option requires "
+                       "Imaging and Lab Report and excludes Cytology and Histology"
+                 % GROUP10_BRAIN_TREE)]
+    ages = (None, BRAIN_MIN_AGE_MONTHS - 1, BRAIN_MIN_AGE_MONTHS, 120)
+    names = BRAIN_AFP_VARIABLES + BRAIN_HCG_VARIABLES
+    levels = {v: (None, BRAIN_MARKER_CUTOFFS[v][0], round(BRAIN_MARKER_CUTOFFS[v][0] + 0.01, 2))
+              for v in names}
+    reach_cache, cases, wrong = {}, 0, []
+    for start in starts:
+        for age in ages:
+            for combo in itertools.product(*(levels[v] for v in names)):
+                values = dict(zip(names, combo))
+                values[BRAIN_AGE_VARIABLE] = age
+                cases += 1
+                want = _brain_expected(values)
+                kind, where, path = _brain_walk(ctx, start, values)
+                if kind != "node":
+                    wrong.append("%s: %s stops at %s %s, not at a question"
+                                 % (GROUP10_BRAIN_TREE, _brain_case_text(values), kind, where))
+                    continue
+                if where not in reach_cache:
+                    reach_cache[where] = _basis4_reachable(ctx, where)
+                got = reach_cache[where]
+                if got != _BRAIN_OUTCOMES[want][0]:
+                    wrong.append("%s: %s reaches %s, which leaves %s; the ruling gives %s"
+                                 % (GROUP10_BRAIN_TREE, _brain_case_text(values), where,
+                                    " and ".join(sorted(got)) or "no marker code",
+                                    _BRAIN_OUTCOMES[want][1]))
+    for msg in wrong[:12]:
+        out.append((FAIL, "BRAIN MARKERS — " + msg))
+    if len(wrong) > 12:
+        out.append((FAIL, "BRAIN MARKERS — %d further case(s) wrong" % (len(wrong) - 12)))
+    if not out:
+        out.append((OK, "BRAIN MARKERS — %d case(s) through %s's marker tier: the SIOP "
+                        "cut-offs (above 25 ng/mL, above 50 IU/L, either compartment) decide "
+                        "from %d months, and a value not entered or an age under %d months "
+                        "leaves the report question" % (cases, GROUP10_BRAIN_TREE,
+                                                        BRAIN_MIN_AGE_MONTHS,
+                                                        BRAIN_MIN_AGE_MONTHS)))
+    return out
+
+
 def _group10_term_key(text):
     """Comparison form for an alias or an ICD-O-3.2 term: case and whitespace folded,
     'tumour' read as 'tumor', and a trailing ', NOS' dropped, so "Mature teratoma" meets
@@ -12074,6 +12316,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group10_no_pathology_codes, ctx)                      # rule 2
         report.run(check_group10_alias_terms_match_icdo32, ctx, layer1, repo)  # rule 3
         report.run(check_group10_subgroups_and_routing, ctx, layer1, repo)     # rule 4
+        # Registrar's ruling of 6 October 2026: SIOP brain marker cut-offs, Groups III and X.
+        report.run(check_brain_marker_cutoffs, ctx)
         # the four new checks (three of them are per-file)
         report.run(check_cryptic_genetics, ctx)
         report.run(check_mpal_rule_ordering, ctx)

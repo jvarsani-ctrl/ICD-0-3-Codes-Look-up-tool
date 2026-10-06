@@ -3320,3 +3320,44 @@ in a NOTE for each group outside `ROUND_TRIP_GROUPS`, so the gap shows in every 
 names to ICD-O-3.2 terms, which today fails the round trip 64 times (33 in Group 1, 31 in Group 2),
 was handed to the Group 1 and Group 2 sessions. Control E above no longer applies; control F's
 exemption went with the check.
+
+# Brain marker cut-offs — Groups III and X (6 October 2026)
+
+`check_brain_marker_cutoffs`, the registrar's ruling of 6 October 2026: the brain reads the SIOP
+cut-offs, alpha-fetoprotein above 25 ng/mL and β-hCG above 50 IU/L, in serum and in cerebrospinal
+fluid (Calaminus 2017, Methods; Calaminus 2026, Table 2). The check puts every reading through a
+Python copy of `app.js` `inBand()`. In Group X it walks 324 cases (age not entered, 23, 24 and
+120 months; each marker not entered, at its cut-off, and 0.01 above it) from the brain tree's
+marker tier and compares the basis-4 codes still reachable where the numbers stop with the ruling's.
+In Group III each `md_gct_*` gate must refer to Group X just above its cut-off and well above it,
+and continue at the cut-off, at zero and with no value. Evidence: `docs/group_10_registrar_review.md`
+E6.
+
+Runners: `build/negative_controls_group10.py` (R5-A to R5-J) and `build/negative_controls_group03.py`
+(G3-A to G3-G). Each control mutates an in-memory copy and expects a FAIL carrying named fragments.
+The probe on the unmutated data passes first, which is the restore. Controls R5-J and G3-G load the
+data as it stood at commit `689d610`, before the ruling, by `git show`, never from HEAD.
+
+| Control | Breaks | First FAIL |
+|---|---|---|
+| R5-A | `cn_marker_age` boundary 24 → 12 months | age 23, cerebrospinal fluid alpha-fetoprotein 25.01 reaches `cn_afp_raised`; the ruling gives the report question |
+| R5-B | `cn_afp_serum` 25 → 250 | serum 25.01 reaches `cn_markers`; the ruling gives alpha-fetoprotein raised |
+| R5-C | `cn_afp_csf` 25 → 250 | serum 25, cerebrospinal fluid 25.01 reaches `cn_markers` |
+| R5-D | `cn_afp_csf_no_serum` 25 → 250 | serum not entered, cerebrospinal fluid 25.01 reaches `cn_markers` |
+| R5-E | `cn_hcg_serum` 50 → 250 | β-hCG serum 50.01 reaches `cn_markers`; the ruling gives β-hCG raised |
+| R5-F | `cn_hcg_csf` 50 → 250 | β-hCG cerebrospinal fluid 50.01 reaches the imaging question |
+| R5-G | `cn_hcg_csf_no_serum` 50 → 250 | β-hCG serum not entered, cerebrospinal fluid 50.01 reaches `cn_markers` |
+| R5-H | `cn_afp_serum` reads "at or above" 25 | serum 25 reaches `cn_afp_raised`; the ruling gives the report question |
+| R5-I | `cn_hcg_csf` sends a missing value to the imaging question | cerebrospinal fluid β-hCG not entered reaches the imaging question |
+| R5-J | the brain tree at `689d610` | age 24, cerebrospinal fluid alpha-fetoprotein 25.01 reaches `cn_markers` |
+| G3-A–D | each `md_gct_*` cut-off → 250 | 25.01 ng/mL (or 50.01 IU/L) does not refer to Group X |
+| G3-E | `md_gct_afp_serum` reads "at or above" 25 | 25 ng/mL refers to Group X (band `>=25`) |
+| G3-F | `md_gct_hcg_csf` bands read in ng/mL | bands[0] is read in `ng_per_ml`; the cut-off is 50 IU/L |
+| G3-G | Group III at `689d610`, Hu 2016's cut-offs | 50 IU/L refers to Group X (band `>=2.5`) |
+
+Result, 6 October 2026: **R5-A to R5-J all caught (34 of 34 in the Group X runner, 6 of 6 probes
+pass); G3-A to G3-G all caught (7 of 7, 1 of 1 probe passes).**
+
+End to end through the generator: `BRAIN_AFP_CUTOFF` set to 250 in `build/group10_tree.py` and
+the data regenerated gives 13 FAIL lines, the first "afp_csf_ng_ml 25.01 … reaches cn_markers …
+the ruling gives alpha-fetoprotein raised"; restored to 25 and regenerated, the check passes.

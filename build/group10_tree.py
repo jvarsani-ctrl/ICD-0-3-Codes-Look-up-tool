@@ -300,8 +300,10 @@ def unspecified(site, label, basis, morph, why, captures=None, note=None, after=
 # alone, so the gate carries the screen in its data: each tier a Lab Report can join has a copy
 # that requires Lab Report and routes to a laboratory screen, and the screen's next_node is the
 # tier's own destination; the tier itself now excludes Lab Report. The marker tier always
-# requires Lab Report, so it routes to its screen directly. The imaging-only tier excludes Lab
-# Report and has none. One screen per destination per tree (LAB_TIERS), all sharing the tree's
+# requires Lab Report, so it routes to its screen directly, except in the brain tree, where it
+# routes to the age gate cn_marker_age and reaches the screen only under 24 months or with no
+# age (registrar's ruling of 6 October 2026, at brain_marker_nodes()). The imaging-only tier
+# excludes Lab Report and has none. One screen per destination per tree (LAB_TIERS), all sharing the tree's
 # test list. With Lab Report unticked the routes are the ones the gate had before. The rules are
 # in docs/evidence_documents/group_10.json, applied by the generator.
 #
@@ -379,13 +381,16 @@ def lab_node_id(site, tier):
 
 def n_labs(site, tier, destination):
     """The laboratory screen between the evidence checklist and one tier's destination."""
+    via = ("from the age gate cn_marker_age, under 24 months or with no age in the file "
+           "(registrar's ruling on the brain marker gates, 6 October 2026)"
+           if (site, tier) == ("cns", "markers") else
+           "from the evidence checklist only when Lab Report is ticked")
     return node(
         lab_node_id(site, tier), "lab_results", 2, "Laboratory results",
         "Which laboratory results are in the file?", LAB_HINT, None, [],
-        "Registrar review E2 and the ruling of 6 October 2026: reached from the evidence "
-        "checklist only when Lab Report is ticked, then on to the %s tier's destination. The "
-        "tests and their sources are listed above SITE_LABS in build/group10_tree.py. No value "
-        "chooses a code." % tier,
+        "Registrar review E2 and the ruling of 6 October 2026: reached %s, then on to the %s "
+        "tier's destination. The tests and their sources are listed above SITE_LABS in "
+        "build/group10_tree.py. No value chooses a code." % (via, tier),
         labs=copy.deepcopy(list(SITE_LABS[site])), next_node=destination)
 
 
@@ -563,10 +568,214 @@ def n_markers(site):
         "range for the patient's age; a newborn's alpha-fetoprotein is high without a tumour. "
         "Each coded option also needs the diagnosis it names (%s, Table 4)." % VISSER,
         opts, EVIDENCE_TIER,
-        "D4. The report's own statement against the age-specific range is read; nothing is "
-        "re-gated numerically (Group III's md_gct_* gates stay in Group III). Visser Table 4 "
-        "registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) or "
-        "choriocarcinoma (9100/3); each coded label states that condition.")
+        ("D4. The report's own statement against the age-specific range is read. In the brain "
+         "tree this is the fallback of the marker gates (cn_marker_age onward): reached when "
+         "the patient is under 24 months or the age is not in the file, when a value the "
+         "decision needs is not entered, and from non-diagnostic cytology, whose values were "
+         "typed on cn_labs_cytology and stay out of reach of a gate (app.js keeps lab values "
+         "out of state.captured). " if site == "cns" else
+         "D4. The report's own statement against the age-specific range is read; nothing is "
+         "re-gated numerically. ") +
+        "Visser Table 4 registers a tumour the file calls a germ cell tumour (9064/3, 9065/3) "
+        "or choriocarcinoma (9100/3); each coded label states that condition.")
+
+
+# ------------------------------------------------------------------------------------------
+# Brain marker gates — the numbers decide "raised" (registrar's ruling, 6 October 2026)
+# ------------------------------------------------------------------------------------------
+# SIOP cut-offs, the same in serum and in cerebrospinal fluid, "above" being strict:
+#   SIOP CNS GCT 96: alpha-fetoprotein > 25 ng/mL or beta human chorionic gonadotropin
+#     > 50 IU/L in serum or cerebrospinal fluid diagnoses a malignant non-germinomatous germ
+#     cell tumour without biopsy (Calaminus G, et al. Neuro Oncol 2017;19:1661-1672, Methods).
+#   SIOP CNS GCT II: germinoma requires alpha-fetoprotein < 25 ng/mL and beta human chorionic
+#     gonadotropin < 50 IU/L in serum and cerebrospinal fluid (Calaminus G, et al. Neuro Oncol
+#     2026;28:2234-2247, Table 2 and Results).
+# docs/group_10_lab_marker_evidence.md §1 holds both, with the COG and Hu cut-offs not used.
+#
+# Age. Serum alpha-fetoprotein is high in infancy without a tumour. The first age at which
+# every published upper reference limit for term infants is at or below 25 ng/mL is 2 years:
+# La'ulu 2011, 12 ng/mL (Beckman Access) and 15 ng/mL (Roche E170). Below it the limits run
+# above 25: > 8 months 27 ng/mL (Lahdenne 1991), 1 year girls 41 and 38 ng/mL (La'ulu 2011),
+# day 180 to day 720 up to 87 ng/mL (Blohm 1998); all from Ferraro 2019, Table 3, aop
+# pp. 8-9. So the gates read a number from 24 completed months. Below that, or with no age in
+# the file, the case goes to the laboratory screen and the report's own reading
+# (cn_markers), as before this ruling: a 9065/9064 split needs the alpha-fetoprotein reading,
+# so a beta human chorionic gonadotropin number alone cannot decide in an infant either.
+# Cerebrospinal fluid alpha-fetoprotein: Coakley 2005 (abstract only) gives a 95th centile of
+# 12.5 kIU/L (about 15 ng/mL at Calaminus 2026's 25 ng/mL = 20.8 kU/L) from a CORRECTED age of
+# 32 days, and all values under 3 kIU/L over 2 months. The tool asks chronological age and no
+# prematurity, so no separate cerebrospinal fluid boundary is built; the registrar is asked
+# (docs/group_10_registrar_review.md).
+#
+# Each number is typed once. The gates replace cn_labs_markers on the marker tier from 24
+# months; under 24 months the gates are never asked and the laboratory screen records the
+# values. A gate asks only what can still change the code (Group III's md_gct_* pattern), so a
+# value after the deciding one is not asked. A raised value in either compartment decides;
+# "not raised" needs both compartments entered and at or below the cut-off; a value not
+# entered (not in the file, or in a unit the tool does not convert) never counts as normal and
+# sends the case to cn_markers. The units are ng/mL and IU/L, SIOP's. The evidence file's
+# Units paragraph equates ng/mL with µg/L and IU/L with mIU/mL. Calaminus 2026 gives 25 ng/mL
+# = 20.8 kU/L for alpha-fetoprotein; no unit choice is built on a gate, so a value in kU/L or
+# IU/mL is left empty and goes to the report question.
+BRAIN_AGE_MONTHS = 24
+BRAIN_AFP_CUTOFF = 25   # ng/mL, serum and cerebrospinal fluid
+BRAIN_HCG_CUTOFF = 50   # IU/L, serum and cerebrospinal fluid
+SIOP_CITE = "Calaminus 2017, Methods; Calaminus 2026, Table 2"
+BRAIN_MARKERS = {
+    "afp": {"name": "alpha-fetoprotein", "cut": BRAIN_AFP_CUTOFF, "unit": "ng_per_ml",
+            "unit_text": "ng/mL", "same": "A value in µg/L is the same number in ng/mL.",
+            "other": "kU/L or IU/mL"},
+    "hcg": {"name": "beta human chorionic gonadotropin (β-hCG)", "cut": BRAIN_HCG_CUTOFF,
+            "unit": "iu_per_l", "unit_text": "IU/L",
+            "same": "A value in mIU/mL is the same number in IU/L.", "other": "another unit"},
+}
+COMPARTMENTS = {"serum": "Serum", "csf": "Cerebrospinal fluid"}
+
+
+def brain_gate_nos():
+    """numeric_gate is a refining type, so it carries a nos_fallback (DT master §3D): the
+    clerk's "Uncertain subtype - still a malignancy" escape. On this tissue-free route Group X
+    rule 2 admits only a Visser Table 4 code at basis 4, and 9064/3, which ICD-O-3.2 files Germ
+    cell tumor, NOS under, is the one that names no type (as cn_ihc's fallback). app.js
+    escape-nos asserts no basis of its own; the basis here is for the validator's rule 2."""
+    return {"code": "9064", "behavior_code": "3", "name": "Germ cell tumor, NOS",
+            "basis_of_diagnosis": 4,
+            "reason": "The marker values do not settle the germ cell tumour's type. %s "
+                      "ICD-O-3.2 files Germ cell tumor, NOS under this number, so the record "
+                      "does not assert that a germinoma was diagnosed; a histology report gives "
+                      "the type." % rec("9064", "3", 4)}
+
+
+def brain_gate(node_id, marker, compartment, raised, not_raised, not_entered,
+               not_raised_captures=None, note=""):
+    """One SIOP gate: above the cut-off -> raised; at or below -> not_raised; no value ->
+    not_entered. The variable names match Group III's md_gct_* gates."""
+    m = BRAIN_MARKERS[marker]
+    var = "%s_%s_%s" % (marker, compartment, "ng_ml" if marker == "afp" else "iu_l")
+    label = "%s %s" % (COMPARTMENTS[compartment], m["name"])
+    low = {"range": "<=%d" % m["cut"], "unit": m["unit"], "next_node": not_raised}
+    if not_raised_captures:
+        low["captures"] = not_raised_captures
+    return node(
+        node_id, "numeric_gate", 2, label[0].upper() + label[1:],
+        "%s, as the report gives it, in %s." % (label, m["unit_text"]),
+        "A value above %d %s counts as raised, the SIOP cut-off for serum and cerebrospinal "
+        "fluid alike (%s). %s If the report gives %s, leave the number empty: the tool does "
+        "not convert units, and a value not entered is never read as normal."
+        % (m["cut"], m["unit_text"], SIOP_CITE, m["same"], m["other"]),
+        None, [var],
+        "Registrar's ruling, 6 October 2026: SIOP cut-off, strict 'above' (SIOP CNS GCT 96 "
+        "'> %d'; SIOP CNS GCT II requires '< %d' for germinoma). %s"
+        % (m["cut"], m["cut"], note),
+        variable=var, variable_label=label, unit=m["unit"],
+        # A reading no band takes (none should exist) goes to the report question, never
+        # throws: app.js fallbackTarget() reads insufficient_next_node first.
+        insufficient_next_node=nid("cns", "markers"), nos_fallback=brain_gate_nos(),
+        bands=[{"range": ">%d" % m["cut"], "unit": m["unit"], "next_node": raised},
+               low,
+               {"range": "not_documented", "unit": m["unit"], "next_node": not_entered}])
+
+
+def n_brain_age():
+    return node(
+        "cn_marker_age", "numeric_gate", 2, "Age",
+        "How old was the patient at diagnosis, in completed months?",
+        "Alpha-fetoprotein is high in infancy without a tumour. Published normal values for "
+        "serum alpha-fetoprotein fall to %d ng/mL or below by %d months (Ferraro 2019, Table "
+        "3). From %d months the marker values decide; under %d months, or with no age in the "
+        "file, the report's own reading decides."
+        % (BRAIN_AFP_CUTOFF, BRAIN_AGE_MONTHS, BRAIN_AGE_MONTHS, BRAIN_AGE_MONTHS),
+        None, ["patient_age_months"],
+        "Registrar's ruling, 6 October 2026. The %d-month boundary and its sources are in the "
+        "comment above BRAIN_AGE_MONTHS. Under it, and with no age, the case takes the "
+        "laboratory screen and cn_markers, the route every brain marker case took before the "
+        "ruling." % BRAIN_AGE_MONTHS,
+        variable="patient_age_months", variable_label="Age at diagnosis", unit="months",
+        insufficient_next_node=lab_node_id("cns", "markers"), nos_fallback=brain_gate_nos(),
+        bands=[{"range": "<%d" % BRAIN_AGE_MONTHS, "next_node": lab_node_id("cns", "markers")},
+               {"range": ">=%d" % BRAIN_AGE_MONTHS, "next_node": "cn_afp_serum"},
+               {"range": "not_documented", "next_node": lab_node_id("cns", "markers")}])
+
+
+def n_brain_raised(marker):
+    """The marker route's own outcomes once the numbers say which marker is raised: the coded
+    option, the option for a file that does not name a germ cell tumour, and the one for
+    imaging that shows no tumour (n_markers' last three, unchanged)."""
+    site = "cns"
+    if marker == "afp":
+        node_id, morph, tier = "cn_afp_raised", "9065", "markers_afp"
+        question = ("Alpha-fetoprotein is above %d ng/mL. What do the imaging report and the "
+                    "file show?" % BRAIN_AFP_CUTOFF)
+        reason = ("%s A germ cell tumour shown on imaging with alpha-fetoprotein above "
+                  "%d ng/mL, the SIOP cut-off (%s), is registered to this code without tissue "
+                  "(%s, Table 4). The marker does not name the histological type; a histology "
+                  "report gives it." % (rec("9065", "3", 4), BRAIN_AFP_CUTOFF, SIOP_CITE,
+                                        VISSER))
+        note = ("D4 and the registrar's ruling of 6 October 2026. Same code, basis and "
+                "captures as cn_markers' alpha-fetoprotein option. The Diagnostic Pathway's "
+                "§2C '9071' for a raised alpha-fetoprotein stays unbuilt (ruling 3, same day).")
+    else:
+        node_id, morph, tier = "cn_hcg_raised", "9064", "markers_hcg"
+        question = ("Beta human chorionic gonadotropin (β-hCG) is above %d IU/L, and "
+                    "alpha-fetoprotein is %d ng/mL or below in serum and in cerebrospinal "
+                    "fluid. What do the imaging report and the file show?"
+                    % (BRAIN_HCG_CUTOFF, BRAIN_AFP_CUTOFF))
+        reason = ("%s ICD-O-3.2 files Germ cell tumor, NOS under this number, and a germ cell "
+                  "tumour with a raised human chorionic gonadotropin is registered to it "
+                  "without tissue (%s, Table 4). The record does not assert that a germinoma "
+                  "was diagnosed; a histology report gives the type." % (rec("9064", "3", 4),
+                                                                        VISSER))
+        note = ("D2, D4. Same code, basis and captures as cn_markers' human chorionic "
+                "gonadotropin option. SIOP CNS GCT 96 reads beta human chorionic gonadotropin "
+                "> 50 IU/L as a secreting, malignant non-germinomatous tumour (Calaminus 2017, "
+                "Methods), which ICD-O-3.2 holds as 9065/3; the tree keeps Visser Table 4's "
+                "9064/3 and the registrar decides (docs/group_10_registrar_review.md).")
+    return node(
+        node_id, "morphology_only", 2, "Tumour markers", question,
+        "Each coded option also needs the diagnosis it names (%s, Table 4)." % VISSER,
+        [
+            code("Imaging shows a tumour, and the file calls it a germ cell tumour", morph, "3",
+                 4, reason, {"workup_status": "incomplete", "basis_evidence_tier": tier},
+                 note=note),
+            go("Imaging shows a tumour, but the file does not call it a germ cell tumour",
+               imaging_node(site, "markers"),
+               {"basis_evidence_tier": "markers_raised_no_diagnosis"},
+               note="As cn_markers: without the diagnosis the imaging conclusion decides."),
+            nonrep("The imaging shows no tumour",
+                   "A raised tumour marker is not registered unless a clinical investigation "
+                   "shows the tumour (%s, rule 6)." % VISSER,
+                   {"workup_status": "not registrable",
+                    "basis_evidence_tier": "markers_no_tumour"}),
+        ],
+        EVIDENCE_TIER,
+        "Registrar's ruling, 6 October 2026: reached only when the numbers decide. The options "
+        "are cn_markers' own, less the marker reading the gates have made.")
+
+
+def brain_marker_nodes():
+    """The age gate, six marker gates and two outcome nodes of the brain marker tier, in the
+    order a case meets them. Each gate's arguments are raised, not raised, not entered."""
+    fallback, neither = nid("cns", "markers"), imaging_node("cns", "markers")
+    return [
+        n_brain_age(),
+        brain_gate("cn_afp_serum", "afp", "serum", "cn_afp_raised", "cn_afp_csf",
+                   "cn_afp_csf_no_serum"),
+        brain_gate("cn_afp_csf", "afp", "csf", "cn_afp_raised", "cn_hcg_serum", fallback,
+                   note="Serum is at or below the cut-off; not raised needs both."),
+        brain_gate("cn_afp_csf_no_serum", "afp", "csf", "cn_afp_raised", fallback, fallback,
+                   note="No serum value: only a raised value here decides."),
+        brain_gate("cn_hcg_serum", "hcg", "serum", "cn_hcg_raised", "cn_hcg_csf",
+                   "cn_hcg_csf_no_serum",
+                   note="Alpha-fetoprotein is at or below the cut-off in both compartments."),
+        brain_gate("cn_hcg_csf", "hcg", "csf", "cn_hcg_raised", neither, fallback,
+                   not_raised_captures={"basis_evidence_tier": "markers_not_raised"},
+                   note="All four values at or below the cut-offs: neither marker is raised, "
+                        "as cn_markers' 'Neither marker is raised' option."),
+        brain_gate("cn_hcg_csf_no_serum", "hcg", "csf", "cn_hcg_raised", fallback, fallback,
+                   note="No serum value: only a raised value here decides."),
+        n_brain_raised("afp"),
+        n_brain_raised("hcg"),
+    ]
 
 
 def n_imaging(site, ctx="imaging"):
@@ -1782,6 +1991,10 @@ def common(site):
                "imaging": imaging_node(site), "cytology": nid(site, "cytology"),
                "histology": nid(site, "histology")}
     lab_targets = {t: lab_node_id(site, t) for t in LAB_TIERS}
+    if site == "cns":
+        # Registrar, 6 October 2026: the brain marker tier meets the age gate first, and the
+        # laboratory screen only under 24 months or with no age (brain_marker_nodes()).
+        lab_targets["markers"] = "cn_marker_age"
     return [
         n_document_inventory(nid(site, "document_inventory"), targets, lab_targets,
                              "Contract §4.2: five evidence tiers. Every Group X tree carries "
@@ -1811,7 +2024,7 @@ TREE_LABELS = {
                     "cell nodes, with moles and benign teratomas as behaviour exclusions",
 }
 SITE_NODES = {
-    "cns": lambda: [],
+    "cns": brain_marker_nodes,
     "ovary": lambda: [n_teratoma_ovary(), n_gonadoblastoma("ovary"), n_sex_cord_ovary(),
                       n_epithelial_ovary(), n_unspecified("ovary"), n_other_gonad("ovary"),
                       n_deposit("ovary")],
