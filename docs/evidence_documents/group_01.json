@@ -1,0 +1,521 @@
+{
+  "group": 1,
+  "nodes": [
+    {
+      "group": 1,
+      "node_id": "ac_document_inventory",
+      "question_edit": "What reports are in this patient's file?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier. Fits any set with no smear and no tissue report, so a lone Lab, IHC or Gene report, imaging, or nothing ticked all land here and are understated rather than overstated.",
+          "confidence": "high",
+          "label_head": "Referral / clinical note only — no marrow report"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab",
+            "ihc"
+          ],
+          "rationale": "Marrow aspirate or blood film morphology is Cytology; a Histology Report (trephine) is also accepted as morphology because the ladder has no tissue tier. Excludes Lab to honour 'no flow cytometry'. A Gene report is tolerated so that a Gene report without a flow rung stay at this tier.",
+          "confidence": "medium",
+          "label_head": "Marrow aspirate / blood film morphology only (no flow cytometry, no IH"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "lab"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "Morphology (Cytology or Histology) plus flow cytometry, mapped to the Lab Report. Excludes Gene reports so a file with genetics fits options 3 and 4 instead. One any_of cannot also express 'IHC beside Histology', so an IHC Report without a Lab Report does not lift the tier.",
+          "confidence": "medium",
+          "label_head": "Morphology + flow cytometry and/or IHC"
+        },
+        {
+          "index": 3,
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Every rung named: morphology (Cytology or Histology), flow (Lab Report), cytogenetics/FISH (Gene report). A set with genetics but no Lab Report falls to option 1.",
+          "confidence": "medium",
+          "label_head": "Morphology + flow/IHC + cytogenetics / FISH"
+        },
+        {
+          "index": 4,
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Same sets as option 3: cytogenetics and molecular testing are both Gene reports and no document id separates them, so the clerk is asked which describes the file.",
+          "confidence": "medium",
+          "label_head": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS"
+        },
+        {
+          "index": 5,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A special population (trisomy 21, neonatal or infant blasts); does not follow from which documents exist.",
+          "confidence": "high",
+          "label_head": "Trisomy 21 (Down syndrome) confirmed or suspected — neonatal or infant"
+        },
+        {
+          "index": 6,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding (extramedullary myeloid mass) that redirects to the sarcoma-site node; not a statement about which documents exist.",
+          "confidence": "medium",
+          "label_head": "Extramedullary mass with a myeloid phenotype (myeloid sarcoma / chloro"
+        },
+        {
+          "index": 7,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review; always available.",
+          "confidence": "high",
+          "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno"
+        }
+      ],
+      "extra_options": [
+        {
+          "after": 2,
+          "copy_of": 2,
+          "requires": [
+            "ihc"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab",
+            "genetics"
+          ],
+          "drop_tests": [
+            "Flow cytometry"
+          ],
+          "rationale": "The same tier for a file with an IHC Report and no Lab Report: the label says flow cytometry and/or IHC, and the IHC Report beside morphology satisfies it. A copy of option 2 that does not credit flow cytometry, since none is ticked."
+        },
+        {
+          "after": 3,
+          "copy_of": 3,
+          "requires": [
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab"
+          ],
+          "drop_tests": [
+            "Flow cytometry"
+          ],
+          "rationale": "Option 3 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
+        },
+        {
+          "after": 4,
+          "copy_of": 4,
+          "requires": [
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab"
+          ],
+          "drop_tests": [
+            "Flow cytometry"
+          ],
+          "rationale": "Option 4 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
+        }
+      ],
+      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies."
+    },
+    {
+      "group": 1,
+      "node_id": "ml_document_inventory",
+      "question_edit": "What reports are in this patient's file?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier. A lone Lab Report is allowed here (otherwise it would dead-end), so 'no flow report' is not enforced.",
+          "confidence": "high",
+          "label_head": "Referral / clinical note only — no blood film, no marrow, no flow repo"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab",
+            "ihc"
+          ],
+          "rationale": "Blood film (Cytology) and/or marrow morphology (Cytology or Histology Report; the next node names the trephine). Excludes Lab to honour 'no flow cytometry'. IHC and Gene reports are tolerated and stay at this tier.",
+          "confidence": "medium",
+          "label_head": "Blood film and/or marrow morphology only (no flow cytometry, no IHC)"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "lab"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "Morphology plus flow cytometry (Lab Report). Excludes Gene reports so genetics lifts to option 3. An IHC Report without a Lab Report does not lift the tier.",
+          "confidence": "medium",
+          "label_head": "Morphology + flow cytometry and/or IHC"
+        },
+        {
+          "index": 3,
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Morphology, flow (Lab Report) and a Gene report (cytogenetics, FISH, molecular and PCR are all Gene reports). Genetics without a Lab Report falls to option 1.",
+          "confidence": "medium",
+          "label_head": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR"
+        },
+        {
+          "index": 4,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding (20% or more blasts) that redirects to the acute leukaemia gate; not a statement about which documents exist.",
+          "confidence": "medium",
+          "label_head": "The marrow shows 20% or more blasts — an acute leukaemia, not a mature"
+        },
+        {
+          "index": 5,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review; always available.",
+          "confidence": "high",
+          "label_head": "Malignancy excluded on review — reactive lymphocytosis, viral, or the "
+        }
+      ],
+      "extra_options": [
+        {
+          "after": 2,
+          "copy_of": 2,
+          "requires": [
+            "ihc"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab",
+            "genetics"
+          ],
+          "drop_tests": [
+            "Flow cytometry"
+          ],
+          "rationale": "The same tier for a file with an IHC Report and no Lab Report: the label says flow cytometry and/or IHC, and the IHC Report beside morphology satisfies it. A copy of option 2 that does not credit flow cytometry, since none is ticked."
+        },
+        {
+          "after": 3,
+          "copy_of": 3,
+          "requires": [
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "lab"
+          ],
+          "drop_tests": [
+            "Flow cytometry"
+          ],
+          "rationale": "Option 3 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
+        }
+      ],
+      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies."
+    },
+    {
+      "group": 1,
+      "node_id": "mpn_document_inventory",
+      "question_edit": "What reports are in this patient's file?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier. Fits any set with no smear and no tissue report, including a lone Gene report (understated).",
+          "confidence": "high",
+          "label_head": "Referral / clinical note only — no blood film or marrow report"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "Blood film or marrow morphology (Cytology or Histology Report). Excludes Gene reports to honour 'no cytogenetics, no molecular'. Lab and IHC Reports have no rung in this ladder and are tolerated.",
+          "confidence": "high",
+          "label_head": "Blood film and/or marrow morphology only (no cytogenetics, no molecula"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Morphology plus a Gene report (cytogenetics or FISH). A Gene report cannot be told apart from molecular testing, so this fits the same sets as option 3.",
+          "confidence": "medium",
+          "label_head": "Morphology + cytogenetics / FISH"
+        },
+        {
+          "index": 3,
+          "kind": "tier",
+          "requires": [
+            "genetics"
+          ],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Same sets as option 2: cytogenetics and molecular testing are both Gene reports, so the clerk is asked which describes the file.",
+          "confidence": "medium",
+          "label_head": "Morphology + cytogenetics / FISH + molecular / PCR / NGS"
+        },
+        {
+          "index": 4,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding (hypereosinophilia) that redirects to the eosinophilia gate; the label itself says it holds whatever else is in the file.",
+          "confidence": "high",
+          "label_head": "Hypereosinophilia is the dominant finding, whatever else is in the fil"
+        },
+        {
+          "index": 5,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding (monocytosis) that redirects to the monocyte-count gate; not a statement about which documents exist.",
+          "confidence": "high",
+          "label_head": "Monocytosis-predominant picture — persistent monocytosis with or witho"
+        },
+        {
+          "index": 6,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review; always available.",
+          "confidence": "high",
+          "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno"
+        }
+      ],
+      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies."
+    },
+    {
+      "group": 1,
+      "node_id": "mds_document_inventory",
+      "question_edit": "What reports are in this patient's file?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "Referral / clinical note only — no marrow report",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Fallback for any set with no smear and no tissue report. A lone IHC, Gene, Lab or imaging report falls here and is understated, which is the safe direction.",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "Blood film / marrow aspirate morphology only (no trephine, no IHC, no ",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [
+            "cytology",
+            "histology"
+          ],
+          "excludes": [],
+          "rationale": "Catches every set with a smear or trephine report that does not reach the rungs of options 2 to 4, including immunocytochemistry (Cytology plus IHC Report with no Histology Report), a trephine without IHC, and genetics without the full ladder. Excluding IHC or genetics would dead-end those sets, and the tick rules cannot express 'not all of the three'. Complete files also fit this option, so the clerk is asked between this option and the higher rung that fits.",
+          "confidence": "medium",
+          "rungs_note": "Proposer A's rule kept."
+        },
+        {
+          "index": 2,
+          "label_head": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)",
+          "kind": "tier",
+          "requires": [
+            "cytology",
+            "histology",
+            "ihc"
+          ],
+          "any_of": [],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "The label names the aspirate, the trephine and the IHC, so all three documents are required (standing rule 8, rule c). Cytology plus IHC Report with no Histology Report is immunocytochemistry and must not reach a tissue tier (rule d), so Proposer B's any_of lift is rejected. Genetics is excluded so files with a Gene report fit options 3 and 4 instead.",
+          "confidence": "medium"
+        },
+        {
+          "index": 3,
+          "label_head": "Marrow + trephine/IHC + cytogenetics / FISH",
+          "kind": "tier",
+          "requires": [
+            "cytology",
+            "histology",
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Every rung the label names is required: aspirate, trephine, IHC and a Gene report. Genetics without the trephine and IHC rungs falls to option 1, which understates. Same fit set as option 4 because one Gene report cannot say which tests were done.",
+          "confidence": "medium"
+        },
+        {
+          "index": 4,
+          "label_head": "Marrow + trephine/IHC + cytogenetics + molecular / PCR / NGS",
+          "kind": "tier",
+          "requires": [
+            "cytology",
+            "histology",
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Sibling of option 3 with an identical fit set; the clerk is asked which describes the file.",
+          "confidence": "medium"
+        },
+        {
+          "index": 5,
+          "label_head": "Monocytosis-predominant picture — persistent monocytosis with or witho",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding that redirects to the monocyte-count gate; independent of which documents exist.",
+          "confidence": "high"
+        },
+        {
+          "index": 6,
+          "label_head": "Hypereosinophilia is the dominant finding, not monocytosis or dysplasi",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "A dominant finding that redirects to the MDS/MPN overlap confirmation; independent of which documents exist.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
+          "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review; always available.",
+          "confidence": "high"
+        }
+      ],
+      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies."
+    }
+  ]
+}

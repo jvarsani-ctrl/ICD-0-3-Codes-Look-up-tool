@@ -1411,5 +1411,46 @@
       },
       "note": "Always Group I (Ib), regardless of presenting site. An orbital, cutaneous, nodal or other extramedullary myeloid sarcoma must NOT be re-routed to Group II or IX. Record the involved site in topography — it does not change the group."
     }
+  },
+  "tick_vocabularies": {
+    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order.",
+    "evidence_documents": {
+      "variable": "documents_in_file",
+      "label": "Documents in file",
+      "prompt": "Tick every report that is in the file.",
+      "context_prompt": "Does one of these apply?",
+      "none_label": "None of these. Code from the reports ticked above.",
+      "sibling_prompt": "More than one description fits what is in the file. Pick the one that describes it.",
+      "items": [
+        {
+          "id": "referral",
+          "label": "Referral Letter/Clinical Note"
+        },
+        {
+          "id": "imaging",
+          "label": "Imaging Report"
+        },
+        {
+          "id": "lab",
+          "label": "Lab Report"
+        },
+        {
+          "id": "cytology",
+          "label": "Cytology"
+        },
+        {
+          "id": "histology",
+          "label": "Histology Report"
+        },
+        {
+          "id": "ihc",
+          "label": "IHC Report"
+        },
+        {
+          "id": "genetics",
+          "label": "Gene reports for cancer"
+        }
+      ]
+    }
   }
 }

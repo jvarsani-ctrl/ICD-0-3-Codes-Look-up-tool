@@ -2402,7 +2402,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child or adolescent with a suspected soft tissue sarcoma. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. A histology report is the usual basis for a soft tissue sarcoma code. Without one, only a few codes can be registered at all.",
+          "hint": "A histology report is the usual basis for a soft tissue sarcoma code. Without one, only a few codes can be registered at all.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4. Five routes, the Group 6 rn_document_inventory idiom. The inadequate-specimen route goes to st_imaging_report because an uninterpretable test drops to the nearest code (ruling 11). Cytology is captured as 'Cytology' in evidence_tests, as Groups 5 and 6 do.",
           "captured_variables": [
@@ -2413,6 +2417,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "st_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -2424,6 +2435,15 @@
             },
             {
               "label": "Ultrasound, CT or MRI report — no cytology or histology in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "st_imaging_report",
               "captures": {
                 "evidence_tests": [
@@ -2435,6 +2455,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "st_cytology",
               "captures": {
                 "evidence_tests": [
@@ -2446,6 +2474,11 @@
             },
             {
               "label": "Histology report from a biopsy or a resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "st_report_contents",
               "captures": {
                 "evidence_tests": [
@@ -5139,7 +5172,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child or adolescent with a skin lesion suspected to be a soft tissue sarcoma, most often Kaposi sarcoma. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. A histology report is the usual basis for a soft tissue sarcoma code. Without one, only a few codes can be registered at all.",
+          "hint": "A histology report is the usual basis for a soft tissue sarcoma code. Without one, only a few codes can be registered at all.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §0.7; code review 4 October 2026. The entry the router's tree_routing gives a skin topography (C44). Identical to st_document_inventory except that the referral route leads to sk_clinical_alias, the only node holding Visser Table 3's basis-1 row for Kaposi sarcoma of the skin. Every other route continues into g9_soft_tissue.",
           "captured_variables": [
@@ -5150,6 +5187,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "sk_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -5161,6 +5205,15 @@
             },
             {
               "label": "Ultrasound, CT or MRI report — no cytology or histology in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "st_imaging_report",
               "captures": {
                 "evidence_tests": [
@@ -5172,6 +5225,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "st_cytology",
               "captures": {
                 "evidence_tests": [
@@ -5183,6 +5244,11 @@
             },
             {
               "label": "Histology report from a biopsy or a resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "st_report_contents",
               "captures": {
                 "evidence_tests": [

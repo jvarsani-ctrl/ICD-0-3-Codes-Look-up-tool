@@ -289,6 +289,48 @@ button, input, select, textarea { font: inherit; color: inherit; }
    ~8px: present, unreadable, worse than absent (design.md §8). */
 .appbar__mark { width: 22px; height: 22px; flex: none; }
 .appbar__context { margin-left: auto; color: var(--ink-400); font-weight: var(--w-medium); font-size: var(--fs-micro); }
+/* Home: outlined, so it reads as the way out and not as the next step. */
+.appbar__home {
+  padding: var(--sp-1) var(--sp-3);
+  border: 2px solid var(--ink-400);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-surface);
+  font-weight: var(--w-semi);
+  font-size: var(--fs-micro);
+  cursor: pointer;
+}
+.appbar__home:hover { border-color: var(--color-surface); background: var(--ink-800); }
+/* "Leave this case?": below the screen, neutral, no alert colour. */
+.exitbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2) var(--sp-3);
+  margin-top: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--ink-050);
+  color: var(--ink-900);
+  font-size: var(--fs-small);
+}
+.exitbar__actions { display: flex; gap: var(--sp-2); }
+/* The laboratory panel: a row per test, its number, its unit, and "Not in the file". */
+.labs { display: flex; flex-direction: column; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+.labrow { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1) var(--sp-3); padding: var(--sp-2) 0; border-top: 1px solid var(--color-border); }
+.labrow__name { flex: 1 1 200px; font-weight: var(--w-semi); font-size: var(--fs-body); }
+.labrow__entry { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.labrow__value { width: 120px; padding: var(--sp-2); border: 2px solid var(--ink-300); border-radius: var(--radius-sm); background: var(--color-surface); }
+.labrow__value[aria-invalid="true"] { border-color: var(--color-alert-edge); }
+.labrow__unit { padding: var(--sp-2); border: 2px solid var(--ink-300); border-radius: var(--radius-sm); background: var(--color-surface); }
+.labrow__absent { font-size: var(--fs-small); color: var(--color-muted); }
+.labrow__error { flex-basis: 100%; font-size: var(--fs-small); color: var(--ink-900); font-weight: var(--w-semi); }
+.labblock { margin: var(--sp-3) 0; }
+
+/* A row the clerk has filtered out, or a line that has nothing to say yet. */
+[hidden] { display: none !important; }
 
 .layout { display: block; min-width: 0; }
 .canvas { padding: var(--sp-3); min-width: 0; flex: 1; }
@@ -429,6 +471,23 @@ button, input, select, textarea { font: inherit; color: inherit; }
   cursor: pointer;
 }
 .opt:hover { border-color: var(--color-primary); background: var(--ink-050); }
+/* Tapped, not yet confirmed: bold, a heavier edge, and the recognition aid
+   beneath. Not colour alone (design.md §4): the weight and the aid carry it. */
+.opt--selected { border-color: var(--color-primary); background: var(--ink-050); }
+.opt--selected .opt__label { font-weight: var(--w-bold); }
+.opt__aid {
+  display: block;
+  margin-top: var(--sp-1);
+  font-weight: var(--w-regular);
+  font-size: var(--fs-small);
+  color: var(--ink-700);
+  font-style: italic;
+}
+/* The filter box above a list of options, and the line shown when it hides them all. */
+.optbox { margin-bottom: var(--sp-3); }
+.optbox__find { margin-bottom: var(--sp-2); }
+.optbox .opts, .optbox .checks { margin-bottom: 0; }
+.optbox__none { margin: var(--sp-2) 0 0; color: var(--color-muted); font-size: var(--fs-small); }
 .opt__label { font-weight: var(--w-semi); font-size: var(--fs-body); }
 .opt__meta  { display: block; font-weight: var(--w-regular); font-size: var(--fs-micro); color: var(--color-muted); margin-top: 2px; }
 
@@ -584,6 +643,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .checks { display: flex; flex-direction: column; gap: var(--sp-1); margin-bottom: var(--sp-3); }
 .check { display: flex; align-items: flex-start; gap: var(--sp-2); font-size: var(--fs-body); }
 .check input { margin-top: 3px; }
+/* The rows a thumb taps — the document boxes, the radio rows under a filter and the
+   "Not in the file" box — are 44px tall, the target size WCAG 2.5.5 asks for. */
+.checks .check, .labrow__absent { min-height: 44px; align-items: center; }
+.checks .check input, .labrow__absent input { width: 20px; height: 20px; margin-top: 0; flex: none; }
+/* Below 16px a phone browser zooms the page when a box takes the focus. */
+@media (max-width: 600px) {
+  .field input[type="search"], .labrow__value, .labrow__unit { font-size: 16px; }
+}
 
 /* Banners. Colour is never the only channel — each carries a bold word label
    and a distinct border weight (design.md §4). */
@@ -727,6 +794,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
   padding-right: var(--sp-2);
 }
 .orow--excluded { background: var(--ink-100); }
+/* The coding block: Name, Morphology code, Behavior code, Topography code,
+   Suggested based on. Its labels are longer than the other rows', so the label
+   column is wider here. */
+.codeblock { margin-bottom: var(--sp-2); border-bottom: 2px solid var(--color-border); }
+.codeblock .orow b { width: 132px; }
+.orow--code span { font-size: var(--fs-title); font-weight: var(--w-bold); font-variant-numeric: tabular-nums; }
 
 /* A NAMED, REVERSIBLE provisional — a specific claim with a specific resolving
    test. A caution, so marigold: coral stays reserved for clinical_alert and a

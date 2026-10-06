@@ -2538,12 +2538,22 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "question": "What reports are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0).",
           "options": [
             {
               "label": "Referral / clinical note only — no marrow report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ac_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -2555,6 +2565,16 @@
             },
             {
               "label": "Marrow aspirate / blood film morphology only (no flow cytometry, no IHC)",
+              "ticks": {
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab",
+                  "ihc"
+                ]
+              },
               "next_node": "ac_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -2566,6 +2586,18 @@
             },
             {
               "label": "Morphology + flow cytometry and/or IHC",
+              "ticks": {
+                "requires": [
+                  "lab"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "ac_prior_therapy_gate",
               "captures": {
                 "evidence_tests": [
@@ -2578,7 +2610,42 @@
               }
             },
             {
+              "label": "Morphology + flow cytometry and/or IHC",
+              "ticks": {
+                "requires": [
+                  "ihc"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab",
+                  "genetics"
+                ]
+              },
+              "next_node": "ac_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "incomplete"
+              }
+            },
+            {
               "label": "Morphology + flow/IHC + cytogenetics / FISH",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ac_prior_therapy_gate",
               "captures": {
                 "evidence_tests": [
@@ -2592,13 +2659,76 @@
               }
             },
             {
+              "label": "Morphology + flow/IHC + cytogenetics / FISH",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ac_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete"
+              }
+            },
+            {
               "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ac_prior_therapy_gate",
               "captures": {
                 "evidence_tests": [
                   "Histology",
                   "IHC",
                   "Flow cytometry",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "received",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ac_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
                   "Cytogenetics/FISH",
                   "Molecular/PCR"
                 ],
@@ -4573,12 +4703,22 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "question": "What reports are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "coding_note": "This tree owns the mature lymphoid leukaemias: Ia2 (9823, 9832, 9833, 9940), Ia3 (9827, 9831, 9834, 9948) and the Ia4 NOS codes (9820, 9591). Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). Precursor (blast) disease belongs to the acute tree; leukaemic Burkitt is no longer a Group I code at all and is referred to Group II (Pathway §3.3, §5.3.11).",
           "options": [
             {
               "label": "Referral / clinical note only — no blood film, no marrow, no flow report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ml_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -4591,6 +4731,16 @@
             },
             {
               "label": "Blood film and/or marrow morphology only (no flow cytometry, no IHC)",
+              "ticks": {
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab",
+                  "ihc"
+                ]
+              },
               "next_node": "ml_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -4603,6 +4753,18 @@
             },
             {
               "label": "Morphology + flow cytometry and/or IHC",
+              "ticks": {
+                "requires": [
+                  "lab"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "ml_compartment_gate",
               "captures": {
                 "evidence_tests": [
@@ -4616,12 +4778,76 @@
               }
             },
             {
+              "label": "Morphology + flow cytometry and/or IHC",
+              "ticks": {
+                "requires": [
+                  "ihc"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab",
+                  "genetics"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC"
+                ],
+                "workup_status": "incomplete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
               "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ml_compartment_gate",
               "captures": {
                 "evidence_tests": [
                   "Histology",
                   "Flow cytometry",
+                  "IHC",
+                  "Cytogenetics/FISH",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
                   "IHC",
                   "Cytogenetics/FISH",
                   "Molecular/PCR"
@@ -7135,12 +7361,22 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "question": "What reports are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). This tree owns subgroup Ic (9863, 9875, 9876, 9950, 9960–9964) and, through its eosinophilia branch, the Ie clonal-eosinophilia codes 9965–9968. CMML and JMML belong to the MDS/JMML tree; acute leukaemia (blasts ≥20%) belongs to the acute tree unless BCR::ABL1 is positive, in which case a blast-phase CML stays here as 9875.",
           "options": [
             {
               "label": "Referral / clinical note only — no blood film or marrow report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mpn_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -7153,6 +7389,15 @@
             },
             {
               "label": "Blood film and/or marrow morphology only (no cytogenetics, no molecular)",
+              "ticks": {
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "mpn_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -7165,6 +7410,15 @@
             },
             {
               "label": "Morphology + cytogenetics / FISH",
+              "ticks": {
+                "requires": [
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mpn_prior_therapy_gate",
               "captures": {
                 "evidence_tests": [
@@ -7177,6 +7431,15 @@
             },
             {
               "label": "Morphology + cytogenetics / FISH + molecular / PCR / NGS",
+              "ticks": {
+                "requires": [
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mpn_prior_therapy_gate",
               "captures": {
                 "evidence_tests": [
@@ -8520,13 +8783,23 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
+          "question": "What reports are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). A case that arrived here from the acute tree's blast gate enters at mds_eb_pediatric_entry or mds_rcc_entry instead and skips this node.",
           "options": [
             {
               "label": "Referral / clinical note only — no marrow report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mds_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -8540,6 +8813,12 @@
             },
             {
               "label": "Blood film / marrow aspirate morphology only (no trephine, no IHC, no cytogenetics)",
+              "ticks": {
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mds_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -8553,6 +8832,16 @@
             },
             {
               "label": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)",
+              "ticks": {
+                "requires": [
+                  "cytology",
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "mds_marrow_pattern",
               "coding_note": "CD61 or CD41 IHC on the trephine is mandatory in paediatric MDS — it identifies the micromegakaryocytes that separate refractory cytopenia of childhood from severe aplastic anaemia (Pathway §3.5).",
               "captures": {
@@ -8568,6 +8857,14 @@
             },
             {
               "label": "Marrow + trephine/IHC + cytogenetics / FISH",
+              "ticks": {
+                "requires": [
+                  "cytology",
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "mds_marrow_pattern",
               "captures": {
                 "evidence_tests": [
@@ -8583,6 +8880,14 @@
             },
             {
               "label": "Marrow + trephine/IHC + cytogenetics + molecular / PCR / NGS",
+              "ticks": {
+                "requires": [
+                  "cytology",
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "mds_marrow_pattern",
               "captures": {
                 "evidence_tests": [

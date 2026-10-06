@@ -1321,7 +1321,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A suspected malignant bone tumour. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. A radiology report counts as imaging. A pathology report on a biopsy, curettage or resection counts as histology.",
+          "hint": "A radiology report counts as imaging. A pathology report on a biopsy, curettage or resection counts as histology.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Build contract §4. Five routes, the Group 6 rn_document_inventory idiom. Every Group VIII tumour sits at C40-C41, so the router's site capture already holds the topography and this node does not ask it again.",
           "captured_variables": [
@@ -1332,6 +1336,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "bn_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -1343,6 +1354,15 @@
             },
             {
               "label": "X-ray, CT or MRI report — no tissue (cytology or histology) in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "bn_imaging_line",
               "captures": {
                 "evidence_tests": [
@@ -1354,6 +1374,11 @@
             },
             {
               "label": "Histology report from a biopsy, curettage or resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "bn_histology_line",
               "captures": {
                 "evidence_tests": [
@@ -1365,6 +1390,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "bn_cytology",
               "captures": {
                 "evidence_tests": [

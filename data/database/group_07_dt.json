@@ -2566,7 +2566,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child with a liver (hepatic) mass. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. When the file holds both a biopsy taken before chemotherapy and a resection taken after it, code from the biopsy: after chemotherapy about 20% of hepatoblastomas show areas that mimic hepatocellular carcinoma (López-Terrada 2025, p. 27).",
+          "hint": "When the file holds both a biopsy taken before chemotherapy and a resection taken after it, code from the biopsy: after chemotherapy about 20% of hepatoblastomas show areas that mimic hepatocellular carcinoma (López-Terrada 2025, p. 27).",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4. Five routes, the Group 5 and 6 document_inventory idiom. primary_site is captured 'C22' on every option because the whole tree is entered for a liver mass; 8963 and 8991 are Group VII codes only at C22.0/C22.1 (ICCC-2017 rows 68, 69), and the 8963 rules at the INI1 step condition on this capture (contract §3.4, check_group7_c22_only_codes). 'Cytology' in evidence_tests follows Group 6 rn_document_inventory; it is not in the diagnostic_tests_required vocabulary, so no entry requires it and it never suppresses a requirement.",
           "captured_variables": [
@@ -2578,6 +2582,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "hp_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -2590,6 +2601,15 @@
             },
             {
               "label": "Ultrasound, CT or MRI report, with or without a serum alpha-fetoprotein result — no tissue (cytology or histology) in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "hp_imaging_pathway",
               "captures": {
                 "evidence_tests": [
@@ -2602,6 +2622,11 @@
             },
             {
               "label": "Histology report from a needle or wedge biopsy, a resection, a transplant hepatectomy or an autopsy",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "hp_histology",
               "captures": {
                 "evidence_tests": [
@@ -2614,6 +2639,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report in the file",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "hp_cytology",
               "captures": {
                 "evidence_tests": [

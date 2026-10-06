@@ -2393,7 +2393,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child with a suspected renal (kidney) tumour. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. Under SIOP protocols, up-front chemotherapy without a prior biopsy is standard for a typical Wilms tumour presentation, so a histology report often does not exist yet at the point of coding — that is expected, not a gap to chase.",
+          "hint": "Under SIOP protocols, up-front chemotherapy without a prior biopsy is standard for a typical Wilms tumour presentation, so a histology report often does not exist yet at the point of coding — that is expected, not a gap to chase.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Tree architecture per build contract §4. Five routes off this node, matching the Group 5 rb_document_inventory idiom (contract §4, Group 5 build contract §4). Unlike Group 5, the histology route passes through rn_age_gate before rn_histology, because the SMARCB1/INI1 fork at rn_ihc_checklist needs a precise age band (contract §4.3); the imaging and inadequate-specimen routes go directly to rn_imaging_pathway without the numeric gate — see rn_imaging_pathway's own coding_note for why (deviation from the contract's literal diagram, recorded there and in the build report). primary_site is captured 'C64.9' on every option because this whole tree is entered specifically for a kidney mass (tree-level topography declaration) — captured explicitly here, rather than assumed, so rn_ihc_checklist's 8963 (rhabdoid tumour of the kidney) rule can carry its own per-rule 'when' confirming C64.9, which check_group6_8963_topography requires (contract §3.1, §0.2: 8963 at a CNS or soft-tissue site is a different ICCC-3 group entirely).",
           "captured_variables": [
@@ -2405,6 +2409,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rn_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -2417,6 +2428,15 @@
             },
             {
               "label": "Ultrasound, CT, or MRI report — no tissue (cytology or histology) in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rn_imaging_pathway",
               "captures": {
                 "evidence_tests": [
@@ -2429,6 +2449,11 @@
             },
             {
               "label": "Histology report from a nephrectomy, core biopsy, or intraoperative specimen",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "rn_age_gate",
               "captures": {
                 "evidence_tests": [
@@ -2441,6 +2466,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report in the file",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "rn_cytology",
               "captures": {
                 "evidence_tests": [
