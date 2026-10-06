@@ -246,6 +246,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 | **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
 | **IX** | `topo_code` | — | — | `444, Skin of scalp and neck` | Open — Group 9 registrar questions H2 | same, §7 |
+| **X** | `x_morph` | **67** — led by `9064` (the `/2` in situ term for Germinoma), `9100` (the `/0` mole for choriocarcinoma) and `9086` (a placeholder label; the 1 October 2026 snapshot has no `9086` choice) | **0 proposed** — 5 numbers ICD-O-3.2 deleted and 28 below-behaviour-3 options await the registrar | **6** — `8023`, `8054`, `8230`, `8231`, `8482`, `9102` | Ready to review, not applied. `x_morph` stores the four-digit number as the choice code, so relabelling changes no stored value | `docs/group_10_layer1_repair.md`; §27 below |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid
 
@@ -1429,9 +1430,110 @@ For `9220` and `9302` the tool's output currently shows the "label is out of dat
 four-digit code" banner, which points the clerk at the benign row. `docs/group_08_registrar_review.md` §C,
 items 1–3, carries the proposed REDCap repair.
 
+## 27. FOR THE REGISTRAR — Group X codes the REDCap dropdown does not offer correctly
+
+**Found 4 October 2026 with the Group 10 build.** The tool is a data-entry aid. It does not connect
+to REDCap and does not verify what REDCap holds, so these are listed for the REDCap side to fix, not
+handled in the tool. `x_morph` stores the four-digit number as its choice code, so a number has one
+row and a relabel changes no stored value. The full classification of all 158 distinct options is
+`docs/group_10_layer1_repair.md`.
+
+| Code the tool emits | What `x_morph` offers | Risk at data entry |
+|---|---|---|
+| `9064/3` Germinoma | `9064 - Intratubular malignant germ cells`, the `/2` in situ term | A germinoma, or a germ cell tumour of unnamed type, entered as germ cell neoplasia in situ |
+| `9100/3` Choriocarcinoma, NOS | `9100 - Hydatidiform mole, NOS`, the `/0` term | A choriocarcinoma entered under a benign mole |
+| `9086/3` Germ cell tumor with associated hematological malignancy | The placeholder *Label not found in the provided "Cancer Morphology.pdf" source.* in the option file; no `9086` choice in the 1 October 2026 snapshot | A `9086` case has nothing to select, or a placeholder to select |
+| `9102/3` Malignant teratoma, trophoblastic | No option (`docs/group_10_layer1_repair.md` §7) | A code a tree emits that the dropdown cannot record |
+| `9080/3` Teratoma, malignant, NOS | `9080 - Teratoma, benign`, the `/0` term | An immature teratoma entered under a benign label. The central nervous system tree also registers `9080/0` and `9080/1` |
+| `8460/3` Low grade serous carcinoma, `8650/3` Leydig cell tumor, malignant | `8460 - Papillary serous cystadenoma, NOS`; `8650 - Leydig cell tumor, benign` | A carcinoma and a malignant stromal tumour entered under benign labels |
+| `8000/3` Neoplasm, malignant | `8000 - Neoplasm, benign` | The gonadal fallback entered as benign |
+
+Fifty-four options in all name a benign, borderline or in situ term on a number the tool emits at
+behaviour 3, seven more drift from ICD-O-3.2 on such a number, and `8474` repeats the placeholder
+label. Five options sit on numbers ICD-O-3.2 deleted. The tool's output names each code by the
+ICD-O-3.2 preferred term, and the clerk matches on the four-digit number.
+
+## 28. Group X's central nervous system tree — route opened 6 October 2026; Group III's three gaps open
+
+**Decided 6 October 2026: option (a)** (`docs/group_10_registrar_review.md` B1). Group 10 is listed
+at the 24 Xa codes (C70.0–C72.9, C75.1–C75.3) and Group 3 on the "Mass / swelling (solid tumour)"
+presentation. Every presentation except "Organ-functional sign" offers Group III and Group X at
+those sites, and a Group X term searched there enters `g10_cns`. Item 4 below is closed. Items 1–3
+are Group III's and stay open. The decision opened one new item, in B1: five generic search terms
+(`8000`–`8004`) that Group III and Group X both hold now stop at those sites instead of entering
+Group III.
+
+**Found 4 October 2026 while building Group X** (design D18;
+`docs/group_10_registrar_review.md` B1). Group III must stay byte-identical to `main` on the Group X
+branch, so none of this is fixed there.
+
+Until 6 October 2026 every central nervous system topography in `data/shared/topography_codes.json`
+listed only Group III (and Group XI at `C75.1`), so the front door never offered Group X at a pineal,
+suprasellar or other intracranial site.
+Group III refers to Group X in nine places, and a referral is a terminal screen: nothing carries
+into the target group, and the clerk starts a new case. Since the registrar's ruling of 4 October
+2026 (`main` commit `9c63a5f`) the search box asks the site and keeps a group only if the site
+lists it, so a Group X term searched at a central nervous system site stopped for referral. Four
+defects followed:
+
+1. A biopsy-proven germinoma with normal markers has no route to Group X from `g3_midline`.
+2. `pf_imaging_no_tissue` option 0, the elevated-marker referral to Group X, can never fire — the
+   defect in §10 above. Closing §10 is the precondition for this one.
+3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
+   the third ventricle.
+4. ~~No route reaches `g10_cns`. It is built and swept by the engine gate.~~ Closed 6 October 2026
+   by option (a).
+
+The same holds outside the central nervous system: Groups VII, VIII and IX refer germ cell tumours
+to Group X from the liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x), and none of those
+topographies lists Group 10 (`docs/group_10_registrar_review.md` B2).
+
+**To close.** The registrar chose (a) on 6 October 2026; (b) and (c) remain open for items 1–3.
+(a) Add Group 10 to the candidate groups of the central
+nervous system codes where germ cell tumours arise (`C75.1`–`C75.3` at least). On its own this
+sends a "Mass / swelling" presentation at those sites straight to Group X, because that
+presentation lists 10 and not 3, so Group 3 joins that presentation too; the clerk then chooses
+Group III or Group X there. (b) Let a referral to a built group offer "continue in that group",
+carrying the topography: an `app.js` change that serves every group. (c) Add germ cell routes to
+Group III's own trees, on a Group III branch, with (a) or (b) for the referral to lead somewhere.
+
+## 29. Group VIII cytology capture drops the cytology report from `evidence_tests`
+
+**Found 4 October 2026 while building Group X.** `app.js` `capture()` replaces each captured key
+and never merges a list. In Group VIII, a case entered at `bn_document_inventory` through the
+cytology tier captures `evidence_tests: ["Cytology"]`. If the cytology report is non-diagnostic,
+`bn_cytology` sends it to `bn_imaging_line`, and the imaging terminal there (`8000/3`) captures
+`["Imaging"]`. The output then lists imaging as the evidence and omits the cytology report that is
+on file. The list understates what the file holds; it does not overstate.
+
+Group X avoids the pattern by giving each evidence context its own node (`p_imaging_cytology`,
+`p_clinical_alias_cytology`, `p_imaging_markers`), so a node reached with two evidence sets never
+exists. **To close** in Group VIII: the same split on `bn_imaging_line`, or an engine change that
+merges `evidence_tests` captures. The engine change affects every group.
+
+## 30. "Also called" lists aliases by four-digit code, so an alias true of one behaviour shows on every behaviour
+
+**Found 4 October 2026 while building Group X.** `app.js` `aliasesFor(code)` matches
+`maps_to_morphology_codes`, which holds four-digit codes, and ignores behaviour. Group X emits
+`9080` at behaviours 0, 1 and 3 and `9084` at 0 and 3 from the central nervous system tree, so an
+alias *Mature teratoma* on `9080` would appear on every immature teratoma output.
+
+Group X restricts its aliases instead (design D21): an ICD-O-3.2 term becomes an alias only when the
+group emits its code at that term's behaviour and at no other, so `9080` and `9084` carry the
+behaviour-neutral alias *Teratoma* only; terms such as *Mature teratoma* are therefore not aliases
+of `9080`. **To close:** key aliases by `(code, behaviour)` in the alias schema and in
+`aliasesFor`; then the restriction can be lifted. Related: §17, the dead alias fields.
+
+## 31. ~~Group X's router rule must list the Group 9 topography codes before the branches merge~~ — CLOSED 4 October 2026
+
+Closed by merging `main` (`334c586`) into the Group X branch. The extragonadal `topography_in`
+list was recomputed from the merged lookup against ICCC-2017's Xb ranges: 114 codes, including
+all 39 Group 9 added. `check_group10_subgroups_and_routing` passes. `g10_site_unstated`, which
+those codes would have reached, was removed in the same change (design D16, revised).
+
 ---
 
-*Last updated 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+*Last updated 6 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): §28 item 4 closed by the registrar's decision on Group X review B1, option (a). Previously 4 October 2026, on the same branch: adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
 Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
@@ -1488,8 +1590,11 @@ Spec `docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md`. Handover to
   files open have merged. Group 10's own text is written to the new spelling by its session.
 - **Group 10: apply the evidence mapping and write the new fields.** Steps in the handover document.
   Until the mapping is applied the data gate fails four nodes with "evidence gate ... no `tick_list`".
-- **Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
-  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.
+- ~~**Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
+  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.~~ **Closed 6 October
+  2026** on the Group X branch: a named-term question, then a `first_match` component checklist (`*_mixed_components`),
+  and 70 recognition aids (`docs/group_10_registrar_review.md` E4, E5). The laboratory screen went in the same day,
+  after the evidence checklist and only when Lab Report is ticked (registrar's ruling; E2).
 
 **Owed to the registrar**
 

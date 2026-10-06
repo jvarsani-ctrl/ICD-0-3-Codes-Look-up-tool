@@ -30,6 +30,7 @@
       "site_capture": true,
       "candidate_groups": [
         2,
+        3,
         4,
         6,
         7,
@@ -195,11 +196,11 @@
       "options": [
         {
           "value": "bone",
-          "label": "Bone — the lesion is centred in bone, cortex destroyed"
+          "label": "Bone"
         },
         {
           "value": "soft_tissue",
-          "label": "Soft tissue — the mass is outside bone, cortex intact"
+          "label": "Soft tissue"
         }
       ],
       "asked_by": [
@@ -220,7 +221,7 @@
         }
       },
       "ask_before_site": true,
-      "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass in muscle, fat or connective tissue with the bone intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
+      "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass outside the bone, in muscle, fat or connective tissue, with the bone cortex intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
       "authoring_note": "Group VIII vs Group IX split for 9364 Ewing sarcoma and 9365 Askin tumour. ICD-O-3.2 deleted 9260/3 and moved Ewing sarcoma to 9364/3. See dual_group_rules."
     }
   },
@@ -738,9 +739,220 @@
     },
     "10": {
       "name": "Germ Cell, Trophoblastic Tumors and Neoplasms of Gonads",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "trees": [
+        {
+          "tree_id": "g10_cns",
+          "entry_node": "cn_document_inventory"
+        },
+        {
+          "tree_id": "g10_ovary",
+          "entry_node": "ov_document_inventory"
+        },
+        {
+          "tree_id": "g10_testis",
+          "entry_node": "ts_document_inventory"
+        },
+        {
+          "tree_id": "g10_extragonadal",
+          "entry_node": "eg_document_inventory"
+        }
+      ],
+      "tree_routing": {
+        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16, as revised 4 October 2026). This tree_routing is the whole site resolver. Every entry into Group X carries a topography: the front door records it at Stage 1, and the express lane asks the site before it enters a group whose data reads the site (registrar, 4 October 2026). The rules list every lookup code in the ICCC-2017 Xa, Xc and Xb site ranges, computed from ICCC-2017.sqlite against topography_codes.json; check_group10_subgroups_and_routing() recomputes them on every build. A topography outside those ranges, such as C77.9, reaches the default; no such code lists Group 10 in its candidate_groups, so app.js does not enter Group X there.",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C70.0",
+              "C70.1",
+              "C70.9",
+              "C71.0",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.6",
+              "C71.7",
+              "C71.8",
+              "C71.9",
+              "C72.0",
+              "C72.1",
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C72.8",
+              "C72.9",
+              "C75.1",
+              "C75.2",
+              "C75.3"
+            ],
+            "tree_id": "g10_cns",
+            "entry_node": "cn_document_inventory",
+            "label": "Brain, spinal cord, pineal and suprasellar region"
+          },
+          {
+            "topography_in": [
+              "C56.9"
+            ],
+            "tree_id": "g10_ovary",
+            "entry_node": "ov_document_inventory",
+            "label": "Ovary"
+          },
+          {
+            "topography_in": [
+              "C62.0",
+              "C62.1",
+              "C62.9"
+            ],
+            "tree_id": "g10_testis",
+            "entry_node": "ts_document_inventory",
+            "label": "Testis"
+          },
+          {
+            "topography_in": [
+              "C11.0",
+              "C11.1",
+              "C11.2",
+              "C11.3",
+              "C11.8",
+              "C11.9",
+              "C22.0",
+              "C22.1",
+              "C24.0",
+              "C24.8",
+              "C24.9",
+              "C30.0",
+              "C30.1",
+              "C31.0",
+              "C31.1",
+              "C31.2",
+              "C31.3",
+              "C31.8",
+              "C31.9",
+              "C38.1",
+              "C38.2",
+              "C38.3",
+              "C40.0",
+              "C40.1",
+              "C40.2",
+              "C40.3",
+              "C40.8",
+              "C40.9",
+              "C41.0",
+              "C41.1",
+              "C41.2",
+              "C41.3",
+              "C41.4",
+              "C41.8",
+              "C41.9",
+              "C42.0",
+              "C42.1",
+              "C42.2",
+              "C42.3",
+              "C42.4",
+              "C44.0",
+              "C44.1",
+              "C44.2",
+              "C44.3",
+              "C44.5",
+              "C44.6",
+              "C44.7",
+              "C44.8",
+              "C44.9",
+              "C47.0",
+              "C47.1",
+              "C47.2",
+              "C47.3",
+              "C47.4",
+              "C47.5",
+              "C47.6",
+              "C47.8",
+              "C47.9",
+              "C48.0",
+              "C48.2",
+              "C48.8",
+              "C49.0",
+              "C49.1",
+              "C49.2",
+              "C49.3",
+              "C49.4",
+              "C49.5",
+              "C49.6",
+              "C49.8",
+              "C49.9",
+              "C51.0",
+              "C51.1",
+              "C51.2",
+              "C51.8",
+              "C51.9",
+              "C52.9",
+              "C53.0",
+              "C53.1",
+              "C53.8",
+              "C53.9",
+              "C54.0",
+              "C54.1",
+              "C54.2",
+              "C54.3",
+              "C54.8",
+              "C54.9",
+              "C55.9",
+              "C58.9",
+              "C61.9",
+              "C63.0",
+              "C63.1",
+              "C63.2",
+              "C63.7",
+              "C63.8",
+              "C63.9",
+              "C64.9",
+              "C67.0",
+              "C67.1",
+              "C67.2",
+              "C67.3",
+              "C67.4",
+              "C67.5",
+              "C67.6",
+              "C67.7",
+              "C67.8",
+              "C67.9",
+              "C69.0",
+              "C69.1",
+              "C69.2",
+              "C69.3",
+              "C69.4",
+              "C69.5",
+              "C69.6",
+              "C69.8",
+              "C69.9",
+              "C74.0",
+              "C74.1",
+              "C74.9",
+              "C75.4",
+              "C75.5",
+              "C76.3",
+              "C80.9"
+            ],
+            "tree_id": "g10_extragonadal",
+            "entry_node": "eg_document_inventory",
+            "label": "Any other site"
+          }
+        ],
+        "default": {
+          "tree_id": "g10_extragonadal",
+          "entry_node": "eg_document_inventory",
+          "label": "Any other site",
+          "reason": "Every lookup code that lists Group 10 is named by a rule above, so the default is reached only by a topography outside the Xa, Xb and Xc site ranges. app.js routedTree() requires a default; the extragonadal tree is the one whose site family, Xb, ICCC-2017 defines as every site outside the central nervous system and the gonads."
+        }
+      },
+      "handoff": {
+        "group": 10,
+        "tree_id": "g10_extragonadal",
+        "entry_node": "eg_document_inventory"
+      }
     },
     "11": {
       "name": "Other Malignant Epithelial Neoplasms and Malignant Melanomas",
@@ -1390,6 +1602,21 @@
           },
           "note": "At the liver (C22.0, C22.1) a malignant neoplasm with no specific type is ICCC-3 Group VII, subgroup VIIc, unspecified malignant hepatic tumours.",
           "authoring_note": "ICCC-2017 range 72: 8000-8005 at sites 220,221, behaviour 3, is VIIc. Without this branch a liver case coded 8000/3 fell to the Group XII default, whose XIIb site list excludes 220-238. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5 (Group 7 build contract Sec.0.6, Sec.7.1)."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C56.9",
+              "C62.0",
+              "C62.1",
+              "C62.9"
+            ]
+          },
+          "result": {
+            "group": 10,
+            "subgroup": "Xe"
+          },
+          "authoring_note": "ICCC-2017 range 117 places 8000-8005 at sites 569 and 620-629, behaviour 3, in subgroup Xe, so the gonadal trees emit 8000/3 to 8005/3 under Group X (Group 10 design decision D13)."
         }
       ],
       "default": {

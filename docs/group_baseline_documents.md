@@ -4,8 +4,8 @@
 remaining group. Each one gets a baseline WHO classification document, the same two-source code
 verification, and the same proof before it is called done.
 
-Status on 4 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7, 8, 9**. In progress and
-not merged: **10** on `claude/group-10-tumor-pathway-3a99f7`. Not started: **11, 12**.
+Status on 6 October 2026. Built and merged to `main`: **1, 2, 3, 4, 5, 6, 7, 8, 9, 10** (Group 10 by pull request #12).
+Not started: **11, 12**.
 
 ---
 
@@ -30,19 +30,20 @@ before building.** A pathway is not designed on secondary sources or on recall.
 | **VII** — Hepatic tumours | Vol. 1, Digestive System Tumours | **Nagtegaal ID, et al.** *The 2019 WHO classification of tumours of the digestive system.* Histopathology 2020;76(2):182–188. [10.1111/his.13975](https://doi.org/10.1111/his.13975) | PMID 31433515 · PMC7003895 |
 | **VIII** — Malignant bone tumours | Vol. 3, Soft Tissue and Bone Tumours | **Sbaraglia M, Bellan E, Dei Tos AP.** *The 2020 WHO Classification of Soft Tissue Tumours: news and perspectives.* Pathologica 2020;113(2):70–84. [10.32074/1591-951X-213](https://doi.org/10.32074/1591-951X-213) | PMID 33179614 · PMC8167394 |
 | **IX** — Soft-tissue and other extraosseous sarcomas | Vol. 3, Soft Tissue and Bone Tumours | same as VIII | PMID 33179614 · PMC8167394 |
-| **X** — Germ cell, trophoblastic and gonadal neoplasms | Vol. 8, Urinary and Male Genital (Part A, testis) **+** Vol. 4, Female Genital | **Moch H, et al.** European Urology 2022;82(5):458–468. [10.1016/j.eururo.2022.06.016](https://doi.org/10.1016/j.eururo.2022.06.016) · **Höhn AK, et al.** *2020 WHO Classification of Female Genital Tumors.* Geburtshilfe und Frauenheilkunde 2021;81(10):1145–1153. [10.1055/a-1545-4279](https://doi.org/10.1055/a-1545-4279) | PMID 35853783 · PMID 34629493 / PMC8494521 |
+| **X** — Germ cell, trophoblastic and gonadal neoplasms | Vol. 8, Urinary and Male Genital (Part A, testis) **+** Vol. 4, Female Genital | **Moch H, et al.** European Urology 2022;82(5):458–468. [10.1016/j.eururo.2022.06.016](https://doi.org/10.1016/j.eururo.2022.06.016) · **Höhn AK, et al.** *2020 WHO Classification of Female Genital Tumors.* Geburtshilfe und Frauenheilkunde 2021;81(10):1145–1153. [10.1055/a-1545-4279](https://doi.org/10.1055/a-1545-4279). **Höhn 2021 covers the vulva, vagina and cervix only**: its full text (PMC8494521, read 4 October 2026) has no ovary or placenta section and prints no ICD-O code. **Moch 2022 Table 3 (pp. 464–465) is the testis baseline.** The ovary has none — provisional, below | PMID 35853783 · PMID 34629493 / PMC8494521 |
 | **XI** — Other malignant epithelial neoplasms and malignant melanomas | Vol. 10, Endocrine and Neuroendocrine Tumours (**thyroid only**) | **Juhlin CC, Mete O, Baloch ZW.** *The 2022 WHO classification of thyroid tumors: novel concepts in nomenclature and grading.* Endocrine-Related Cancer 2022;30(2):e220293. [10.1530/ERC-22-0293](https://doi.org/10.1530/ERC-22-0293) | PMID 36445235 |
 | **XII** — Other and unspecified malignant neoplasms | none | **Residual bucket by design** — no single volume. Verify each code against whichever volume owns the entity. | — |
 
 Baseline list supplied by the registrar, 16 September 2026, and **every entry verified against
 PubMed** the same day: each DOI was resolved to its PubMed record and the citation checked against
-the returned metadata. Only Group III's paper is held on disk. **Four entries are provisional — see below.**
+the returned metadata. On 16 September only Group III's paper was held on disk; by 4 October Pfister 2022 (Group IV, `Group 4 Papers/331.pdf`) and Moch 2022 (Groups VI and X, `Group 6 Papers/`) are too. **Five entries are provisional — see below.**
 
-### ⚠️ Four entries are provisional and await the registrar's verification
+### ⚠️ Five entries are provisional and await the registrar's verification
 
 Flagged 16 September 2026. **No 6th-edition volume exists for any of these** — a PubMed sweep for
 sixth editions returned nothing, so the 5th-edition volumes are current. The problem is **fit, not
-edition**: three of these papers do not actually cover the group they are assigned to.
+edition**: three of these papers do not actually cover the group they are assigned to. Group X was
+added on 4 October 2026.
 
 | Group | Concern |
 |---|---|
@@ -50,6 +51,7 @@ edition**: three of these papers do not actually cover the group they are assign
 | **V** — retinoblastoma | ~~Milman 2023 is indexed by PubMed as an **Editorial** with no abstract. It announces the Eye and Orbit volume rather than summarising its entities the way Louis 2021 does for CNS. Usable as a pointer; thin as an authority.~~ **RESOLVED 22 Sep 2026 — Milman 2023 stands.** The Editorial tag is real and is not a measure of standing: 25 pages against Louis 2021's 21, organised by chapter with "ICD-O coding" subsections throughout, and written by the Eye and Orbit volume's **own editorial board** — the same model as Louis 2021, which is the CNS volume's own board. No better candidate exists. Two real weaknesses replace the one withdrawn: it summarises a **beta version ahead of print** (April 2023) while the bound volume printed **23 January 2026**, thirty-three months later with no published comparison; and its Table 9 names only *Retinocytoma* and *Retinoblastoma* under the neurosensory retina, leaving the status of `9511/3`, `9512/3` and `9513/3` unsettled behind a paywall. Full working: `docs/group_05_build_contract.md` §10. |
 | **VII** — hepatic | Nagtegaal 2019 is a seven-page overview of the **whole** digestive system, also with no abstract in PubMed. Paediatric liver tumours — hepatoblastoma above all — will be thinly covered. **Confirmed 2 October 2026 on the Group VII branch:** the full text (PMC7003895) never mentions hepatoblastoma and prints no ICD-O code. The build uses the International Pediatric Liver Tumors Consensus Classification instead — see the closing note below. |
 | **XI** — other epithelial and melanoma | Vol. 10 is **thyroid only**. The group also takes skin melanoma, adrenocortical carcinoma and carcinomas of other sites, each in a different volume. At least two further baselines are needed. |
+| **X** — germ cell, trophoblastic and gonadal | The ovary has **no baseline paper on disk**. Höhn 2021 covers the vulva, vagina and cervix only (full text PMC8494521, read 4 October 2026: no ovary or placenta section, no ICD-O code), so it settles nothing for the ovary or the placenta. **Candidate:** McCluggage WG, Singh N, Gilks CB. *Key changes to the World Health Organization (WHO) classification of female genital tumours introduced in the 5th edition (2020).* Histopathology 2022;80(5):762–778. [10.1111/his.14609](https://doi.org/10.1111/his.14609) · PMID 34996131 · **not in PubMed Central**. **Worked around 4 October 2026, pending the registrar:** the build used ICD-O-3.2 for every ovarian code, and Pfister 2022 Table 3 (pp. 342–343) for which paediatric ovarian entities are current. The testis half is covered: Moch 2022 Table 3 (pp. 464–465) prints the testis entities with their ICD-O codes. Requested as item 13 in `docs/sources-requested.md`. Full working: `docs/group_10_build_contract.md` and design D22 in `docs/superpowers/specs/2026-10-04-group-10-germ-cell-code-decisions-design.md`. |
 
 **A structural question for groups IV–VII and X.** These are paediatric-site groups, and
 **Pfister SM, et al. (Cancer Discovery 2022;12(2):331–355)** summarises the inaugural *WHO
@@ -72,6 +74,28 @@ That is the registrar's call and is not assumed here.
 > cancer-predisposition-syndrome groupings. There is no renal tumour section. **Pfister 2022 is not
 > the spine for Group VI either**, and the structural question above can be treated as answered for
 > two of the five paediatric-site groups: search the text, do not assume the volume.
+
+> **Corrected 4 October 2026, on the Group X branch: the "kidney" count above.** The zero came from
+> the PMC text, where Table 3 (*Classification of pediatric solid tumors*) is an image. The article
+> PDF (`Group 4 Papers/331.pdf`) carries Table 3 as text, and "kidney" appears four times in it, all in
+> the table: a *Kidney* heading on p. 342 and, on p. 343, *Clear cell sarcoma of kidney*, *Malignant
+> rhabdoid tumor of the kidney* and *Anaplastic sarcoma of kidney*. Table 3 lists the paediatric renal
+> entities on pp. 342–343 (nephroblastic and related, molecularly defined, metanephric and
+> mesenchymal renal tumours) with no ICD-O code and no discussion. The narrative conclusion stands:
+> the text has no renal tumour section, and p. 340 uses nephroblastoma as a worked example (with the
+> anaplasia criterion) without opening one, so Pfister 2022 is still not the spine for Group VI.
+> What changes is that its Table 3 is an entity-currency source, as it is for Group X. The Group V
+> count has the same cause: Table 3 also lists *Eye tumors*, *Retinocytoma* and *Retinoblastoma* on
+> p. 342, and that note's conclusion stands for the same reason.
+
+> **Closed for Group X, 4 October 2026.** Pfister 2022 is not the spine for Group X. The text gives germ
+> cell tumours a developmental paragraph (pp. 340–341), and Table 3 lists the paediatric germ cell
+> entities on p. 342 and the ovarian and testicular sex cord–stromal entities on p. 343, with no
+> ICD-O code. Louis 2021 Table 1 (p. 1235) lists the eight central nervous system germ cell entities,
+> also with no ICD-O code. Moch 2022 Table 3 (pp. 464–465) is the only baseline that prints codes, and
+> it covers the testis. Group X's codes are therefore settled term by term against `icdo32.sqlite`,
+> with the ovary resting on ICD-O-3.2 and Pfister's Table 3 (provisional table above). Full working:
+> `docs/group_10_build_contract.md`.
 
 > **Closed for Group VII, 2 October 2026 — and here Pfister names the spine.** Pfister 2022's full text
 > (PMC9401511) gives hepatoblastoma one paragraph and states that the paediatric volume's

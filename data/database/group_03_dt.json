@@ -3569,11 +3569,11 @@
           ],
           "biochemical_questions": [
             {
-              "question": "Serum AFP 25 ng/mL or above, or CSF β-hCG 8.2 IU/L or above — record the number, not a yes/no",
+              "question": "Serum or CSF AFP above 25 ng/mL, or serum or CSF β-hCG above 50 IU/L — record the number, not a yes/no",
               "required_answer": "no"
             },
             {
-              "question": "Both AFP and β-hCG measured and both below those cut-offs",
+              "question": "Both AFP and β-hCG measured and both at or below those cut-offs",
               "required_answer": "yes"
             }
           ],
@@ -3613,7 +3613,7 @@
             {
               "label": "A midline mass with an ELEVATED serum AFP or CSF β-hCG",
               "refer_group": 10,
-              "reason": "An elevated AFP or β-hCG in a midline intracranial mass is a secreting germ cell tumour. It belongs in ICCC-3 Group X (germ cell, trophoblastic tumours and neoplasms of gonads), not Group III. Code it there and stop. Use each compartment's own cut-off and never one on the other: β-hCG is higher in CSF (8.2 IU/L, sensitivity 47%), AFP is higher in serum (25 ng/mL). Record the numbers.",
+              "reason": "An elevated AFP or β-hCG in a midline intracranial mass is a secreting germ cell tumour. It belongs in ICCC-3 Group X (germ cell, trophoblastic tumours and neoplasms of gonads), not Group III. Code it there and stop. The SIOP cut-offs are the same in serum and CSF: AFP above 25 ng/mL, β-hCG above 50 IU/L (Calaminus 2017, Methods). Record the numbers.",
               "captures": {
                 "germ_cell_markers": "elevated"
               }
@@ -4044,7 +4044,7 @@
             {
               "descriptor": "Germ cell — germinomatous sheets with lymphocytic infiltrate, yolk sac, teratomatous or choriocarcinomatous elements, or the file records an elevated AFP or β-hCG",
               "refer_group": 10,
-              "reason": "An intracranial germ cell tumour belongs in ICCC-3 Group X. Code it there. An elevated serum AFP (25 ng/mL or above) or CSF β-hCG (8.2 IU/L or above) routes out and stops; a normal result excludes nothing and the case proceeds to tissue, because marker-negative intracranial germ cell tumours are well documented. Record the numbers, not a yes/no."
+              "reason": "An intracranial germ cell tumour belongs in ICCC-3 Group X. Code it there. A serum or CSF AFP above 25 ng/mL, or a serum or CSF β-hCG above 50 IU/L (the SIOP cut-offs, Calaminus 2017, Methods), routes out and stops; a normal result excludes nothing and the case proceeds to tissue, because marker-negative intracranial germ cell tumours are well documented. Record the numbers, not a yes/no."
             },
             {
               "descriptor": "Metastatic deposit from a known extracranial primary",
@@ -14474,7 +14474,7 @@
           "question": "Before any code: which AFP or β-hCG results are in this patient's file?",
           "hint": "This question comes before histology, not after it. An elevated marker moves the case to Group X and ends the Group III pathway. A normal marker excludes nothing - it lets the case proceed to tissue with germ cell tumour still in the differential. Li 2020 found 22.6% (21 of 93) of institutional pineoblastoma diagnoses were other entities, commonest germ cell tumours.",
           "clinical_alert": null,
-          "coding_note": "Revision 2 3.2 and the 6.4 alert row for any pineal, suprasellar or third-ventricular mass. Each marker gets its own numeric_gate with its own compartment-specific cut-off; this node only routes to whichever the file actually has, so a case with no markers costs one tap rather than four. The chain walks forward from wherever it is entered.",
+          "coding_note": "Revision 2 3.2 and the 6.4 alert row for any pineal, suprasellar or third-ventricular mass. Each marker and compartment gets its own numeric_gate, and since the registrar's ruling of 6 October 2026 each reads the SIOP cut-off (alpha-fetoprotein above 25 ng/mL, beta-hCG above 50 IU/L, in either compartment); this node only routes to whichever the file actually has, so a case with no markers costs one tap rather than four. The chain walks forward from wherever it is entered.",
           "options": [
             {
               "label": "Serum αFP is reported (with or without other markers)",
@@ -14536,19 +14536,19 @@
           "step_number": 2,
           "step_label": "Serum αFP",
           "question": "Serum αFP, as reported (ng/mL). Enter the number.",
-          "hint": "Enter the measured value, never a yes/no. One control craniopharyngioma in Hu 2016 reached a CSF β-hCG of 8 against a cut-off of 8.2 - a margin of 0.2, which a yes/no answer destroys. The serum αFP cut-off is 25 ng/mL. αFP is the marker that is HIGHER IN SERUM; do not read a serum value against the CSF cut-off of 3.8 ng/mL.",
+          "hint": "Enter the measured value, never a yes/no. A value above 25 ng/mL refers the case to Group X: the SIOP cut-off, the same in serum and in cerebrospinal fluid (Calaminus 2017, Methods; Calaminus 2026, Table 2). A value in µg/L is the same number in ng/mL.",
           "clinical_alert": null,
-          "coding_note": "Revision 2 3.2. The cut-offs are Hu 2016's, chosen for 100% specificity. β-hCG is higher in CSF and αFP is higher in serum, so serum and CSF cut-offs are authored as SEPARATE numeric_gate nodes with separate variables: one node can never apply one compartment's cut-off to the other, and the per-unit domain sweep runs inside a node. This node's unit is ng_per_ml.",
+          "coding_note": "Registrar's ruling, 6 October 2026: the SIOP cut-offs, the same in serum and cerebrospinal fluid, 'above' being strict - alpha-fetoprotein above 25 ng/mL, beta-hCG above 50 IU/L (SIOP CNS GCT 96, Calaminus 2017, Methods; SIOP CNS GCT II requires below 25 and below 50 for germinoma, Calaminus 2026, Table 2). They replace Hu 2016's (serum alpha-fetoprotein at or above 25, cerebrospinal fluid alpha-fetoprotein at or above 3.8 ng/mL; serum beta-hCG at or above 2.5, cerebrospinal fluid beta-hCG at or above 8.2 IU/L), which separate any intracranial germ cell tumour from a non-germ-cell lesion rather than germinoma from a non-germinomatous tumour (docs/group_10_lab_marker_evidence.md §1). Serum and cerebrospinal fluid stay SEPARATE numeric_gate nodes with separate variables, and the per-unit domain sweep runs inside a node. This node's unit is ng_per_ml.",
           "variable": "afp_serum_ng_ml",
           "variable_label": "Serum αFP",
           "unit": "ng_per_ml",
           "band_variable": "afp_serum_ng_ml_band",
           "bands": [
             {
-              "range": ">=25",
+              "range": ">25",
               "unit": "ng_per_ml",
               "refer_group": 10,
-              "reason": "Elevated Serum αFP at or above 25 ng/mL. An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
+              "reason": "Serum αFP above 25 ng/mL, the SIOP cut-off (Calaminus 2017, Methods). An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
               "captures": {
                 "gct_marker_result": "elevated",
                 "evidence_tests": [
@@ -14558,7 +14558,7 @@
               }
             },
             {
-              "range": "<25",
+              "range": "<=25",
               "unit": "ng_per_ml",
               "next_node": "md_gct_afp_csf",
               "coding_note": "NOT an exclusion. The rule is one-directional: elevated routes out and stops, normal proceeds to tissue with germ cell tumour still live in the differential. Markers were below the detection threshold in 11 of 32 cases (34.4%) in Hu's historical sub-cohort, part of that a detection-limit artefact. ENCR Table 3 has no germinoma row, so there is no imaging-only registration shortcut for an intracranial germ cell tumour either.",
@@ -14595,19 +14595,19 @@
           "step_number": 2,
           "step_label": "CSF αFP",
           "question": "CSF αFP, as reported (ng/mL). Enter the number.",
-          "hint": "Enter the measured value, never a yes/no. One control craniopharyngioma in Hu 2016 reached a CSF β-hCG of 8 against a cut-off of 8.2 - a margin of 0.2, which a yes/no answer destroys. The CSF αFP cut-off of 3.8 ng/mL is empirical and derived from three cases only. Weight it accordingly; the serum assay is the better αFP compartment.",
+          "hint": "Enter the measured value, never a yes/no. A value above 25 ng/mL refers the case to Group X: the SIOP cut-off, the same in serum and in cerebrospinal fluid (Calaminus 2017, Methods; Calaminus 2026, Table 2). A value in µg/L is the same number in ng/mL.",
           "clinical_alert": null,
-          "coding_note": "Revision 2 3.2. The cut-offs are Hu 2016's, chosen for 100% specificity. β-hCG is higher in CSF and αFP is higher in serum, so serum and CSF cut-offs are authored as SEPARATE numeric_gate nodes with separate variables: one node can never apply one compartment's cut-off to the other, and the per-unit domain sweep runs inside a node. This node's unit is ng_per_ml.",
+          "coding_note": "Registrar's ruling, 6 October 2026: the SIOP cut-offs, the same in serum and cerebrospinal fluid, 'above' being strict - alpha-fetoprotein above 25 ng/mL, beta-hCG above 50 IU/L (SIOP CNS GCT 96, Calaminus 2017, Methods; SIOP CNS GCT II requires below 25 and below 50 for germinoma, Calaminus 2026, Table 2). They replace Hu 2016's (serum alpha-fetoprotein at or above 25, cerebrospinal fluid alpha-fetoprotein at or above 3.8 ng/mL; serum beta-hCG at or above 2.5, cerebrospinal fluid beta-hCG at or above 8.2 IU/L), which separate any intracranial germ cell tumour from a non-germ-cell lesion rather than germinoma from a non-germinomatous tumour (docs/group_10_lab_marker_evidence.md §1). Serum and cerebrospinal fluid stay SEPARATE numeric_gate nodes with separate variables, and the per-unit domain sweep runs inside a node. This node's unit is ng_per_ml.",
           "variable": "afp_csf_ng_ml",
           "variable_label": "CSF αFP",
           "unit": "ng_per_ml",
           "band_variable": "afp_csf_ng_ml_band",
           "bands": [
             {
-              "range": ">=3.8",
+              "range": ">25",
               "unit": "ng_per_ml",
               "refer_group": 10,
-              "reason": "Elevated CSF αFP at or above 3.8 ng/mL. An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
+              "reason": "CSF αFP above 25 ng/mL, the SIOP cut-off (Calaminus 2017, Methods). An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
               "captures": {
                 "gct_marker_result": "elevated",
                 "evidence_tests": [
@@ -14617,7 +14617,7 @@
               }
             },
             {
-              "range": "<3.8",
+              "range": "<=25",
               "unit": "ng_per_ml",
               "next_node": "md_gct_hcg_csf",
               "coding_note": "NOT an exclusion. The rule is one-directional: elevated routes out and stops, normal proceeds to tissue with germ cell tumour still live in the differential. Markers were below the detection threshold in 11 of 32 cases (34.4%) in Hu's historical sub-cohort, part of that a detection-limit artefact. ENCR Table 3 has no germinoma row, so there is no imaging-only registration shortcut for an intracranial germ cell tumour either.",
@@ -14654,19 +14654,19 @@
           "step_number": 2,
           "step_label": "CSF β-hCG",
           "question": "CSF β-hCG, as reported (IU/L). Enter the number.",
-          "hint": "Enter the measured value, never a yes/no. One control craniopharyngioma in Hu 2016 reached a CSF β-hCG of 8 against a cut-off of 8.2 - a margin of 0.2, which a yes/no answer destroys. The CSF β-hCG cut-off is 8.2 IU/L at 47% sensitivity. β-hCG is the marker that is HIGHER IN CSF; do not read a CSF value against the serum cut-off of 2.5 IU/L.",
+          "hint": "Enter the measured value, never a yes/no. A value above 50 IU/L refers the case to Group X: the SIOP cut-off, the same in serum and in cerebrospinal fluid (Calaminus 2017, Methods; Calaminus 2026, Table 2). A value in mIU/mL is the same number in IU/L.",
           "clinical_alert": null,
-          "coding_note": "Revision 2 3.2. The cut-offs are Hu 2016's, chosen for 100% specificity. β-hCG is higher in CSF and αFP is higher in serum, so serum and CSF cut-offs are authored as SEPARATE numeric_gate nodes with separate variables: one node can never apply one compartment's cut-off to the other, and the per-unit domain sweep runs inside a node. This node's unit is iu_per_l.",
+          "coding_note": "Registrar's ruling, 6 October 2026: the SIOP cut-offs, the same in serum and cerebrospinal fluid, 'above' being strict - alpha-fetoprotein above 25 ng/mL, beta-hCG above 50 IU/L (SIOP CNS GCT 96, Calaminus 2017, Methods; SIOP CNS GCT II requires below 25 and below 50 for germinoma, Calaminus 2026, Table 2). They replace Hu 2016's (serum alpha-fetoprotein at or above 25, cerebrospinal fluid alpha-fetoprotein at or above 3.8 ng/mL; serum beta-hCG at or above 2.5, cerebrospinal fluid beta-hCG at or above 8.2 IU/L), which separate any intracranial germ cell tumour from a non-germ-cell lesion rather than germinoma from a non-germinomatous tumour (docs/group_10_lab_marker_evidence.md §1). Serum and cerebrospinal fluid stay SEPARATE numeric_gate nodes with separate variables, and the per-unit domain sweep runs inside a node. This node's unit is iu_per_l.",
           "variable": "hcg_csf_iu_l",
           "variable_label": "CSF β-hCG",
           "unit": "iu_per_l",
           "band_variable": "hcg_csf_iu_l_band",
           "bands": [
             {
-              "range": ">=8.2",
+              "range": ">50",
               "unit": "iu_per_l",
               "refer_group": 10,
-              "reason": "Elevated CSF β-hCG at or above 8.2 IU/L. An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
+              "reason": "CSF β-hCG above 50 IU/L, the SIOP cut-off (Calaminus 2017, Methods). An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
               "captures": {
                 "gct_marker_result": "elevated",
                 "evidence_tests": [
@@ -14676,7 +14676,7 @@
               }
             },
             {
-              "range": "<8.2",
+              "range": "<=50",
               "unit": "iu_per_l",
               "next_node": "md_gct_hcg_serum",
               "coding_note": "NOT an exclusion. The rule is one-directional: elevated routes out and stops, normal proceeds to tissue with germ cell tumour still live in the differential. Markers were below the detection threshold in 11 of 32 cases (34.4%) in Hu's historical sub-cohort, part of that a detection-limit artefact. ENCR Table 3 has no germinoma row, so there is no imaging-only registration shortcut for an intracranial germ cell tumour either.",
@@ -14713,19 +14713,19 @@
           "step_number": 2,
           "step_label": "Serum β-hCG",
           "question": "Serum β-hCG, as reported (IU/L). Enter the number.",
-          "hint": "Enter the measured value, never a yes/no. One control craniopharyngioma in Hu 2016 reached a CSF β-hCG of 8 against a cut-off of 8.2 - a margin of 0.2, which a yes/no answer destroys. The serum β-hCG cut-off is 2.5 IU/L at 34% sensitivity - lower sensitivity than the CSF assay, which is why a CSF sample is worth having.",
+          "hint": "Enter the measured value, never a yes/no. A value above 50 IU/L refers the case to Group X: the SIOP cut-off, the same in serum and in cerebrospinal fluid (Calaminus 2017, Methods; Calaminus 2026, Table 2). A value in mIU/mL is the same number in IU/L.",
           "clinical_alert": null,
-          "coding_note": "Revision 2 3.2. The cut-offs are Hu 2016's, chosen for 100% specificity. β-hCG is higher in CSF and αFP is higher in serum, so serum and CSF cut-offs are authored as SEPARATE numeric_gate nodes with separate variables: one node can never apply one compartment's cut-off to the other, and the per-unit domain sweep runs inside a node. This node's unit is iu_per_l.",
+          "coding_note": "Registrar's ruling, 6 October 2026: the SIOP cut-offs, the same in serum and cerebrospinal fluid, 'above' being strict - alpha-fetoprotein above 25 ng/mL, beta-hCG above 50 IU/L (SIOP CNS GCT 96, Calaminus 2017, Methods; SIOP CNS GCT II requires below 25 and below 50 for germinoma, Calaminus 2026, Table 2). They replace Hu 2016's (serum alpha-fetoprotein at or above 25, cerebrospinal fluid alpha-fetoprotein at or above 3.8 ng/mL; serum beta-hCG at or above 2.5, cerebrospinal fluid beta-hCG at or above 8.2 IU/L), which separate any intracranial germ cell tumour from a non-germ-cell lesion rather than germinoma from a non-germinomatous tumour (docs/group_10_lab_marker_evidence.md §1). Serum and cerebrospinal fluid stay SEPARATE numeric_gate nodes with separate variables, and the per-unit domain sweep runs inside a node. This node's unit is iu_per_l.",
           "variable": "hcg_serum_iu_l",
           "variable_label": "Serum β-hCG",
           "unit": "iu_per_l",
           "band_variable": "hcg_serum_iu_l_band",
           "bands": [
             {
-              "range": ">=2.5",
+              "range": ">50",
               "unit": "iu_per_l",
               "refer_group": 10,
-              "reason": "Elevated Serum β-hCG at or above 2.5 IU/L. An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
+              "reason": "Serum β-hCG above 50 IU/L, the SIOP cut-off (Calaminus 2017, Methods). An intracranial germ cell tumour is ICCC-3 Group X (Xa1-Xa6, intracranial and intraspinal germ cell tumours), not Group III. No Group III code is emitted and the case is coded in Group X. Record the measured value, not a yes/no - it is the evidence for the referral. Stop here: an elevated marker is decisive on its own.",
               "captures": {
                 "gct_marker_result": "elevated",
                 "evidence_tests": [
@@ -14735,7 +14735,7 @@
               }
             },
             {
-              "range": "<2.5",
+              "range": "<=50",
               "unit": "iu_per_l",
               "next_node": "md_compartment",
               "coding_note": "NOT an exclusion. The rule is one-directional: elevated routes out and stops, normal proceeds to tissue with germ cell tumour still live in the differential. Markers were below the detection threshold in 11 of 32 cases (34.4%) in Hu's historical sub-cohort, part of that a detection-limit artefact. ENCR Table 3 has no germinoma row, so there is no imaging-only registration shortcut for an intracranial germ cell tumour either.",
@@ -14967,7 +14967,7 @@
               "required_answer": "yes"
             },
             {
-              "question": "αFP and β-hCG have been measured and are not elevated?",
+              "question": "αFP and β-hCG have been measured, αFP is 25 ng/mL or below and β-hCG is 50 IU/L or below?",
               "required_answer": "yes"
             }
           ],
@@ -15056,7 +15056,7 @@
               "required_answer": "yes"
             },
             {
-              "question": "αFP and β-hCG have been measured and are not elevated?",
+              "question": "αFP and β-hCG have been measured, αFP is 25 ng/mL or below and β-hCG is 50 IU/L or below?",
               "required_answer": "yes"
             }
           ],
@@ -18418,7 +18418,7 @@
           ],
           "biochemical_questions": [
             {
-              "question": "αFP and β-hCG have been measured and are not elevated?",
+              "question": "αFP and β-hCG have been measured, αFP is 25 ng/mL or below and β-hCG is 50 IU/L or below?",
               "required_answer": "yes"
             }
           ],
@@ -18440,7 +18440,7 @@
               "reason": "Favours Langerhans cell histiocytosis, hypophysitis or germinoma."
             },
             {
-              "feature": "αFP or β-hCG is elevated, or was never measured",
+              "feature": "αFP is above 25 ng/mL or β-hCG is above 50 IU/L, or either was never measured",
               "reason": "An elevated marker moves the case to Group X. A marker that was never measured leaves a germ cell tumour live in the differential, and a normal one excludes nothing."
             },
             {
@@ -19239,7 +19239,7 @@
           ],
           "biochemical_questions": [
             {
-              "question": "αFP and β-hCG have been measured and are not elevated?",
+              "question": "αFP and β-hCG have been measured, αFP is 25 ng/mL or below and β-hCG is 50 IU/L or below?",
               "required_answer": "yes"
             }
           ],
@@ -19249,7 +19249,7 @@
               "reason": "22.6% (21 of 93) of institutional pineoblastoma diagnoses in Li 2020 were other entities, commonest germ cell tumours. A named pineoblastoma is a reason for tissue, not a reason to code one."
             },
             {
-              "feature": "αFP or β-hCG is elevated, or was never measured",
+              "feature": "αFP is above 25 ng/mL or β-hCG is above 50 IU/L, or either was never measured",
               "reason": "An elevated marker moves the case to Group X. ENCR Table 3 has no germinoma row, so there is no imaging registration route for an intracranial germ cell tumour."
             },
             {
@@ -20026,7 +20026,7 @@
               "reason": "Favours germinoma, craniopharyngioma or a hypothalamic pilomyxoid tumour rather than an optic pathway glioma."
             },
             {
-              "feature": "αFP or β-hCG is elevated, or was never measured",
+              "feature": "αFP is above 25 ng/mL or β-hCG is above 50 IU/L, or either was never measured",
               "reason": "A suprasellar germinoma presents in exactly this region. An elevated marker moves the case to Group X; a marker never measured leaves it live."
             },
             {
@@ -27866,11 +27866,11 @@
           ],
           "biochemical_questions": [
             {
-              "question": "Serum alpha-fetoprotein is below 25 ng/mL, or was not measured",
+              "question": "Serum and CSF alpha-fetoprotein are 25 ng/mL or below, or were not measured",
               "required_answer": "yes"
             },
             {
-              "question": "CSF beta-hCG is below 8.2 IU/L - or serum beta-hCG is below its own laboratory cut-off; never read one compartment's cut-off against the other - or neither was measured",
+              "question": "Serum and CSF beta-hCG are 50 IU/L or below, or neither was measured",
               "required_answer": "yes"
             }
           ],
@@ -27880,8 +27880,8 @@
               "reason": "A CNS deposit is coded to the primary, not to the site it was found in. 8000/6 and 8000/9 sit outside ICCC-3 Group III's 0-1,3 declaration, so a case carrying one leaves Group III silently and is never emitted here."
             },
             {
-              "feature": "Serum alpha-fetoprotein or CSF/serum beta-hCG is elevated above its cut-off",
-              "reason": "An elevated marker places the case in ICCC-3 Group X (germ cell tumours) and the pathway stops. The rule is one-directional: a normal marker excludes nothing and the pathway continues. One control craniopharyngioma reached a CSF beta-hCG of 8 against a cut-off of 8.2, so record the number, never a yes or no."
+              "feature": "Serum or CSF alpha-fetoprotein is above 25 ng/mL, or serum or CSF beta-hCG is above 50 IU/L",
+              "reason": "An elevated marker places the case in ICCC-3 Group X (germ cell tumours) and the pathway stops. The rule is one-directional: a normal marker excludes nothing and the pathway continues. The SIOP cut-offs are the same in serum and CSF (Calaminus 2017, Methods). Record the number, never a yes or no."
             },
             {
               "feature": "Ring enhancement with restricted diffusion, or a tuberculosis, HIV or otherwise immunosuppressed setting",
@@ -28030,9 +28030,9 @@
           ],
           "options": [
             {
-              "label": "Serum alpha-fetoprotein is at or above 25 ng/mL, or CSF beta-hCG is at or above 8.2 IU/L (or serum beta-hCG is above its own cut-off)",
+              "label": "Serum or CSF alpha-fetoprotein is above 25 ng/mL, or serum or CSF beta-hCG is above 50 IU/L",
               "refer_group": 10,
-              "reason": "An elevated alpha-fetoprotein or beta-hCG places this case in ICCC-3 Group X, germ cell and trophoblastic tumours, and the Group III pathway stops here. Code it from the Group X tree. Record the actual value, not a yes or no: the cut-offs are compartment-specific (beta-hCG 8.2 IU/L in CSF, alpha-fetoprotein 25 ng/mL in serum) and one control craniopharyngioma reached a CSF beta-hCG of 8. The rule runs one way only - a normal result excludes nothing.",
+              "reason": "An elevated alpha-fetoprotein or beta-hCG places this case in ICCC-3 Group X, germ cell and trophoblastic tumours, and the Group III pathway stops here. Code it from the Group X tree. Record the actual value, not a yes or no: the SIOP cut-offs, the same in serum and CSF, are alpha-fetoprotein above 25 ng/mL and beta-hCG above 50 IU/L (Calaminus 2017, Methods). The rule runs one way only - a normal result excludes nothing.",
               "captures": {
                 "tumour_markers_status": "elevated"
               }

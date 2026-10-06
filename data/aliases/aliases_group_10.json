@@ -1,0 +1,2340 @@
+[
+  {
+    "alias": "Malignant tumor, clear cell type",
+    "full_form": "Malignant tumor, clear cell type -> Malignant tumor, clear cell type (8005)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8005"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Malignant tumor, clear cell type, 8005/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8005/3, read from icdo32.sqlite; D21 holds: Group X emits 8005 at /3 only."
+  },
+  {
+    "alias": "Carcinoma, NOS",
+    "full_form": "Carcinoma, NOS -> Carcinoma, NOS (8010)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8010"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Carcinoma, NOS, 8010/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8010/3, read from icdo32.sqlite; D21 holds: Group X emits 8010 at /3 only."
+  },
+  {
+    "alias": "Carcinoma, undifferentiated, NOS",
+    "full_form": "Carcinoma, undifferentiated, NOS -> Carcinoma, undifferentiated, NOS (8020)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8020"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Carcinoma, undifferentiated, NOS, 8020/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8020/3, read from icdo32.sqlite; D21 holds: Group X emits 8020 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Anaplastic undifferentiated carcinoma",
+    "full_form": "Anaplastic undifferentiated carcinoma -> Carcinoma, undifferentiated, NOS (8020)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8020"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Carcinoma, undifferentiated, NOS (8020/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8020/3, read from icdo32.sqlite; D21 holds: Group X emits 8020 at /3 only."
+  },
+  {
+    "alias": "Carcinoma, poorly differentiated, NOS",
+    "full_form": "Carcinoma, poorly differentiated, NOS -> Carcinoma, undifferentiated, NOS (8020)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8020"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Carcinoma, undifferentiated, NOS (8020/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8020/3, read from icdo32.sqlite; D21 holds: Group X emits 8020 at /3 only."
+  },
+  {
+    "alias": "Dedifferentiated carcinoma",
+    "full_form": "Dedifferentiated carcinoma -> Carcinoma, undifferentiated, NOS (8020)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8020"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Carcinoma, undifferentiated, NOS (8020/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8020/3, read from icdo32.sqlite; D21 holds: Group X emits 8020 at /3 only."
+  },
+  {
+    "alias": "Small cell carcinoma, intermediate cell",
+    "full_form": "Small cell carcinoma, intermediate cell -> Small cell carcinoma, intermediate cell (8044)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8044"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Small cell carcinoma, intermediate cell, 8044/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8044/3, read from icdo32.sqlite; D21 holds: Group X emits 8044 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Small cell carcinoma, hypercalcemic type",
+    "full_form": "Small cell carcinoma, hypercalcemic type -> Small cell carcinoma, intermediate cell (8044)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8044"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Small cell carcinoma, intermediate cell (8044/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8044/3, read from icdo32.sqlite; D21 holds: Group X emits 8044 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma, NOS",
+    "full_form": "Adenocarcinoma, NOS -> Adenocarcinoma, NOS (8140)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8140"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma, NOS, 8140/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8140/3, read from icdo32.sqlite; D21 holds: Group X emits 8140 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma, usual type",
+    "full_form": "Adenocarcinoma, usual type -> Adenocarcinoma, NOS (8140)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8140"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma, NOS (8140/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8140/3, read from icdo32.sqlite; D21 holds: Group X emits 8140 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine tumor, NOS",
+    "full_form": "Neuroendocrine tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Neuroendocrine tumor, NOS, 8240/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Carcinoid tumor, NOS",
+    "full_form": "Carcinoid tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Carcinoid, NOS",
+    "full_form": "Carcinoid, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, low grade",
+    "full_form": "Neuroendocrine carcinoma, low grade -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, well differentiated",
+    "full_form": "Neuroendocrine carcinoma, well differentiated -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Typical carcinoid",
+    "full_form": "Typical carcinoid -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Bronchial adenoma, carcinoid",
+    "full_form": "Bronchial adenoma, carcinoid -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine tumor, grade 1",
+    "full_form": "Neuroendocrine tumor, grade 1 -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, NOS",
+    "full_form": "Neuroendocrine carcinoma, NOS -> Neuroendocrine carcinoma, NOS (8246)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8246"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Neuroendocrine carcinoma, NOS, 8246/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8246/3, read from icdo32.sqlite; D21 holds: Group X emits 8246 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Poorly differentiated neuroendocrine neoplasm",
+    "full_form": "Poorly differentiated neuroendocrine neoplasm -> Neuroendocrine carcinoma, NOS (8246)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8246"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine carcinoma, NOS (8246/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8246/3, read from icdo32.sqlite; D21 holds: Group X emits 8246 at /3 only."
+  },
+  {
+    "alias": "Clear cell adenocarcinoma, NOS",
+    "full_form": "Clear cell adenocarcinoma, NOS -> Clear cell adenocarcinoma, NOS (8310)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8310"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Clear cell adenocarcinoma, NOS, 8310/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8310/3, read from icdo32.sqlite; D21 holds: Group X emits 8310 at /3 only."
+  },
+  {
+    "alias": "Clear cell carcinoma, NOS",
+    "full_form": "Clear cell carcinoma, NOS -> Clear cell adenocarcinoma, NOS (8310)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8310"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Clear cell adenocarcinoma, NOS (8310/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8310/3, read from icdo32.sqlite; D21 holds: Group X emits 8310 at /3 only."
+  },
+  {
+    "alias": "Clear cell adenocarcinoma, mesonephroid",
+    "full_form": "Clear cell adenocarcinoma, mesonephroid -> Clear cell adenocarcinoma, NOS (8310)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8310"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Clear cell adenocarcinoma, NOS (8310/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8310/3, read from icdo32.sqlite; D21 holds: Group X emits 8310 at /3 only."
+  },
+  {
+    "alias": "Clear cell adenocarcinofibroma",
+    "full_form": "Clear cell adenocarcinofibroma -> Clear cell adenocarcinofibroma (8313)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8313"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Clear cell adenocarcinofibroma, 8313/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8313/3, read from icdo32.sqlite; D21 holds: Group X emits 8313 at /3 only."
+  },
+  {
+    "alias": "Clear cell cystadenocarcinofibroma",
+    "full_form": "Clear cell cystadenocarcinofibroma -> Clear cell adenocarcinofibroma (8313)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8313"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Clear cell adenocarcinofibroma (8313/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8313/3, read from icdo32.sqlite; D21 holds: Group X emits 8313 at /3 only."
+  },
+  {
+    "alias": "Endometrioid adenocarcinoma, NOS",
+    "full_form": "Endometrioid adenocarcinoma, NOS -> Endometrioid adenocarcinoma, NOS (8380)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8380"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Endometrioid adenocarcinoma, NOS, 8380/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8380/3, read from icdo32.sqlite; D21 holds: Group X emits 8380 at /3 only."
+  },
+  {
+    "alias": "Endometrioid carcinoma, NOS",
+    "full_form": "Endometrioid carcinoma, NOS -> Endometrioid adenocarcinoma, NOS (8380)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8380"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Endometrioid adenocarcinoma, NOS (8380/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8380/3, read from icdo32.sqlite; D21 holds: Group X emits 8380 at /3 only."
+  },
+  {
+    "alias": "Endometrioid cystadenocarcinoma",
+    "full_form": "Endometrioid cystadenocarcinoma -> Endometrioid adenocarcinoma, NOS (8380)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8380"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Endometrioid adenocarcinoma, NOS (8380/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8380/3, read from icdo32.sqlite; D21 holds: Group X emits 8380 at /3 only."
+  },
+  {
+    "alias": "Serous carcinoma, NOS",
+    "full_form": "Serous carcinoma, NOS -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Serous carcinoma, NOS, 8441/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Papillary serous adenocarcinoma",
+    "full_form": "Papillary serous adenocarcinoma -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Papillary serous cystadenocarcinoma",
+    "full_form": "Papillary serous cystadenocarcinoma -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Serous adenocarcinoma, NOS",
+    "full_form": "Serous adenocarcinoma, NOS -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Serous cystadenocarcinoma, NOS",
+    "full_form": "Serous cystadenocarcinoma, NOS -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Serous papillary adenocarcinoma, NOS",
+    "full_form": "Serous papillary adenocarcinoma, NOS -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Serous surface papillary carcinoma",
+    "full_form": "Serous surface papillary carcinoma -> Serous carcinoma, NOS (8441)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8441"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Low grade serous carcinoma",
+    "full_form": "Low grade serous carcinoma -> Low grade serous carcinoma (8460)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8460"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Low grade serous carcinoma, 8460/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8460/3, read from icdo32.sqlite; D21 holds: Group X emits 8460 at /3 only."
+  },
+  {
+    "alias": "Micropapillary serous carcinoma",
+    "full_form": "Micropapillary serous carcinoma -> Low grade serous carcinoma (8460)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8460"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Low grade serous carcinoma (8460/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8460/3, read from icdo32.sqlite; D21 holds: Group X emits 8460 at /3 only."
+  },
+  {
+    "alias": "High grade serous carcinoma",
+    "full_form": "High grade serous carcinoma -> High grade serous carcinoma (8461)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8461"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "High grade serous carcinoma, 8461/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8461/3, read from icdo32.sqlite; D21 holds: Group X emits 8461 at /3 only."
+  },
+  {
+    "alias": "Mucinous cystadenocarcinoma, NOS",
+    "full_form": "Mucinous cystadenocarcinoma, NOS -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucinous cystadenocarcinoma, NOS, 8470/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
+  },
+  {
+    "alias": "Papillary mucinous cystadenocarcinoma",
+    "full_form": "Papillary mucinous cystadenocarcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
+  },
+  {
+    "alias": "Papillary pseudomucinous cystadenocarcinoma",
+    "full_form": "Papillary pseudomucinous cystadenocarcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
+  },
+  {
+    "alias": "Pseudomucinous adenocarcinoma",
+    "full_form": "Pseudomucinous adenocarcinoma -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
+  },
+  {
+    "alias": "Pseudomucinous cystadenocarcinoma, NOS",
+    "full_form": "Pseudomucinous cystadenocarcinoma, NOS -> Mucinous cystadenocarcinoma, NOS (8470)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8470"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous cystadenocarcinoma, NOS (8470/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8470/3, read from icdo32.sqlite; D21 holds: Group X emits 8470 at /3 only."
+  },
+  {
+    "alias": "Seromucinous carcinoma",
+    "full_form": "Seromucinous carcinoma -> Seromucinous carcinoma (8474)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8474"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Seromucinous carcinoma, 8474/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8474/3, read from icdo32.sqlite; D21 holds: Group X emits 8474 at /3 only."
+  },
+  {
+    "alias": "Mucinous adenocarcinoma",
+    "full_form": "Mucinous adenocarcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucinous adenocarcinoma, 8480/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Colloid adenocarcinoma",
+    "full_form": "Colloid adenocarcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinoma (8480/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Colloid carcinoma",
+    "full_form": "Colloid carcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinoma (8480/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Mucinous carcinoma",
+    "full_form": "Mucinous carcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinoma (8480/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Mucoid adenocarcinoma",
+    "full_form": "Mucoid adenocarcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinoma (8480/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Mucoid carcinoma",
+    "full_form": "Mucoid carcinoma -> Mucinous adenocarcinoma (8480)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8480"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinoma (8480/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
+  },
+  {
+    "alias": "Thecoma, malignant",
+    "full_form": "Thecoma, malignant -> Thecoma, malignant (8600)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8600"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Thecoma, malignant, 8600/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8600/3, read from icdo32.sqlite; D21 holds: Group X emits 8600 at /3 only."
+  },
+  {
+    "alias": "Adult granulosa cell tumor of ovary",
+    "full_form": "Adult granulosa cell tumor of ovary -> Adult granulosa cell tumor of ovary (8620)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8620"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adult granulosa cell tumor of ovary, 8620/3. Adult type of the ovary. Of the testis it is 8620/1, and the juvenile type is 8622/1 or 8622/0; neither is a Group X code (design D11).",
+    "coding_note": "ICD-O-3.2 Preferred term on 8620/3, read from icdo32.sqlite; D21 holds: Group X emits 8620 at /3 only."
+  },
+  {
+    "alias": "Granulosa cell tumor, adult type",
+    "full_form": "Granulosa cell tumor, adult type -> Adult granulosa cell tumor of ovary (8620)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8620"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adult granulosa cell tumor of ovary (8620/3). Adult type of the ovary. Of the testis it is 8620/1, and the juvenile type is 8622/1 or 8622/0; neither is a Group X code (design D11).",
+    "coding_note": "ICD-O-3.2 Related term on 8620/3, read from icdo32.sqlite; D21 holds: Group X emits 8620 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Granulosa cell tumor, sarcomatoid",
+    "full_form": "Granulosa cell tumor, sarcomatoid -> Adult granulosa cell tumor of ovary (8620)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8620"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adult granulosa cell tumor of ovary (8620/3). Adult type of the ovary. Of the testis it is 8620/1, and the juvenile type is 8622/1 or 8622/0; neither is a Group X code (design D11).",
+    "coding_note": "ICD-O-3.2 Related term on 8620/3, read from icdo32.sqlite; D21 holds: Group X emits 8620 at /3 only."
+  },
+  {
+    "alias": "Sertoli-Leydig cell tumor, poorly differentiated",
+    "full_form": "Sertoli-Leydig cell tumor, poorly differentiated -> Sertoli-Leydig cell tumor, poorly differentiated (8631)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8631"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Sertoli-Leydig cell tumor, poorly differentiated, 8631/3. Poorly differentiated only. Well, intermediate and retiform forms and Sertoli-Leydig cell tumor, NOS are behaviour exclusions (design D11).",
+    "coding_note": "ICD-O-3.2 Preferred term on 8631/3, read from icdo32.sqlite; D21 holds: Group X emits 8631 at /3 only."
+  },
+  {
+    "alias": "Sertoli-Leydig cell tumor, sarcomatoid",
+    "full_form": "Sertoli-Leydig cell tumor, sarcomatoid -> Sertoli-Leydig cell tumor, poorly differentiated (8631)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8631"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Sertoli-Leydig cell tumor, poorly differentiated (8631/3). Poorly differentiated only. Well, intermediate and retiform forms and Sertoli-Leydig cell tumor, NOS are behaviour exclusions (design D11).",
+    "coding_note": "ICD-O-3.2 Related term on 8631/3, read from icdo32.sqlite; D21 holds: Group X emits 8631 at /3 only."
+  },
+  {
+    "alias": "Sertoli-Leydig cell tumor, poorly differentiated, with heterologous elements",
+    "full_form": "Sertoli-Leydig cell tumor, poorly differentiated, with heterologous elements -> Sertoli-Leydig cell tumor, poorly differentiated, with heterologous elements (8634)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8634"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Sertoli-Leydig cell tumor, poorly differentiated, with heterologous elements, 8634/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8634/3, read from icdo32.sqlite; D21 holds: Group X emits 8634 at /3 only."
+  },
+  {
+    "alias": "Sertoli cell carcinoma",
+    "full_form": "Sertoli cell carcinoma -> Sertoli cell carcinoma (8640)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8640"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Sertoli cell carcinoma, 8640/3. The malignant tumour. Sertoli cell tumor, NOS is 8640/1, a behaviour exclusion (design D11).",
+    "coding_note": "ICD-O-3.2 Preferred term on 8640/3, read from icdo32.sqlite; D21 holds: Group X emits 8640 at /3 only."
+  },
+  {
+    "alias": "Leydig cell tumor, malignant",
+    "full_form": "Leydig cell tumor, malignant -> Leydig cell tumor, malignant (8650)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8650"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Leydig cell tumor, malignant, 8650/3. The malignant tumour. Leydig cell tumor of testis, NOS is 8650/1 and Leydig cell tumor of ovary, NOS is 8650/0, behaviour exclusions (design D11).",
+    "coding_note": "ICD-O-3.2 Preferred term on 8650/3, read from icdo32.sqlite; D21 holds: Group X emits 8650 at /3 only."
+  },
+  {
+    "alias": "Interstitial cell tumor, malignant",
+    "full_form": "Interstitial cell tumor, malignant -> Leydig cell tumor, malignant (8650)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8650"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Leydig cell tumor, malignant (8650/3). The malignant tumour. Leydig cell tumor of testis, NOS is 8650/1 and Leydig cell tumor of ovary, NOS is 8650/0, behaviour exclusions (design D11).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8650/3, read from icdo32.sqlite; D21 holds: Group X emits 8650 at /3 only."
+  },
+  {
+    "alias": "Steroid cell tumor, malignant",
+    "full_form": "Steroid cell tumor, malignant -> Steroid cell tumor, malignant (8670)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8670"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Steroid cell tumor, malignant, 8670/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8670/3, read from icdo32.sqlite; D21 holds: Group X emits 8670 at /3 only."
+  },
+  {
+    "alias": "Mucinous adenocarcinofibroma",
+    "full_form": "Mucinous adenocarcinofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucinous adenocarcinofibroma, 9015/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Malignant mucinous adenofibroma",
+    "full_form": "Malignant mucinous adenofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Malignant mucinous cystadenofibroma",
+    "full_form": "Malignant mucinous cystadenofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Mucinous cystadenocarcinofibroma",
+    "full_form": "Mucinous cystadenocarcinofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Dysgerminoma",
+    "full_form": "Dysgerminoma -> Dysgerminoma (9060)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9060"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Dysgerminoma, 9060/3. Germinoma, at any site, is 9064/3, not 9060 (design D1).",
+    "coding_note": "ICD-O-3.2 Preferred term on 9060/3, read from icdo32.sqlite; D21 holds: Group X emits 9060 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Seminoma, NOS",
+    "full_form": "Seminoma, NOS -> Seminoma, NOS (9061)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9061"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Seminoma, NOS, 9061/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9061/3, read from icdo32.sqlite; D21 holds: Group X emits 9061 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Seminoma, anaplastic",
+    "full_form": "Seminoma, anaplastic -> Seminoma, anaplastic (9062)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9062"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Seminoma, anaplastic, 9062/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9062/3, read from icdo32.sqlite; D21 holds: Group X emits 9062 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Seminoma with high mitotic index",
+    "full_form": "Seminoma with high mitotic index -> Seminoma, anaplastic (9062)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9062"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Seminoma, anaplastic (9062/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9062/3, read from icdo32.sqlite; D21 holds: Group X emits 9062 at /3 only."
+  },
+  {
+    "alias": "Spermatocytic seminoma",
+    "full_form": "Spermatocytic seminoma -> Spermatocytic seminoma (9063)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9063"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Spermatocytic seminoma, 9063/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9063/3, read from icdo32.sqlite; D21 holds: Group X emits 9063 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Spermatocytic tumor",
+    "full_form": "Spermatocytic tumor -> Spermatocytic seminoma (9063)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9063"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Spermatocytic seminoma (9063/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9063/3, read from icdo32.sqlite; D21 holds: Group X emits 9063 at /3 only."
+  },
+  {
+    "alias": "Spermatocytoma",
+    "full_form": "Spermatocytoma -> Spermatocytic seminoma (9063)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9063"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Spermatocytic seminoma (9063/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9063/3, read from icdo32.sqlite; D21 holds: Group X emits 9063 at /3 only."
+  },
+  {
+    "alias": "Germinoma",
+    "full_form": "Germinoma -> Germinoma (9064)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9064"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Germinoma, 9064/3. Not 9060: ICD-O-3.2 files Germinoma under 9064/3 and Dysgerminoma under 9060/3 (design D1). Germ cell tumor, NOS is a synonym of 9064/3 (design D2).",
+    "coding_note": "ICD-O-3.2 Preferred term on 9064/3, read from icdo32.sqlite; D21 holds: Group X emits 9064 at /3 only."
+  },
+  {
+    "alias": "Germ cell tumor, NOS",
+    "full_form": "Germ cell tumor, NOS -> Germinoma (9064)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9064"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Germinoma (9064/3). Not 9060: ICD-O-3.2 files Germinoma under 9064/3 and Dysgerminoma under 9060/3 (design D1). Germ cell tumor, NOS is a synonym of 9064/3 (design D2).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9064/3, read from icdo32.sqlite; D21 holds: Group X emits 9064 at /3 only."
+  },
+  {
+    "alias": "Germ cell tumor, nonseminomatous",
+    "full_form": "Germ cell tumor, nonseminomatous -> Germ cell tumor, nonseminomatous (9065)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9065"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Germ cell tumor, nonseminomatous, 9065/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9065/3, read from icdo32.sqlite; D21 holds: Group X emits 9065 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Embryonal carcinoma, NOS",
+    "full_form": "Embryonal carcinoma, NOS -> Embryonal carcinoma, NOS (9070)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Embryonal carcinoma, NOS, 9070/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9070/3, read from icdo32.sqlite; D21 holds: Group X emits 9070 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Embryonal adenocarcinoma",
+    "full_form": "Embryonal adenocarcinoma -> Embryonal carcinoma, NOS (9070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Embryonal carcinoma, NOS (9070/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9070/3, read from icdo32.sqlite; D21 holds: Group X emits 9070 at /3 only."
+  },
+  {
+    "alias": "Yolk sac tumor, NOS",
+    "full_form": "Yolk sac tumor, NOS -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Yolk sac tumor, NOS, 9071/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Embryonal carcinoma, infantile",
+    "full_form": "Embryonal carcinoma, infantile -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Endodermal sinus tumor",
+    "full_form": "Endodermal sinus tumor -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Orchioblastoma",
+    "full_form": "Orchioblastoma -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Polyvesicular vitelline tumor",
+    "full_form": "Polyvesicular vitelline tumor -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Yolk sac tumor, pre-pubertal type",
+    "full_form": "Yolk sac tumor, pre-pubertal type -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Hepatoid yolk sac tumor",
+    "full_form": "Hepatoid yolk sac tumor -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Yolk sac tumor, post-pubertal type",
+    "full_form": "Yolk sac tumor, post-pubertal type -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9071/3, read from icdo32.sqlite; D21 holds: Group X emits 9071 at /3 only."
+  },
+  {
+    "alias": "Polyembryoma",
+    "full_form": "Polyembryoma -> Polyembryoma (9072)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9072"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Polyembryoma, 9072/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9072/3, read from icdo32.sqlite; D21 holds: Group X emits 9072 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Embryonal carcinoma, polyembryonal type",
+    "full_form": "Embryonal carcinoma, polyembryonal type -> Polyembryoma (9072)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9072"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Polyembryoma (9072/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9072/3, read from icdo32.sqlite; D21 holds: Group X emits 9072 at /3 only."
+  },
+  {
+    "alias": "Teratocarcinoma",
+    "full_form": "Teratocarcinoma -> Teratocarcinoma (9081)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9081"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Teratocarcinoma, 9081/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9081/3, read from icdo32.sqlite; D21 holds: Group X emits 9081 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Mixed embryonal carcinoma and teratoma",
+    "full_form": "Mixed embryonal carcinoma and teratoma -> Teratocarcinoma (9081)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9081"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Teratocarcinoma (9081/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9081/3, read from icdo32.sqlite; D21 holds: Group X emits 9081 at /3 only."
+  },
+  {
+    "alias": "Teratocarcinosarcoma",
+    "full_form": "Teratocarcinosarcoma -> Teratocarcinoma (9081)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9081"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Teratocarcinoma (9081/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9081/3, read from icdo32.sqlite; D21 holds: Group X emits 9081 at /3 only."
+  },
+  {
+    "alias": "Malignant teratoma, undifferentiated",
+    "full_form": "Malignant teratoma, undifferentiated -> Malignant teratoma, undifferentiated (9082)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Malignant teratoma, undifferentiated, 9082/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9082/3, read from icdo32.sqlite; D21 holds: Group X emits 9082 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Malignant teratoma, anaplastic",
+    "full_form": "Malignant teratoma, anaplastic -> Malignant teratoma, undifferentiated (9082)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Malignant teratoma, undifferentiated (9082/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9082/3, read from icdo32.sqlite; D21 holds: Group X emits 9082 at /3 only."
+  },
+  {
+    "alias": "Malignant teratoma, intermediate",
+    "full_form": "Malignant teratoma, intermediate -> Malignant teratoma, intermediate (9083)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9083"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Malignant teratoma, intermediate, 9083/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9083/3, read from icdo32.sqlite; D21 holds: Group X emits 9083 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Mixed germ cell tumor",
+    "full_form": "Mixed germ cell tumor -> Mixed germ cell tumor (9085)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9085"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc6",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mixed germ cell tumor, 9085/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9085/3, read from icdo32.sqlite; D21 holds: Group X emits 9085 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Mixed teratoma and seminoma",
+    "full_form": "Mixed teratoma and seminoma -> Mixed germ cell tumor (9085)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9085"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc6",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Mixed germ cell tumor (9085/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9085/3, read from icdo32.sqlite; D21 holds: Group X emits 9085 at /3 only."
+  },
+  {
+    "alias": "Germ cell tumor with associated hematological malignancy",
+    "full_form": "Germ cell tumor with associated hematological malignancy -> Germ cell tumor with associated hematological malignancy (9086)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9086"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xb6",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Germ cell tumor with associated hematological malignancy, 9086/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9086/3, read from icdo32.sqlite; D21 holds: Group X emits 9086 at /3 only."
+  },
+  {
+    "alias": "Struma ovarii, malignant",
+    "full_form": "Struma ovarii, malignant -> Struma ovarii, malignant (9090)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9090"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Struma ovarii, malignant, 9090/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9090/3, read from icdo32.sqlite; D21 holds: Group X emits 9090 at /3 only."
+  },
+  {
+    "alias": "Choriocarcinoma, NOS",
+    "full_form": "Choriocarcinoma, NOS -> Choriocarcinoma, NOS (9100)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9100"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Choriocarcinoma, NOS, 9100/3. Choriocarcinoma only. Hydatidiform moles are 9100/0 and 9100/1, behaviour exclusions (design D8).",
+    "coding_note": "ICD-O-3.2 Preferred term on 9100/3, read from icdo32.sqlite; D21 holds: Group X emits 9100 at /3 only."
+  },
+  {
+    "alias": "Chorioepithelioma",
+    "full_form": "Chorioepithelioma -> Choriocarcinoma, NOS (9100)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9100"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Choriocarcinoma, NOS (9100/3). Choriocarcinoma only. Hydatidiform moles are 9100/0 and 9100/1, behaviour exclusions (design D8).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9100/3, read from icdo32.sqlite; D21 holds: Group X emits 9100 at /3 only."
+  },
+  {
+    "alias": "Chorionepithelioma",
+    "full_form": "Chorionepithelioma -> Choriocarcinoma, NOS (9100)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9100"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Choriocarcinoma, NOS (9100/3). Choriocarcinoma only. Hydatidiform moles are 9100/0 and 9100/1, behaviour exclusions (design D8).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9100/3, read from icdo32.sqlite; D21 holds: Group X emits 9100 at /3 only."
+  },
+  {
+    "alias": "Choriocarcinoma combined with other germ cell elements",
+    "full_form": "Choriocarcinoma combined with other germ cell elements -> Choriocarcinoma combined with other germ cell elements (9101)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9101"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Choriocarcinoma combined with other germ cell elements, 9101/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9101/3, read from icdo32.sqlite; D21 holds: Group X emits 9101 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Choriocarcinoma combined with embryonal carcinoma",
+    "full_form": "Choriocarcinoma combined with embryonal carcinoma -> Choriocarcinoma combined with other germ cell elements (9101)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9101"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Choriocarcinoma combined with other germ cell elements (9101/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9101/3, read from icdo32.sqlite; D21 holds: Group X emits 9101 at /3 only."
+  },
+  {
+    "alias": "Choriocarcinoma combined with teratoma",
+    "full_form": "Choriocarcinoma combined with teratoma -> Choriocarcinoma combined with other germ cell elements (9101)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9101"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Choriocarcinoma combined with other germ cell elements (9101/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9101/3, read from icdo32.sqlite; D21 holds: Group X emits 9101 at /3 only."
+  },
+  {
+    "alias": "Malignant teratoma, trophoblastic",
+    "full_form": "Malignant teratoma, trophoblastic -> Malignant teratoma, trophoblastic (9102)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9102"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Malignant teratoma, trophoblastic, 9102/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9102/3, read from icdo32.sqlite; D21 holds: Group X emits 9102 at /3 only."
+  },
+  {
+    "alias": "Trophoblastic tumor, epithelioid",
+    "full_form": "Trophoblastic tumor, epithelioid -> Trophoblastic tumor, epithelioid (9105)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9105"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Trophoblastic tumor, epithelioid, 9105/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9105/3, read from icdo32.sqlite; D21 holds: Group X emits 9105 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Yolk sac tumor",
+    "full_form": "Yolk sac tumor -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option wording for 9071. It equals an ICD-O-3.2 term of 9071/3 apart from a trailing NOS.",
+    "coding_note": "x_morph option string for 9071 that differs from the ICD-O-3.2 preferred term. Offered so a clerk who types the dropdown wording finds the code; it is not a test of REDCap (standing rule 16)."
+  },
+  {
+    "alias": "Yolk sac tumour",
+    "full_form": "Yolk sac tumour -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C3011",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Yolk sac tumor, NOS (9071/3).",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3011 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Endodermal sinus tumour",
+    "full_form": "Endodermal sinus tumour -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C3011",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of the ICD-O-3.2 synonym Endodermal sinus tumor, 9071/3.",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3011 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Yolk sac tumour, prepubertal type",
+    "full_form": "Yolk sac tumour, prepubertal type -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C3011",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of the ICD-O-3.2 synonym Yolk sac tumor, pre-pubertal type, 9071/3. The prepubertal and postpubertal types are 9071/3 (contract §4.4).",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3011 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Yolk sac tumour, postpubertal type",
+    "full_form": "Yolk sac tumour, postpubertal type -> Yolk sac tumor, NOS (9071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C3011",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc4",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of the ICD-O-3.2 related term Yolk sac tumor, post-pubertal type, 9071/3.",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3011 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Germ cell tumour, NOS",
+    "full_form": "Germ cell tumour, NOS -> Germinoma (9064)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9064"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of the ICD-O-3.2 synonym Germ cell tumor, NOS, 9064/3 (design D2). The output names the code by its preferred term, Germinoma; a report that says only germ cell tumour has not diagnosed a germinoma.",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Non-germinomatous germ cell tumour",
+    "full_form": "Non-germinomatous germ cell tumour -> Germ cell tumor, nonseminomatous (9065)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C121619",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9065"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Clinical wording for Germ cell tumor, nonseminomatous (9065/3). NCIt names the concept Nongerminomatous Germ Cell Tumor.",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C121619 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Mixed germ cell tumour",
+    "full_form": "Mixed germ cell tumour -> Mixed germ cell tumor (9085)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C4290",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9085"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc6",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Mixed germ cell tumor (9085/3).",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C4290 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Teratoma",
+    "full_form": "Teratoma -> 9080 at /0, /1, /3, by the behaviour the report states / 9084 at /0, /3, by the behaviour the report states",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": "NCIT:C3403",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9080",
+      "9084"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc2",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "The behaviour-neutral alias (design D21). Group X emits 9080 at /0, /1 and /3 and 9084 at /0 and /3 (the central nervous system tree emits /0 and /1; every tree emits /3), and 'Also called' lists an alias on every output of its code, so only this text, true of every behaviour, is attached to these codes. The tree takes the behaviour from the report.",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3403 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Embryonal carcinoma",
+    "full_form": "Embryonal carcinoma -> Embryonal carcinoma, NOS (9070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (wording variant)",
+    "nci_concept_id": "NCIT:C3752",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc3",
+    "needs_ihc_tree": true,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Embryonal carcinoma, NOS (9070/3) without the NOS. Embryonal carcinoma, infantile is an ICD-O-3.2 synonym of Yolk sac tumor, 9071/3.",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C3752 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Spermatocytic tumour",
+    "full_form": "Spermatocytic tumour -> Spermatocytic seminoma (9063)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C39921",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9063"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc1",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of the ICD-O-3.2 synonym Spermatocytic tumor, 9063/3. Coded as the report writes it (design D3).",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C39921 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Small cell carcinoma of the ovary, hypercalcaemic type",
+    "full_form": "Small cell carcinoma of the ovary, hypercalcaemic type -> Small cell carcinoma, intermediate cell (8044)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "Clinical descriptive term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8044"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "The ovarian tumour that ICD-O-3.2 lists as Small cell carcinoma, hypercalcemic type, a related term of 8044/3 (design D14; contract §4.4).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Low-grade serous carcinoma",
+    "full_form": "Low-grade serous carcinoma -> Low grade serous carcinoma (8460)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (wording variant)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8460"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Hyphenated form of Low grade serous carcinoma (8460/3) (design D14).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "High-grade serous carcinoma",
+    "full_form": "High-grade serous carcinoma -> High grade serous carcinoma (8461)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (wording variant)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8461"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Hyphenated form of High grade serous carcinoma (8461/3) (design D14).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Adult granulosa cell tumour",
+    "full_form": "Adult granulosa cell tumour -> Adult granulosa cell tumor of ovary (8620)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8620"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Adult granulosa cell tumor of ovary (8620/3). Of the testis the tumour is 8620/1, which Group X does not register (design D11).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Sertoli-Leydig cell tumour, poorly differentiated",
+    "full_form": "Sertoli-Leydig cell tumour, poorly differentiated -> Sertoli-Leydig cell tumor, poorly differentiated (8631)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8631"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xe",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Sertoli-Leydig cell tumor, poorly differentiated (8631/3).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Germ cell tumour with associated haematological malignancy",
+    "full_form": "Germ cell tumour with associated haematological malignancy -> Germ cell tumor with associated hematological malignancy (9086)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9086"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xb6",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Germ cell tumor with associated hematological malignancy (9086/3).",
+    "coding_note": "Curated: Group 10 build contract §6. Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  },
+  {
+    "alias": "Epithelioid trophoblastic tumour",
+    "full_form": "Epithelioid trophoblastic tumour -> Trophoblastic tumor, epithelioid (9105)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 (British spelling)",
+    "nci_concept_id": "NCIT:C6900",
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9105"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xc5",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "British spelling of Trophoblastic tumor, epithelioid (9105/3).",
+    "coding_note": "Curated: Group 10 build contract §6, NCIt NCIT:C6900 from 'Group 10 — Alias Build Instructions.md' (14 May 2026). Corrected to ICD-O-3.2 by the Group 10 build (design D1-D21)."
+  }
+]
