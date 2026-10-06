@@ -62,7 +62,9 @@ These apply to every session and every subagent working in this repository.
    `coding_note` reaches the clerk with no explanation. No `clinical_alert`
    carries text: the warnings live in `docs/clinical-warnings.md` (4 September
    ruling 9). The grey sub-line under an answer option does not come back,
-   from `coding_note` or from a new field (registrar, 4 October 2026).
+   from `coding_note` or from a new field (registrar, 4 October 2026). One
+   exception, ruled 6 October 2026: `recognition_aid`, clerk-facing text in
+   report vocabulary that shows only under the option the clerk has selected.
 8. **The tool is advisory and must never overstate its evidence.** Every defect
    that reached the browser made a case look better evidenced than it was. Test
    that class of fault first. The abstractor confirms every code.

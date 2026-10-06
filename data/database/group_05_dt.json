@@ -152,7 +152,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child with a suspected retinal tumour (retinoblastoma). What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. There is no 'histology' or 'biopsy' option for an intact eye: incisional or needle biopsy of an eye that still contains the tumour risks seeding it outside the eye, so a pathology report exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere -- record which imaging was actually performed, at the next step.",
+          "hint": "Biopsy of an eye that still contains the tumour is avoided, because incisional or needle biopsy risks seeding the tumour outside the eye. A pathology report therefore exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere, so the next step records which imaging was actually performed.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Tree architecture per build contract Sec.4: five routes off this node. The contract's own diagram lists the fifth route's (inadequate/uninterpretable specimen) destination as 'rb_imaging_pathway or the non-registrable terminal' without deciding between them. This build routes it to rb_imaging_pathway: a failed tissue attempt does not erase whatever clinical/imaging evidence is also in the file, so that evidence is checked against the full constellation before the case falls through the pathway's own insufficient_next_node (rb_imaging_insufficient) to a non-reportable or Group XII outcome. Recorded for the registrar as a judgement call, per verification instructions.",
           "captured_variables": [
@@ -164,6 +168,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no ophthalmic examination or imaging report, no cytology, no pathology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rb_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -176,6 +187,15 @@
             },
             {
               "label": "Ophthalmic examination under anaesthesia, B-scan ultrasound, and/or orbital magnetic resonance imaging report — the eye is intact, no cytology, no pathology report",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rb_imaging_pathway",
               "captures": {
                 "evidence_tests": [
@@ -188,6 +208,14 @@
             },
             {
               "label": "Cytology report, or an aqueous-humour or plasma liquid biopsy report — no enucleation or exenteration specimen in the file",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "rb_cytology",
               "captures": {
                 "evidence_tests": [
@@ -200,6 +228,11 @@
             },
             {
               "label": "Enucleation or exenteration specimen with a pathology report",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "rb_enucleation_report",
               "captures": {
                 "evidence_tests": [

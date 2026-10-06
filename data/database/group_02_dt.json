@@ -3295,8 +3295,12 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What specimen and what reports are actually in this patient's file? Pick the highest tier available, or the outcome state that applies to the aspirate.",
+          "question": "What specimen and what reports are in this patient's file, and what was the outcome of any aspirate?",
           "hint": "This is the specimen ladder (Pathway §2.4). It fixes what precision is achievable. An FNA has FOUR outcome states — adequate and positive, adequate and negative, inadequate, and not done. Inadequate is not a negative.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Fixation is an upstream gate: with unbuffered formalin or fixation beyond 72 h, CD10 falls to 17%, Ki-67 >90% to 24% and MYC FISH signal to 3%. Record fixation quality before offering any IHC- or FISH-tier route (Emile 2016, Pathway §2.4).",
           "test_result_states": {
@@ -3323,6 +3327,12 @@
           "options": [
             {
               "label": "Referral or clinical note only — no cytology and no histology report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "g2_alias",
               "coding_note": "Tier 1. The referral diagnosis was wrong or uncertain in 57% of NLPHL cases and clinically diagnosed Burkitt was confirmed in only 75% (Xia 2022, Ogwang 2011).",
               "captures": {
@@ -3337,6 +3347,15 @@
             },
             {
               "label": "FNA smear only — ADEQUATE, and the cytology reports a neoplastic / malignant / lymphomatous population (no cell block, no flow, no IHC)",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology",
+                  "lab"
+                ]
+              },
               "next_node": "g2_fnac_triage",
               "coding_note": "Adequate-positive. FNAC alone cannot carry a lineage-specific code: PPV for an FNAC call of 'NHL' is 71.4% and FNAC misses about 1 in 5 Hodgkin lymphomas (Alemu 2026).",
               "captures": {
@@ -3351,6 +3370,15 @@
             },
             {
               "label": "FNA smear only — ADEQUATE, and the cytology reports granulomas, necrosis, reactive change or another benign picture",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology",
+                  "lab"
+                ]
+              },
               "next_node": "g2_notlymphoma_gate",
               "coding_note": "Adequate-negative. FNA separates TB from reactive at 98.3% specificity, but a granulomatous node is neither a TB diagnosis nor an exclusion of lymphoma (Pathway §2.3).",
               "captures": {
@@ -3389,6 +3417,15 @@
             },
             {
               "label": "FNA + cell block, or core needle biopsy, or excisional / incisional biopsy — H&E only, no IHC and no flow",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc",
+                  "lab"
+                ]
+              },
               "next_node": "g2_morphology",
               "coding_note": "Tier 2. WHO-HAEM5's own rule governs: where resources or specimen quality are insufficient for an entity, apply the family-level label.",
               "captures": {
@@ -3403,6 +3440,18 @@
             },
             {
               "label": "Tissue (cell block / core / excisional) WITH immunohistochemistry and/or flow cytometry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "any_of": [
+                  "ihc",
+                  "lab"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "g2_compartment_gate",
               "coding_note": "Tier 3. Excision is still required for FL grade, composite lymphoma (9596), THRLBL vs NLPHL architecture and NLPHL nodularity — a core cannot settle those (Ingersoll 2019, Ding 2024, Xia 2022).",
               "captures": {
@@ -3419,6 +3468,15 @@
             },
             {
               "label": "Effusion, CSF, marrow aspirate or node aspirate WITH flow cytometry — no tissue block",
+              "ticks": {
+                "requires": [
+                  "cytology",
+                  "lab"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "g2_compartment_gate",
               "coding_note": "Full flow phenotyping including the Burkitt signature and T-LBL is reachable on these specimens (Tsagarakis 2020, Bhaker 2015). Marrow and CSF were negative in all 15 of Bhaker's T-LBL cases and blood counts were normal in all — a normal haemogram does not argue against T-LBL.",
               "captures": {
@@ -3434,6 +3492,16 @@
             },
             {
               "label": "Tissue with IHC/flow PLUS cytogenetics / FISH, or plus molecular / NGS",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "genetics"
+                ],
+                "any_of": [
+                  "ihc",
+                  "lab"
+                ]
+              },
               "next_node": "g2_compartment_gate",
               "coding_note": "Tier 4–5. Where one FISH test is affordable, run it on the FNA cell block — hybridisation failure ~1% and MYC/BCL2 concordance with excision was 100% across 34 paired specimens (Menke 2024).",
               "captures": {
@@ -7781,12 +7849,21 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What is in this patient's file for the skin lesion? Pick the highest tier available, or the special context that applies.",
+          "question": "What is in this patient's file for the skin lesion?",
           "hint": "Cutaneous lymphoid disease is diagnosed clinically and pathologically together. The biopsy alone settles almost nothing here: three of the six codes in this branch turn on the clinical history, and one of them cannot be settled until follow-up. Read the clinic letters as well as the pathology report.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "coding_note": "This tree owns 9700, 9701, 9709/1, 9718 (/1 and /3), 9725 (/1 and /3) and 9726, and it is the only place the betaF1 / CD56 discrimination between 9708 and 9726 is taken. Reached from the main tree's lineage node by next_node g2cut_document_inventory, and directly from presentation_router.json for a skin presentation. Cross-tree next_node targets used by this tree: g2_document_inventory, g2_matureB, g2_matureT, g2hist_document_inventory, g2mast_document_inventory. Transferability (Pathway 3.7): neither retained source mentions Africa for any T/NK entity. Expect 9724 and 9725 to be near-empty in this catchment; a populated one warrants review rather than acceptance.",
           "options": [
             {
               "label": "Referral, clinic or dermatology letter only — no skin biopsy in the file",
+              "ticks": {
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "g2cut_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -7801,6 +7878,14 @@
             },
             {
               "label": "Skin biopsy with H&E only — no immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "g2cut_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -7816,6 +7901,16 @@
             },
             {
               "label": "Skin biopsy with immunohistochemistry (with or without EBER in-situ hybridisation)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics",
+                  "lab"
+                ]
+              },
               "next_node": "g2cut_lesion_pattern",
               "captures": {
                 "evidence_tests": [
@@ -7828,6 +7923,16 @@
             },
             {
               "label": "Skin biopsy with immunohistochemistry, plus TCR clonality, FISH, or blood flow cytometry",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "any_of": [
+                  "genetics",
+                  "lab"
+                ]
+              },
               "next_node": "g2cut_lesion_pattern",
               "captures": {
                 "evidence_tests": [
@@ -10067,13 +10172,22 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What is in this patient's file for the histiocytic or dendritic lesion? Pick the highest tier available, or the special context that applies.",
+          "question": "What is in this patient's file for the histiocytic or dendritic lesion?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block. In this subgroup the gate matters more than anywhere else in Group II.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Entry node for tree g2_histiocytic (contract §4). Reached from the main tree's lineage node by next_node. Covers 9749, 9750, 9751, 9755, 9756, 9757, 9758, 9759. Erdheim-Chester (ICD-O-3.2 9749) is NOT built tonight — it reaches 9750 with a visible provisional (contract §1). Every path that can reach an MHN code passes through g2hist_secondary first, because prior_haematopoietic_malignancy is a required field in this subgroup, not an optional one (Goyal 2026 DX-03–05).",
           "options": [
             {
               "label": "Referral or clinic letter only — it names a histiocytosis, but there is no biopsy report in the file",
+              "ticks": {
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "g2hist_referral_alias",
               "captures": {
                 "evidence_tests": [
@@ -10088,6 +10202,14 @@
             },
             {
               "label": "Biopsy report with H&E morphology only — no IHC performed, or none reported",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "g2hist_morphology_only",
               "captures": {
                 "evidence_tests": [
@@ -10102,6 +10224,15 @@
             },
             {
               "label": "Biopsy report with immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "g2hist_secondary",
               "captures": {
                 "evidence_tests": [
@@ -10112,6 +10243,13 @@
             },
             {
               "label": "Biopsy + IHC + molecular (BRAF, ALK rearrangement, clonality or NGS)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "g2hist_secondary",
               "captures": {
                 "evidence_tests": [
@@ -12522,13 +12660,23 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file? Pick the highest tier available.",
+          "question": "What reports are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block. Mast cell disease is one of the few places where the cheapest test — a smear count, or a serum tryptase — reaches a definitive code, so a low tier here is not a dead end.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "This tree owns 9740, 9741 and 9742 only (subgroup IId). Pathway confidence for mastocytosis is rated LOW and these codes are rare in children — the honest terminal here is frequently 'cannot be established from this file', which is why every node carries a route to g2mast_unresolved or to the 9740 family-level fallback rather than forcing 9741. Reached from the main tree's lineage node via next_node g2mast_document_inventory.",
           "options": [
             {
               "label": "Referral or clinical note only — no pathology report in the file",
+              "ticks": {
+                "excludes": [
+                  "histology",
+                  "cytology"
+                ]
+              },
               "next_node": "g2mast_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -12541,6 +12689,15 @@
             },
             {
               "label": "Morphology only — skin biopsy, marrow biopsy and/or a blood or marrow smear, with no IHC, no serum tryptase and no KIT result",
+              "ticks": {
+                "any_of": [
+                  "histology",
+                  "cytology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "g2mast_compartment",
               "hint": "A smear differential counts as morphology. It is all 9742 needs.",
               "captures": {
@@ -12554,6 +12711,18 @@
             },
             {
               "label": "Morphology + IHC (tryptase, CD117, and/or CD25 / CD30 / CD2)",
+              "ticks": {
+                "requires": [
+                  "ihc"
+                ],
+                "any_of": [
+                  "histology",
+                  "cytology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
               "next_node": "g2mast_compartment",
               "captures": {
                 "evidence_tests": [
@@ -12566,6 +12735,16 @@
             },
             {
               "label": "Morphology + IHC + basal serum tryptase and/or KIT molecular result",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "lab"
+                ],
+                "any_of": [
+                  "histology",
+                  "cytology"
+                ]
+              },
               "next_node": "g2mast_compartment",
               "captures": {
                 "evidence_tests": [

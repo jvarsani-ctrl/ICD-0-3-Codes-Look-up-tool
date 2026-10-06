@@ -1472,3 +1472,43 @@ the other three to aliases Group I already carried). No exemption mechanism was 
 REDCap now owes 15 relabels **and 4 retires**, logged in §7 above.
 
 **Group II is still open** and is the Group 2 session's work.
+
+## 28. Interface changes of 6 October 2026: what they leave owed
+
+Spec `docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md`. Handover to the Group 10 session:
+`docs/handover_group_10_ux_changes.md`. Proof of every new check: `docs/ux_negative_controls.md`.
+
+**Owed to the data**
+
+- **Sweep "behaviour" to "behavior" in clerk-facing sentences.** The interface says "Behavior" since 6 October;
+  these keys in `data/database/group_01` to `group_09_dt.json` still carry the British spelling in prose a clerk
+  reads: `reason` (about 180), `upgrade_path` (37), `comment` (28), `hint` (8), `label` (4), `descriptive_diagnosis`
+  (3), `descriptor` (2), `question` (1). Do not touch `coding_note`, `notes`, `authoring_note`, schema keys such as
+  `behaviour_resolution` and `behaviour_documented`, or node ids. Run it once the group branches that hold those
+  files open have merged. Group 10's own text is written to the new spelling by its session.
+- **Group 10: apply the evidence mapping and write the new fields.** Steps in the handover document.
+  Until the mapping is applied the data gate fails four nodes with "evidence gate ... no `tick_list`".
+- **Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
+  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.
+
+**Owed to the registrar**
+
+- Confirm the document meanings, above all the three haematology readings (flow cytometry is Lab Report; blood
+  film and marrow aspirate smear are Cytology; trephine biopsy is Histology Report). Table and per-gate
+  questions: `docs/evidence_document_mapping.md`.
+- Decide each "DATA GAP" in that document: a gate has no option that truthfully describes a file the checklist
+  can now express (for example a cytology-only file in a gate with no cytology option).
+- Rule on two readings the review of 6 October made visible. A Lab Report tick reaches the tier whose old option
+  said flow cytometry, and that option's captures credit flow cytometry (and IHC, where the label says "and/or"), so a
+  blood count alone lifts the tier and shortens the workup list. And a file no option describes takes the nearest lower
+  tier, whose sentence can deny a document that is ticked (the tool now keeps that sentence out of "Suggested based on").
+  Fixing either needs new options or a document item for flow cytometry, both clerk-facing wording.
+- Decide whether the seven documents need a one-line definition on screen. The registrar's wording is the bare
+  label, so none was added.
+
+**Not changed, on purpose**
+
+- The test-result state chips, the marker grid and flow, and the workup status dropdown carry no filter box:
+  they are not lists of one answer to pick. `FILTER_MIN_OPTIONS` in `app.js` turns the filter off for short lists.
+- `outActions()` and the override handler are untouched; `feature/report-an-error` (parked) rewrites them. Both
+  branches change `renderOutput()`, so the second to merge resolves a few lines by hand.
