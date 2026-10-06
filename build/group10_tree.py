@@ -95,6 +95,11 @@ NO_TISSUE_BASIS = (1, 2, 4, 5)
 # does not look better evidenced than the file is (Group 7 precedent: DNAJB1::PRKACA).
 IHC_CONFIRMS = ("Immunohistochemistry, where the report does not describe it, confirms the "
                 "germ cell type the report names; it does not change this code.")
+# The upgrade line for a terminal whose report does not determine the type. Without one, app.js
+# prints "None — fully subtyped at this evidence tier" (code review, 6 October 2026).
+TYPE_NOT_STATED = ("The report does not state the tumour's type. A report that names it gives "
+                   "that type's own code; where this step does not list it, record it with "
+                   "'Override this code'.")
 
 BEH_TEXT = {"0": "behaviour 0, benign", "1": "behaviour 1, uncertain or borderline",
             "2": "behaviour 2, in situ"}
@@ -106,7 +111,6 @@ PSTT_REASON = (
     "ICD-O-3.2 codes placental site trophoblastic tumour 9104/1, behaviour 1, uncertain or "
     "borderline. WHO 2022 prints 9104/3, a code approved after ICD-O-3.2 (Moch 2022, Table 3, "
     "pp. 464-465). The case is not recorded as a Group X cancer until the registrar rules.")
-DEPOSIT_HEADING = "Metastatic deposit: code the primary tumour"
 
 # ICCC-2017.sqlite code_ranges topography strings: range 94 (Xa), 100 (Xb), 106 (Xc).
 TOPOGRAPHY_RAW = {
@@ -320,7 +324,9 @@ def n_document_inventory(node_id, targets, note):
         node_id, "document_inventory", 1, "Evidence in file",
         "What is in the file for this tumour?",
         "Pick the highest tier of evidence in the file. A radiology report counts as imaging. "
-        "A pathology report on a biopsy or resection counts as histology.",
+        "A pathology report on a biopsy or resection counts as histology. A biopsy or cytology "
+        "report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick "
+        "from the other tiers.",
         [go(TIER_LABELS[t], targets[t], copy.deepcopy(TIER_CAPTURES[t])) for t in TIERS],
         EVIDENCE_TIER, note)
 
@@ -342,8 +348,8 @@ IMAGING_CONTEXTS = {
                 "question": "No tissue is in the file. What does the imaging report "
                             "conclude?"},
     "markers": {"suffix": "_markers", "evidence": ["Imaging", "Tumour markers"],
-                "question": "Neither tumour marker is raised, and no tissue is in the file. "
-                            "What does the imaging report conclude?"},
+                "question": "No tissue is in the file, and the markers do not register the "
+                            "tumour on their own. What does the imaging report conclude?"},
     "cytology": {"suffix": "_cytology", "evidence": ["Cytology", "Imaging"],
                  "question": "The cytology report is not diagnostic, and no histology report "
                              "is in the file. What does the imaging report conclude?"},
@@ -424,6 +430,12 @@ def n_markers(site):
              "a histology report gives the type." % (rec("9064", "3", 4), VISSER),
              {"workup_status": "incomplete", "basis_evidence_tier": "markers_hcg"},
              note="D2, D4. Visser Table 4, p. 06."),
+        go("Imaging shows a tumour and a marker is raised, but the file does not call it a "
+           "germ cell tumour or choriocarcinoma", imaging_node(site, "markers"),
+           {"basis_evidence_tier": "markers_raised_no_diagnosis"},
+           note="Visser Table 4 registers a marker code only for the diagnosis it names; "
+                "without that diagnosis the imaging conclusion decides. evidence_tests stays "
+                "Imaging and Tumour markers."),
         go("Neither marker is raised", imaging_node(site, "markers"),
            {"basis_evidence_tier": "markers_not_raised"},
            note="evidence_tests stays Imaging and Tumour markers."),
@@ -501,6 +513,18 @@ def n_cytology(site):
                          note="D3: the extragonadal tree offers germinoma and seminoma as the "
                               "report writes them, as its histology node does."))
     opts += [
+        code(label, morph, "3", 5,
+             "%s Cytology does not give a histological subtype; a histology report confirms "
+             "it." % rec(morph, "3", 5),
+             {"workup_status": "incomplete", "basis_evidence_tier": "cytology_named"},
+             note="Coded as the report names it, as the histology node does.")
+        for label, morph in (
+            ("Cytology names a yolk sac tumour", "9071"),
+            ("Cytology names embryonal carcinoma", "9070"),
+            ("Cytology names choriocarcinoma", "9100"),
+            ("Cytology names a non-seminomatous or non-germinomatous germ cell tumour without "
+             "naming its type", "9065"))
+    ] + [
         code("Cytology names a malignant germ cell tumour without naming its type", "9064",
              "3", 5,
              "%s ICD-O-3.2 files Germ cell tumor, NOS under this number, so the record does "
@@ -512,7 +536,14 @@ def n_cytology(site):
                     {"workup_status": "incomplete",
                      "basis_evidence_tier": "cytology_malignant"}),
         go("No malignant cells, scant material, or a non-diagnostic report — and an imaging "
-           "report is in the file", imaging_node(site, "cytology"),
+           "report and an alpha-fetoprotein or human chorionic gonadotropin result are in the "
+           "file", nid(site, "markers"),
+           {"evidence_tests": ["Cytology", "Imaging", "Tumour markers"],
+            "workup_status": "incomplete", "basis_evidence_tier": "cytology_nondiagnostic"},
+           note="Non-diagnostic cytology leaves the marker route (Visser Table 4) as the best "
+                "evidence."),
+        go("No malignant cells, scant material, or a non-diagnostic report — and an imaging "
+           "report, with no marker result, is in the file", imaging_node(site, "cytology"),
            {"evidence_tests": ["Cytology", "Imaging"], "workup_status": "incomplete",
             "basis_evidence_tier": "cytology_nondiagnostic"},
            note="Non-diagnostic cytology leaves imaging as the best evidence."),
@@ -540,23 +571,20 @@ def n_cytology(site):
 # ------------------------------------------------------------------------------------------
 def n_mixed(site):
     opts = [
-        code("Choriocarcinoma is one of the components", "9101", "3", 7, rec("9101")),
-        code("Embryonal carcinoma and teratoma, and nothing else", "9081", "3", 7,
+        code("Choriocarcinoma", "9101", "3", 7, rec("9101")),
+        code("Embryonal carcinoma and teratoma only", "9081", "3", 7,
              "%s ICD-O-3.2 gives it the synonym Mixed embryonal carcinoma and teratoma."
              % rec("9081")),
-        code("The report uses the term teratocarcinoma", "9081", "3", 7, rec("9081")),
-        code("The report uses the term malignant teratoma, undifferentiated (or anaplastic)",
-             "9082", "3", 7, rec("9082")),
-        code("The report uses the term malignant teratoma, intermediate", "9083", "3", 7,
+        code("Teratocarcinoma", "9081", "3", 7, rec("9081")),
+        code("Malignant teratoma, undifferentiated or anaplastic", "9082", "3", 7, rec("9082")),
+        code("Malignant teratoma, intermediate", "9083", "3", 7,
              rec("9083")),
     ]
     if site in GONADS:
-        opts.append(code("The report uses the term malignant teratoma, trophoblastic", "9102",
-                         "3", 7, rec("9102"),
+        opts.append(code("Malignant teratoma, trophoblastic", "9102", "3", 7, rec("9102"),
                          note="D6. ICCC-2017 range 110 (Xc5) only: ovary and testis."))
     if site == "extragonadal":
-        opts.append(code("A germ cell tumour with an associated haematological malignancy",
-                         "9086", "3", 7,
+        opts.append(code("Germ cell tumour with a haematological malignancy", "9086", "3", 7,
                          "%s The associated haematological malignancy is coded separately, "
                          "from its own group's tree." % rec("9086"),
                          note="D17. New in ICD-O-3.2; ICCC-2017 range 105 (Xb6) only."))
@@ -564,14 +592,15 @@ def n_mixed(site):
         code("Teratoma and seminoma, germinoma or dysgerminoma", "9085", "3", 7,
              "%s ICD-O-3.2 gives it the related term Mixed teratoma and seminoma."
              % rec("9085")),
-        code("Any other combination, or the components are not listed", "9085", "3", 7,
-             rec("9085")),
+        code("Other combination, or none listed", "9085", "3", 7, rec("9085")),
     ]
     return node(
         nid(site, "mixed"), "histology_subclassification", 3, "Mixed germ cell tumour",
         "Which components does the report list?",
-        "Where the report uses one of the named terms below, choose it. Otherwise choose by "
-        "the components the report lists.",
+        "If the report itself uses a named term, teratocarcinoma or malignant teratoma, choose "
+        "that term. Otherwise choose the first option that fits, reading from the top. Choose "
+        "'Choriocarcinoma' when choriocarcinoma is any one of the components. Choose 'Embryonal "
+        "carcinoma and teratoma only' when those two are the only components.",
         opts, [],
         "D6. WHO 2022 (Moch 2022, Table 3, p. 464) codes every mixture 9085/3; ICD-O-3.2 keeps "
         "the specific terms, coded as written (Group 8 D8 precedent). 9102/3 is ovary and "
@@ -593,6 +622,32 @@ def n_ihc(site):
     fam_reason = ("Dysgerminoma, seminoma and germinoma are one tumour under three names (Moch "
                   "2022, p. 464), and the name this site uses is recorded. %s" % rec(fam))
     rules = [
+        code(["OCT3/4", "SOX2"], "9070", "3", 7,
+             "OCT3/4 and SOX2 are positive and SOX17 is not: the embryonal carcinoma pattern "
+             "(%s, p. 37). %s" % (SIEGMUND, rec("9070")),
+             satisfies=["IHC"], key="positive", negative=["SOX17"],
+             note="Rule 2. Siegmund 2023 p. 37 (Nonaka): diffuse SOX2 with negative SOX17 in "
+                  "100% of embryonal carcinomas; diffuse SOX17 with negative SOX2 in 100% of "
+                  "seminomas. SOX2 in teratoma epithelium (up to 81%) is excluded by OCT3/4, "
+                  "which teratoma lacks (Table 1, p. 34). Listed first: it emits rule 1's "
+                  "code, and above rule 0 it keeps SOX2 asked before rule 0 can settle."),
+        code(["OCT3/4", "CD30", "CD117"], "9064", "3", 7,
+             "OCT3/4, CD30 and CD117 are all positive, and SOX2 and SOX17 are not: the panel "
+             "matches neither the embryonal carcinoma pattern (CD30 without CD117) nor the "
+             "seminoma pattern (CD117 without CD30) (%s, p. 37), so it does not establish the "
+             "germ cell tumour's type. Recorded as Germinoma (9064/3): ICD-O-3.2 files Germ "
+             "cell tumor, NOS under this number, so the record does not assert that a "
+             "germinoma was diagnosed." % SIEGMUND,
+             satisfies=["IHC"], key="positive", negative=["SOX2", "SOX17"],
+             note="Rule 0, after rule 2 and ahead of rule 1, so the flow asks CD117 before "
+                  "rule 1 can settle and SOX2 before rule 0 can. The engine counts an unasked "
+                  "negative marker as off and stops at the first satisfied rule, asking only "
+                  "about rules above it, so without this rule a seminoma with focal CD30 and "
+                  "a positive CD117 the clerk was never asked about was coded 9070/3. It "
+                  "records what the node's fallback records for the same panel; SOX2 and "
+                  "SOX17 negative keep rules 2 and 4 deciding when either is positive. "
+                  "Siegmund 2023 p. 37: CD30+/KIT- is 100% specific for "
+                  "embryonal carcinoma and CD30-/KIT+ for seminoma (Leroy)."),
         code(["OCT3/4", "CD30"], "9070", "3", 7,
              "OCT3/4 and CD30 are positive, and the seminoma markers CD117 and SOX17 are not: "
              "the embryonal carcinoma pattern (%s, p. 37). %s" % (SIEGMUND, rec("9070")),
@@ -603,14 +658,6 @@ def n_ihc(site):
                   "(100% each, p. 37). negative CD117 and SOX17: added to the contract's rule, "
                   "so a seminoma with focal CD30 is not coded embryonal carcinoma. SOX17 is "
                   "negative in 100% of embryonal carcinomas (Nonaka, p. 37)."),
-        code(["OCT3/4", "SOX2"], "9070", "3", 7,
-             "OCT3/4 and SOX2 are positive and SOX17 is not: the embryonal carcinoma pattern "
-             "(%s, p. 37). %s" % (SIEGMUND, rec("9070")),
-             satisfies=["IHC"], key="positive", negative=["SOX17"],
-             note="Rule 2. Siegmund 2023 p. 37 (Nonaka): diffuse SOX2 with negative SOX17 in "
-                  "100% of embryonal carcinomas; diffuse SOX17 with negative SOX2 in 100% of "
-                  "seminomas. SOX2 in teratoma epithelium (up to 81%) is excluded by OCT3/4, "
-                  "which teratoma lacks (Table 1, p. 34)."),
         code(["OCT3/4", "CD117"], fam, "3", 7,
              "OCT3/4 and CD117 are positive and CD30 is not: the seminoma pattern (%s, pp. "
              "36-37). %s" % (SIEGMUND, fam_reason),
@@ -685,8 +732,8 @@ def n_ihc(site):
         "OCT3/4 positive, a positive SOX17 decides the panel for the germinoma family "
         "whatever CD30 or SOX2 show (rule 4; a panel with OCT3/4, SOX17 and CD30 fires it), "
         "because SOX17 is negative in every embryonal carcinoma (Siegmund p. 37). Without "
-        "SOX17, a panel positive for CD30 and for CD117 or D2-40 falls to the fallback unless "
-        "SOX2 settles it (rule 2). "
+        "SOX17, a panel positive for CD30 and for CD117 or D2-40 is coded 9064/3 unless SOX2 "
+        "settles it (rule 2): rule 0 records it for CD117, the fallback for D2-40. "
         "Contract rules 6-8 (one yolk sac marker each) are replaced by two pairs, OCT3/4 not "
         "positive in each: glypican-3 with alpha-fetoprotein, and glypican-3 with nuclear "
         "HNF1-beta. A single yolk sac marker falls to the fallback. The pair "
@@ -737,6 +784,12 @@ def germ_cell_core(site):
         named(st["yolk_sac"], "9071", yolk, upgrade=IHC_CONFIRMS),
         named(st["choriocarcinoma"], "9100", note="D8."),
         go("Mixed germ cell tumour — more than one germ cell component", nid(site, "mixed")),
+        named("Non-seminomatous or non-germinomatous germ cell tumour, type not named", "9065",
+              "%s The report places the tumour outside the germinoma family without naming "
+              "its type; a non-germinomatous germ cell tumour of the brain is the same "
+              "assertion." % rec("9065"),
+              note="D2: 9065/3 asserts a non-seminomatous tumour, so it is coded only where "
+                   "the report says so."),
         go("Germ cell tumour, type not named, with immunostains listed", nid(site, "ihc")),
         code("Germ cell tumour, type not named, and no immunostains listed", "9064", "3", 7,
              "%s ICD-O-3.2 files Germ cell tumor, NOS under this number, so the record does "
@@ -801,8 +854,8 @@ def n_histology_ovary():
               "%s ICD-O-3.2 gives Small cell carcinoma, hypercalcemic type as a related term of "
               "this code." % rec("8044"), note="D14."),
         go("Malignant tumour, type not determined", nid(s, "unspecified")),
-        go("Another tumour type — lymphoma, leukaemia, sarcoma, a metastatic deposit or "
-           "another named tumour", nid(s, "other")),
+        go("Another tumour type — neuroendocrine tumour, lymphoma, leukaemia, sarcoma, a "
+           "metastatic deposit or another named tumour", nid(s, "other")),
     ], "Contract §4.3. ICD-O-3.2 for every ovarian code; Pfister 2022 Table 3, p. 342, for "
        "paediatric entity currency (D22: no ovary baseline paper on disk).")
 
@@ -822,21 +875,30 @@ def n_histology_testis():
         named("Epithelioid trophoblastic tumour", "9105", note="D8. Moch 2022 Table 3, p. 464."),
         excl("Placental site trophoblastic tumour", "9104", "1", PSTT_REASON, decision=True,
              note="D8, provisional: the Group 8 9222 pattern."),
-        excl_outside("Germ cell neoplasia in situ only, with no invasive tumour",
+        excl_outside("Germ cell neoplasia in situ, or an intratubular seminoma, embryonal "
+                     "carcinoma, yolk sac tumour or teratoma, with no invasive tumour",
                      "germ cell neoplasia in situ", "9064", "2",
                      extra="WHO 2022 lists it among the non-invasive germ cell lesions (Moch "
-                           "2022, Table 3, p. 464).",
+                           "2022, Table 3, p. 464). WHO 2022's intratubular seminoma, embryonal "
+                           "carcinoma, yolk sac tumour and teratoma have no ICD-O-3.2 code of "
+                           "their own and take this one.",
                      note="D9, settled. Moch's intratubular 9061/2, 9070/2, 9071/2 and 9080/2 "
                           "are not ICD-O-3.2 codes; a report of any of them is this exclusion."),
+        excl_outside("Regressed (burnt-out) germ cell tumour", "a regressed germ cell tumour",
+                     "9080", "1",
+                     extra="ICD-O-3.2 lists Germ cell tumor, regressed under this code, and "
+                           "WHO 2022 codes regressed germ cell tumours 9080/1 (Moch 2022, "
+                           "Table 3, p. 464).",
+                     note="Settled by ICD-O-3.2 and Moch 2022 together; the same pattern as "
+                          "Group V's 9514/1 spontaneously regressed retinoblastoma."),
         go("Gonadoblastoma, alone or with another tumour", nid(s, "gonadoblastoma")),
         go("A sex cord–stromal tumour — Leydig cell, Sertoli cell, granulosa cell or another",
            nid(s, "sex_cord")),
-        named("Carcinoma", "8010",
-              "%s Where the report names the carcinoma's type, search for that type's own "
-              "code." % rec("8010"), note="D14: the testis tree offers 8010/3 only."),
+        named("Carcinoma", "8010", upgrade=TYPE_NOT_STATED,
+              note="D14: the testis tree offers 8010/3 only."),
         go("Malignant tumour, type not determined", nid(s, "unspecified")),
-        go("Another tumour type — lymphoma, leukaemia, sarcoma, a metastatic deposit or "
-           "another named tumour", nid(s, "other")),
+        go("Another tumour type — neuroendocrine tumour, lymphoma, leukaemia, sarcoma, a "
+           "metastatic deposit or another named tumour", nid(s, "other")),
     ], "Contract §4.3. Moch H, et al. European Urology 2022;82(5):458-468, Table 3, "
        "pp. 464-465, is the testis baseline.")
 
@@ -856,7 +918,8 @@ def n_histology_extragonadal():
         excl_outside("Partial hydatidiform mole", "partial hydatidiform mole", "9103", "0",
                      note="D8, settled."),
         excl_outside("Invasive mole", "invasive mole", "9100", "1", note="D8, settled."),
-        go("Not a germ cell or trophoblastic tumour", nid(s, "other")),
+        go("Not a germ cell or trophoblastic tumour — including a sex cord–stromal tumour or "
+           "a carcinoma", nid(s, "other")),
     ], "Contract §4.3. ICCC-2017 ranges 100-105 (Xb), behaviour 3 only. The p57 and "
        "genotyping algorithm for moles is not built: every outcome is an exclusion (D8).")
 
@@ -1026,6 +1089,16 @@ def n_sex_cord_ovary():
                   note="D11. 'Terms that are changing behaviour', p. 4."),
             sex_cord_excl("Juvenile granulosa cell tumour", "juvenile granulosa cell tumour",
                           "8622", "1", decision=True),
+            excl("Granulosa cell tumour, adult or juvenile type not stated", "8622", "1",
+                 "ICD-O-3.2 prints no term for a granulosa cell tumour of the ovary whose type "
+                 "is not stated: the adult type is 8620/3, a Group X cancer, and the juvenile "
+                 "type 8622/1, behaviour 1, outside Group X. The juvenile type is the "
+                 "granulosa cell tumour of childhood (Pfister 2022, p. 343), so the case is "
+                 "shown under 8622/1 and is not recorded as a Group X cancer. A report that "
+                 "states the type is coded by that type." + PENDING,
+                 decision=True,
+                 note="D11; registrar review A1. Code review, 6 October 2026: no option fitted "
+                      "a report that leaves the type unstated."),
             named("Sertoli-Leydig cell tumour, poorly differentiated", "8631", note="D11."),
             named("Sertoli-Leydig cell tumour, poorly differentiated, with heterologous "
                   "elements", "8634", note="D11."),
@@ -1111,7 +1184,9 @@ def n_epithelial_ovary():
                   "term of this code." % rec("8044"), note="D14."),
             named("Low-grade serous carcinoma", "8460", note="D14."),
             named("High-grade serous carcinoma", "8461", note="D14."),
-            named("Serous carcinoma, grade not stated", "8441", note="D14."),
+            named("Serous carcinoma, grade not stated", "8441", note="D14.",
+                  upgrade="A report that states the grade gives low-grade serous carcinoma "
+                          "(8460/3) or high-grade serous carcinoma (8461/3)."),
             named("Mucinous carcinoma", "8480",
                   "%s ICD-O-3.2 gives it the synonym Mucinous carcinoma." % rec("8480"),
                   note="D14."),
@@ -1120,8 +1195,9 @@ def n_epithelial_ovary():
             named("Clear cell carcinoma", "8310", note="D14."),
             named("Seromucinous carcinoma", "8474", note="D14."),
             named("Undifferentiated carcinoma", "8020", note="D14."),
-            named("Adenocarcinoma, type not stated", "8140", note="D14."),
-            named("Carcinoma, type not stated", "8010", note="D14."),
+            named("Adenocarcinoma, type not stated", "8140", note="D14.",
+                  upgrade=TYPE_NOT_STATED),
+            named("Carcinoma, type not stated", "8010", note="D14.", upgrade=TYPE_NOT_STATED),
         ] + [excl_d(label, label.lower(), icdo, beh, "D14", decision=True)
              for label, icdo, beh in (
                  ("Serous borderline tumour", "8442", "1"),
@@ -1142,11 +1218,12 @@ def n_unspecified(site):
         "The report establishes a malignant tumour without determining its type. Choose the "
         "cell type the report describes, if it describes one.",
         [
-            named("Malignant neoplasm, type not determined, cell type not described", "8000"),
-            named("Malignant tumour, small cell type", "8002"),
-            named("Malignant tumour, giant cell type", "8003"),
-            named("Malignant tumour, spindle cell type", "8004"),
-            named("Malignant tumour, clear cell type", "8005"),
+            named("Malignant neoplasm, type not determined, cell type not described", "8000",
+                  upgrade=TYPE_NOT_STATED),
+            named("Malignant tumour, small cell type", "8002", upgrade=TYPE_NOT_STATED),
+            named("Malignant tumour, giant cell type", "8003", upgrade=TYPE_NOT_STATED),
+            named("Malignant tumour, spindle cell type", "8004", upgrade=TYPE_NOT_STATED),
+            named("Malignant tumour, clear cell type", "8005", upgrade=TYPE_NOT_STATED),
         ],
         [], "D13: ICCC-2017 range 117 places 8000-8005 at C56.9 and C62 in Xe.")
 
@@ -1163,19 +1240,97 @@ def refer_lymphoma(where=None):
                  "(lymphomas) tree." % (" involving %s" % where if where else ""))
 
 
-def nonrep_deposit(where=None):
-    return nonrep("A deposit of a tumour that began elsewhere",
-                  "The tumour%s is a deposit of a tumour that began elsewhere. Code that tumour "
-                  "at its primary site, from its own group's tree."
-                  % (" in %s" % where if where else ""),
-                  heading=DEPOSIT_HEADING)
+def go_deposit(site):
+    return go("A deposit of a tumour that began elsewhere", nid(site, "deposit"))
 
 
-def refer_other_named(group11):
+# A deposit is coded as its primary, from the primary's group, and a deposit with no primary
+# found is ICCC-3 Group XII: the pattern of Group III pf_secondary_deposit, Group VII
+# hp_secondary_deposit and Group VIII bn_metastasis. A germ cell primary at another site is
+# Group X itself, which a referral cannot name, so the hint sends it back to the site step.
+DEPOSIT_PRIMARIES = (
+    ("Neuroblastoma", 4, "Neuroblastoma is ICCC-3 Group IV."),
+    ("Nephroblastoma (Wilms tumour), or another kidney tumour", 6,
+     "Renal tumours are ICCC-3 Group VI."),
+    ("Hepatoblastoma, or another liver tumour", 7, "Hepatic tumours are ICCC-3 Group VII."),
+    ("A bone sarcoma", 8, "Malignant bone tumours are ICCC-3 Group VIII."),
+    ("A soft tissue sarcoma, including rhabdomyosarcoma", 9,
+     "Soft tissue sarcomas are ICCC-3 Group IX."),
+    ("A tumour of the brain or spinal cord", 3,
+     "Central nervous system tumours are ICCC-3 Group III."),
+    ("Retinoblastoma", 5, "Retinoblastoma is ICCC-3 Group V."),
+    ("A carcinoma or melanoma of another organ", 11,
+     "Carcinomas of other organs and melanomas are ICCC-3 Group XI."),
+)
+
+
+def n_deposit(site):
+    where = SITES[site].get("where")
+    return node(
+        nid(site, "deposit"), "morphology_only", 5, "Metastatic deposit",
+        "Where does the report say the primary tumour is?",
+        "The tumour%s is a deposit, not a separate registration: the case is coded at its "
+        "primary site. A deposit of a germ cell tumour that began at another site is coded "
+        "there: go back to the site step and record the primary's topography. A lymphoma or "
+        "leukaemia is answered at the step before." % (" in %s" % where if where else ""),
+        [refer(label, group, "%s Code the case at its primary." % why)
+         for label, group, why in DEPOSIT_PRIMARIES] + [
+            refer("The primary is not known and has not been found", 12,
+                  "A deposit with no identified primary belongs in ICCC-3 Group XII, other "
+                  "and unspecified malignant neoplasms. Code the case from the Group XII "
+                  "tree."),
+        ],
+        [], "Code review, 6 October 2026: the deposit was non_reportable, so a malignancy "
+            "left the registry and an unknown primary had no route.")
+
+
+def refer_other_named():
     return refer("Another malignant tumour type the report names", 12,
                  "ICCC-3 Group XII holds the specified malignant tumours no other group codes. "
                  "Code the case from the Group XII (other and unspecified malignant neoplasms) "
-                 "tree; %s is coded from the Group XI tree instead." % group11)
+                 "tree.")
+
+
+def refer_carcinoma(label, what):
+    return refer(label, 11,
+                 "%s belongs to ICCC-3 Group XI (other malignant epithelial neoplasms and "
+                 "malignant melanomas). Code the case from the Group XI tree." % what)
+
+
+# ICCC-2017 places these in Group X at every site (000-809), so the extragonadal tree codes them
+# rather than referring them: the malignant sex cord-stromal tumours (range 116, Xe,
+# 8590-8671) and the ovarian-type carcinomas of range 114 (Xd). ICD-O-3.2 prints no /3 for
+# 8443, 8444 or 8451, the rest of range 114.
+EXTRAGONADAL_GROUP_X = (
+    ("Adult granulosa cell tumour", "8620", 116),
+    ("Sertoli-Leydig cell tumour, poorly differentiated", "8631", 116),
+    ("Sertoli-Leydig cell tumour, poorly differentiated, with heterologous elements", "8634",
+     116),
+    ("Malignant Sertoli cell tumour, or Sertoli cell carcinoma", "8640", 116),
+    ("Malignant Leydig cell tumour", "8650", 116),
+    ("Malignant steroid cell tumour", "8670", 116),
+    ("Malignant thecoma", "8600", 116),
+    ("Seromucinous carcinoma", "8474", 114),
+    ("Clear cell adenocarcinofibroma", "8313", 114),
+    ("Mucinous adenocarcinofibroma", "9015", 114),
+)
+
+
+def n_group_x_everywhere():
+    return [named(label, morph,
+                  "%s ICCC-3 places this tumour type in Group X at every site (ICCC-2017 range "
+                  "%d, %s)." % (rec(morph), rng, "Xe" if rng == 116 else "Xd"),
+                  note="ICCC-2017 range %d covers sites 000-809." % rng)
+            for label, morph, rng in EXTRAGONADAL_GROUP_X]
+
+
+# ICCC-2017 range 63 (Ewing sarcoma), 59 (osteosarcoma) and 60 (chondrosarcoma) place these
+# types at sites 760-768 in Group VIII; at the other extragonadal sites they are Group IX.
+BONE_TYPE_AT_PELVIS = refer(
+    "Ewing sarcoma, osteosarcoma or chondrosarcoma, with the site recorded as Pelvis, NOS "
+    "(C76.3)", 8,
+    "At Pelvis, NOS (C76.3) ICCC-3 places Ewing sarcoma, osteosarcoma and chondrosarcoma in "
+    "Group VIII (malignant bone tumours). Code the case from the Group VIII tree.")
 
 
 def n_other_gonad(site):
@@ -1184,18 +1339,27 @@ def n_other_gonad(site):
     return node(
         nid(site, "other"), "morphology_only", 4, "Another tumour type",
         "Which tumour does the report diagnose?",
-        "A tumour of %s that is not a germ cell, sex cord–stromal or epithelial tumour is "
-        "coded from another group, or at its primary site." % where,
+        "A neuroendocrine tumour of %s is coded here. Any other tumour that is not a germ "
+        "cell, sex cord–stromal or epithelial tumour is coded from another group, or at its "
+        "primary site." % where,
         [
+            named("Neuroendocrine tumour or carcinoid tumour", "8240",
+                  "%s ICCC-3 places it in Group X at %s (ICCC-2017 range 113, Xd)."
+                  % (rec("8240"), where), note="ICCC-2017 range 113: 8221-8241, 8244-8246."),
+            named("Neuroendocrine carcinoma", "8246",
+                  "%s ICCC-3 places it in Group X at %s (ICCC-2017 range 113, Xd)."
+                  % (rec("8246"), where), note="ICCC-2017 range 113: 8221-8241, 8244-8246."),
             refer_lymphoma(where),
             refer("Leukaemic infiltration", 1,
                   "Leukaemic infiltration of %s is coded as the leukaemia, in ICCC-3 Group I. "
                   "Code the case from the Group I (leukaemias) tree." % where),
             refer("Rhabdomyosarcoma or another sarcoma", 9, SARCOMA_REASON),
-            nonrep_deposit(where),
-            refer_other_named("a melanoma"),
+            go_deposit(site),
+            refer_carcinoma("A melanoma", "A melanoma of %s" % where),
+            refer_other_named(),
         ],
-        [], "Contract §4.4.")
+        [], "Contract §4.4. The neuroendocrine tumours are Xd at the gonads (ICCC-2017 range "
+            "113), so they are coded here, not referred.")
 
 
 def n_other_extragonadal():
@@ -1203,18 +1367,23 @@ def n_other_extragonadal():
     return node(
         nid(s, "other"), "morphology_only", 4, "Another tumour type",
         "Which tumour does the report diagnose?",
-        "A tumour that is not a germ cell or trophoblastic tumour is coded from another group, "
-        "or at its primary site.",
-        [
+        "The malignant sex cord–stromal tumours and three ovarian-type carcinomas listed first "
+        "are Group X at every site and are coded here. Any other tumour that is not a germ "
+        "cell or trophoblastic tumour is coded from another group, or at its primary site.",
+        n_group_x_everywhere() + [
             refer_lymphoma(),
             refer("Neuroblastoma", 4,
                   "Neuroblastoma belongs to ICCC-3 Group IV. Code the case from the Group IV "
                   "tree."),
+            BONE_TYPE_AT_PELVIS,
             refer("A sarcoma", 9, SARCOMA_REASON),
-            nonrep_deposit(),
-            refer_other_named("a carcinoma or melanoma"),
+            go_deposit(s),
+            refer_carcinoma("Another carcinoma, or a melanoma", "A carcinoma or melanoma "
+                            "outside the gonads"),
+            refer_other_named(),
         ],
-        [], "Contract §4.4.")
+        [], "Contract §4.4. ICCC-2017 ranges 114 and 116 cover sites 000-809, so their tumour "
+            "types are coded here rather than referred.")
 
 
 # ------------------------------------------------------------------------------------------
@@ -1253,10 +1422,12 @@ TREE_LABELS = {
 SITE_NODES = {
     "cns": lambda: [],
     "ovary": lambda: [n_teratoma_ovary(), n_gonadoblastoma("ovary"), n_sex_cord_ovary(),
-                      n_epithelial_ovary(), n_unspecified("ovary"), n_other_gonad("ovary")],
+                      n_epithelial_ovary(), n_unspecified("ovary"), n_other_gonad("ovary"),
+                      n_deposit("ovary")],
     "testis": lambda: [n_teratoma_testis(), n_gonadoblastoma("testis"), n_sex_cord_testis(),
-                       n_unspecified("testis"), n_other_gonad("testis")],
-    "extragonadal": lambda: [n_teratoma_extragonadal(), n_other_extragonadal()],
+                       n_unspecified("testis"), n_other_gonad("testis"), n_deposit("testis")],
+    "extragonadal": lambda: [n_teratoma_extragonadal(), n_other_extragonadal(),
+                             n_deposit("extragonadal")],
 }
 
 

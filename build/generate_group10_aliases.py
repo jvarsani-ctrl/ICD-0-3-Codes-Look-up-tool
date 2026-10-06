@@ -24,6 +24,17 @@ ovarii 9090/0, hydatidiform moles 9100/0 and 9100/1, placental site trophoblasti
 9104/1, borderline and benign tumours) is never aliased: the express lane is for codes the
 tree emits.
 
+An alias is written when each of its codes is emitted by at least one tree a search can reach.
+The reachable trees are the routed trees of the topographies whose candidate_groups admit
+Group X. A search does not emit a code: it enters the tree the router picks for the recorded
+site, and that tree asks the clerk. A site-specific term searched at another site therefore
+enters that site's tree, which offers that site's own terms; the clerk answers from the report,
+or goes back and corrects the site. An alias whose code no tree emits is a build error. Until
+6 October 2026 the filter took the intersection, writing an alias only when every reachable tree
+emitted its codes. On the trees of that day it wrote 46 of the 128 aliases and left out
+"Dysgerminoma", "Adult granulosa cell tumour" and "Spermatocytic tumour"; with Group 10 listed
+at the central nervous system sites (registrar review B1) it would have written 39.
+
 The generator and validator rule 3 (check_group10_alias_terms_match_icdo32) share two
 functions: build_database._group10_term_key(), which decides what "equal to an ICD-O-3.2 term"
 means, and build_database._group10_emissions(), which reads the emitted set from the trees. A
@@ -73,6 +84,14 @@ EXCLUDED_TERMS = {
     "Cancer": "generic; matches every group",
     "Malignancy": "generic; matches every group",
     "Tumor, malignant, NOS": "generic; matches every group",
+    # Group III holds the next five, and the brain sites list Groups III and X, so a search
+    # there would stop with "The site does not decide the group" instead of entering Group III
+    # (registrar, 6 October 2026). The gonadal trees still code them on the guided route.
+    "Neoplasm, malignant": "generic; Group III codes it at the brain sites",
+    "Tumor cells, malignant": "generic; Group III codes it at the brain sites",
+    "Malignant tumor, small cell type": "generic; Group III codes it at the brain sites",
+    "Malignant tumor, giant cell type": "generic; Group III codes it at the brain sites",
+    "Malignant tumor, spindle cell type": "generic; Group III codes it at the brain sites",
     "Unclassified tumor, malignant": "generic; matches every group",
     "Blastoma, NOS": "generic; a blastoma in a child is rarely a gonadal tumour",
     "Malignant tumor, fusiform cell type": "generic descriptor",
@@ -198,10 +217,25 @@ def load():
     ctx = bd.DTContext(DT, dt, GROUP)
     emitted: dict[str, set[str]] = {}
     ihc: set[str] = set()
+    by_tree: dict[str, set[str]] = {}
     for node_id, _where, code, beh in bd._group10_emissions(ctx):
         emitted.setdefault(code, set()).add(beh)
+        by_tree.setdefault(ctx.node_tree[node_id], set()).add(code)
         if ctx.nodes[node_id].get("node_type") == "ihc_checklist":
             ihc.add(code)
+    # A search enters the tree the router picks for the recorded site, and that tree asks the
+    # clerk; the search emits nothing itself. So a code is searchable when at least one tree a
+    # search can reach emits it: the routed tree of a topography whose candidate_groups lets
+    # Group X in (the sites validator rule 4 counts). A site-specific term searched at another
+    # site enters that site's tree, which offers that site's own terms.
+    tr, lookup, found = bd._group10_tree_routing(REPO)
+    if tr is None or found:
+        raise SystemExit("ERROR: cannot read groups[\"10\"].tree_routing or the topography "
+                         "lookup: %s" % "; ".join(m for _s, m in found))
+    reached = {bd._group10_route(tr, t) for t, rec in lookup.items()
+               if not isinstance((rec or {}).get("candidate_groups"), list)
+               or GROUP in rec["candidate_groups"]}
+    searchable = set().union(*(by_tree.get(t, set()) for t in reached))
     index, err = bd.load_icdo32(LAYER1)
     if err:
         raise SystemExit("ERROR: %s" % err)
@@ -217,7 +251,7 @@ def load():
     router = json.loads(ROUTER.read_text(encoding="utf-8"))
     handoff = router["groups"][str(GROUP)]["handoff"]
     entries = {(e["morphology_code"], e["behavior_code"]): e for e in dt["morphology_entries"]}
-    return emitted, ihc, index, pairs, opts, handoff, entries
+    return emitted, ihc, index, pairs, opts, handoff, entries, searchable, sorted(reached)
 
 
 def d21_codes(pairs, emitted, text):
@@ -255,7 +289,8 @@ def report_shared(out: list[dict]) -> None:
 
 
 def main() -> int:
-    emitted, ihc, index, pairs, opts, handoff, entries = load()
+    emitted, ihc, index, pairs, opts, handoff, entries, searchable, reached = load()
+    unsearchable: list[str] = []
     redcap_names = {key(n) for rec in opts.values() for n in rec["names"]}
 
     def entry_at(code: str, beh: str) -> dict:
@@ -285,6 +320,9 @@ def main() -> int:
         for c in codes:
             if c not in emitted:
                 raise SystemExit("ERROR: alias %r maps to %s, which no tree emits" % (alias, c))
+        if not set(codes) <= searchable:
+            unsearchable.append(alias)
+            return
         seen.add(alias.lower())
         by_source[source] += 1
         out.append({
@@ -376,6 +414,12 @@ def main() -> int:
     print("wrote %s (%d aliases: %s)"
           % (OUT, len(out), ", ".join("%d %s" % (n, s) for s, n in by_source.items())),
           file=sys.stderr)
+    print("%d alias(es) not written: a code that none of the trees a search reaches (%s) "
+          "emits%s. An alias is written when each of its codes is emitted by at least one of "
+          "them. A site-specific term searched at another site enters that site's tree, which "
+          "offers that site's own terms."
+          % (len(unsearchable), ", ".join(reached),
+             (" (" + "; ".join(unsearchable) + ")") if unsearchable else ""), file=sys.stderr)
     report_shared(out)
     return 0
 

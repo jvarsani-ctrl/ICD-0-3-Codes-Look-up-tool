@@ -179,6 +179,27 @@
       "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Botryoid embryonal rhabdomyosarcoma of the vagina and cervix (ICCC-3 IXa); yolk sac tumour of the vagina is Group X; carcinoma is Group XI."
     },
     {
+      "organ": "female_genital_upper",
+      "topography_range": "C54-C55, C58",
+      "codes": [
+        "C54.0",
+        "C54.1",
+        "C54.2",
+        "C54.3",
+        "C54.8",
+        "C54.9",
+        "C55.9",
+        "C58.9"
+      ],
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "label": "Uterus and placenta",
+      "note": "Added 6 October 2026 (Group 10 code review). Gestational trophoblastic tumours of the uterus and placenta are Group X (ICCC-2017 range 104, Xb5, sites 540-559 and 589); rhabdomyosarcoma is Group IX; carcinoma is Group XI."
+    },
+    {
       "organ": "male_genital_paratesticular",
       "topography_range": "C63",
       "codes": [
@@ -976,6 +997,100 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C54.0": {
+      "code": "C54.0",
+      "label": "Isthmus uteri (Lower uterine segment)",
+      "redcap_code": "540",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.1": {
+      "code": "C54.1",
+      "label": "Endometrium (Endometrial gland, Endometrial stroma)",
+      "redcap_code": "541",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.2": {
+      "code": "C54.2",
+      "label": "Myometrium",
+      "redcap_code": "542",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.3": {
+      "code": "C54.3",
+      "label": "Fundus uteri",
+      "redcap_code": "543",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.8": {
+      "code": "C54.8",
+      "label": "Overlapping lesion of corpus uteri",
+      "redcap_code": "548",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.9": {
+      "code": "C54.9",
+      "label": "Corpus uteri (Body of uterus)",
+      "redcap_code": "549",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C55.9": {
+      "code": "C55.9",
+      "label": "Uterus, NOS (Uterine, NOS)",
+      "redcap_code": "559",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C58.9": {
+      "code": "C58.9",
+      "label": "Placenta (Fetal membranes)",
+      "redcap_code": "589",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
     "C63.0": {
       "code": "C63.0",
       "label": "Epididymis",
@@ -1162,7 +1277,8 @@
       "redcap_code": "709",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.9": {
@@ -1171,7 +1287,8 @@
       "redcap_code": "719",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.3": {
@@ -1180,7 +1297,8 @@
       "redcap_code": "723",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ],
       "note": "9380 (Glioma, NOS) at this site routes to Group III (IIIb) instead of IIId2 — see presentation_router.dual_group_rules['9380']."
     },
@@ -1190,7 +1308,8 @@
       "redcap_code": "729",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C75.1": {
@@ -1200,6 +1319,7 @@
       "coarse_organ": "pituitary",
       "candidate_groups": [
         3,
+        10,
         11
       ]
     },
@@ -1249,7 +1369,8 @@
       "redcap_code": "752",
       "coarse_organ": "midline_cns_extension",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C75.3": {
@@ -1258,7 +1379,8 @@
       "redcap_code": "753",
       "coarse_organ": "midline_cns_extension",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C47.0": {
@@ -1558,7 +1680,8 @@
       "redcap_code": "700",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C70.1": {
@@ -1567,7 +1690,8 @@
       "redcap_code": "701",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.1": {
@@ -1576,7 +1700,8 @@
       "redcap_code": "711",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.2": {
@@ -1585,7 +1710,8 @@
       "redcap_code": "712",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.3": {
@@ -1594,7 +1720,8 @@
       "redcap_code": "713",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.4": {
@@ -1603,7 +1730,8 @@
       "redcap_code": "714",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.5": {
@@ -1612,7 +1740,8 @@
       "redcap_code": "715",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.6": {
@@ -1621,7 +1750,8 @@
       "redcap_code": "716",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.7": {
@@ -1630,7 +1760,8 @@
       "redcap_code": "717",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.8": {
@@ -1639,7 +1770,8 @@
       "redcap_code": "718",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.0": {
@@ -1648,7 +1780,8 @@
       "redcap_code": "720",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.1": {
@@ -1657,7 +1790,8 @@
       "redcap_code": "721",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.2": {
@@ -1666,7 +1800,8 @@
       "redcap_code": "722",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.4": {
@@ -1675,7 +1810,8 @@
       "redcap_code": "724",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.5": {
@@ -1684,7 +1820,8 @@
       "redcap_code": "725",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.8": {
@@ -1693,7 +1830,8 @@
       "redcap_code": "728",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.0": {
@@ -1702,7 +1840,8 @@
       "redcap_code": null,
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ],
       "note": "NO REDCap topography option exists for this code — the `topo_code` dropdown jumps 709 to 711. Verified against ICD coding/RedCap Options/Topography Redcap.md, 2026-09-14. The tool carries C71.0 because Group III keys its decision trees to anatomical compartment and a thalamic diffuse midline glioma lands here. Until the option is added the clerk has no dropdown value to record. See docs/TODO.md."
     },

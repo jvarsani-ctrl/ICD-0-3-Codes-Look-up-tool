@@ -9,10 +9,10 @@ Plan: `docs/group_10_build_contract.md`. Code decisions: `docs/superpowers/specs
 | | |
 |---|---|
 | Entries | 136 (code, behaviour) pairs from 131 ICD-O-3.2 codes; 171 ICCC records |
-| Trees | `g10_cns` 11 nodes · `g10_ovary` 17 · `g10_testis` 16 · `g10_extragonadal` 13 — 57 nodes |
+| Trees | `g10_cns` 11 nodes · `g10_ovary` 18 · `g10_testis` 17 · `g10_extragonadal` 14 — 60 nodes (a deposit node per gonadal and extragonadal tree added 6 October 2026) |
 | Emitted | 49 (code, behaviour) pairs on code branches; 36 behaviour exclusions |
-| Immunohistochemistry panels | 4, one per tree, 7 rules each, every rule with a witness |
-| Aliases | 112 |
+| Immunohistochemistry panels | 4, one per tree, 8 rules each, every rule with a witness |
+| Aliases | 123: each code emitted by at least one tree a search can reach, less five generic terms Group III holds (128 before they were left out, 46 under the earlier filter, which required every reachable tree to emit it; all 6 October 2026) |
 | Validator | four Group X rules; 24 negative controls, all caught |
 
 ---
@@ -110,8 +110,8 @@ also stains choriocarcinoma and teratoma (Siegmund 2023 Table 1, p. 34; p. 38). 
 
 | File | Change |
 |---|---|
-| `presentation_router.json` | `groups["10"]` built, four trees, `tree_routing` (Xa 24 codes → `g10_cns`; C56.9 → `g10_ovary`; C62.0, C62.1, C62.9 → `g10_testis`; Xb 114 codes → `g10_extragonadal`; default `g10_extragonadal`); one `8000-8005` branch, C56.9 and C62 → group 10, Xe |
-| `topography_codes.json` | `C62.0`, `C62.1`, `C76.3` added; Group 10 added to `C38.1`, `C38.3`, `C48.0`; `C76.3` lists groups 9 and 10 |
+| `presentation_router.json` | `groups["10"]` built, four trees, `tree_routing` (Xa 24 codes → `g10_cns`; C56.9 → `g10_ovary`; C62.0, C62.1, C62.9 → `g10_testis`; Xb 122 codes → `g10_extragonadal`; default `g10_extragonadal`); one `8000-8005` branch, C56.9 and C62 → group 10, Xe; Group 3 added to the "Mass / swelling (solid tumour)" presentation (registrar review B1, 6 October 2026) |
+| `topography_codes.json` | `C62.0`, `C62.1`, `C76.3` added; Group 10 added to `C38.1`, `C38.3`, `C48.0`; `C76.3` lists groups 9 and 10; Group 10 added to the 24 Xa codes C70.0–C72.9 and C75.1–C75.3 (registrar review B1, 6 October 2026) |
 | `build_database.py` | `GROUP10`; behaviour row `{"3"}`; `ROUND_TRIP_GROUPS`; four rules |
 | `alias_index.json` | regenerated |
 
@@ -145,16 +145,33 @@ earlier versions: three in rule 3 and two in rule 4, whose first version checked
 2. **The stop screen misstates the fact at a central nervous system site.** Searching "Germinoma"
    at C71.0 stops with "C71.0 … is not a site that group codes this term at". ICCC-2017 range 94
    places germinoma at C71.0 in Xa1. The message reads `candidate_groups`, which list Group III
-   alone. Registrar review B1.
+   alone. Registrar review B1. Closed 6 October 2026 by the B1 decision: "Germinoma" at the
+   pineal enters `g10_cns` and records `9064/3` Xa1.
 3. **D21 costs three searches.** "Mature teratoma", "Immature teratoma" and "Dermoid" find nothing,
    because an alias on `9080` or `9084` would show on every behaviour's output ("Also called" is
    keyed by code, `docs/TODO.md` §30). "Teratoma" finds them.
+4. **Five generic search terms stop at the central nervous system sites** (found 6 October 2026,
+   after the B1 decision). "Neoplasm, malignant" and the four `8001`–`8004` terms are Group X
+   aliases because the ovary and testis trees emit them, and Group III holds the same strings.
+   At a site that now lists Groups 3 and 10, the search stops with "The site does not decide the
+   group", which is untrue for Group X: ICCC-2017 range 42 places `8000` there in IIIf and
+   `g10_cns` emits none of the five. **Closed 6 October 2026** (registrar): the five are left out
+   of Group X's aliases (`EXCLUDED_TERMS` in `build/generate_group10_aliases.py`), so at the brain
+   sites they enter Group III again. At the ovary and testis these searches now stop, and the
+   guided route still codes them. Registrar review B1.
 
 Seven cases driven on 4 October 2026, all as specified: ovarian dysgerminoma by search → `9060/3`
 Xc1; germinoma at C71.0 → stop for referral; front door, mass, C76.3, Group X → immature teratoma
 `9080/3` Xb2; testicular mixed tumour with choriocarcinoma → `9101/3` Xc5; ovary, imaging with raised
 alpha-fetoprotein → `9065/3` basis 4; ovarian mature cystic teratoma → exclusion `9080/0`; adult
 granulosa cell tumour of the ovary → `8620/3` Xe. No console errors.
+
+Seven walks on 6 October 2026, after the B1 decision: mass at the pineal → Group III or Group X
+offered → Group X → germinoma `9064/3` Xa1; "Germinoma" searched at the pineal → `g10_cns` →
+`9064/3` Xa1; mass at the cerebellum → Group III chosen → Group III's posterior fossa tree;
+organ-functional sign at the pineal → Group III's midline tree, no group screen; "Dysgerminoma"
+searched at the ovary → `9060/3` Xc1; organ-functional sign at C55.9 → Groups IX, X and XI, as
+before; "Neoplasm, malignant" searched at C71.6 → the stop in item 4. No console errors.
 
 ---
 
@@ -173,10 +190,11 @@ codes to take Group IX's lookup additions.
 
 `docs/group_10_registrar_review.md`, ordered by cost. The first three:
 
-- **B1. No route reaches `g10_cns`.** It is built and verified; every central nervous system
-  topography lists Group III only (and Group XI at C75.1), and the search box now stops there. The
-  same holds for the germ cell referrals Groups VII, VIII and IX make from the liver, bone and soft
-  tissue (B2).
+- **B1. Decided 6 October 2026, option (a).** Group 10 is listed at the 24 Xa sites and Group 3 on
+  "Mass / swelling", so `g10_cns` is reached from every presentation except "Organ-functional
+  sign" and from the search box. Open under B1: Group III's three gaps. The five generic search
+  terms in §7 item 4 are closed. The germ cell referrals Groups VII, VIII and IX make from the liver,
+  bone and soft tissue still lead nowhere (B2).
 - **A1. Juvenile granulosa cell tumour is not registered** — the commonest paediatric sex
   cord–stromal tumour, excluded by ICD-O-3.2's behaviour.
 - **A2–A3. Germ cell tumour of unnamed type and the marker route code to `9064/3`, which prints as
@@ -194,7 +212,7 @@ codes to take Group IX's lookup additions.
 | `python3 build/negative_controls_group10.py` | 24 of 24 caught, 5 of 5 probes pass |
 | `python3 build/group09_negative_controls.py <repo>`, `negative_controls_group08.py` | unchanged |
 | `node build/check_engine_flow.mjs` | OK |
-| Browser | seven cases, §7 |
+| Browser | seven cases on 4 October 2026 and seven walks on 6 October 2026, §7 |
 | Groups I–IX, `app.js`, `index.html`, `uccf-tool.css` | byte-identical to `main` |
 
 The seven Group X warnings: six search-only entries whose ICD-O-3.2 preferred term is marked

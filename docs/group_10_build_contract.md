@@ -583,7 +583,9 @@ The doc conflicts are append-only on both sides: keep both on merge. Rebuild
    choriocarcinoma to `9101/3`; the markers route to `9065/3` basis 4; an adult granulosa cell
    tumour of the ovary to `8620/3`; a search for "germinoma" at C75.3 stops for referral (B1).
    On each output read the subgroup line and the "Also called" row. `g10_cns` has no route in
-   (B1); the engine gate sweeps it.
+   (B1); the engine gate sweeps it. Since the B1 decision of 6 October 2026 (option (a)), the
+   "germinoma" search at C75.3 enters `g10_cns` and records `9064/3` Xa1, and a mass at C75.3
+   offers Group III and Group X.
 6. Groups 1–9 data and alias files, `app.js`, `index.html`, `uccf-tool.css` byte-identical to
    `main`.
 

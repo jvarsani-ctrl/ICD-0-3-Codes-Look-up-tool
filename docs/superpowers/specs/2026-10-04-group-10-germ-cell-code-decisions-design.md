@@ -293,7 +293,9 @@ to `main`:
    the front door never offers Group X there, and since the registrar's ruling of 4 October 2026
    the search box stops a Group X term at a central nervous system site for referral.
    **`g10_cns` is built and verified by the engine gate, and no route reaches it.** Opening one is
-   a front-door decision for the registrar (`docs/group_10_registrar_review.md` B1).
+   a front-door decision for the registrar (`docs/group_10_registrar_review.md` B1). Decided
+   6 October 2026, option (a): Group 10 is listed at the 24 Xa codes and Group 3 on "Mass /
+   swelling", so item 4 is closed. Items 1–3 stand.
 
 ## D19. Front-door reach outside the central nervous system — provisional
 

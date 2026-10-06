@@ -66,7 +66,7 @@ var MARKER_LABELS = { pos: 'positive', strong: 'strongly positive', weak: 'weakl
 var TRACK_LABELS = { who_cns5: 'WHO CNS5', adaptr_descriptive: 'ADAPTR descriptive' };
 var GRADE_SYSTEM_LABELS = { roman: 'Roman numerals', arabic: 'Arabic numerals' };
 var UNIT_LABELS = { per_mm2: 'per mm²', per_10_hpf: 'per 10 HPF',
-  per_hpf: 'per HPF', percent: 'percent' };
+  per_hpf: 'per HPF', percent: 'percent', ng_per_ml: 'ng/mL', iu_per_l: 'IU/L' };
 var CODE_STATUS_LABELS = { shares_code: 'Shares its code with other entities',
   no_code: 'No code exists for this entity', awaiting_layer1: 'Awaiting a Layer 1 option' };
 var RL_SCALE = ['I', 'II', 'III', 'IV', 'V'];
@@ -485,7 +485,7 @@ function renderSite() {
       : state.archetype.site_capture === false
       ? 'Site is fixed for this presentation — one tap confirms which system to record.'
       : (origin
-          ? 'Systems matching the origin you recorded are listed first. The others are still here — an abdominal mass is soft tissue and may still be renal or hepatic.'
+          ? 'Use the clinical examination notes and the imaging reports.'
           : 'The organ of origin, not the region of the swelling. Code the primary, not the biopsy site.'),
     pick('site', systemRows().map(function (c) {
       return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes' };
@@ -1078,7 +1078,8 @@ function bandUnits(n) {
 }
 function numericGate(n) {
   var undoc = state.draft.not_documented === true;
-  var units = bandUnits(n), label = n.unit || (units.length === 1 ? units[0] : '');
+  var units = bandUnits(n),
+    label = tokenLabel(UNIT_LABELS, n.unit) || (units.length === 1 ? units[0] : '');
   return '<label class="field"><span class="field__label">' + esc(n.variable_label || n.variable) +
     (label ? ' (' + esc(label) + ')' : '') + '</span>' +
     '<input type="number" step="any" data-act="draft" data-k="value" value="' +
@@ -2348,7 +2349,7 @@ function boundary(n) {
     },
     /* `over === null` is exactly "the reading could not be read", so it also
        covers a blank and a non-numeric entry without a second test for each. */
-    value: (over === null ? 'reading not documented' : have + (n.unit || '')) +
+    value: (over === null ? 'reading not documented' : have + tokenLabel(UNIT_LABELS, n.unit)) +
       ' → ' + (out ? 'outside' : 'inside') + ' the entity boundary'
   };
 }
@@ -2393,7 +2394,7 @@ function resolveNode(n, before) {
          denominator. A band with no unit keeps the node's own, unchanged. */
       var bu = bandUnitText(band);
       return advance(band, n.step_label || 'Value',
-        (v === null ? 'not documented' : v + (bu ? ' ' + bu : (n.unit || ''))) +
+        (v === null ? 'not documented' : v + (bu ? ' ' + bu : tokenLabel(UNIT_LABELS, n.unit))) +
         ' → ' + band.range + (bu ? ' ' + bu : ''), before);
     }
     case 'cytogenetics_dropdown': {

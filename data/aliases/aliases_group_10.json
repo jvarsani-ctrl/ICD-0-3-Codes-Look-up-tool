@@ -1,100 +1,5 @@
 [
   {
-    "alias": "Neoplasm, malignant",
-    "full_form": "Neoplasm, malignant -> Neoplasm, malignant (8000)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8000"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "Neoplasm, malignant, 8000/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8000/3, read from icdo32.sqlite; D21 holds: Group X emits 8000 at /3 only."
-  },
-  {
-    "alias": "Tumor cells, malignant",
-    "full_form": "Tumor cells, malignant -> Tumor cells, malignant (8001)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8001"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "Tumor cells, malignant, 8001/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8001/3, read from icdo32.sqlite; D21 holds: Group X emits 8001 at /3 only."
-  },
-  {
-    "alias": "Malignant tumor, small cell type",
-    "full_form": "Malignant tumor, small cell type -> Malignant tumor, small cell type (8002)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8002"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "Malignant tumor, small cell type, 8002/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8002/3, read from icdo32.sqlite; D21 holds: Group X emits 8002 at /3 only. Also the REDCap option wording."
-  },
-  {
-    "alias": "Malignant tumor, giant cell type",
-    "full_form": "Malignant tumor, giant cell type -> Malignant tumor, giant cell type (8003)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8003"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "Malignant tumor, giant cell type, 8003/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8003/3, read from icdo32.sqlite; D21 holds: Group X emits 8003 at /3 only. Also the REDCap option wording."
-  },
-  {
-    "alias": "Malignant tumor, spindle cell type",
-    "full_form": "Malignant tumor, spindle cell type -> Malignant tumor, spindle cell type (8004)",
-    "also_known_as": [],
-    "alias_type": "who_preferred",
-    "origin_system": "ICD-O-3.2",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8004"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xe",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "Malignant tumor, spindle cell type, 8004/3.",
-    "coding_note": "ICD-O-3.2 Preferred term on 8004/3, read from icdo32.sqlite; D21 holds: Group X emits 8004 at /3 only. Also the REDCap option wording."
-  },
-  {
     "alias": "Malignant tumor, clear cell type",
     "full_form": "Malignant tumor, clear cell type -> Malignant tumor, clear cell type (8005)",
     "also_known_as": [],
@@ -285,6 +190,196 @@
     "coding_note": "ICD-O-3.2 Synonym term on 8140/3, read from icdo32.sqlite; D21 holds: Group X emits 8140 at /3 only."
   },
   {
+    "alias": "Neuroendocrine tumor, NOS",
+    "full_form": "Neuroendocrine tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Neuroendocrine tumor, NOS, 8240/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Carcinoid tumor, NOS",
+    "full_form": "Carcinoid tumor, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Carcinoid, NOS",
+    "full_form": "Carcinoid, NOS -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, low grade",
+    "full_form": "Neuroendocrine carcinoma, low grade -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, well differentiated",
+    "full_form": "Neuroendocrine carcinoma, well differentiated -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Typical carcinoid",
+    "full_form": "Typical carcinoid -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Bronchial adenoma, carcinoid",
+    "full_form": "Bronchial adenoma, carcinoid -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine tumor, grade 1",
+    "full_form": "Neuroendocrine tumor, grade 1 -> Neuroendocrine tumor, NOS (8240)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8240"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Neuroendocrine tumor, NOS (8240/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
+  },
+  {
+    "alias": "Neuroendocrine carcinoma, NOS",
+    "full_form": "Neuroendocrine carcinoma, NOS -> Neuroendocrine carcinoma, NOS (8246)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8246"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Neuroendocrine carcinoma, NOS, 8246/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8246/3, read from icdo32.sqlite; D21 holds: Group X emits 8246 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Poorly differentiated neuroendocrine neoplasm",
+    "full_form": "Poorly differentiated neuroendocrine neoplasm -> Neuroendocrine carcinoma, NOS (8246)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8246"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Neuroendocrine carcinoma, NOS (8246/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8246/3, read from icdo32.sqlite; D21 holds: Group X emits 8246 at /3 only."
+  },
+  {
     "alias": "Clear cell adenocarcinoma, NOS",
     "full_form": "Clear cell adenocarcinoma, NOS -> Clear cell adenocarcinoma, NOS (8310)",
     "also_known_as": [],
@@ -340,6 +435,44 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 related term for Clear cell adenocarcinoma, NOS (8310/3).",
     "coding_note": "ICD-O-3.2 Related term on 8310/3, read from icdo32.sqlite; D21 holds: Group X emits 8310 at /3 only."
+  },
+  {
+    "alias": "Clear cell adenocarcinofibroma",
+    "full_form": "Clear cell adenocarcinofibroma -> Clear cell adenocarcinofibroma (8313)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8313"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Clear cell adenocarcinofibroma, 8313/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8313/3, read from icdo32.sqlite; D21 holds: Group X emits 8313 at /3 only."
+  },
+  {
+    "alias": "Clear cell cystadenocarcinofibroma",
+    "full_form": "Clear cell cystadenocarcinofibroma -> Clear cell adenocarcinofibroma (8313)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8313"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Clear cell adenocarcinofibroma (8313/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8313/3, read from icdo32.sqlite; D21 holds: Group X emits 8313 at /3 only."
   },
   {
     "alias": "Endometrioid adenocarcinoma, NOS",
@@ -1024,6 +1157,82 @@
     "clinical_alert": null,
     "notes": "Steroid cell tumor, malignant, 8670/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8670/3, read from icdo32.sqlite; D21 holds: Group X emits 8670 at /3 only."
+  },
+  {
+    "alias": "Mucinous adenocarcinofibroma",
+    "full_form": "Mucinous adenocarcinofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucinous adenocarcinofibroma, 9015/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Malignant mucinous adenofibroma",
+    "full_form": "Malignant mucinous adenofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Malignant mucinous cystadenofibroma",
+    "full_form": "Malignant mucinous cystadenofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
+  },
+  {
+    "alias": "Mucinous cystadenocarcinofibroma",
+    "full_form": "Mucinous cystadenocarcinofibroma -> Mucinous adenocarcinofibroma (9015)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Mucinous adenocarcinofibroma (9015/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9015/3, read from icdo32.sqlite; D21 holds: Group X emits 9015 at /3 only."
   },
   {
     "alias": "Dysgerminoma",

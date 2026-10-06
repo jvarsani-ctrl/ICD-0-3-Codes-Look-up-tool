@@ -30,6 +30,7 @@
       "site_capture": true,
       "candidate_groups": [
         2,
+        3,
         4,
         6,
         7,
@@ -195,11 +196,11 @@
       "options": [
         {
           "value": "bone",
-          "label": "Bone — the lesion is centred in bone, cortex destroyed"
+          "label": "Bone"
         },
         {
           "value": "soft_tissue",
-          "label": "Soft tissue — the mass is outside bone, cortex intact"
+          "label": "Soft tissue"
         }
       ],
       "asked_by": [
@@ -220,7 +221,7 @@
         }
       },
       "ask_before_site": true,
-      "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass in muscle, fat or connective tissue with the bone intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
+      "hint": "Read it off the imaging. Cortical destruction, periosteal reaction or a lesion centred in the bone means bone. A mass outside the bone, in muscle, fat or connective tissue, with the bone cortex intact means soft tissue. If the report does not say, and the mass is not centred on a bone, answer soft tissue.",
       "authoring_note": "Group VIII vs Group IX split for 9364 Ewing sarcoma and 9365 Askin tumour. ICD-O-3.2 deleted 9260/3 and moved Ewing sarcoma to 9364/3. See dual_group_rules."
     }
   },
@@ -892,6 +893,14 @@
               "C53.1",
               "C53.8",
               "C53.9",
+              "C54.0",
+              "C54.1",
+              "C54.2",
+              "C54.3",
+              "C54.8",
+              "C54.9",
+              "C55.9",
+              "C58.9",
               "C61.9",
               "C63.0",
               "C63.1",

@@ -1451,33 +1451,43 @@ behaviour 3, seven more drift from ICD-O-3.2 on such a number, and `8474` repeat
 label. Five options sit on numbers ICD-O-3.2 deleted. The tool's output names each code by the
 ICD-O-3.2 preferred term, and the clerk matches on the four-digit number.
 
-## 28. FOR THE REGISTRAR — no route reaches Group X's central nervous system tree
+## 28. Group X's central nervous system tree — route opened 6 October 2026; Group III's three gaps open
+
+**Decided 6 October 2026: option (a)** (`docs/group_10_registrar_review.md` B1). Group 10 is listed
+at the 24 Xa codes (C70.0–C72.9, C75.1–C75.3) and Group 3 on the "Mass / swelling (solid tumour)"
+presentation. Every presentation except "Organ-functional sign" offers Group III and Group X at
+those sites, and a Group X term searched there enters `g10_cns`. Item 4 below is closed. Items 1–3
+are Group III's and stay open. The decision opened one new item, in B1: five generic search terms
+(`8000`–`8004`) that Group III and Group X both hold now stop at those sites instead of entering
+Group III.
 
 **Found 4 October 2026 while building Group X** (design D18;
 `docs/group_10_registrar_review.md` B1). Group III must stay byte-identical to `main` on the Group X
 branch, so none of this is fixed there.
 
-Every central nervous system topography in `data/shared/topography_codes.json` lists Group III
-(and Group XI at `C75.1`), so the front door never offers Group X at a pineal, suprasellar or other
-intracranial site.
+Until 6 October 2026 every central nervous system topography in `data/shared/topography_codes.json`
+listed only Group III (and Group XI at `C75.1`), so the front door never offered Group X at a pineal,
+suprasellar or other intracranial site.
 Group III refers to Group X in nine places, and a referral is a terminal screen: nothing carries
 into the target group, and the clerk starts a new case. Since the registrar's ruling of 4 October
 2026 (`main` commit `9c63a5f`) the search box asks the site and keeps a group only if the site
-lists it, so a Group X term searched at a central nervous system site stops for referral. Four
-defects follow:
+lists it, so a Group X term searched at a central nervous system site stopped for referral. Four
+defects followed:
 
 1. A biopsy-proven germinoma with normal markers has no route to Group X from `g3_midline`.
 2. `pf_imaging_no_tissue` option 0, the elevated-marker referral to Group X, can never fire — the
    defect in §10 above. Closing §10 is the precondition for this one.
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    the third ventricle.
-4. No route reaches `g10_cns`. It is built and swept by the engine gate.
+4. ~~No route reaches `g10_cns`. It is built and swept by the engine gate.~~ Closed 6 October 2026
+   by option (a).
 
 The same holds outside the central nervous system: Groups VII, VIII and IX refer germ cell tumours
 to Group X from the liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x), and none of those
 topographies lists Group 10 (`docs/group_10_registrar_review.md` B2).
 
-**To close.** The registrar chooses. (a) Add Group 10 to the candidate groups of the central
+**To close.** The registrar chose (a) on 6 October 2026; (b) and (c) remain open for items 1–3.
+(a) Add Group 10 to the candidate groups of the central
 nervous system codes where germ cell tumours arise (`C75.1`–`C75.3` at least). On its own this
 sends a "Mass / swelling" presentation at those sites straight to Group X, because that
 presentation lists 10 and not 3, so Group 3 joins that presentation too; the clerk then chooses
@@ -1521,7 +1531,7 @@ those codes would have reached, was removed in the same change (design D16, revi
 
 ---
 
-*Last updated 4 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+*Last updated 6 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): §28 item 4 closed by the registrar's decision on Group X review B1, option (a). Previously 4 October 2026, on the same branch: adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
 Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with

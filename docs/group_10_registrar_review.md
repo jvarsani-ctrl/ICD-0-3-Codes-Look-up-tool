@@ -23,6 +23,12 @@ sex cord–stromal tumour of childhood leaves the registry. The pathway (§3 Xe)
 required. **If you rule otherwise:** there is no `8622/3` in ICD-O-3.2; registering it means a
 registry-local rule, which item A10 covers.
 
+**Also open: an ovarian granulosa cell tumour whose report does not state the type** (added
+6 October 2026). ICD-O-3.2 prints no term for it; the adult type is `8620/3` (registered) and
+the juvenile type `8622/1` (excluded). **Built:** the exclusion `8622/1`, registrar decision
+required, so the tool does not register a cancer the report does not establish. **Question:**
+keep that default, or register it as `8620/3`?
+
 ### A2. A germ cell tumour of unnamed type is `9064/3`, which prints as "Germinoma" (D2)
 
 ICD-O-3.2 files *Germ cell tumor, NOS* under `9064/3`, whose preferred term is *Germinoma*.
@@ -107,44 +113,77 @@ keying aliases by behaviour (`docs/TODO.md` §30) would lift this.
 
 ## B. Routing and reach
 
-### B1. No route reaches the central nervous system tree (D18) — the most consequential open item
+### B1. The central nervous system tree (D18) — decided 6 October 2026: option (a)
 
-`g10_cns` is built: eleven nodes, swept by the engine gate, and every code it emits checked
-against ICCC-2017 range declarations by validator rule 1. No clerk can reach it:
+**Decided, 6 October 2026: option (a).** `topography_codes.json` lists Group 10 at the 24 lookup
+codes ICCC-2017 places in Xa (C70.0–C72.9 and C75.1–C75.3; ranges 94–99, subgroups Xa1–Xa6), the
+same 24 codes `groups["10"].tree_routing` sends to `g10_cns`. C75.1 lists Groups 3, 10 and 11; the
+other 23 list Groups 3 and 10. The "Mass / swelling (solid tumour)" presentation lists Group 3.
 
-- Every central nervous system topography lists only Group III (and Group XI at C75.1) in `topography_codes.json`, so the
-  front door never offers Group X there.
-- Since your ruling of 4 October 2026 (`main` commit `9c63a5f`), the search box asks the site and
-  keeps a group only if the site lists it. A search for a germ cell term at the pineal stops for
-  referral. Driven on 4 October 2026: "Germinoma" searched at C71.0 stops with "C71.0 … is not a
-  site that group codes this term at" — untrue, since ICCC-2017 range 94 places germinoma at C71.0
-  in Xa1. The message reads `candidate_groups`, not ICCC.
-- Group III refers to Group X in nine places, and a referral ends the case.
+What the front door does now. `app.js` narrows the presentation's list by the site's list, and
+takes the site's list when the two share no group. Run over every presentation, every answer to
+its origin or compartment question and every lookup code, the candidate list changes at these 25
+codes and at no other:
 
-Group III also has three defects of its own, left untouched because Group III stays
-byte-identical to `main`:
+- At the 24 sites, every presentation except "Organ-functional sign" offers Group III and Group X,
+  and the clerk chooses by the pathology report. "Organ-functional sign" lists Group 3 and not
+  Group 10, so it still goes to Group III alone.
+- At C75.1 *Pituitary gland*, "Mass / swelling" offered Groups III and XI and now offers Groups III
+  and X: Group XI, which is not built, leaves that one picker. "Incidental imaging finding", "Not
+  sure / mixed presentation", "Lymphadenopathy" and "Cutaneous / mucosal lesion" offer Groups III,
+  X and XI.
+- At C80.9 *Unknown primary site* (`route_by_morphology`), "Mass / swelling" lists Group 3 with the
+  others. No organ-system row offers C80.9, so the guided front door does not record it.
+
+Driven on 6 October 2026: Mass / swelling, soft tissue, Pineal gland offers Group III and Group X,
+and Group X's histology answer "Germinoma" records `9064/3` Xa1. "Germinoma" searched at the
+pineal enters `g10_cns` and records the same code; before the decision it stopped with "The term
+and the site point to different groups". At the cerebellum, Group III's posterior fossa tree
+starts as before. Organ-functional sign at the pineal enters Group III's midline tree directly.
+
+**Decided 6 October 2026: five generic search terms are left out of Group X.** Before the decision: Group X's
+aliases include "Neoplasm, malignant", "Tumor cells, malignant" and "Malignant tumor, small cell
+type", "giant cell type" and "spindle cell type" (`8000`–`8004`), because the ovary and testis
+trees emit them (Xe, ICCC-2017 range 117, sites 569 and 620–629). Group III holds the same five
+strings. Searched at any of the 24 sites, each used to enter Group III. Each now stops with "The
+site does not decide the group", and the screen says Group III and Group X both occur at the site.
+That is untrue for Group X: ICCC-2017 range 42 places `8000` at those sites in IIIf, and `g10_cns`
+emits none of the five. Driven on 6 October 2026: "Neoplasm, malignant" at C71.6. The registrar
+chose to leave the five strings out of Group X's aliases. At the brain sites they enter Group III
+again. At the ovary and testis these searches stop for referral, and the guided route still codes
+them. Group X keeps 123 aliases. Keying generic aliases to a site would need an alias field the
+engine reads; it was not chosen.
+
+**Still open: Group III's own gaps.** Group III stays byte-identical to `main` on this branch, so
+these three are unchanged:
 
 1. A biopsy-proven germinoma with normal markers has no route to Group X from `g3_midline`.
 2. `pf_imaging_no_tissue` option 0 can never fire (`docs/TODO.md` §10).
 3. `g3_supratentorial` has no germ cell route, though germinomas arise in the basal ganglia and
    third ventricle.
 
-**Options:**
-- **(a)** List Group 10 on the central nervous system topographies where germ cell tumours arise
-  (C75.1–C75.3 at least; ICCC-2017 Xa covers all 24). On its own this sends a "Mass / swelling"
-  presentation at those sites straight to Group X, because that presentation lists 10 and not 3;
-  it needs Group 3 added to that presentation as well. The clerk then chooses Group III or Group X
-  at those sites for mass, incidental and unsure presentations; an organ-functional presentation
-  still goes to Group III alone.
+Group III refers to Group X in nine places, and a referral still ends the case: the clerk starts
+a new case, and at a central nervous system site the front door now offers Group X.
+
+**Before the decision.** Every central nervous system topography listed only Group III (and
+Group XI at C75.1), so no clerk could reach `g10_cns`. Driven on 4 October 2026: "Germinoma"
+searched at C71.0 stopped with "C71.0 … is not a site that group codes this term at", which was
+untrue, since ICCC-2017 range 94 places germinoma at C71.0 in Xa1. The options put to you were:
+
+- **(a)** — chosen. List Group 10 on the central nervous system topographies, and add Group 3 to
+  "Mass / swelling", which listed 10 and not 3 and would otherwise have sent those sites straight
+  to Group X.
 - **(b)** Let a referral to a built group offer "continue in that group", carrying the topography —
   an `app.js` change that serves every group's referrals.
-- **(c)** Add germ cell routes to Group III's trees, on a Group III branch, that end in a referral
-  — and choose (a) or (b) for the referral to lead somewhere.
+- **(c)** Add germ cell routes to Group III's trees, on a Group III branch, that end in a referral.
 
 ### B2. Front-door candidate groups outside the central nervous system (D19)
 
 **Built:** Group 10 added to C38.1, C38.3 and C48.0; C62.0, C62.1 and C76.3 added to the lookup,
-C76.3 with candidate groups 9 and 10. Two questions: does the registry record a sacrococcygeal
+C76.3 with candidate groups 9 and 10. Added 6 October 2026: the uterus (C54.0–C54.9, C55.9;
+candidate groups 9, 10 and 11) and the placenta (C58.9; Group 10), so a gestational
+trophoblastic tumour is recorded at its own site (ICCC-2017 range 104, Xb5, sites 540–559 and
+589). Groups IX and XI are listed there as at the cervix; neither group's tree was changed. Two questions: does the registry record a sacrococcygeal
 tumour at C76.3 *Pelvis, NOS* (the pathway's choice; no Layer 1 file records the ICD-O-3 index
 entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to declare C76.3?
 
@@ -152,7 +191,7 @@ entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to 
 to Group X: Group VII "at any site including the liver", Group VIII from a bone deposit, Group IX
 from soft tissue. The liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x) do not list
 Group 10, so the front door never offers Group X there, and the search box stops with the same
-untrue message as at C71.0 (B1). Group VII's own alias "Yolk sac tumour of the liver" leads straight
+untrue message that C71.0 gave before the B1 decision. Group VII's own alias "Yolk sac tumour of the liver" leads straight
 into it. The same three options as B1 apply; option (a) here means listing Group 10 at the sites
 where extragonadal germ cell tumours arise — the build added only C38.1, C38.3, C48.0 and C76.3.
 
@@ -196,3 +235,51 @@ Group VI conclusion stands. Nothing to decide.
 `/3` is *Germinoma*; `9100` reads "Hydatidiform mole, NOS", the benign term, for the number that
 carries choriocarcinoma; `9086` reads "Label not found". `9102` is not offered at all. The
 REDCap-side list is `docs/TODO.md` §27.
+
+---
+
+## E. Decided by the registrar, 6 October 2026 (hand review of fifteen cases)
+
+The cases are in `docs/group_10_scenarios.md`.
+
+### E1. "Choriocarcinoma" keeps one label on two screens
+
+"Choriocarcinoma" appears in two places:
+- on "What does the histology report call the tumour?", meaning a pure choriocarcinoma, `9100/3`;
+- on "Which components does the report list?", meaning one component of a mixed tumour, `9101/3`.
+
+**Decided:** keep both labels as they are. A clerk reaches the second screen only after saying
+the tumour is mixed, and that screen's question says so.
+
+### E2. Laboratory results are recorded as numbers on one screen
+
+**Decided:**
+- One "Laboratory results" screen with a row per test: the value as the report gives it, its unit,
+  and "not in the file".
+- The values appear on the result. The tool sets no cut-offs and does not interpret the values. No
+  value chooses a code; the no-tissue routes keep coding on the report's own word "raised".
+- The screen is a new question type in the engine. It was handed to the "ICD Overall fixes"
+  session on 6 October 2026.
+- Once the engine supports it, this branch places the screen at the start of each Group X tree,
+  before "What is in the file for this tumour?".
+
+**Group X's list:**
+
+| Test | Points to | Source |
+|---|---|---|
+| Alpha-fetoprotein | Yolk sac tumour, immature teratoma, embryonal carcinoma | van Heerden 2019, Table 4, p. 107; Rajpert-De Meyts 2015, p. 177 |
+| Beta human chorionic gonadotropin | Choriocarcinoma, embryonal carcinoma, some dysgerminomas | van Heerden 2019, Table 4, p. 107; Rajpert-De Meyts 2015, p. 177 |
+| Lactate dehydrogenase | Dysgerminoma; tumour bulk | van Heerden 2019, Table 4, p. 107; Rajpert-De Meyts 2015, p. 177 |
+| CA-125 | Epithelial tumours | van Heerden 2019, Table 4, p. 107 |
+| Human epididymis protein 4 | Malignant and borderline epithelial tumours | van Heerden 2019, Table 4, p. 107 |
+| Carcinoembryonic antigen | Epithelial tumours | van Heerden 2019, p. 108 |
+| Inhibin A | Granulosa cell tumour | van Heerden 2019, Table 4, p. 107 |
+| Calcium | Sex cord–stromal tumours; small cell carcinoma of the ovary, hypercalcaemic type | van Heerden 2019, Table 4, p. 107 |
+
+### E3. Pineal germinoma belongs to Group X
+
+ICCC-3 places germ cell codes 9060–9065, 9070–9072, 9080–9085, 9100 and 9101 at sites C70–C72
+and C75.1–C75.3 in X(a) (SEER ICCC-3 recode table). The local ICCC-2017 table agrees: range 94,
+Xa1. The route is open since 6 October 2026 (item B1): every presentation except "Organ-functional
+sign" offers Group X at those sites, and a Group X term searched there enters the central
+nervous system tree.

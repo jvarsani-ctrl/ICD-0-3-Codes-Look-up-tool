@@ -209,8 +209,11 @@ DECISIONS: dict[str, tuple] = {
                "basis of diagnosis 4, for a tumour shown on imaging with human chorionic "
                "gonadotropin raised and alpha-fetoprotein not raised (D4). Where an "
                "immunohistochemistry panel identifies the family without a name, the central "
-               "nervous system and extragonadal trees use this code (D3). %s" % IHC_SENTENCE,
-               IHC_FAMILY),
+               "nervous system and extragonadal trees use this code (D3). %s Every tree's "
+               "panel also emits it on OCT3/4 with CD30 and CD117 together, SOX2 and SOX17 "
+               "not positive, which establishes no type (Siegmund 2023, p. 37)." % IHC_SENTENCE,
+               {"diagnostic_tests_required": HIST_IHC,
+                "ihc_markers_required": ["OCT3/4", "CD30", "CD117", "SOX17", "D2-40"]}),
     "9065/3": ("D2, D4",
                "Registered without tissue, at basis of diagnosis 4, when imaging shows a "
                "tumour and the report calls alpha-fetoprotein raised for the patient's age "
@@ -224,7 +227,7 @@ DECISIONS: dict[str, tuple] = {
                "with CD30 (CD117 and SOX17 not positive) or with SOX2 (SOX17 not positive) "
                "(Siegmund 2023, p. 37).",
                {"diagnostic_tests_required": HIST_IHC,
-                "ihc_markers_required": ["OCT3/4", "CD30", "SOX2"]}),
+                "ihc_markers_required": ["OCT3/4", "SOX2", "CD30"]}),
     "9071/3": ("D4",
                "Coded when the report names a yolk sac tumour. A raised alpha-fetoprotein "
                "alone does not name one: the evidence route codes it 9065/3 (D4). The germ "
@@ -315,6 +318,19 @@ DECISIONS: dict[str, tuple] = {
     "8010/3": ("D14",
                "Carcinoma, type not stated: offered in the ovary tree, and the only carcinoma "
                "the testis tree offers."),
+    "8240/3": ("D14",
+               "Offered in the ovary and testis trees for a report of a neuroendocrine or "
+               "carcinoid tumour: ICCC-2017 range 113 places 8221-8241 and 8244-8246 at the "
+               "gonads in Xd, so the case is coded, not referred to Group XII."),
+    "8246/3": ("D14",
+               "Offered in the ovary and testis trees for a report of a neuroendocrine "
+               "carcinoma (ICCC-2017 range 113, Xd at the gonads)."),
+    "8313/3": ("D14",
+               "Offered in the extragonadal tree: ICCC-2017 range 114 places it in Xd at every "
+               "site, so it is coded, not referred."),
+    "9015/3": ("D14",
+               "Offered in the extragonadal tree: ICCC-2017 range 114 places it in Xd at every "
+               "site, so it is coded, not referred."),
     # --- sex cord-stromal (D11) ---------------------------------------------------------
     "8620/3": ("D11",
                "Adult granulosa cell tumour of the ovary. ICD-O-3.2 changed the behaviour "
@@ -647,8 +663,11 @@ def build_entries(payload: dict, obs: dict, codes: list, entering: set, trees: l
     germ_cell_sites = sorted({t for r in records
                               if r["iccc3_subgroup_id"][:2] in GERM_CELL_FAMILIES
                               for t in r["topography"]})
+    # Each code's /3 entry first. app.js "Override this code" takes a four-digit code and
+    # entryFor() returns the first entry for it; outside the central nervous system /3 is the
+    # only Group X behaviour, so 9080, 9084 and 9100 must not resolve to their /0 entries.
     return [build_entry(grouped[k], obs, codes, pairs_by_tree, entering, germ_cell_sites)
-            for k in sorted(grouped)]
+            for k in sorted(grouped, key=lambda k: (k[0], k[1] != "3", k[1]))]
 
 
 def build_metadata(entries: list, summary: dict, trees: list) -> dict:
