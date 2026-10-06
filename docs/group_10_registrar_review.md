@@ -450,16 +450,27 @@ routing changed. Seven negative controls in `build/negative_controls_group03.py`
 
 **Traced: a pineal mass, imaging only, β-hCG 20 IU/L.** Before the ruling the gate referred it to
 Group X. Now it continues to the compartment question, the pineal route and the imaging-only node
-`md_pineal_imaging_only`. That node asks whether alpha-fetoprotein and β-hCG "have been measured and
-are not elevated" and diverts to tissue when either "is elevated, or was never measured"; it states
-no number. With alpha-fetoprotein measured and not elevated, and no other diversion, the case codes
+`md_pineal_imaging_only`. That node asks whether alpha-fetoprotein and β-hCG have been measured with
+alpha-fetoprotein 25 ng/mL or below and β-hCG 50 IU/L or below, and diverts to tissue when
+alpha-fetoprotein is above 25 ng/mL or β-hCG above 50 IU/L, or either was never measured (the
+numbers were added on review, 6 October 2026, so a clerk does not read 20 IU/L as elevated). With alpha-fetoprotein measured and not elevated, and no other diversion, the case codes
 8000/1 (Neoplasm, uncertain whether benign or malignant) at basis 2. With alpha-fetoprotein never
 measured, it goes to "tissue required" and, with no tissue, the same 8000/1 at basis 2.
 
 **For the registrar:**
-1. **β-hCG above 50 IU/L with alpha-fetoprotein not raised.** SIOP CNS GCT 96 reads it as a
-   secreting, malignant non-germinomatous tumour (Calaminus 2017, Methods), which ICD-O-3.2 holds as
-   9065/3. The tree keeps Visser 2023 Table 4's 9064/3. Not chosen; your decision.
+1. **β-hCG above 50 IU/L with alpha-fetoprotein not raised — decided 6 October 2026: 9064/3.**
+   SIOP CNS GCT 96 reads it as a secreting, malignant non-germinomatous tumour (Calaminus 2017,
+   Methods), which ICD-O-3.2 holds as 9065/3. The registrar kept 9064/3 under ruling 7, the latest
+   document: the European Network of Cancer Registries basis-of-diagnosis recommendations (Visser
+   2023, Front Oncol 13:1250549, Table 4, p. 06), in force for cases from 1 January 2023, are the
+   newest source that codes a cancer without tissue, and they postdate SIOP CNS GCT 96. The newest
+   histology series agrees: β-hCG was raised only in tumours with a germinoma or choriocarcinoma
+   component, with a clear cut-off between the two (Takami 2023, Brain Tumor Pathol 40:124–132,
+   Abstract). The SIOP CNS GCT II final report (Calaminus 2026) is newer but sets treatment entry
+   criteria for germinoma and does not code this case. ICD-O-3.2 lists "Germ cell tumor, NOS" as a
+   synonym of 9064/3, and the registrar asked that this outcome display that term rather than the
+   preferred term "Germinoma". The engine shows the entry's preferred term on every result, so the
+   display needs an engine field; it is requested from the overall-fixes session (6 October 2026).
 2. **A raised value by the laboratory's range that is not raised by SIOP's** (β-hCG 5 to 50 IU/L,
    alpha-fetoprotein 10 to 25 ng/mL) in a complete set of four values now reaches the imaging
    question and, for a malignant tumour on imaging, Group III's 8000/3. Before the ruling the
