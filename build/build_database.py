@@ -334,6 +334,12 @@ POSITIVE_RESULT_TOKENS = {
 # are the anchors for everything that can be anchored.
 # --------------------------------------------------------------------------------------
 
+# Group I joined ROUND_TRIP_GROUPS on 6 October 2026 (docs/TODO.md §27,
+# docs/group_01_icdo32_names.md). Its names are ICD-O-3.2 terms, and the four codes
+# ICD-O-3.2 carries no term for — 9826, 9836, 9991, 9992 — were removed from the group
+# by registrar ruling rather than exempted, so no exemption mechanism was added.
+GROUP1 = 1
+
 GROUP3 = 3
 
 # -- §2(1) diagnosis_rendering — the two-track output -----------------------------------
@@ -795,7 +801,7 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
 # group outside this set has no name check at all, and the round trip says so in a NOTE. Groups
 # 1 and 2 are outside it until their names move to ICD-O-3.2 terms, handed to those groups'
 # sessions the same day.
-ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9}
+ROUND_TRIP_GROUPS = {GROUP1, GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9}
 
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
