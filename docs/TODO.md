@@ -241,6 +241,7 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
 | **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
+| **I** | `i_morph` | **15** — picks on lines 28, 54, 55, 62, 68, 72, 88, 94, 95, 96, 98, 120–123 of the Group 1 option file, now that Group I's names are ICD-O-3.2 terms (§27). `9869` is a correctness fix, not a wording one: the option reads `t(13.3)(q21;q26.2)`, which is not valid cytogenetic notation; ICD-O-3.2 has `t(3;3)(q21;q26.2)`. `9980` and `9983` move off the FAB-era *Refractory anemia* wording to the WHO names. | **4** — lines 17, 25, 104, 105 (`9836`, `9826`, `9991`, `9992`). The tool no longer carries these; they were removed from Group I by registrar ruling of 6 October 2026, and ICD-O-3.2 carries no term for any of them. Retire in place, never delete — `i_morph` stores a pick number. | — | Open — not applied | §27 below, and `docs/group_01_icdo32_names.md` |
 | **VI** | `vi_morph` | **8** label drifts (contract §2C) | — | **3** — `8023/3`, `8054/3`, `8482/3` | Ready to review, not applied | `docs/group_06_layer1_repair.md`; `docs/codes-awaiting-redcap.md` |
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 | **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
@@ -1451,3 +1452,23 @@ registrar first. These are Group I's 9826/3, 9836/3, 9991/3 and 9992/3, and Grou
 9673/3, 9725/3, 9765/3, 9767/3, 9768/3, 9769/3, 9823/3, 9970/3 and 9971/3. To reproduce the full list,
 add the group to `ROUND_TRIP_GROUPS` temporarily and run the build. Handed to the Group 1 and Group 2
 sessions on 4 October 2026.
+
+**Group I: CLOSED, 6 October 2026.** `GROUP1` is in `ROUND_TRIP_GROUPS` and the build reports
+`186/186 (code, name, behaviour) triple(s) exist verbatim in icdo32.sqlite; 0 declared name
+exemption(s)`. Group I no longer prints the "not validated against any source" NOTE. Detail in
+`docs/group_01_icdo32_names.md`.
+
+The 33 failures were 15 wrong names plus 18 echoes of three of them in `nos_fallback_name` and
+node-level `nos_fallback`; 9945 needed no rename. One was a correctness defect rather than a
+wording one: 9869 read `t(13.3)(q21;q26.2)`, which is not valid cytogenetic notation.
+
+Two registrar rulings closed it. **9975** moves to the ICD-O-3.2 preferred term
+(`Myeloproliferative neoplasm, unclassifiable`); the MDS/MPN overlap wording stays as an alias
+and on the output block's ALSO CALLED row. **9826, 9836, 9991 and 9992 are removed from the
+group** rather than exempted — ICD-O-3.2 carries no term for them, they were already closed
+terminals, and every term that used to reach them still resolves (Burkitt to Group II's mirror,
+the other three to aliases Group I already carried). No exemption mechanism was added.
+
+REDCap now owes 15 relabels **and 4 retires**, logged in §7 above.
+
+**Group II is still open** and is the Group 2 session's work.

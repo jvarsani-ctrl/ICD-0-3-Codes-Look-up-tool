@@ -924,51 +924,6 @@
     "notes": "Code 9833. Extremely rare in paediatrics."
   },
   {
-    "alias": "Burkitt cell leukemia",
-    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "FAB L3",
-      "L3 ALL"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "WHO Classification 2022",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
-  },
-  {
-    "alias": "Burkitt leukaemia",
-    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "Burkitt cell leukemia",
-      "FAB L3",
-      "L3 ALL"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "UK/East African clinical spelling",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
-  },
-  {
     "alias": "Chronic lymphocytic leukemia",
     "full_form": "B-cell chronic lymphocytic leukemia (9823)",
     "also_known_as": [
@@ -1011,28 +966,6 @@
     "ihc_tree_id": null,
     "tree_entry_node": "ml_document_inventory",
     "notes": "Code 9823. Dual-group code 9823: Group I (Ia2, CLL) if C42.x blood/marrow; Group II (IIb2, SLL) if nodal. Same disease, different presentation. Extremely rare in children — if encountered in a paediatric file, verify against the flow report."
-  },
-  {
-    "alias": "FAB L3",
-    "full_form": "FAB L3 -> Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "Burkitt cell leukemia",
-      "L3 ALL"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "FAB classification (pre-WHO 2001)",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
   },
   {
     "alias": "Hairy cell leukaemia variant",
@@ -1112,51 +1045,6 @@
     "notes": "Pathway 5.2 uncoded-entity fallback: no ICD-O-3.2 code of its own — code 9940 AND set the variant flag. BRAF V600E is ABSENT in the variant, unlike classic HCL. confidence=low because the variant flag, not the code, carries the distinction."
   },
   {
-    "alias": "L3 ALL",
-    "full_form": "FAB L3 -> Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "Burkitt cell leukemia",
-      "FAB L3"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "FAB classification (pre-WHO 2001)",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
-  },
-  {
-    "alias": "Leukaemic Burkitt lymphoma",
-    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "Burkitt cell leukemia",
-      "FAB L3",
-      "L3 ALL"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "Clinical descriptive",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
-  },
-  {
     "alias": "Leukemic reticuloendotheliosis",
     "full_form": "Hairy cell leukemia (9940)",
     "also_known_as": [
@@ -1175,29 +1063,6 @@
     "ihc_tree_id": null,
     "tree_entry_node": "ml_document_inventory",
     "notes": "Historical name for hairy cell leukaemia, code 9940."
-  },
-  {
-    "alias": "Mature B-cell ALL",
-    "full_form": "Burkitt cell leukemia (9826 — ARCHIVAL ONLY; current cases code 9687/3, Group II)",
-    "also_known_as": [
-      "Burkitt cell leukemia",
-      "FAB L3",
-      "L3 ALL"
-    ],
-    "alias_type": "who_historical",
-    "origin_system": "Clinical descriptive",
-    "nci_concept_id": "NCIT:C7400",
-    "who_version_current": "historical",
-    "maps_to_morphology_codes": [
-      "9826"
-    ],
-    "maps_to_iccc3_subgroup_id": "Ia2",
-    "confidence": "low",
-    "needs_ihc_tree": true,
-    "ihc_tree_id": "tree_mature_lymphoid",
-    "tree_entry_node": "ml_document_inventory",
-    "notes": "DO NOT CODE A CURRENT CASE HERE: this entity now codes 9687/3 in Group II (IIc); 9826 is READ-ONLY for diagnoses before 1 January 2021. archival_only is true on this entry and terminal_reachable is false on 9826 in group_01_dt.json — no tree may land on it. 9826 is carried at all only so pre-2021 records resolve, and only because 9687 is a Group II code that does not exist in group_01_dt.json (inventing it here is forbidden). Registry ruling: adopt 9687, no Group I/II override (Pathway 3.3, 5.3.11, 5.7c). The same alias string is carried in aliases_group_02.json so a clerk lands in Group II for any current case; that mirror was built on 2026-09-04 and the gap is closed. Selection between 9826/9687 and 9811 is by the >25% marrow blast rule, not topography. Time-series discontinuity — flag to biostatistics for trends spanning the change. Discriminators from BCP-ALL (9811): CD34-negative, CD58-negative, CD20/CD45 bright, TdT-negative, MYC-r present (its absence excludes Burkitt); sIgM is unreliable in both directions. Uganda: endemic Burkitt is EBV+ in ~95%, jaw/facial mass typical; where FISH is unavailable Ki-67 >95% + MYC protein IHC >80% is the accepted surrogate. confidence=low because the alias alone cannot decide 9826 vs 9687 vs 9811 — the >25% marrow blast rule and MYC-r status must be resolved in tree_mature_lymphoid.",
-    "archival_only": true
   },
   {
     "alias": "PLL",
@@ -4798,8 +4663,12 @@
   },
   {
     "alias": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable",
-    "full_form": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable (9975)",
-    "also_known_as": [],
+    "full_form": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable -> Myeloproliferative neoplasm, unclassifiable (9975)",
+    "also_known_as": [
+      "MDS/MPN overlap",
+      "MDS/MPN, unclassifiable",
+      "MDS/MPN-U"
+    ],
     "alias_type": "who_preferred",
     "origin_system": "WHO Classification 2022",
     "nci_concept_id": null,
@@ -4812,7 +4681,7 @@
     "needs_ihc_tree": false,
     "ihc_tree_id": null,
     "tree_entry_node": "mds_document_inventory",
-    "notes": "Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2). The Group 1 OLS results record C27350 against 9975, but C27350 is the MPN-NOS concept, not MDS/MPN-U — nci_concept_id is left null pending a re-query."
+    "notes": "An ICD-O-3.2 RELATED term for 9975/3, and the REDCap option label. From 6 October 2026 the tool displays the ICD-O-3.2 PREFERRED term, 'Myeloproliferative neoplasm, unclassifiable' (registrar ruling). Both wordings carry code 9975, so the code filed is identical; this alias keeps the overlap wording searchable and puts it on the output block's ALSO CALLED row. Read that row: every route the tool takes to this terminal is an MDS/MPN OVERLAP picture — the four MDS-tree nodes, and the NOS fallback for CMML (9945) and JMML (9946). Code 9975 — MDS/MPN overlap not meeting the CMML, aCML, JMML or MDS/MPN-RS-T criteria. Distinct from 9960 (MPN, NOS, subgroup Ic). Also the landing code for RAS-negative JMML-like mimics (Pathway 3.4, 5.3.2). The Group 1 OLS results record C27350 against 9975, but C27350 is the MPN-NOS concept, not MDS/MPN-U — nci_concept_id is left null pending a re-query."
   },
   {
     "alias": "Preleukemia",
@@ -5762,5 +5631,206 @@
     "ihc_tree_id": "tree_acute_leukemia",
     "tree_entry_node": "ac_document_inventory",
     "notes": "Code 9801 carries THREE situations, disambiguated by workup_status + alal_subtype (Pathway 4.1, 5.7): (a) acute leukaemia, lineage not yet established — incomplete workup; (b) acute undifferentiated leukaemia (AUL) — comprehensive panel, <=1 lineage marker per lineage, mimics excluded; (c) ALAL-NOS — >=2 markers of one lineage but MPAL criteria not met. 9805 (MPAL NOS) is NOT AUL. Routes into tree_acute_leukemia for lineage assignment."
+  },
+  {
+    "alias": "Acute myeloid leukemia with biallelic mutations of CEBPA",
+    "full_form": "Acute myeloid leukemia with biallelic mutations of CEBPA -> Acute myeloid leukemia with biallelic mutation of CEBPA (9878)",
+    "also_known_as": [
+      "AML with biallelic CEBPA mutation",
+      "CEBPA-biallelic AML",
+      "AML with double-mutated CEBPA"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9878"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9878. The tool displays the ICD-O-3.2 term 'Acute myeloid leukemia with biallelic mutation of CEBPA'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 writes the mutation singular. WHO-HAEM5 narrows this entity to a bZIP in-frame mutation, which may be monoallelic, so a report naming only one CEBPA mutation does not by itself exclude the code — read the zygosity and the domain before falling back to 9861."
+  },
+  {
+    "alias": "Myeloid leukemia associated with Down Syndrome",
+    "full_form": "Myeloid leukemia associated with Down Syndrome -> Myeloid leukemia associated with Down syndrome (9898)",
+    "also_known_as": [
+      "ML-DS",
+      "Myeloid leukaemia of Down syndrome",
+      "AML in Down syndrome"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9898"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9898. The tool displays the ICD-O-3.2 term 'Myeloid leukemia associated with Down syndrome'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. Capitalisation only: ICD-O-3.2 lower-cases \"syndrome\". Separate from 9898/1 transient abnormal myelopoiesis, which carries the same code at behaviour /1 and is NOT reportable."
+  },
+  {
+    "alias": "Therapy related myeloid neoplasm",
+    "full_form": "Therapy related myeloid neoplasm -> Therapy-related myeloid neoplasm (9920)",
+    "also_known_as": [
+      "t-MN",
+      "Therapy-related myeloid neoplasm",
+      "t-AML",
+      "Therapy-related AML"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9920"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap dropdown label for option 9920. The tool displays the ICD-O-3.2 term 'Therapy-related myeloid neoplasm'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 hyphenates \"Therapy-related\". Per Pathway §4.8 this is a QUALIFIER on the underlying neoplasm, not a separate entity: code the underlying subtype and set the qualifier rather than defaulting to 9920."
+  },
+  {
+    "alias": "Chronic eosinophilic leukemia, NOS",
+    "full_form": "Chronic eosinophilic leukemia, NOS -> Chronic eosinophilic leukemia (9964)",
+    "also_known_as": [
+      "CEL",
+      "CEL, NOS",
+      "Chronic eosinophilic leukaemia"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9964"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ic",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9964. The tool displays the ICD-O-3.2 term 'Chronic eosinophilic leukemia'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 carries no \", NOS\" on this term; the REDCap option does. Reached only after clonality is demonstrated and reactive and parasitic eosinophilia are excluded (Pathway §3.10) — in Uganda the commonest false positive in Group I."
+  },
+  {
+    "alias": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement",
+    "full_form": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement -> Myeloid or lymphoid neoplasm with PDGFRA rearrangement (9965)",
+    "also_known_as": [
+      "PDGFRA-rearranged myeloid neoplasm",
+      "FIP1L1-PDGFRA",
+      "Myeloid neoplasm with PDGFRA rearrangement"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9965"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9965. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with PDGFRA rearrangement'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 reads \"or\", singular \"neoplasm\"; the REDCap option reads \"and\", plural. FIP1L1-PDGFRA is cryptic on karyotype — FISH or RT-PCR is required before falling back to 9964."
+  },
+  {
+    "alias": "Myeloid neoplasms with PDGFRB rearrangement",
+    "full_form": "Myeloid neoplasms with PDGFRB rearrangement -> Myeloid neoplasm with PDGFRB rearrangement (9966)",
+    "also_known_as": [
+      "PDGFRB-rearranged myeloid neoplasm",
+      "ETV6-PDGFRB",
+      "t(5;12) myeloid neoplasm"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9966"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9966. The tool displays the ICD-O-3.2 term 'Myeloid neoplasm with PDGFRB rearrangement'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 uses the singular \"neoplasm\"; the REDCap option is plural."
+  },
+  {
+    "alias": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities",
+    "full_form": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities -> Myeloid or lymphoid neoplasm with FGFR1 abnormalities (9967)",
+    "also_known_as": [
+      "FGFR1-rearranged myeloid neoplasm",
+      "8p11 myeloproliferative syndrome",
+      "EMS"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9967"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9967. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with FGFR1 abnormalities'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 reads \"or\", singular \"neoplasm\"; the REDCap option reads \"and\", plural."
+  },
+  {
+    "alias": "Myeloid/lymphoid neoplasm with PCM1-JAK2",
+    "full_form": "Myeloid/lymphoid neoplasm with PCM1-JAK2 -> Myeloid or lymphoid neoplasm with PCM1-JAK2 (9968)",
+    "also_known_as": [
+      "PCM1-JAK2",
+      "t(8;9)(p22;p24.1)",
+      "JAK2-rearranged myeloid neoplasm"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9968"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ie",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "mpn_document_inventory",
+    "notes": "The REDCap dropdown label for option 9968. The tool displays the ICD-O-3.2 term 'Myeloid or lymphoid neoplasm with PCM1-JAK2'; this alias keeps the REDCap wording findable in the express lane so a clerk searching the string they can see in REDCap still lands on the code. ICD-O-3.2 spells it \"Myeloid or lymphoid\"; the REDCap option uses a solidus."
+  },
+  {
+    "alias": "Acute myeloid leukemia with inv(3)(q21;q26.2) or t(13.3)(q21;q26.2); RPN1-EVI1",
+    "full_form": "Acute myeloid leukemia with inv(3)(q21;q26.2) or t(13.3)(q21;q26.2); RPN1-EVI1 -> Acute myeloid leukemia with inv(3)(q21;q26.2) or t(3;3)(q21;q26.2); RPN1-EVI1 (9869)",
+    "also_known_as": [
+      "AML with inv(3)",
+      "AML with t(3;3)",
+      "RPN1-EVI1",
+      "MECOM-rearranged AML",
+      "inv(3)/t(3;3) AML"
+    ],
+    "alias_type": "who_historical",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "WHO 2022",
+    "maps_to_morphology_codes": [
+      "9869"
+    ],
+    "maps_to_iccc3_subgroup_id": "Ib",
+    "confidence": "high",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": null,
+    "tree_entry_node": "ac_document_inventory",
+    "notes": "The REDCap option label, recorded because it contains a typographical error: it reads 't(13.3)(q21;q26.2)', which is not valid cytogenetic notation. The translocation is t(3;3)(q21;q26.2), which is what ICD-O-3.2 carries and what the tool now displays. Kept so a clerk who copies the broken string straight out of REDCap still lands on 9869. The REDCap relabel is owed in docs/TODO.md §7."
   }
 ]

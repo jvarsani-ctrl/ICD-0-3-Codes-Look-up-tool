@@ -4,7 +4,7 @@
     "group_name": "Leukemias, Myeloproliferative and Myelodysplastic Diseases",
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
-    "total_morphology_entries": 84,
+    "total_morphology_entries": 80,
     "total_decision_nodes": 97,
     "decision_trees": [
       "tree_acute_leukemia",
@@ -432,39 +432,6 @@
       "topography_routing_note": null
     },
     {
-      "morphology_code": "9836",
-      "morphology_name": "Precursor B-cell lymphoblastic leukemia",
-      "iccc3_subgroup_id": "Ia1",
-      "iccc3_subgroup_name": "Precursor cell leukemias",
-      "who_version": "WHO-HAEM5",
-      "behavior_code": "3",
-      "diagnostic_tests_required": [
-        "Histology",
-        "Flow cytometry"
-      ],
-      "ihc_markers_required": [
-        "CD19",
-        "cCD79a",
-        "TdT"
-      ],
-      "ihc_markers_exclude": [
-        "cMPO"
-      ],
-      "imaging_sufficient": false,
-      "imaging_features": null,
-      "nos_fallback_code": "9811",
-      "nos_fallback_name": "B lymphoblastic leukemia/lymphoma, NOS",
-      "confidence_ceiling": "low",
-      "clinical_alert": null,
-      "coding_note": "RETIRED at ICD-O-3.2 — replaced by 9811/3 (Pathway §5.3.4, §5.7). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry.",
-      "code_neutral_molecular": false,
-      "redcap_value": "9836",
-      "terminal_reachable": false,
-      "primary_sites": null,
-      "topography_dependent": false,
-      "topography_routing_note": null
-    },
-    {
       "morphology_code": "9837",
       "morphology_name": "Precursor T-cell lymphoblastic leukemia",
       "iccc3_subgroup_id": "Ia1",
@@ -545,42 +512,6 @@
       "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 → Group I, Ia2 (CLL). C42.2 (spleen) and every nodal/extranodal site → Group II, IIb2 (SLL). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
-      "morphology_code": "9826",
-      "morphology_name": "Burkitt cell leukemia",
-      "iccc3_subgroup_id": "Ia2",
-      "iccc3_subgroup_name": "Mature B-cell leukemias",
-      "who_version": "WHO-HAEM5",
-      "behavior_code": "3",
-      "diagnostic_tests_required": [
-        "Histology",
-        "Flow cytometry",
-        "Cytogenetics/FISH"
-      ],
-      "ihc_markers_required": [
-        "CD20 bright",
-        "CD45 bright",
-        "MYC rearrangement"
-      ],
-      "ihc_markers_exclude": [
-        "CD34",
-        "CD58",
-        "TdT"
-      ],
-      "imaging_sufficient": false,
-      "imaging_features": null,
-      "nos_fallback_code": null,
-      "nos_fallback_name": null,
-      "confidence_ceiling": "low",
-      "clinical_alert": null,
-      "coding_note": "RETIRED for diagnoses from 1 January 2021 — leukaemic Burkitt codes 9687/3 and moves to Group II (IIc). Registry ruling: adopt 9687, no Group I/II override (Pathway §3.3, §5.3.11, §5.7c). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry. nos_fallback_code is null: Pathway §6 annotates the mature-B chain 'leukaemic Burkitt is 9687, Group II — not in this chain', and 9687 is a Group II code that does not exist in this file, so there is no valid in-file downgrade. Nothing depends on it — the entry is not terminal-reachable. sIgM is not the gate in either direction; MYC rearrangement is required (absence excludes Burkitt). Where FISH is unavailable, Ki-67 >95% with MYC protein IHC >80% predicts MYC-r in about 99% (§3.3). Time-series discontinuity — flag to biostatistics for trends spanning the change.",
-      "code_neutral_molecular": false,
-      "redcap_value": "9826",
-      "terminal_reachable": false,
-      "primary_sites": null,
-      "topography_dependent": false,
-      "topography_routing_note": "Not topography-split (Pathway §5.5.2). ICCC-2017 assigns 9826 to Ia2 across all topography (C00.0–C80.9). The Group I versus Group II question for Burkitt is code-selection (9826 versus 9687), decided by the >25% marrow blast rule, not topography routing."
-    },
-    {
       "morphology_code": "9832",
       "morphology_name": "Prolymphocytic leukemia, NOS",
       "iccc3_subgroup_id": "Ia2",
@@ -639,7 +570,7 @@
     },
     {
       "morphology_code": "9940",
-      "morphology_name": "Hairy cell leukemia",
+      "morphology_name": "Hairy cell leukemia, NOS",
       "iccc3_subgroup_id": "Ia2",
       "iccc3_subgroup_name": "Mature B-cell leukemias",
       "who_version": "WHO-HAEM5",
@@ -995,7 +926,7 @@
     },
     {
       "morphology_code": "9867",
-      "morphology_name": "Acute myelomonocytic leukemia",
+      "morphology_name": "Acute myelomonocytic leukemia, NOS",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "WHO-HAEM5",
@@ -1028,7 +959,7 @@
     },
     {
       "morphology_code": "9869",
-      "morphology_name": "Acute myeloid leukemia with inv(3)(q21;q26.2) or t(13.3)(q21;q26.2); RPN1-EVI1",
+      "morphology_name": "Acute myeloid leukemia with inv(3)(q21;q26.2) or t(3;3)(q21;q26.2); RPN1-EVI1",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1243,7 +1174,7 @@
     },
     {
       "morphology_code": "9878",
-      "morphology_name": "Acute myeloid leukemia with biallelic mutations of CEBPA",
+      "morphology_name": "Acute myeloid leukemia with biallelic mutation of CEBPA",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1475,7 +1406,7 @@
     },
     {
       "morphology_code": "9898",
-      "morphology_name": "Myeloid leukemia associated with Down Syndrome",
+      "morphology_name": "Myeloid leukemia associated with Down syndrome",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "WHO-HAEM5",
@@ -1607,7 +1538,7 @@
     },
     {
       "morphology_code": "9920",
-      "morphology_name": "Therapy related myeloid neoplasm",
+      "morphology_name": "Therapy-related myeloid neoplasm",
       "iccc3_subgroup_id": "Ib",
       "iccc3_subgroup_name": "Acute myeloid leukemias",
       "who_version": "ICC-2022",
@@ -1918,7 +1849,7 @@
     },
     {
       "morphology_code": "9964",
-      "morphology_name": "Chronic eosinophilic leukemia, NOS",
+      "morphology_name": "Chronic eosinophilic leukemia",
       "iccc3_subgroup_id": "Ic",
       "iccc3_subgroup_name": "Chronic myeloproliferative diseases",
       "who_version": "ICC-2022",
@@ -1960,7 +1891,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9975",
-      "nos_fallback_name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+      "nos_fallback_name": "Myeloproliferative neoplasm, unclassifiable",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "Persistent monocytosis, both absolute (≥0.5×10⁹/L) AND relative (≥10% of WBC), with blasts <20%. CMML-1 is PB <5% / BM <10% blasts; CMML-2 is 5–19% / 10–19%. Two-tier supporting-criteria rule: monocytosis ≥1×10⁹/L requires ≥1 supporting criterion; monocytosis 0.5–<1×10⁹/L requires BOTH (dysplasia ≥10% in ≥1 lineage; clonal cytogenetic or molecular evidence). Exclude reactive monocytosis, especially at the ≥1×10⁹/L level (TB and other infection are common in the UCI catchment). CMUS/CCMUS — persistent monocytosis ≥10% and ≥0.5×10⁹/L with the criteria not met — is NOT malignant, has no code and must not be reported (§3.10, §4.9). WHO-HAEM5 and ICC have converged on the monocyte threshold, so no arbitration applies.",
@@ -1973,7 +1904,7 @@
     },
     {
       "morphology_code": "9946",
-      "morphology_name": "Juvenile myelomonocytic leukemia",
+      "morphology_name": "Juvenile myelomonocytic leukemia, NOS",
       "iccc3_subgroup_id": "Id",
       "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
       "who_version": "WHO-HAEM5",
@@ -1988,7 +1919,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9975",
-      "nos_fallback_name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+      "nos_fallback_name": "Myeloproliferative neoplasm, unclassifiable",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "Category I (clinical/haematological, all four assessed, last two MANDATORY): PB monocytes ≥1×10⁹/L (absent in about 7%); splenomegaly (absent in about 3%); blasts <20% in PB and BM (mandatory); absence of BCR::ABL1 (mandatory). Category II (genetic, ≥1 required, present in >95% of true JMML): somatic PTPN11, KRAS, NRAS or RRAS; germline NF1 with LOH, or clinical NF1 (≥6 café-au-lait macules >5 mm); germline CBL with LOH. Supporting: HbF elevated for age, circulating myeloid precursors, monosomy 7. AGE IS NOT DIAGNOSTIC — prognostic only. Noonan-spectrum myeloproliferative disease (germline PTPN11/KRAS/NRAS/RIT1 with NO somatic secondary mutation, normal karyotype, self-limiting) is a distinct non-reportable entity — do not auto-code 9946. ICC's RAS-negative 'JMML-like neoplasm' category is NOT adopted; those cases code to 9975 on their own merits (§3.4, §5.3.2). DNA-methylation subgroups (LM/IM/HM) are prognostic and code-neutral. Spontaneous regression (about 15%) does not retract the diagnosis — code at diagnosis on the evidence then available (§5.3.9). Also exclude malaria/HIV hypersplenism, which confounds the splenomegaly and monocyte criteria (§4.9).",
@@ -2001,7 +1932,7 @@
     },
     {
       "morphology_code": "9975",
-      "morphology_name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+      "morphology_name": "Myeloproliferative neoplasm, unclassifiable",
       "iccc3_subgroup_id": "Id",
       "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
       "who_version": "WHO-HAEM5",
@@ -2029,7 +1960,7 @@
     },
     {
       "morphology_code": "9980",
-      "morphology_name": "Refractory anemia",
+      "morphology_name": "Myelodysplastic syndrome with single lineage dysplasia",
       "iccc3_subgroup_id": "Id",
       "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
       "who_version": "ICC-2022",
@@ -2082,7 +2013,7 @@
     },
     {
       "morphology_code": "9983",
-      "morphology_name": "Refractory anemia with excess blasts",
+      "morphology_name": "Myelodysplastic syndrome with excess blasts",
       "iccc3_subgroup_id": "Id",
       "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
       "who_version": "ICC-2022",
@@ -2237,58 +2168,6 @@
       "code_neutral_molecular": false,
       "redcap_value": "9989",
       "terminal_reachable": true,
-      "primary_sites": null,
-      "topography_dependent": false,
-      "topography_routing_note": null
-    },
-    {
-      "morphology_code": "9991",
-      "morphology_name": "Refractory neutropenia",
-      "iccc3_subgroup_id": "Id",
-      "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
-      "who_version": "ICC-2022",
-      "behavior_code": "3",
-      "diagnostic_tests_required": [
-        "Histology"
-      ],
-      "ihc_markers_required": null,
-      "ihc_markers_exclude": null,
-      "imaging_sufficient": false,
-      "imaging_features": null,
-      "nos_fallback_code": "9980",
-      "nos_fallback_name": "Refractory anemia",
-      "confidence_ceiling": "low",
-      "clinical_alert": null,
-      "coding_note": "RETIRED at ICD-O-3.2 — replaced by 9980/3 (Pathway §5.7). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry. Previously counted within the SEER MDS over-counting family (§3.5).",
-      "code_neutral_molecular": false,
-      "redcap_value": "9991",
-      "terminal_reachable": false,
-      "primary_sites": null,
-      "topography_dependent": false,
-      "topography_routing_note": null
-    },
-    {
-      "morphology_code": "9992",
-      "morphology_name": "Refractory thrombocytopenia",
-      "iccc3_subgroup_id": "Id",
-      "iccc3_subgroup_name": "Myelodysplastic syndrome and other myeloproliferative diseases",
-      "who_version": "ICC-2022",
-      "behavior_code": "3",
-      "diagnostic_tests_required": [
-        "Histology"
-      ],
-      "ihc_markers_required": null,
-      "ihc_markers_exclude": null,
-      "imaging_sufficient": false,
-      "imaging_features": null,
-      "nos_fallback_code": "9980",
-      "nos_fallback_name": "Refractory anemia",
-      "confidence_ceiling": "low",
-      "clinical_alert": null,
-      "coding_note": "RETIRED at ICD-O-3.2 — replaced by 9980/3 (Pathway §5.7). Retained so aliases and pre-2021 archival records resolve; must never be selected as a live terminal and must never be the nos_fallback_code of another entry. Previously counted within the SEER MDS over-counting family (§3.5).",
-      "code_neutral_molecular": false,
-      "redcap_value": "9992",
-      "terminal_reachable": false,
       "primary_sites": null,
       "topography_dependent": false,
       "topography_routing_note": null
@@ -2539,7 +2418,7 @@
     },
     {
       "morphology_code": "9965",
-      "morphology_name": "Myeloid and lymphoid neoplasms with PDGFRA rearrangement",
+      "morphology_name": "Myeloid or lymphoid neoplasm with PDGFRA rearrangement",
       "iccc3_subgroup_id": "Ie",
       "iccc3_subgroup_name": "Unspecified and other specified leukemias",
       "who_version": "WHO-HAEM5",
@@ -2554,7 +2433,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9964",
-      "nos_fallback_name": "Chronic eosinophilic leukemia, NOS",
+      "nos_fallback_name": "Chronic eosinophilic leukemia",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "CRYPTIC — FIP1L1::PDGFRA is invisible on karyotype; requires FISH for the CHIC2 deletion or RT-PCR. A normal karyotype must never close this branch or resolve to 9964 (§4.4, §7.5). The secondary-eosinophilia exclusion cascade (parasitic, HIV, drugs, allergy, autoimmune, solid-tumour-associated) is a hard gate that must be documented BEFORE this code is reachable (§3.10). Clinically important because these cases are imatinib-responsive.",
@@ -2567,7 +2446,7 @@
     },
     {
       "morphology_code": "9966",
-      "morphology_name": "Myeloid neoplasms with PDGFRB rearrangement",
+      "morphology_name": "Myeloid neoplasm with PDGFRB rearrangement",
       "iccc3_subgroup_id": "Ie",
       "iccc3_subgroup_name": "Unspecified and other specified leukemias",
       "who_version": "WHO-HAEM5",
@@ -2581,7 +2460,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9964",
-      "nos_fallback_name": "Chronic eosinophilic leukemia, NOS",
+      "nos_fallback_name": "Chronic eosinophilic leukemia",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "Karyotype 5q31-33 rearrangement confirmed by FISH. The secondary-eosinophilia exclusion cascade is a hard gate that must be documented before this code is reachable (§3.10).",
@@ -2594,7 +2473,7 @@
     },
     {
       "morphology_code": "9967",
-      "morphology_name": "Myeloid and lymphoid neoplasms with FGFR1 abnormalities",
+      "morphology_name": "Myeloid or lymphoid neoplasm with FGFR1 abnormalities",
       "iccc3_subgroup_id": "Ie",
       "iccc3_subgroup_name": "Unspecified and other specified leukemias",
       "who_version": "WHO-HAEM5",
@@ -2608,7 +2487,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9964",
-      "nos_fallback_name": "Chronic eosinophilic leukemia, NOS",
+      "nos_fallback_name": "Chronic eosinophilic leukemia",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "Karyotype 8p11-12 abnormality confirmed by FISH. The secondary-eosinophilia exclusion cascade is a hard gate that must be documented before this code is reachable (§3.10).",
@@ -2621,7 +2500,7 @@
     },
     {
       "morphology_code": "9968",
-      "morphology_name": "Myeloid/lymphoid neoplasm with PCM1-JAK2",
+      "morphology_name": "Myeloid or lymphoid neoplasm with PCM1-JAK2",
       "iccc3_subgroup_id": "Ie",
       "iccc3_subgroup_name": "Unspecified and other specified leukemias",
       "who_version": "WHO-HAEM5",
@@ -2636,7 +2515,7 @@
       "imaging_sufficient": false,
       "imaging_features": null,
       "nos_fallback_code": "9964",
-      "nos_fallback_name": "Chronic eosinophilic leukemia, NOS",
+      "nos_fallback_name": "Chronic eosinophilic leukemia",
       "confidence_ceiling": "high",
       "clinical_alert": null,
       "coding_note": "Added to the registry code set at ICD-O-3.2 (Pathway §5.7); previously and wrongly advised to 9964. Requires t(8;9)(p22;p24) on karyotype, or FISH, or RT-PCR for PCM1::JAK2. The secondary-eosinophilia exclusion cascade is a hard gate that must be documented before this code is reachable (§3.10). NOTE: not present in the ICCC-2017 recode table (which predates ICD-O-3.2); Ie assignment follows Pathway §1.",
@@ -7078,7 +6957,7 @@
           "nos_fallback": {
             "code": "9820",
             "name": "Lymphoid leukemia, NOS",
-            "reason": "Burkitt suspected but neither MYC rearrangement nor the Ki-67/MYC-protein surrogate was demonstrated, and no other mature lymphoid entity was established. 9826 is retired and is never emitted; a confirmed Burkitt is referred to Group II as 9687."
+            "reason": "Burkitt suspected but neither MYC rearrangement nor the Ki-67/MYC-protein surrogate was demonstrated, and no other mature lymphoid entity was established. The retired number 9826 is no longer carried in Group I at all; a confirmed Burkitt is referred to Group II as 9687."
           },
           "branch_sequence": {
             "order": [
@@ -7234,7 +7113,7 @@
               "label": "Confirm — refer this case to Group II and code 9687/3 (IIc)",
               "refer_group": 2,
               "refer_code": "9687",
-              "reason": "Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021. 9826 is retired and read-only for earlier records. No Group I code is emitted, and this is NOT a non-reportable terminal — Burkitt is a malignancy and must stay on the registry, in Group II. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change. The same alias strings must exist in aliases_group_02.json for the clerk to land there; that mirror is a flagged gap."
+              "reason": "Leukaemic Burkitt codes 9687/3 in Group II (IIc) from 1 January 2021. The retired number 9826 was removed from Group I on 6 October 2026 (registrar ruling) and is no longer carried here. No Group I code is emitted, and this is NOT a non-reportable terminal — Burkitt is a malignancy and must stay on the registry, in Group II. ⚠ Time-series discontinuity — pre-change leukaemic Burkitt sits in Group I as 9826, post-change in Group II as 9687; flag to biostatistics for any trend analysis spanning the change. Every Burkitt alias string Group I used to carry is mirrored in aliases_group_02.json, so the clerk lands in Group II; verified 6 October 2026."
             },
             {
               "label": "On review MYC rearrangement is not established — go back to the discriminator panel",
@@ -8517,7 +8396,7 @@
           ],
           "nos_fallback": {
             "code": "9964",
-            "name": "Chronic eosinophilic leukemia, NOS",
+            "name": "Chronic eosinophilic leukemia",
             "reason": "Clonal hypereosinophilia with the secondary causes excluded, but no specific kinase fusion identified."
           }
         },
@@ -8625,7 +8504,7 @@
           ],
           "nos_fallback": {
             "code": "9964",
-            "name": "Chronic eosinophilic leukemia, NOS",
+            "name": "Chronic eosinophilic leukemia",
             "reason": "Clonal hypereosinophilia with the secondary causes excluded, but no specific kinase fusion identified."
           }
         }
@@ -9038,7 +8917,7 @@
           ],
           "nos_fallback": {
             "code": "9975",
-            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "name": "Myeloproliferative neoplasm, unclassifiable",
             "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
           }
         },
@@ -9418,7 +9297,7 @@
           ],
           "nos_fallback": {
             "code": "9975",
-            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "name": "Myeloproliferative neoplasm, unclassifiable",
             "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
           }
         },
@@ -9459,7 +9338,7 @@
           ],
           "nos_fallback": {
             "code": "9975",
-            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "name": "Myeloproliferative neoplasm, unclassifiable",
             "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
           }
         },
@@ -9528,7 +9407,7 @@
           ],
           "nos_fallback": {
             "code": "9975",
-            "name": "Myelodysplastic/myeloproliferative neoplasm, unclassifiable.",
+            "name": "Myeloproliferative neoplasm, unclassifiable",
             "reason": "MDS/MPN overlap picture recorded but the CMML, aCML and JMML criteria were not met or could not be established."
           }
         },
