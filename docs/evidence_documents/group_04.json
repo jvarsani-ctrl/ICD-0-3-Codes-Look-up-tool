@@ -1,0 +1,355 @@
+{
+  "group": 4,
+  "nodes": [
+    {
+      "group": 4,
+      "node_id": "sa_document_inventory",
+      "question_edit": "",
+      "hint_edit": "This compartment holds two biologically distinct tumour families — the neuroblastic spectrum (neuroblastoma, ganglioneuroblastoma, ganglioneuroma) and the paraganglioma/pheochromocytoma family — plus, at the adrenal gland specifically, an epithelial differential (adrenocortical carcinoma). Record adequacy honestly: an uninterpretable specimen is not a negative one.",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Lowest tier. Excludes only the two pathology documents, so every set without cytology or histology fits it, including imaging-only and lab-only files and sets holding IHC or genetics alone, which understates. It cannot exclude imaging and lab because the gate has no imaging-only or lab-only option (DATA GAP). A file with imaging and lab ticked fits this option and option 1, and the clerk is asked.",
+          "label_head": "Referral letter or clinical note only — no imaging report, no laborato"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [
+            "imaging",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "The label asserts imaging plus a documented biochemical work-up with no tissue and no cytology. Requires both documents; the Lab Report stands for the catecholamine or biochemical work-up (assumption e, flagged). Excludes cytology and histology per the label.",
+          "label_head": "Imaging report (CT/MRI) with a biochemical or catecholamine work-up do"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Cytology with no histology report. IHC or genetics ticked beside cytology stays at this tier (immunocytochemistry, rule d). Imaging and lab do not change it. The label calls core-needle sampling cytology, which the seven-document definitions class as histology (flagged).",
+          "label_head": "Fine-needle aspiration or core-needle cytology only — no excisional or"
+        },
+        {
+          "index": 3,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "ihc"
+          ],
+          "confidence": "high",
+          "rationale": "Histology with no IHC reported, per the label. Genetics ticked beside histology without IHC falls here, because option 5 needs the IHC rung below it (rule c, flagged).",
+          "label_head": "Definitive histology report — no immunohistochemistry performed or rep"
+        },
+        {
+          "index": 4,
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc"
+          ],
+          "any_of": [],
+          "excludes": [
+            "genetics"
+          ],
+          "confidence": "high",
+          "rationale": "Histology read with IHC and no molecular result. Excludes genetics so a file with all three fits option 5 only; both options route to the same IHC checklist.",
+          "label_head": "Definitive histology WITH immunohistochemistry — any of PHOX2B, synapt"
+        },
+        {
+          "index": 5,
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Cumulative ladder: the label names histology, IHC and cytogenetic or molecular testing, so all three are required. Histology plus genetics without IHC falls to option 3.",
+          "label_head": "Histology and immunohistochemistry PLUS cytogenetic or molecular testi"
+        },
+        {
+          "index": 6,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Inadequate, non-diagnostic or crush-artefact specimen: a situation, not a document set.",
+          "label_head": "A specimen was taken but the report says it is inadequate, non-diagnos"
+        },
+        {
+          "index": 7,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Non-neoplastic lesion reviewed and excluded: a situation. Routes to a non-reportable exit.",
+          "label_head": "Reviewed and NOT a neoplasm — adrenal haemorrhage, extramedullary haem"
+        }
+      ],
+      "hint_was": "Pick the highest evidence tier present. This compartment holds two biologically distinct tumour families — the neuroblastic spectrum (neuroblastoma, ganglioneuroblastoma, ganglioneuroma) and the paraganglioma/pheochromocytoma family — plus, at the adrenal gland specifically, an epithelial differential (adrenocortical carcinoma). Record adequacy honestly: an uninterpretable specimen is not a negative one."
+    },
+    {
+      "group": 4,
+      "node_id": "hn_document_inventory",
+      "question_edit": "",
+      "hint_edit": "This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 8692/8690/8691/8693/8682/8680 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Lowest tier. Excludes imaging (option 1 takes imaging files) and histology (option 2). Cytology-only and cytology-with-nothing-else files fall here because the gate has no cytology option (DATA GAP); a lone Lab Report, IHC or genetics also falls here, which understates.",
+          "label_head": "Referral letter or clinical note only — no pathology report and no ima"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Imaging report with no tissue report. Cytology is not excluded because a file with imaging and cytology would otherwise fit no tier; the label's 'no cytology' wording cannot be honoured (DATA GAP). The gate has no lab wording, so a Lab Report does not change the tier.",
+          "label_head": "Imaging report only — no tissue, no cytology"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Tissue report. IHC and genetics refine it only beside histology and the label allows either or neither, so neither is required or excluded. Cytology alone never fits here.",
+          "label_head": "Tissue with a definitive pathology report — with or without immunohist"
+        },
+        {
+          "index": 3,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Inadequate or non-diagnostic specimen: a situation, not a document set.",
+          "label_head": "Specimen INADEQUATE or non-diagnostic — insufficient tissue, crush art"
+        },
+        {
+          "index": 4,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Technically uninterpretable specimen: a situation, not a document set.",
+          "label_head": "Specimen technically UNINTERPRETABLE — processing or stain failure, no"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence genuinely in the file. This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 8692/8690/8691/8693/8682/8680 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way."
+    },
+    {
+      "group": 4,
+      "node_id": "sn_document_inventory",
+      "question_edit": "",
+      "hint_edit": "This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 9522/9520/9521/9523 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+      "options": [
+        {
+          "index": 0,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Lowest tier. Excludes imaging (option 1 takes imaging files) and histology (option 2). Cytology-only and cytology-with-nothing-else files fall here because the gate has no cytology option (DATA GAP); a lone Lab Report, IHC or genetics also falls here, which understates.",
+          "label_head": "Referral letter or clinical note only — no pathology report and no ima"
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "Imaging report with no tissue report. Cytology is not excluded because a file with imaging and cytology would otherwise fit no tier; the label's 'no cytology' wording cannot be honoured (DATA GAP). The gate has no lab wording, so a Lab Report does not change the tier.",
+          "label_head": "Imaging report only — no tissue, no cytology"
+        },
+        {
+          "index": 2,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Tissue report. IHC and genetics refine it only beside histology and the label allows either or neither, so neither is required or excluded. Cytology alone never fits here.",
+          "label_head": "Tissue with a pathology report — with or without immunohistochemistry"
+        },
+        {
+          "index": 3,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Inadequate or non-diagnostic specimen: a situation, not a document set.",
+          "label_head": "Specimen INADEQUATE or non-diagnostic — insufficient tissue, crush art"
+        },
+        {
+          "index": 4,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Technically uninterpretable specimen: a situation, not a document set.",
+          "label_head": "Specimen technically UNINTERPRETABLE — processing or stain failure, no"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence genuinely in the file. This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 9522/9520/9521/9523 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way."
+    },
+    {
+      "group": 4,
+      "node_id": "op_document_inventory",
+      "question_edit": "",
+      "hint_edit": "Record the topography exactly as documented before answering anything else. This tree covers every Group IV site this registry does not have a dedicated tree for, including a primary that was never established (C80.9). If the topography is a meningeal, brain, spinal cord or other central-nervous-system site (C70.0-C72.9), stop here and choose the first of the special situations listed under the boxes, because four of this group's codes belong to ICCC-3 Group III at that topography, whatever the pathology report says.",
+      "options": [
+        {
+          "index": 0,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "A topography situation that redirects to the Group III tree, whatever documents exist.",
+          "label_head": "The topography recorded for this tumour is a meningeal, brain, spinal "
+        },
+        {
+          "index": 1,
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "confidence": "medium",
+          "rationale": "No tissue. Excludes histology only, so sets with no pathology, imaging, referral, lab, or IHC or genetics alone all fit. Cytology is not excluded because a cytology-only file would otherwise fit no tier, although the label says no cytology preparation was performed (DATA GAP).",
+          "label_head": "No operation, biopsy or cytology preparation was ever performed - the "
+        },
+        {
+          "index": 2,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "Inadequate, non-diagnostic or unassessable specimen: a situation, not a document set.",
+          "label_head": "Tissue was obtained and examined, but the specimen was inadequate, non"
+        },
+        {
+          "index": 3,
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "high",
+          "rationale": "The report is missing: a situation, not a document set.",
+          "label_head": "Tissue was examined and reported somewhere, but the report itself is n"
+        },
+        {
+          "index": 4,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "medium",
+          "rationale": "The pathology report names the entity. Fits every set with a Histology Report; options 4 to 7 differ only by what the report states, which no document id expresses, so the clerk is asked among them.",
+          "label_head": "The pathology report identifies Medulloepithelioma or Teratoid medullo"
+        },
+        {
+          "index": 5,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "medium",
+          "rationale": "Same fit as option 4: differs only by the wording the report uses.",
+          "label_head": "The pathology report uses the word \"neuroepithelioma\" in any form - \"N"
+        },
+        {
+          "index": 6,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "medium",
+          "rationale": "Same fit as option 4: differs only by the entity and site the report establishes. IHC is not required because the label does not name it.",
+          "label_head": "The pathology report confirms a paraganglioma-family tumour (paragangl"
+        },
+        {
+          "index": 7,
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "confidence": "medium",
+          "rationale": "Same fit as option 4: adequate tissue whose report names none of the entities above.",
+          "label_head": "Tissue was examined and is adequate, and the report describes a neurob"
+        }
+      ],
+      "hint_was": "Record the topography exactly as documented before answering anything else. This tree covers every Group IV site this registry does not have a dedicated tree for, including a primary that was never established (C80.9). If the topography is a meningeal, brain, spinal cord or other central-nervous-system site (C70.0-C72.9), stop here and use the first option below - four of this group's codes belong to ICCC-3 Group III at that topography, whatever the pathology report says."
+    }
+  ]
+}

@@ -6718,7 +6718,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "What is in the file for this tumour?",
-          "hint": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "hint": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4.2: five evidence tiers. Every Group X tree carries the same tiers; the router's site capture chose this tree.",
           "captured_variables": [
@@ -6729,6 +6733,13 @@
           "options": [
             {
               "label": "A referral letter or clinical note only — no imaging report, no marker result, no tissue",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "cn_clinical_alias",
               "captures": {
                 "evidence_tests": [],
@@ -6738,6 +6749,16 @@
             },
             {
               "label": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein or human chorionic gonadotropin result — no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "cn_markers",
               "captures": {
                 "evidence_tests": [
@@ -6750,6 +6771,16 @@
             },
             {
               "label": "An imaging report only — no marker result, no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "lab",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "cn_imaging",
               "captures": {
                 "evidence_tests": [
@@ -6761,6 +6792,14 @@
             },
             {
               "label": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate; no tissue",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "cn_cytology",
               "captures": {
                 "evidence_tests": [
@@ -6772,6 +6811,11 @@
             },
             {
               "label": "A histology report — biopsy or resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "cn_histology",
               "captures": {
                 "evidence_tests": [
@@ -7644,7 +7688,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "What is in the file for this tumour?",
-          "hint": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "hint": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4.2: five evidence tiers. Every Group X tree carries the same tiers; the router's site capture chose this tree.",
           "captured_variables": [
@@ -7655,6 +7703,13 @@
           "options": [
             {
               "label": "A referral letter or clinical note only — no imaging report, no marker result, no tissue",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ov_clinical_alias",
               "captures": {
                 "evidence_tests": [],
@@ -7664,6 +7719,16 @@
             },
             {
               "label": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein or human chorionic gonadotropin result — no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ov_markers",
               "captures": {
                 "evidence_tests": [
@@ -7676,6 +7741,16 @@
             },
             {
               "label": "An imaging report only — no marker result, no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "lab",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ov_imaging",
               "captures": {
                 "evidence_tests": [
@@ -7687,6 +7762,14 @@
             },
             {
               "label": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate; no tissue",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "ov_cytology",
               "captures": {
                 "evidence_tests": [
@@ -7698,6 +7781,11 @@
             },
             {
               "label": "A histology report — biopsy or resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "ov_histology",
               "captures": {
                 "evidence_tests": [
@@ -9389,7 +9477,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "What is in the file for this tumour?",
-          "hint": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "hint": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4.2: five evidence tiers. Every Group X tree carries the same tiers; the router's site capture chose this tree.",
           "captured_variables": [
@@ -9400,6 +9492,13 @@
           "options": [
             {
               "label": "A referral letter or clinical note only — no imaging report, no marker result, no tissue",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ts_clinical_alias",
               "captures": {
                 "evidence_tests": [],
@@ -9409,6 +9508,16 @@
             },
             {
               "label": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein or human chorionic gonadotropin result — no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ts_markers",
               "captures": {
                 "evidence_tests": [
@@ -9421,6 +9530,16 @@
             },
             {
               "label": "An imaging report only — no marker result, no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "lab",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "ts_imaging",
               "captures": {
                 "evidence_tests": [
@@ -9432,6 +9551,14 @@
             },
             {
               "label": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate; no tissue",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "ts_cytology",
               "captures": {
                 "evidence_tests": [
@@ -9443,6 +9570,11 @@
             },
             {
               "label": "A histology report — biopsy or resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "ts_histology",
               "captures": {
                 "evidence_tests": [
@@ -10862,7 +10994,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "What is in the file for this tumour?",
-          "hint": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "hint": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Contract §4.2: five evidence tiers. Every Group X tree carries the same tiers; the router's site capture chose this tree.",
           "captured_variables": [
@@ -10873,6 +11009,13 @@
           "options": [
             {
               "label": "A referral letter or clinical note only — no imaging report, no marker result, no tissue",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "eg_clinical_alias",
               "captures": {
                 "evidence_tests": [],
@@ -10882,6 +11025,16 @@
             },
             {
               "label": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein or human chorionic gonadotropin result — no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "eg_markers",
               "captures": {
                 "evidence_tests": [
@@ -10894,6 +11047,16 @@
             },
             {
               "label": "An imaging report only — no marker result, no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "lab",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "eg_imaging",
               "captures": {
                 "evidence_tests": [
@@ -10905,6 +11068,14 @@
             },
             {
               "label": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate; no tissue",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "eg_cytology",
               "captures": {
                 "evidence_tests": [
@@ -10916,6 +11087,11 @@
             },
             {
               "label": "A histology report — biopsy or resection",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "eg_histology",
               "captures": {
                 "evidence_tests": [

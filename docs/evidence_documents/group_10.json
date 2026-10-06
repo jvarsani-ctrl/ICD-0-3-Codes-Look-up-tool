@@ -1,0 +1,329 @@
+{
+  "group": 10,
+  "nodes": [
+    {
+      "group": 10,
+      "node_id": "cn_document_inventory",
+      "question_edit": "",
+      "hint_edit": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
+          "kind": "tier",
+          "requires": [
+            "imaging",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "An imaging report only — no marker result, no tissue",
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "lab",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Imaging Report alone, honouring 'no marker result, no tissue' by excluding Lab Report, Cytology and Histology Report; sibling to option 1, so imaging with a Lab Report fits only option 1.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
+    },
+    {
+      "group": 10,
+      "node_id": "ov_document_inventory",
+      "question_edit": "",
+      "hint_edit": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
+          "kind": "tier",
+          "requires": [
+            "imaging",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "An imaging report only — no marker result, no tissue",
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "lab",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Imaging Report alone, honouring 'no marker result, no tissue' by excluding Lab Report, Cytology and Histology Report; sibling to option 1, so imaging with a Lab Report fits only option 1.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
+    },
+    {
+      "group": 10,
+      "node_id": "ts_document_inventory",
+      "question_edit": "",
+      "hint_edit": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
+          "kind": "tier",
+          "requires": [
+            "imaging",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "An imaging report only — no marker result, no tissue",
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "lab",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Imaging Report alone, honouring 'no marker result, no tissue' by excluding Lab Report, Cytology and Histology Report; sibling to option 1, so imaging with a Lab Report fits only option 1.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
+    },
+    {
+      "group": 10,
+      "node_id": "eg_document_inventory",
+      "question_edit": "",
+      "hint_edit": "A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers.",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
+          "kind": "tier",
+          "requires": [
+            "imaging",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "An imaging report only — no marker result, no tissue",
+          "kind": "tier",
+          "requires": [
+            "imaging"
+          ],
+          "any_of": [],
+          "excludes": [
+            "lab",
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Imaging Report alone, honouring 'no marker result, no tissue' by excluding Lab Report, Cytology and Histology Report; sibling to option 1, so imaging with a Lab Report fits only option 1.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        }
+      ],
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
+    }
+  ]
+}

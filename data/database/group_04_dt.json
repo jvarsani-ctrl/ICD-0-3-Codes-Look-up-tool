@@ -592,7 +592,11 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "Sympathoadrenal-region mass — adrenal gland (C74.0, C74.1, C74.9), peripheral nerve or autonomic nervous system (C47.0–C47.9), retroperitoneum (C48.0, C48.2, C48.8), or mediastinum (C38.1–C38.3). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the highest evidence tier present. This compartment holds two biologically distinct tumour families — the neuroblastic spectrum (neuroblastoma, ganglioneuroblastoma, ganglioneuroma) and the paraganglioma/pheochromocytoma family — plus, at the adrenal gland specifically, an epithelial differential (adrenocortical carcinoma). Record adequacy honestly: an uninterpretable specimen is not a negative one.",
+          "hint": "This compartment holds two biologically distinct tumour families — the neuroblastic spectrum (neuroblastoma, ganglioneuroblastoma, ganglioneuroma) and the paraganglioma/pheochromocytoma family — plus, at the adrenal gland specifically, an epithelial differential (adrenocortical carcinoma). Record adequacy honestly: an uninterpretable specimen is not a negative one.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "ENCR basis of diagnosis is computed as the highest of codes 1-8 (0 and 9 override). ihc_counts_as 7, methylation_counts_as 8 are declared on the tree object (build contract §4.2). Only 9500/3 and 8700/3 may be assigned on imaging alone, at basis 4, and only with a biochemical marker AND the imaging finding together (Visser Rule 6, p.05) — never on imaging alone. Every other code in this tree requires tissue.",
           "captured_variables": [
@@ -603,6 +607,12 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no laboratory result and no pathology report",
+              "ticks": {
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "sa_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -614,6 +624,16 @@
             },
             {
               "label": "Imaging report (CT/MRI) with a biochemical or catecholamine work-up documented — no tissue and no cytology",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "sa_imaging_gate",
               "captures": {
                 "evidence_tests": [
@@ -625,6 +645,14 @@
             },
             {
               "label": "Fine-needle aspiration or core-needle cytology only — no excisional or incisional biopsy report is in the file",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "sa_cytology_only",
               "captures": {
                 "evidence_tests": [],
@@ -634,6 +662,14 @@
             },
             {
               "label": "Definitive histology report — no immunohistochemistry performed or reported",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "sa_histology_subclassification",
               "captures": {
                 "evidence_tests": [
@@ -645,6 +681,15 @@
             },
             {
               "label": "Definitive histology WITH immunohistochemistry — any of PHOX2B, synaptophysin, chromogranin A, GATA3 or cytokeratin reported",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "sa_ihc_checklist",
               "captures": {
                 "evidence_tests": [
@@ -657,6 +702,13 @@
             },
             {
               "label": "Histology and immunohistochemistry PLUS cytogenetic or molecular testing — MYCN FISH, ALK testing, germline susceptibility gene testing, or another molecular result",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "sa_ihc_checklist",
               "captures": {
                 "evidence_tests": [
@@ -1332,7 +1384,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A head and neck paraganglioma is suspected (carotid body C75.4; aortic body and other paraganglia C75.5, which covers vagal, laryngeal and other extra-adrenal head and neck sites; middle ear C30.1). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 8692/8690/8691/8693/8682/8680 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+          "hint": "This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 8692/8690/8691/8693/8682/8680 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Larynx (C32.x) and oropharynx (C10.x) have no topography code in this registry's topography_codes.json yet. Vagal and laryngeal paraganglioma still reach this tree through C75.5, whose RedCap label covers 'aortic body and other paraganglia' generally; a case captured at C75.4/C75.5/C30.1 at Stage 1 is what enters here regardless of the more specific anatomical wording the report may use downstream in hn_site_resolution.",
           "captured_variables": [
@@ -1345,6 +1401,12 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no pathology report and no imaging report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "histology"
+                ]
+              },
               "next_node": "hn_clinical_alias",
               "coding_note": "Tier 1. No Group IV code is reachable from a referral alone — see hn_clinical_alias.",
               "captures": {
@@ -1359,6 +1421,14 @@
             },
             {
               "label": "Imaging report only — no tissue, no cytology",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "refer_group": 12,
               "reason": "No tissue diagnosis exists. Under Visser 2023 rule 5 (p. 03), a tumour diagnosed without pathology is coded 8000/3 (malignant neoplasm, NOS). Group IV carries no Visser Table 3 entries permitting an imaging-based registration, so 8000/3 is not a Group IV code here; the case routes to Group XII pending a biopsy. Neither ¹²³I-MIBG, ⁶⁸Ga-DOTATATE nor ¹⁸F-FDOPA imaging, however characteristic, can establish a paraganglioma diagnosis or its site-specific code on its own.",
               "captures": {
@@ -1373,6 +1443,11 @@
             },
             {
               "label": "Tissue with a definitive pathology report — with or without immunohistochemistry, with or without constitutional genetic testing",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "hn_ihc_checklist",
               "captures": {
                 "evidence_tests": [
@@ -1828,7 +1903,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A sinonasal or nasopharyngeal mass (C30.0 nasal cavity; C31.0-C31.9 paranasal sinuses; C11.0-C11.9 nasopharynx). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 9522/9520/9521/9523 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+          "hint": "This tree has no imaging-sufficient route and no clinical-only route: Group IV has no Visser Table 3 entries at all, so a terminal without a tissue diagnosis never emits 9522/9520/9521/9523 — it refers to Group XII instead. An inadequate or unassessable specimen is treated the same way.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Nasopharyngeal masses (C11.x) route here because they sit in the sinonasal small round cell / neuroectodermal differential, not the paraganglioma one (build contract Sec.5, controller correction 2026-09-18).",
           "captured_variables": [
@@ -1841,6 +1920,12 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no pathology report and no imaging report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "histology"
+                ]
+              },
               "next_node": "sn_clinical_alias",
               "coding_note": "Tier 1. No Group IV code is reachable from a referral alone — see sn_clinical_alias.",
               "captures": {
@@ -1855,6 +1940,14 @@
             },
             {
               "label": "Imaging report only — no tissue, no cytology",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "refer_group": 12,
               "reason": "No tissue diagnosis exists. Under Visser 2023 rule 5 (p. 03), a tumour diagnosed without pathology is coded 8000/3 (malignant neoplasm, NOS). Group IV carries no Visser Table 3 entries permitting an imaging-based registration, so 8000/3 is not a Group IV code here; the case routes to Group XII pending a biopsy. Neither olfactory neuroblastoma nor any of the three related codes may be assigned on imaging alone, however characteristic the imaging appearance.",
               "captures": {
@@ -1869,6 +1962,11 @@
             },
             {
               "label": "Tissue with a pathology report — with or without immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "sn_report_wording",
               "captures": {
                 "evidence_tests": [
@@ -2265,7 +2363,11 @@
           "step_number": 1,
           "step_label": "Evidence in file, and the topography gate",
           "question": "What does the pathology file establish about this tumour, and where is it - record the topography first.",
-          "hint": "Record the topography exactly as documented before answering anything else. This tree covers every Group IV site this registry does not have a dedicated tree for, including a primary that was never established (C80.9). If the topography is a meningeal, brain, spinal cord or other central-nervous-system site (C70.0-C72.9), stop here and use the first option below - four of this group's codes belong to ICCC-3 Group III at that topography, whatever the pathology report says.",
+          "hint": "Record the topography exactly as documented before answering anything else. This tree covers every Group IV site this registry does not have a dedicated tree for, including a primary that was never established (C80.9). If the topography is a meningeal, brain, spinal cord or other central-nervous-system site (C70.0-C72.9), stop here and choose the first of the special situations listed under the boxes, because four of this group's codes belong to ICCC-3 Group III at that topography, whatever the pathology report says.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "This is the Group IV catch-all tree, the analogue of the Group 3 g3_unspecified tree. It is deliberately thin: Pfister 2022 says almost nothing about peripheral medulloepithelioma, neuroepithelioma or unclassified peripheral neuroblastic tumours, and no diagnostic pathway is built where no evidence supports one. The topography gate below enforces contract section 2.4/2.5: the medulloepithelioma/neuroepithelioma-family stems this tree owns are dual-group with Group III across the whole of C70.0-C72.9, and the router's own dual_group_rule for this must not be relied on as the only safeguard.",
           "captured_variables": [
@@ -2289,6 +2391,11 @@
             },
             {
               "label": "No operation, biopsy or cytology preparation was ever performed - the tumour is known only from imaging, a clinical impression, or a referral note",
+              "ticks": {
+                "excludes": [
+                  "histology"
+                ]
+              },
               "refer_group": 12,
               "reason": "No pathology exists for this tumour. Under Visser rule 5 (Front Oncol 2023;13:1250549, p. 03), a case diagnosed with no tissue, cytology or entity-specific marker basis is coded 8000/3, Neoplasm, malignant, NOS - and 8000/3 at this topography is not an ICCC-3 Group IV code. Code the case from the ICCC-3 Group XII tree (other and unspecified malignant neoplasms) until tissue is obtained.",
               "captures": {
@@ -2324,6 +2431,11 @@
             },
             {
               "label": "The pathology report identifies Medulloepithelioma or Teratoid medulloepithelioma at this site",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "op_medulloepithelioma",
               "captures": {
                 "surgery_performed": "y",
@@ -2336,6 +2448,11 @@
             },
             {
               "label": "The pathology report uses the word \"neuroepithelioma\" in any form - \"Neuroepithelioma, NOS\", \"peripheral neuroepithelioma\", \"peripheral PNET\", \"PPNET\", or \"peripheral (primitive) neuroectodermal tumour\"",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "op_clinical_alias",
               "captures": {
                 "surgery_performed": "y",
@@ -2348,6 +2465,11 @@
             },
             {
               "label": "The pathology report confirms a paraganglioma-family tumour (paraganglioma, sympathetic paraganglioma, parasympathetic paraganglioma, or extra-adrenal paraganglioma), but the primary site is not one this registry's dedicated paraganglioma trees cover, or the primary site could not be established",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "op_paraganglioma_uncovered",
               "captures": {
                 "surgery_performed": "y",
@@ -2360,6 +2482,11 @@
             },
             {
               "label": "Tissue was examined and is adequate, and the report describes a neuroblastic, neuroendocrine or small round cell neoplasm, but none of the entities above is named",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "op_unclassified_histology",
               "captures": {
                 "surgery_performed": "y",

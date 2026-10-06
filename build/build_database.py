@@ -60,6 +60,7 @@ NODE_TYPES = {
     "histology_subclassification",
     "site_resolution",
     "numeric_gate",  # Group 1 extension, Pathway §7.3
+    "lab_results",   # laboratory panel, registrar 6 Oct 2026 (DT master §3I)
 }
 
 # NOS-fallback rule BY NODE TYPE (DT master §3D; nodes.md §2) — not a step-number rule.
@@ -78,6 +79,7 @@ NOS_FORBIDDEN_TYPES = {
     "imaging_pathway",
     "histology_subclassification",
     "site_resolution",
+    "lab_results",
 }
 
 # Router-tier node types never appear inside a group_XX_dt.json (DT master §3B).
@@ -334,6 +336,12 @@ POSITIVE_RESULT_TOKENS = {
 # are the anchors for everything that can be anchored.
 # --------------------------------------------------------------------------------------
 
+# Group I joined ROUND_TRIP_GROUPS on 6 October 2026 (docs/TODO.md §27,
+# docs/group_01_icdo32_names.md). Its names are ICD-O-3.2 terms, and the four codes
+# ICD-O-3.2 carries no term for — 9826, 9836, 9991, 9992 — were removed from the group
+# by registrar ruling rather than exempted, so no exemption mechanism was added.
+GROUP1 = 1
+
 GROUP3 = 3
 
 # -- §2(1) diagnosis_rendering — the two-track output -----------------------------------
@@ -388,7 +396,7 @@ RL_FAMILIES_WITHOUT_ADAPTR = {
 RL_ASSIGNMENT_VALUES = {"by_analogy", "sourced"}
 
 # -- §2(3) entity_annotation — the WHO CNS5 entity, recorded without a code -------------
-ENTITY_CODE_STATUS = {"shares_code", "no_code", "awaiting_layer1"}
+ENTITY_CODE_STATUS = {"shares_code", "no_code", "own_code"}
 # How firmly the entity is claimed. Added 2026-09-14 on the registrar’s ruling, after
 # two trees handled the same situation differently: an MYCN IHC with no published
 # sensitivity, and a DLGNT with 1p untested. Without this, a `who_cns5_entity` rendered
@@ -487,6 +495,10 @@ CLERK_FACING_TEXT_KEYS = {
     "reason", "hint", "label", "question", "name", "morphology_name", "nos_fallback_name",
     "descriptive_diagnosis", "who_diagnosis", "comment", "full_form", "upgrade_path",
     "criterion", "feature", "who_cns5_entity", "iccc3_subgroup_name", "notes",
+    "recognition_aid",
+    # Tick lists and the laboratory screen (6 Oct 2026): the sentences above and below a
+    # checklist, drawn by tickControl()/tickSiblings(). Their `label`s are covered above.
+    "prompt", "context_prompt", "none_label", "sibling_prompt",
 }
 # Author-facing per memory `uccf-lookup-tool-clerk-facing-text` — not displayed, so a
 # banned code here is reported but does not block.
@@ -537,6 +549,7 @@ CLERK_FACING_PROSE_KEYS = CLERK_FACING_TEXT_KEYS | {
     "variable_label", "step_label", "required_answer", "defer_to", "resolving_test",
     "alternative_entities", "shared_with", "evidence", "interpretation", "context",
     "imaging_features",
+    "units",      # lab_results labs[].units: the closed list of units a clerk picks from, labControl()
 }
 
 # The engine's OWN vocabulary — a schema field name, never a clinical fact — appearing
@@ -800,12 +813,13 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     GROUP10: {"3"},
 }
 
-# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip()
-# INSTEAD OF against the REDCap option file by check_redcap_exact_names(). Both guards read
-# this one set: a group in one and not the other would get neither name check.
-# GROUP10 joins on its build contract §5: morphology_name is the ICD-O-3.2 preferred term,
-# and x_morph drifts from it on 67 codes (docs/group_10_layer1_repair.md).
-ROUND_TRIP_GROUPS = {GROUP3, GROUP4, GROUP6, GROUP7, GROUP8, GROUP9, GROUP10}
+# Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip().
+# The REDCap exact-name check was removed on 4 October 2026 (standing rule 16; registrar), so a
+# group outside this set has no name check at all, and the round trip says so in a NOTE. Groups
+# 1 and 2 are outside it until their names move to ICD-O-3.2 terms, handed to those groups'
+# sessions the same day.
+# GROUP10 joins on its build contract §5: morphology_name is the ICD-O-3.2 preferred term.
+ROUND_TRIP_GROUPS = {GROUP1, GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9, GROUP10}
 
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
@@ -2806,177 +2820,6 @@ def check_satisfies_tests(ctx: DTContext):
 # --------------------------------------------------------------------------------------
 # B3. The four checks that did not exist before (data.md §5)
 # --------------------------------------------------------------------------------------
-
-def check_redcap_exact_names(ctx: DTContext, redcap_options: dict):
-    """
-    NEW CHECK 1 — exact-string match of morphology_name to the REDCap options file.
-
-    The tool is ADVISORY: the clerk finds the row in REDCap by matching the WHOLE option
-    string, not four digits (redcap.md §2, §5). Any drift between morphology_name and the
-    REDCap option's name half therefore breaks the model.
-
-    This check used to key off `redcap_option_verified` alone — only entries claiming
-    `true` were compared, and `false` was a bare WARN. That left a hole wide enough to
-    drive six codes through: an entry could be flagged `false` while Layer 1 DID carry an
-    option string for its code, so its morphology_name was free to drift from a string
-    sitting right there in the source of truth, and the build still passed.
-
-    The rule is now keyed off Layer 1, not off the flag:
-
-        code HAS an option string in Layer 1  ->  the name must be character-identical,
-                                                  and a mismatch is a FAIL, whatever the
-                                                  flag says.
-        code has NO option string in Layer 1  ->  WARN. There is nothing to compare
-                                                  against; the registry must add the
-                                                  option before the terminal is usable.
-
-    `redcap_option_verified: true` on a code Layer 1 does not carry stays a FAIL, and a
-    stale `false` on a code it does carry is reported as a WARN so the flag is corrected.
-
-    ONE exemption, deliberately narrow — the behaviour-overloaded code. 9898 has a single
-    option string and that string names one of the two entities (ML-DS, /3); the sibling
-    it does not name (TAM, /1) genuinely has no option string of its own. An entry is
-    exempt only when ALL of:
-        * it is flagged `redcap_option_verified: false` (it makes no claim), AND
-        * another entry shares its morphology_code with a DIFFERENT behavior_code, AND
-        * that sibling's morphology_name IS character-identical to the option.
-    i.e. the option is demonstrably spoken for by the sibling. Anything less than all
-    three and the mismatch is a FAIL — the exemption can never absorb ordinary drift.
-
-    GROUPS 3, 4 AND 6 ARE OUT OF SCOPE, and are validated by something stronger (Group 3
-    build contract §5.2; Group 4 build contract §1.1a; Group 6 build contract §8, all
-    three adopting the same rule for the same reason — §0.3 lists four Group IV
-    divergences and §2C lists EIGHT Group VI divergences, the largest Layer 1 split of
-    any group built so far, between the REDCap option strings and the ICD-O-3.2
-    preferred terms). For those groups Layer 1 for code identity is ICD-O-3.2, not the
-    REDCap option file: check_icdo32_round_trip() requires every (code, name, behaviour)
-    triple the engine can emit to exist verbatim in icdo32.sqlite. That is a superset of
-    this check's question, because the option list itself carries (code, term) pairs the
-    database does not — matching them would inherit the errors rather than catch them.
-    The option strings are not dropped; they move to the alias file and are checked the
-    other way round (every alias resolves to a valid triple; no alias is ever emitted).
-
-    GROUP 5 IS DELIBERATELY NOT HERE. Its four option strings are character-identical to
-    both sources, so this check and check_icdo32_round_trip() agree on it and there is no
-    defect to fix; whether it should also move to the round-trip is a question for the
-    Group 5 branch, not this one (Group 6 build contract §8).
-
-    Nothing about Groups 1 and 2 changes. Their Layer 1 is still the option file, the
-    sibling exemption still works exactly as described above, and the scoping below is a
-    single equality on the group number — which comes from the FILENAME and is
-    cross-checked against metadata.group_id by check_top_level_keys(), so it is not a
-    flag in the file exempting itself (rule 8).
-    """
-    out = []
-    if ctx.group in ROUND_TRIP_GROUPS:
-        return [(NOTE, "group %d: morphology_name is checked by check_icdo32_round_trip() "
-                       "against icdo32.sqlite instead of against the REDCap option file "
-                       "(contract §5.2 for Group 3; §1.1a for Group 4; Group 6 build "
-                       "contract §8 for Group 6, whose eight REDCap-string drifts — "
-                       "§2C, two of them naming a different lesion entirely — would "
-                       "otherwise FAIL this check on correct data; Group 9 build contract "
-                       "§8 for Group 9, whose fourteen string drifts include three labels "
-                       "naming a benign lesion on a malignant code). That is the "
-                       "stronger question — it rejects (code, term) pairs the option list "
-                       "carries that ICD-O-3.2 does not, where this check would have "
-                       "inherited them. Group 7 joins on its own contract §2E, for ten "
-                       "drifts; Group 8 on its contract §2, whose viii_morph offers "
-                       "Ewing sarcoma on the retired number 9260; Group 10 on its "
-                       "contract §5. Groups 1 and 2 are unaffected."
-                       % ctx.group)]
-    options = redcap_options.get(ctx.group)
-    if not options:
-        return [(NOTE, "no REDCap options parsed for group %d — exact-string check skipped"
-                 % ctx.group)]
-
-    def variants_of(option):
-        return option.get("names") or [option["name"]]
-
-    # code -> [entries], so the behaviour-overload exemption can see an entry's siblings.
-    by_code: dict[str, list] = {}
-    for entry in ctx.entries:
-        if not isinstance(entry, dict):
-            continue
-        code = as_code(entry.get("morphology_code"))
-        if code is not None:
-            by_code.setdefault(code, []).append(entry)
-
-    def sibling_claims_option(entry, code, variants):
-        """True when a DIFFERENT-behaviour entry on this code already matches the option."""
-        mine = entry.get("behavior_code")
-        for other in by_code.get(code, []):
-            if other is entry:
-                continue
-            if other.get("behavior_code") == mine:
-                continue
-            if isinstance(other.get("morphology_name"), str) \
-                    and other["morphology_name"] in variants:
-                return True
-        return False
-
-    compared = matched = 0
-    no_option: list[str] = []
-    for entry in ctx.entries:
-        if not isinstance(entry, dict):
-            continue
-        code = as_code(entry.get("morphology_code"))
-        name = entry.get("morphology_name")
-        if code is None:
-            continue
-        flag = entry.get("redcap_option_verified")
-        option = options.get(code)
-
-        if option is None:
-            # Nothing in Layer 1 to compare against.
-            if flag is True:
-                out.append((FAIL, "entry %s claims redcap_option_verified: true but no "
-                                  "REDCap option with that code exists for group %d"
-                            % (code, ctx.group)))
-            else:
-                no_option.append(code)
-            continue
-
-        # Layer 1 carries an option for this code — the name MUST match it.
-        variants = variants_of(option)
-        compared += 1
-        if isinstance(name, str) and name in variants:
-            matched += 1
-            if flag is not True:
-                out.append((WARN, "entry %s: morphology_name matches the REDCap option but "
-                                  "redcap_option_verified is %r — the flag is stale and "
-                                  "should be true" % (code, flag)))
-            continue
-
-        if flag is not True and sibling_claims_option(entry, code, variants):
-            # Behaviour-overloaded code: the one option string is spoken for by the
-            # sibling behaviour. This entry has no option string of its own.
-            compared -= 1
-            out.append((NOTE, "entry %s/%s (%r) is the unnamed half of a behaviour-"
-                              "overloaded code — the single REDCap option names the "
-                              "%s behaviour; no option string of its own"
-                        % (code, entry.get("behavior_code"), name,
-                           next((o.get("behavior_code") for o in by_code.get(code, [])
-                                 if o is not entry
-                                 and isinstance(o.get("morphology_name"), str)
-                                 and o["morphology_name"] in variants), "?"))))
-            no_option.append("%s/%s" % (code, entry.get("behavior_code")))
-            continue
-
-        out.append((FAIL, "entry %s: a REDCap option EXISTS for this code and "
-                          "morphology_name is not character-identical to it "
-                          "(redcap_option_verified: %r — the flag does not exempt it).\n"
-                          "               dt.json : %r\n"
-                          "               REDCap  : %s"
-                    % (code, flag, name, " | ".join(repr(v) for v in variants))))
-
-    if no_option:
-        out.append((WARN, "%d code(s) have no REDCap option string in Layer 1: %s"
-                    % (len(no_option), ", ".join(sorted(set(no_option))))))
-    if compared:
-        out.append((OK, "%d/%d morphology_name(s) whose code HAS a REDCap option are "
-                        "character-identical to it" % (matched, compared)))
-    return out
-
 
 def check_raw_hex_ban(repo: Path):
     """
@@ -6244,15 +6087,16 @@ def check_icdo32_round_trip(ctx: DTContext, layer1: Path):
     # ICD-O-3.2 preferred term and viii_morph drifts from it on nine codes (§2).
     # GROUP10 joins on the same ground (Group 10 build contract §5).
     if ctx.group not in ROUND_TRIP_GROUPS:
-        return []
+        return [(NOTE, "group %d: morphology_name is not validated against any source. The "
+                       "REDCap exact-name check was removed on 4 October 2026 (standing rule "
+                       "16), and this group's names are REDCap wordings that do not yet "
+                       "round-trip to icdo32.sqlite; moving them is the group's own pending "
+                       "work" % ctx.group)]
     index, err = load_icdo32(layer1)
     if err:
         return [(WARN, "RULE 13 could not run: %s. morphology_name is NOT validated for "
-                       "this group — check_redcap_exact_names() steps aside for Group 3, "
-                       "Group 4 and Group 6 (contract §5.2, §1.1a, Group 6 build "
-                       "contract §8) on the understanding that this check replaces it, "
-                       "so with the database absent nothing is checking the names at all"
-                 % err)]
+                       "this group — this check is the only name check, so with the database "
+                       "absent nothing is checking the names at all" % err)]
 
     out, checked, matched = [], 0, 0
     exempt_pairs = set(ICDO32_SOURCE_TERM_EXEMPTIONS)
@@ -10270,55 +10114,84 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
     return out
 
 
-def check_codes_against_source_of_truth(ctx: DTContext, redcap_options: dict,
-                                        classification: dict):
-    """
-    Every morphology_code appears in Layer 1 for that group.
+_ICCC_GROUP_CODES: dict = {}
 
-    Absent from BOTH the REDCap options file and the ICCC classification table -> FAIL
-    (Architecture §11 rule 1: never fabricate a code).
-    Present in the classification table but with no REDCap option -> WARN.
+
+def iccc_group_codes(layer1) -> dict:
+    """{group number: set(code)} read straight from ICCC-2017.sqlite's code_lookup view.
+
+    The markdown classification table parses into ten groups and carries no Group VII rows,
+    so a check resting on it alone could not verify a single Group VII code. The database
+    is the generators' own source (build/generate_group_inventory.py). Empty when absent."""
+    path = _iccc_path(layer1)
+    key = str(path)
+    if key in _ICCC_GROUP_CODES:
+        return _ICCC_GROUP_CODES[key]
+    roman_to_int = {v: k for k, v in ROMAN_BY_GROUP.items()}
+    out: dict = {}
+    if path is not None and path.exists():
+        try:
+            con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
+            try:
+                for code, main_group in con.execute("SELECT code, main_group FROM code_lookup"):
+                    g = roman_to_int.get(str(main_group))
+                    if g is not None:
+                        out.setdefault(g, set()).add(str(code))
+            finally:
+                con.close()
+        except sqlite3.Error:
+            out = {}
+    _ICCC_GROUP_CODES[key] = out
+    return out
+
+
+def check_codes_against_source_of_truth(ctx: DTContext, classification: dict, layer1: Path):
     """
-    out = []
-    redcap = set(redcap_options.get(ctx.group, {}))
-    classif = set(classification.get(ctx.group, set()))
-    if not redcap and not classif:
-        return [(NOTE, "no Layer 1 code list available for group %d — source-of-truth "
-                 "check skipped" % ctx.group)]
-    declared_awaiting = {}
-    for entry in ctx.data.get("morphology_entries") or []:
-        if isinstance(entry, dict) and isinstance(entry.get("awaiting_layer1"), dict):
-            needs = entry["awaiting_layer1"].get("needs") or []
-            declared_awaiting[str(entry.get("morphology_code"))] = ", ".join(needs) or "declared"
-    no_option: list[str] = []
-    for code in sorted(ctx.codes):
-        in_redcap = code in redcap
-        in_classif = code in classif
-        if not in_redcap and not in_classif:
-            # Ruling 3, 4 Sep 2026: a code the option list lacks is built, reported and put
-            # on the to-do list rather than withheld — but only when the entry SAYS SO. An
-            # entry that just appeared with no declaration is still a fabricated code.
-            declared = declared_awaiting.get(code)
-            if declared:
-                out.append((WARN, "morphology_code %s is in neither Layer 1 list for group "
-                                  "%d and is declared awaiting_layer1: %s"
-                            % (code, ctx.group, declared)))
-            else:
-                out.append((FAIL, "morphology_code %s is in neither the REDCap options file "
-                                  "nor the ICCC classification table for group %d — never "
-                                  "fabricate a code (Architecture §11 rule 1). If it is a "
-                                  "ratified ICD-O-3.2 addition, give the entry an "
-                                  "`awaiting_layer1` object and list it in "
-                                  "docs/codes-awaiting-redcap.md (ruling 3)."
-                        % (code, ctx.group)))
-        elif not in_redcap:
-            no_option.append(code)
-    if no_option:
-        out.append((WARN, "%d code(s) verified in the ICCC classification table but with no "
-                          "REDCap option yet: %s"
-                    % (len(no_option), ", ".join(no_option))))
-    if not out:
-        out.append((OK, "all %d morphology_code(s) verified against Layer 1" % len(ctx.codes)))
+    Every morphology entry is a real code: in the ICCC classification for its group (the
+    markdown table or ICCC-2017.sqlite), or, failing that, a (code, behaviour) pair ICD-O-3.2 itself carries.
+
+    In neither -> FAIL (Architecture §11 rule 1: never fabricate a code). In ICD-O-3.2 but
+    outside every ICCC range for the group -> NOTE: ICCC-2017 is the grouping convention
+    only, and a valid ICD-O-3.2 code offered in a group belongs to it (registrar, 1 October
+    2026; standing rule 3).
+
+    The REDCap option list is not consulted. Until 4 October 2026 it was the first list
+    checked and a code absent from it needed an `awaiting_layer1` flag to pass; the tool
+    does not verify REDCap (standing rule 16), so the guard now rests on the ICCC table and
+    icdo32.sqlite, the two sources of code identity.
+    """
+    classif = set(classification.get(ctx.group, set())) | iccc_group_codes(layer1).get(ctx.group, set())
+    index, err = load_icdo32(layer1)
+    if not classif and err:
+        return [(NOTE, "no ICCC classification list and no icdo32.sqlite for group %d — "
+                       "source-of-truth check skipped (%s)" % (ctx.group, err))]
+    out, outside = [], []
+    seen = set()
+    for entry in ctx.entries:
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        if code is None:
+            continue
+        beh = str(entry.get("behavior_code") or "3").strip()
+        if (code, beh) in seen:
+            continue
+        seen.add((code, beh))
+        if code in classif:
+            continue
+        if (code, beh) in index:
+            outside.append("%s/%s" % (code, beh))
+            continue
+        out.append((FAIL, "morphology_code %s/%s is in neither the ICCC classification table for "
+                          "group %d nor icdo32.sqlite — never fabricate a code (Architecture §11 "
+                          "rule 1)" % (code, beh, ctx.group)))
+    if outside:
+        out.append((NOTE, "%d code(s) verified in ICD-O-3.2 but outside every ICCC-2017 range for "
+                          "group %d, which is the grouping convention only (standing rule 3): %s"
+                    % (len(outside), ctx.group, ", ".join(outside))))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "all %d (code, behaviour) pair(s) verified against the ICCC table or "
+                        "ICD-O-3.2" % len(seen)))
     return out
 
 
@@ -10432,57 +10305,6 @@ def check_iccc_subgroup_ranges(ctx: DTContext, subgroups: dict):
     if not out:
         out.append((OK, "all %d morphology_code(s) sit inside the ICCC-2017 range of the "
                         "subgroup they declare" % len(ctx.codes)))
-    return out
-
-
-def check_awaiting_layer1(ctx: DTContext, repo: Path):
-    """Ruling 3 — a code REDCap cannot record is built, reported, and listed.
-
-    The tree is allowed to run ahead of the option list. What is not allowed is running
-    ahead of it silently, so the two facts have to agree: an entry carrying
-    `awaiting_layer1` must appear in docs/codes-awaiting-redcap.md, and a code named there
-    as open must still be carrying the flag.
-    """
-    todo = repo / "docs" / "codes-awaiting-redcap.md"
-    if not todo.exists():
-        return [(FAIL, "docs/codes-awaiting-redcap.md is missing — ruling 3 requires a "
-                       "code absent from REDCap to be on a to-do list")]
-    text = todo.read_text(encoding="utf-8")
-    # The file carries one "## Group N — open" section per group. Only this group's
-    # section governs this file, or Group I's entries answer for Group II's listings.
-    head = re.compile(r"^## Group %d — open\b" % ctx.group, re.M).search(text)
-    if not head:
-        open_section = ""
-    else:
-        rest = text[head.end():]
-        nxt = re.compile(r"^## ", re.M).search(rest)
-        open_section = rest[:nxt.start()] if nxt else rest
-    flagged, out = [], []
-    for entry in ctx.data.get("morphology_entries") or []:
-        if not isinstance(entry, dict) or not entry.get("awaiting_layer1"):
-            continue
-        code = str(entry.get("morphology_code"))
-        flagged.append(code)
-        aw = entry["awaiting_layer1"]
-        if not isinstance(aw, dict) or not aw.get("reason"):
-            out.append((FAIL, "entry %s: awaiting_layer1 must be an object carrying a "
-                              "`reason` saying what Layer 1 is missing" % code))
-        if entry.get("redcap_option_verified") is not False:
-            out.append((FAIL, "entry %s: awaiting_layer1 is set but redcap_option_verified "
-                              "is not False — the two cannot both be true" % code))
-        if code not in open_section:
-            out.append((FAIL, "entry %s carries awaiting_layer1 but is not listed under "
-                              "'## Group %d — open' in docs/codes-awaiting-redcap.md "
-                              "(ruling 3)" % (code, ctx.group)))
-    for m in re.finditer(r"^### (\d{4})/", open_section, re.M):
-        code = m.group(1)
-        if code in ctx.codes and code not in flagged:
-            out.append((FAIL, "docs/codes-awaiting-redcap.md still lists %s as open, but the "
-                              "entry no longer carries awaiting_layer1 — close the item"
-                        % code))
-    if not out:
-        out.append((OK, "%d code(s) awaiting a REDCap option are declared and listed: %s"
-                    % (len(flagged), ", ".join(sorted(flagged)) or "none")))
     return out
 
 
@@ -10835,6 +10657,409 @@ def _name_some(labels, limit=4):
     labels = sorted(labels)
     head = "; ".join(labels[:limit])
     return head + ("; and %d more" % (len(labels) - limit) if len(labels) > limit else "")
+
+
+# ----------------------------------------------------------------------------------
+# Laboratory results (node_type `lab_results`, registrar, 6 Oct 2026; DT master §3I).
+#
+# One screen with a row per laboratory test. The numbers are recorded and shown on the
+# result and never read by a rule: the node routes only by its own `next_node`, which is
+# why it may carry none of the keys a code is chosen by.
+LAB_ID_RE = re.compile(r"^[a-z][a-z0-9_]*$")
+LAB_FORBIDDEN_KEYS = ("options", "resolution_logic", "bands", "branch_sequence", "morphology_code",
+                      "refer_group", "non_reportable", "behaviour_resolution", "grade_resolution")
+
+
+def check_lab_results(ctx: DTContext, vocabularies=None, repo=None):
+    """
+    A lab_results node records numbers and routes by `next_node` alone.
+
+    * `labs` is a non-empty list; each lab has a unique snake_case `id`, a clerk-facing
+      `label`, and a non-empty list of unique, non-empty `units` strings (the closed list
+      the clerk chooses from; there is no free-text unit).
+    * `next_node` is required (the generic next_node check proves it resolves).
+    * The node carries none of the keys a code is chosen by: no `options`,
+      `resolution_logic`, `bands`, `branch_sequence`, terminal or referral keys. The
+      registrar's ruling is that a laboratory value never chooses the code, and the engine
+      keeps the values outside `captured`, where no rule can read them. This check makes
+      the data say the same.
+    * `nos_fallback` is null; `implies_ticks`, when present, names a vocabulary the router
+      holds and ids that are in it.
+    * No lab id is also a variable the file captures or a `when` key, so a rule could never
+      be keyed off a test by accident.
+    """
+    out = []
+    n_nodes = 0
+    if vocabularies is None:
+        vocabularies, _f = _tick_vocabularies(repo) if repo is not None else ({}, [])
+    captured = set()
+    whens = set()
+    for holder, _path in walk_dicts(ctx.data):
+        if isinstance(holder.get("when"), dict):
+            whens.update(holder["when"].keys())
+        for v in holder.get("captured_variables") or []:
+            if isinstance(v, str):
+                captured.add(v)
+        if isinstance(holder.get("captures"), dict):
+            captured.update(holder["captures"].keys())
+    for node_id, node in sorted(ctx.nodes.items()):
+        if node.get("node_type") != "lab_results":
+            continue
+        n_nodes += 1
+        labs = node.get("labs")
+        if not isinstance(labs, list) or not labs:
+            out.append((FAIL, "lab_results %s: `labs` is required and must be a non-empty list" % node_id))
+            continue
+        seen = set()
+        for i, lab in enumerate(labs):
+            where = "lab_results %s labs[%d]" % (node_id, i)
+            if not isinstance(lab, dict):
+                out.append((FAIL, "%s is not an object" % where))
+                continue
+            lid = lab.get("id")
+            if not isinstance(lid, str) or not LAB_ID_RE.match(lid):
+                out.append((FAIL, "%s: `id` must be a snake_case string, got %r" % (where, lid)))
+            elif lid in seen:
+                out.append((FAIL, "%s: duplicate id %r" % (where, lid)))
+            else:
+                seen.add(lid)
+                if lid in captured or lid in whens:
+                    out.append((FAIL, "%s: id %r is also a captured variable or a `when` key in this file, so a "
+                                      "rule could read the test. Name it differently." % (where, lid)))
+            if not isinstance(lab.get("label"), str) or not lab["label"].strip():
+                out.append((FAIL, "%s: needs a clerk-facing `label`" % where))
+            units = lab.get("units")
+            if (not isinstance(units, list) or not units
+                    or any(not isinstance(u, str) or not u.strip() for u in units)
+                    or len(set(units)) != len(units)):
+                out.append((FAIL, "%s: `units` must be a non-empty list of unique, non-empty strings" % where))
+        nxt = node.get("next_node")
+        if not isinstance(nxt, str) or not nxt:
+            out.append((FAIL, "lab_results %s: `next_node` is required: the node routes by it alone" % node_id))
+        bad = [k for k in LAB_FORBIDDEN_KEYS if k in node]
+        if bad:
+            out.append((FAIL, "lab_results %s carries %s. A laboratory value never chooses the code (registrar, "
+                              "6 Oct 2026), so this node routes only by `next_node`." % (node_id, bad)))
+        if node.get("nos_fallback") is not None:
+            out.append((FAIL, "lab_results %s: nos_fallback must be null" % node_id))
+        imp = node.get("implies_ticks")
+        if imp is not None:
+            if not isinstance(imp, dict) or imp.get("vocabulary") not in vocabularies:
+                out.append((FAIL, "lab_results %s: implies_ticks.vocabulary %r is not a router tick vocabulary (%s)"
+                            % (node_id, (imp or {}).get("vocabulary") if isinstance(imp, dict) else imp, sorted(vocabularies) or "none")))
+            else:
+                ids = {it.get("id") for it in vocabularies[imp["vocabulary"]].get("items", []) if isinstance(it, dict)}
+                missing = [x for x in (imp.get("ids") or []) if x not in ids]
+                if missing or not imp.get("ids"):
+                    out.append((FAIL, "lab_results %s: implies_ticks.ids %s are not all in vocabulary %r"
+                                % (node_id, imp.get("ids"), imp["vocabulary"])))
+    if not out:
+        out.append((OK, "%d lab_results node(s) well formed; none can choose a code" % n_nodes))
+    return out
+
+
+# ----------------------------------------------------------------------------------
+# Tick lists (schema extension ratified by the registrar, 6 Oct 2026; spec
+# docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md section 4).
+#
+# A node may declare `tick_list`: the clerk ticks items from a list and the engine picks
+# the destination from the ticked set. An option may carry `ticks`
+# {requires, any_of, excludes}; it FITS a ticked set when every `requires` id is ticked,
+# at least one `any_of` id is ticked (when any_of is given) and no `excludes` id is
+# ticked. `ticks: {}` fits every set.
+TICK_FIELDS = ("requires", "any_of", "excludes")
+TICK_RESOLVE_MODES = ("ask_siblings", "first_match")
+TICK_MAX_ITEMS = 12          # 2^12 = 4096 ticked sets per node is the enumeration budget
+
+
+def _tick_fits(ticks: dict, ticked: frozenset) -> bool:
+    req = set(ticks.get("requires") or [])
+    any_of = set(ticks.get("any_of") or [])
+    exc = set(ticks.get("excludes") or [])
+    return req <= ticked and (not any_of or bool(any_of & ticked)) and not (exc & ticked)
+
+
+def _tick_vocabularies(repo: Path):
+    data, findings = load_json(repo / "data" / "shared" / "presentation_router.json")
+    vocab = data.get("tick_vocabularies") if isinstance(data, dict) else None
+    out = {}
+    for name, v in (vocab or {}).items():
+        if not name.startswith("_") and isinstance(v, dict):
+            out[name] = v
+    return out, findings
+
+
+def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
+    """
+    A tick list must not strand a clerk and must not hide an option.
+
+    Every ticked set (2^n, n <= 12) is enumerated for every node that declares one:
+
+      * ask_siblings: every ticked set must fit at least one TIER (an option with
+        `ticks`). A set that fits none is a dead end the clerk can reach by ticking
+        boxes. Every tier must fit at least one set, or it can never be offered.
+      * first_match: every option carries `ticks`, the first fitting option wins, and
+        every option must be the FIRST fit for some set (a witness) or it is shadowed
+        and the build fails; every set must fit something, so the last option is the
+        fallback. Registrar's ruling 13 states the same rule for marker rules.
+
+    Also checked: every id used in requires / any_of / excludes is in the list; the
+    three never share an id; a named vocabulary exists in the router; and every node
+    labelled "Evidence in file" carries a tick list, so a group built later cannot go
+    back to the single-choice gate the registrar replaced.
+    """
+    out = []
+    if vocabularies is None:
+        vocabularies, findings = _tick_vocabularies(repo)
+        out += [f for f in findings if f[0] == FAIL]
+    checked = 0
+    sets_total = 0
+    # The evidence gates are the document_inventory nodes a tree STARTS at (the source of
+    # truth is the tree's own entry_node, not the label on the node), following a laboratory
+    # screen placed in front of the gate. A label is only a second net.
+    entry_gates = set()
+    for tree in (ctx.data or {}).get("decision_trees") or []:
+        cur = tree.get("entry_node") or tree.get("entry_node_id")
+        for _ in range(3):
+            nd = ctx.nodes.get(cur)
+            if nd is None:
+                break
+            if nd.get("node_type") == "lab_results":
+                cur = nd.get("next_node")
+                continue
+            if nd.get("node_type") == "document_inventory":
+                entry_gates.add(cur)
+            break
+    for vname_, voc in sorted(vocabularies.items()):
+        for text in [voc.get(k) for k in ("prompt", "context_prompt", "none_label", "sibling_prompt")] + \
+                    [it.get("label") for it in voc.get("items", []) if isinstance(it, dict)]:
+            for tok in INTERNAL_IDENTIFIER_TOKENS:
+                if isinstance(text, str) and tok in text:
+                    out.append((FAIL, "router tick_vocabularies.%s: %r contains the internal identifier "
+                                      "%r; a clerk reads this text" % (vname_, text, tok)))
+    for node_id, node in sorted(ctx.nodes.items()):
+        tl = node.get("tick_list")
+        options = node.get("options") if isinstance(node.get("options"), list) else []
+        carries = [i for i, o in enumerate(options) if isinstance(o, dict) and "ticks" in o]
+        evidence_gate = (node.get("node_type") == "document_inventory"
+                         and (node_id in entry_gates
+                              or str(node.get("step_label", "")).lower().startswith("evidence in file")))
+        if tl is None:
+            if carries:
+                out.append((FAIL, "node %s: options %s carry `ticks` but the node declares no "
+                                  "`tick_list`" % (node_id, carries)))
+            if evidence_gate:
+                out.append((FAIL, "node %s is an evidence gate ('Evidence in file') with no "
+                                  "`tick_list`: the registrar replaced the single-choice gate "
+                                  "with the document checklist (6 Oct 2026). Convert it with "
+                                  "build/apply_evidence_documents.py." % node_id))
+            continue
+        if not isinstance(tl, dict):
+            out.append((FAIL, "node %s: tick_list must be an object" % node_id))
+            continue
+        merged = dict(tl)
+        vname = tl.get("vocabulary")
+        if vname is not None:
+            if vname not in vocabularies:
+                out.append((FAIL, "node %s: tick_list names vocabulary %r, which the router's "
+                                  "tick_vocabularies does not hold (it holds %s)"
+                            % (node_id, vname, sorted(vocabularies) or "none")))
+                continue
+            vvar = vocabularies[vname].get("variable")
+            if "variable" in tl and tl["variable"] != vvar:
+                out.append((FAIL, "node %s: tick_list overrides the vocabulary's variable %r with %r, "
+                                  "so a second gate in the same case would not open with the same "
+                                  "boxes ticked" % (node_id, vvar, tl["variable"])))
+            merged = dict(vocabularies[vname]); merged.update(tl)
+        items = merged.get("items")
+        if not isinstance(items, list) or not items:
+            out.append((FAIL, "node %s: tick_list has no items (and names no vocabulary that does)" % node_id))
+            continue
+        ids = [i.get("id") if isinstance(i, dict) else None for i in items]
+        if any(not isinstance(x, str) or not x for x in ids) or len(set(ids)) != len(ids):
+            out.append((FAIL, "node %s: tick_list item ids must be unique non-empty strings" % node_id))
+            continue
+        if any(not isinstance(i.get("label"), str) or not i["label"].strip() for i in items):
+            out.append((FAIL, "node %s: every tick_list item needs a clerk-facing label" % node_id))
+        if len(ids) > TICK_MAX_ITEMS:
+            out.append((FAIL, "node %s: %d tick items; the build enumerates every ticked set and "
+                              "stops at %d" % (node_id, len(ids), TICK_MAX_ITEMS)))
+            continue
+        if not isinstance(merged.get("variable"), str) or not merged["variable"]:
+            out.append((FAIL, "node %s: tick_list names no `variable` to hold the ticks" % node_id))
+        mode = merged.get("resolve", "ask_siblings")
+        if mode not in TICK_RESOLVE_MODES:
+            out.append((FAIL, "node %s: tick_list resolve %r is not one of %s"
+                        % (node_id, mode, list(TICK_RESOLVE_MODES))))
+            continue
+        if not options:
+            out.append((FAIL, "node %s: a tick_list node has no options to resolve to" % node_id))
+            continue
+
+        problems = False
+        tiers = []
+        for idx, o in enumerate(options):
+            t = o.get("ticks") if isinstance(o, dict) else None
+            if t is None:
+                if mode == "first_match":
+                    out.append((FAIL, "node %s option %d: in a first_match list every option "
+                                      "carries `ticks` (use {} for the fallback)" % (node_id, idx)))
+                    problems = True
+                continue
+            if not isinstance(t, dict):
+                out.append((FAIL, "node %s option %d: `ticks` must be an object" % (node_id, idx)))
+                problems = True
+                continue
+            extra = sorted(set(t) - set(TICK_FIELDS))
+            if extra:
+                out.append((FAIL, "node %s option %d: unknown ticks field(s) %s" % (node_id, idx, extra)))
+                problems = True
+            seen = {}
+            for f in TICK_FIELDS:
+                vals = t.get(f, [])
+                if not isinstance(vals, list) or any(not isinstance(v, str) for v in vals):
+                    out.append((FAIL, "node %s option %d: ticks.%s must be a list of ids" % (node_id, idx, f)))
+                    problems = True
+                    continue
+                for v in vals:
+                    if v not in ids:
+                        out.append((FAIL, "node %s option %d: ticks.%s names %r, which is not in the "
+                                          "list (%s)" % (node_id, idx, f, v, ", ".join(ids))))
+                        problems = True
+                    if v in seen:
+                        out.append((FAIL, "node %s option %d: %r is in both ticks.%s and ticks.%s"
+                                    % (node_id, idx, v, seen[v], f)))
+                        problems = True
+                    seen[v] = f
+            if mode == "ask_siblings" and not any(t.get(f) for f in TICK_FIELDS):
+                out.append((FAIL, "node %s option %d: a tier with `ticks: {}` fits every ticked set, so it "
+                                  "is offered beside every other tier. A fallback belongs in a "
+                                  "first_match list; here give the tier a rule." % (node_id, idx)))
+                problems = True
+            tiers.append(idx)
+        if problems:
+            continue
+        if mode == "ask_siblings" and not tiers:
+            out.append((FAIL, "node %s: an ask_siblings tick list needs at least one option with "
+                              "`ticks` (a tier)" % node_id))
+            continue
+
+        n = len(ids)
+        ever_fits = {i: False for i in tiers}
+        first_fits = {i: False for i in tiers}
+        dead = []
+        for mask in range(1 << n):
+            ticked = frozenset(ids[b] for b in range(n) if mask >> b & 1)
+            fitting = [i for i in tiers if _tick_fits(options[i]["ticks"], ticked)]
+            sets_total += 1
+            if not fitting:
+                dead.append(ticked)
+                continue
+            for i in fitting:
+                ever_fits[i] = True
+            first_fits[fitting[0]] = True
+        checked += 1
+        if dead:
+            def show(s):
+                return "{" + ", ".join(sorted(s)) + "}" if s else "{nothing ticked}"
+            out.append((FAIL, "node %s: %d of %d ticked sets fit no option, so a clerk can tick "
+                              "them and be stranded, e.g. %s"
+                        % (node_id, len(dead), 1 << n, "; ".join(show(s) for s in sorted(dead, key=lambda s: (len(s), sorted(s)))[:3]))))
+        never = [i for i in tiers if not ever_fits[i]]
+        if never:
+            out.append((FAIL, "node %s: option(s) %s fit no ticked set, so they can never be offered"
+                        % (node_id, never)))
+        if mode == "first_match":
+            shadowed = [i for i in tiers if ever_fits[i] and not first_fits[i]]
+            if shadowed:
+                out.append((FAIL, "node %s: option(s) %s are never the first fit for any ticked set "
+                                  "(shadowed by an earlier option), so no answer can reach them"
+                            % (node_id, shadowed)))
+    if not any(lvl == FAIL for lvl, _ in out):
+        out.append((OK, "tick lists: %d node(s), %d ticked sets enumerated, none stranded and "
+                        "every option reachable" % (checked, sets_total)))
+    return out
+
+
+# ----------------------------------------------------------------------------------
+# Recognition aids (registrar, 6 Oct 2026). An option may carry `recognition_aid`, text in
+# report vocabulary shown under the option the clerk has SELECTED. app.js draws an aid only
+# on a list it answers select-then-Confirm, which is optionList(): the node types below with
+# no tick list. An aid anywhere else is silently never shown, so it is refused here. Keep
+# this set in step with nodeControl() in app.js.
+RECOGNITION_AID_NODE_TYPES = ("clinical_presentation", "site_capture", "document_inventory",
+                              "morphology_only", "histology_subclassification",
+                              "site_resolution", "clinical_alias")
+
+
+def check_recognition_aids(ctx: DTContext):
+    """A recognition_aid is clerk-facing text on an option of a list that shows it."""
+    out = []
+    n = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        options = node.get("options") if isinstance(node.get("options"), list) else []
+        with_aid = [i for i, o in enumerate(options) if isinstance(o, dict) and "recognition_aid" in o]
+        if not with_aid:
+            continue
+        n += len(with_aid)
+        if node.get("node_type") not in RECOGNITION_AID_NODE_TYPES or node.get("tick_list"):
+            out.append((FAIL, "node %s: option(s) %s carry `recognition_aid`, but a %s%s node does not "
+                              "draw its options as a select-then-confirm list, so the aid would never be "
+                              "shown. Put it on an option of one of %s with no tick list."
+                        % (node_id, with_aid, node.get("node_type"),
+                           " with a tick list" if node.get("tick_list") else "",
+                           ", ".join(RECOGNITION_AID_NODE_TYPES))))
+        for i in with_aid:
+            aid = options[i]["recognition_aid"]
+            if not isinstance(aid, str) or not aid.strip():
+                out.append((FAIL, "node %s option %d: `recognition_aid` must be a non-empty string" % (node_id, i)))
+    if not out:
+        out.append((OK, "%d recognition aid(s), each on a list that shows it" % n))
+    return out
+
+
+def check_evidence_mapping(ctx: DTContext, repo: Path):
+    """
+    The group's evidence gates carry the tick rules the registrar-reviewed mapping gives them.
+
+    `docs/evidence_documents/group_NN.json` records which documents fit which tier of each
+    evidence gate (the registrar reads it in docs/evidence_document_mapping.md). The data gate
+    proves a gate has no dead end; it cannot tell that two tiers' rules were swapped, because a
+    swap still covers every ticked set. This applies the mapping to a copy of the group file and
+    fails where a mapped node differs, so an edit to a tier's rule has to be made in the mapping,
+    where the registrar can see it. A group with no mapping file has nothing to compare.
+    """
+    import copy
+    import importlib.util
+    mp = repo / "docs" / "evidence_documents" / ("group_%02d.json" % ctx.group)
+    if not mp.exists():
+        return [(OK, "no evidence-document mapping for group %d: nothing to compare" % ctx.group)]
+    spec = importlib.util.spec_from_file_location("apply_evidence_documents", repo / "build" / "apply_evidence_documents.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mapping, findings = load_json(mp)
+    if mapping is None:
+        return [f for f in findings if f[0] == FAIL] or [(FAIL, "%s could not be read" % mp.name)]
+    applied = copy.deepcopy(ctx.data)
+    out = []
+    for problem in mod.apply(applied, mapping):
+        out.append((FAIL, "%s: %s" % (mp.name, problem)))
+
+    def nodes_of(data):
+        return {n.get("node_id"): n for t in data.get("decision_trees") or [] for n in t.get("nodes") or []}
+    have, want = nodes_of(ctx.data), nodes_of(applied)
+    for m in mapping.get("nodes") or []:
+        nid = m.get("node_id")
+        if nid in have and nid in want and have[nid] != want[nid]:
+            where = [k for k in sorted(set(have[nid]) | set(want[nid])) if have[nid].get(k) != want[nid].get(k)]
+            tiers = [i for i, (a, b) in enumerate(zip(have[nid].get("options") or [], want[nid].get("options") or []))
+                     if a.get("ticks") != b.get("ticks")]
+            out.append((FAIL, "node %s differs from %s in %s%s. Change a tier's rule in the mapping, which "
+                              "the registrar reviews, then re-run build/apply_evidence_documents.py"
+                        % (nid, mp.name, ", ".join(where), "; tier(s) %s have other ticks" % tiers if tiers else "")))
+    if not out:
+        out.append((OK, "evidence gates match %s (%d node(s))" % (mp.name, len(mapping.get("nodes") or []))))
+    return out
 
 
 def check_override_affordance(ctx: DTContext, repo: Path):
@@ -11191,10 +11416,19 @@ def check_presentation_router(repo: Path, contexts: dict):
         elif node is None:
             out.append((FAIL, "presentation_router.json %s: entry_node %r does not resolve "
                               "in %s" % (loc, entry, ctx.name)))
+        elif node.get("node_type") == "lab_results":
+            # The laboratory screen may stand in front of the gate (registrar, 6 Oct 2026):
+            # the router hands off to it, and it hands on to the evidence gate by next_node.
+            gate = ctx.nodes.get(node.get("next_node"))
+            if gate is None or gate.get("node_type") != "document_inventory":
+                out.append((FAIL, "presentation_router.json %s: entry_node %r is a lab_results "
+                                  "node whose next_node %r is not a document_inventory gate; the "
+                                  "laboratory screen may precede the gate, never replace it"
+                            % (loc, entry, node.get("next_node"))))
         elif node.get("node_type") != "document_inventory":
             out.append((FAIL, "presentation_router.json %s: entry_node %r is a %r; the "
-                              "router must hand off to a document_inventory gate "
-                              "(Architecture §8, DT master §3B)"
+                              "router must hand off to a document_inventory gate, or to a "
+                              "lab_results screen that leads to one (Architecture §8, DT master §3B)"
                         % (loc, entry, node.get("node_type"))))
         tid = holder.get("tree_id")
         if isinstance(tid, str) and tid:
@@ -11456,84 +11690,6 @@ def check_router_cns_topography_completeness(repo: Path, contexts: dict):
                     % (checked, checked + exempted, len(cns),
                        "" if not exempted else
                        "; %d exempt and still short, reported above as WARN" % exempted)))
-    return out
-
-
-def check_redcap_banner_signal(ctx: DTContext, redcap_options: dict):
-    """
-    `awaiting_layer1` must mark exactly the entries Layer 1 has NO option for.
-
-    app.js's output block renders two different warnings off one flag, and it has
-    to, because two different things can be true of an entry carrying
-    `redcap_option_verified: false`:
-
-        awaiting_layer1 present  ->  "Not yet a REDCap option ... cannot be
-                                      selected yet" — the tree has run ahead of
-                                      the option list (ruling 3).
-        awaiting_layer1 absent   ->  "The REDCap label for this code is out of
-                                      date ... the case can be entered" — the row
-                                      is there, its words are stale.
-
-    Until 22 September 2026 the engine printed the FIRST message for both, so
-    eleven codes with an option a clerk could select today said they could not:
-    9898 (Group I), 9718 and 9725 (Group II), and Group VI's eight drifted
-    strings. 8311 is the sharpest of them — its option exists and is labelled
-    "Hypernephroid tumor", the obsolete 8311/1 term for a different lesion, so
-    the clerk needs to be told the label is wrong, not that the row is missing.
-    Sending a clerk away from a row that is there is the same class of defect as
-    sending them to one that is not.
-
-    THIS CHECK IS WHAT LETS THE ENGINE TRUST THE FLAG. It keys off the option
-    file itself — Layer 1, never anything in the file being checked (rule 8) —
-    and fails in both directions:
-
-        awaiting_layer1 set   on a code Layer 1 DOES carry  -> the clerk is told
-                              to go away from a usable row;
-        awaiting_layer1 unset on a code Layer 1 does NOT carry -> the clerk is
-                              told to match a label that is not there at all.
-
-    Scoped to entries flagged `redcap_option_verified: false`, because that is
-    the only branch app.js reads it on. Silent when a group's options cannot be
-    parsed: a missing option file is already reported by parse_redcap_options()
-    and guessing from its absence would invent a finding.
-    """
-    options = redcap_options.get(ctx.group)
-    if not options:
-        return []
-    checked = 0
-    out = []
-    for entry in ctx.entries:
-        if not isinstance(entry, dict):
-            continue
-        if entry.get("redcap_option_verified") is not False:
-            continue
-        code = as_code(entry.get("morphology_code"))
-        if code is None:
-            continue
-        checked += 1
-        has_option = code in options
-        awaiting = bool(entry.get("awaiting_layer1"))
-        if has_option and awaiting:
-            out.append((FAIL, "entry %s carries awaiting_layer1, but Layer 1 DOES "
-                              "offer an option for this code. app.js then tells the "
-                              "clerk it 'has no option in the registry dropdown, so "
-                              "it cannot be selected yet' and sends them away from a "
-                              "row that is there. Drop awaiting_layer1; the label-drift "
-                              "banner is the correct one" % code))
-        elif not has_option and not awaiting:
-            out.append((FAIL, "entry %s is flagged redcap_option_verified false with no "
-                              "awaiting_layer1, but Layer 1 offers no option for this "
-                              "code at all. app.js then tells the clerk the row exists "
-                              "and to 'match on the four-digit code', and there is no "
-                              "row to match. Add awaiting_layer1 with what it needs"
-                        % code))
-    if not checked:
-        return []
-    if not [f for f in out if f[0] == FAIL]:
-        out.append((OK, "REDCap banner signal: all %d entry/entries flagged "
-                        "redcap_option_verified false carry awaiting_layer1 exactly "
-                        "when Layer 1 has no option for them, so both output banners "
-                        "state something true" % checked))
     return out
 
 
@@ -11811,6 +11967,10 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_detection_method, ctx)
         report.run(check_classification_system, ctx)
         report.run(check_satisfies_tests, ctx)
+        report.run(check_tick_lists, ctx, repo)
+        report.run(check_lab_results, ctx, None, repo)
+        report.run(check_recognition_aids, ctx)
+        report.run(check_evidence_mapping, ctx, repo)
         report.run(check_outstanding_tests, ctx)
         report.run(check_non_reportable_heading, ctx)
         # Group II schema extensions (Group II build contract §3) — fields, not node types
@@ -11862,8 +12022,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         # to Group 6 only and a no-op on any other group's file. check_behaviour_
         # exclusion() above already covers this group's behaviour_exclusion blocks
         # (BEHAVIOUR_DECLARED_BY_GROUP now carries GROUP6), and check_icdo32_round_
-        # trip() / check_redcap_exact_names() above already carry the Group 6
-        # extension described in contract §8 — neither needs a new call here.
+        # trip() above already carries the Group 6 extension described in contract
+        # §8 — neither needs a new call here.
         report.run(check_group6_code_set, ctx)                         # rule 1
         report.run(check_group6_absent_codes, ctx)                     # rule 2
         report.run(check_group6_behaviour_declaration, ctx, layer1)    # rule 3
@@ -11908,13 +12068,10 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group10_alias_terms_match_icdo32, ctx, layer1, repo)  # rule 3
         report.run(check_group10_subgroups_and_routing, ctx, layer1, repo)     # rule 4
         # the four new checks (three of them are per-file)
-        report.run(check_redcap_exact_names, ctx, redcap_options)
-        report.run(check_redcap_banner_signal, ctx, redcap_options)
         report.run(check_cryptic_genetics, ctx)
         report.run(check_mpal_rule_ordering, ctx)
         # the 4 Sep 2026 registrar rulings
         report.run(check_iccc_subgroup_ranges, ctx, classification_subgroups)
-        report.run(check_awaiting_layer1, ctx, repo)
         report.run(check_no_clinical_alerts, ctx)
         report.run(check_flow_charts, ctx)
         report.run(check_ihc_checklist_renders_a_control, ctx)
@@ -11924,7 +12081,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         # the override affordance (18 Sep 2026) — one per group's file
         report.run(check_override_affordance, ctx, repo)
         # source of truth
-        report.run(check_codes_against_source_of_truth, ctx, redcap_options, classification)
+        report.run(check_codes_against_source_of_truth, ctx, classification, layer1)
 
     # -- C. cross-layer ------------------------------------------------------------
     report.section("C. cross-layer — presentation_router.json")

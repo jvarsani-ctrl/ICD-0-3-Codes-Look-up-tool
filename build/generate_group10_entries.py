@@ -43,7 +43,9 @@ from collections import defaultdict
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+EVIDENCE_MAP = REPO / "docs" / "evidence_documents" / "group_10.json"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import apply_evidence_documents as evidence  # noqa: E402
 import build_database as bd  # noqa: E402
 import generate_group_inventory as gi  # noqa: E402
 import group10_tree  # noqa: E402
@@ -740,6 +742,14 @@ def run(argv=None) -> int:
         "morphology_entries": entries,
         "decision_trees": trees,
     }
+    # The four "Evidence in file" gates become document checklists (registrar, 6 October
+    # 2026). The rules live in docs/evidence_documents/group_10.json, which the data gate
+    # compares with this file, so they are applied here rather than written into the trees.
+    problems = evidence.apply(doc, json.loads(EVIDENCE_MAP.read_text(encoding="utf-8")))
+    if problems:
+        for p in problems:
+            print("ERROR: %s" % p, file=sys.stderr)
+        return 2
     text = json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
 
     if args.check:

@@ -241,6 +241,8 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **IV** | `topo_code` | — | — | **0** | ✅ Nothing owed — every Group IV site is already in the dropdown | same, §7 |
 | **VII** | `vii_morph` | **10** — picks 1, 2, 3, 39, 46, 47, 60, 83, 102, 103 (pick 2, `8975`, kept by ruling of 3 October 2026) | **27** | **8** — `8171`–`8175`, `8023`, `8054`, `8504/3` as picks 113–120 | Ready to review, not applied | `docs/group_07_layer1_repair.md` |
 | **I, II** | — | — | — | `9715`, `9749`, `9819` | Open | `docs/codes-awaiting-redcap.md` |
+| **I** | `i_morph` | **15** — picks on lines 28, 54, 55, 62, 68, 72, 88, 94, 95, 96, 98, 120–123 of the Group 1 option file, now that Group I's names are ICD-O-3.2 terms (§27). `9869` is a correctness fix, not a wording one: the option reads `t(13.3)(q21;q26.2)`, which is not valid cytogenetic notation; ICD-O-3.2 has `t(3;3)(q21;q26.2)`. `9980` and `9983` move off the FAB-era *Refractory anemia* wording to the WHO names. | **4** — lines 17, 25, 104, 105 (`9836`, `9826`, `9991`, `9992`). The tool no longer carries these; they were removed from Group I by registrar ruling of 6 October 2026, and ICD-O-3.2 carries no term for any of them. Retire in place, never delete — `i_morph` stores a pick number. | — | Open — not applied | §27 below, and `docs/group_01_icdo32_names.md` |
+| **VI** | `vi_morph` | **8** label drifts (contract §2C) | — | **3** — `8023/3`, `8054/3`, `8482/3` | Ready to review, not applied | `docs/group_06_layer1_repair.md`; `docs/codes-awaiting-redcap.md` |
 | **VIII** | `viii_morph` | **8** — picks 7, 8, 24, 35, 39, 66, 75, 98 | **3** — picks 18, 19 (wrong number `9211`) and **33** (`9260` Ewing sarcoma, a retired number now meaning aneurysmal bone cyst) | **2** — `9220/3` Chondrosarcoma, NOS; `9302/3` Ghost cell odontogenic carcinoma | Ready to review, not applied. 49 more picks sit below behaviour 3 and await the registrar | `docs/group_08_layer1_repair.md` |
 | **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
 | **IX** | `topo_code` | — | — | `444, Skin of scalp and neck` | Open — Group 9 registrar questions H2 | same, §7 |
@@ -1537,3 +1539,78 @@ engine gate and §19 closed by the registrar the same day. Previously 22 Septemb
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
 §17 and the second ligature instance in §1.3; and 18 September 2026 on the Group 4 branch
 (`group-04-neuroblastoma`), with the Group 4 build documentation (§14–§18).*
+
+## 27. Groups I and II: morphology names are validated against nothing
+
+**Opened 4 October 2026.** The registrar removed `check_redcap_exact_names` (standing rule 16), the
+only check that compared Groups I and II's `morphology_name` strings with anything; it compared them
+with the REDCap option file. Every other group's names go through `check_icdo32_round_trip()`.
+Groups I and II's are REDCap wordings and fail it (33 in Group I, 31 in Group II). Each build prints
+a NOTE for both groups until this closes.
+
+The work: move each name to its ICD-O-3.2 preferred term, keep the REDCap wording as an alias, and
+add GROUP1 and GROUP2 to `ROUND_TRIP_GROUPS`. The pairs ICD-O-3.2 does not carry at all need the
+registrar first. These are Group I's 9826/3, 9836/3, 9991/3 and 9992/3, and Group II's 9670/3,
+9673/3, 9725/3, 9765/3, 9767/3, 9768/3, 9769/3, 9823/3, 9970/3 and 9971/3. To reproduce the full list,
+add the group to `ROUND_TRIP_GROUPS` temporarily and run the build. Handed to the Group 1 and Group 2
+sessions on 4 October 2026.
+
+**Group I: CLOSED, 6 October 2026.** `GROUP1` is in `ROUND_TRIP_GROUPS` and the build reports
+`186/186 (code, name, behaviour) triple(s) exist verbatim in icdo32.sqlite; 0 declared name
+exemption(s)`. Group I no longer prints the "not validated against any source" NOTE. Detail in
+`docs/group_01_icdo32_names.md`.
+
+The 33 failures were 15 wrong names plus 18 echoes of three of them in `nos_fallback_name` and
+node-level `nos_fallback`; 9945 needed no rename. One was a correctness defect rather than a
+wording one: 9869 read `t(13.3)(q21;q26.2)`, which is not valid cytogenetic notation.
+
+Two registrar rulings closed it. **9975** moves to the ICD-O-3.2 preferred term
+(`Myeloproliferative neoplasm, unclassifiable`); the MDS/MPN overlap wording stays as an alias
+and on the output block's ALSO CALLED row. **9826, 9836, 9991 and 9992 are removed from the
+group** rather than exempted — ICD-O-3.2 carries no term for them, they were already closed
+terminals, and every term that used to reach them still resolves (Burkitt to Group II's mirror,
+the other three to aliases Group I already carried). No exemption mechanism was added.
+
+REDCap now owes 15 relabels **and 4 retires**, logged in §7 above.
+
+**Group II is still open** and is the Group 2 session's work.
+
+## 28. Interface changes of 6 October 2026: what they leave owed
+
+Spec `docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md`. Handover to the Group 10 session:
+`docs/handover_group_10_ux_changes.md`. Proof of every new check: `docs/ux_negative_controls.md`.
+
+**Owed to the data**
+
+- **Sweep "behaviour" to "behavior" in clerk-facing sentences.** The interface says "Behavior" since 6 October;
+  these keys in `data/database/group_01` to `group_09_dt.json` still carry the British spelling in prose a clerk
+  reads: `reason` (about 180), `upgrade_path` (37), `comment` (28), `hint` (8), `label` (4), `descriptive_diagnosis`
+  (3), `descriptor` (2), `question` (1). Do not touch `coding_note`, `notes`, `authoring_note`, schema keys such as
+  `behaviour_resolution` and `behaviour_documented`, or node ids. Run it once the group branches that hold those
+  files open have merged. Group 10's own text is written to the new spelling by its session.
+- **Group 10: apply the evidence mapping and write the new fields.** Steps in the handover document.
+  Until the mapping is applied the data gate fails four nodes with "evidence gate ... no `tick_list`".
+- **Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
+  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.
+
+**Owed to the registrar**
+
+- Confirm the document meanings, above all the three haematology readings (flow cytometry is Lab Report; blood
+  film and marrow aspirate smear are Cytology; trephine biopsy is Histology Report). Table and per-gate
+  questions: `docs/evidence_document_mapping.md`.
+- Decide each "DATA GAP" in that document: a gate has no option that truthfully describes a file the checklist
+  can now express (for example a cytology-only file in a gate with no cytology option).
+- Rule on two readings the review of 6 October made visible. A Lab Report tick reaches the tier whose old option
+  said flow cytometry, and that option's captures credit flow cytometry (and IHC, where the label says "and/or"), so a
+  blood count alone lifts the tier and shortens the workup list. And a file no option describes takes the nearest lower
+  tier, whose sentence can deny a document that is ticked (the tool now keeps that sentence out of "Suggested based on").
+  Fixing either needs new options or a document item for flow cytometry, both clerk-facing wording.
+- Decide whether the seven documents need a one-line definition on screen. The registrar's wording is the bare
+  label, so none was added.
+
+**Not changed, on purpose**
+
+- The test-result state chips, the marker grid and flow, and the workup status dropdown carry no filter box:
+  they are not lists of one answer to pick. `FILTER_MIN_OPTIONS` in `app.js` turns the filter off for short lists.
+- `outActions()` and the override handler are untouched; `feature/report-an-error` (parked) rewrites them. Both
+  branches change `renderOutput()`, so the second to merge resolves a few lines by hand.

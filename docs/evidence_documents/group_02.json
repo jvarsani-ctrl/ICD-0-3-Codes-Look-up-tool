@@ -1,0 +1,461 @@
+{
+  "group": 2,
+  "nodes": [
+    {
+      "group": 2,
+      "node_id": "g2_document_inventory",
+      "question_edit": "What specimen and what reports are in this patient's file, and what was the outcome of any aspirate?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "Referral or clinical note only — no cytology and no histology report",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "cytology",
+            "histology"
+          ],
+          "rationale": "Lowest tier: fits every file with neither a Cytology nor a Histology Report, so imaging, lab, IHC or gene reports on their own fall here and understate.",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "FNA smear only — ADEQUATE, and the cytology reports a neoplastic / mal",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology",
+            "lab"
+          ],
+          "rationale": "Smear-only tier: needs the Cytology document, no tissue or cell block (Histology) and no flow (Lab Report); IHC beside Cytology is immunocytochemistry and stays at this tier.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "FNA smear only — ADEQUATE, and the cytology reports granulomas, necros",
+          "kind": "tier",
+          "requires": [
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology",
+            "lab"
+          ],
+          "rationale": "Sibling of option 1 that differs only by the cytological reading (benign picture), which no document expresses, so it fits the same sets.",
+          "confidence": "medium"
+        },
+        {
+          "index": 3,
+          "label_head": "FNA smear only — INADEQUATE / non-diagnostic (\"too few cells for cytol",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Inadequate aspirate is an outcome state of the specimen, not a document set.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "FNA smear only — technically UNINTERPRETABLE (air-dried, obscured by b",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Technically uninterpretable aspirate is an outcome state of the specimen, not a document set.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
+          "label_head": "FNA + cell block, or core needle biopsy, or excisional / incisional bi",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "ihc",
+            "lab"
+          ],
+          "rationale": "Tissue or cell-block report with no IHC and no flow: requires Histology and excludes IHC and Lab Report; genetics alone does not lift it.",
+          "confidence": "high"
+        },
+        {
+          "index": 6,
+          "label_head": "Tissue (cell block / core / excisional) WITH immunohistochemistry and/",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [
+            "ihc",
+            "lab"
+          ],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "Tissue with IHC and/or flow: requires Histology plus an IHC Report or a Lab Report read as flow; excludes genetics so option 8 holds the higher rung.",
+          "confidence": "medium"
+        },
+        {
+          "index": 7,
+          "label_head": "Effusion, CSF, marrow aspirate or node aspirate WITH flow cytometry — ",
+          "kind": "tier",
+          "requires": [
+            "cytology",
+            "lab"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Fluid or aspirate cytology with flow cytometry and no tissue block: requires Cytology and a Lab Report read as flow, and excludes Histology.",
+          "confidence": "medium"
+        },
+        {
+          "index": 8,
+          "label_head": "Tissue with IHC/flow PLUS cytogenetics / FISH, or plus molecular / NGS",
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "genetics"
+          ],
+          "any_of": [
+            "ihc",
+            "lab"
+          ],
+          "excludes": [],
+          "rationale": "Cumulative rung: tissue, IHC and/or flow, and a gene report; histology plus genetics without IHC or flow falls to option 5.",
+          "confidence": "medium"
+        },
+        {
+          "index": 9,
+          "label_head": "Malignancy excluded on review — reactive, infective or non-neoplastic;",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review is a conclusion that does not follow from which documents exist.",
+          "confidence": "high"
+        }
+      ],
+      "question_was": "What specimen and what reports are actually in this patient's file? Pick the highest tier available, or the outcome state that applies to the aspirate."
+    },
+    {
+      "group": 2,
+      "node_id": "g2cut_document_inventory",
+      "question_edit": "What is in this patient's file for the skin lesion?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "Referral, clinic or dermatology letter only — no skin biopsy in the fi",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Letter-only tier: fits every file with no Histology Report (skin biopsy), so cytology, IHC, lab or gene reports alone fall here and understate.",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "Skin biopsy with H&E only — no immunohistochemistry",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "ihc"
+          ],
+          "rationale": "Skin biopsy with H&E only: requires Histology and excludes IHC; genetics or lab without IHC falls here because the higher rungs need IHC.",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
+          "label_head": "Skin biopsy with immunohistochemistry (with or without EBER in-situ hy",
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc"
+          ],
+          "any_of": [],
+          "excludes": [
+            "genetics",
+            "lab"
+          ],
+          "rationale": "Skin biopsy with IHC: requires Histology and IHC and excludes genetics and Lab Report so option 3 holds the higher rung.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Skin biopsy with immunohistochemistry, plus TCR clonality, FISH, or bl",
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc"
+          ],
+          "any_of": [
+            "genetics",
+            "lab"
+          ],
+          "excludes": [],
+          "rationale": "Cumulative rung: biopsy, IHC and TCR clonality or FISH (genetics) or blood flow cytometry (Lab Report read as flow).",
+          "confidence": "medium"
+        },
+        {
+          "index": 4,
+          "label_head": "The skin lesion is one site of an established systemic or nodal lympho",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Established systemic or nodal lymphoma is a dominant finding that redirects to the main tree.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
+          "label_head": "The infiltrate is B-lineage — CD20, CD79a or PAX5 positive and CD3 neg",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "B-lineage infiltrate is a finding that redirects to the mature B-cell tree, not a document set.",
+          "confidence": "medium"
+        },
+        {
+          "index": 6,
+          "label_head": "The infiltrate is Langerhans cell or histiocytic — CD1a, CD207 / lange",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Langerhans or histiocytic infiltrate is a finding that redirects to the histiocytic tree, not a document set.",
+          "confidence": "medium"
+        },
+        {
+          "index": 7,
+          "label_head": "The infiltrate is mast cell — tryptase or CD117 positive, or the repor",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Mast cell infiltrate is a finding that redirects to the mast cell tree, not a document set.",
+          "confidence": "medium"
+        },
+        {
+          "index": 8,
+          "label_head": "The file establishes a non-neoplastic skin condition — infection, drug",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Established non-neoplastic mimic is a conclusion, not a document set.",
+          "confidence": "high"
+        },
+        {
+          "index": 9,
+          "label_head": "Malignancy excluded on review — the diagnosis was revised and no lymph",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review is a conclusion, not a document set.",
+          "confidence": "high"
+        }
+      ],
+      "question_was": "What is in this patient's file for the skin lesion? Pick the highest tier available, or the special context that applies."
+    },
+    {
+      "group": 2,
+      "node_id": "g2hist_document_inventory",
+      "question_edit": "What is in this patient's file for the histiocytic or dendritic lesion?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "Referral or clinic letter only — it names a histiocytosis, but there i",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Letter-only tier: fits every file with no Histology Report, so imaging, cytology, IHC or gene reports alone fall here and understate.",
+          "confidence": "high"
+        },
+        {
+          "index": 1,
+          "label_head": "Biopsy report with H&E morphology only — no IHC performed, or none rep",
+          "kind": "tier",
+          "requires": [
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "ihc"
+          ],
+          "rationale": "Biopsy with H&E only: requires Histology and excludes IHC; histology plus genetics without IHC falls here because the higher rungs need IHC.",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
+          "label_head": "Biopsy report with immunohistochemistry",
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc"
+          ],
+          "any_of": [],
+          "excludes": [
+            "genetics"
+          ],
+          "rationale": "Biopsy with IHC: requires Histology and IHC and excludes genetics so option 3 holds the higher rung.",
+          "confidence": "high"
+        },
+        {
+          "index": 3,
+          "label_head": "Biopsy + IHC + molecular (BRAF, ALK rearrangement, clonality or NGS)",
+          "kind": "tier",
+          "requires": [
+            "histology",
+            "ihc",
+            "genetics"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Cumulative rung: biopsy, IHC and a molecular gene report (BRAF, ALK, clonality, NGS) all required.",
+          "confidence": "high"
+        },
+        {
+          "index": 4,
+          "label_head": "Spindled or epithelioid tumour in a node, tonsil, spleen, liver or abd",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Sarcoma-like or undifferentiated tumour with a non-contributory panel is a finding in the report, not a document set; as context it stays selectable whatever is ticked.",
+          "confidence": "medium"
+        },
+        {
+          "index": 5,
+          "label_head": "The file establishes a named non-neoplastic or uncoded histiocytic con",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Named non-neoplastic or uncoded histiocytic condition is a conclusion, not a document set.",
+          "confidence": "high"
+        },
+        {
+          "index": 6,
+          "label_head": "On review this is a lymphoma, not a histiocytic or dendritic neoplasm",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Lymphoma on review is a dominant finding that redirects to the lymphoid lineage node.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
+          "label_head": "Malignancy excluded on review — the lesion is reactive or infective an",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Malignancy excluded on review is a conclusion, not a document set.",
+          "confidence": "high"
+        }
+      ],
+      "question_was": "What is in this patient's file for the histiocytic or dendritic lesion? Pick the highest tier available, or the special context that applies."
+    },
+    {
+      "group": 2,
+      "node_id": "g2mast_document_inventory",
+      "question_edit": "What reports are in this patient's file?",
+      "hint_edit": "",
+      "options": [
+        {
+          "index": 0,
+          "label_head": "Referral or clinical note only — no pathology report in the file",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "histology",
+            "cytology"
+          ],
+          "rationale": "Lowest tier. Fits every set with neither a Histology Report nor a Cytology document, so lab, imaging, IHC or gene reports on their own fall here and understate.",
+          "confidence": "medium"
+        },
+        {
+          "index": 1,
+          "label_head": "Morphology only — skin biopsy, marrow biopsy and/or a blood or marrow ",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [
+            "histology",
+            "cytology"
+          ],
+          "excludes": [
+            "ihc"
+          ],
+          "rationale": "Morphology (biopsy or smear) with no IHC Report. A lab or gene report beside morphology without IHC falls here and understates.",
+          "confidence": "medium"
+        },
+        {
+          "index": 2,
+          "label_head": "Morphology + IHC (tryptase, CD117, and/or CD25 / CD30 / CD2)",
+          "kind": "tier",
+          "requires": [
+            "ihc"
+          ],
+          "any_of": [
+            "histology",
+            "cytology"
+          ],
+          "excludes": [
+            "lab"
+          ],
+          "rationale": "Judged: option 3 is a cumulative rung above this one, so the two must not fit the same set; a clerk should not be asked to choose between a tier and the tier that strictly contains it. Excluding the Lab Report makes option 3 exclusive. Sets with a gene report but no Lab Report stay here, which understates the KIT result.",
+          "confidence": "medium"
+        },
+        {
+          "index": 3,
+          "label_head": "Morphology + IHC + basal serum tryptase and/or KIT molecular result",
+          "kind": "tier",
+          "requires": [
+            "ihc",
+            "lab"
+          ],
+          "any_of": [
+            "histology",
+            "cytology"
+          ],
+          "excludes": [],
+          "rationale": "Judged: the rung needs morphology, IHC and a tryptase or KIT result. The schema allows one any_of group, which is spent on morphology, so the Lab Report (basal serum tryptase) is required and the gene report (KIT) cannot be an alternative. A KIT-only file falls to option 2, which understates and is the safe direction. Proposer A's alternative (require Histology, any_of lab or genetics) overlaps option 2 on every qualifying set and forces a question on each. A gene report alone never raises a tier; IHC and Lab Report ticked without morphology cannot reach this rung because morphology is required.",
+          "confidence": "medium"
+        },
+        {
+          "index": 4,
+          "label_head": "Reviewed — this is not a mast cell neoplasm, or the diagnosis was revi",
+          "kind": "context",
+          "requires": [],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Review outcome leading to a non-reportable exit; does not follow from which documents exist.",
+          "confidence": "high"
+        }
+      ],
+      "question_was": "What reports are in this patient's file? Pick the highest tier available."
+    }
+  ]
+}

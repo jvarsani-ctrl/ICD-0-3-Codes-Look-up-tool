@@ -2343,14 +2343,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "awaiting_layer1": {
-        "reason": "9476 Medulloblastoma, SHH-activated and TP53-mutant is absent from the REDCap `iii_morph` option list (verified against the live data dictionary export, 2026-09-14 — it is the only Group III code missing). Built anyway under registrar ruling 3 of 4 Sep 2026: the tree may run ahead of the dropdown so long as the two stay reconcilable in writing. ICD-O-3.2 carries the code and the term; ICCC-2017 places it in IIIc1.",
-        "missing_from": [
-          "REDCap Group 3 option list"
-        ]
-      },
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "9477",
@@ -3216,7 +3209,11 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "Posterior fossa mass (cerebellum C71.6 or brain stem C71.7). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the highest evidence tier present. Posterior fossa resection is often the only tissue that will ever exist, so record adequacy honestly: an uninterpretable specimen is not a negative one, and it must not be coded as though a diagnosis was reached.",
+          "hint": "Posterior fossa resection is often the only tissue that will ever exist, so record adequacy honestly: an uninterpretable specimen is not a negative one, and it must not be coded as though a diagnosis was reached.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "ENCR basis of diagnosis is computed from this gate as the highest of codes 1-8 (0 and 9 override). The two gaps ENCR leaves are declared on the tree object: ihc_counts_as 7, methylation_counts_as 8 (Revision 2 §2.6). No Group III terminal may emit basis 1 — every CNS row in ENCR Table 3 is basis 2. `ihc_tier` is the tree's own routing variable; it is NOT the engine's site resource level, which belongs to site_profile and is read per tumour family.",
           "test_result_states": {
@@ -3239,6 +3236,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report and no pathology report",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "pf_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -3251,6 +3255,15 @@
             },
             {
               "label": "Imaging report only (MRI / CT) — no tissue and no cytology",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "pf_imaging_no_tissue",
               "coding_note": "Imaging does three different jobs here: it fixes topography, it ranks the differential, and for exactly one entity in this compartment it is proposed as a diagnostic endpoint. Only the third is a terminal, and it is gated.",
               "captures": {
@@ -3264,6 +3277,14 @@
             },
             {
               "label": "Intraoperative frozen section or squash cytology only — no definitive histology report has followed",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "pf_intraoperative",
               "coding_note": "Jain 2022, paediatric CNS: frozen section sensitivity 91.43%, squash cytology 88.57%, kappa 0.729. An intraoperative diagnosis is never the coded diagnosis while definitive histology is still expected.",
               "captures": {
@@ -3276,6 +3297,14 @@
             },
             {
               "label": "Definitive histology report — H&E, reticulin, PAS or Alcian blue only; no immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "pf_subsite",
               "coding_note": "Resource level I. Reticulin is the stain that separates a true desmoplastic/nodular medulloblastoma from nodular classic morphology, and it is available at RL I.",
               "captures": {
@@ -3289,6 +3318,15 @@
             },
             {
               "label": "Histology WITH basic diagnostic immunohistochemistry — GFAP, synaptophysin, EMA, S100, Ki-67, SMARCB1 (INI1)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "pf_subsite",
               "coding_note": "Resource level II. Basic IHC establishes lineage; it does not approximate a molecular result.",
               "captures": {
@@ -3303,6 +3341,15 @@
             },
             {
               "label": "Histology WITH surrogate molecular immunohistochemistry — H3 K27me3, H3 K27M, EZHIP, LEF1, β-catenin, GAB1, YAP1, LIN28A, BRG1/SMARCA4",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "pf_subsite",
               "coding_note": "Resource level III. This is the tier at which the medulloblastoma molecular axis, PFA ependymoma and AT/RT all become reachable.",
               "captures": {
@@ -3317,6 +3364,13 @@
             },
             {
               "label": "Histology and IHC PLUS molecular testing — FISH, RT-PCR, Sanger or NGS sequencing, or DNA methylation profiling",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "pf_subsite",
               "coding_note": "Resource level IV-V. Tick methylation only where a methylation class was actually reported; it is the one result that counts as ENCR basis 8 in its own right.",
               "captures": {
@@ -5973,7 +6027,7 @@
               },
               "entity_annotation": {
                 "who_cns5_entity": "Medulloblastoma, SHH-activated and TP53-mutant",
-                "code_status": "awaiting_layer1",
+                "code_status": "own_code",
                 "shared_with": [],
                 "evidence": "SHH surrogate panel plus a demonstrated pathogenic TP53 variant on sequencing.",
                 "provisional": false
@@ -8237,7 +8291,11 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "What is in this patient's file for this supratentorial lesion, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the HIGHEST evidence tier that is actually in the file, not the one that was requested. A crush-artefact or non-diagnostic biopsy is INADEQUATE — it is not a negative biopsy, and it must not be recorded as one. An intraoperative frozen section or squash is never the coded diagnosis on its own.",
+          "hint": "A crush-artefact or non-diagnostic biopsy is INADEQUATE — it is not a negative biopsy, and it must not be recorded as one. An intraoperative frozen section or squash is never the coded diagnosis on its own.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "coding_note": "Router handoff for C71.0 Cerebrum, C71.1 Frontal lobe, C71.2 Temporal lobe, C71.3 Parietal lobe, C71.4 Occipital lobe, C71.5 Ventricle NOS and C71.8 Overlapping lesion of brain. C71.0 also carries thalamus and basal ganglia, so a thalamic diffuse midline glioma arrives in this tree. Resource level is computed PER TUMOUR FAMILY from site_profile, never as one number for the site (Revision 2 §2.2 rule 1) — the evidence tier captured here is the file's, not the laboratory's.",
           "test_result_states": {
             "variable": "specimen_adequacy",
@@ -8258,6 +8316,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no pathology report and no imaging report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "st_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -8270,6 +8335,15 @@
             },
             {
               "label": "Imaging report only — no tissue has been taken, or none will be",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "st_imaging_pathway",
               "coding_note": "Neither of the group's two imaging-only endpoints lives in this compartment: DIPG is pontine (C71.7) and NF1 optic pathway glioma is C72.3. Supratentorially, imaging fixes topography and ranks the differential; it does not diagnose.",
               "captures": {
@@ -8283,6 +8357,14 @@
             },
             {
               "label": "Intraoperative frozen section or squash cytology only — no definitive paraffin histology report",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "st_intraoperative",
               "coding_note": "Jain 2022: frozen section sensitivity 91.43%, squash 88.57%, kappa 0.729. ADAPTR places both at RL I.",
               "captures": {
@@ -8296,6 +8378,14 @@
             },
             {
               "label": "Definitive histology report (H&E) — no immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "st_lesion_gate",
               "captures": {
                 "evidence_tests": [
@@ -8308,6 +8398,15 @@
             },
             {
               "label": "Histology with basic diagnostic immunohistochemistry (GFAP, synaptophysin, EMA, Olig2, S100, Ki-67, INI1)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "st_lesion_gate",
               "captures": {
                 "evidence_tests": [
@@ -8321,6 +8420,15 @@
             },
             {
               "label": "Histology with surrogate molecular immunohistochemistry as well (IDH1 R132H, ATRX, p53, H3 K27M, H3 G34R/V, BRAF VE1, L1CAM, p65/RelA, LIN28A, CD34)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "st_lesion_gate",
               "captures": {
                 "evidence_tests": [
@@ -8334,6 +8442,13 @@
             },
             {
               "label": "Histology plus a molecular result — FISH, RT-PCR, Sanger sequencing or MLPA",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "st_lesion_gate",
               "captures": {
                 "evidence_tests": [
@@ -8349,6 +8464,13 @@
             },
             {
               "label": "Histology plus DNA methylation profiling or NGS",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "st_lesion_gate",
               "captures": {
                 "evidence_tests": [
@@ -14146,8 +14268,12 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "Sellar, suprasellar, pineal, optic pathway or cranial nerve lesion. What is in this patient's file? Pick the highest tier available, or the special context that applies.",
-          "hint": "Answer the specimen-adequacy selector as well as picking an option. The commonest failure in CNS pathology is not a missing test but an uninterpretable specimen, and a crush-artefact biopsy is not a negative biopsy. 'Not assessable' means the report does not say - it is not the same answer as 'inadequate' and it does not route the same way.",
+          "question": "Sellar, suprasellar, pineal, optic pathway or cranial nerve lesion. What is in this patient's file?",
+          "hint": "Answer the specimen-adequacy selector too. The commonest failure in CNS pathology is not a missing test but an uninterpretable specimen, and a crush-artefact biopsy is not a negative biopsy. 'Not assessable' means the report does not say - it is not the same answer as 'inadequate' and it does not route the same way.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Entry node for tree g3_midline (contract 3). Reached from the router on C72.2, C72.3, C72.4, C72.5, C75.1, C75.2 or C75.3 with topography already captured at Stage 1 - no extra site question is asked here. Every tissue and imaging option routes to md_gct_markers first: Revision 2 3.2 puts the AFP/β-hCG rule before any code in this compartment, because the consequential error here is filing an intracranial germ cell tumour in Group III instead of Group X. 3.3: an inadequate specimen resolves to the group NOS code at basis 2, not 7 - the tissue did not yield a diagnosis.",
           "test_result_states": {
@@ -14161,6 +14287,13 @@
           "options": [
             {
               "label": "Referral or clinic letter only - it names a diagnosis, but there is no biopsy or imaging report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "md_referral_alias",
               "captures": {
                 "evidence_tests": [
@@ -14171,6 +14304,16 @@
             },
             {
               "label": "Imaging only - MRI or CT report, no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "lab",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "md_gct_markers",
               "captures": {
                 "evidence_tests": [
@@ -14181,6 +14324,16 @@
             },
             {
               "label": "Hormone assays and imaging - a functioning pituitary tumour that has not been operated on",
+              "ticks": {
+                "requires": [
+                  "imaging",
+                  "lab"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "md_gct_markers",
               "captures": {
                 "evidence_tests": [
@@ -14192,6 +14345,14 @@
             },
             {
               "label": "Frozen section or squash cytology only - no definitive paraffin histology",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "md_intraoperative",
               "captures": {
                 "evidence_tests": [
@@ -14202,6 +14363,14 @@
             },
             {
               "label": "Histology report with H&E morphology only - no immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "md_gct_markers",
               "captures": {
                 "evidence_tests": [
@@ -14212,6 +14381,15 @@
             },
             {
               "label": "Histology report with immunohistochemistry",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "md_gct_markers",
               "captures": {
                 "evidence_tests": [
@@ -14222,6 +14400,13 @@
             },
             {
               "label": "Histology, immunohistochemistry and molecular or DNA methylation profiling",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "md_gct_markers",
               "captures": {
                 "evidence_tests": [
@@ -20699,6 +20884,10 @@
           "step_label": "Evidence in file",
           "question": "Spinal cord or cauda equina tumour. What reports are in this patient's file, and was the specimen adequate for diagnosis?",
           "hint": "Intraspinal biopsy carries real morbidity, so an inadequate or absent specimen is common here and it changes the code. Inadequate is not a negative result, and an uninterpretable section is not an inadequate one — pick the line that says what actually happened. A tumour that turns out to arise from a nerve root, a vertebra or a paraspinal mass is not a Group III primary; there is a line for that too.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Entry node for tree g3_spinal, handed off by the router on C72.0 (spinal cord) or C72.1 (cauda equina). No extra topography question is asked of the clerk (contract §3). Basis-of-diagnosis declarations for the two ENCR gaps are carried here because basis is computed from this gate: IHC counts as 7, methylation profiling counts as 8 (Revision 2 §2.6).",
           "basis_of_diagnosis_declarations": {
@@ -20727,6 +20916,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology and no histology",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "sp_clinical_alias",
               "coding_note": "Tier 1. Nothing above the family level is reachable from a referral, and a named entity in a referral is not a diagnosis.",
               "captures": {
@@ -20739,6 +20935,15 @@
             },
             {
               "label": "MRI report only — no tissue was taken, and none is planned or available",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "sp_imaging_no_tissue",
               "coding_note": "There is no imaging-only diagnostic endpoint in the spinal compartment. Revision 2 §3.5 grants exactly two, DIPG (pons) and NF1 optic pathway glioma (C72.3); neither is reachable from C72.0 or C72.1.",
               "captures": {
@@ -20751,6 +20956,14 @@
             },
             {
               "label": "Intraoperative frozen section or squash cytology only — with or without a definitive paraffin report to follow",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "sp_intraoperative",
               "coding_note": "Revision 2 §3.4: an intraoperative diagnosis is never the coded diagnosis. Frozen section sensitivity 91.43%, squash cytology 88.57%, kappa 0.729 (Jain 2022, paediatric CNS).",
               "captures": {
@@ -20763,6 +20976,14 @@
             },
             {
               "label": "Definitive histology report — ADEQUATE specimen, H&E only, no immunohistochemistry available",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "sp_morphology_pattern",
               "coding_note": "Resource level I for every family. Myxopapillary ependymoma and subependymoma are the two spinal types still reachable from morphology at this level (Revision 2 §4.0, §4.1).",
               "captures": {
@@ -20778,6 +20999,12 @@
             },
             {
               "label": "Definitive histology report — ADEQUATE specimen, with immunohistochemistry (GFAP, EMA, Olig2, S100, synaptophysin and similar)",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ]
+              },
               "next_node": "sp_morphology_pattern",
               "coding_note": "Resource level II to III. Sufficient for myxopapillary ependymoma, subependymoma and spinal ependymoma; not sufficient for MYCN amplification or for 1p deletion.",
               "captures": {
@@ -20794,6 +21021,13 @@
             },
             {
               "label": "Definitive histology report — ADEQUATE specimen, with immunohistochemistry AND FISH, RT-PCR or sequencing on fresh tissue",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "sp_morphology_pattern",
               "coding_note": "Resource level IV or above. RL IV requires fresh tissue, not merely an assay contract (Revision 2 §2.2 rule 2) — a formalin-only pathway is not RL IV for MYCN or 1p FISH.",
               "captures": {
@@ -23316,7 +23550,11 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "A meningeal lesion (C70.0 cerebral meninges, C70.1 spinal meninges, C70.9 meninges NOS). What is actually in this patient's file, and was the specimen adequate for diagnosis?",
-          "hint": "Pick the highest tier of evidence that is genuinely in the file. An inadequate or unreadable specimen is not a negative one and never closes to a code here - it leaves this tree. Benign behaviour does NOT leave the registry: this registry registers non-malignant CNS tumours, and six of the twelve meningioma codes are /0 only.",
+          "hint": "An inadequate or unreadable specimen is not a negative one and never closes to a code here - it leaves this tree. Benign behaviour does NOT leave the registry: this registry registers non-malignant CNS tumours, and six of the twelve meningioma codes are /0 only.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Registrar ruling 14-09-26: register_nonmalignant_cns is true, so the non-reportable exit is reserved for the genuinely non-neoplastic - a tuberculoma, an abscess, demyelination - and is no longer the destination for benign behaviour. Revision 2 §1.3: a malignant-only registration rule would delete 9531-9535 and 9537 outright.",
           "test_result_states": {
@@ -23339,6 +23577,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only - no pathology report and no imaging report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mn_clinical_alias",
               "coding_note": "Tier 1. Nothing above the family-level code is reachable from a referral.",
               "captures": {
@@ -23353,6 +23598,15 @@
             },
             {
               "label": "Imaging report only - no tissue, no cytology",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "mn_imaging_pathway",
               "coding_note": "ENCR Table 3 permits meningioma 9530/0, 9539/1 and 9530/3 to be registered on imaging at basis 2. This tool emits only 9530/0 without tissue: imaging cannot establish atypia or malignancy.",
               "captures": {
@@ -23367,6 +23621,14 @@
             },
             {
               "label": "Intraoperative frozen section or squash cytology only - no definitive paraffin-section report yet",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "mn_intraoperative",
               "coding_note": "Revision 2 §3.4: an intraoperative diagnosis is NEVER the coded diagnosis. Frozen section and squash are RL I. Jain 2022: frozen sensitivity 91.43%, squash 88.57%, kappa = 0.729.",
               "captures": {
@@ -23381,6 +23643,14 @@
             },
             {
               "label": "Tissue with a definitive H&E report - no immunohistochemistry (RL I)",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ],
+                "excludes": [
+                  "ihc"
+                ]
+              },
               "next_node": "mn_lesion_triage",
               "captures": {
                 "evidence_tests": [
@@ -23394,6 +23664,15 @@
             },
             {
               "label": "Tissue with H&E and immunohistochemistry (EMA, SSTR2A, STAT6, SOX10, SMARCE1, BAP1 and the like) - RL II-III",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc"
+                ],
+                "excludes": [
+                  "genetics"
+                ]
+              },
               "next_node": "mn_lesion_triage",
               "coding_note": "ENCR: immunohistochemistry counts as basis of diagnosis 7, not 8.",
               "captures": {
@@ -23409,6 +23688,13 @@
             },
             {
               "label": "Tissue with H&E, immunohistochemistry AND a molecular, copy-number or methylation result (FISH, MLPA, CMA, WES, methylation array) - RL IV-V",
+              "ticks": {
+                "requires": [
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
               "next_node": "mn_lesion_triage",
               "coding_note": "ENCR: methylation profiling counts as basis of diagnosis 8.",
               "captures": {
@@ -26940,8 +27226,12 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What is in this patient's file, and how far did the diagnosis actually get? Pick the highest tier that applies.",
-          "hint": "Every case in this subgroup records five facts: (a) was surgery performed, (b) was tissue sent to pathology, (c) was immunohistochemistry requested, (d) was the result unavailable or never requested, and (e) the ENCR basis of diagnosis. The option you pick sets them. A tumour that was never diagnosed is still a tumour with recoverable facts on it - record what the file has, not \"unknown\".",
+          "question": "What is in this patient's file, and how far did the diagnosis actually get?",
+          "hint": "Every case in this subgroup records five facts: (a) was surgery performed, (b) was tissue sent to pathology, (c) was immunohistochemistry requested, (d) was the result unavailable or never requested, and (e) the ENCR basis of diagnosis. The description of the file that applies sets them. A tumour that was never diagnosed is still a tumour with recoverable facts on it - record what the file has, not \"unknown\".",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "IIIf is the subgroup a resource-limited registry reaches most often (Revision 2 section 1.6). Two NOS-rate figures circulate in this project - ~24% of gliomas without methylation, 50-70% of Group III in registries without neuropathology - and neither is traceable to any paper in the library. They are deliberately not encoded anywhere in this tree. The five-point flag is how the registry measures its own gap from its own data instead.",
           "basis_of_diagnosis_rules": {
@@ -27092,6 +27382,13 @@
             },
             {
               "label": "Referral or clinical note only - no imaging report, no operation, no pathology",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "un_clinical_alias",
               "captures": {
                 "surgery_performed": "n",
@@ -27108,6 +27405,15 @@
             },
             {
               "label": "Imaging only - CT, MRI or ultrasound describes a mass and reads it as a tumour; no operation and no tissue",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "un_imaging_only",
               "captures": {
                 "surgery_performed": "n",
@@ -27125,6 +27431,15 @@
             },
             {
               "label": "Imaging is in the file but it is equivocal, reads the lesion as something other than a tumour, or serum/CSF tumour markers were measured",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "un_imaging_incomplete",
               "captures": {
                 "surgery_performed": "n",
@@ -27157,6 +27472,14 @@
             },
             {
               "label": "Tissue was taken and only an intraoperative preparation was reported - frozen section or squash/smear cytology; no paraffin report ever followed",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "un_intraoperative_only",
               "captures": {
                 "surgery_performed": "y",
@@ -27186,6 +27509,11 @@
             },
             {
               "label": "Tissue was taken, the section was adequate, and the report describes a neoplasm but names no entity",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "un_ihc_status",
               "captures": {
                 "surgery_performed": "y",

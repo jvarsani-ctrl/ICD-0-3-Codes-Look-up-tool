@@ -66,8 +66,8 @@ FIELD_ORDER = bd.MORPHOLOGY_FIELDS
 # viii_morph option strings that differ from the ICD-O-3.2 preferred term at /3, or are
 # missing for a /3 code the tool emits (contract §2). Generated on 2 Oct 2026 by comparing
 # the option file with icdo32.sqlite; confirmed identical to the REDCap dictionary snapshot
-# of 1 Oct 2026. For these codes redcap_option_verified is False and the alias file carries
-# the REDCap string.
+# of 1 Oct 2026. The alias file carries the REDCap string; the entry carries no REDCap flag
+# (standing rule 16).
 REDCAP_DRIFT = {
     "8804": "viii_morph carries 'Epithelioid sarcoma' (pick 98); ICD-O-3.2's preferred term "
             "is 'Epithelioid sarcoma, NOS' and 'Epithelioid sarcoma' alone is not a term on "
@@ -358,7 +358,6 @@ def build_entry(rec: dict, obs: dict) -> dict:
                if obs_levels else ""))
     if code in REDCAP_DRIFT:
         e["coding_note"] = note(e["coding_note"], "Layer 1:", REDCAP_DRIFT[code])
-    e["redcap_option_verified"] = code not in REDCAP_DRIFT
     return e
 
 

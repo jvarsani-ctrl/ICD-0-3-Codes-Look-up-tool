@@ -21,11 +21,13 @@
 
 /* The closed, shared vocabulary. An unrecognised node_type throws — the
    runtime half of "node types are a closed vocabulary" (nodes.md §1).
-   `numeric_gate` is the ratified continuous-threshold type. */
+   `numeric_gate` is the ratified continuous-threshold type. `lab_results` is the
+   laboratory panel (registrar, 6 October 2026): it records numbers and never
+   chooses a code. */
 var NODE_TYPES = [
   'clinical_presentation', 'site_capture', 'document_inventory', 'clinical_alias',
   'morphology_only', 'imaging_pathway', 'ihc_checklist', 'cytogenetics_dropdown',
-  'molecular_freetext', 'histology_subclassification', 'site_resolution', 'numeric_gate'
+  'molecular_freetext', 'histology_subclassification', 'site_resolution', 'numeric_gate', 'lab_results'
 ];
 
 /* Captured per MISSING TEST, not per case: "not done" and "unavailable" are
@@ -68,7 +70,7 @@ var GRADE_SYSTEM_LABELS = { roman: 'Roman numerals', arabic: 'Arabic numerals' }
 var UNIT_LABELS = { per_mm2: 'per mm²', per_10_hpf: 'per 10 HPF',
   per_hpf: 'per HPF', percent: 'percent', ng_per_ml: 'ng/mL', iu_per_l: 'IU/L' };
 var CODE_STATUS_LABELS = { shares_code: 'Shares its code with other entities',
-  no_code: 'No code exists for this entity', awaiting_layer1: 'Awaiting a Layer 1 option' };
+  no_code: 'No code exists for this entity', own_code: 'Has its own ICD-O-3.2 code' };
 var RL_SCALE = ['I', 'II', 'III', 'IV', 'V'];
 
 /* Cleared per case. No localStorage — the iframe reloads between patients
@@ -79,6 +81,7 @@ var state = {
   router: null, topography: null, aliasIndex: null,
   archetype: null, group: null, treeId: null, nodeId: null,
   organSystem: null,     /* the crosswalk row picked at Stage 1, before the region */
+  labs: [],              /* the laboratory panel as recorded: values the clerk typed. Never read by a rule */
   candidates: [],        /* groups still possible — narrowed, never asked for blind */
   searchTerm: null,      /* the express-lane alias that set the candidates, if one did */
   dt: null, aliases: null,
@@ -91,7 +94,10 @@ var state = {
   grade: null,           /* the grade decision, once the criterion is answered */
   entity: null,          /* the entity annotation, carried to the output block */
   basisCodes: [],        /* ENCR basis-of-diagnosis codes asserted along the path */
-  trail: [], trailAtGroupEntry: 0, workup: [], result: null, error: null, query: ''
+  trail: [], trailAtGroupEntry: 0, workup: [], result: null, error: null, query: '',
+  confirmExit: false,    /* Home was pressed on a case with answers, and the clerk has not yet said yes */
+  focusNext: null,       /* a selector render() puts the keyboard focus on after the next draw, then clears */
+  hopFrom: null          /* trail index the evidence starts from, after a referral hop; read once by enterGroup() */
 };
 
 var groupCache = new Map();   /* group number -> { dt, aliases } (Architecture §7) */
@@ -127,18 +133,27 @@ function snapshot() {
     organSystem: state.organSystem, candidates: state.candidates,
     searchTerm: state.searchTerm || null,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
-    markers: state.markers, workup: state.workup, result: state.result,
+    markers: state.markers, workup: state.workup, result: state.result, labs: state.labs,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
     pendingGrade: state.pendingGrade || null, grade: state.grade || null,
     entity: state.entity || null, basisCodes: state.basisCodes,
-    trailAtGroupEntry: state.trailAtGroupEntry
+    trailAtGroupEntry: state.trailAtGroupEntry, hopFrom: state.hopFrom
   });
+}
+function cachedGroup(g) {
+  return (g === null || g === undefined) ? null : (groupCache.get(g) || groupCache.get(Number(g)) || null);
 }
 function restore(snap, upto) {
   var s = JSON.parse(snap);
   Object.keys(s).forEach(function (k) { state[k] = s[k]; });
   state.trail = state.trail.slice(0, upto);
   state.draft = {};
+  /* The group file in memory is the one loaded last. A step back across a
+     referral hop returns to a group the case left, so its file comes back with
+     it: the screen reads nodes from the file and would not find them in the
+     receiving group's. */
+  var c = cachedGroup(state.group);
+  if (c) { state.dt = c.dt; state.aliases = c.aliases; }
 }
 /* `before` is the snapshot taken BEFORE the answer was applied, so clicking a
    trail entry rewinds to the moment that question was asked. Trail entries are
@@ -294,13 +309,75 @@ function resolveGroup(code, topo) {
 /* ============================================================================
    RENDER — one function, rebuilt from state on every change
    ========================================================================= */
+var lastView = null;     /* which screen the last render drew, to tell a new screen from a re-render */
 function render() {
   var app = byId('app');
   app.setAttribute('data-shell', state.shell);
   byId('appbar-context').textContent = contextLabel();
+  /* A new screen starts with empty filter boxes. A re-render of the same
+     screen keeps what the clerk typed, so a tick or a selection does not
+     throw their search away. */
+  var view = state.stage + ':' + (state.nodeId || '') + ':' + (state.pending ? 'b' : '') + (state.pendingGrade ? 'g' : '');
+  var sameScreen = view === lastView;
+  if (!sameScreen) {
+    Object.keys(state.draft).forEach(function (k) { if (k.indexOf('f:') === 0) delete state.draft[k]; });
+    lastView = view;
+  }
+  /* Home is the way out of a case at any point (registrar, 6 October 2026). It
+     is hidden where there is no case to leave, and while the router has not
+     loaded: a reset there would land on a screen with nothing to draw. */
+  var home = byId('appbar-home');
+  if (home) home.hidden = !state.router || ((state.stage === 'landing' || state.stage === 'boot') && !state.error);
+  /* Rebuilding the screen drops the keyboard focus with the element that held
+     it, so the control is noted first and found again after the swap. Only on
+     a re-render of the same screen: a new screen starts with no focus. */
+  var held = sameScreen ? focusKey(document.activeElement) : null;
   byId('rail').innerHTML = renderRail();
   byId('trail-rows').innerHTML = renderTrailRows();
-  byId('slot').innerHTML = renderStage();
+  byId('slot').innerHTML = renderStage() + (state.confirmExit ? renderExitConfirm() : '');
+  if (state.focusNext) { focusFound(state.focusNext); state.focusNext = null; }
+  else if (held) focusFound(held);
+  /* The question sits below the screen's content, so a long list must not hide it.
+     The tool runs in a frame inside another page, so this scrolls THIS document
+     only: scrollIntoView() can move the page that embeds it. */
+  var bar = byId('slot').querySelector('.exitbar');
+  if (bar) scrollToSee(bar);
+}
+/* A selector that finds the same control after a re-render: the action and the
+   attributes that tell one control of that action from another. */
+function focusKey(el) {
+  if (!el || !el.getAttribute || !el.closest || !el.closest('#slot')) return null;
+  var act = el.getAttribute('data-act');
+  if (!act) return null;
+  var sel = '[data-act="' + act + '"]';
+  ['data-id', 'data-i', 'data-k', 'data-key'].forEach(function (a) {
+    if (el.getAttribute(a) !== null) sel += '[' + a + '="' + el.getAttribute(a) + '"]';
+  });
+  if (el.type === 'radio') sel += '[value="' + el.value + '"]';
+  return sel;
+}
+function focusFound(sel) {
+  var el = document.querySelector(sel);
+  if (!el || !el.focus) return;
+  el.focus({ preventScroll: true });
+  scrollToSee(el);
+}
+/* Scrolls this document just far enough to show the element's bottom edge. The
+   tool runs in a frame, so scrollIntoView() and a plain focus() are not used:
+   either can move the page that embeds it. */
+function scrollToSee(el) {
+  if (!el.getBoundingClientRect || !window.scrollBy) return;
+  var hidden = el.getBoundingClientRect().bottom - window.innerHeight;
+  if (hidden > 0) window.scrollBy(0, hidden + 8);
+}
+/* Leaving a case with answers in it asks first: the trail is the only copy.
+   Quiet on purpose (registrar, 6 October 2026: the first version was a yellow
+   box at the top and too eye-catching), and below the screen, not above it. */
+function renderExitConfirm() {
+  return '<div class="exitbar" role="alertdialog" aria-label="Leave this case?">' +
+    '<span class="exitbar__text">Leave this case? The answers given so far will be discarded.</span>' +
+    '<span class="exitbar__actions"><button class="btn btn--ghost" data-act="home-yes">Discard</button>' +
+    '<button class="btn" data-act="home-no">Keep Working</button></span></div>';
 }
 
 function contextLabel() {
@@ -308,8 +385,15 @@ function contextLabel() {
   /* Keyed to the group the case is in, not the last group file loaded: the
      file outlives a step back to the family question and a new case, and the
      bar would name a group the clerk has not chosen. */
-  if (state.group && state.dt && state.dt.metadata) {
-    return esc(state.dt.metadata.group_name) + (state.result ? ' · case complete' : '');
+  var md = state.dt && state.dt.metadata;
+  if (state.group && md && (md.group_id === undefined || Number(md.group_id) === Number(state.group))) {
+    return esc(md.group_name) + (state.result ? ' · case complete' : '');
+  }
+  /* The file in memory belongs to another group (a referral has just moved the
+     case, and the receiving group's file is not loaded until its tree is
+     entered), so the router names the group. */
+  if (state.group && state.router && groupMeta(state.group).name) {
+    return esc(groupMeta(state.group).name) + (state.result ? ' · case complete' : '');
   }
   return state.router ? 'New case' : 'Loading…';
 }
@@ -338,7 +422,7 @@ function renderTrailRows() {
 function currentLabel() {
   if (state.result) return 'Output';
   if (state.pendingGrade) return 'Grade';
-  if (state.pending) return 'Behaviour';
+  if (state.pending) return 'Behavior';
   var n = node();
   if (n) return n.step_label || n.node_type.replace(/_/g, ' ');
   if (state.stage === 'search_unresolved') return 'Refer to registrar';
@@ -389,7 +473,7 @@ function renderSearchResults() {
   if (!hits.length) return '<p class="node__hint">No match. Use guided entry.</p>';
   return pick('alias', hits.map(function (hit) {
     return { label: hit.alias, meta: 'Group ' + hit.groups.join(', ') };
-  }));
+  }), { filter: false });
 }
 /* Fuzzy-ish match against the lightweight startup index (Architecture §4C). */
 function searchAlias(q) {
@@ -410,14 +494,81 @@ function searchAlias(q) {
    budget (Architecture §12) without pushing presentation into the JSON. */
 function panel(over, question, hint, body) {
   return '<div class="node--live"><div class="tag node__over">' + esc(over) + '</div>' +
-    '<p class="node__q">' + esc(question) + '</p>' +
+    '<p class="node__q" id="node-q">' + esc(question) + '</p>' +
     (hint ? '<p class="node__hint">' + esc(hint) + '</p>' : '') + body + '</div>';
 }
-function pick(act, items) {
-  return '<div class="opts">' + items.map(function (it, i) {
-    return '<button class="opt" data-act="' + esc(act) + '" data-i="' + i + '">' +
+/* ------------------------------------------------- the search box on a list */
+/* Every single-choice list carries a filter box (registrar, 6 October 2026:
+   every question, not only long ones). The options stay on screen, so one tap
+   still answers; typing hides the options that do not match and Enter takes
+   the first that does. A list this short needs no box, which is what raising
+   this number buys — the registrar chose to have none removed. */
+var FILTER_MIN_OPTIONS = 1;
+
+/* Lower-cased and stripped of accents, so "Mullerian" finds "Müllerian". */
+function foldText(s) {
+  var t = String(s === null || s === undefined ? '' : s).toLowerCase();
+  return t.normalize ? t.normalize('NFD').replace(/[̀-ͯ]/g, '') : t;
+}
+/* Every word the clerk typed must appear somewhere in the row's text. */
+function findMatch(haystack, typed) {
+  var terms = foldText(typed).split(/\s+/).filter(Boolean);
+  return terms.every(function (t) { return haystack.indexOf(t) !== -1; });
+}
+/* The text a row answers to: its label, its meta line and anything extra the
+   caller says belongs to it — an organ system also answers to its regions. */
+function findText(it) {
+  return foldText([it.label, it.meta, it.find].filter(Boolean).join(' '));
+}
+function filterBox(key) {
+  return '<label class="field optbox__find"><span class="visually-hidden">Filter the options below</span>' +
+    '<input type="search" data-act="filter" data-key="' + esc(key) + '" value="' + esc(state.draft['f:' + key] || '') +
+    '" placeholder="Type to filter the options" autocomplete="off"></label>';
+}
+/* The count a screen reader hears after each keystroke in a filter box. */
+function shownText(n) { return n === 1 ? '1 option shown' : n + ' options shown'; }
+/* The DOM half: hide and show rows as the clerk types, with no re-render, so
+   the cursor stays where it is. */
+function applyFilter(input) {
+  var box = input.closest('.optbox');
+  if (!box) return;
+  var typed = input.value, shown = 0;
+  Array.prototype.forEach.call(box.querySelectorAll('[data-find]'), function (row) {
+    /* The row the clerk has selected stays on screen, so what is selected is
+       always what they can see: Confirm and Continue act on it. */
+    var hit = rowSelected(row) || findMatch(row.getAttribute('data-find'), typed);
+    row.hidden = !hit;
+    if (hit) shown++;
+  });
+  var none = box.querySelector('.optbox__none');
+  if (none) none.hidden = shown > 0;
+  var say = box.querySelector('.optbox__status');
+  if (say) say.textContent = shownText(shown);
+}
+function rowSelected(row) {
+  return row.classList.contains('opt--selected') || !!row.querySelector('input:checked');
+}
+
+/* One list of one-tap options. `o.key` names the filter box (default: the
+   action); `o.filter === false` leaves the box off; `o.selected` is the index
+   of a row the clerk has tapped and not yet confirmed. An item may carry `aid`,
+   the recognition aid, which shows beneath a SELECTED row and nowhere else. */
+function pick(act, items, o) {
+  o = o || {};
+  var key = o.key || act;
+  var typed = state.draft['f:' + key] || '';
+  var withBox = o.filter !== false && items.length >= FILTER_MIN_OPTIONS;
+  var shown = 0;
+  var rows = items.map(function (it, i) {
+    var on = o.selected !== undefined && o.selected !== null && Number(o.selected) === i;
+    var hit = !withBox || !typed || on || findMatch(findText(it), typed);
+    if (hit) shown++;
+    return '<button class="opt' + (on ? ' opt--selected' : '') + '"' + (hit ? '' : ' hidden') +
+      ' data-find="' + esc(findText(it)) + '" data-act="' + esc(act) + '" data-i="' + i + '"' +
+      (o.selected !== undefined ? ' aria-pressed="' + (on ? 'true' : 'false') + '"' : '') + '>' +
       '<span class="opt__label">' + esc(it.label) +
       (it.meta ? '<span class="opt__meta">' + rich(it.meta) + '</span>' : '') +
+      (it.aid && on ? '<span class="opt__aid">' + esc(it.aid) + '</span>' : '') +
       /* A CLINICAL ALERT AUTHORED ON A BRANCH IS CLERK-FACING (DT master §3E)
          — the counterpart of coding_note, which is author-facing and stays
          unrendered. On an option it must be visible BEFORE the option is
@@ -426,7 +577,31 @@ function pick(act, items) {
          banner each — several can be on screen at once. */
       (it.alert ? '<span class="opt__alert"><b>Clinical alert</b> ' + rich(it.alert) + '</span>' : '') +
       '</span></button>';
-  }).join('') + '</div>';
+  }).join('');
+  return '<div class="optbox">' + (withBox ? filterBox(key) : '') + '<div class="opts" role="group" aria-labelledby="node-q">' + rows + '</div>' +
+    (withBox ? noneLine(shown) : '') + '</div>';
+}
+function noneLine(shown) {
+  return '<p class="optbox__none"' + (shown ? ' hidden' : '') + '>No option matches. Clear the box to see them all.</p>' +
+    '<span class="visually-hidden optbox__status" role="status" aria-live="polite">' + shownText(shown) + '</span>';
+}
+/* A single-choice list the clerk answers with Continue rather than a tap: radio
+   rows under the same filter box. `name` is the draft key the choice lands in.
+   Used where a tap would leave the screen before the rest of it is answered. */
+function choose(name, items, selected) {
+  var typed = state.draft['f:' + name] || '';
+  var withBox = items.length >= FILTER_MIN_OPTIONS;
+  var shown = 0;
+  var rows = items.map(function (it, i) {
+    var hit = !withBox || !typed || Number(selected) === i || findMatch(findText(it), typed);
+    if (hit) shown++;
+    return '<label class="check check--row"' + (hit ? '' : ' hidden') + ' data-find="' + esc(findText(it)) + '">' +
+      '<input type="radio" name="' + esc(name) + '" data-act="draft" data-k="' + esc(name) + '" value="' + i + '"' +
+      (Number(selected) === i ? ' checked' : '') + '> <span>' + esc(it.label) +
+      (it.meta ? '<span class="opt__meta">' + rich(it.meta) + '</span>' : '') + '</span></label>';
+  }).join('');
+  return '<div class="optbox">' + (withBox ? filterBox(name) : '') + '<div class="checks" role="radiogroup" aria-labelledby="node-q">' + rows + '</div>' +
+    (withBox ? noneLine(shown) : '') + '</div>';
 }
 
 function renderArchetype() {
@@ -488,7 +663,10 @@ function renderSite() {
           ? 'Use the clinical examination notes and the imaging reports.'
           : 'The organ of origin, not the region of the swelling. Code the primary, not the biopsy site.'),
     pick('site', systemRows().map(function (c) {
-      return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes' };
+      /* A system answers to the names of the regions inside it, so "ovary"
+         finds "Ovary and testis" and "femur" finds "Bone and joints". */
+      return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes',
+        find: regionOptions(c).map(function (r) { return r.label + ' ' + r.topography; }).join(' ') };
     })));
 }
 function renderSiteRegion() {
@@ -660,6 +838,7 @@ function dispatchNode(n) {
   return stateSelectors(n) + nodeControl(n);
 }
 function nodeControl(n) {
+  if (n.tick_list) return tickControl(n);
   switch (n.node_type) {
     case 'clinical_presentation':
     case 'site_capture':
@@ -672,6 +851,7 @@ function nodeControl(n) {
     case 'ihc_checklist':
       return n.branch_sequence ? markerFlow(n) : markerGrid(n);
     case 'numeric_gate':           return numericGate(n);
+    case 'lab_results':            return labControl(n);
     case 'molecular_freetext':     return freeText(n);
     case 'imaging_pathway':        return imagingPathway(n);
     case 'clinical_alias':         return optionList(n);
@@ -718,25 +898,291 @@ function optionList(n) {
     return '<div class="actions"><button class="btn" data-act="direct">Accept ' +
       esc(n.accept_label || 'this result') + '</button></div>';
   }
-  return pick('opt', opts.map(function (o) {
+  var items = opts.map(function (o) {
     /* An option carrying a gate says, before it is tapped, whether the test
        behind it can be done here — the same reason an option's clinical alert
        shows before it is taken rather than after. */
     var rl = o.resource_level_gate ? gateText(gateStatus(o.resource_level_gate)) : '';
     return { label: optionLabel(o),
              meta: [priorText(o.prior_probability), rl].filter(Boolean).join(' · ') || null,
-             alert: o.clinical_alert || null };
-  }));
+             alert: o.clinical_alert || null,
+             aid: o.recognition_aid || null };
+  });
+  /* A recognition aid is clerk-facing text in report vocabulary, shown under
+     the option the clerk has SELECTED and nowhere else (registrar, 6 October
+     2026). A list that carries any is answered select, then Confirm; every
+     other list stays one tap. This is not the grey sub-line the 4 October
+     ruling removed: that showed on every option, always, from coding_note. */
+  if (!items.some(function (it) { return it.aid; })) return pick('opt', items);
+  var sel = state.draft.sel;
+  return pick('optsel', items, { selected: sel === undefined ? null : sel }) +
+    '<div class="actions"><button class="btn" data-act="optconfirm"' + (sel === undefined ? ' disabled' : '') + '>Confirm</button></div>';
+}
+
+/* ============================================================================
+   Tick lists (schema extension, ratified by the registrar on 6 October 2026)
+
+   A node may declare `tick_list`. The clerk ticks which items are present and
+   the engine picks a destination from the ticked set, instead of the clerk
+   choosing one sentence. It is a field on an existing node_type, so the
+   closed vocabulary is unchanged.
+
+   An option may carry `ticks`: { requires, any_of, excludes }. It FITS a ticked
+   set when every `requires` id is ticked, at least one `any_of` id is ticked
+   (when any_of is given) and no `excludes` id is ticked. `ticks: {}` fits every
+   set. The engine knows no item by name: the items are in the router
+   (`tick_vocabularies`) or on the node.
+
+     resolve "ask_siblings"  Options WITH `ticks` are tiers; options without
+                             are special situations, listed under the checklist
+                             and always choosable. One fitting tier is taken at
+                             once; two or more are asked.
+     resolve "first_match"   The first fitting option in file order is the
+                             destination.
+
+   The data gate proves, on every group, that no ticked set dead-ends and that
+   every option can be reached; the engine gate drives the same sets through
+   these functions.
+   ========================================================================= */
+function tickList(n) {
+  var tl = n && n.tick_list;
+  if (!tl) return null;
+  var voc = null;
+  if (tl.vocabulary) {
+    voc = ((state.router && state.router.tick_vocabularies) || {})[tl.vocabulary];
+    if (!voc) throw new Error('tick_list on ' + n.node_id + ' names an unknown vocabulary: ' + tl.vocabulary);
+  }
+  var out = {};
+  [voc, tl].forEach(function (src) {
+    Object.keys(src || {}).forEach(function (k) { out[k] = src[k]; });
+  });
+  out.items = arr(out.items);
+  out.resolve = out.resolve || 'ask_siblings';
+  if (!out.variable) throw new Error('tick_list on ' + n.node_id + ' names no variable to capture the ticks in');
+  return out;
+}
+function tickFits(t, ids) {
+  if (!t) return false;
+  var has = function (x) { return ids.indexOf(x) !== -1; };
+  var any = arr(t.any_of);
+  return arr(t.requires).every(has) && (!any.length || any.some(has)) && !arr(t.excludes).some(has);
+}
+/* The options that fit, in file order, each with its index in n.options. */
+function tickOffered(n, ids) {
+  var out = [];
+  arr(n.options).forEach(function (o, i) { if (o.ticks && tickFits(o.ticks, ids)) out.push({ i: i, o: o }); });
+  return out;
+}
+function tickContexts(n) {
+  var out = [];
+  arr(n.options).forEach(function (o, i) { if (!o.ticks) out.push({ i: i, o: o }); });
+  return out;
+}
+/* In the order the list is drawn, whatever order they were ticked in. */
+function orderedTicks(tl, ids) {
+  return tl.items.map(function (it) { return it.id; }).filter(function (id) { return ids.indexOf(id) !== -1; });
+}
+/* What is ticked on screen: this visit's draft, else what the case already
+   holds — so a second gate in one case opens with the same boxes ticked. */
+function ticksNow(tl) {
+  return state.draft.ticks !== undefined ? state.draft.ticks : arr(state.captured[tl.variable]);
+}
+function tickLabels(tl, ids) {
+  return ids.map(function (id) {
+    var it = tl.items.filter(function (x) { return x.id === id; })[0];
+    return it ? it.label : id;
+  });
+}
+function tickControl(n) {
+  var tl = tickList(n);
+  if (tl.resolve === 'ask_siblings' && state.captured.tick_gate === n.node_id) return tickSiblings(n, tl);
+  var on = ticksNow(tl);
+  var h = '<p class="node__hint" id="tick-prompt">' + esc(tl.prompt || 'Tick every item that applies.') + '</p>' +
+    '<div class="checks" role="group" aria-labelledby="tick-prompt">' + tl.items.map(function (it) {
+      return '<label class="check"><input type="checkbox" data-act="tick" data-id="' + esc(it.id) + '"' +
+        (on.indexOf(it.id) !== -1 ? ' checked' : '') + '> ' + esc(it.label) + '</label>';
+    }).join('') + '</div>';
+  var ctx = tickContexts(n);
+  if (ctx.length && tl.resolve === 'ask_siblings') {
+    h += '<div class="tag">' + esc(tl.context_prompt || 'Does one of these apply?') + '</div>' +
+      choose('ctx', [{ label: tl.none_label || 'None of these' }].concat(ctx.map(function (c) {
+        return { label: optionLabel(c.o) };
+      })), Number(state.draft.ctx) || 0);
+  }
+  return h + '<div class="actions"><button class="btn" data-act="tick-continue">Continue</button></div>';
+}
+/* Two or more tiers fit the ticked documents: the clerk says which describes the file. */
+function tickSiblings(n, tl) {
+  var offered = tickOffered(n, arr(state.captured[tl.variable]));
+  return '<p class="node__hint">' + esc(tl.sibling_prompt ||
+    'More than one description fits what is in the file. Pick the one that describes it.') + '</p>' +
+    pick('tickopt', offered.map(function (c) {
+      return { label: optionLabel(c.o), meta: priorText(c.o.prior_probability) || null, alert: c.o.clinical_alert || null };
+    }));
+}
+/* Continue on the checklist. The ticks go on the trail and onto the case, then
+   the destination is the special situation chosen, the first fit, the one tier
+   that fits, or, when several fit, a second question. */
+function tickContinue(n, before) {
+  var tl = tickList(n);
+  var ids = orderedTicks(tl, ticksNow(tl));
+  var names = tickLabels(tl, ids);
+  pushTrail(tl.label || n.step_label || 'Ticked', names.length ? names.join(', ') : 'Nothing ticked', before);
+  state.trail[state.trail.length - 1].ticks = ids.slice();
+  state.captured[tl.variable] = ids;
+  var after = snapshot(), label = n.step_label || 'Answer';
+  if (tl.resolve === 'first_match') {
+    var hit = tickOffered(n, ids)[0];
+    if (!hit) throw new Error('No option on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
+    return advance(hit.o, label, optionLabel(hit.o), after, true);
+  }
+  var pickedCtx = Number(state.draft.ctx) || 0;
+  if (pickedCtx > 0) {
+    var c = tickContexts(n)[pickedCtx - 1];
+    if (c) return advance(c.o, label, optionLabel(c.o), after, true);
+  }
+  var offered = tickOffered(n, ids);
+  if (!offered.length) throw new Error('No tier on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
+  if (offered.length === 1) {
+    var at = state.trail.length;
+    var went = advance(offered[0].o, label, optionLabel(offered[0].o), after, true);
+    /* The tier is the engine's description of the documents ticked, not the clerk's
+       answer, and its wording can say more or less than they ticked ("no imaging
+       report" beside an imaging report). The documents ticked are the evidence, so
+       "Suggested based on" lists those and not this sentence. */
+    state.trail[at].quiet = true;
+    return went;
+  }
+  state.captured.tick_gate = n.node_id;
+  state.draft = {};
+}
+
+/* ============================================================================
+   Laboratory results (node_type `lab_results`, registrar, 6 October 2026)
+
+   One screen with a row per laboratory test: the number as the report gives it,
+   its unit from the test's own list, and "Not in the file". The boxes start
+   empty (registrar, 6 October 2026); a row left without a number is recorded as
+   not in the file, ticked or not, and ticking the box also clears a number.
+   The numbers are RECORDED and
+   shown on the result and nothing more: they are kept in `state.labs`, never in
+   `state.captured`, so no rule, `when` or gate can read one, and a value never
+   chooses a code. The tool interprets nothing here: no cut-off, no "raised".
+   The node routes by its own `next_node`.
+   ========================================================================= */
+/* The rows as typed so far; else what the case already holds, so a clerk who
+   steps back finds the panel as they left it. */
+function labDraft() {
+  if (state.draft.labs) return state.draft.labs;
+  var held = {};
+  arr(state.labs).forEach(function (l) {
+    held[l.id] = { value: l.inFile ? l.value : '', unit: l.unit };
+  });
+  return held;
+}
+/* A row with no number records no result, whether or not its box is ticked. */
+function labRowAbsent(r) {
+  var typed = r && r.value !== undefined ? String(r.value).trim() : '';
+  return typed === '' || !!(r && r.absent);
+}
+/* The unit the row holds when it is on the test's own list, else the list's first. */
+function labUnit(lab, r) {
+  var units = arr(lab.units);
+  return r && units.indexOf(r.unit) !== -1 ? r.unit : (units[0] || '');
+}
+/* Digits with at most one decimal mark, as a report prints a result. */
+var LAB_NUMBER = /^\d+(?:[.,]\d+)?$/;
+function labControl(n) {
+  var d = labDraft();
+  var h = '<div class="labs">' + arr(n.labs).map(function (lab, i) {
+    var r = d[lab.id] || {}, units = arr(lab.units), unit = labUnit(lab, r);
+    var ticked = !!r.absent, id = 'lab-' + lab.id;
+    return '<div class="labrow">' +
+      '<label class="labrow__name" for="' + esc(id) + '">' + esc(lab.label) + '</label>' +
+      '<span class="labrow__entry">' +
+      '<input id="' + esc(id) + '" class="labrow__value" type="text" inputmode="decimal" autocomplete="off" maxlength="12" data-act="labval" data-i="' + i + '"' +
+      ' value="' + esc(r.value === undefined ? '' : r.value) + '"' + (r.error ? ' aria-invalid="true" aria-describedby="' + esc(id) + '-error"' : '') + '>' +
+      '<select class="labrow__unit" data-act="labunit" data-i="' + i + '" aria-label="Unit for ' + esc(lab.label) + '">' +
+      units.map(function (u) {
+        return '<option value="' + esc(u) + '"' + (u === unit ? ' selected' : '') + '>' + esc(u) + '</option>';
+      }).join('') + '</select>' +
+      '<label class="check labrow__absent"><input type="checkbox" data-act="lababsent" data-i="' + i + '"' +
+      ' aria-label="Not in the file: ' + esc(lab.label) + '"' + (ticked ? ' checked' : '') + '> Not in the file</label></span>' +
+      (r.error ? '<span class="labrow__error" id="' + esc(id) + '-error" role="alert">' + esc(r.error) + '</span>' : '') + '</div>';
+  }).join('') + '</div>';
+  return h + '<div class="actions"><button class="btn" data-act="labs-continue">Continue</button></div>';
+}
+/* The panel as one line, for the trail: "Alpha-fetoprotein 2.1 ng/mL · Lactate
+   dehydrogenase 450 U/L · 6 not in the file". */
+function labSummary(rows) {
+  var inFile = rows.filter(function (l) { return l.inFile; });
+  if (!inFile.length) return 'None of ' + rows.length + ' in the file';
+  var absent = rows.length - inFile.length;
+  return inFile.map(function (l) { return l.label + ' ' + l.value + ' ' + l.unit; }).join(' · ') +
+    (absent ? ' · ' + absent + ' not in the file' : '');
+}
+function labsContinue(n, before) {
+  var d = labDraft(), rows = [], typedRows = {}, bad = false, mine = {};
+  arr(n.labs).forEach(function (lab) {
+    var r = d[lab.id] || {}, unit = labUnit(lab, r);
+    var typed = r.value === undefined ? '' : String(r.value).trim();
+    /* The draft keeps what the clerk did: the number as typed and the box as
+       they left it. A blank row is RECORDED as not in the file, but it is not
+       ticked on their behalf, so a refused Continue or a step back shows the
+       boxes as they were. */
+    var row = { value: typed, unit: unit, absent: !!r.absent };
+    mine[lab.id] = true;
+    if (labRowAbsent(r)) {
+      rows.push({ id: lab.id, label: lab.label, value: '', unit: '', inFile: false });
+    } else if (!LAB_NUMBER.test(typed)) {
+      row.error = 'Enter a number: digits with one decimal mark. “' + typed + '” is not one.';
+      bad = true;
+    } else {
+      rows.push({ id: lab.id, label: lab.label, value: typed, unit: unit, inFile: true });
+    }
+    typedRows[lab.id] = row;
+  });
+  if (bad) {
+    state.draft.labs = typedRows;
+    state.focusNext = '.labrow__value[aria-invalid="true"]';
+    return;
+  }
+  /* A panel replaces the rows of the tests it lists and keeps the rest, so a
+     second panel in the same case does not erase the first. */
+  state.labs = arr(state.labs).filter(function (l) { return !mine[l.id]; }).concat(rows);
+  /* A panel with a result in it means a laboratory report is in the file, so the
+     evidence checklist that follows opens with that box ticked. The node names
+     the vocabulary and the ids; the engine knows neither. */
+  var imp = n.implies_ticks, voc = imp && ((state.router.tick_vocabularies || {})[imp.vocabulary]);
+  if (voc && rows.some(function (l) { return l.inFile; })) {
+    var have = arr(state.captured[voc.variable]).slice();
+    arr(imp.ids).forEach(function (id) { if (have.indexOf(id) === -1) have.push(id); });
+    state.captured[voc.variable] = arr(voc.items).map(function (it) { return it.id; })
+      .filter(function (id) { return have.indexOf(id) !== -1; });
+  }
+  var at = state.trail.length;
+  advance({ next_node: n.next_node }, n.step_label || 'Laboratory results', labSummary(rows), before);
+  /* The values are not what the code rests on, so they stay out of "Suggested
+     based on"; and stepping back reopens the screen as it was typed. They are
+     what a clerk typed, so the entry is marked typed, and nothing that reports
+     the case may print them. */
+  state.trail[at].quiet = true;
+  state.trail[at].typed = true;
+  state.trail[at].labDraft = JSON.parse(JSON.stringify(typedRows));
+}
+/* The recorded panel on the result: each test, its value and unit, or "not in the file". */
+function labResultsBlock() {
+  var rows = arr(state.labs);
+  if (!rows.length) return '';
+  return '<div class="labblock"><div class="tag">Laboratory results</div>' + rows.map(function (l) {
+    return orow(l.label, l.inFile ? l.value + ' ' + l.unit : 'not in the file');
+  }).join('') + '</div>';
 }
 
 function cytogeneticsSelect(n) {
   var opts = arr(n.options);
-  var h = '<label class="field"><span class="field__label">Reported finding</span><select data-act="draft" data-k="option"><option value="">—</option>';
-  opts.forEach(function (o, i) {
-    var sel = String(state.draft.option) === String(i) ? ' selected' : '';
-    h += '<option value="' + i + '"' + sel + '>' + esc(o.label || o.finding) + '</option>';
-  });
-  h += '</select></label>';
+  var h = '<div class="tag">Reported finding</div>' +
+    choose('option', opts.map(function (o) { return { label: o.label || o.finding }; }), state.draft.option);
   var chosen = state.draft.option !== undefined && state.draft.option !== '' ? opts[+state.draft.option] : null;
   /* A native <option> cannot carry markup, so a dropdown option's alert shows
      the moment it is selected — still before Continue commits it. */
@@ -1084,9 +1530,14 @@ function numericGate(n) {
     (label ? ' (' + esc(label) + ')' : '') + '</span>' +
     '<input type="number" step="any" data-act="draft" data-k="value" value="' +
     esc(state.draft.value === undefined ? '' : state.draft.value) + '"' + (undoc ? ' disabled' : '') + '></label>' +
+    /* One sentence for every kind of unit. It was written for counts and said
+       "denominator" and "count" under a serum concentration too (Group III's
+       pineal marker screens, 6 October 2026). A unit carries its own
+       denominator ("per mm²" is not "per 10 HPF"), so asking for the same unit
+       covers both, and a count is named in the same breath. */
     (units.length ? '<p class="node__hint">Thresholds on this question are read ' +
-      esc(units.join(', and ')) + '. Check the report states the same denominator before ' +
-      'entering the count.</p>' : '') +
+      esc(units.join(', and ')) + '. Check that the report gives the value in the same unit, ' +
+      'and a count over the same denominator, before entering it.</p>' : '') +
     '<div class="checks"><label class="check"><input type="checkbox" data-act="draft" data-k="not_documented"' +
     (undoc ? ' checked' : '') + '> Not documented in the file</label></div>' +
     '<div class="actions"><button class="btn" data-act="resolve">Continue</button></div>';
@@ -1130,6 +1581,8 @@ function imagingPathway(n) {
    never be collapsed into one control: forcing an NOS *malignant* code on the
    second would record a cancer that does not exist (nodes.md §4). */
 function renderEscapes(n) {
+  /* The laboratory screen asks no diagnostic question, so it offers no way to end the case on one. */
+  if (n && n.node_type === 'lab_results') return '';
   var nos = n.nos_fallback;
   return '<div class="escapes">' +
     (nos ? '<button class="escape escape--nos" data-act="escape-nos">Uncertain subtype — still a malignancy' +
@@ -1164,7 +1617,7 @@ function behaviourLeaves(br) {
 }
 function renderBehaviour() {
   var br = state.pending, n = node();
-  return panel('Behaviour', br.criterion,
+  return panel('Behavior', br.criterion,
     br.clinical_only
       ? 'A clinical-history question. The pathology report cannot answer it — ask the notes or the clinician.'
       : null,
@@ -1473,6 +1926,38 @@ var BEHAVIOUR_LABELS = {
   '0': 'Benign neoplasm (benign tumour)', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
   '3': 'Malignant', '6': 'Metastatic', '9': 'Malignant, uncertain whether primary or metastatic'
 };
+/* The same digit as the coding block prints it: "/3 (Malignant)". The registrar
+   asked on 6 October 2026 for the code and its meaning in brackets everywhere
+   behaviour is reported, and for the interface word to be "Behavior code", the
+   ICD-O spelling. The meaning here is short because it sits inside brackets;
+   BEHAVIOUR_LABELS keeps the registrar's longer wording for the panel heading. */
+var BEHAVIOR_MEANING = {
+  '0': 'Benign neoplasm', '1': 'Uncertain whether benign or malignant', '2': 'In situ',
+  '3': 'Malignant', '6': 'Metastatic', '9': 'Malignant, uncertain whether primary or metastatic'
+};
+function behaviorCodeText(b) {
+  var d = String(b);
+  return '/' + d + (BEHAVIOR_MEANING[d] ? ' (' + BEHAVIOR_MEANING[d] + ')' : '');
+}
+/* A topography as the registry writes it: the ICD-O code without its letter and
+   point, then the ICD-O name, "569 (Ovary)" for C56.9. */
+function topographyText(code) {
+  if (!code) return '—';
+  /* A group may record a range with an instruction ("C70.0-C72.9 - record the
+     exact code documented") where no one site is known. That is text, not a code,
+     so it prints as the file wrote it. */
+  if (!/^C\d{2}(\.\d)?$/i.test(String(code))) return String(code);
+  var look = (state.topography && state.topography.topography_lookup) || {};
+  var t = look[code] || {};
+  var num = String(code).replace(/^C/i, '').replace('.', '');
+  var name = t.label || t.region_label;
+  return num + (name ? ' (' + name + ')' : '');
+}
+/* A schema variable, or any token, said as words. The ICD-O spelling is
+   "behavior", so a variable named for behaviour reads that way on the trail. */
+function words(v) {
+  return String(v).replace(/_/g, ' ').replace(/ehaviour/g, 'ehavior');
+}
 function basisCode(v) {
   var n = Number(v);
   if (v === '' || v === null || v === undefined || isNaN(n) || BASIS_CODES.indexOf(n) === -1) {
@@ -1550,7 +2035,7 @@ function basisOfDiagnosis() {
    dropped — the JSON looked right and the variable never arrived, which is
    the worst shape a bug can take here. Applied before finish() so the output
    block sees them. */
-function advance(target, label, value, before) {
+function advance(target, label, value, before, automatic) {
   /* THE GATE RUNS FIRST, before the trail entry and before captures. A branch
      whose test this laboratory cannot run is not a branch the clerk can be
      asked to take, so it resolves to the gate's `unreachable_destination`
@@ -1570,7 +2055,9 @@ function advance(target, label, value, before) {
     target = unreachableTarget(target, dst);
     diverted = true;
   }
-  pushTrail(label, value + (diverted ? ' — unavailable at this laboratory' : ''), before);
+  pushTrail(label, value + (diverted ? ' — unavailable at this laboratory' : ''), before, automatic);
+  /* Leaving the node leaves its tick gate: a node reached again opens on its checklist. */
+  delete state.captured.tick_gate;
   capture(target.captures);
   state.draft = {};
   state.pending = null;
@@ -1628,7 +2115,8 @@ function advance(target, label, value, before) {
 /* "Based on" is the evidence chain since the case entered the group — the
    clerk has to be able to justify the code at the output block. */
 function basisFromTrail() {
-  return state.trail.slice(state.trailAtGroupEntry || 0).map(function (t) { return t.value; }).join(' · ');
+  return state.trail.slice(state.trailAtGroupEntry || 0).filter(function (t) { return !t.quiet; })
+    .map(function (t) { return t.value; }).join(' · ');
 }
 
 function finish(target, basis) {
@@ -1736,6 +2224,60 @@ function finish(target, basis) {
     routing: resolveGroup(code, state.captured.topography)
   };
   state.stage = 'output';
+}
+
+/* ------------------------------------------------------ the referral hop
+   A referral to a BUILT group does not end the case: the clerk continues in
+   that group's tree (registrar, 6 October 2026). The referral itself
+   establishes the group, so the topography's candidate_groups are not
+   consulted again; the receiving group routes its own tree from the topography
+   or asks for one, exactly as it does for any case.
+
+   What carries over is the case: where the tumour is, what is in the file, and
+   the basis of diagnosis already asserted. What does not is what the old tree
+   READ: stain results, workup, grade, entity, parked branches. The new tree
+   interprets those afresh, and a stain read under one tree's panel must not be
+   taken as answered under another's. */
+function caseFacts() {
+  var keep = ['topography', 'organ_system', 'tumour_origin'];
+  var router = state.router || {};
+  Object.keys(router.discriminators || {}).forEach(function (k) {
+    if (router.discriminators[k].variable) keep.push(router.discriminators[k].variable);
+  });
+  Object.keys(router.tick_vocabularies || {}).forEach(function (k) {
+    if (router.tick_vocabularies[k].variable) keep.push(router.tick_vocabularies[k].variable);
+  });
+  var out = {};
+  keep.forEach(function (k) { if (state.captured[k] !== undefined) out[k] = state.captured[k]; });
+  return out;
+}
+function canHop(r) {
+  if (!(r && r.referral && r.group !== undefined && r.group !== null && groupMeta(r.group).built)) return false;
+  /* A group that routes its trees from the topography cannot take a case that
+     has none: it would enter that group's default tree in silence. The referral
+     screen stays as it was, and the case is started again from its site. */
+  return !(groupMeta(r.group).tree_routing && !state.captured.topography);
+}
+function hopAction(r) {
+  if (!canHop(r)) return '';
+  var name = groupMeta(r.group).name;
+  return '<div class="actions"><button class="btn" data-act="hop">Continue in Group ' + esc(r.group) +
+    (name ? ' — ' + esc(name) : '') + '</button></div>';
+}
+function hopToGroup(before) {
+  var r = state.result;
+  if (!canHop(r)) { state.error = 'This referral names no built group to continue in.'; return; }
+  var target = r.group;
+  pushTrail('Referral', 'Group ' + target + (groupMeta(target).name ? ' — ' + groupMeta(target).name : ''), before);
+  state.captured = caseFacts();
+  state.markers = {}; state.workup = []; state.pending = null; state.pendingGrade = null;
+  state.grade = null; state.entity = null; state.firedAlert = null; state.draft = {};
+  state.result = null; state.treeId = null; state.nodeId = null; state.searchTerm = null;
+  state.group = target; state.candidates = [target];
+  /* "Suggested based on" keeps the evidence that led to the hop: the new
+     group's entry point is the old one. */
+  state.hopFrom = state.trailAtGroupEntry;
+  return afterGroup();
 }
 
 /* A terminal for a case that IS a malignancy but belongs to a DIFFERENT ICCC-3
@@ -1867,6 +2409,30 @@ function entityText(a) {
   return bits.filter(Boolean).join(' ');
 }
 
+/* The four coding fields and the evidence behind them, in one block, for every
+   terminal that finds a code (registrar, 6 October 2026): Name, Morphology
+   code, Behavior code, Topography code, Suggested based on. The behaviour is
+   printed whatever it is: a benign tumour's code is still its code. */
+function codingBlock(name, code, behavior, basis) {
+  var shown = behavior === undefined || behavior === null || behavior === '' ? '\u2014' : behaviorCodeText(behavior);
+  return '<div class="codeblock">' +
+    orow('Name', name || '\u2014') +
+    '<div class="orow orow--code"><b>Morphology code</b><span>' + esc(code) + '</span></div>' +
+    orow('Behavior code', shown) +
+    orow('Topography code', topographyText(state.captured.topography)) +
+    orow('Suggested based on', basis || '\u2014') + '</div>';
+}
+/* The behaviours a group admits, said as codes: "3", "0-1,3" or "0, 1 and 3". */
+function behaviorListText(spec) {
+  var out = [];
+  String(spec).split(/[,\s]+(?:and\s+)?/).forEach(function (tok) {
+    var m = /^(\d)-(\d)$/.exec(tok);
+    if (m) { for (var d = +m[1]; d <= +m[2]; d++) out.push(String(d)); }
+    else if (/^\d$/.test(tok)) out.push(tok);
+  });
+  return out.length ? out.map(behaviorCodeText).join(', ') : String(spec);
+}
+
 function renderOutput() {
   var r = state.result;
   if (r.referral) {
@@ -1878,16 +2444,16 @@ function renderOutput() {
       '<div class="orow"><b>Code here</b><span>None. Emitting a code from this group would put the case in the wrong ICCC-3 group.</span></div>' +
       (r.codeHint ? orow('Code there', r.codeHint) : '') +
       (r.note ? orow('Why', r.note) : '') +
-      orow('Topography', state.captured.topography || '—') +
-      orow('Based on', basisFromTrail() || '—') +
-      outActions() + '</div>';
+      orow('Topography code', topographyText(state.captured.topography)) +
+      orow('Suggested based on', basisFromTrail() || '—') +
+      labResultsBlock() + hopAction(r) + outActions() + '</div>';
   }
   if (r.excluded) {
     return '<div class="node--live">' +
       banner('info', r.heading || 'Not a reportable malignancy', r.reason) +
       '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted. This case leaves the malignant registry.</span></div>' +
-      '<div class="orow"><b>Topography</b><span>' + esc(state.captured.topography || '—') + '</span></div>' +
-      outActions() + '</div>';
+      orow('Topography code', topographyText(state.captured.topography)) +
+      labResultsBlock() + outActions() + '</div>';
   }
   /* Group 4 build contract §3, ruling D1. Neither the referral panel above
      nor the exclusion panel below fits: this case is a real ICD-O-3.2
@@ -1898,21 +2464,18 @@ function renderOutput() {
      always carries a registrar flag alongside the clerk-facing reason. */
   if (r.behaviourExcluded) {
     return '<div class="node--live">' +
-      banner('info', (BEHAVIOUR_LABELS[String(r.icdoBehaviour)] || 'Behaviour ' + r.icdoBehaviour) +
-        ' — outside this group’s declared behaviour', r.reason) +
-      '<div class="orow orow--excluded"><b>Morphology</b><span>No code emitted here.</span></div>' +
-      orow('ICD-O-3.2', r.icdoCode + '/' + r.icdoBehaviour + ' — ' + r.icdoTerm) +
-      orow('Group declares', 'Behaviour ' + r.groupDeclares + ' only') +
+      banner('info', (BEHAVIOUR_LABELS[String(r.icdoBehaviour)] || 'Behavior code ' + r.icdoBehaviour) +
+        ' \u2014 outside this group\u2019s declared behavior', r.reason) +
+      codingBlock(r.icdoTerm, r.icdoCode, r.icdoBehaviour, basisFromTrail()) +
+      orow('Group admits', 'Behavior code ' + behaviorListText(r.groupDeclares) + ' only') +
       (r.registrarDecisionRequired
         ? banner('warn', 'Registrar decision required',
-            'This code and behaviour need the registrar’s ruling before the case can be closed.')
+            'This code and behavior need the registrar\u2019s ruling before the case can be closed.')
         : '') +
       (r.basisOfDiagnosis !== null && r.basisOfDiagnosis !== undefined
-        ? orow('Basis of diagnosis', r.basisOfDiagnosis + ' — ' + (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'))
+        ? orow('Basis of diagnosis', r.basisOfDiagnosis + ' \u2014 ' + (BASIS_LABELS[r.basisOfDiagnosis] || 'Unknown'))
         : '') +
-      orow('Topography', state.captured.topography || '—') +
-      orow('Based on', basisFromTrail() || '—') +
-      outActions() + '</div>';
+      labResultsBlock() + outActions() + '</div>';
   }
   var e = r.entry, redcap = state.host === 'redcap';
   var h = '<div class="node--live">';
@@ -1926,21 +2489,13 @@ function renderOutput() {
        and it fails loudly when the tool and the options file drift apart. */
     h += '<div class="pickbox"><div class="pickbox__head">Select this option in REDCap</div>' +
       '<div class="pickbox__value">' + esc(e.redcap_value) + '&nbsp;&nbsp;' + esc(e.morphology_name) + '</div></div>';
-  } else {
-    h += '<div class="headline"><div class="headline__code">' + esc(r.code) + '</div>' +
-      '<div class="headline__name">' + esc(e.morphology_name) + '</div></div>';
   }
   /* No REDCap banner. The tool does not verify REDCap (standing rule 16,
      registrar, 4 October 2026): it does not connect to it, and a banner about
      what the dropdown holds costs the clerk attention without changing the
      code. Codes REDCap cannot record, and labels it holds out of date, are
      listed for the REDCap side in docs/TODO.md §7. */
-  /* Behaviour is shown only where it is not the reportable /3 default: a case
-     whose code carries the other behaviour reads as an ordinary malignancy
-     otherwise, and under ?host=redcap the option string names the /3 disease. */
-  if (e.behavior_code && String(e.behavior_code) !== '3') {
-    h += orow('Behaviour', r.code + '/' + e.behavior_code);
-  }
+  h += codingBlock(e.morphology_name, r.code, e.behavior_code, r.basis);
 
   /* The subgroup is RESOLVED, not read off the entry: one (code, behaviour)
      pair can belong to two ICCC-3 subgroups depending on the topography, and
@@ -1986,9 +2541,7 @@ function renderOutput() {
     rich(r.upgrade || 'None — fully subtyped at this evidence tier.') + '</span></div>';
   h += renderAliases(r.code);
   h += renderUnread();
-  h += orow('Topography', state.captured.topography || '—');
   if (redcap) h += orow('REDCap value', e.redcap_value);
-  h += orow('Based on', r.basis || '—');
   if (r.reason) h += orow('Why', r.reason, true);
   if (r.discordant) h += orow('Discordance', 'Subtype uncertain — recorded as a quality signal.');
   if (r.classification_system) h += orow('Classification', r.classification_system);
@@ -2002,6 +2555,7 @@ function renderOutput() {
      uncoded entity loses its genotype permanently (Pathway §7.3 item 7). */
   if (state.captured.genotype_annotation) h += orow('Genotype', state.captured.genotype_annotation);
   if (r.routing && r.routing.note) h += orow('Group routing', r.routing.note);
+  h += labResultsBlock();
   h += outActions();
   return h + '</div>';
 }
@@ -2101,8 +2655,27 @@ function outActions() {
    Interaction — one delegated listener, actions declared in the markup
    ========================================================================= */
 function handleOption(act, el) {
+  /* A group's file is loading (a referral hop, a tree entered): the screen on
+     show is the one being left, and a second tap on it would act on a case
+     already on its way elsewhere. */
+  if (state.stage === 'boot' && !state.error) return;
   var n = node(), before = snapshot(), i = +el.getAttribute('data-i');
+  /* Anything but Home itself dismisses the "leave this case?" question. */
+  if (act !== 'home') state.confirmExit = false;
   switch (act) {
+    case 'home':
+      if (!state.trail.length && !state.result) return reset();
+      state.confirmExit = true;
+      /* The safe answer takes the keyboard focus, and Escape gives it. */
+      state.focusNext = '[data-act="home-no"]';
+      return;
+    case 'home-yes': return reset();
+    case 'home-no': state.focusNext = '#appbar-home'; return;
+    /* The text in a filter box. Held on the draft so a re-render of this
+       screen keeps it; the rows are hidden by applyFilter() as it is typed. */
+    case 'filter':
+      state.draft['f:' + el.getAttribute('data-key')] = el.value;
+      return;
     /* A step back through the trail can return to the landing screen from an
        express-lane case, and the snapshot it restores carries that case's
        search term and group. The guided route starts without them, or its
@@ -2185,6 +2758,44 @@ function handleOption(act, el) {
       var o2 = arr(n.options)[i];
       return advance(o2, n.step_label || 'Answer', optionLabel(o2), before);
     }
+    /* A list whose options carry recognition aids is answered in two taps: the
+       first selects (bold, aid shown), Confirm advances. */
+    case 'optsel': state.draft.sel = i; return;
+    case 'optconfirm': {
+      var o3 = arr(n.options)[state.draft.sel];
+      if (!o3) return;
+      return advance(o3, n.step_label || 'Answer', optionLabel(o3), before);
+    }
+    /* One box on a tick list. It changes the draft and nothing else. */
+    case 'tick': {
+      var tk = tickList(n), mine = ticksNow(tk).slice(), id = el.getAttribute('data-id'), at = mine.indexOf(id);
+      if (el.checked && at === -1) mine.push(id);
+      else if (!el.checked && at !== -1) mine.splice(at, 1);
+      state.draft.ticks = mine;
+      return;
+    }
+    case 'tick-continue': return tickContinue(n, before);
+    /* The laboratory screen. A typed number or a unit changes the draft only;
+       ticking "Not in the file" clears the number. */
+    case 'labval': case 'labunit': case 'lababsent': {
+      var lab = arr(n.labs)[i], dd = labDraft();
+      if (!lab) return;
+      var row = dd[lab.id] = Object.assign({}, dd[lab.id] || {});
+      delete row.error;
+      if (act === 'labval') { row.value = el.value; row.absent = false; }
+      else if (act === 'labunit') row.unit = el.value;
+      else { row.absent = !!el.checked; if (el.checked) row.value = ''; }
+      state.draft.labs = dd;
+      return;
+    }
+    case 'labs-continue': return labsContinue(n, before);
+    case 'tickopt': {
+      var pick2 = tickOffered(n, arr(state.captured[tickList(n).variable]))[i];
+      if (!pick2) return;
+      return advance(pick2.o, n.step_label || 'Answer', optionLabel(pick2.o), before);
+    }
+    /* A referral to a built group continues into that group's tree. */
+    case 'hop': return hopToGroup(before);
     case 'direct': return advance(n, n.step_label || 'Answer', n.accept_label || n.question, before);
     /* One declared result state, captured as a first-class answer (§3.4). It
        does NOT advance: the node still resolves through its own options or its
@@ -2212,7 +2823,7 @@ function handleOption(act, el) {
          needs the review just as much as an unanswered one; hiding the row on
          the resolved leaves would be the quieter and the wronger choice. */
       if (br.deferrable && br.follow_up_review) state.captured.follow_up_review = br.follow_up_review;
-      return advance(leaf.leaf, String(br.variable).replace(/_/g, ' '), leaf.label, before);
+      return advance(leaf.leaf, words(br.variable), leaf.label, before);
     }
     /* One answer to the grade criterion. The criterion's own variable is
        captured as an ordinary fact so a later rule can read it, and the grade
@@ -2301,7 +2912,11 @@ function handleOption(act, el) {
     case 'rewind': {
       var j = i;
       while (j > 0 && state.trail[j].automatic) j--;
-      return restore(state.trail[j].before, j);
+      var ticked = state.trail[j].ticks, typedLabs = state.trail[j].labDraft;
+      restore(state.trail[j].before, j);
+      if (ticked) state.draft.ticks = ticked.slice();
+      if (typedLabs) state.draft.labs = JSON.parse(JSON.stringify(typedLabs));
+      return;
     }
     case 'restart': return reset();
     case 'retry': state.error = null; return boot();
@@ -2614,7 +3229,8 @@ function enterGroup(group, treeId, entryNode) {
     state.treeId = tree.tree_id;
     state.nodeId = entryNode || tree.entry_node;
     if (!findNode(state.nodeId)) throw new Error('Entry node not in file: ' + state.nodeId);
-    state.trailAtGroupEntry = state.trail.length;
+    state.trailAtGroupEntry = state.hopFrom !== null ? state.hopFrom : state.trail.length;
+    state.hopFrom = null;
     state.stage = 'node';
   });
 }
@@ -2626,7 +3242,8 @@ function reset() {
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
   state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
-  state.error = null; state.query = '';
+  state.error = null; state.query = ''; state.confirmExit = false; state.hopFrom = null; state.labs = [];
+  state.focusNext = null;
 }
 
 /* ============================================================================
@@ -2704,6 +3321,35 @@ document.addEventListener('DOMContentLoaded', function () {
     if (el.getAttribute('data-act') === 'query') {
       byId('slot').querySelector('.results').innerHTML = renderSearchResults();
     }
+    if (el.getAttribute('data-act') === 'filter') applyFilter(el);
+    if (el.getAttribute('data-act') === 'labval') {
+      var absentBox = el.closest('.labrow').querySelector('[data-act="lababsent"]');
+      if (absentBox && el.value.trim() !== '') absentBox.checked = false;
+    }
+  });
+  /* Escape answers the "Leave this case?" bar with Keep Working. */
+  slot.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Escape' || !state.confirmExit) return;
+    ev.preventDefault();
+    run('home-no', ev.target);
+  });
+  /* Enter in a filter box takes the first row still showing, so the list can be
+     answered without leaving the keyboard. */
+  slot.addEventListener('keydown', function (ev) {
+    var el = ev.target;
+    if (ev.key !== 'Enter' || !el || el.getAttribute('data-act') !== 'filter') return;
+    ev.preventDefault();
+    /* An empty box has nothing to take: the first option would answer the
+       question for a clerk who had only pressed Enter. */
+    if (!el.value.trim()) return;
+    var box = el.closest('.optbox'), row = null;
+    /* A selected row stays on screen whatever was typed; it is not a match. */
+    if (box) Array.prototype.some.call(box.querySelectorAll('[data-find]:not([hidden])'), function (r) {
+      if (!findMatch(r.getAttribute('data-find'), el.value)) return false;
+      row = r; return true;
+    });
+    var ctl = row && (row.tagName === 'BUTTON' ? row : row.querySelector('input'));
+    if (ctl) ctl.click();
   });
   boot();
 });

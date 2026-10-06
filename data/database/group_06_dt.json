@@ -39,8 +39,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8001",
@@ -66,8 +65,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8002",
@@ -93,8 +91,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8003",
@@ -120,8 +117,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8004",
@@ -147,8 +143,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8005",
@@ -174,8 +169,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8010",
@@ -201,8 +195,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8011",
@@ -228,8 +221,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8012",
@@ -255,8 +247,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8013",
@@ -282,8 +273,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8014",
@@ -309,8 +299,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8015",
@@ -336,8 +325,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8020",
@@ -363,8 +351,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8021",
@@ -390,8 +377,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8022",
@@ -417,8 +403,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8023",
@@ -444,15 +429,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 addition (Nuclear protein in testis (NUT)-associated carcinoma), verified against ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 6 REDCap list (RedCap Options/Group 6 - Renal Tumors.md). Already inside the ICCC-2017 VIb carcinoma range at C64.9, behaviour 3, so only the REDCap option is missing, not the classification range. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld (contract §2B). Reachable only by direct code entry -- no decision-tree branch is built for it (contract §0.3).",
-        "needs": [
-          "REDCap Group 6 option list"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8030",
@@ -478,8 +455,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8031",
@@ -505,8 +481,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8032",
@@ -532,8 +507,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8033",
@@ -559,8 +533,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8034",
@@ -586,8 +559,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8035",
@@ -613,8 +585,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8041",
@@ -640,8 +611,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8050",
@@ -667,8 +637,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8051",
@@ -694,8 +663,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8052",
@@ -721,8 +689,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8054",
@@ -748,15 +715,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 addition (Warty carcinoma), verified against ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 6 REDCap list (RedCap Options/Group 6 - Renal Tumors.md). Already inside the ICCC-2017 VIb carcinoma range at C64.9, behaviour 3, so only the REDCap option is missing, not the classification range. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld (contract §2B). Reachable only by direct code entry -- no decision-tree branch is built for it (contract §0.3).",
-        "needs": [
-          "REDCap Group 6 option list"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8070",
@@ -782,8 +741,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8071",
@@ -809,8 +767,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8072",
@@ -836,8 +793,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8073",
@@ -863,8 +819,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8074",
@@ -890,8 +845,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8075",
@@ -917,8 +871,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8082",
@@ -944,8 +897,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8120",
@@ -971,8 +923,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8121",
@@ -998,8 +949,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8122",
@@ -1025,8 +975,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8130",
@@ -1052,8 +1001,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8131",
@@ -1079,8 +1027,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8140",
@@ -1106,8 +1053,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8141",
@@ -1133,8 +1079,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8143",
@@ -1160,8 +1105,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8155",
@@ -1187,8 +1131,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8190",
@@ -1214,8 +1157,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8200",
@@ -1241,8 +1183,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8201",
@@ -1268,8 +1209,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8210",
@@ -1295,8 +1235,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8211",
@@ -1322,8 +1261,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8221",
@@ -1349,8 +1287,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8230",
@@ -1376,8 +1313,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8231",
@@ -1403,8 +1339,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8240",
@@ -1430,8 +1365,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8241",
@@ -1457,8 +1391,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8244",
@@ -1484,8 +1417,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8245",
@@ -1511,8 +1443,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8246",
@@ -1538,8 +1469,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8260",
@@ -1565,8 +1495,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8261",
@@ -1592,8 +1521,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8262",
@@ -1619,8 +1547,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8263",
@@ -1646,8 +1573,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8290",
@@ -1673,8 +1599,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8310",
@@ -1700,8 +1625,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8311",
@@ -1730,8 +1654,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8312",
@@ -1757,8 +1680,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8316",
@@ -1784,8 +1706,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8317",
@@ -1811,8 +1732,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8318",
@@ -1838,8 +1758,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8319",
@@ -1868,8 +1787,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8320",
@@ -1895,8 +1813,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8323",
@@ -1922,8 +1839,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8401",
@@ -1949,8 +1865,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8430",
@@ -1976,8 +1891,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8440",
@@ -2003,8 +1917,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8480",
@@ -2030,8 +1943,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8481",
@@ -2057,8 +1969,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8482",
@@ -2084,15 +1995,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false,
-      "awaiting_layer1": {
-        "reason": "ICD-O-3.2 addition (Mucinous carcinoma, gastric type), verified against ICD coding/ICD-O-3.2/icdo32.sqlite. Not yet an option in the Group 6 REDCap list (RedCap Options/Group 6 - Renal Tumors.md). Already inside the ICCC-2017 VIb carcinoma range at C64.9, behaviour 3, so only the REDCap option is missing, not the classification range. Built under registrar rulings 1-3 of 4 Sep 2026: paediatric occurrence decides whether a code is built, and a code the option list lacks is reported and put on the to-do list rather than withheld (contract §2B). Reachable only by direct code entry -- no decision-tree branch is built for it (contract §0.3).",
-        "needs": [
-          "REDCap Group 6 option list"
-        ],
-        "todo": "docs/codes-awaiting-redcap.md"
-      }
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8490",
@@ -2118,8 +2021,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8504",
@@ -2145,8 +2047,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": false
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8510",
@@ -2175,8 +2076,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8550",
@@ -2202,8 +2102,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8560",
@@ -2229,8 +2128,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8562",
@@ -2256,8 +2154,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8570",
@@ -2283,8 +2180,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8571",
@@ -2310,8 +2206,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8572",
@@ -2337,8 +2232,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8573",
@@ -2364,8 +2258,7 @@
         "C64.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8959",
@@ -2391,8 +2284,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8960",
@@ -2419,8 +2311,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     },
     {
       "morphology_code": "8963",
@@ -2449,8 +2340,7 @@
         "C64.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "8963 is the group's only dual-group code (contract §3.1). data/shared/presentation_router.json dual_group_rules['8963'] routes C64.9 to Group VI VIa2, all 21 CNS subsites in C70.0-C72.9 to Group III (via 9508, ATRT), and everything else (default) to Group IX IXd3. ★ Correction to this file's own earlier reading: when this entry was first drafted the C64.9 branch was read from disk and looked correct, but it in fact used the JSON shape 'topography_equals', which app.js's branchMatches() has never implemented (it reads only 'topography_in', a list, and 'captured_variable' shapes) -- so the branch silently never matched and every 8963 case fell through to the Group IX IXd3 default, the exact opposite of 'no router change needed'. This was found and fixed by a concurrent commit on this branch during this build (d205d79, 'Four router branches were dead, two of them across a group boundary', 22 Sep 2026), which also extended the CNS side of this same rule from the three NOS-level codes to all 21 C70.0-C72.9 subsites (contract §7.2b) and added build_database.py's check_router_branch_when_vocabulary() so an unreadable `when` shape fails the build instead of passing silently. As of the current state of data/shared/presentation_router.json the C64.9 branch is live and uses the shape the engine reads; this entry's earlier 'no router change is needed' claim was wrong at the time it was written and is left here, corrected, rather than quietly rewritten, per the standing rule against overstating evidence. The next task's rhabdoid terminal must still be reachable only with C64.9 confirmed (contract §3.1, §8 check 6).",
-      "redcap_option_verified": false
+      "topography_routing_note": "8963 is the group's only dual-group code (contract §3.1). data/shared/presentation_router.json dual_group_rules['8963'] routes C64.9 to Group VI VIa2, all 21 CNS subsites in C70.0-C72.9 to Group III (via 9508, ATRT), and everything else (default) to Group IX IXd3. ★ Correction to this file's own earlier reading: when this entry was first drafted the C64.9 branch was read from disk and looked correct, but it in fact used the JSON shape 'topography_equals', which app.js's branchMatches() has never implemented (it reads only 'topography_in', a list, and 'captured_variable' shapes) -- so the branch silently never matched and every 8963 case fell through to the Group IX IXd3 default, the exact opposite of 'no router change needed'. This was found and fixed by a concurrent commit on this branch during this build (d205d79, 'Four router branches were dead, two of them across a group boundary', 22 Sep 2026), which also extended the CNS side of this same rule from the three NOS-level codes to all 21 C70.0-C72.9 subsites (contract §7.2b) and added build_database.py's check_router_branch_when_vocabulary() so an unreadable `when` shape fails the build instead of passing silently. As of the current state of data/shared/presentation_router.json the C64.9 branch is live and uses the shape the engine reads; this entry's earlier 'no router change is needed' claim was wrong at the time it was written and is left here, corrected, rather than quietly rewritten, per the standing rule against overstating evidence. The next task's rhabdoid terminal must still be reachable only with C64.9 confirmed (contract §3.1, §8 check 6)."
     },
     {
       "morphology_code": "8964",
@@ -2481,8 +2371,7 @@
         "C00.0-C80.9"
       ],
       "topography_dependent": false,
-      "topography_routing_note": null,
-      "redcap_option_verified": true
+      "topography_routing_note": null
     }
   ],
   "decision_trees": [
@@ -2504,7 +2393,11 @@
           "step_number": 1,
           "step_label": "Evidence in file",
           "question": "A child with a suspected renal (kidney) tumour. What is actually in this patient's file?",
-          "hint": "Pick the highest tier of evidence genuinely in the file. Under SIOP protocols, up-front chemotherapy without a prior biopsy is standard for a typical Wilms tumour presentation, so a histology report often does not exist yet at the point of coding — that is expected, not a gap to chase.",
+          "hint": "Under SIOP protocols, up-front chemotherapy without a prior biopsy is standard for a typical Wilms tumour presentation, so a histology report often does not exist yet at the point of coding — that is expected, not a gap to chase.",
+          "tick_list": {
+            "vocabulary": "evidence_documents",
+            "resolve": "ask_siblings"
+          },
           "clinical_alert": null,
           "coding_note": "Tree architecture per build contract §4. Five routes off this node, matching the Group 5 rb_document_inventory idiom (contract §4, Group 5 build contract §4). Unlike Group 5, the histology route passes through rn_age_gate before rn_histology, because the SMARCB1/INI1 fork at rn_ihc_checklist needs a precise age band (contract §4.3); the imaging and inadequate-specimen routes go directly to rn_imaging_pathway without the numeric gate — see rn_imaging_pathway's own coding_note for why (deviation from the contract's literal diagram, recorded there and in the build report). primary_site is captured 'C64.9' on every option because this whole tree is entered specifically for a kidney mass (tree-level topography declaration) — captured explicitly here, rather than assumed, so rn_ihc_checklist's 8963 (rhabdoid tumour of the kidney) rule can carry its own per-rule 'when' confirming C64.9, which check_group6_8963_topography requires (contract §3.1, §0.2: 8963 at a CNS or soft-tissue site is a different ICCC-3 group entirely).",
           "captured_variables": [
@@ -2516,6 +2409,13 @@
           "options": [
             {
               "label": "Referral letter or clinical note only — no imaging report, no cytology, no histology report in the file",
+              "ticks": {
+                "excludes": [
+                  "imaging",
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rn_clinical_alias",
               "captures": {
                 "evidence_tests": [
@@ -2528,6 +2428,15 @@
             },
             {
               "label": "Ultrasound, CT, or MRI report — no tissue (cytology or histology) in the file",
+              "ticks": {
+                "requires": [
+                  "imaging"
+                ],
+                "excludes": [
+                  "cytology",
+                  "histology"
+                ]
+              },
               "next_node": "rn_imaging_pathway",
               "captures": {
                 "evidence_tests": [
@@ -2540,6 +2449,11 @@
             },
             {
               "label": "Histology report from a nephrectomy, core biopsy, or intraoperative specimen",
+              "ticks": {
+                "requires": [
+                  "histology"
+                ]
+              },
               "next_node": "rn_age_gate",
               "captures": {
                 "evidence_tests": [
@@ -2552,6 +2466,14 @@
             },
             {
               "label": "Fine-needle aspiration or other cytology report only — no histology report in the file",
+              "ticks": {
+                "requires": [
+                  "cytology"
+                ],
+                "excludes": [
+                  "histology"
+                ]
+              },
               "next_node": "rn_cytology",
               "captures": {
                 "evidence_tests": [
