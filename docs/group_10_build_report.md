@@ -9,7 +9,7 @@ Plan: `docs/group_10_build_contract.md`. Code decisions: `docs/superpowers/specs
 | | |
 |---|---|
 | Entries | 136 (code, behaviour) pairs from 131 ICD-O-3.2 codes; 171 ICCC records |
-| Trees | `g10_cns` 11 nodes · `g10_ovary` 18 · `g10_testis` 17 · `g10_extragonadal` 14 — 60 nodes (a deposit node per gonadal and extragonadal tree added 6 October 2026) |
+| Trees | `g10_cns` 16 nodes · `g10_ovary` 23 · `g10_testis` 22 · `g10_extragonadal` 19 — 80 nodes (a deposit node per gonadal and extragonadal tree, and per tree four laboratory screens and the mixed tumour's component checklist, added 6 October 2026) |
 | Emitted | 49 (code, behaviour) pairs on code branches; 36 behaviour exclusions |
 | Immunohistochemistry panels | 4, one per tree, 8 rules each, every rule with a witness |
 | Aliases | 123: each code emitted by at least one tree a search can reach, less five generic terms Group III holds (128 before they were left out, 46 under the earlier filter, which required every reachable tree to emit it; all 6 October 2026) |
@@ -104,6 +104,23 @@ markers (glypican-3 with tissue alpha-fetoprotein, or with nuclear HNF1-beta), b
 also stains choriocarcinoma and teratoma (Siegmund 2023 Table 1, p. 34; p. 38). Fallback
 `9064/3` *Germ cell tumor, NOS*. Every rule cites its page.
 
+**Added 6 October 2026** (registrar review E2, E4, E5):
+
+- **Laboratory screens.** A tier of the evidence checklist that a Lab Report can join has a copy that
+  requires Lab Report and goes through a `lab_results` screen to the tier's own destination; the tier
+  itself excludes Lab Report. Four screens per tree (referral, markers, cytology, histology), each
+  with the tree's test list: eight tests at the ovary, alpha-fetoprotein, beta human chorionic
+  gonadotropin and lactate dehydrogenase at the testis and other sites, the two markers in serum and
+  cerebrospinal fluid at the brain. With Lab Report unticked every route is unchanged. The rules are in
+  `docs/evidence_documents/group_10.json`.
+- **Mixed tumour.** `*_mixed` asks for a named term the report uses (teratocarcinoma, the malignant
+  teratomas, and `9086/3` at other sites); "None of these" leads to `*_mixed_components`, a
+  `first_match` checklist of six components whose four rules give `9101/3`, `9081/3` or `9085/3`. All 64
+  ticked sets reach an option, and every option is the first fit for one.
+- **Recognition aids.** 70 one-sentence aids on the histology, teratoma, sex cord–stromal and epithelial
+  screens, each with its source and page in a comment in `build/group10_tree.py`. The options left
+  without one are listed in registrar review E5.
+
 ---
 
 ## 5. Shared-layer changes
@@ -112,7 +129,7 @@ also stains choriocarcinoma and teratoma (Siegmund 2023 Table 1, p. 34; p. 38). 
 |---|---|
 | `presentation_router.json` | `groups["10"]` built, four trees, `tree_routing` (Xa 24 codes → `g10_cns`; C56.9 → `g10_ovary`; C62.0, C62.1, C62.9 → `g10_testis`; Xb 122 codes → `g10_extragonadal`; default `g10_extragonadal`); one `8000-8005` branch, C56.9 and C62 → group 10, Xe; Group 3 added to the "Mass / swelling (solid tumour)" presentation (registrar review B1, 6 October 2026) |
 | `topography_codes.json` | `C62.0`, `C62.1`, `C76.3` added; Group 10 added to `C38.1`, `C38.3`, `C48.0`; `C76.3` lists groups 9 and 10; Group 10 added to the 24 Xa codes C70.0–C72.9 and C75.1–C75.3 (registrar review B1, 6 October 2026) |
-| `build_database.py` | `GROUP10`; behaviour row `{"3"}`; `ROUND_TRIP_GROUPS`; four rules |
+| `build_database.py` | `GROUP10`; behaviour row `{"3"}`; `ROUND_TRIP_GROUPS`; four rules; the path walk behind Group VIII and Group X rule 2 (`_group8_terminals_by_evidence`) passes through a `lab_results` node by its `next_node` (6 October 2026). Without it the walk stopped at the laboratory screens and missed every terminal behind them: four tissue-free terminals instead of fifteen, and negative controls R2-B and R2-C went uncaught |
 | `alias_index.json` | regenerated |
 
 `app.js`, `index.html`, `uccf-tool.css` and every Group I–IX data and alias file are
@@ -206,13 +223,15 @@ codes to take Group IX's lookup additions.
 
 | Gate | Result |
 |---|---|
-| `python3 build/build_database.py` | BUILD PASSED — 1082 checks, 0 FAIL, 94 WARN |
+| `python3 build/build_database.py` | BUILD PASSED — 1092 checks, 0 FAIL, 79 WARN (6 October 2026, after the laboratory screens, component checklist and recognition aids) |
 | `python3 build/induce_flow.py --check` | every rule has a witness |
 | `python3 build/generate_group10_entries.py --check` | up to date |
 | `python3 build/negative_controls_group10.py` | 24 of 24 caught, 5 of 5 probes pass |
 | `python3 build/group09_negative_controls.py <repo>`, `negative_controls_group08.py` | unchanged |
-| `node build/check_engine_flow.mjs` | OK |
-| Browser | seven cases on 4 October 2026 and seven walks on 6 October 2026, §7 |
+| `node build/check_engine_flow.mjs` | OK; its tick-list sweep drives the four Group X gates and the four component checklists |
+| `python3 build/negative_controls_ux.py` | every control behaves |
+| `python3 build/apply_evidence_documents.py --check …group_10…` | up to date |
+| Browser | seven cases on 4 October 2026 and seven walks on 6 October 2026, §7; on 6 October 2026 also an ovarian dysgerminoma with Histology and Lab Report ticked (laboratory screen, then the tumour type, the alpha-fetoprotein value on the result), the same with Histology alone (no laboratory screen), the dysgerminoma aid under the selected option, and a testicular mixed tumour ticked embryonal carcinoma and teratoma (`9081/3`) |
 | Groups I–IX, `app.js`, `index.html`, `uccf-tool.css` | byte-identical to `main` |
 
 The seven Group X warnings: six search-only entries whose ICD-O-3.2 preferred term is marked

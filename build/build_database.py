@@ -9032,6 +9032,13 @@ def _group8_terminals_by_evidence(ctx: DTContext):
                     yield node_id, node, after(node, ev)
                 if isinstance(node.get("insufficient_next_node"), str):
                     stack.append((node["insufficient_next_node"], ev))
+            # A lab_results screen (DT master §3I) has no branches: it routes by its own
+            # next_node and captures no evidence_tests (app.js labsContinue()), so the walk
+            # passes through it with the evidence it arrived with. Without this the walk stops
+            # at a laboratory screen and misses every terminal behind it (Group 10, 6 Oct 2026:
+            # 4 tissue-free terminals instead of 15, and controls R2-B and R2-C uncaught).
+            if node.get("node_type") == "lab_results" and isinstance(node.get("next_node"), str):
+                stack.append((node["next_node"], ev))
             fb = node.get("nos_fallback")
             if isinstance(fb, dict) and as_code(fb.get("code")):
                 yield node_id, {"morphology_code": fb.get("code"), "_fallback": True}, ev

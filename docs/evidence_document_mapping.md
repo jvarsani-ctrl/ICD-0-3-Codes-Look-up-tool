@@ -765,6 +765,14 @@ acute gate has three copies and the mature gate two; they are listed under `extr
 
 ## Group 10
 
+**Changed 6 October 2026 (registrar's ruling: the laboratory screen follows the checklist, and only when Lab Report is
+ticked).** Each Group X gate now has eight options. Options 0, 4 and 6 are copies of the referral, cytology and histology
+tiers that add Lab Report to the rule and route through a laboratory screen to the tier's own destination; options 1, 5 and
+7 are those tiers with Lab Report excluded. Option 2 (imaging and a marker result) keeps its rule and routes through its
+laboratory screen; option 3 (imaging only) is unchanged. Labels and captures are the tiers' own, so with Lab Report unticked
+every route is the one in the tables below. The tables keep the five tiers as they were derived; the indices in
+`docs/evidence_documents/group_10.json` are the eight options.
+
 ### `cn_document_inventory` (tree `g10_cns`)
 
 *Question:* What is in the file for this tumour?

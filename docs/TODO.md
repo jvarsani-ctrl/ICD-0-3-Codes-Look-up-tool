@@ -1590,8 +1590,11 @@ Spec `docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md`. Handover to
   files open have merged. Group 10's own text is written to the new spelling by its session.
 - **Group 10: apply the evidence mapping and write the new fields.** Steps in the handover document.
   Until the mapping is applied the data gate fails four nodes with "evidence gate ... no `tick_list`".
-- **Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
-  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.
+- ~~**Mixed-tumour components as tick-boxes** (the four `*_mixed` nodes of Group 10) and **recognition aids** for its
+  long histology lists are the Group 10 session's to author; the engine and the data gate are ready.~~ **Closed 6 October
+  2026** on the Group X branch: a named-term question, then a `first_match` component checklist (`*_mixed_components`),
+  and 70 recognition aids (`docs/group_10_registrar_review.md` E4, E5). The laboratory screen went in the same day,
+  after the evidence checklist and only when Lab Report is ticked (registrar's ruling; E2).
 
 **Owed to the registrar**
 

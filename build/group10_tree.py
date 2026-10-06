@@ -292,6 +292,104 @@ def unspecified(site, label, basis, morph, why, captures=None, note=None, after=
 
 
 # ------------------------------------------------------------------------------------------
+# Laboratory results (registrar, 6 October 2026: registrar review E2; DT master §3I)
+# ------------------------------------------------------------------------------------------
+# The laboratory screen follows the evidence checklist, and only when the clerk ticks Lab Report
+# (registrar's ruling, 6 October 2026; it replaces the handover's design, in which the screen
+# opened the tree and pre-ticked the box). app.js routes a lab_results node by its own next_node
+# alone, so the gate carries the screen in its data: each tier a Lab Report can join has a copy
+# that requires Lab Report and routes to a laboratory screen, and the screen's next_node is the
+# tier's own destination; the tier itself now excludes Lab Report. The marker tier always
+# requires Lab Report, so it routes to its screen directly. The imaging-only tier excludes Lab
+# Report and has none. One screen per destination per tree (LAB_TIERS), all sharing the tree's
+# test list. With Lab Report unticked the routes are the ones the gate had before. The rules are
+# in docs/evidence_documents/group_10.json, applied by the generator.
+#
+# A row per test: the number as the report gives it, a unit from the test's closed list, or "Not
+# in the file". The values are shown on the result and never choose a code: the node routes by
+# next_node alone, and app.js keeps the values out of the case variables. The node carries no
+# implies_ticks: the clerk has already ticked Lab Report.
+#
+# The tests per tree are the ones the sources tie to tumours that tree codes:
+#   van Heerden J, Tjalma WA. Eur J Obstet Gynecol Reprod Biol 2019;243:103-110, Table 4,
+#     p. 107: alpha-fetoprotein (yolk sac tumour, immature teratoma, embryonal carcinoma), beta
+#     human chorionic gonadotropin (choriocarcinoma, embryonal carcinoma, dysgerminoma),
+#     lactate dehydrogenase (dysgerminoma), CA-125 (epithelial tumours), inhibin A (granulosa
+#     cell tumour), calcium (sex cord-stromal tumours), human epididymis protein 4 (malignant
+#     and borderline epithelial tumours); p. 108: carcinoembryonic antigen.
+#   Rajpert-De Meyts E, et al. Folia Histochem Cytobiol 2015;53:177-188, p. 177: beta human
+#     chorionic gonadotropin, alpha-fetoprotein and lactate dehydrogenase are the classical
+#     serum markers of germ cell tumours.
+#   Group 10 Diagnostic Pathway §2C (Takami 2022): serum or cerebrospinal fluid
+#     alpha-fetoprotein and beta human chorionic gonadotropin for a tumour of the brain.
+# The ovary takes all eight tests; the testis and the extragonadal sites (the uterus and the
+# placenta among them) the three germ cell markers; the brain the two markers in serum and in
+# cerebrospinal fluid.
+#
+# Neither paper prints a unit. The unit lists are the registrar's closed lists (6 October
+# 2026). Tourne 2019 (Bull Cancer 106:328-341) reports human chorionic gonadotropin in IU/L
+# (pp. 331, 335) and alpha-fetoprotein in ng/mL (p. 335); Buza 2022 (Surg Pathol Clin,
+# pp. 197-218) reports beta human chorionic gonadotropin in mIU/mL (p. 206); Coskun 2023 (J
+# Pediatr Adolesc Gynecol 36:112-115, pp. 112-113) reports CA-125 in U/mL and calcium in mg/dL.
+# The build cannot check that a unit is right; it refuses an empty or repeated list.
+LAB_HINT = ("Enter each number as the report gives it, with its unit. Leave a test the file "
+            "does not hold empty.")
+AFP_UNITS = ("ng/mL", "µg/L", "IU/mL", "kU/L")
+BHCG_UNITS = ("IU/L", "mIU/mL")
+LDH_UNITS = ("U/L", "IU/L")
+
+
+def lab(lab_id, label, units):
+    return {"id": lab_id, "label": label, "units": list(units)}
+
+
+GERM_CELL_LABS = (
+    lab("afp", "Alpha-fetoprotein (AFP)", AFP_UNITS),
+    lab("bhcg", "Beta human chorionic gonadotropin (β-hCG)", BHCG_UNITS),
+    lab("ldh", "Lactate dehydrogenase (LDH)", LDH_UNITS),
+)
+SITE_LABS = {
+    "cns": (
+        lab("serum_afp", "Serum alpha-fetoprotein (AFP)", AFP_UNITS),
+        lab("serum_bhcg", "Serum beta human chorionic gonadotropin (β-hCG)", BHCG_UNITS),
+        lab("csf_afp", "Cerebrospinal fluid alpha-fetoprotein (AFP)", AFP_UNITS),
+        lab("csf_bhcg", "Cerebrospinal fluid beta human chorionic gonadotropin (β-hCG)",
+            BHCG_UNITS),
+    ),
+    "ovary": GERM_CELL_LABS + (
+        lab("ca125", "Cancer antigen 125 (CA-125)", ("U/mL", "kU/L")),
+        lab("he4", "Human epididymis protein 4 (HE4)", ("pmol/L",)),
+        lab("cea", "Carcinoembryonic antigen (CEA)", ("ng/mL", "µg/L")),
+        lab("inhibin_a", "Inhibin A", ("pg/mL", "ng/L")),
+        lab("calcium", "Calcium", ("mmol/L", "mg/dL")),
+    ),
+    "testis": GERM_CELL_LABS,
+    "extragonadal": GERM_CELL_LABS,
+}
+
+
+# The evidence tiers a ticked Lab Report can join: every tier but the imaging-only one, which
+# excludes Lab Report.
+LAB_TIERS = ("referral", "markers", "cytology", "histology")
+
+
+def lab_node_id(site, tier):
+    return nid(site, "labs_" + tier)
+
+
+def n_labs(site, tier, destination):
+    """The laboratory screen between the evidence checklist and one tier's destination."""
+    return node(
+        lab_node_id(site, tier), "lab_results", 2, "Laboratory results",
+        "Which laboratory results are in the file?", LAB_HINT, None, [],
+        "Registrar review E2 and the ruling of 6 October 2026: reached from the evidence "
+        "checklist only when Lab Report is ticked, then on to the %s tier's destination. The "
+        "tests and their sources are listed above SITE_LABS in build/group10_tree.py. No value "
+        "chooses a code." % tier,
+        labs=copy.deepcopy(list(SITE_LABS[site])), next_node=destination)
+
+
+# ------------------------------------------------------------------------------------------
 # The evidence front end (§4.2) — document inventory, referral, markers, imaging, cytology
 # ------------------------------------------------------------------------------------------
 TIER_CAPTURES = {
@@ -319,7 +417,20 @@ TIER_LABELS = {
 TIERS = ("referral", "markers", "imaging", "cytology", "histology")
 
 
-def n_document_inventory(node_id, targets, note):
+def gate_options(targets, lab_targets):
+    """The five tiers, in order. A tier a Lab Report can join comes twice, the copy that routes
+    through the laboratory screen first; the marker tier, which always has Lab Report, comes once
+    and routes through it. Labels and captures are the tier's own in every copy."""
+    out = []
+    for t in TIERS:
+        if t in lab_targets:
+            out.append(go(TIER_LABELS[t], lab_targets[t], copy.deepcopy(TIER_CAPTURES[t])))
+        if t != "markers":
+            out.append(go(TIER_LABELS[t], targets[t], copy.deepcopy(TIER_CAPTURES[t])))
+    return out
+
+
+def n_document_inventory(node_id, targets, lab_targets, note):
     return node(
         node_id, "document_inventory", 1, "Evidence in file",
         "What is in the file for this tumour?",
@@ -327,7 +438,7 @@ def n_document_inventory(node_id, targets, note):
         "A pathology report on a biopsy or resection counts as histology. A biopsy or cytology "
         "report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick "
         "from the other tiers.",
-        [go(TIER_LABELS[t], targets[t], copy.deepcopy(TIER_CAPTURES[t])) for t in TIERS],
+        gate_options(targets, lab_targets),
         EVIDENCE_TIER, note)
 
 
@@ -570,11 +681,11 @@ def n_cytology(site):
 # Mixed tumours (D6) and the immunohistochemistry checklist (§4.2)
 # ------------------------------------------------------------------------------------------
 def n_mixed(site):
+    """The named-term question. A term the report itself uses wins over its components
+    (registrar's rule), so it is asked first, as a plain choice. A first_match tick list cannot
+    hold it: there every option carries `ticks` and the engine draws no option without them
+    (app.js tickControl(), check_tick_lists), so the components go on their own screen."""
     opts = [
-        code("Choriocarcinoma", "9101", "3", 7, rec("9101")),
-        code("Embryonal carcinoma and teratoma only", "9081", "3", 7,
-             "%s ICD-O-3.2 gives it the synonym Mixed embryonal carcinoma and teratoma."
-             % rec("9081")),
         code("Teratocarcinoma", "9081", "3", 7, rec("9081")),
         code("Malignant teratoma, undifferentiated or anaplastic", "9082", "3", 7, rec("9082")),
         code("Malignant teratoma, intermediate", "9083", "3", 7,
@@ -588,23 +699,77 @@ def n_mixed(site):
                          "%s The associated haematological malignancy is coded separately, "
                          "from its own group's tree." % rec("9086"),
                          note="D17. New in ICD-O-3.2; ICCC-2017 range 105 (Xb6) only."))
-    opts += [
-        code("Teratoma and seminoma, germinoma or dysgerminoma", "9085", "3", 7,
-             "%s ICD-O-3.2 gives it the related term Mixed teratoma and seminoma."
-             % rec("9085")),
-        code("Other combination, or none listed", "9085", "3", 7, rec("9085")),
-    ]
+    opts.append(go("None of these: the report lists the components",
+                   nid(site, "mixed_components")))
     return node(
         nid(site, "mixed"), "histology_subclassification", 3, "Mixed germ cell tumour",
-        "Which components does the report list?",
-        "If the report itself uses a named term, teratocarcinoma or malignant teratoma, choose "
-        "that term. Otherwise choose the first option that fits, reading from the top. Choose "
-        "'Choriocarcinoma' when choriocarcinoma is any one of the components. Choose 'Embryonal "
-        "carcinoma and teratoma only' when those two are the only components.",
+        "Does the report call the tumour by one of these names?",
+        "Choose a name only where the report itself uses it. Otherwise choose the last option "
+        "and tick the components on the next screen.",
         opts, [],
         "D6. WHO 2022 (Moch 2022, Table 3, p. 464) codes every mixture 9085/3; ICD-O-3.2 keeps "
         "the specific terms, coded as written (Group 8 D8 precedent). 9102/3 is ovary and "
-        "testis only (range 110); 9086/3 extragonadal only (range 105).")
+        "testis only (range 110); 9086/3 extragonadal only (range 105). The named terms are "
+        "asked before the component checklist (registrar, 6 October 2026: the report's own "
+        "term wins).")
+
+
+# The components a report lists, in the report vocabulary of the EAFYA document review §7.2.
+# "Another germ cell component" holds polyembryoma and any other component the list does not
+# name, so "Embryonal carcinoma and teratoma only" can exclude a third component of any kind.
+MIXED_ITEMS = (
+    {"id": "choriocarcinoma", "label": "Choriocarcinoma"},
+    {"id": "embryonal_carcinoma", "label": "Embryonal carcinoma"},
+    {"id": "yolk_sac_tumour", "label": "Yolk sac tumour (endodermal sinus tumour)"},
+    {"id": "teratoma", "label": "Teratoma, mature or immature"},
+    {"id": "seminoma", "label": "Seminoma, germinoma or dysgerminoma"},
+    {"id": "other_component", "label": "Another germ cell component, such as polyembryoma"},
+)
+MIXED_IDS = tuple(i["id"] for i in MIXED_ITEMS)
+
+
+def n_mixed_components(site):
+    """The component checklist (tick_list, resolve first_match; registrar, 6 October 2026). The
+    first option in file order whose rule fits the ticked set is the destination:
+      choriocarcinoma among the components            -> 9101/3
+      embryonal carcinoma and teratoma, nothing else  -> 9081/3
+      teratoma and the germinoma family               -> 9085/3
+      anything else, or nothing ticked                -> 9085/3
+    The codes, labels and reasons are those of the single-choice list this replaces; the old
+    hint's reading order ("the first option that fits, reading from the top") is now the
+    engine's."""
+    def with_ticks(branch, ticks):
+        branch["ticks"] = ticks
+        return branch
+    opts = [
+        with_ticks(code("Choriocarcinoma", "9101", "3", 7, rec("9101")),
+                   {"requires": ["choriocarcinoma"]}),
+        with_ticks(code("Embryonal carcinoma and teratoma only", "9081", "3", 7,
+                        "%s ICD-O-3.2 gives it the synonym Mixed embryonal carcinoma and "
+                        "teratoma." % rec("9081")),
+                   {"requires": ["embryonal_carcinoma", "teratoma"],
+                    "excludes": [i for i in MIXED_IDS
+                                 if i not in ("embryonal_carcinoma", "teratoma")]}),
+        with_ticks(code("Teratoma and seminoma, germinoma or dysgerminoma", "9085", "3", 7,
+                        "%s ICD-O-3.2 gives it the related term Mixed teratoma and seminoma."
+                        % rec("9085")),
+                   {"requires": ["teratoma", "seminoma"]}),
+        with_ticks(code("Other combination, or none listed", "9085", "3", 7, rec("9085")), {}),
+    ]
+    return node(
+        nid(site, "mixed_components"), "histology_subclassification", 4,
+        "Mixed germ cell tumour",
+        "Which components does the report list?",
+        "The code follows from the components ticked. A component the list does not name goes "
+        "under 'Another germ cell component'.",
+        opts, [],
+        "D6, registrar 6 October 2026. Rules: choriocarcinoma among the components -> 9101/3; "
+        "exactly embryonal carcinoma and teratoma -> 9081/3; anything else -> 9085/3. The data "
+        "gate enumerates all 64 ticked sets: none is stranded and every option is the first fit "
+        "for at least one.",
+        tick_list={"resolve": "first_match", "variable": "mixed_components",
+                   "label": "Components", "prompt": "Tick every component the report lists.",
+                   "items": [dict(i) for i in MIXED_ITEMS]})
 
 
 IHC_MARKER_GROUPS = [
@@ -764,6 +929,202 @@ def n_ihc(site):
 
 
 # ------------------------------------------------------------------------------------------
+# Recognition aids (registrar, 6 October 2026; spec 2026-10-06-ux-overall-fixes-design.md §5)
+# ------------------------------------------------------------------------------------------
+# An aid is clerk-facing: one sentence in report vocabulary, shown only under the option the
+# clerk has selected. It helps a clerk recognise what a report naming that tumour describes; it
+# is never grounds for the code, which stays the report's own term. The source of each aid is
+# the comment above it, never the aid itself. Sources (Group 10 Papers/ and the Pathway):
+#   Pathway    Group 10 Diagnostic Pathway, §1 "How it is reached" and "Diagnostic anchor"
+#              columns, and §6.
+#   Tourne     Tourne M, Radulescu C, Allory Y. Bull Cancer 2019;106:328-341 (testis; French,
+#              translated here).
+#   RDM        Rajpert-De Meyts E, et al. Folia Histochem Cytobiol 2015;53:177-188, pp. 178-179:
+#              the same germ cell entities arise in the ovary and outside the gonads, and
+#              dysgerminoma and germinoma are seminoma's ovarian and extragonadal counterparts.
+#              This is why a description of the testicular tumour serves every site's tree.
+#   Calaminus  Calaminus G, Joffe J. Prog Tumor Res 2016;43:115-127.
+#   Pashankar  Pashankar F, et al. Eur J Cancer 2022;173:59-70 (ovarian immature teratoma).
+#   Buza       Buza N. Surg Pathol Clin 2022, pp. 197-218 (gestational trophoblastic disease).
+#   Bica       Bica O, et al. Int J Mol Sci 2024;25:6752.
+#   Lim        Lim D, Oliva E. Pathology 2018;50(2):178-189 (ovarian sex cord-stromal tumours).
+#   Atwi       Atwi D, et al. Pediatr Dev Pathol 2021;24(5):493-497.
+#   Coskun     Coskun C, et al. J Pediatr Adolesc Gynecol 2023;36:112-115.
+#   Handagala  Handagala I, et al. Gynecol Oncol Rep 2025;58:101697.
+#   Li         Li et al. BMC Womens Health 2023;23:382.
+# Options left without an aid, and why, are listed in docs/group_10_registrar_review.md E5.
+
+# Pathway §1 X_1 ("sheets of large cells, lymphocytic stroma"); Tourne p. 331 (seminoma:
+# clusters of fairly uniform cells in lobules divided by thin fibrous septa rich in lymphocytes);
+# Bica Fig. 2, p. 3 (dysgerminoma: medium and large polygonal cells, lymphoid infiltrates in the
+# stroma); RDM pp. 178-179 (dysgerminoma and germinoma are the same tumour).
+AID_GERMINOMA = ("Reports describe sheets of large, uniform cells divided into lobules by thin "
+                 "fibrous septa that hold lymphocytes.")
+# Pathway §1 X_1, row 9062 ("Seminoma with brisk mitoses").
+AID_SEMINOMA_MITOTIC = "Reports describe a seminoma with many dividing cells (mitoses)."
+# Tourne p. 337: nodules of three cell types, small cells like lymphocytes, medium cells with
+# round nuclei, and giant cells.
+AID_SPERMATOCYTIC = ("Reports describe nodules of three kinds of cell: small cells like "
+                     "lymphocytes, medium-sized round cells and giant cells.")
+# Pathway §1 X_3 ("solid/papillary, pleomorphic"); Tourne p. 333 (solid, papillary, alveolar,
+# tubular or pseudoglandular; atypia usually marked, prominent nucleoli, frequent mitoses).
+AID_EMBRYONAL = ("Reports describe solid, papillary or gland-like growth of poorly "
+                 "differentiated cells, usually markedly atypical, with prominent nucleoli and "
+                 "frequent mitoses.")
+# Pathway §1 X_3, row 9072 ("Embryoid bodies"); Tourne p. 336 (embryonal carcinoma and yolk sac
+# tumour closely intermixed are described as polyembryoma).
+AID_POLYEMBRYOMA = ("Reports describe embryoid bodies: embryonal carcinoma and yolk sac tumour "
+                    "closely intermixed.")
+# Pathway §1 X_4 ("Schiller-Duval bodies, reticular"); Tourne p. 335 (several patterns in one
+# tumour; hyaline globules and Schiller-Duval bodies frequently seen; microcystic or reticular
+# the commonest of eleven patterns) and p. 337 (the prepubertal type looks the same).
+AID_YOLK_SAC = ("Reports often describe several growth patterns in one tumour, most often "
+                "microcystic or reticular, with hyaline globules and Schiller-Duval bodies.")
+# Pathway §6 ("syncytio/cytotrophoblast"); Tourne p. 335 (a biphasic, largely haemorrhagic
+# growth of mononuclear trophoblast cells and multinucleated syncytiotrophoblast giant cells);
+# Buza p. 206 (sheets of mononuclear trophoblast rimmed by multinucleated syncytiotrophoblast)
+# and p. 207 (gestational and non-gestational choriocarcinoma look the same).
+AID_CHORIOCARCINOMA = ("Reports describe a haemorrhagic tumour of two cell types: "
+                       "single-nucleus trophoblast cells rimmed by large multinucleated "
+                       "syncytiotrophoblast cells.")
+# Tourne p. 336 (mixed germ cell tumours: most often more than two components, classically
+# embryonal carcinoma with teratoma, seminoma or yolk sac tumour).
+AID_MIXED = ("Reports list two or more germ cell components, such as embryonal carcinoma, "
+             "teratoma, seminoma or yolk sac tumour.")
+# Calaminus p. 118 (structures from all three germ layers: hair, squamous and mucous
+# epithelium, teeth, cartilage, bone, glial or thyroid tissue); Tourne pp. 335-336.
+AID_TERATOMA = ("Reports describe several kinds of tissue side by side, such as skin with "
+                "hair, teeth, cartilage, bone, glands, brain (glial) tissue or thyroid.")
+# Calaminus p. 118 (identifiable mature structures); Tourne p. 335 (a teratoma may consist of
+# mature, well-differentiated tissue only); Pathway §6 ("≥2 lineages, all mature").
+AID_MATURE_TERATOMA = ("Reports describe only mature, fully formed tissues, such as skin with "
+                       "hair, cartilage, bone or glands, and no immature tissue.")
+# Calaminus p. 118 (immature teratomas mostly show immature neurotubular structures);
+# Pashankar Fig. 1, p. 61, and Fig. 2, p. 62 (primitive neuroectoderm forming rosettes).
+AID_IMMATURE_TERATOMA = ("Reports describe teratoma tissues that include immature (primitive) "
+                         "neural tissue, such as neural tubules or rosettes.")
+# As above, and Pashankar p. 60: ovarian immature teratomas are graded 1 to 3 on the amount of
+# immature neuroectoderm. The grade is ovarian practice, so only the ovary's aid names it.
+AID_IMMATURE_TERATOMA_OVARY = ("Reports describe teratoma tissues that include immature "
+                               "(primitive) neural tissue, such as neural tubules or rosettes, "
+                               "and grade the tumour 1, 2 or 3.")
+# Tourne p. 337 (a dermoid cyst has a fibrous wall lined by well-differentiated squamous
+# epithelium with pilosebaceous adnexa); Calaminus p. 118 (hair and squamous epithelium among a
+# teratoma's mature structures).
+AID_DERMOID = ("Reports describe a cyst lined by skin-type (squamous) epithelium with hair "
+               "follicles and sebaceous glands in its wall.")
+# Tourne p. 337 (an epidermoid cyst is lined by regular squamous epithelium with no skin
+# adnexa and holds layered keratin; a dermoid cyst has pilosebaceous adnexa).
+AID_DERMOID_EPIDERMOID = ("Reports describe a cyst lined by skin-type (squamous) epithelium, "
+                          "with hair follicles and sebaceous glands in the wall of a dermoid "
+                          "cyst and none in an epidermoid cyst.")
+# Tourne p. 336 (a distinct secondary component resembling a malignant somatic tumour, such as
+# a carcinoma or a sarcoma); Pathway §1 X_2, row 9084 (squamous cell carcinoma in a dermoid).
+AID_SOMATIC = ("Reports describe a teratoma in which a separate cancer of another tissue type "
+               "has grown, such as a carcinoma or a sarcoma.")
+# Pathway §1 X_2, row 9090 ("thyroid tissue"; a monodermal teratoma).
+AID_STRUMA = "Reports describe a teratoma made up of thyroid tissue."
+# Pathway §1 X_2, row 9091 ("Monodermal teratoma + carcinoid") with row 9090 (struma is
+# thyroid tissue).
+AID_STRUMAL_CARCINOID = ("Reports describe thyroid tissue (struma) mixed with a carcinoid "
+                         "tumour.")
+# Pathway §1 Xc7 ("germ cells + sex-cord nests"); RDM p. 178 (gonadoblastoma lies in nests of
+# granulosa-like cells).
+AID_GONADOBLASTOMA = ("Reports describe nests of germ cells mixed with sex cord cells that "
+                      "resemble granulosa cells.")
+# Tourne p. 330 (germ cell neoplasia in situ: seminiferous tubules colonised by cells like
+# seminoma cells, with clear cytoplasm; intratubular seminoma fills the tubules).
+AID_GCNIS = ("Reports describe cells like seminoma cells, with clear cytoplasm, lining or "
+             "filling the seminiferous tubules, with no tumour outside them.")
+# Tourne p. 336 (the orchidectomy usually shows only a scar with histiocytes, haemosiderin
+# deposits and microcalcifications).
+AID_REGRESSED = ("Reports usually describe only a scar in the testis, with histiocytes, "
+                 "haemosiderin and microcalcifications.")
+# Buza p. 209 (gestational: nests, cords and sheets of fairly uniform medium-sized trophoblastic
+# cells with eosinophilic to clear cytoplasm).
+AID_ETT = ("Reports describe nests, cords and sheets of fairly uniform, medium-sized "
+           "trophoblast cells with pink to clear cytoplasm.")
+# Buza p. 212 (gestational: large, mainly mononuclear intermediate trophoblast in cords and
+# sheets, infiltrating between the smooth muscle fibres of the uterine wall).
+AID_PSTT = ("Reports describe large trophoblast cells, most with one nucleus, in cords and "
+            "sheets that spread between the muscle fibres of the uterine wall.")
+# Buza p. 198 (well-developed complete mole: villous enlargement, marked hydrops, trophoblastic
+# hyperplasia all round the villi; no fetal tissue).
+AID_COMPLETE_MOLE = ("Reports describe enlarged, swollen (hydropic) chorionic villi with "
+                     "trophoblast overgrowth all round them, and no fetal tissue.")
+# Buza p. 198 (partial mole: two villous populations, large hydropic villi among small or
+# normal ones; irregular scalloped outlines; mild to moderate trophoblastic hyperplasia).
+AID_PARTIAL_MOLE = ("Reports describe two kinds of chorionic villi, large swollen ones among "
+                    "small or normal ones, with irregular scalloped outlines and mild "
+                    "trophoblast overgrowth.")
+# Coskun p. 114 (generally oval hyperchromatic nuclei with minimal cytoplasm; a large cell
+# variant in some cases); Atwi pp. 494 and 496 (small round blue cells in sheets, occasional
+# follicle-like structures, a subset of large cells with eosinophilic cytoplasm).
+AID_SCCOHT = ("Reports usually describe sheets of small round cells with dark nuclei and scant "
+              "cytoplasm, sometimes with follicle-like spaces or larger cells with pink "
+              "cytoplasm.")
+# Handagala Fig. 3, p. 3 (papillary and micropapillary structures; small uniform cells with
+# low-grade nuclei and low mitotic activity).
+AID_LOW_GRADE_SEROUS = ("Reports describe papillae and micropapillae of small, uniform cells "
+                        "with low-grade nuclei and few mitoses.")
+# Li p. 2 (cysts filled with mucus; benign, borderline and carcinomatous areas in a continuum;
+# glands with expansile growth and minimal or absent stroma).
+AID_MUCINOUS_CYSTADENOCARCINOMA = ("Reports describe mucus-filled cysts with benign, borderline "
+                                   "and cancerous areas side by side, the cancer forming "
+                                   "crowded glands with little stroma between them.")
+# Lim p. 179 (ovoid nuclei, pale chromatin, often nuclear grooves, the coffee-bean look;
+# diffuse, microfollicular, trabecular and other patterns; Call-Exner bodies in the
+# microfollicular pattern, absent in some tumours).
+AID_ADULT_GRANULOSA = ("Reports describe granulosa cells with pale, often grooved "
+                       "('coffee-bean') nuclei in sheets, cords or small follicles, sometimes "
+                       "with Call-Exner bodies.")
+# Lim p. 182 (nodular or diffuse growth in oedematous or myxoid stroma; follicle-like spaces
+# of varying size holding secretions; round nuclei, abundant cytoplasm) and Fig. 4, p. 183
+# (non-grooved nuclei).
+AID_JUVENILE_GRANULOSA = ("Reports describe nodules or sheets of cells with round, ungrooved "
+                          "nuclei and plentiful cytoplasm, with follicle-like spaces of "
+                          "varying size that hold secretions.")
+# Lim p. 183 (well differentiated: lobules of hollow or solid tubules lined by Sertoli cells,
+# fibrous stroma holding Leydig cells, atypia and mitoses rare).
+AID_SLCT_WELL = ("Reports describe lobules of tubules lined by Sertoli cells, with Leydig cells "
+                 "in the fibrous tissue between them and little atypia.")
+# Lim p. 183 (intermediate: immature Sertoli cells in nests, cords, poorly formed tubules or
+# sheets, in lobules separated by oedematous stroma; Leydig cells at the edges of the lobules or
+# in the stroma).
+AID_SLCT_INTERMEDIATE = ("Reports describe lobules of immature Sertoli cells in nests, cords or "
+                         "poorly formed tubules, with Leydig cells at their edges or in the loose "
+                         "tissue between them.")
+# Lim pp. 183-184 (as above; heterologous elements, most often intestinal-type mucinous
+# epithelium).
+AID_SLCT_INTERMEDIATE_HETEROLOGOUS = ("Reports describe an intermediate Sertoli-Leydig cell "
+                                      "tumour that also holds another tissue, most often "
+                                      "intestinal-type mucinous glands.")
+# Lim p. 183 (poorly differentiated: diffuse or spindle-cell growth of poorly differentiated
+# Sertoli cells with hyperchromatic nuclei, often brisk mitoses, Leydig cells inconspicuous).
+AID_SLCT_POOR = ("Reports describe sheets or spindle-cell areas of immature Sertoli cells with "
+                 "dark nuclei, often with many mitoses, and few Leydig cells.")
+# Lim pp. 183-184 (as above; heterologous elements, most often intestinal-type mucinous
+# epithelium, less often rhabdomyoblasts or cartilage).
+AID_SLCT_POOR_HETEROLOGOUS = ("Reports describe a poorly differentiated Sertoli-Leydig cell "
+                              "tumour that also holds another tissue, most often intestinal-type "
+                              "mucinous glands, less often muscle (rhabdomyoblasts) or "
+                              "cartilage.")
+# Lim p. 183 (retiform: a network of irregularly branching, narrow slit-like tubules and cysts
+# with papillary or polypoid projections).
+AID_SLCT_RETIFORM = ("Reports describe a network of narrow, branching slit-like tubules and "
+                     "cysts with papillary or polypoid projections.")
+# Pathway §1 Xe, row 8632 ("granulosa + Sertoli-Leydig").
+AID_GYNANDROBLASTOMA = ("Reports describe a tumour with both a granulosa cell component and a "
+                        "Sertoli-Leydig cell component.")
+
+
+def aid(branch, text):
+    """Attach a recognition aid to an option and return it."""
+    branch["recognition_aid"] = text
+    return branch
+
+
+# ------------------------------------------------------------------------------------------
 # Histology (§4.3)
 # ------------------------------------------------------------------------------------------
 def named(label, morph, reason=None, upgrade=None, note=None):
@@ -779,11 +1140,12 @@ def germ_cell_core(site):
     st = SITES[site]
     yolk = rec("9071") + (" " + st["yolk_sac_reason"] if st.get("yolk_sac_reason") else "")
     return [
-        named("Embryonal carcinoma", "9070", upgrade=IHC_CONFIRMS),
-        named("Polyembryoma", "9072", note="D7."),
-        named(st["yolk_sac"], "9071", yolk, upgrade=IHC_CONFIRMS),
-        named(st["choriocarcinoma"], "9100", note="D8."),
-        go("Mixed germ cell tumour — more than one germ cell component", nid(site, "mixed")),
+        aid(named("Embryonal carcinoma", "9070", upgrade=IHC_CONFIRMS), AID_EMBRYONAL),
+        aid(named("Polyembryoma", "9072", note="D7."), AID_POLYEMBRYOMA),
+        aid(named(st["yolk_sac"], "9071", yolk, upgrade=IHC_CONFIRMS), AID_YOLK_SAC),
+        aid(named(st["choriocarcinoma"], "9100", note="D8."), AID_CHORIOCARCINOMA),
+        aid(go("Mixed germ cell tumour — more than one germ cell component",
+               nid(site, "mixed")), AID_MIXED),
         named("Non-seminomatous or non-germinomatous germ cell tumour, type not named", "9065",
               "%s The report places the tumour outside the germinoma family without naming "
               "its type; a non-germinomatous germ cell tumour of the brain is the same "
@@ -813,20 +1175,21 @@ CNS_IN_GROUP_X = "In the central nervous system ICCC-3 Group X registers behavio
 def n_histology_cns():
     s = "cns"
     return histology_node(s, [
-        named("Germinoma", "9064", upgrade=IHC_CONFIRMS),
-        code("Mature teratoma", "9080", "0", 7, "%s %s" % (rec("9080", "0"), CNS_IN_GROUP_X),
-             note="D5. ICCC-2017 range 95 (Xa2) declares 0-1,3."),
-        named("Immature teratoma", "9080",
-              "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
-              note="D5. The pathway's 9083 for immature teratoma is wrong; 9083/3 is "
-                   "Malignant teratoma, intermediate."),
+        aid(named("Germinoma", "9064", upgrade=IHC_CONFIRMS), AID_GERMINOMA),
+        aid(code("Mature teratoma", "9080", "0", 7, "%s %s" % (rec("9080", "0"),
+                                                               CNS_IN_GROUP_X),
+                 note="D5. ICCC-2017 range 95 (Xa2) declares 0-1,3."), AID_MATURE_TERATOMA),
+        aid(named("Immature teratoma", "9080",
+                  "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
+                  note="D5. The pathway's 9083 for immature teratoma is wrong; 9083/3 is "
+                       "Malignant teratoma, intermediate."), AID_IMMATURE_TERATOMA),
         code("Teratoma, with maturity not stated", "9080", "1", 7,
              "%s %s" % (rec("9080", "1"), CNS_IN_GROUP_X), note="D5."),
-        code("Dermoid cyst", "9084", "0", 7, "%s %s" % (rec("9084", "0"), CNS_IN_GROUP_X),
-             note="D5."),
-        named("Teratoma with a somatic-type malignancy", "9084",
-              "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
-              % rec("9084"), note="D5. Louis 2021 Table 1, p. 1235."),
+        aid(code("Dermoid cyst", "9084", "0", 7, "%s %s" % (rec("9084", "0"), CNS_IN_GROUP_X),
+                 note="D5."), AID_DERMOID),
+        aid(named("Teratoma with a somatic-type malignancy", "9084",
+                  "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
+                  % rec("9084"), note="D5. Louis 2021 Table 1, p. 1235."), AID_SOMATIC),
     ], [
         refer("Not a germ cell tumour", 3,
               "A tumour of the brain or spinal cord that is not a germ cell tumour belongs to "
@@ -839,20 +1202,22 @@ def n_histology_cns():
 def n_histology_ovary():
     s = "ovary"
     return histology_node(s, [
-        named("Dysgerminoma", "9060", upgrade=IHC_CONFIRMS, note="D1, D3."),
-        named("Germinoma", "9064",
-              "%s A report that uses the term germinoma is coded as written; dysgerminoma is "
-              "9060/3." % rec("9064"), upgrade=IHC_CONFIRMS, note="D1."),
-        go("A teratoma, struma ovarii or strumal carcinoid", nid(s, "teratoma")),
+        aid(named("Dysgerminoma", "9060", upgrade=IHC_CONFIRMS, note="D1, D3."), AID_GERMINOMA),
+        aid(named("Germinoma", "9064",
+                  "%s A report that uses the term germinoma is coded as written; dysgerminoma "
+                  "is 9060/3." % rec("9064"), upgrade=IHC_CONFIRMS, note="D1."), AID_GERMINOMA),
+        aid(go("A teratoma, struma ovarii or strumal carcinoid", nid(s, "teratoma")),
+            AID_TERATOMA),
     ], [
-        go("Gonadoblastoma, alone or with another tumour", nid(s, "gonadoblastoma")),
+        aid(go("Gonadoblastoma, alone or with another tumour", nid(s, "gonadoblastoma")),
+            AID_GONADOBLASTOMA),
         go("A sex cord–stromal tumour — granulosa cell, Sertoli-Leydig cell, Sertoli cell, "
            "Leydig cell, steroid cell, thecoma or another", nid(s, "sex_cord")),
         go("An epithelial tumour — carcinoma, borderline tumour or cystadenoma",
            nid(s, "epithelial")),
-        named("Small cell carcinoma, hypercalcaemic type", "8044",
-              "%s ICD-O-3.2 gives Small cell carcinoma, hypercalcemic type as a related term of "
-              "this code." % rec("8044"), note="D14."),
+        aid(named("Small cell carcinoma, hypercalcaemic type", "8044",
+                  "%s ICD-O-3.2 gives Small cell carcinoma, hypercalcemic type as a related "
+                  "term of this code." % rec("8044"), note="D14."), AID_SCCOHT),
         go("Malignant tumour, type not determined", nid(s, "unspecified")),
         go("Another tumour type — neuroendocrine tumour, lymphoma, leukaemia, sarcoma, a "
            "metastatic deposit or another named tumour", nid(s, "other")),
@@ -863,19 +1228,20 @@ def n_histology_ovary():
 def n_histology_testis():
     s = "testis"
     return histology_node(s, [
-        named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3."),
-        named("Seminoma, anaplastic or with a high mitotic index", "9062",
-              "%s ICD-O-3.2 gives it the synonym Seminoma with high mitotic index."
-              % rec("9062"), note="D3."),
-        named("Spermatocytic tumour", "9063",
-              "%s ICD-O-3.2 gives it the synonym Spermatocytic tumor." % rec("9063"),
-              note="D3. Moch 2022 Table 3, p. 464."),
-        go("A teratoma, dermoid cyst or epidermoid cyst", nid(s, "teratoma")),
+        aid(named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3."), AID_GERMINOMA),
+        aid(named("Seminoma, anaplastic or with a high mitotic index", "9062",
+                  "%s ICD-O-3.2 gives it the synonym Seminoma with high mitotic index."
+                  % rec("9062"), note="D3."), AID_SEMINOMA_MITOTIC),
+        aid(named("Spermatocytic tumour", "9063",
+                  "%s ICD-O-3.2 gives it the synonym Spermatocytic tumor." % rec("9063"),
+                  note="D3. Moch 2022 Table 3, p. 464."), AID_SPERMATOCYTIC),
+        aid(go("A teratoma, dermoid cyst or epidermoid cyst", nid(s, "teratoma")),
+            AID_TERATOMA),
     ], [
         named("Epithelioid trophoblastic tumour", "9105", note="D8. Moch 2022 Table 3, p. 464."),
         excl("Placental site trophoblastic tumour", "9104", "1", PSTT_REASON, decision=True,
              note="D8, provisional: the Group 8 9222 pattern."),
-        excl_outside("Germ cell neoplasia in situ, or an intratubular seminoma, embryonal "
+        aid(excl_outside("Germ cell neoplasia in situ, or an intratubular seminoma, embryonal "
                      "carcinoma, yolk sac tumour or teratoma, with no invasive tumour",
                      "germ cell neoplasia in situ", "9064", "2",
                      extra="WHO 2022 lists it among the non-invasive germ cell lesions (Moch "
@@ -884,14 +1250,17 @@ def n_histology_testis():
                            "their own and take this one.",
                      note="D9, settled. Moch's intratubular 9061/2, 9070/2, 9071/2 and 9080/2 "
                           "are not ICD-O-3.2 codes; a report of any of them is this exclusion."),
-        excl_outside("Regressed (burnt-out) germ cell tumour", "a regressed germ cell tumour",
+            AID_GCNIS),
+        aid(excl_outside("Regressed (burnt-out) germ cell tumour", "a regressed germ cell tumour",
                      "9080", "1",
                      extra="ICD-O-3.2 lists Germ cell tumor, regressed under this code, and "
                            "WHO 2022 codes regressed germ cell tumours 9080/1 (Moch 2022, "
                            "Table 3, p. 464).",
                      note="Settled by ICD-O-3.2 and Moch 2022 together; the same pattern as "
                           "Group V's 9514/1 spontaneously regressed retinoblastoma."),
-        go("Gonadoblastoma, alone or with another tumour", nid(s, "gonadoblastoma")),
+            AID_REGRESSED),
+        aid(go("Gonadoblastoma, alone or with another tumour", nid(s, "gonadoblastoma")),
+            AID_GONADOBLASTOMA),
         go("A sex cord–stromal tumour — Leydig cell, Sertoli cell, granulosa cell or another",
            nid(s, "sex_cord")),
         named("Carcinoma", "8010", upgrade=TYPE_NOT_STATED,
@@ -906,17 +1275,18 @@ def n_histology_testis():
 def n_histology_extragonadal():
     s = "extragonadal"
     return histology_node(s, [
-        named("Germinoma", "9064", upgrade=IHC_CONFIRMS, note="D1."),
-        named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3: coded as written."),
-        go("A teratoma or dermoid cyst", nid(s, "teratoma")),
+        aid(named("Germinoma", "9064", upgrade=IHC_CONFIRMS, note="D1."), AID_GERMINOMA),
+        aid(named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3: coded as written."),
+            AID_GERMINOMA),
+        aid(go("A teratoma or dermoid cyst", nid(s, "teratoma")), AID_TERATOMA),
     ], [
-        named("Epithelioid trophoblastic tumour", "9105", note="D8."),
-        excl("Placental site trophoblastic tumour", "9104", "1", PSTT_REASON, decision=True,
-             note="D8, provisional."),
-        excl_outside("Complete hydatidiform mole", "complete hydatidiform mole", "9100", "0",
-                     note="D8, settled."),
-        excl_outside("Partial hydatidiform mole", "partial hydatidiform mole", "9103", "0",
-                     note="D8, settled."),
+        aid(named("Epithelioid trophoblastic tumour", "9105", note="D8."), AID_ETT),
+        aid(excl("Placental site trophoblastic tumour", "9104", "1", PSTT_REASON, decision=True,
+                 note="D8, provisional."), AID_PSTT),
+        aid(excl_outside("Complete hydatidiform mole", "complete hydatidiform mole", "9100",
+                         "0", note="D8, settled."), AID_COMPLETE_MOLE),
+        aid(excl_outside("Partial hydatidiform mole", "partial hydatidiform mole", "9103", "0",
+                         note="D8, settled."), AID_PARTIAL_MOLE),
         excl_outside("Invasive mole", "invasive mole", "9100", "1", note="D8, settled."),
         go("Not a germ cell or trophoblastic tumour — including a sex cord–stromal tumour or "
            "a carcinoma", nid(s, "other")),
@@ -938,24 +1308,28 @@ def n_teratoma_ovary():
         "Which teratoma or related tumour does the report diagnose?",
         "Use the report's own term. An immature teratoma of any grade is malignant.",
         [
-            excl_outside("Mature cystic teratoma (mature teratoma)",
-                         "mature cystic teratoma", "9080", "0", note="D5, settled."),
-            excl_outside("Dermoid cyst", "dermoid cyst", "9084", "0", note="D5, settled."),
-            named("Immature teratoma, any grade", "9080",
-                  "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
-                  note="D5."),
+            aid(excl_outside("Mature cystic teratoma (mature teratoma)",
+                             "mature cystic teratoma", "9080", "0", note="D5, settled."),
+                AID_MATURE_TERATOMA),
+            aid(excl_outside("Dermoid cyst", "dermoid cyst", "9084", "0", note="D5, settled."),
+                AID_DERMOID),
+            aid(named("Immature teratoma, any grade", "9080",
+                      "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
+                      note="D5."), AID_IMMATURE_TERATOMA_OVARY),
             excl_outside("Teratoma, with maturity not stated", "a teratoma whose maturity is "
                          "not stated", "9080", "1", note="D5, settled."),
-            named("Teratoma or dermoid cyst with a somatic-type malignancy (a carcinoma or "
-                  "sarcoma arising in it)", "9084",
-                  "%s ICD-O-3.2 gives it the synonym Dermoid cyst with malignant "
-                  "transformation." % rec("9084"), note="D5."),
-            excl_outside("Struma ovarii", "struma ovarii", "9090", "0", note="D5, settled."),
+            aid(named("Teratoma or dermoid cyst with a somatic-type malignancy (a carcinoma or "
+                      "sarcoma arising in it)", "9084",
+                      "%s ICD-O-3.2 gives it the synonym Dermoid cyst with malignant "
+                      "transformation." % rec("9084"), note="D5."), AID_SOMATIC),
+            aid(excl_outside("Struma ovarii", "struma ovarii", "9090", "0", note="D5, settled."),
+                AID_STRUMA),
             named("Malignant struma ovarii", "9090",
                   note="D5. ICCC-2017 range 107 (Xc2)."),
-            excl_outside("Strumal carcinoid", "strumal carcinoid", "9091", "1",
-                         extra="ICD-O-3.2 has no malignant code for it.",
-                         note="D5, settled: ICD-O-3.2 has no 9091/3."),
+            aid(excl_outside("Strumal carcinoid", "strumal carcinoid", "9091", "1",
+                             extra="ICD-O-3.2 has no malignant code for it.",
+                             note="D5, settled: ICD-O-3.2 has no 9091/3."),
+                AID_STRUMAL_CARCINOID),
             go("A teratoma with a yolk sac tumour or another malignant germ cell component",
                nid(s, "mixed")),
         ],
@@ -974,16 +1348,16 @@ def n_teratoma_testis():
             excl_outside("Teratoma, prepubertal type", "teratoma, prepubertal type", "9084",
                          "0", extra="WHO 2022 does the same (Moch 2022, Table 3, p. 464).",
                          note="D5, settled. ICD-O-3.2 related term of 9084/0."),
-            excl_outside("Dermoid cyst or epidermoid cyst", "a dermoid cyst", "9084", "0",
-                         extra="WHO 2022 codes dermoid and epidermoid cysts of the testis "
-                               "9084/0 (Moch 2022, Table 3, p. 464).",
-                         note="D5, settled."),
+            aid(excl_outside("Dermoid cyst or epidermoid cyst", "a dermoid cyst", "9084", "0",
+                             extra="WHO 2022 codes dermoid and epidermoid cysts of the testis "
+                                   "9084/0 (Moch 2022, Table 3, p. 464).",
+                             note="D5, settled."), AID_DERMOID_EPIDERMOID),
             named("Teratoma, postpubertal type", "9080",
                   "%s WHO 2022 codes postpubertal-type teratoma 9080/3 (Moch 2022, Table 3, "
                   "p. 464)." % rec("9080"), note="D5."),
-            named("Immature teratoma", "9080",
-                  "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
-                  note="D5."),
+            aid(named("Immature teratoma", "9080",
+                      "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
+                      note="D5."), AID_IMMATURE_TERATOMA),
             excl_outside("Mature teratoma, with prepubertal or postpubertal type not stated",
                          "mature teratoma", "9080", "0", decision=True,
                          note="D5; registrar review A5 open: code as written, or 9080/3 "
@@ -992,9 +1366,10 @@ def n_teratoma_testis():
                          "a teratoma whose type is not stated", "9080", "1", decision=True,
                          note="D5; registrar review A5 open: code as written, or 9080/3 "
                               "after puberty."),
-            named("Teratoma with a somatic-type malignancy", "9084",
-                  "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
-                  % rec("9084"), note="D5. Moch 2022 Table 3, p. 464."),
+            aid(named("Teratoma with a somatic-type malignancy", "9084",
+                      "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type "
+                      "malignancies." % rec("9084"), note="D5. Moch 2022 Table 3, p. 464."),
+                AID_SOMATIC),
             go("Teratoma with another malignant germ cell component", nid(s, "mixed")),
         ],
         [], "Contract §4.4, D5. The prepubertal and postpubertal types enter only here, where "
@@ -1009,26 +1384,28 @@ def n_teratoma_extragonadal():
         "Use the report's own term and site. ICD-O-3.2 codes immature teratoma of the lung, "
         "thymus or thyroid differently from immature teratoma elsewhere.",
         [
-            excl_outside("Mature teratoma", "mature teratoma", "9080", "0",
-                         note="D5, settled."),
-            excl_outside("Immature teratoma of the lung, thymus or thyroid",
+            aid(excl_outside("Mature teratoma", "mature teratoma", "9080", "0",
+                             note="D5, settled."), AID_MATURE_TERATOMA),
+            aid(excl_outside("Immature teratoma of the lung, thymus or thyroid",
                          "immature teratoma of the lung, thymus or thyroid", "9080", "1",
                          decision=True,
                          extra="ICD-O-3.2 lists the change in 'Terms that are changing "
                                "behaviour', p. 6.",
                          note="D5: the thymus part is provisional. A mediastinal immature "
                               "teratoma recorded at C38.1 is 9080/3 by the same rule."),
-            named("Immature teratoma at any other site — sacrococcygeal region, mediastinum "
-                  "outside the thymus, retroperitoneum or elsewhere", "9080",
-                  "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
-                  note="D5."),
+                AID_IMMATURE_TERATOMA),
+            aid(named("Immature teratoma at any other site — sacrococcygeal region, mediastinum "
+                      "outside the thymus, retroperitoneum or elsewhere", "9080",
+                      "%s ICD-O-3.2 gives it the synonym Immature teratoma, NOS." % rec("9080"),
+                      note="D5."), AID_IMMATURE_TERATOMA),
             excl_outside("Teratoma, with maturity not stated",
                          "a teratoma whose maturity is not stated", "9080", "1",
                          note="D5, settled."),
-            excl_outside("Dermoid cyst", "dermoid cyst", "9084", "0", note="D5, settled."),
-            named("Teratoma with a somatic-type malignancy", "9084",
-                  "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
-                  % rec("9084"), note="D5."),
+            aid(excl_outside("Dermoid cyst", "dermoid cyst", "9084", "0", note="D5, settled."),
+                AID_DERMOID),
+            aid(named("Teratoma with a somatic-type malignancy", "9084",
+                      "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type "
+                      "malignancies." % rec("9084"), note="D5."), AID_SOMATIC),
             go("Teratoma with a yolk sac tumour or another malignant germ cell component",
                nid(s, "mixed")),
         ],
@@ -1083,12 +1460,13 @@ def n_sex_cord_ovary():
         "Use the report's own term, including the Sertoli-Leydig cell tumour's "
         "differentiation.",
         [
-            named("Adult granulosa cell tumour", "8620",
-                  "%s ICD-O-3.2 changed the behaviour of the adult granulosa cell tumour of the "
-                  "ovary from 1 to 3." % rec("8620"),
-                  note="D11. 'Terms that are changing behaviour', p. 4."),
-            sex_cord_excl("Juvenile granulosa cell tumour", "juvenile granulosa cell tumour",
-                          "8622", "1", decision=True),
+            aid(named("Adult granulosa cell tumour", "8620",
+                      "%s ICD-O-3.2 changed the behaviour of the adult granulosa cell tumour of "
+                      "the ovary from 1 to 3." % rec("8620"),
+                      note="D11. 'Terms that are changing behaviour', p. 4."),
+                AID_ADULT_GRANULOSA),
+            aid(sex_cord_excl("Juvenile granulosa cell tumour", "juvenile granulosa cell tumour",
+                              "8622", "1", decision=True), AID_JUVENILE_GRANULOSA),
             excl("Granulosa cell tumour, adult or juvenile type not stated", "8622", "1",
                  "ICD-O-3.2 prints no term for a granulosa cell tumour of the ovary whose type "
                  "is not stated: the adult type is 8620/3, a Group X cancer, and the juvenile "
@@ -1099,19 +1477,23 @@ def n_sex_cord_ovary():
                  decision=True,
                  note="D11; registrar review A1. Code review, 6 October 2026: no option fitted "
                       "a report that leaves the type unstated."),
-            named("Sertoli-Leydig cell tumour, poorly differentiated", "8631", note="D11."),
-            named("Sertoli-Leydig cell tumour, poorly differentiated, with heterologous "
-                  "elements", "8634", note="D11."),
-            sex_cord_excl("Sertoli-Leydig cell tumour, intermediate differentiation",
-                          "Sertoli-Leydig cell tumour of intermediate differentiation", "8631",
-                          "1"),
-            sex_cord_excl("Sertoli-Leydig cell tumour, intermediate differentiation, with "
-                          "heterologous elements", "Sertoli-Leydig cell tumour of intermediate "
-                          "differentiation with heterologous elements", "8634", "1"),
-            sex_cord_excl("Sertoli-Leydig cell tumour, well differentiated",
-                          "well-differentiated Sertoli-Leydig cell tumour", "8631", "0"),
-            sex_cord_excl("Sertoli-Leydig cell tumour, retiform",
-                          "retiform Sertoli-Leydig cell tumour", "8633", "1"),
+            aid(named("Sertoli-Leydig cell tumour, poorly differentiated", "8631", note="D11."),
+                AID_SLCT_POOR),
+            aid(named("Sertoli-Leydig cell tumour, poorly differentiated, with heterologous "
+                      "elements", "8634", note="D11."), AID_SLCT_POOR_HETEROLOGOUS),
+            aid(sex_cord_excl("Sertoli-Leydig cell tumour, intermediate differentiation",
+                              "Sertoli-Leydig cell tumour of intermediate differentiation",
+                              "8631", "1"), AID_SLCT_INTERMEDIATE),
+            aid(sex_cord_excl("Sertoli-Leydig cell tumour, intermediate differentiation, with "
+                              "heterologous elements", "Sertoli-Leydig cell tumour of "
+                              "intermediate differentiation with heterologous elements", "8634",
+                              "1"), AID_SLCT_INTERMEDIATE_HETEROLOGOUS),
+            aid(sex_cord_excl("Sertoli-Leydig cell tumour, well differentiated",
+                              "well-differentiated Sertoli-Leydig cell tumour", "8631", "0"),
+                AID_SLCT_WELL),
+            aid(sex_cord_excl("Sertoli-Leydig cell tumour, retiform",
+                              "retiform Sertoli-Leydig cell tumour", "8633", "1"),
+                AID_SLCT_RETIFORM),
             sex_cord_excl("Sertoli-Leydig cell tumour, differentiation not stated",
                           "Sertoli-Leydig cell tumour, NOS", "8631", "1"),
             sex_cord_excl("Sertoli cell tumour", "Sertoli cell tumour", "8640", "1"),
@@ -1123,7 +1505,8 @@ def n_sex_cord_ovary():
             named("Malignant steroid cell tumour", "8670", note="D11."),
             sex_cord_excl("Thecoma", "thecoma", "8600", "0"),
             named("Malignant thecoma", "8600", note="D11."),
-            sex_cord_excl("Gynandroblastoma", "gynandroblastoma", "8632", "1"),
+            aid(sex_cord_excl("Gynandroblastoma", "gynandroblastoma", "8632", "1"),
+                AID_GYNANDROBLASTOMA),
             sex_cord_excl("Sex cord tumour with annular tubules",
                           "sex cord tumour with annular tubules", "8623", "1"),
             sex_cord_excl("Microcystic stromal tumour or signet-ring stromal tumour",
@@ -1179,10 +1562,10 @@ def n_epithelial_ovary():
         "Which epithelial tumour does the report diagnose?",
         "Use the report's own term. Borderline tumours and cystadenomas are not malignant.",
         [
-            named("Small cell carcinoma, hypercalcaemic type", "8044",
-                  "%s ICD-O-3.2 gives Small cell carcinoma, hypercalcemic type as a related "
-                  "term of this code." % rec("8044"), note="D14."),
-            named("Low-grade serous carcinoma", "8460", note="D14."),
+            aid(named("Small cell carcinoma, hypercalcaemic type", "8044",
+                      "%s ICD-O-3.2 gives Small cell carcinoma, hypercalcemic type as a related "
+                      "term of this code." % rec("8044"), note="D14."), AID_SCCOHT),
+            aid(named("Low-grade serous carcinoma", "8460", note="D14."), AID_LOW_GRADE_SEROUS),
             named("High-grade serous carcinoma", "8461", note="D14."),
             named("Serous carcinoma, grade not stated", "8441", note="D14.",
                   upgrade="A report that states the grade gives low-grade serous carcinoma "
@@ -1190,7 +1573,8 @@ def n_epithelial_ovary():
             named("Mucinous carcinoma", "8480",
                   "%s ICD-O-3.2 gives it the synonym Mucinous carcinoma." % rec("8480"),
                   note="D14."),
-            named("Mucinous cystadenocarcinoma", "8470", note="D14."),
+            aid(named("Mucinous cystadenocarcinoma", "8470", note="D14."),
+                AID_MUCINOUS_CYSTADENOCARCINOMA),
             named("Endometrioid carcinoma", "8380", note="D14."),
             named("Clear cell carcinoma", "8310", note="D14."),
             named("Seromucinous carcinoma", "8474", note="D14."),
@@ -1390,18 +1774,25 @@ def n_other_extragonadal():
 # Assembly
 # ------------------------------------------------------------------------------------------
 def common(site):
-    """The eleven nodes every site tree carries, in tree order: the contract's eight,
-    plus the clinical-note and imaging nodes for the cytology and marker evidence contexts."""
+    """The sixteen nodes every site tree carries, in tree order: the contract's eight, the four
+    laboratory screens behind the evidence checklist (registrar, 6 October 2026), the
+    clinical-note and imaging nodes for the cytology and marker evidence contexts, and the
+    component checklist after the mixed tumour's named-term question."""
     targets = {"referral": clinical_node(site), "markers": nid(site, "markers"),
                "imaging": imaging_node(site), "cytology": nid(site, "cytology"),
                "histology": nid(site, "histology")}
+    lab_targets = {t: lab_node_id(site, t) for t in LAB_TIERS}
     return [
-        n_document_inventory(nid(site, "document_inventory"), targets,
+        n_document_inventory(nid(site, "document_inventory"), targets, lab_targets,
                              "Contract §4.2: five evidence tiers. Every Group X tree carries "
-                             "the same tiers; the router's site capture chose this tree."),
+                             "the same tiers; the router's site capture chose this tree. A "
+                             "tier a Lab Report can join routes through a laboratory screen "
+                             "when Lab Report is ticked (registrar, 6 October 2026)."),
+        *[n_labs(site, t, targets[t]) for t in LAB_TIERS],
         n_clinical_alias(site), n_clinical_alias(site, "cytology"), n_markers(site),
         n_imaging(site), n_imaging(site, "markers"), n_imaging(site, "cytology"),
-        n_cytology(site), HISTOLOGY_BUILDERS[site](), n_mixed(site), n_ihc(site),
+        n_cytology(site), HISTOLOGY_BUILDERS[site](), n_mixed(site),
+        n_mixed_components(site), n_ihc(site),
     ]
 
 

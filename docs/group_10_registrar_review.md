@@ -251,6 +251,9 @@ The cases are in `docs/group_10_scenarios.md`.
 **Decided:** keep both labels as they are. A clerk reaches the second screen only after saying
 the tumour is mixed, and that screen's question says so.
 
+Since 6 October 2026 the second "Choriocarcinoma" is a box on the component checklist and the label
+of the option the checklist resolves to (E4). Both keep the one word.
+
 ### E2. Laboratory results are recorded as numbers on one screen
 
 **Decided:**
@@ -276,6 +279,33 @@ the tumour is mixed, and that screen's question says so.
 | Inhibin A | Granulosa cell tumour | van Heerden 2019, Table 4, p. 107 |
 | Calcium | Sex cord–stromal tumours; small cell carcinoma of the ovary, hypercalcaemic type | van Heerden 2019, Table 4, p. 107 |
 
+**Built, 6 October 2026, to the registrar's ruling of the same day:** the "Laboratory results"
+screen (node type `lab_results`) follows the evidence checklist, and only when Lab Report is ticked.
+The engine routes the screen by its own next step, so the gate carries it in its data. Each tier a Lab
+Report can join has a copy, listed just before it, that requires Lab Report and goes to a laboratory
+screen; the screen then goes on to the tier's own next question, and the tier itself now excludes Lab
+Report. The marker tier always has Lab Report ticked, so it goes through the screen directly. The
+imaging-only tier excludes Lab Report and has no screen. That is four screens per tree, one per
+destination (`<tree>_labs_referral`, `_labs_markers`, `_labs_cytology`, `_labs_histology`), each with
+the tree's own tests. With Lab Report unticked the routes are the ones the gate had before. The trees
+and the router open on the evidence checklist, as before. No value chooses a code, and the values
+print on the result. The rules are in `docs/evidence_documents/group_10.json`.
+
+| Tree | Tests, in screen order | Units the clerk chooses from |
+|---|---|---|
+| Ovary | Alpha-fetoprotein (AFP) · Beta human chorionic gonadotropin (β-hCG) · Lactate dehydrogenase (LDH) · Cancer antigen 125 (CA-125) · Human epididymis protein 4 (HE4) · Carcinoembryonic antigen (CEA) · Inhibin A · Calcium | AFP ng/mL, µg/L, IU/mL, kU/L · β-hCG IU/L, mIU/mL · LDH U/L, IU/L · CA-125 U/mL, kU/L · HE4 pmol/L · CEA ng/mL, µg/L · Inhibin A pg/mL, ng/L · Calcium mmol/L, mg/dL |
+| Testis | AFP · β-hCG · LDH | as for the ovary |
+| Other sites, the uterus and placenta among them | AFP · β-hCG · LDH | as for the ovary |
+| Brain and spinal cord | Serum alpha-fetoprotein (AFP) · Serum beta human chorionic gonadotropin (β-hCG) · Cerebrospinal fluid alpha-fetoprotein (AFP) · Cerebrospinal fluid beta human chorionic gonadotropin (β-hCG) | AFP and β-hCG as above |
+
+Sources for the tests: van Heerden 2019, Table 4, p. 107, and p. 108 for carcinoembryonic antigen;
+Rajpert-De Meyts 2015, p. 177; for the brain, the Group 10 Diagnostic Pathway §2C (Takami 2022).
+Neither paper prints a unit. The unit lists are the registrar's closed lists. Tourne 2019 reports
+human chorionic gonadotropin in IU/L (pp. 331, 335) and alpha-fetoprotein in ng/mL (p. 335), Buza 2022
+beta human chorionic gonadotropin in mIU/mL (p. 206), and Coşkun 2023 CA-125 in U/mL and calcium in
+mg/dL (pp. 112–113). The labels spell out cerebrospinal fluid and cancer antigen 125, as the tree's
+other text does (standing rule 14).
+
 ### E3. Pineal germinoma belongs to Group X
 
 ICCC-3 places germ cell codes 9060–9065, 9070–9072, 9080–9085, 9100 and 9101 at sites C70–C72
@@ -283,3 +313,59 @@ and C75.1–C75.3 in X(a) (SEER ICCC-3 recode table). The local ICCC-2017 table 
 Xa1. The route is open since 6 October 2026 (item B1): every presentation except "Organ-functional
 sign" offers Group X at those sites, and a Group X term searched there enters the central
 nervous system tree.
+
+### E4. The components of a mixed tumour are ticked, not chosen
+
+The mixed germ cell tumour step is two screens since 6 October 2026:
+
+1. "Does the report call the tumour by one of these names?" Teratocarcinoma `9081/3`; malignant
+   teratoma, undifferentiated or anaplastic `9082/3`; malignant teratoma, intermediate `9083/3`;
+   malignant teratoma, trophoblastic `9102/3` (ovary and testis); germ cell tumour with a
+   haematological malignancy `9086/3` (other sites); or "None of these: the report lists the
+   components". A term the report uses wins, so it is asked first. The checklist cannot hold these
+   as plain choices: on a first-match checklist every option carries a rule and only the boxes are
+   drawn.
+2. "Which components does the report list?" A box each for choriocarcinoma, embryonal carcinoma,
+   yolk sac tumour (endodermal sinus tumour), teratoma (mature or immature), seminoma, germinoma or
+   dysgerminoma, and another germ cell component such as polyembryoma. The first rule that fits, top
+   down, is the code:
+
+| Option | Rule | Code |
+|---|---|---|
+| Choriocarcinoma | choriocarcinoma ticked | `9101/3` |
+| Embryonal carcinoma and teratoma only | both ticked, nothing else | `9081/3` |
+| Teratoma and seminoma, germinoma or dysgerminoma | both ticked, no choriocarcinoma, not exactly embryonal carcinoma and teratoma | `9085/3` |
+| Other combination, or none listed | any other set, an empty one included | `9085/3` |
+
+Every code, label and destination is the one the single-choice list had. The data gate enumerates all
+64 ticked sets: none is stranded, and each option is the first fit for at least one. "Another germ cell
+component" exists so that embryonal carcinoma, teratoma and a third component of any kind, polyembryoma
+among them, is not coded `9081/3`.
+
+### E5. Recognition aids on the tumour-type lists
+
+The histology, teratoma, sex cord–stromal and epithelial screens carry a one-sentence aid under the
+option the clerk selects, then Confirm (70 aids across the four trees). Each aid is drawn from the
+Pathway's §1 and §6 anchors or a Group 10 paper, and its source and page are in the comment beside it
+in `build/group10_tree.py`. An aid helps a clerk recognise a report; the code stays the report's own
+term.
+
+Left without an aid:
+- **No source on disk describes them:** Sertoli cell tumour and malignant Sertoli cell tumour; Leydig
+  cell tumour and malignant Leydig cell tumour; steroid cell tumour and its malignant form; thecoma
+  and malignant thecoma; sex cord tumour with annular tubules; microcystic or signet-ring stromal
+  tumour; malignant struma ovarii; invasive mole; high-grade serous, endometrioid, clear cell,
+  seromucinous and undifferentiated carcinoma; mucinous carcinoma; the four borderline tumours and
+  the two cystadenomas.
+- **The sources describe the tumour at another site:** every option on the testis's sex cord–stromal
+  screen and the extragonadal "Another tumour type" screen (Lim and Oliva 2018 describe the ovary),
+  and the epithelioid and placental site trophoblastic tumours of the testis (Buza 2022 describes the
+  uterine tumours; the extragonadal tree carries both aids).
+- **The aid would decide an open question:** teratoma of prepubertal or of postpubertal type, and the
+  testicular teratoma whose type is not stated (A5). A description of the two types would invite the
+  clerk to choose a type the report does not state.
+- **The option names no tumour:** every "type not named", "type not stated", "not determined",
+  "Another tumour type" and "Not a germ cell tumour" option, the sex cord–stromal and epithelial
+  category options on the ovary's histology screen, and the teratoma-with-another-component routes.
+- **Not in this change:** the gonadoblastoma screen, the cytology screen and the mixed tumour's
+  named-term screen.
