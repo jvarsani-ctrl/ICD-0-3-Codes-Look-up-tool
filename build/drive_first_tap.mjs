@@ -153,9 +153,10 @@ try {
 
   await load(); await js(`(async () => { await enterGroup(1, 'tree_acute_leukemia', 'ac_ball_cytogenetics'); render(); })()`);
   r = await js(`({ before: document.querySelector('[data-act="resolve"]').disabled })`);
-  await js(`(() => { const s = document.querySelector('select[data-act="draft"]'); s.focus(); s.value = '1'; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
+  /* The list is a filtered radio list since 6 October 2026, not a select. */
+  await js(`(() => { const s = document.querySelector('input[type="radio"][data-act="draft"][data-k="option"][value="1"]'); s.focus(); s.checked = true; s.dispatchEvent(new Event('change', { bubbles: true })); })()`);
   r.after = await js(`document.querySelector('[data-act="resolve"]').disabled`);
-  check('choosing a dropdown finding enables Continue', r.before === true && r.after === false, JSON.stringify(r));
+  check('choosing a finding from the list enables Continue', r.before === true && r.after === false, JSON.stringify(r));
 
   await load();
   await js(`document.querySelector('input[data-act="query"]').focus()`);
