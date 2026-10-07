@@ -10712,13 +10712,50 @@ def check_routing_narrows(repo: Path, contexts: dict):
             if str(name) not in narrows:
                 out.append((FAIL, "discriminator %s: option %r has no entry in `narrows`, so "
                                   "that answer narrows nothing" % (key, name)))
+        # The presentations that really ask this discriminator are the ones whose
+        # `dual_group_discriminator` names it: that is the field the engine reads.
+        # `asked_by` is a note on the discriminator and can go stale.
+        users = [a for a in (router.get("archetypes") or []) if a.get("dual_group_discriminator") == key]
+        offered = set()
+        for a in users:
+            offered.update(g for g in (a.get("candidate_groups") or []) if isinstance(g, int))
+        stale = sorted(set(d.get("asked_by") or []) - {a.get("archetype_id") for a in users})
+        if stale:
+            out.append((NOTE, "discriminator %s: `asked_by` lists %s, which do not set "
+                              "`dual_group_discriminator` to it, so the engine never asks it there"
+                        % (key, ", ".join(stale))))
         for answer, rule in narrows.items():
             if not isinstance(rule, dict) or not isinstance(rule.get("drop"), list):
                 out.append((FAIL, "discriminator %s, answer %r: `narrows` entry needs a "
                                   "`drop` list" % (key, answer)))
+                continue
+            # `keep_on_site` protects a group from the site step, so it has to name a
+            # group the presentations that ask this discriminator can actually offer,
+            # it cannot also be dropped by the same answer, and the discriminator must
+            # be asked before the site: narrowBySite() reads the answer when it runs.
+            kept = rule.get("keep_on_site")
+            if kept is None:
+                continue
+            if not d.get("ask_before_site"):
+                out.append((FAIL, "discriminator %s, answer %r: `keep_on_site` needs `ask_before_site` "
+                                  "true, or the site step runs before the answer exists and the "
+                                  "protection never applies" % (key, answer)))
+            if not isinstance(kept, list) or not kept or not all(isinstance(g, int) and 1 <= g <= 12 for g in kept):
+                out.append((FAIL, "discriminator %s, answer %r: `keep_on_site` must be a non-empty "
+                                  "list of group numbers 1-12, not %r" % (key, answer, kept)))
+                continue
+            stray = [g for g in kept if g not in offered]
+            if stray:
+                out.append((FAIL, "discriminator %s, answer %r: `keep_on_site` names group(s) %r that no "
+                                  "presentation asking this discriminator offers, so the protection "
+                                  "can never apply" % (key, answer, stray)))
+            clash = [g for g in kept if g in rule["drop"]]
+            if clash:
+                out.append((FAIL, "discriminator %s, answer %r: group(s) %r are both dropped and kept "
+                                  "on site by the same answer" % (key, answer, clash)))
 
     n_soft = sum(1 for c in lookup if c[:3] in ("C47", "C48", "C49"))
-    if not out:
+    if not any(level == FAIL for level, _ in out):
         out.append((OK, "routing narrows: %d archetype(s), %d topography code(s) (%d soft "
                         "tissue), %d discriminator(s) — every candidate list is a non-empty "
                         "list of real groups and every crosswalk code resolves"

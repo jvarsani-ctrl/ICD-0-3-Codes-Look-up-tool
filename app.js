@@ -131,7 +131,7 @@ function snapshot() {
   return JSON.stringify({
     stage: state.stage, archetype: state.archetype, group: state.group,
     organSystem: state.organSystem, candidates: state.candidates,
-    searchTerm: state.searchTerm || null,
+    searchTerm: state.searchTerm || null, siteRecordOnly: state.siteRecordOnly || false,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result, labs: state.labs,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
@@ -475,11 +475,26 @@ function renderSearchResults() {
     return { label: hit.alias, meta: 'Group ' + hit.groups.join(', ') };
   }), { filter: false });
 }
+/* Hyphens, spaces and other punctuation do not separate words for matching. */
+function squashTerm(s) { return foldText(s).replace(/[^a-z0-9]+/g, ''); }
+/* WHO ICD-O-3 Rule J (section 4.3.7): a compound term that is not listed is looked up again
+   with its word roots in another order. The typed roots (fibro-myxo-sarcoma) are permuted
+   and the last word stays last; a single unhyphenated word has no roots to split. */
+function rootOrders(q) {
+  var parts = foldText(q).split(/[\s-]+/).filter(Boolean), head = parts.pop(), out = [];
+  if (parts.length < 2 || parts.length > 4) return out;
+  (function walk(rest, got) {
+    if (!rest.length) { out.push(got.concat(head).join('')); return; }
+    rest.forEach(function (p, i) { walk(rest.slice(0, i).concat(rest.slice(i + 1)), got.concat(p)); });
+  })(parts, []);
+  return out;
+}
 /* Fuzzy-ish match against the lightweight startup index (Architecture §4C). */
 function searchAlias(q) {
-  var needle = q.toLowerCase(), out = [];
+  var needles = [squashTerm(q)].concat(rootOrders(q)).filter(Boolean), out = [];
   Object.keys(state.aliasIndex || {}).forEach(function (k) {
-    if (k.toLowerCase().indexOf(needle) !== -1) out.push({ alias: k, groups: arr(state.aliasIndex[k]) });
+    var hay = squashTerm(k);
+    if (needles.some(function (n) { return hay.indexOf(n) !== -1; })) out.push({ alias: k, groups: arr(state.aliasIndex[k]) });
   });
   return out.sort(function (a, b) { return a.alias.length - b.alias.length; }).slice(0, 8);
 }
@@ -656,7 +671,9 @@ function renderSite() {
     state.searchTerm
       ? (arr((state.aliasIndex || {})[state.searchTerm]).length > 1
           ? 'The search term “' + state.searchTerm + '” is filed under more than one group, and the primary site decides which. Code the primary, not the biopsy site.'
-          : 'The primary site decides how “' + state.searchTerm + '” is coded, so it is asked first. Code the primary, not the biopsy site.')
+          : (state.siteRecordOnly
+              ? 'The primary site is recorded with “' + state.searchTerm + '”. Code the primary, not the biopsy site.'
+              : 'The primary site decides how “' + state.searchTerm + '” is coded, so it is asked first. Code the primary, not the biopsy site.'))
       : state.archetype.site_capture === false
       ? 'Site is fixed for this presentation — one tap confirms which system to record.'
       : (origin
@@ -667,12 +684,14 @@ function renderSite() {
          finds "Ovary and testis" and "femur" finds "Bone and joints". */
       return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes',
         find: regionOptions(c).map(function (r) { return r.label + ' ' + r.topography; }).join(' ') };
-    })));
+    })) + (state.siteRecordOnly && state.searchTerm
+      ? '<div class="escapes"><button class="escape escape--site" data-act="site-unstated">The file does not state the site</button></div>' : ''));
 }
 function renderSiteRegion() {
   var row = state.organSystem;
   return panel('Stage 1 · region', 'Where in ' + systemLabel(row).toLowerCase() + '?',
-    'This is the topography code the registry records. Pick the one the report supports; NOS is a legitimate answer where it does not say.',
+    'This is the topography code the registry records. ' + (row.region_hint ||
+      'Pick the one the report supports; NOS is a legitimate answer where it does not say.'),
     pick('site_region', regionOptions(row).map(function (o) {
       return { label: o.label, meta: o.topography };
     })));
@@ -2271,7 +2290,7 @@ function hopToGroup(before) {
   state.captured = caseFacts();
   state.markers = {}; state.workup = []; state.pending = null; state.pendingGrade = null;
   state.grade = null; state.entity = null; state.firedAlert = null; state.draft = {};
-  state.result = null; state.treeId = null; state.nodeId = null; state.searchTerm = null;
+  state.result = null; state.treeId = null; state.nodeId = null; state.searchTerm = null; state.siteRecordOnly = false;
   state.group = target; state.candidates = [target];
   /* "Suggested based on" keeps the evidence that led to the hop: the new
      group's entry point is the old one. */
@@ -2680,13 +2699,14 @@ function handleOption(act, el) {
        search term and group. The guided route starts without them, or its
        site step would become the express lane's. */
     case 'guided':
-      state.searchTerm = null; state.group = null; state.candidates = [];
+      state.searchTerm = null; state.siteRecordOnly = false; state.group = null; state.candidates = [];
       state.stage = 'archetype'; break;
     case 'query': state.query = el.value; break;
     case 'alias': {
       var hit = searchAlias(state.query)[i];
       pushTrail('Search', hit.alias, before);
       state.searchTerm = hit.alias;
+      state.siteRecordOnly = false;
       state.candidates = hit.groups.slice();
       state.group = null;
       /* The express lane bypasses the clinical scaffold and enters at the
@@ -2707,9 +2727,15 @@ function handleOption(act, el) {
       var only = hit.groups[0];
       if (!groupMeta(only).built) { state.group = only; return afterGroup(); }
       return loadGroupData(only).then(function () {
+        /* A second tap while this group's file was loading replaced the case. */
+        if (state.searchTerm !== hit.alias) return;
         if (groupReadsSite(only)) { state.stage = 'site'; return; }
-        state.group = only;
-        return afterGroup();
+        /* A group that reads no site is asked it too, and the answer is only
+           recorded: the term already fixes the group, so the site never narrows
+           or stops the case. Without it the output printed Topography as a dash
+           for most typed terms (registrar, 7 October 2026). */
+        state.siteRecordOnly = true;
+        state.stage = 'site';
       });
     }
     case 'archetype': {
@@ -2725,6 +2751,10 @@ function handleOption(act, el) {
       pushTrail('Organ system', systemLabel(row), before);
       return afterSystem();
     }
+    case 'site-unstated':
+      if (!state.siteRecordOnly || !state.searchTerm) return;
+      pushTrail('Topography', 'not stated in the file', before);
+      return enterRecordedGroup();
     case 'site_region': {
       var reg = regionOptions(state.organSystem)[i];
       state.captured.topography = reg.topography;
@@ -2881,7 +2911,8 @@ function handleOption(act, el) {
     case 'resolve': return resolveNode(n, before);
     case 'escape-nos': {
       var f = n.nos_fallback;
-      return advance({ morphology_code: f.code, discordant: true, upgrade_path: f.reason },
+      /* Name the behaviour, as fallbackTarget() does: without it entryFor() takes the first-listed entry of a behaviour-overloaded code. */
+      return advance({ morphology_code: f.code, behavior_code: f.behavior_code, discordant: true, upgrade_path: f.reason },
         n.step_label || 'Answer', 'Uncertain subtype — ' + f.name, before);
     }
     case 'escape-excluded':
@@ -3089,12 +3120,24 @@ function narrowByDiscriminator() {
 }
 /* The topography carries its own candidate list. Intersect; and if the
    intersection is empty, take the site's list rather than none — an empty
-   candidate set is a dead end, and the site is the more specific fact. */
+   candidate set is a dead end, and the site is the more specific fact.
+   A discriminator answer can protect groups from this step (`keep_on_site`):
+   a lymphoma arises in an organ whose own list does not name Group II, and the
+   clerk has already said the disease is nodal or extranodal, so the site must
+   not take the family away (WHO Rule D: the lymphoma is coded to its site of
+   origin). The protection only keeps a group that is already a candidate; it
+   never adds one. */
+function groupsKeptOnSite() {
+  var d = discriminator();
+  var rule = d && d.narrows && d.narrows[String(state.captured[d.variable])];
+  return arr(rule && rule.keep_on_site);
+}
 function narrowBySite() {
   var t = (state.topography.topography_lookup || {})[state.captured.topography];
   var site = t && t.candidate_groups;
   if (!site || !Array.isArray(site)) return;
-  var keep = state.candidates.filter(function (g) { return site.indexOf(g) !== -1; });
+  var kept = groupsKeptOnSite();
+  var keep = state.candidates.filter(function (g) { return site.indexOf(g) !== -1 || kept.indexOf(g) !== -1; });
   state.candidates = keep.length ? keep : site.slice();
 }
 
@@ -3161,6 +3204,7 @@ function groupReadsSite(g) {
    rather than from `candidates`, so a step back through the trail and a new
    site start from the full list. */
 function afterSearchSite() {
+  if (state.siteRecordOnly) return enterRecordedGroup();
   var t = (state.topography.topography_lookup || {})[state.captured.topography];
   var site = t && t.candidate_groups;
   var term = arr((state.aliasIndex || {})[state.searchTerm]);
@@ -3173,6 +3217,18 @@ function afterSearchSite() {
   var before = snapshot();
   state.group = state.candidates[0];
   pushTrail('Group', groupMeta(state.group).name || ('Group ' + state.group), before, true);
+  return afterGroup();
+}
+/* The express lane's record-only site step. The search term is filed under one
+   group, so the site decides nothing: it is recorded and the case enters that
+   group. A site the group's candidate list does not name is not a conflict. */
+function enterRecordedGroup() {
+  var groups = arr((state.aliasIndex || {})[state.searchTerm]);
+  /* Only a term filed under one group is entered without its site deciding. */
+  if (!state.siteRecordOnly || groups.length !== 1) return;
+  var only = groups[0];
+  state.candidates = [only];
+  state.group = only;
   return afterGroup();
 }
 /* A group whose trees are keyed to a fact the router has ALREADY captured
@@ -3236,7 +3292,7 @@ function enterGroup(group, treeId, entryNode) {
 
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
-  state.organSystem = null; state.candidates = []; state.searchTerm = null;
+  state.organSystem = null; state.candidates = []; state.searchTerm = null; state.siteRecordOnly = false;
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
