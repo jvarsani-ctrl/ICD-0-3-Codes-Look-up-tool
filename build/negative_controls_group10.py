@@ -64,8 +64,16 @@ def option(d, nid, starts):
 def run(check, data, alias_list=aliases, router_doc=router):
     if check in (bd.check_group10_no_pathology_codes, bd.check_brain_marker_cutoffs):
         return check(ctx_of(data))
+    if check is bd.check_group10_every_gonadal_carcinoma_has_a_route:
+        return check(ctx_of(data), LAYER1)
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
+        if check is bd.check_group10_picker_aliases_stay_unshared:
+            # rule 8 reads every other group's alias file as well as Group 10's
+            for other in (REPO / "data/aliases").glob("aliases_group_*.json"):
+                if other.name != "aliases_group_10.json":
+                    (tmp / "data/aliases").mkdir(parents=True, exist_ok=True)
+                    (tmp / "data/aliases" / other.name).write_text(other.read_text())
         docs = [("data/shared/presentation_router.json", router_doc),
                 ("data/shared/topography_codes.json", topography)]
         if alias_list is not None:
@@ -73,13 +81,16 @@ def run(check, data, alias_list=aliases, router_doc=router):
         for rel, doc in docs:
             (tmp / rel).parent.mkdir(parents=True, exist_ok=True)
             (tmp / rel).write_text(json.dumps(doc))
+        if check is bd.check_group10_picker_aliases_stay_unshared:
+            return check(ctx_of(data), tmp)
         return check(ctx_of(data), LAYER1, tmp)
 
 
 controls = []
 RULES = (bd.check_group10_codes_fit_site, bd.check_group10_no_pathology_codes,
          bd.check_group10_alias_terms_match_icdo32, bd.check_group10_subgroups_and_routing,
-         bd.check_brain_marker_cutoffs)
+         bd.check_group10_every_gonadal_carcinoma_has_a_route,
+         bd.check_group10_picker_aliases_stay_unshared, bd.check_brain_marker_cutoffs)
 
 # correct data first: every rule must pass
 for chk in RULES:
@@ -258,8 +269,27 @@ def flip_convention(d):
         b["range"] = {">25": ">=25", "<=25": "<25"}.get(b["range"], b["range"])
 
 
-def missing_is_normal(d):
-    node(d, "cn_hcg_csf")["bands"][2]["next_node"] = "cn_imaging_markers"
+def not_documented_to_report(d):
+    for b in node(d, "cn_hcg_csf")["bands"]:
+        if b["range"] == "not_documented":
+            b["next_node"] = "cn_markers_cutoff"
+
+
+def other_unit_is_normal(d):
+    for b in node(d, "cn_hcg_csf")["bands"]:
+        if b["range"] == "other_unit":
+            b["next_node"] = "cn_imaging_markers"
+
+
+def afp_csf_not_documented_to_report(d):
+    for b in node(d, "cn_afp_csf")["bands"]:
+        if b["range"] == "not_documented":
+            b["next_node"] = "cn_markers_cutoff"
+
+
+def no_other_unit_band(d):
+    n = node(d, "cn_afp_serum")
+    n["bands"] = [b for b in n["bands"] if b["range"] != "other_unit"]
 
 
 def at_pre_gates(d):
@@ -273,29 +303,72 @@ AFP_RAISED = "the ruling gives alpha-fetoprotein raised"
 HCG_RAISED = "the ruling gives beta human chorionic gonadotropin raised"
 REPORT = "the ruling gives the report question"
 ctl("R5-A cn_marker_age boundary 24 -> 12 months", BRAIN,
-    ["patient_age_months 23", "reaches cn_afp_raised", REPORT], recut("cn_marker_age", "24", "12"))
+    ["patient_age_months 23", REPORT], recut("cn_marker_age", "24", "12"))
 ctl("R5-B cn_afp_serum cut-off 25 -> 250 ng/mL", BRAIN,
     ["afp_serum_ng_ml 25.01", AFP_RAISED], recut("cn_afp_serum", "25", "250"))
 ctl("R5-C cn_afp_csf cut-off 25 -> 250 ng/mL", BRAIN,
-    ["afp_serum_ng_ml 25, afp_csf_ng_ml 25.01", AFP_RAISED], recut("cn_afp_csf", "25", "250"))
-ctl("R5-D cn_afp_csf_no_serum cut-off 25 -> 250 ng/mL", BRAIN,
-    ["afp_serum_ng_ml not entered, afp_csf_ng_ml 25.01", "reaches cn_markers", AFP_RAISED],
-    recut("cn_afp_csf_no_serum", "25", "250"))
+    ["afp_csf_ng_ml 25.01", AFP_RAISED], recut("cn_afp_csf", "25", "250"))
 ctl("R5-E cn_hcg_serum cut-off 50 -> 250 IU/L", BRAIN,
     ["hcg_serum_iu_l 50.01", HCG_RAISED], recut("cn_hcg_serum", "50", "250"))
 ctl("R5-F cn_hcg_csf cut-off 50 -> 250 IU/L", BRAIN,
     ["hcg_serum_iu_l 50, hcg_csf_iu_l 50.01", "reaches cn_imaging_markers", HCG_RAISED],
     recut("cn_hcg_csf", "50", "250"))
-ctl("R5-G cn_hcg_csf_no_serum cut-off 50 -> 250 IU/L", BRAIN,
-    ["hcg_serum_iu_l not entered, hcg_csf_iu_l 50.01", "reaches cn_markers", HCG_RAISED],
-    recut("cn_hcg_csf_no_serum", "50", "250"))
+ctl("R5-G cn_hcg_serum cut-off 50 -> 250 IU/L", BRAIN,
+    ["hcg_serum_iu_l 50.01", "reaches cn_imaging_markers", HCG_RAISED],
+    recut("cn_hcg_serum", "50", "250"))
 ctl("R5-H cn_afp_serum reads 'at or above' 25", BRAIN,
-    ["afp_serum_ng_ml 25, afp_csf_ng_ml not entered", "reaches cn_afp_raised", REPORT],
+    ["afp_serum_ng_ml 25,", "reaches cn_afp_raised", "the ruling gives"],
     flip_convention)
-ctl("R5-I cn_hcg_csf reads a missing value as normal", BRAIN,
-    ["hcg_csf_iu_l not entered", "reaches cn_imaging_markers", REPORT], missing_is_normal)
+ctl("R5-I cn_hcg_csf sends 'not documented' to the report question (the rule before 7 October 2026)", BRAIN,
+    ["hcg_csf_iu_l not entered", "reaches cn_markers_cutoff", "the ruling gives neither"], not_documented_to_report)
+ctl("R5-K cn_hcg_csf reads 'in another unit or only described' as not raised", BRAIN,
+    ["hcg_csf_iu_l in another unit or only described", "reaches cn_imaging_markers", REPORT],
+    other_unit_is_normal)
+ctl("R5-L cn_afp_csf sends 'not documented' to the report question", BRAIN,
+    ["afp_csf_ng_ml not entered", "reaches cn_markers_cutoff", "the ruling gives"],
+    afp_csf_not_documented_to_report)
+ctl("R5-M cn_afp_serum has no 'in another unit' band", BRAIN,
+    ["cn_afp_serum has no `other_unit` band"], no_other_unit_band)
+# ---- rule 7 (the gonadal carcinoma picker) and rule 8 (its aliases) -----------------------
+R7 = bd.check_group10_every_gonadal_carcinoma_has_a_route
+R8 = bd.check_group10_picker_aliases_stay_unshared
+ADENOSQ = option(base, "ov_carcinoma_other", "Adenosquamous carcinoma")["morphology_code"]
+
+
+def r7_drop_option(d):
+    n = node(d, "ov_carcinoma_other")
+    n["options"] = [o for o in n["options"] if o["label"] != "Adenosquamous carcinoma"]
+
+
+def r7_obsolete_option(d):
+    """An option that records 8130/3, whose Preferred term ICD-O-3.2 marks [obs] (design D11)."""
+    node(d, "ov_carcinoma_other")["options"].append(
+        {"label": "Papillary urothelial carcinoma", "morphology_code": "8130", "behavior_code": "3",
+         "basis_of_diagnosis": 7, "reason": "Control."})
+
+
+def r7_invented_search_term(d):
+    for o in node(d, "ov_carcinoma_other")["options"]:
+        if o.get("search_terms"):
+            o["search_terms"] = o["search_terms"] + ["Invented name for a tumour"]
+            return
+
+
+ctl("R7-A ov_carcinoma_other loses the option for %s/3" % ADENOSQ, R7,
+    ["GROUP 10 RULE 7", "g10_ovary offers no option that records", ADENOSQ], r7_drop_option)
+ctl("R7-B ov_carcinoma_other offers 8130/3, an [obs] Preferred term", R7,
+    ["GROUP 10 RULE 7", "marked [obs]", "8130/3"], r7_obsolete_option)
+ctl("R7-C an option's search term is no ICD-O-3.2 term of its code", R7,
+    ["GROUP 10 RULE 7", "Invented name for a tumour", "not a live ICD-O-3.2 Synonym or Related term"],
+    r7_invented_search_term)
+ctl("R8-A a Group 10 alias on a picker-only code is also a Group VI alias", R8,
+    ["GROUP 10 RULE 8", "Medullary carcinoma, NOS", "Group 6"],
+    alias_add={"alias": "Medullary carcinoma, NOS", "maps_to_morphology_codes": ["8510"]})
+ctl("R8-B a Group 10 alias on a picker-only code is also a Group III alias", R8,
+    ["GROUP 10 RULE 8", "ACTH-producing tumor", "Group 3"],
+    alias_add={"alias": "ACTH-producing tumor", "maps_to_morphology_codes": ["8158"]})
 ctl("R5-J the brain tree at %s, before the gates" % PRE_GATES, BRAIN,
-    ["patient_age_months 24", "reaches cn_markers", AFP_RAISED], at_pre_gates)
+    ["patient_age_months 24", "reaches cn_markers", "the ruling gives neither"], at_pre_gates)
 
 print("Rule 3 alias list: %s" % ALIAS_SOURCE)
 wrong = caught = probes = 0

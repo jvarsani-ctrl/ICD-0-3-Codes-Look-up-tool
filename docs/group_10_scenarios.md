@@ -31,7 +31,7 @@ The cases are synthetic.
    Then: Start new case -> type "Burkitt lymphoma" in the search box -> Burkitt lymphoma -> Group II opens at "What does the lesion look like on the report (one tap)?"
 
 9. **Testicular yolk sac tumour in an infant**
-   Click: Start guided entry -> Mass / swelling (solid tumour) -> Soft tissue -> Ovary, testis and sacrococcygeal region -> Descended testis (Scrotal testis) -> A histology report — biopsy or resection -> Yolk sac tumour, prepubertal or postpubertal type -> 9071 Yolk sac tumor, NOS
+   Click: Start guided entry -> Mass / swelling (solid tumour) -> Soft tissue -> Ovary, testis and sacrococcygeal region -> Descended testis (Scrotal testis) -> A histology report — biopsy or resection -> Yolk sac tumour, prepubertal or postpubertal type (or infantile embryonal carcinoma) -> 9071 Yolk sac tumor, NOS
 
 10. **Testicular embryonal carcinoma with teratoma**
     Click: Start guided entry -> Mass / swelling (solid tumour) -> Soft tissue -> Ovary, testis and sacrococcygeal region -> Descended testis (Scrotal testis) -> A histology report — biopsy or resection -> Mixed germ cell tumour — more than one germ cell component -> Embryonal carcinoma and teratoma only -> 9081 Teratocarcinoma

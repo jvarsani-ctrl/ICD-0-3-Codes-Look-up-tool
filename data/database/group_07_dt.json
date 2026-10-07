@@ -3116,7 +3116,8 @@
               "refer_group": 1,
               "reason": "Leukaemias are ICCC-3 Group I. Acute megakaryoblastic leukaemia is listed among the tumours that present as a liver mass in children (López-Terrada 2025, Table 1, p. 24).",
               "captures": {
-                "histology_pattern": "leukaemia"
+                "histology_pattern": "leukaemia",
+                "topography": "C42.1"
               }
             },
             {
@@ -3750,7 +3751,8 @@
               "reason": "Neuroblastoma and other peripheral nervous cell tumours are ICCC-3 Group IV. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "neuroblastoma"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Nephroblastoma (Wilms tumour), or another kidney tumour",
@@ -3758,7 +3760,8 @@
               "reason": "Renal tumours are ICCC-3 Group VI. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "renal"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "A germ cell tumour, or another tumour of the ovary or testis",
@@ -3766,7 +3769,8 @@
               "reason": "Germ cell tumours and gonadal tumours are ICCC-3 Group X. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "germ_cell"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Retinoblastoma",
@@ -3774,7 +3778,8 @@
               "reason": "Retinoblastoma is ICCC-3 Group V. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "retinoblastoma"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "A tumour of the brain or spinal cord",
@@ -3782,7 +3787,8 @@
               "reason": "Central nervous system tumours are ICCC-3 Group III. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "cns"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "A soft tissue sarcoma, including rhabdomyosarcoma",
@@ -3790,7 +3796,8 @@
               "reason": "Soft tissue sarcomas are ICCC-3 Group IX. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "soft_tissue_sarcoma"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "A bone tumour",
@@ -3798,7 +3805,8 @@
               "reason": "Malignant bone tumours are ICCC-3 Group VIII. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "bone"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Lymphoma",
@@ -3806,14 +3814,16 @@
               "reason": "Lymphomas are ICCC-3 Group II.",
               "captures": {
                 "metastasis_primary": "lymphoma"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Leukaemia",
               "refer_group": 1,
               "reason": "Leukaemias are ICCC-3 Group I.",
               "captures": {
-                "metastasis_primary": "leukaemia"
+                "metastasis_primary": "leukaemia",
+                "topography": "C42.1"
               }
             },
             {
@@ -3822,14 +3832,16 @@
               "reason": "Carcinomas of other organs and melanomas are ICCC-3 Group XI. Code the case at its primary.",
               "captures": {
                 "metastasis_primary": "carcinoma_or_melanoma"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "The primary is not known and has not been found",
               "refer_group": 12,
               "reason": "A deposit with no identified primary belongs in ICCC-3 Group XII, other and unspecified malignant neoplasms. Coding it here would file a metastasis as a liver primary.",
               "captures": {
-                "metastasis_primary": "unknown"
+                "metastasis_primary": "unknown",
+                "topography": "C80.9"
               }
             }
           ],

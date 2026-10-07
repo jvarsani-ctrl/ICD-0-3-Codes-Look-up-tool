@@ -438,6 +438,53 @@
       "note": "Group 4's sympathoadrenal tree (g4_sympathoadrenal) includes the mediastinum for posterior mediastinal/paraspinal neuroblastoma; an anterior mediastinal mass in a child is more commonly lymphoma (group 2). The compartment alone does not decide, so both groups are listed."
     },
     {
+      "organ": "lung",
+      "topography_range": "C34",
+      "codes": [
+        "C34.0",
+        "C34.1",
+        "C34.2",
+        "C34.3",
+        "C34.8",
+        "C34.9"
+      ],
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "label": "Lung and bronchus",
+      "note": "Added 7 October 2026 (audit of Group X, F-A-05). ICD-O-3.2 codes an immature teratoma of the lung, thymus or thyroid 9080/1 and elsewhere 9080/3, so the site has to be recordable for Group X to record the pair. ICCC-2017 holds carcinomas of this organ in Group XI (XIf4, carcinomas of lung), which is not built; Group 11 is listed so the family question is complete when it is."
+    },
+    {
+      "organ": "thymus",
+      "topography_range": "C37.9",
+      "codes": [
+        "C37.9"
+      ],
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "label": "Thymus",
+      "note": "Added 7 October 2026 (audit of Group X, F-A-05). ICD-O-3.2 codes an immature teratoma of the lung, thymus or thyroid 9080/1 and elsewhere 9080/3, so the site has to be recordable for Group X to record the pair. ICCC-2017 holds carcinomas of this organ in Group XI (XIf5, carcinomas of thymus), which is not built; Group 11 is listed so the family question is complete when it is."
+    },
+    {
+      "organ": "thyroid",
+      "topography_range": "C73.9",
+      "codes": [
+        "C73.9"
+      ],
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "label": "Thyroid gland",
+      "note": "Added 7 October 2026 (audit of Group X, F-A-05). ICD-O-3.2 codes an immature teratoma of the lung, thymus or thyroid 9080/1 and elsewhere 9080/3, so the site has to be recordable for Group X to record the pair. ICCC-2017 holds carcinomas of this organ in Group XI (XIb, thyroid carcinomas), which is not built; Group 11 is listed so the family question is complete when it is."
+    },
+    {
       "organ": "head_neck_paraganglia",
       "topography_range": "C75.4-C75.5",
       "codes": [
@@ -475,6 +522,90 @@
     }
   ],
   "topography_lookup": {
+    "C34.0": {
+      "code": "C34.0",
+      "label": "Main bronchus (Carina, Hilus of lung)",
+      "redcap_code": "340",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C34.1": {
+      "code": "C34.1",
+      "label": "Upper lobe, lung (Lingula of lung, Upper lobe, bronchus)",
+      "redcap_code": "341",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C34.2": {
+      "code": "C34.2",
+      "label": "Middle lobe, lung (Middle lobe, bronchus)",
+      "redcap_code": "342",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C34.3": {
+      "code": "C34.3",
+      "label": "Lower lobe, lung (Lower lobe, bronchus)",
+      "redcap_code": "343",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C34.8": {
+      "code": "C34.8",
+      "label": "Overlapping lesion of lung",
+      "redcap_code": "348",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C34.9": {
+      "code": "C34.9",
+      "label": "Lung, NOS (Bronchus, NOS, Bronchiole, Bronchogenic, Pulmonary, NOS)",
+      "redcap_code": "349",
+      "coarse_organ": "lung",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C37.9": {
+      "code": "C37.9",
+      "label": "Thymus",
+      "redcap_code": "379",
+      "coarse_organ": "thymus",
+      "candidate_groups": [
+        2,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C42.0": {
       "code": "C42.0",
       "label": "Blood",
@@ -1243,6 +1374,18 @@
       "coarse_organ": "biliary_extrahepatic",
       "candidate_groups": [
         9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C73.9": {
+      "code": "C73.9",
+      "label": "Thyroid gland (Thyroid, NOS, Thyroglossal duct)",
+      "redcap_code": "739",
+      "coarse_organ": "thyroid",
+      "candidate_groups": [
+        2,
+        10,
         11
       ],
       "candidate_groups_advisory": true

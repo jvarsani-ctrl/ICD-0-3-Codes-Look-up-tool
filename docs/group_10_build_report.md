@@ -219,8 +219,10 @@ codes to take Group IX's lookup additions.
 - **B1. Decided 6 October 2026, option (a).** Group 10 is listed at the 24 Xa sites and Group 3 on
   "Mass / swelling", so `g10_cns` is reached from every presentation except "Organ-functional
   sign" and from the search box. Open under B1: Group III's three gaps. The five generic search
-  terms in §7 item 4 are closed. The germ cell referrals Groups VII, VIII and IX make from the liver,
-  bone and soft tissue still lead nowhere (B2).
+  terms in §7 item 4 are closed. A germ cell referral from Groups VII, VIII and IX continues in
+  Group X since the hop ruling of 6 October 2026, and the search box enters Group X at every site
+  its routing rules name since 7 October 2026. The front door still omits Group X at the liver,
+  bone and soft tissue until B2 is decided.
 - **A1. Juvenile granulosa cell tumour is not registered** — the commonest paediatric sex
   cord–stromal tumour, excluded by ICD-O-3.2's behaviour.
 - **A2–A3. Germ cell tumour of unnamed type and the marker route code to `9064/3`, which prints as

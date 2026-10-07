@@ -155,7 +155,8 @@ def checklist_markers(trees: list) -> dict:
                     markers.append(m)
     return out
 
-OFF_TREE_NOTE = "In the inventory, not on the tree: reachable by search where aliased."
+OFF_TREE_NOTE = ("In the inventory, not on the tree: ICD-O-3.2 marks the preferred term of this "
+                 "code [obs], and an obsolete term stays off every screen (design D11).")
 MOLE_NOTE = (
     "Inside ICCC-2017 range 98 (Xa5, behaviours 0-1,3). No central nervous system entity "
     "lives at this behaviour: Louis 2021 Table 1, p. 1235, lists choriocarcinoma and no "
@@ -318,8 +319,8 @@ DECISIONS: dict[str, tuple] = {
     "8020/3": d14("undifferentiated carcinoma"),
     "8140/3": d14("adenocarcinoma, type not stated"),
     "8010/3": ("D14",
-               "Carcinoma, type not stated: offered in the ovary tree, and the only carcinoma "
-               "the testis tree offers."),
+               "Carcinoma, type not stated: offered in the ovary tree and in the testis tree, "
+               "beside the gonadal carcinoma picker that offers the other carcinomas."),
     "8240/3": ("D14",
                "Offered in the ovary and testis trees for a report of a neuroendocrine or "
                "carcinoid tumour: ICCC-2017 range 113 places 8221-8241 and 8244-8246 at the "
@@ -461,14 +462,23 @@ def routing(subs: dict, default: str, codes: list, entering: set, germ_cell_site
     some lookup code falls outside the pair's site ranges: what the output shows there, and
     whether Group X can be entered there."""
     rules = []
+    # A lookup code outside every Group X germ cell site range (a lymph node, C77.x) is reached
+    # only by a referral hop, and the router sends it to the extragonadal tree. ICCC-2017 places
+    # the pair in no subgroup there, so the line names the extragonadal subgroup, Xb, where the
+    # pair has one, in the family of the tree the case is in, and not the gonadal default
+    # (audit of Group X, 7 October 2026, F-A-04, F-H-05, F-H-10).
+    outside_every = {c for c in codes if not covers(germ_cell_sites, topo3(c))}
     for sid, sub in subs.items():
         if sid == default:
             continue
-        listed = [c for c in codes if covers(sub["topography"], topo3(c))]
+        listed = [c for c in codes
+                  if covers(sub["topography"], topo3(c))
+                  or (sid[:2] == "Xb" and c in outside_every)]
         if not listed:
             raise GenerationError("subgroup %s covers no code in the topography lookup" % sid)
         rules.append({"topography_in": listed, "iccc3_subgroup_id": sid,
                       "iccc3_subgroup_name": sub["name"]})
+    xb = next((r for r in rules if r["iccc3_subgroup_id"][:2] == "Xb"), None)
 
     def ranges(sid):
         return ", ".join(t.replace("–", "-") for t in subs[sid]["topography"])
@@ -483,20 +493,27 @@ def routing(subs: dict, default: str, codes: list, entering: set, germ_cell_site
             % (default, FAMILY_WHERE[default[:2]], ranges(default), named))
     uncovered = [c for c in codes
                  if not any(covers(sub["topography"], topo3(c)) for sub in subs.values())]
-    if uncovered:
+    # What the output shows at the uncovered codes: Xb at those outside every range when the pair
+    # has an Xb rule, the default at the rest.
+    for there, shows in (([c for c in uncovered if xb and c in outside_every],
+                          xb["iccc3_subgroup_id"] if xb else None),
+                         ([c for c in uncovered if not (xb and c in outside_every)], default)):
+        if not there:
+            continue
         outside = ("outside every Group X germ cell site range"
-                   if not any(covers(germ_cell_sites, topo3(c)) for c in uncovered)
+                   if not any(covers(germ_cell_sites, topo3(c)) for c in there)
                    else "outside this code's site ranges")
-        one = len(uncovered) == 1
-        at = (uncovered[0] if one else
-              "the %d lookup codes %s (e.g. %s)" % (len(uncovered), outside, uncovered[0]))
+        one = len(there) == 1
+        at = (there[0] if one else
+              "the %d lookup codes %s (e.g. %s)" % (len(there), outside, there[0]))
         text += (" At %s%s, ICCC-2017 places this code in no Group X subgroup and the output "
-                 "shows the default %s"
-                 % (at, (", " + outside) if one else "", default))
-        if not set(uncovered) & entering:
-            text += ("; Group X is not entered at %s, because %s candidate groups do not "
-                     "list 10." % (uncovered[0] if one else "any of them",
-                                   "its" if one else "their"))
+                 "shows %s%s"
+                 % (at, (", " + outside) if one else "",
+                    shows, " (the extragonadal subgroup, the family of the tree the router "
+                    "sends the case to)" if shows != default else " (the default)"))
+        if not set(there) & entering:
+            text += ("; Group X is not entered at %s by the front door or the search, "
+                     "only by a referral hop." % (there[0] if one else "any of them"))
         else:
             text += "."
     return rules, text
@@ -619,7 +636,8 @@ def build_entry(recs: list, obs: dict, codes: list, pairs_by_tree: dict, enterin
                 name, beh,
                 " (%s term(s) on the stem carry [obs])" % ", ".join(obs_levels)
                 if obs_levels else ""),
-            OFF_TREE_NOTE)
+            ("Emitted by %s (the gonadal carcinoma picker, registrar's design of 7 October "
+             "2026)." % join_and(trees)) if trees else OFF_TREE_NOTE)
 
     # Group 3's 9380 entry puts the rule list straight after topography_routing_note.
     if rules is not None:
@@ -651,9 +669,17 @@ def build_entries(payload: dict, obs: dict, codes: list, entering: set, trees: l
     if annotated - inventory:
         problems.append("annotated pair(s) absent from the inventory: %s"
                         % ", ".join(sorted(annotated - inventory)))
-    if emitted - set(DECISIONS):
+    # The gonadal carcinoma picker (registrar, 7 October 2026) emits every Xd code the other nodes
+    # do not offer, generated from the inventory, so its pairs carry the templated note and need
+    # no hand-written decision.
+    picker = {key(code, beh)
+              for t in trees
+              for code, beh, _from_checklist, _holder
+              in _emissions([n for n in t.get("nodes") or []
+                             if str(n.get("node_id", "")).endswith("carcinoma_other")])}
+    if emitted - set(DECISIONS) - picker:
         problems.append("emitted pair(s) with no DECISIONS entry: %s"
-                        % ", ".join(sorted(emitted - set(DECISIONS))))
+                        % ", ".join(sorted(emitted - set(DECISIONS) - picker)))
     if set(DECISIONS) - emitted:
         problems.append("DECISIONS entry for pair(s) no tree emits: %s"
                         % ", ".join(sorted(set(DECISIONS) - emitted)))

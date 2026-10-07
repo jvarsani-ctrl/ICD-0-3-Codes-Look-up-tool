@@ -4115,57 +4115,72 @@
             {
               "site": "Leukaemia or myeloid sarcoma",
               "refer_group": 1,
-              "reason": "Code the leukaemia from the Group I tree. The intracranial deposit is not a separate primary."
+              "reason": "Code the leukaemia from the Group I tree. The intracranial deposit is not a separate primary.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "site": "Lymphoma",
               "refer_group": 2,
-              "reason": "Code the lymphoma from the Group II tree."
+              "reason": "Code the lymphoma from the Group II tree.",
+              "recapture_site": true
             },
             {
               "site": "Neuroblastoma",
               "refer_group": 4,
-              "reason": "Code the neuroblastoma at its primary site from the Group IV tree."
+              "reason": "Code the neuroblastoma at its primary site from the Group IV tree.",
+              "recapture_site": true
             },
             {
               "site": "Retinoblastoma",
               "refer_group": 5,
-              "reason": "Code the retinoblastoma from the Group V tree. Intracranial spread does not create a new primary."
+              "reason": "Code the retinoblastoma from the Group V tree. Intracranial spread does not create a new primary.",
+              "recapture_site": true
             },
             {
               "site": "Renal tumour",
               "refer_group": 6,
-              "reason": "Code the renal primary from the Group VI tree."
+              "reason": "Code the renal primary from the Group VI tree.",
+              "recapture_site": true
             },
             {
               "site": "Hepatic tumour",
               "refer_group": 7,
-              "reason": "Code the hepatic primary from the Group VII tree."
+              "reason": "Code the hepatic primary from the Group VII tree.",
+              "recapture_site": true
             },
             {
               "site": "Bone sarcoma",
               "refer_group": 8,
-              "reason": "Code the bone primary from the Group VIII tree."
+              "reason": "Code the bone primary from the Group VIII tree.",
+              "recapture_site": true
             },
             {
               "site": "Soft tissue sarcoma",
               "refer_group": 9,
-              "reason": "Code the soft-tissue primary from the Group IX tree."
+              "reason": "Code the soft-tissue primary from the Group IX tree.",
+              "recapture_site": true
             },
             {
               "site": "Extracranial germ cell tumour",
               "refer_group": 10,
-              "reason": "Code the germ cell primary from the Group X tree."
+              "reason": "Code the germ cell primary from the Group X tree.",
+              "recapture_site": true
             },
             {
               "site": "Carcinoma or melanoma",
               "refer_group": 11,
-              "reason": "Code the epithelial or melanocytic primary from the Group XI tree."
+              "reason": "Code the epithelial or melanocytic primary from the Group XI tree.",
+              "recapture_site": true
             },
             {
               "site": "The primary is not known and has not been found",
               "refer_group": 12,
-              "reason": "A deposit with no identified primary belongs in ICCC-3 Group XII, other and unspecified malignant neoplasms. It is not a Group III tumour: coding it here would file a metastasis as a primary CNS neoplasm and inflate this group's incidence."
+              "reason": "A deposit with no identified primary belongs in ICCC-3 Group XII, other and unspecified malignant neoplasms. It is not a Group III tumour: coding it here would file a metastasis as a primary CNS neoplasm and inflate this group's incidence.",
+              "captures": {
+                "topography": "C80.9"
+              }
             }
           ],
           "nos_fallback": null
@@ -8524,6 +8539,7 @@
               "label": "An extracranial primary tumour is documented and this brain lesion is a metastasis from it",
               "refer_group": 12,
               "reason": "This is a metastasis, not a primary intracranial neoplasm. Group III codes primary intracranial and intraspinal tumours only. Go back to Stage 1 and code the PRIMARY tumour in the group that owns it — the brain deposit is not coded separately. Only where no primary is ever established does the case stay outside Group III, as 8000/3 at C80.9. The tool must never emit 8000/6 or 8000/9: both fall outside this group's 0-1,3 behaviour declaration and a case carrying them leaves Group III silently.",
+              "recapture_site": true,
               "captures": {
                 "workup_status": "incomplete"
               }
@@ -9139,6 +9155,7 @@
               "descriptor": "Small round blue cell tumour centred on SKULL BONE or dura, invading the brain secondarily — not a parenchymal tumour",
               "refer_group": 8,
               "reason": "A peripheral primitive neuroectodermal / Ewing sarcoma family tumour arising in bone belongs in ICCC-3 Group VIII (malignant bone tumours), subgroup VIIIc1, not in Group III. Code it from the Group VIII tree. Group III's 9473/3 is the CNS embryonal tumour code and applies only to a tumour arising in the brain itself.",
+              "recapture_site": true,
               "captures": {
                 "tumour_origin": "bone"
               }
@@ -9147,6 +9164,7 @@
               "descriptor": "Small round blue cell tumour centred on EXTRADURAL SOFT TISSUE or scalp, invading the skull and brain secondarily",
               "refer_group": 9,
               "reason": "A peripheral primitive neuroectodermal / Ewing sarcoma family tumour arising in soft tissue belongs in ICCC-3 Group IX (soft tissue sarcomas), subgroup IXd1, not in Group III. Code it from the Group IX tree.",
+              "recapture_site": true,
               "captures": {
                 "tumour_origin": "soft_tissue"
               }
@@ -9155,6 +9173,7 @@
               "descriptor": "Clearly non-neuroepithelial — gland-forming or keratinising carcinoma, melanoma, or another morphology foreign to the CNS",
               "refer_group": 12,
               "reason": "This is a metastasis, not a primary intracranial neoplasm. Go back to Stage 1 and code the PRIMARY tumour in the group that owns it. Only where no primary is ever established does the case sit outside Group III as 8000/3 at C80.9. Never emit 8000/6 or 8000/9 — both fall outside this group's 0-1,3 behaviour declaration.",
+              "recapture_site": true,
               "captures": {
                 "morphological_family": "metastatic"
               }
@@ -21576,17 +21595,20 @@
             {
               "descriptor": "Paraspinal, posterior mediastinal or retroperitoneal mass invading the canal — small round blue cell or neuroblastic morphology",
               "refer_group": 4,
-              "reason": "A paraspinal neuroblastic tumour invading the spinal canal is a sympathetic nervous system tumour, ICCC-3 Group IV, and is coded from the Group IV tree at its paraspinal primary site. Canal invasion is extension, not a second primary."
+              "reason": "A paraspinal neuroblastic tumour invading the spinal canal is a sympathetic nervous system tumour, ICCC-3 Group IV, and is coded from the Group IV tree at its paraspinal primary site. Canal invasion is extension, not a second primary.",
+              "recapture_site": true
             },
             {
               "descriptor": "Paraspinal soft-tissue sarcoma invading the canal — rhabdomyosarcoma, extraosseous Ewing sarcoma or similar",
               "refer_group": 9,
-              "reason": "A soft-tissue sarcoma that invades the spinal canal stays a soft-tissue sarcoma, ICCC-3 Group IX. Code it from the Group IX tree at the soft-tissue primary site."
+              "reason": "A soft-tissue sarcoma that invades the spinal canal stays a soft-tissue sarcoma, ICCC-3 Group IX. Code it from the Group IX tree at the soft-tissue primary site.",
+              "recapture_site": true
             },
             {
               "descriptor": "Vertebral bone primary invading the canal — Ewing sarcoma of bone, osteosarcoma, or a bone lesion of Langerhans cell histiocytosis",
               "refer_group": 8,
-              "reason": "A malignant bone tumour of a vertebra belongs to ICCC-3 Group VIII and is coded from the Group VIII tree at the vertebral site. Record the bone versus soft-tissue origin explicitly — it is what separates Group VIII from Group IX for Ewing sarcoma."
+              "reason": "A malignant bone tumour of a vertebra belongs to ICCC-3 Group VIII and is coded from the Group VIII tree at the vertebral site. Record the bone versus soft-tissue origin explicitly — it is what separates Group VIII from Group IX for Ewing sarcoma.",
+              "recapture_site": true
             },
             {
               "descriptor": "Intraspinal or epidural lymphoma — lymphomatous infiltrate on the biopsy",
@@ -24013,7 +24035,8 @@
             {
               "label": "Carcinoma, small round blue cell tumour or another non-meningothelial malignancy - a secondary (metastatic) deposit",
               "refer_group": 12,
-              "reason": "Metastatic disease is coded to the PRIMARY, not to the biopsy site. Go back to Stage 1 and enter the primary tumour's own topography; the ICCC-3 group then follows the primary, whatever it is. Group XII is named here only because that is where a secondary deposit with no primary ever established is coded - it is not a claim about this case's primary. Do not emit a meningioma code and do not mark the case non-reportable: it is a real cancer in the wrong file."
+              "reason": "Metastatic disease is coded to the PRIMARY, not to the biopsy site. Go back to Stage 1 and enter the primary tumour's own topography; the ICCC-3 group then follows the primary, whatever it is. Group XII is named here only because that is where a secondary deposit with no primary ever established is coded - it is not a claim about this case's primary. Do not emit a meningioma code and do not mark the case non-reportable: it is a real cancer in the wrong file.",
+              "recapture_site": true
             },
             {
               "label": "The lesion is intra-axial - within the brain or spinal cord parenchyma, not dural and not leptomeningeal",
@@ -29287,7 +29310,8 @@
               "reason": "Code the neuroblastoma from the ICCC-3 Group IV tree at its own topography. The CNS deposit is not a separate registration.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Kidney",
@@ -29295,7 +29319,8 @@
               "reason": "Code the renal tumour from the ICCC-3 Group VI tree.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Liver",
@@ -29303,7 +29328,8 @@
               "reason": "Code the hepatic tumour from the ICCC-3 Group VII tree.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Bone",
@@ -29311,7 +29337,8 @@
               "reason": "Code the bone tumour from the ICCC-3 Group VIII tree.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Soft tissue",
@@ -29319,7 +29346,8 @@
               "reason": "Code the soft tissue sarcoma from the ICCC-3 Group IX tree.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Gonad, mediastinum or sacrococcygeal region - germ cell tumour",
@@ -29327,7 +29355,8 @@
               "reason": "Code the germ cell tumour from the ICCC-3 Group X tree. Where alpha-fetoprotein or beta-hCG is elevated this is the destination whether or not a primary mass has been found.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Eye - retinoblastoma",
@@ -29335,14 +29364,16 @@
               "reason": "Code the retinoblastoma from the ICCC-3 Group V tree. Trilateral disease is recorded there, not as a second primary here.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Marrow or blood - leukaemia",
               "refer_group": 1,
               "reason": "CNS involvement by leukaemia is part of the leukaemia, not a CNS tumour. Code it from the ICCC-3 Group I tree.",
               "captures": {
-                "metastatic_deposit": "y"
+                "metastatic_deposit": "y",
+                "topography": "C42.1"
               }
             },
             {
@@ -29351,7 +29382,8 @@
               "reason": "Code the lymphoma from the ICCC-3 Group II tree. A primary CNS lymphoma is also Group II, not Group III.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Thyroid, nasopharynx, skin melanoma or another carcinoma",
@@ -29359,7 +29391,8 @@
               "reason": "Code the carcinoma or melanoma from the ICCC-3 Group XI tree.",
               "captures": {
                 "metastatic_deposit": "y"
-              }
+              },
+              "recapture_site": true
             },
             {
               "label": "Extracranial disease is documented but no primary has been found anywhere",

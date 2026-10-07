@@ -2400,6 +2400,18 @@ def check_refer_terminals(ctx: DTContext):
                                   "no explanation for why the case leaves this group "
                                   "(app.js falls back to coding_note)" % label))
 
+            # `recapture_site` makes the hop ask for the primary's site in place of carrying the
+            # one on the case. Only true means anything, and a branch that sets a topography
+            # itself cannot also ask for one: the engine would delete what the branch just set.
+            if "recapture_site" in holder:
+                if holder["recapture_site"] is not True:
+                    out.append((FAIL, "refer terminal %s: recapture_site must be true or "
+                                      "absent, got %r" % (label, holder["recapture_site"])))
+                elif "topography" in (holder.get("captures") or {}):
+                    out.append((FAIL, "refer terminal %s sets a topography and also asks for "
+                                      "the primary's site (recapture_site), so the hop would "
+                                      "delete the topography the branch sets" % label))
+
             if "refer_code" in holder:
                 rc = holder.get("refer_code")
                 rcs = as_code(rc)
@@ -9761,6 +9773,377 @@ def check_group10_codes_fit_site(ctx: DTContext, layer1: Path, repo: Path):
     return out
 
 
+# A referral that says the tumour is a metastasis or a deposit, or tells the clerk to code the
+# primary, is about a site that is not the case's. The words are a tripwire: they find a branch
+# whose own text says so, in any node, so a deposit node renamed or a branch added elsewhere is
+# still found. A branch the words miss is found by its node id (deposit, metastasis).
+# Nodes whose referrals to Group I concern a myeloid sarcoma, the one leukaemia WHO Rule E codes to
+# the site it arose in. The exemption needs the node and the words together: the words alone would
+# let a branch that says "this is not a myeloid sarcoma" past the check.
+MYELOID_SARCOMA_NODES = {"g2hist_minimum_panel", "g2hist_mhn_nos_review", "sp_extrinsic_gate",
+                         "ov_other", "ts_other"}
+
+DEPOSIT_TRIPWIRE = re.compile(
+    r"metastat|deposit|go back to stage 1|code the (?:primary|case at its primary)"
+    r"|primary (?:tumou?r )?from the group|at (?:its|the) [\w-]+ primary site|at the vertebral site", re.I)
+
+
+def check_deposit_referrals(ctx: DTContext):
+    """
+    A metastatic deposit is coded at its primary (WHO section 4.3.2, Rules A and H), and the
+    site the tool holds on such a case is the deposit's. Every referral out of a deposit
+    therefore does not carry that site. It asks for the primary's (`recapture_site`); for a
+    leukaemia it sets the bone marrow (C42.1, Rule E); where no primary was found it sets C80.9
+    (WHO section 4.2.2, an unknown primary).
+
+    A referral is a deposit referral when its node id names a deposit or a metastasis, or its
+    own label or reason says it is one (DEPOSIT_TRIPWIRE). Both are heuristics: a deposit
+    referral whose node and text say neither is not found, and the gate's sweep of every
+    `recapture_site` branch is what proves the ones that are declared. Found by the audit of
+    Group X on 7 October 2026 (F-A-01, F-D-01) and by the review of that fix, which found a
+    Group VIII neuroblastoma referral that said "metastatic" in a node with neither word in its id.
+    """
+    out, checked = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        by_id = bool(re.search(r"deposit|metast", node_id))
+        for holder, where in walk_dicts(node):
+            if not is_refer_branch(holder):
+                continue
+            text = " ".join(str(holder.get(k) or "") for k in ("label", "finding", "reason"))
+            if not (by_id or DEPOSIT_TRIPWIRE.search(text)):
+                continue
+            grp = holder.get("refer_group")
+            checked += 1
+            captured = (holder.get("captures") or {}).get("topography")
+            at = "%s (%s) %r -> Group %s" % (node_id, where or "node level",
+                                             holder.get("label") or holder.get("finding") or "", grp)
+            if holder.get("recapture_site") is True:
+                continue
+            if grp == 1:
+                # A myeloid sarcoma is the one leukaemia coded to the site it arose in (Rule E).
+                if captured != "C42.1" and not (
+                        node_id in MYELOID_SARCOMA_NODES and "myeloid sarcoma" in text.lower()):
+                    out.append((FAIL, "%s: a leukaemia is recorded at the bone marrow, C42.1 "
+                                      "(WHO Rule E), and this referral sets %r" % (at, captured)))
+            elif grp == 12:
+                if captured != "C80.9":
+                    out.append((FAIL, "%s: a deposit whose primary is not known is recorded at "
+                                      "C80.9 (WHO section 4.2.2), not at the deposit's site; "
+                                      "this referral sets %r" % (at, captured)))
+            else:
+                out.append((FAIL, "%s: a deposit is coded at its primary, but this referral "
+                                  "does not ask for the primary's site (recapture_site), so the "
+                                  "hop prints the deposit's site as the primary's (WHO Rules A "
+                                  "and H)" % at))
+    if out:
+        return out
+    return [(OK, "deposit referrals: %d in this group ask for the primary's site, or set the "
+                 "bone marrow or an unknown primary" % checked)] if checked else []
+
+
+def check_leukaemia_referrals_record_marrow(ctx: DTContext):
+    """
+    WHO Rule E (section 4.2.8): every leukaemia except myeloid sarcoma is recorded at the bone
+    marrow, C42.1. A referral into Group I from any other group therefore sets C42.1, or asks for
+    the site (`recapture_site`), or is about a myeloid sarcoma, which keeps the site it arose in.
+    Otherwise the hop carries the site the other group captured, a lymph node or an organ, and the
+    leukaemia prints there. Found by the audit of Group X (7 October 2026) and by the review of it,
+    which found the same fault in Groups II, VII and IX. Keyed off the branch's own fields and its
+    own words, as check_deposit_referrals is.
+    """
+    if ctx.group == 1:
+        return []
+    out, checked = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if not is_refer_branch(holder) or holder.get("refer_group") != 1:
+                continue
+            checked += 1
+            text = " ".join(str(holder.get(k) or "") for k in ("label", "finding", "reason"))
+            captured = (holder.get("captures") or {}).get("topography")
+            if captured == "C42.1" or holder.get("recapture_site") is True \
+                    or (node_id in MYELOID_SARCOMA_NODES and "myeloid sarcoma" in text.lower()):
+                continue
+            out.append((FAIL, "%s (%s) %r -> Group 1: a leukaemia is recorded at the bone marrow, "
+                              "C42.1 (WHO Rule E), and this referral sets %r, so the hop prints "
+                              "the site of the other group's case"
+                        % (node_id, where or "node level",
+                           holder.get("label") or holder.get("finding") or "", captured)))
+    if out:
+        return out
+    return [(OK, "referrals to Group I: %d in this group record the bone marrow, ask for the site "
+                 "or concern a myeloid sarcoma" % checked)] if checked else []
+
+
+def check_group10_referrals_carry_the_right_site(ctx: DTContext):
+    """
+    GROUP 10 RULE 5 (audit of 7 October 2026, WHO Rules A, B and E) — a referral that leaves
+    Group X carries the site the case's tissue and type give it, not the site it happened to be
+    recorded at. The deposit nodes are checked for every group by check_deposit_referrals.
+
+    * The extragonadal tree's bone sarcoma and sarcoma branches (to Groups VIII and IX) ask for
+      it too: the case came in at an ill-defined or non-tissue site such as Pelvis, NOS (C76.3),
+      and WHO Rules A and B code the tissue's own site.
+    * Rule E (section 4.2.8): leukaemic infiltration is a leukaemia and is recorded at the bone
+      marrow (C42.1); a myeloid sarcoma is the one leukaemia coded to the site it arose in.
+
+    Keyed off the data of every node, never off a flag the nodes set about themselves.
+    """
+    if ctx.group != GROUP10:
+        return []
+    out, checked, leukaemia_here = [], 0, {}
+    for node_id, node in sorted(ctx.nodes.items()):
+        for holder, where in walk_dicts(node):
+            if not is_refer_branch(holder):
+                continue
+            grp, label = holder.get("refer_group"), str(holder.get("label") or "")
+            at = "%s (%s) %r -> Group %s" % (node_id, where or "node level", label, grp)
+            captured = (holder.get("captures") or {}).get("topography")
+            if node_id == "eg_other" and grp in (8, 9):
+                checked += 1
+                if holder.get("recapture_site") is not True:
+                    out.append((FAIL, "GROUP 10 RULE 5: %s does not ask for the tissue's own "
+                                      "site (recapture_site), so Pelvis, NOS (C76.3) is carried "
+                                      "onto a bone or soft tissue sarcoma (WHO Rules A and B)" % at))
+            if grp == 1 and node_id in ("ov_other", "ts_other"):
+                checked += 1
+                leukaemia_here.setdefault(node_id, 0)
+                if captured == "C42.1":
+                    leukaemia_here[node_id] += 1
+                elif label.startswith("Myeloid sarcoma") and captured is None:
+                    pass
+                else:
+                    out.append((FAIL, "GROUP 10 RULE 5: %s must record the bone marrow, C42.1 "
+                                      "(WHO Rule E), or be the myeloid sarcoma that keeps the "
+                                      "site it arose in (label \"Myeloid sarcoma...\", no "
+                                      "topography set); it sets %r" % (at, captured)))
+    for gonad_node in ("ov_other", "ts_other"):
+        if leukaemia_here.get(gonad_node, 0) != 1:
+            out.append((FAIL, "GROUP 10 RULE 5: %s must hold exactly one referral to Group I that "
+                              "records the bone marrow (C42.1), the leukaemic infiltration; it "
+                              "holds %d" % (gonad_node, leukaemia_here.get(gonad_node, 0))))
+    if not checked:
+        return [(FAIL, "GROUP 10 RULE 5: no extragonadal sarcoma or leukaemic referral "
+                       "was found to check, so the rule is not running")]
+    if not out:
+        out.append((OK, "GROUP 10 RULE 5: %d referral(s) that carry a site name the tissue's "
+                        "own site, the bone marrow or the site of origin as WHO Rules A, B and E "
+                        "require" % checked))
+    return out
+
+
+def check_group10_terms_offered_where_allowed(ctx: DTContext):
+    """
+    GROUP 10 RULE 6 (audit of 7 October 2026, WHO Rule H, F-H-02 and F-G-01) — a report's own term
+    is coded as written wherever ICD-O-3.2 and ICCC-2017 allow it, so a stated site that differs
+    from the term's usual one keeps the term (Rule H).
+
+    * Dysgerminoma (9060), seminoma (9061), anaplastic seminoma (9062) and germinoma (9064) are
+      offered by the histology screen of every Group X site tree: ICCC-2017 places 9060 to 9065
+      in Xa1, Xb1 and Xc1, so none of the three subgroups lacks one.
+    * The two malignant teratoma terms ICD-O-3.2 prints at 9082/3 and 9083/3 are offered by the
+      teratoma screen of every tree (the central nervous system tree has none, its histology
+      screen holds the teratomas), so a report that names one of them need not be called mixed.
+
+    Keyed off the codes the nodes' own options emit, never off a flag the nodes set.
+    """
+    if ctx.group != GROUP10:
+        return []
+    family = {"9060": "Dysgerminoma", "9061": "Seminoma", "9062": "anaplastic seminoma",
+              "9064": "Germinoma"}
+    teratoma = {"9082": "Malignant teratoma, undifferentiated", "9083": "Malignant teratoma, intermediate"}
+    plan = [("cn_histology", family), ("ov_histology", family), ("ts_histology", family),
+            ("eg_histology", family), ("cn_histology", teratoma), ("ov_teratoma", teratoma),
+            ("ts_teratoma", teratoma), ("eg_teratoma", teratoma)]
+    out, checked = [], 0
+    for node_id, wanted in plan:
+        node = ctx.nodes.get(node_id)
+        if node is None:
+            out.append((FAIL, "GROUP 10 RULE 6: node %s does not exist" % node_id))
+            continue
+        emitted = {(as_code(o.get("morphology_code")), str(o.get("behavior_code")))
+                   for o in node.get("options") or [] if isinstance(o, dict)}
+        for code_, name in wanted.items():
+            checked += 1
+            if (code_, "3") not in emitted:
+                out.append((FAIL, "GROUP 10 RULE 6: %s offers no option that records %s/3 (%s); "
+                                  "a report that uses the term cannot be coded as written "
+                                  "(WHO Rule H, design D3)" % (node_id, code_, name)))
+    if not out:
+        out.append((OK, "GROUP 10 RULE 6: %d (screen, term) pairs: every site tree offers "
+                        "dysgerminoma, seminoma, anaplastic seminoma and germinoma, and "
+                        "every teratoma screen offers 9082/3 and 9083/3" % checked))
+    return out
+
+
+def check_group10_every_gonadal_carcinoma_has_a_route(ctx: DTContext, layer1: Path):
+    """
+    GROUP 10 RULE 7 (registrar's design, 7 October 2026; audit F-J-01, F-J-05) — every code in
+    ICCC-2017 subgroup Xd, "Gonadal carcinomas", that ICD-O-3.2 prints at /3 and that ICCC-2017
+    places at the ovary or the testis is offered by that gonad's tree, in a node or in its
+    gonadal carcinoma picker. Before this rule 80 of them were in the inventory and no option
+    emitted them, so a report that named one recorded the neighbouring "Carcinoma" or
+    "Adenocarcinoma" code.
+
+    A code whose Preferred term ICD-O-3.2 marks [obs] is not owed an option: design D11 keeps an
+    obsolete term off every screen, and no option of Group X records such a pair (a pair that
+    appears here is a defect, not an exemption: the exemption only says it need not be offered).
+
+    Also: every `search_terms` entry on an option is a live (not [obs]) ICD-O-3.2 Synonym or
+    Related term of the code that option records, so the filter box never matches a name
+    ICD-O-3.2 does not give the tumour. The alias layer indexes the same two levels, so a name a
+    clerk can type in the search box is a name the picker's filter finds.
+
+    Keyed off ICCC-2017.sqlite and icdo32.sqlite through the generated inventory, never off a flag
+    in the data being checked.
+    """
+    if ctx.group != GROUP10:
+        return []
+    index, err = load_icdo32(layer1)
+    out = []
+    if err:
+        return [(WARN, "GROUP 10 RULE 7 could not read ICD-O-3.2 (%s); routes and synonyms are "
+                       "NOT checked" % err)]
+    gonads = (("g10_ovary", 569), ("g10_testis", 629))
+    for tree_id, site in gonads:
+        tree = next((t for t in ctx.trees if t.get("tree_id") == tree_id), None)
+        if tree is None:
+            out.append((FAIL, "GROUP 10 RULE 7: no %s tree" % tree_id))
+            continue
+        offered = set()
+        for node in tree.get("nodes") or []:
+            for holder, _w in walk_dicts(node):
+                if holder.get("morphology_code") and str(holder.get("behavior_code")) == "3":
+                    offered.add(as_code(holder["morphology_code"]))
+                if isinstance(holder.get("nos_fallback"), dict) and holder["nos_fallback"].get("code"):
+                    offered.add(as_code(holder["nos_fallback"]["code"]))
+        wanted = []
+        for e in ctx.entries:
+            if not isinstance(e, dict) or not str(e.get("iccc3_subgroup_id", "")).startswith("Xd"):
+                continue
+            if str(e.get("behavior_code")) != "3":
+                continue
+            if _icdo_preferred_obsolete(index, as_code(e["morphology_code"]), "3"):
+                continue
+            if any(_in_spans(_group10_site_spans(s_), site) for s_ in e.get("primary_sites") or []):
+                wanted.append(as_code(e["morphology_code"]))
+        missing = sorted(set(wanted) - offered)
+        if missing:
+            out.append((FAIL, "GROUP 10 RULE 7: %s offers no option that records %d gonadal "
+                              "carcinoma code(s) ICCC-2017 places at its site (subgroup Xd): %s"
+                        % (tree_id, len(missing), ", ".join(missing[:12])
+                           + (", ..." if len(missing) > 12 else ""))))
+    bad, terms = [], 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        for opt in node.get("options") or []:
+            if not isinstance(opt, dict) or "search_terms" not in opt:
+                continue
+            st = opt["search_terms"]
+            if not isinstance(st, list) or not all(isinstance(x, str) and x for x in st):
+                bad.append("%s %r: search_terms must be a list of non-empty strings"
+                           % (node_id, opt.get("label")))
+                continue
+            listed = index.get((as_code(opt.get("morphology_code")), str(opt.get("behavior_code"))), {})
+            for x in st:
+                terms += 1
+                level, obs = (listed.get(x) or ("", ""))[:2]
+                if level not in ("Synonym", "Related") or obs:
+                    bad.append("%s %r: search term %r is not a live ICD-O-3.2 Synonym or Related "
+                               "term of %s/%s"
+                               % (node_id, opt.get("label"), x, opt.get("morphology_code"),
+                                  opt.get("behavior_code")))
+    # No option of Group X records a pair whose Preferred term ICD-O-3.2 marks [obs] (design D11).
+    obsolete = sorted({"%s/%s" % (as_code(h.get("morphology_code")), h.get("behavior_code"))
+                       for node in ctx.nodes.values() for h, _w in walk_dicts(node)
+                       if h.get("morphology_code") and h.get("behavior_code") is not None
+                       and _icdo_preferred_obsolete(index, as_code(h["morphology_code"]),
+                                                    str(h["behavior_code"]))})
+    if obsolete:
+        out.append((FAIL, "GROUP 10 RULE 7: an option records %d pair(s) whose ICD-O-3.2 Preferred "
+                          "term is marked [obs], which design D11 keeps off every screen: %s"
+                    % (len(obsolete), ", ".join(obsolete[:12]))))
+    for msg in bad[:8]:
+        out.append((FAIL, "GROUP 10 RULE 7: " + msg))
+    if len(bad) > 8:
+        out.append((FAIL, "GROUP 10 RULE 7: %d further search term problem(s)" % (len(bad) - 8)))
+    if not out:
+        out.append((OK, "GROUP 10 RULE 7: every subgroup Xd code ICD-O-3.2 prints at /3 and "
+                        "ICCC-2017 places at a gonad, bar the obsolete ones, is offered by that "
+                        "gonad's tree; no option records an obsolete pair; and the %d search "
+                        "term(s) on options are live ICD-O-3.2 synonyms or related terms"
+                        % terms))
+    return out
+
+
+def _icdo_preferred_obsolete(index, code, beh):
+    """Is the Preferred term of (code, behaviour) marked [obs] in ICD-O-3.2? `index` is
+    load_icdo32(): (code, behaviour) -> {term: (level, obs)}."""
+    return any(level == "Preferred" and obs
+               for level, obs in (index.get((code, str(beh))) or {}).values())
+
+
+def check_group10_picker_aliases_stay_unshared(ctx: DTContext, repo: Path):
+    """
+    GROUP 10 RULE 8 (review of 7 October 2026, finding 1) — an alias that maps only to codes the
+    gonadal carcinoma picker alone offers is held by no other group's alias file.
+
+    The picker finds a term the alias layer does not carry by its own filter box, so it does not
+    need the alias. A shared alias costs other groups' cases: on `main` six Group VI terms
+    ("Medullary carcinoma, NOS") entered Group VI at every site and three Group III terms
+    ("ACTH-producing tumor") entered Group III at every site a Group III list names; filed under
+    Group X as well, the first stopped at the 174 sites outside the kidney and the second tied
+    at the pituitary and the brain.
+
+    Keyed off the other groups' alias files and the picker nodes (`prefill_filter_from_search`),
+    never off a flag on the alias.
+    """
+    if ctx.group != GROUP10:
+        return []
+    picker_nodes = {nid for nid, n in ctx.nodes.items() if n.get("prefill_filter_from_search") is True}
+    from_picker, elsewhere = set(), set()
+    for node_id, _where, code, _beh in _group10_emissions(ctx):
+        (from_picker if node_id in picker_nodes else elsewhere).add(code)
+    picker_only = from_picker - elsewhere
+    alias_dir = Path(repo) / "data" / "aliases"
+    held: dict = {}
+    for path in sorted(alias_dir.glob("aliases_group_*.json")):
+        grp = int(re.search(r"aliases_group_(\d+)\.json$", path.name).group(1))
+        if grp == GROUP10:
+            continue
+        try:
+            rows = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for a in rows if isinstance(rows, list) else []:
+            held.setdefault(" ".join(str(a.get("alias", "")).lower().split()), set()).add(grp)
+    mine = alias_dir / ("aliases_group_%02d.json" % GROUP10)
+    try:
+        own = json.loads(mine.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return [(FAIL, "GROUP 10 RULE 8: cannot read %s" % mine)]
+    bad, checked = [], 0
+    for a in own:
+        codes = {as_code(c) for c in a.get("maps_to_morphology_codes") or []}
+        if not codes or not codes <= picker_only:
+            continue
+        checked += 1
+        groups = held.get(" ".join(str(a.get("alias", "")).lower().split()))
+        if groups:
+            bad.append("%r is also held by Group %s" % (a.get("alias"), ", ".join(map(str, sorted(groups)))))
+    if bad:
+        return [(FAIL, "GROUP 10 RULE 8: %d alias(es) on picker-only codes are shared with another "
+                       "group, so a term that group files alone now ties or stops: %s"
+                % (len(bad), "; ".join(bad[:6])))]
+    return [(OK, "GROUP 10 RULE 8: the %d alias(es) on picker-only codes are held by no other "
+                 "group" % checked)]
+
+
+def _group10_site_spans(text):
+    """The (low, high) three-digit spans in a primary_sites string such as 'C00.0-C55.9'."""
+    nums = [int(a) * 10 + int(b) for a, b in re.findall(r"C(\d\d)\.(\d)", str(text))]
+    return [(nums[0], nums[-1])] if nums else []
+
+
 def check_group10_no_pathology_codes(ctx: DTContext):
     """
     GROUP 10 RULE 2 (contract §5) — a terminal reached with neither histology nor cytology in
@@ -9863,6 +10246,7 @@ BRAIN_MARKER_CUTOFFS = {
 _BRAIN_UNIT_TEXT = {"ng_per_ml": "ng/mL", "iu_per_l": "IU/L"}
 BRAIN_AFP_VARIABLES = ("afp_serum_ng_ml", "afp_csf_ng_ml")
 BRAIN_HCG_VARIABLES = ("hcg_serum_iu_l", "hcg_csf_iu_l")
+BRAIN_OTHER_UNIT = "other_unit"   # app.js OTHER_UNIT: a result in another unit or only described
 BRAIN_AGE_VARIABLE = "patient_age_months"
 BRAIN_MIN_AGE_MONTHS = 24
 GROUP10_BRAIN_TREE = "g10_cns"
@@ -9884,7 +10268,9 @@ def _engine_in_band(rng, v):
     a missing reading, and a missing reading takes nothing else."""
     if rng == "not_documented":
         return v is None
-    if v is None or not isinstance(rng, str):
+    if rng == "other_unit":
+        return v == BRAIN_OTHER_UNIT
+    if not isinstance(v, (int, float)) or isinstance(v, bool) or not isinstance(rng, str):
         return False
     for pat, test in ((r"^>=\s*([\d.]+)$", lambda a: v >= a), (r"^>\s*([\d.]+)$", lambda a: v > a),
                       (r"^<=\s*([\d.]+)$", lambda a: v <= a), (r"^<\s*([\d.]+)$", lambda a: v < a)):
@@ -9954,25 +10340,32 @@ def _basis4_reachable(ctx, start):
 
 
 def _brain_expected(values):
-    """The ruling, applied to one case: no number read under 24 months or with no age; a value
-    above its cut-off in either compartment is raised; not raised needs both compartments
-    entered and at or below the cut-off; a value not entered never counts as normal."""
+    """The ruling, applied to one case. No number is read under 24 months or with no age. From
+    24 months the gates are asked in order: serum and cerebrospinal fluid alpha-fetoprotein, then
+    serum and cerebrospinal fluid beta-hCG. A value above its cut-off is raised for its marker and
+    decides there; a result in another unit or only described sends the case to the report
+    question at once; a value at or below the cut-off, or none in the file (read as not raised,
+    registrar, 7 October 2026), goes on to the next gate. After the fourth, neither is raised."""
     age = values.get(BRAIN_AGE_VARIABLE)
     if age is None or age < BRAIN_MIN_AGE_MONTHS:
         return "report"
     for kind, names in (("afp", BRAIN_AFP_VARIABLES), ("hcg", BRAIN_HCG_VARIABLES)):
-        got = [values.get(v) for v in names]
-        if any(x is not None and x > BRAIN_MARKER_CUTOFFS[v][0] for x, v in zip(got, names)):
-            return kind
-        if any(x is None for x in got):
-            return "report"
+        for v in names:
+            x = values.get(v)
+            if x == BRAIN_OTHER_UNIT:
+                return "report"
+            if x is not None and x > BRAIN_MARKER_CUTOFFS[v][0]:
+                return kind
     return "neither"
 
 
 def _brain_case_text(values):
     parts = []
     for v in (BRAIN_AGE_VARIABLE,) + BRAIN_AFP_VARIABLES + BRAIN_HCG_VARIABLES:
-        parts.append("%s %s" % (v, "not entered" if values.get(v) is None else "%g" % values[v]))
+        x = values.get(v)
+        parts.append("%s %s" % (v, "not entered" if x is None else
+                                "in another unit or only described" if x == BRAIN_OTHER_UNIT
+                                else "%g" % x))
     return ", ".join(parts)
 
 
@@ -10044,9 +10437,10 @@ def check_brain_marker_cutoffs(ctx: DTContext):
                  % GROUP10_BRAIN_TREE)]
     ages = (None, BRAIN_MIN_AGE_MONTHS - 1, BRAIN_MIN_AGE_MONTHS, 120)
     names = BRAIN_AFP_VARIABLES + BRAIN_HCG_VARIABLES
-    levels = {v: (None, BRAIN_MARKER_CUTOFFS[v][0], round(BRAIN_MARKER_CUTOFFS[v][0] + 0.01, 2))
+    levels = {v: (None, BRAIN_OTHER_UNIT, BRAIN_MARKER_CUTOFFS[v][0],
+                  round(BRAIN_MARKER_CUTOFFS[v][0] + 0.01, 2))
               for v in names}
-    reach_cache, cases, wrong = {}, 0, []
+    reach_cache, cases, wrong, report_nodes = {}, 0, [], set()
     for start in starts:
         for age in ages:
             for combo in itertools.product(*(levels[v] for v in names)):
@@ -10062,11 +10456,44 @@ def check_brain_marker_cutoffs(ctx: DTContext):
                 if where not in reach_cache:
                     reach_cache[where] = _basis4_reachable(ctx, where)
                 got = reach_cache[where]
+                if want == "report" and age is not None and age >= BRAIN_MIN_AGE_MONTHS:
+                    report_nodes.add(where)
                 if got != _BRAIN_OUTCOMES[want][0]:
                     wrong.append("%s: %s reaches %s, which leaves %s; the ruling gives %s"
                                  % (GROUP10_BRAIN_TREE, _brain_case_text(values), where,
                                     " and ".join(sorted(got)) or "no marker code",
                                     _BRAIN_OUTCOMES[want][1]))
+    # Where a walk from 24 months stops at the report question, because a value the decision
+    # needed was not entered, that question's hint must apply the SIOP cut-offs and not leave
+    # "raised" to the laboratory's own range (audit of 7 October 2026, F-F-07: a β-hCG of 20 IU/L
+    # that the laboratory flags is not raised). The nodes are those the walk really reaches,
+    # whichever band or fallback edge leads there, and the numbers come from the cut-offs above.
+    phrases = ["above %g %s" % (BRAIN_MARKER_CUTOFFS[v][0], _BRAIN_UNIT_TEXT[BRAIN_MARKER_CUTOFFS[v][1]])
+               for v in (BRAIN_AFP_VARIABLES[0], BRAIN_HCG_VARIABLES[0])]
+    # Each gate must offer the answer "in the file, but in another unit or only described" (R3.3,
+    # registrar, 7 October 2026) and send it to a report question. Without the band the engine
+    # does not draw the answer, and the case falls to the gate's fallback edge, which reaches the
+    # same question, so the walk above cannot see the answer missing.
+    for gate_id, gate_node in sorted(gates.items()):
+        others = [b for b in gate_node.get("bands") or []
+                  if isinstance(b, dict) and b.get("range") == BRAIN_OTHER_UNIT]
+        if not others:
+            out.append((FAIL, "BRAIN MARKERS — %s has no `other_unit` band, so the clerk cannot say "
+                              "a result is in the file in another unit or only described" % gate_id))
+        elif others[0].get("next_node") not in report_nodes:
+            out.append((FAIL, "BRAIN MARKERS — %s sends `other_unit` to %r, which is not the report "
+                              "question" % (gate_id, others[0].get("next_node"))))
+    if not report_nodes:
+        out.append((FAIL, "BRAIN MARKERS — no walk from %d months stops at a report question, so "
+                          "its hint cannot be checked" % BRAIN_MIN_AGE_MONTHS))
+    for t in sorted(report_nodes):
+        hint = str(ctx.nodes[t].get("hint") or "")
+        missing = [p_ for p_ in phrases if p_ not in hint]
+        if missing or "against the laboratory's range" in hint or "laboratory's own range" in hint:
+            out.append((FAIL, "BRAIN MARKERS — %s is where a walk from %d months stops when a "
+                              "value was not entered, but its hint does not apply the SIOP "
+                              "cut-offs (it lacks %s, or leaves \"raised\" to the laboratory's "
+                              "range)" % (t, BRAIN_MIN_AGE_MONTHS, " and ".join(missing) or "nothing")))
     for msg in wrong[:12]:
         out.append((FAIL, "BRAIN MARKERS — " + msg))
     if len(wrong) > 12:
@@ -10074,10 +10501,11 @@ def check_brain_marker_cutoffs(ctx: DTContext):
     if not out:
         out.append((OK, "BRAIN MARKERS — %d case(s) through %s's marker tier: the SIOP "
                         "cut-offs (above 25 ng/mL, above 50 IU/L, either compartment) decide "
-                        "from %d months, and a value not entered or an age under %d months "
-                        "leaves the report question" % (cases, GROUP10_BRAIN_TREE,
-                                                        BRAIN_MIN_AGE_MONTHS,
-                                                        BRAIN_MIN_AGE_MONTHS)))
+                        "from %d months, a test with no result in the file is read as not raised, "
+                        "and a result in another unit or only described, or an age under %d "
+                        "months, leaves the report question" % (cases, GROUP10_BRAIN_TREE,
+                                                                BRAIN_MIN_AGE_MONTHS,
+                                                                BRAIN_MIN_AGE_MONTHS)))
     return out
 
 
@@ -10239,7 +10667,7 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
         return out + [(FAIL, "GROUP 10 RULE 4: topography_codes.json enumerates no topography "
                              "code, so no subgroup or route can be checked")]
 
-    pairs, entries_checked = 0, 0
+    pairs, entries_checked, outside_checked = 0, 0, 0
     for i, entry in enumerate(ctx.entries):
         if not isinstance(entry, dict):
             continue
@@ -10262,6 +10690,30 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                 wrong.append((topo, got, "/".join(sorted(want))))
         pairs += entry_pairs
         entries_checked += bool(entry_pairs)
+        # A lookup code outside every Group X germ cell range (C77.x) is reached only by a
+        # referral hop, and the router sends it to the extragonadal tree. ICCC-2017 places the
+        # pair in no subgroup there, so a pair that has an Xb subgroup shows it, in the family of
+        # that tree, and never the gonadal default (audit of 7 October 2026, F-A-04).
+        pair_subs = {r["subgroup"] for r in
+                     _group10_fitting_ranges(ranges, code, beh, set(range(1000)))}
+        if any(sid[:2] == "Xb" for sid in pair_subs) and any(sid[:2] == "Xc" for sid in pair_subs):
+            all_sites = [sp for r in ranges if r["subgroup"][:2] in GROUP10_GERM_CELL_FAMILIES
+                         for sp in r["sites"]]
+            for topo in topos:
+                if _in_spans(all_sites, _topo_index(topo)):
+                    continue
+                outside_checked += 1
+                got = entry.get("iccc3_subgroup_id")
+                for rule in rules if isinstance(rules, list) else []:
+                    if isinstance(rule, dict) and topo in (rule.get("topography_in") or []):
+                        got = rule.get("iccc3_subgroup_id")
+                        break
+                if not str(got).startswith("Xb"):
+                    out.append((FAIL, "morphology_entries[%d] %s/%s shows subgroup %r at %s, a "
+                                      "site outside every Group X germ cell range that only a "
+                                      "referral hop reaches; the router sends it to the "
+                                      "extragonadal tree, so the line shows that tree's "
+                                      "subgroup, Xb" % (i, code, beh, got, topo)))
         if wrong:
             topo, got, want = wrong[0]
             out.append((FAIL, "morphology_entries[%d] %s/%s shows subgroup %r at %s, where "
@@ -10356,10 +10808,12 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
                         "sends all %d lookup topography codes to the tree ICCC-2017's site "
                         "ranges give them; each site tree's rules name exactly the lookup codes "
                         "of its family (%s), and a rule names each of the %d from which app.js "
-                        "can enter Group X"
+                        "can enter Group X; at the lookup codes outside every Group X range, "
+                        "which only a referral hop reaches, the %d (entry, topography) pair(s) "
+                        "that have both an Xb and an Xc subgroup show Xb"
                         % (entries_checked, len(ctx.entries), pairs, len(topos),
                            ", ".join("%s %d" % (holds[t], len(c)) for t, c in expected.items()),
-                           len(enters))))
+                           len(enters), outside_checked)))
     return out
 
 
@@ -11635,6 +12089,22 @@ def check_routing_narrows(repo: Path, contexts: dict):
             out.append((FAIL, "group %s: `occurs_at_any_site` on a group that is not built, "
                               "so the typed lane would route a case to a handoff" % gk))
 
+    # `occurs_at_routed_sites` lets the typed lane enter a group at every site one of its own
+    # `tree_routing` rules names. The rules are the list, so the flag needs a rule list to read
+    # and a built group to enter, and only the value true means anything.
+    for gk, meta in sorted((router.get("groups") or {}).items(), key=lambda kv: int(kv[0])):
+        if "occurs_at_routed_sites" not in meta:
+            continue
+        if meta["occurs_at_routed_sites"] is not True:
+            out.append((FAIL, "group %s: `occurs_at_routed_sites` must be true or absent, not %r"
+                        % (gk, meta["occurs_at_routed_sites"])))
+        elif not meta.get("built"):
+            out.append((FAIL, "group %s: `occurs_at_routed_sites` on a group that is not built, "
+                              "so the typed lane would route a case to a handoff" % gk))
+        elif not (isinstance(meta.get("tree_routing"), dict) and meta["tree_routing"].get("rules")):
+            out.append((FAIL, "group %s: `occurs_at_routed_sites` on a group with no tree_routing "
+                              "rules, so there is no list of sites for the flag to read" % gk))
+
     n_soft = sum(1 for c in lookup if c[:3] in ("C47", "C48", "C49"))
     if not any(level == FAIL for level, _ in out):
         out.append((OK, "routing narrows: %d archetype(s), %d topography code(s) (%d soft "
@@ -12258,6 +12728,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_orphan_nodes, ctx)
         report.run(check_non_reportable_terminals, ctx)
         report.run(check_refer_terminals, ctx)
+        report.run(check_deposit_referrals, ctx)
+        report.run(check_leukaemia_referrals_record_marrow, ctx)
         # Group 1 schema extensions
         report.run(check_numeric_gate_shape, ctx)
         report.run(check_marker_intensity_tokens, ctx)
@@ -12365,6 +12837,10 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group10_no_pathology_codes, ctx)                      # rule 2
         report.run(check_group10_alias_terms_match_icdo32, ctx, layer1, repo)  # rule 3
         report.run(check_group10_subgroups_and_routing, ctx, layer1, repo)     # rule 4
+        report.run(check_group10_referrals_carry_the_right_site, ctx)         # rule 5
+        report.run(check_group10_terms_offered_where_allowed, ctx)           # rule 6
+        report.run(check_group10_every_gonadal_carcinoma_has_a_route, ctx, layer1)  # rule 7
+        report.run(check_group10_picker_aliases_stay_unshared, ctx, repo)    # rule 8
         # Registrar's ruling of 6 October 2026: SIOP brain marker cut-offs, Groups III and X.
         report.run(check_brain_marker_cutoffs, ctx)
         # the four new checks (three of them are per-file)

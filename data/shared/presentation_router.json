@@ -79,7 +79,8 @@
         7
       ],
       "candidate_groups_advisory": true,
-      "scaffold": "site → imaging (may be imaging-sufficient)"
+      "scaffold": "site → imaging (may be imaging-sufficient)",
+      "notes": "Group 10 is not listed on purpose (audit of Group X, 7 October 2026, F-H-12; registrar review B1 and section F). Listing it would make a case at the mediastinum, retroperitoneum, vagina, uterus, cervix or spermatic cord enter Group X with no choice: narrowBySite() takes the intersection of this list and the site's list, and falls back to the site's whole list only when the two share nothing, so adding one group here turns a choice at 28 such sites into that group alone. A per-site extension in the engine (as keep_on_site does for a discriminator) would let a central nervous system site offer Group X here without that effect."
     },
     {
       "archetype_id": "cutaneous_mucosal_lesion",
@@ -747,6 +748,7 @@
     "10": {
       "name": "Germ Cell, Trophoblastic Tumors and Neoplasms of Gonads",
       "built": true,
+      "occurs_at_routed_sites": true,
       "trees": [
         {
           "tree_id": "g10_cns",
@@ -766,7 +768,7 @@
         }
       ],
       "tree_routing": {
-        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16, as revised 4 October 2026). This tree_routing is the whole site resolver. Every entry into Group X carries a topography: the front door records it at Stage 1, and the express lane asks the site before it enters a group whose data reads the site (registrar, 4 October 2026). The rules list every lookup code in the ICCC-2017 Xa, Xc and Xb site ranges, computed from ICCC-2017.sqlite against topography_codes.json; check_group10_subgroups_and_routing() recomputes them on every build. A topography outside those ranges, such as C77.9, reaches the default; no such code lists Group 10 in its candidate_groups, so app.js does not enter Group X there.",
+        "_comment": "Group X keeps one histotype tree per site family, because the same ICD-O-3.2 code sits in Xa, Xb or Xc by site, and the Stage 1 topography picks the tree, so the clerk is asked nothing extra (design decision D16, as revised 4 October 2026). This tree_routing is the whole site resolver. Every entry into Group X carries a topography: the front door records it at Stage 1, and the express lane asks the site before it enters a group whose data reads the site (registrar, 4 October 2026). The rules list every lookup code in the ICCC-2017 Xa, Xc and Xb site ranges, computed from ICCC-2017.sqlite against topography_codes.json; check_group10_subgroups_and_routing() recomputes them on every build. A topography outside those ranges, such as C77.9, reaches the default only by a referral hop; the front door and the express lane do not enter Group X there. The group is marked occurs_at_routed_sites: the express lane enters a Group X term at a site a rule above names, although the site's own candidate_groups omits 10, when the term's own entries place it there (their primary_sites), so a term ICCC-2017 places only at the gonads still stops at the liver (registrar review B2 decides whether the front door lists Group X too).",
         "variable": "topography",
         "rules": [
           {
@@ -839,6 +841,13 @@
               "C31.3",
               "C31.8",
               "C31.9",
+              "C34.0",
+              "C34.1",
+              "C34.2",
+              "C34.3",
+              "C34.8",
+              "C34.9",
+              "C37.9",
               "C38.1",
               "C38.2",
               "C38.3",
@@ -937,6 +946,7 @@
               "C69.6",
               "C69.8",
               "C69.9",
+              "C73.9",
               "C74.0",
               "C74.1",
               "C74.9",

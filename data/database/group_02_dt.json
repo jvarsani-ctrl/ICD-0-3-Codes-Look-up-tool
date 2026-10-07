@@ -3884,10 +3884,11 @@
             {
               "descriptor": "Marrow blasts above 25% AND the peripheral blood is abnormal (blasts on the film, cytopenias, leukocytosis)",
               "refer_group": 1,
-              "reason": "Marrow blasts above 25% with an abnormal peripheral blood film place this case in Group I (leukaemias), not Group II. Code it from the Group I acute-leukaemia tree. Record the exact marrow blast percentage and the blood film findings — the boundary comes from Murphy 1980, quoted in Rosolen 2015, and is the single most load-bearing rule in this group.",
+              "reason": "Marrow blasts above 25% with an abnormal peripheral blood film place this case in Group I (leukaemias), not Group II. Code it from the Group I acute-leukaemia tree. Record the exact marrow blast percentage and the blood film findings — the boundary comes from Murphy 1980, quoted in Rosolen 2015, and is the single most load-bearing rule in this group. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
               "captures": {
                 "marrow_positivity_method": "morphology",
-                "primary_compartment": "marrow"
+                "primary_compartment": "marrow",
+                "topography": "C42.1"
               }
             },
             {
@@ -4164,14 +4165,20 @@
                 "lineage_count": "2"
               },
               "refer_group": 1,
-              "reason": "Two lineages are met on the same blast population — mixed-phenotype acute leukaemia. MPAL has no Group II code. Code this from the Group I acute-leukaemia tree. Record the MPO percentage and the method used (cytochemistry or flow): proposals range from 3% to 28%, >10% improves specificity, and no consensus threshold exists, so the number and the method must both be on the record."
+              "reason": "Two lineages are met on the same blast population — mixed-phenotype acute leukaemia. MPAL has no Group II code. Code this from the Group I acute-leukaemia tree. Record the MPO percentage and the method used (cytochemistry or flow): proposals range from 3% to 28%, >10% improves specificity, and no consensus threshold exists, so the number and the method must both be on the record. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "when": {
                 "lineage_count": "none"
               },
               "refer_group": 1,
-              "reason": "No lineage-defining marker was found — acute undifferentiated leukaemia or acute leukaemia of ambiguous lineage. Neither has a Group II code. Code this from the Group I acute-leukaemia tree, where the panel-adequacy rules for AUL versus ALAL-NOS are carried."
+              "reason": "No lineage-defining marker was found — acute undifferentiated leukaemia or acute leukaemia of ambiguous lineage. Neither has a Group II code. Code this from the Group I acute-leukaemia tree, where the panel-adequacy rules for AUL versus ALAL-NOS are carried. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "positive": [
@@ -6539,7 +6546,10 @@
                 "CD56 positive"
               ],
               "refer_group": 1,
-              "reason": "Aggressive NK-cell leukaemia is a separate entity with no code in this group and is a haemophagocytic emergency, rapidly fatal. It is not extranodal NK/T-cell lymphoma and must not be coded 9719. Route it to Group I and record it as a named uncoded entity."
+              "reason": "Aggressive NK-cell leukaemia is a separate entity with no code in this group and is a haemophagocytic emergency, rapidly fatal. It is not extranodal NK/T-cell lymphoma and must not be coded 9719. Route it to Group I and record it as a named uncoded entity. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "positive": [
@@ -7188,7 +7198,10 @@
                 "Leukaemic NK-cell picture with rapid deterioration"
               ],
               "refer_group": 1,
-              "reason": "Aggressive NK-cell leukaemia is a haemophagocytic emergency and is rapidly fatal. It has no code in this group, is a separate entity from extranodal NK/T-cell lymphoma, and must not be coded 9719. Route to Group I and record it as a named uncoded entity."
+              "reason": "Aggressive NK-cell leukaemia is a haemophagocytic emergency and is rapidly fatal. It has no code in this group, is a separate entity from extranodal NK/T-cell lymphoma, and must not be coded 9719. Route to Group I and record it as a named uncoded entity. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "positive": [
@@ -7367,14 +7380,20 @@
                 "lineage_count": "2"
               },
               "refer_group": 1,
-              "reason": "Two lineages are met on the same blast population — mixed-phenotype acute leukaemia, which has no Group II code. Code from the Group I acute-leukaemia tree. Record the MPO percentage AND the method: proposals range from 3% to 28%, >10% improves specificity, and no consensus threshold exists, so the number and the method must both be on the record. WHO-HAEM5 gives no per-lineage blast threshold; ICC proposes >5%."
+              "reason": "Two lineages are met on the same blast population — mixed-phenotype acute leukaemia, which has no Group II code. Code from the Group I acute-leukaemia tree. Record the MPO percentage AND the method: proposals range from 3% to 28%, >10% improves specificity, and no consensus threshold exists, so the number and the method must both be on the record. WHO-HAEM5 gives no per-lineage blast threshold; ICC proposes >5%. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "when": {
                 "lineage_count": "none"
               },
               "refer_group": 1,
-              "reason": "No lineage-defining marker was found — acute undifferentiated leukaemia or acute leukaemia of ambiguous lineage, neither of which has a Group II code. Code from the Group I acute-leukaemia tree, which carries the panel-adequacy rules."
+              "reason": "No lineage-defining marker was found — acute undifferentiated leukaemia or acute leukaemia of ambiguous lineage, neither of which has a Group II code. Code from the Group I acute-leukaemia tree, which carries the panel-adequacy rules. The site is recorded as the bone marrow (C42.1), as WHO ICD-O-3 Rule E requires for a leukaemia.",
+              "captures": {
+                "topography": "C42.1"
+              }
             },
             {
               "positive": [
