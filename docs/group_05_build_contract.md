@@ -346,8 +346,23 @@ Pathologists Retinoblastoma Protocol v4.0.0.0 (2017) and the diagnostic pathway 
 
 Where the report states a Mendoza anaplasia grade *instead of* a differentiation grade, the bridge
 is: retinocytoma-grade or mild ≈ the differentiated end; severe ≈ the undifferentiated end. **Where
-both appear, code from the differentiation grade** and record anaplasia as a prognostic finding
-that changes no code.
+the report states more than one grade, code the higher.** Severe anaplasia outranks a G1 or G2
+differentiation grade, and a G3 or G4 differentiation grade outranks mild anaplasia. Moderate
+anaplasia changes no code where a differentiation grade is stated; moderate anaplasia alone stays in
+the GX/`9510` option, which is open for the registrar (build report).
+
+*Decision, 7 October 2026 (registrar).* The first build said "code from the differentiation grade"
+and recorded anaplasia as a prognostic finding that changes no code. That coded a G2 report with
+severe anaplasia as `9511`, although this contract's own bridge places severe anaplasia at the
+undifferentiated end, and the tool has no field in which to record the anaplasia it told the clerk to
+set aside. The registrar replaced the rule with the higher-grade rule. Sources: the WHO ICD-O-3 first
+revision, section 4.3.4, pp. 21-22 (code the higher of two stated degrees; "anaplastic" is grade IV
+beside "undifferentiated"); College of American Pathologists Retinoblastoma Protocol v4.0.0.0, p. 4,
+Note K (anaplasia is graded on its highest level in the tumour); Mendoza PR, et al., American Journal
+of Ophthalmology 2015;159(4):764-776, p. 765 (a moderately anaplastic tumour with a focal region of
+severe anaplasia is graded severe). The same rule governs an area called "retinocytoma" inside an
+active tumour (§2.3): it sets `9511` only where the report states no poorer grade and no severe
+anaplasia for the rest of the tumour, and `9512` otherwise. A stated diffuse infiltrating growth pattern outranks a grade, because `9513` is the higher code (WHO Rule K: two modifiers with different codes and no combined code).
 
 ### 2.5 `9513` cannot use the imaging route, and `9510` must
 

@@ -306,3 +306,70 @@ controls, each run against the working tree with `app.js` edited and then restor
 | fix | — | OK: 55 multi-group and 483 single-group terms settled by the site; 848 single-group terms of a group that reads no site enter it directly |
 
 `build/drive_first_tap.mjs` still passes every tap with real input.
+
+## 7 October 2026: two site rules changed
+
+Each control was run against the working tree with `APP=` pointed at an edited copy of `app.js`, so the
+tree itself was never edited.
+
+### A discriminator answer keeps a group through the site step
+
+`primary_compartment` answers "nodal" and "extranodal" now carry `keep_on_site: [2]`. A lymphoma arises
+in organs whose own candidate list does not name Group II; the site used to take the family away at 120
+of 157 selectable sites. Driven through `handleOption`, lymphadenopathy then extranodal then every site:
+Group II is a candidate at all 157 (62 enter it directly, 95 ask which group applies).
+
+| Control | Result |
+|---|---|
+| `ONLY=ux` against the `app.js` of 2cb9c61 plus the other fixes, without `keep_on_site` | FAIL: "a group the answer keeps survives the site step when the site does not list it"; FAIL: "the site still narrows every other candidate"; the two controls that expect no change pass |
+| `keep_on_site` names a group no asking presentation offers (the "unsure" presentation narrowed first) | build FAIL: "names group(s) [7] that no presentation asking this discriminator offers" |
+| the same answer drops and keeps group 2 | build FAIL: "both dropped and kept on site by the same answer" |
+| `keep_on_site` is a number, and an empty list | build FAIL: "must be a non-empty list of group numbers 1-12" |
+| fix | OK |
+
+### A single-group term of a group that reads no site is asked the site, and only records it
+
+This reverses the control of 4 October 2026 above, which failed any engine that asked every term for its
+site. The registrar chose to ask: before, 863 of 1,395 typed terms printed Topography as a dash. The
+recorded site never narrows the group and never stops the case, so the gate tries every such term at the
+first selectable site, at a site its group's candidate list excludes, at a site it names, and at "The file
+does not state the site".
+
+| Control | Engine copy | Gate result |
+|---|---|---|
+| the defect | `app.js` before the change | FAIL: `"5q- syndrome" [1] reached stage handoff, group 1, not the record-only site question` |
+| the recorded site narrows the group | the `siteRecordOnly` branch of `afterSearchSite()` removed | FAIL: `"5q- syndrome" [1] at C64.9 [6]: expected Group 1 entered, got stage search_unresolved, group null` |
+| no "not stated" answer | the button condition set to false | FAIL: `"5q- syndrome" [1] site screen offers no "not stated" answer` |
+| fix | — | OK |
+
+Driven through the handlers: "Retinoblastoma" at the retina enters Group V and records `C69.2`; "Burkitt
+lymphoma" at the kidney enters Group II's tree selection with `C64.9` kept, where the guided route used to
+stop; "Retinoblastoma" with "The file does not state the site" enters Group V with no topography.
+
+### Review round, 7 October 2026
+
+Two independent reviewers read the changes above. Their findings changed the engine and the gates:
+
+- **A second tap while a group file was loading** left a multi-group term with the record-only flag, so "The file
+  does not state the site" entered the lowest-numbered group. The group-file callback now ignores a case that
+  has moved on, and the record-only entry points refuse unless the term is filed under one group. Replayed with the
+  reviewer's delayed-fetch script: before, `after "not stated": stage handoff, group 1`; after, the stage stays
+  `site` and no group is entered.
+- **The `keep_on_site` build check** read `asked_by`, a note that had gone stale (it lists a presentation that never
+  asks the question), so every group number passed. It now reads `dual_group_discriminator`, the field the engine
+  reads, and requires `ask_before_site`. With the presentation list left alone, a `keep_on_site` naming group 7 now
+  fails.
+- **New gate checks**, each proved against a scratch tree that must fail:
+
+| Control | Scratch tree | Gate result |
+|---|---|---|
+| the router's `keep_on_site` deleted | router edited | FAIL R5: found no keep_on_site in the router, so the scenario did not run |
+| the engine ignores `keep_on_site`, router intact | `narrowBySite()` without the kept groups | FAIL R5: `lymphadenopathy, answer "nodal", site C64.9: Group 2 was kept by the router but is not a candidate (stage node, group 6, candidates [6])` |
+| "not stated" offered on every express-lane site screen | `app.js` button condition widened | FAIL: multi-group term site screen offers "not stated" |
+| the record-only flag survives a step back to Search | flag left out of `snapshot()` and of the guided reset | FAIL R4: back to Search, then the guided route, carries the flag |
+| BAP1 rules restored | Group III data before the change | FAIL: BAP1 loss changes the code of a meningioma |
+| follicular grade markers removed | Group II data before the change | FAIL: highest-grade combinations |
+| retinoblastoma retinocytoma options removed | Group V data before the change | FAIL: 9512, 9513 and 9511 routes |
+
+`build/drive_first_tap.mjs` does not pass: its fourth control looks for a `select` that is now a filtered radio list
+(TODO section 30). The sentence above that says it passes every tap predates the 6 October interface change.
