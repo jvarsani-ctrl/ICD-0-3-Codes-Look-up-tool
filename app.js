@@ -3211,6 +3211,13 @@ function afterSearchSite() {
   state.candidates = Array.isArray(site)
     ? term.filter(function (g) { return site.indexOf(g) !== -1; })
     : term.slice();
+  /* A group the router declares as occurring at any site (a lymphoma arises in any
+     organ) survives a site that names none of the term's groups. Only then: where
+     the site names a group of the term, that group is the answer and the any-site
+     group does not tie with it (registrar, 7 October 2026). */
+  if (Array.isArray(site) && !state.candidates.length) {
+    state.candidates = term.filter(function (g) { return groupMeta(g).occurs_at_any_site === true; });
+  }
   /* `group` is cleared because a step back to a Tree entry restores the group
      the case was routed to, and a stop must not name it. */
   if (state.candidates.length !== 1) { state.group = null; state.stage = 'search_unresolved'; return; }

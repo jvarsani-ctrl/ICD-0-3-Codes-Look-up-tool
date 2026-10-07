@@ -371,5 +371,35 @@ Two independent reviewers read the changes above. Their findings changed the eng
 | follicular grade markers removed | Group II data before the change | FAIL: highest-grade combinations |
 | retinoblastoma retinocytoma options removed | Group V data before the change | FAIL: 9512, 9513 and 9511 routes |
 
-`build/drive_first_tap.mjs` does not pass: its fourth control looks for a `select` that is now a filtered radio list
-(TODO section 30). The sentence above that says it passes every tap predates the 6 October interface change.
+`build/drive_first_tap.mjs` stopped at its fourth control, which looked for a `select` that is now a filtered radio
+list; it is fixed below.
+
+## 7 October 2026: Group II occurs at any site, and the first-tap driver
+
+### A group that occurs at any site survives a site that names none of the term's groups
+
+The router marks Group II `occurs_at_any_site`: a lymphoma arises in any organ. A typed term filed under
+Groups I and II used to stop at 120 of 157 sites, the sites where neither group is listed. Now the term enters
+Group II there with the site recorded. A site that names one of the term's groups still decides, and a site that names
+both (the marrow sites C42.0 to C42.4) still stops. The gate computes the expected outcome from the router and the
+topography file, never from the engine. On the real tree: 34304 (term, site) pairs routed to one group, 48615 stopped
+with no group, 605 stopped on a tie, 1440 pairs routed to a group that occurs at any site.
+
+| Control | Scratch tree | Result |
+|---|---|---|
+| the defect | `app.js` before the change | FAIL: `"ATL" [1,2] at C64.9 [6]: expected Group 2, got stage search_unresolved, group null` |
+| the fallback replaces the term's own survivors | fallback condition widened | FAIL: `"ACTH-producing tumor" [3] at C70.9 [3]: expected Group 3, got stage search_unresolved, group null` |
+| the router's flag deleted | router edited | FAIL: no term was routed by `occurs_at_any_site` |
+| the fallback added to the survivors, not only when there are none | `app.js`, `ONLY=ux` | FAIL: "a site that names one of the term's groups decides, although another group occurs at any site" |
+| the flag a string, false, or on an unbuilt group | router edited | build FAIL: `occurs_at_any_site` must be true or absent; not on a group that is not built |
+| fix | none | OK |
+
+No site on the current data names Group I without Group II, so the last "names none" condition cannot be told apart from
+an engine that adds the group to the survivors on real data. The synthetic fixture in the `ux` section pins it.
+
+### The first-tap driver
+
+`build/drive_first_tap.mjs` passes all eight checks in headless Chrome (typed first taps, Continue under a typed number
+and a free-text answer, "Not documented", a list choice enabling Continue, and the keyboard). Its fourth control now
+picks a radio, because the list is no longer a `select`. Control: a scratch copy that never fires the change event fails
+that check with `{"before":true,"after":true}`; the other seven pass.

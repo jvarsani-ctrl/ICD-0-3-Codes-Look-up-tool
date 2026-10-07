@@ -10754,6 +10754,18 @@ def check_routing_narrows(repo: Path, contexts: dict):
                 out.append((FAIL, "discriminator %s, answer %r: group(s) %r are both dropped and kept "
                                   "on site by the same answer" % (key, answer, clash)))
 
+    # `occurs_at_any_site` lets the typed lane enter a group at a site that names none of a
+    # term's groups. It is a flag on a built group, and only the value true means anything.
+    for gk, meta in sorted((router.get("groups") or {}).items(), key=lambda kv: int(kv[0])):
+        if "occurs_at_any_site" not in meta:
+            continue
+        if meta["occurs_at_any_site"] is not True:
+            out.append((FAIL, "group %s: `occurs_at_any_site` must be true or absent, not %r"
+                        % (gk, meta["occurs_at_any_site"])))
+        elif not meta.get("built"):
+            out.append((FAIL, "group %s: `occurs_at_any_site` on a group that is not built, "
+                              "so the typed lane would route a case to a handoff" % gk))
+
     n_soft = sum(1 for c in lookup if c[:3] in ("C47", "C48", "C49"))
     if not any(level == FAIL for level, _ in out):
         out.append((OK, "routing narrows: %d archetype(s), %d topography code(s) (%d soft "

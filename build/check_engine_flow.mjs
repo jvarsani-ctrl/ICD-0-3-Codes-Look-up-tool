@@ -381,8 +381,10 @@ function fixtures(ctx) {
    from alias_index.json and topography_codes.json — the sources of truth —
    and never read off a flag the engine sets. The term's groups that also
    appear in the site's candidate_groups decide it: exactly one enters that
-   group with the topography captured; none or several stop the case with
-   nothing entered. Each pair is tapped through `handleOption` — alias, organ
+   group with the topography captured; several stop the case with nothing
+   entered, and so does none, unless the router declares exactly one of the
+   term's groups as occurring at any site (Group II, registrar, 7 October 2026),
+   which then enters. Each pair is tapped through `handleOption` — alias, organ
    system, region — the handlers the rendered buttons call.
 
    A term filed under ONE group is asked its site too when that group's data
@@ -434,6 +436,16 @@ async function expressLane(ctx, out) {
     if (meta.tree_routing) return true;
     const c = ctx.groupCache.get(g);
     return !!c && hasSiteWhen(c.dt.decision_trees);
+  };
+  /* The groups a (term, site) pair should reach, computed from the router and the topography
+     file: the term's groups that the site names; and only if it names none, the term's groups
+     the router declares as occurring at any site. */
+  const anySite = (g) => ((router.groups || {})[String(g)] || {}).occurs_at_any_site === true;
+  const expectAt = (groups, code) => {
+    const cg = topo.topography_lookup[code].candidate_groups;
+    if (!Array.isArray(cg)) return groups.slice();
+    const named = groups.filter((g) => cg.includes(g));
+    return named.length ? named : groups.filter(anySite);
   };
   for (const term of Object.keys(index).sort()) {
     const groups = index[term];
@@ -496,11 +508,12 @@ async function expressLane(ctx, out) {
       await enter(term);
       try { await pickSite(code); } catch (e) { fail('"' + term + '" at ' + code + ' throws: ' + e.message); continue; }
       const cg = topo.topography_lookup[code].candidate_groups;
-      const expect = Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
+      const expect = expectAt(groups, code);
       const st = ctx.state, at = '"' + term + '" ' + JSON.stringify(groups) + ' at ' + code + ' ' + JSON.stringify(cg);
       if (st.captured.topography !== code) { fail(at + ': topography captured as ' + st.captured.topography); continue; }
       if (expect.length === 1) {
         out.routed++;
+        if (Array.isArray(cg) && !groups.some((g) => cg.includes(g))) out.anySite++;
         if (st.group !== expect[0] || st.stage === 'search_unresolved') {
           fail(at + ': expected Group ' + expect[0] + ', got stage ' + st.stage + ', group ' + st.group);
         } else if (!st.trail.some((t) => t.label === 'Group')) {
@@ -530,10 +543,6 @@ async function expressLane(ctx, out) {
        R2  rewind a single-group express-lane case to its Tree entry and take
            the guided route instead: the case must not carry the search term,
            or the guided site step becomes the express lane's. */
-  const expectAt = (groups, code) => {
-    const cg = topo.topography_lookup[code].candidate_groups;
-    return Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
-  };
   const rewindTo = async (label) => {
     const i = ctx.state.trail.map((t) => t.label).lastIndexOf(label);
     if (i < 0) return false;
@@ -662,6 +671,7 @@ async function expressLane(ctx, out) {
     }
   }
   if (!out.keepWalks) fail('R5 found no keep_on_site in the router — the scenario did not run');
+  if (!out.anySite) fail('no term was routed by occurs_at_any_site — the router declares no such group, or the scenario did not run');
 
   /* R3  the guided route, same defect: a tree routed from the topography is
          an automatic trail entry. Every presentation × organ system is walked
@@ -1453,6 +1463,23 @@ async function uxScenarios(ctx) {
     t('keep_on_site never adds a group that was not already a candidate', run('lymph', [9], [6]) === '[6]', run('lymph', [9], [6]));
     ctx.reset(); ctx.state.router = savedRouter; ctx.state.topography = savedTopo;
   }
+  /* ---- FIXTURE: a group that occurs at any site survives only a site that names none of the term's groups ---- */
+  {
+    const savedRouter = ctx.state.router, savedTopo = ctx.state.topography, savedIndex = ctx.state.aliasIndex;
+    const router = { groups: { 1: { name: 'One', built: false }, 2: { name: 'Two', built: false, occurs_at_any_site: true } } };
+    const topo = { topography_lookup: { X1: { candidate_groups: [1] }, X2: { candidate_groups: [2] }, X6: { candidate_groups: [6] }, X12: { candidate_groups: [1, 2] } } };
+    const run = (code) => {
+      ctx.reset();
+      Object.assign(ctx.state, { router, topography: topo, aliasIndex: { T: [1, 2] }, searchTerm: 'T' });
+      ctx.state.captured = { topography: code };
+      ctx.afterSearchSite();
+      return ctx.state.stage + ':' + ctx.state.group;
+    };
+    t('a site that names one of the term\'s groups decides, although another group occurs at any site', run('X1') === 'handoff:1' && run('X2') === 'handoff:2', JSON.stringify([run('X1'), run('X2')]));
+    t('a site that names none of the term\'s groups takes the group that occurs at any site', run('X6') === 'handoff:2', run('X6'));
+    t('a site that names both of the term\'s groups still stops', run('X12') === 'search_unresolved:null', run('X12'));
+    ctx.reset(); ctx.state.router = savedRouter; ctx.state.topography = savedTopo; ctx.state.aliasIndex = savedIndex;
+  }
   /* ---- FIXTURES on the real data: the "take the higher" decisions of 7 October 2026 ---- */
   {
     /* BAP1 loss is recorded and changes neither the code nor the behavior of a meningioma. The
@@ -1534,10 +1561,10 @@ console.log('\nExpress lane — a term filed under several groups is settled by 
 {
   /* An engine that throws inside a scenario fails the section by name rather
      than ending the run with a stack trace. */
-  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, siteSingles: 0, terms: 0, skipped: 0, rewinds: 0, keepWalks: 0, fails: [] };
+  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, siteSingles: 0, terms: 0, skipped: 0, rewinds: 0, keepWalks: 0, anySite: 0, fails: [] };
   if (ONLY !== 'ux') try { await expressLane(ctx, r); } catch (e) { r.fails.push('the engine threw: ' + e.message); }
-  console.log('  %s  %d multi-group term(s) and %d single-group term(s) whose group reads the site, x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) of a group that reads no site are asked the site and only record it (%d sites tried, each entering the group); %d stepped-back case(s); %d guided walk(s) that must keep a group on site; %d term(s) not reachable from the results',
-    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.siteSingles, r.routed, r.mismatch, r.tie, r.single, r.recorded || 0, r.rewinds, r.keepWalks, r.skipped);
+  console.log('  %s  %d multi-group term(s) and %d single-group term(s) whose group reads the site, x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) of a group that reads no site are asked the site and only record it (%d sites tried, each entering the group); %d stepped-back case(s); %d guided walk(s) that must keep a group on site; %d (term, site) pair(s) routed to a group that occurs at any site; %d term(s) not reachable from the results',
+    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.siteSingles, r.routed, r.mismatch, r.tie, r.single, r.recorded || 0, r.rewinds, r.keepWalks, r.anySite, r.skipped);
   for (const f of r.fails.slice(0, Math.max(SHOW, 5))) console.log('        ' + f);
   if (r.fails.length > Math.max(SHOW, 5)) console.log('        ... and ' + (r.fails.length - Math.max(SHOW, 5)) + ' more');
   bad += r.fails.length;

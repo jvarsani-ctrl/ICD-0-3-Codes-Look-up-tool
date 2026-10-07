@@ -352,6 +352,7 @@
     "2": {
       "name": "Lymphomas and Reticuloendothelial Neoplasms",
       "built": true,
+      "occurs_at_any_site": true,
       "trees": [
         {
           "tree_id": "g2_lymphoid_main",
