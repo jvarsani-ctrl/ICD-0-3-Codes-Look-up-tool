@@ -381,8 +381,10 @@ function fixtures(ctx) {
    from alias_index.json and topography_codes.json — the sources of truth —
    and never read off a flag the engine sets. The term's groups that also
    appear in the site's candidate_groups decide it: exactly one enters that
-   group with the topography captured; none or several stop the case with
-   nothing entered. Each pair is tapped through `handleOption` — alias, organ
+   group with the topography captured; several stop the case with nothing
+   entered, and so does none, unless the router declares exactly one of the
+   term's groups as occurring at any site (Group II, registrar, 7 October 2026),
+   which then enters. Each pair is tapped through `handleOption` — alias, organ
    system, region — the handlers the rendered buttons call.
 
    A term filed under ONE group is asked its site too when that group's data
@@ -390,9 +392,14 @@ function fixtures(ctx) {
    `when` in its trees names `topography` — computed here from the router and
    the group files, not from the engine (registrar, 4 October 2026). Without
    the site those rules fail open: "Rhabdoid tumour", a Group IX-only
-   spelling, coded a renal rhabdoid tumour in Group IX. The single-group terms
-   of a group that reads no site are the control: a fix that asks every term
-   for its site passes the rest and fails this. */
+   spelling, coded a renal rhabdoid tumour in Group IX.
+
+   The single-group terms of a group that reads no site are asked the site too,
+   and the answer is only recorded (registrar, 7 October 2026): before that the
+   output printed Topography as a dash for most typed terms. They are the
+   control for the opposite fault: the recorded site must never narrow the group
+   or stop the case, so each is tried at a site its group's own candidate list
+   excludes, and at "the file does not state the site". */
 async function expressLane(ctx, out) {
   const SHARED = path.join(ROOT, 'data', 'shared');
   const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
@@ -430,6 +437,16 @@ async function expressLane(ctx, out) {
     const c = ctx.groupCache.get(g);
     return !!c && hasSiteWhen(c.dt.decision_trees);
   };
+  /* The groups a (term, site) pair should reach, computed from the router and the topography
+     file: the term's groups that the site names; and only if it names none, the term's groups
+     the router declares as occurring at any site. */
+  const anySite = (g) => ((router.groups || {})[String(g)] || {}).occurs_at_any_site === true;
+  const expectAt = (groups, code) => {
+    const cg = topo.topography_lookup[code].candidate_groups;
+    if (!Array.isArray(cg)) return groups.slice();
+    const named = groups.filter((g) => cg.includes(g));
+    return named.length ? named : groups.filter(anySite);
+  };
   for (const term of Object.keys(index).sort()) {
     const groups = index[term];
     /* A term outranked in the top eight by shorter matches cannot be tapped.
@@ -442,8 +459,37 @@ async function expressLane(ctx, out) {
     }
     if (groups.length === 1 && !readsSite(groups[0])) {
       out.single++;
-      if (ctx.state.stage === 'site' || ctx.state.group !== groups[0]) {
-        fail('"' + term + '" ' + JSON.stringify(groups) + ' was asked the site or entered group ' + ctx.state.group);
+      const g = groups[0], at0 = '"' + term + '" [' + g + ']';
+      if (!(router.groups || {})[String(g)].built) {
+        /* An unbuilt group stops at its handoff: no tree, so no site to record. */
+        if (ctx.state.group !== g || ['site', 'site_region'].includes(ctx.state.stage)) fail(at0 + ' (unbuilt) reached stage ' + ctx.state.stage + ', group ' + ctx.state.group);
+        continue;
+      }
+      if (ctx.state.stage !== 'site' || ctx.state.group !== null) {
+        fail(at0 + ' reached stage ' + ctx.state.stage + ', group ' + ctx.state.group + ', not the record-only site question');
+        continue;
+      }
+      let screen = '';
+      try { screen = ctx.renderSite(); } catch (e) { fail(at0 + ' site screen throws: ' + e.message); continue; }
+      if (screen.indexOf(ctx.esc(term)) < 0) fail(at0 + ' site screen does not name the term');
+      if (screen.indexOf('data-act="site-unstated"') < 0) fail(at0 + ' site screen offers no "not stated" answer');
+      const cgOf = (c) => topo.topography_lookup[c].candidate_groups;
+      const named = (c) => !Array.isArray(cgOf(c)) || cgOf(c).includes(g);
+      const probe = [...new Set([codes[0], codes.find((c) => !named(c)), codes.find((c) => named(c))].filter(Boolean))];
+      for (const code of probe) {
+        await enter(term);
+        try { await pickSite(code); } catch (e) { fail(at0 + ' at ' + code + ' throws: ' + e.message); continue; }
+        const st = ctx.state;
+        out.recorded = (out.recorded || 0) + 1;
+        if (st.captured.topography !== code) fail(at0 + ' at ' + code + ': topography captured as ' + st.captured.topography);
+        else if (st.group !== g || ['site', 'site_region', 'search_unresolved'].includes(st.stage)) {
+          fail(at0 + ' at ' + code + ' ' + JSON.stringify(cgOf(code)) + ': expected Group ' + g + ' entered, got stage ' + st.stage + ', group ' + st.group);
+        }
+      }
+      await enter(term); await tap('site-unstated', 0);
+      const su = ctx.state;
+      if (su.group !== g || su.captured.topography !== undefined || ['site', 'site_region', 'search_unresolved'].includes(su.stage)) {
+        fail(at0 + ' "not stated": expected Group ' + g + ' with no topography, got stage ' + su.stage + ', group ' + su.group + ', topography ' + su.captured.topography);
       }
       continue;
     }
@@ -455,15 +501,19 @@ async function expressLane(ctx, out) {
     let screen = '';
     try { screen = ctx.renderSite(); } catch (e) { fail('"' + term + '" site screen throws: ' + e.message); continue; }
     if (screen.indexOf(ctx.esc(term)) < 0) fail('"' + term + '" site screen does not name the term');
+    if (screen.indexOf('data-act="site-unstated"') >= 0 || ctx.state.siteRecordOnly) {
+      fail('"' + term + '" ' + JSON.stringify(groups) + ' site screen offers "not stated" or sets the record-only flag, which would enter a group the site did not choose');
+    }
     for (const code of codes) {
       await enter(term);
       try { await pickSite(code); } catch (e) { fail('"' + term + '" at ' + code + ' throws: ' + e.message); continue; }
       const cg = topo.topography_lookup[code].candidate_groups;
-      const expect = Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
+      const expect = expectAt(groups, code);
       const st = ctx.state, at = '"' + term + '" ' + JSON.stringify(groups) + ' at ' + code + ' ' + JSON.stringify(cg);
       if (st.captured.topography !== code) { fail(at + ': topography captured as ' + st.captured.topography); continue; }
       if (expect.length === 1) {
         out.routed++;
+        if (Array.isArray(cg) && !groups.some((g) => cg.includes(g))) out.anySite++;
         if (st.group !== expect[0] || st.stage === 'search_unresolved') {
           fail(at + ': expected Group ' + expect[0] + ', got stage ' + st.stage + ', group ' + st.group);
         } else if (!st.trail.some((t) => t.label === 'Group')) {
@@ -493,10 +543,6 @@ async function expressLane(ctx, out) {
        R2  rewind a single-group express-lane case to its Tree entry and take
            the guided route instead: the case must not carry the search term,
            or the guided site step becomes the express lane's. */
-  const expectAt = (groups, code) => {
-    const cg = topo.topography_lookup[code].candidate_groups;
-    return Array.isArray(cg) ? groups.filter((g) => cg.includes(g)) : groups.slice();
-  };
   const rewindTo = async (label) => {
     const i = ctx.state.trail.map((t) => t.label).lastIndexOf(label);
     if (i < 0) return false;
@@ -564,6 +610,68 @@ async function expressLane(ctx, out) {
     }
   }
   if (!routedGroups.size) fail('R2 found no single-group term whose group routes its tree — the scenario did not run');
+
+  /* R4  the record-only lane, stepped back from. One term of every built group that
+         reads no site. Back at the Search entry the clerk takes the guided route, and
+         the case must carry neither the search term nor the record-only flag. Back at
+         the organ-system question the clerk answers "not stated", and the trail must
+         hold that answer once and no site. */
+  const recordGroups = new Set();
+  for (const term of singles) {
+    const g = index[term][0];
+    if (recordGroups.has(g) || readsSite(g) || !(router.groups || {})[String(g)].built) continue;
+    recordGroups.add(g);
+    await enter(term); await pickSite(codes[0]);
+    if (!(await rewindTo('Search'))) { fail('R4 "' + term + '" [' + g + ']: no Search entry to step back to'); continue; }
+    await tap('guided', 0);
+    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site', 'site_region'].includes(ctx.state.stage); k++) await tap(ctx.state.stage, 0);
+    out.rewinds++;
+    if (ctx.state.searchTerm || ctx.state.siteRecordOnly || ctx.state.stage === 'search_unresolved') {
+      fail('R4 "' + term + '" [' + g + '], back to Search, then the guided route: term ' + JSON.stringify(ctx.state.searchTerm) +
+        ', record-only ' + ctx.state.siteRecordOnly + ', stage ' + ctx.state.stage);
+    }
+    await enter(term); await pickSite(codes[0]);
+    if (!(await rewindTo('Organ system'))) { fail('R4 "' + term + '" [' + g + ']: no Organ system entry to step back to'); continue; }
+    await tap('site-unstated', 0);
+    out.rewinds++;
+    const labels = ctx.state.trail.map((x) => x.label), st = ctx.state;
+    if (st.group !== g || st.captured.topography !== undefined || labels.includes('Organ system') ||
+        labels.filter((l) => l === 'Topography').length !== 1) {
+      fail('R4 "' + term + '" [' + g + '], back to the organ system and "not stated": group ' + st.group + ', topography ' +
+        st.captured.topography + ', trail ' + JSON.stringify(st.trail.map((x) => x.label + ': ' + x.value)));
+    }
+  }
+  if (!recordGroups.size) fail('R4 found no single-group term of a group that reads no site — the scenario did not run');
+
+  /* R5  keep_on_site, read from the router and driven through the engine. Every answer
+         that keeps a group must leave that group a candidate (or the entered group) at
+         every selectable site, for every presentation that asks the question. Without
+         the key the site takes Group II away at most sites. */
+  for (const a of router.archetypes) {
+    const d = a.dual_group_discriminator && (router.discriminators || {})[a.dual_group_discriminator];
+    if (!d || !d.ask_before_site) continue;
+    const ai = router.archetypes.indexOf(a);
+    for (const [answer, rule] of Object.entries(d.narrows || {})) {
+      const keep = (rule.keep_on_site || []).filter((g) => (a.candidate_groups || []).includes(g));
+      if (!keep.length) continue;
+      const oi = d.options.findIndex((o) => String(typeof o === 'string' ? o : o.value) === answer);
+      for (const code of codes) {
+        ctx.reset(); ctx.state.router = router; ctx.state.topography = topo; ctx.state.aliasIndex = index;
+        await tap('guided', 0); await tap('archetype', ai); await tap('discriminator', oi);
+        if (ctx.systemRows().findIndex((row) => row.codes.includes(code)) < 0) continue;
+        await pickSite(code);
+        out.keepWalks++;
+        for (const g of keep) {
+          if (ctx.state.group !== g && !(ctx.state.candidates || []).includes(g)) {
+            fail('R5 ' + a.archetype_id + ', answer "' + answer + '", site ' + code + ': Group ' + g + ' was kept by the router but is not a candidate (stage ' +
+              ctx.state.stage + ', group ' + ctx.state.group + ', candidates ' + JSON.stringify(ctx.state.candidates) + ')');
+          }
+        }
+      }
+    }
+  }
+  if (!out.keepWalks) fail('R5 found no keep_on_site in the router — the scenario did not run');
+  if (!out.anySite) fail('no term was routed by occurs_at_any_site — the router declares no such group, or the scenario did not run');
 
   /* R3  the guided route, same defect: a tree routed from the topography is
          an automatic trail entry. Every presentation × organ system is walked
@@ -1317,6 +1425,125 @@ async function uxScenarios(ctx) {
     await fire('input', el({ 'data-act': 'labval', 'data-i': 0 }, { tagName: 'INPUT', type: 'text', value: '2.1', __closest: { '.labrow': { querySelector: () => absentBox } } }));
     t('typing a number in a laboratory row clears that row\'s "Not in the file" box', absentBox.checked === false && L.state.draft.labs.afp.value === '2.1', JSON.stringify(L.state.draft.labs));
   }
+  /* ---- FIXTURE: "Uncertain subtype" names the behaviour of its fallback ---- */
+  {
+    const entry = (b, name) => ({ morphology_code: '9391', behavior_code: b, morphology_name: name, iccc3_subgroup_id: 'IIIa', iccc3_subgroup_name: 'x' });
+    const fb = { node_id: 'fx_nos', node_type: 'morphology_only', step_label: 'Subtype', question: 'q', options: [], nos_fallback: { code: '9391', behavior_code: '3', name: 'Ependymoma, NOS', reason: 'r' } };
+    begin({ morphology_entries: [entry('1', 'Sellar ependymoma'), entry('3', 'Ependymoma, NOS')], decision_trees: [{ tree_id: 'fx', entry_node: 'fx_nos', nodes: [fb] }] }, 'fx', 'fx_nos', 'C72.0');
+    await tap('escape-nos');
+    const e = ctx.state.result && ctx.state.result.entry;
+    t('"Uncertain subtype" records the behaviour its fallback names, not the first entry listed for that code', !!e && e.behavior_code === '3' && e.morphology_name === 'Ependymoma, NOS', JSON.stringify(e && [e.morphology_code, e.behavior_code, e.morphology_name]));
+  }
+  /* ---- FIXTURE: WHO Rule J, a compound term typed with its roots in another order ---- */
+  {
+    ctx.reset();
+    ctx.state.aliasIndex = { Fibromyxosarcoma: [9], Osteochondrosarcoma: [8], 'Rhabdomyosarcoma, NOS': [9] };
+    const found = (q, alias) => ctx.searchAlias(q).some((h) => h.alias === alias);
+    t('a compound term typed with hyphens, spaces or its roots swapped finds the listed term',
+      found('fibro-myxo-sarcoma', 'Fibromyxosarcoma') && found('myxo fibro sarcoma', 'Fibromyxosarcoma') && found('chondro-osteo-sarcoma', 'Osteochondrosarcoma') && found('Fibromyxosarcoma', 'Fibromyxosarcoma'),
+      JSON.stringify(['fibro-myxo-sarcoma', 'myxo fibro sarcoma', 'chondro-osteo-sarcoma'].map((q) => ctx.searchAlias(q).map((h) => h.alias))));
+    t('the swapped-roots search keeps the last word last and matches nothing else', !found('sarcoma-myxo-fibro', 'Fibromyxosarcoma') && ctx.searchAlias('-').length === 0,
+      JSON.stringify([ctx.searchAlias('sarcoma-myxo-fibro').map((h) => h.alias), ctx.searchAlias('-').map((h) => h.alias)]));
+  }
+  /* ---- FIXTURE: a discriminator answer can keep a group through the site step (WHO Rule D) ---- */
+  {
+    const savedRouter = ctx.state.router, savedTopo = ctx.state.topography;
+    const router = { discriminators: { dx: { variable: 'dx', narrows: { lymph: { drop: [1], keep_on_site: [2] }, other: { drop: [2] } } } } };
+    const run = (answer, cands, siteGroups) => {
+      ctx.reset();
+      Object.assign(ctx.state, { router, archetype: { dual_group_discriminator: 'dx' }, candidates: cands.slice(),
+        topography: { topography_lookup: { 'C64.9': { candidate_groups: siteGroups } } } });
+      ctx.state.captured = { topography: 'C64.9', dx: answer };
+      ctx.narrowBySite();
+      return JSON.stringify(ctx.state.candidates);
+    };
+    t('a group the answer keeps survives the site step when the site does not list it', run('lymph', [2, 9], [6]) === '[2]', run('lymph', [2, 9], [6]));
+    t('the site still narrows every other candidate', run('lymph', [2, 6, 9], [6]) === '[2,6]', run('lymph', [2, 6, 9], [6]));
+    t('an answer that keeps nothing lets the site take the family away', run('other', [6, 9], [6]) === '[6]' && run('other', [1, 2, 9], [6]) === '[6]', JSON.stringify([run('other', [6, 9], [6]), run('other', [1, 2, 9], [6])]));
+    t('keep_on_site never adds a group that was not already a candidate', run('lymph', [9], [6]) === '[6]', run('lymph', [9], [6]));
+    ctx.reset(); ctx.state.router = savedRouter; ctx.state.topography = savedTopo;
+  }
+  /* ---- FIXTURE: a group that occurs at any site survives only a site that names none of the term's groups ---- */
+  {
+    const savedRouter = ctx.state.router, savedTopo = ctx.state.topography, savedIndex = ctx.state.aliasIndex;
+    const router = { groups: { 1: { name: 'One', built: false }, 2: { name: 'Two', built: false, occurs_at_any_site: true } } };
+    const topo = { topography_lookup: { X1: { candidate_groups: [1] }, X2: { candidate_groups: [2] }, X6: { candidate_groups: [6] }, X12: { candidate_groups: [1, 2] } } };
+    const run = (code) => {
+      ctx.reset();
+      Object.assign(ctx.state, { router, topography: topo, aliasIndex: { T: [1, 2] }, searchTerm: 'T' });
+      ctx.state.captured = { topography: code };
+      ctx.afterSearchSite();
+      return ctx.state.stage + ':' + ctx.state.group;
+    };
+    t('a site that names one of the term\'s groups decides, although another group occurs at any site', run('X1') === 'handoff:1' && run('X2') === 'handoff:2', JSON.stringify([run('X1'), run('X2')]));
+    t('a site that names none of the term\'s groups takes the group that occurs at any site', run('X6') === 'handoff:2', run('X6'));
+    t('a site that names both of the term\'s groups still stops', run('X12') === 'search_unresolved:null', run('X12'));
+    ctx.reset(); ctx.state.router = savedRouter; ctx.state.topography = savedTopo; ctx.state.aliasIndex = savedIndex;
+  }
+  /* ---- FIXTURES on the real data: the "take the higher" decisions of 7 October 2026 ---- */
+  {
+    /* BAP1 loss is recorded and changes neither the code nor the behavior of a meningioma. The
+       subtype, band and invasion values are read from the node's own rules. */
+    begin(dts.get(3), 'g3_meninges', 'mn_grade_assembly', 'C70.0');
+    const n = ctx.findNode('mn_grade_assembly');
+    const vals = (k) => [...new Set(n.resolution_logic.flatMap((r) => [].concat((r.when || {})[k] === undefined ? [] : (r.when || {})[k])))];
+    const subs = [undefined, ...vals('meningioma_subtype')], bands = vals('mitotic_band'), inv = [undefined, ...vals('brain_invasion')];
+    const res = (sub, band, inva, bap) => {
+      const c = ctx.state.captured;
+      for (const k of ['meningioma_subtype', 'mitotic_band', 'brain_invasion', 'bap1_status']) delete c[k];
+      if (sub) c.meningioma_subtype = sub;
+      c.mitotic_band = band;
+      if (inva) c.brain_invasion = inva;
+      if (bap) c.bap1_status = bap;
+      const r = ctx.matchRules(n.resolution_logic);
+      return r ? r.morphology_code + '/' + r.behavior_code : 'none';
+    };
+    const diffs = [];
+    for (const sub of subs) for (const band of bands) for (const inva of inv) {
+      const a = res(sub, band, inva, 'altered'), z = res(sub, band, inva, undefined);
+      if (a !== z) diffs.push([sub, band, inva].join('|') + ' ' + a + ' vs ' + z);
+    }
+    t('BAP1 loss is recorded and changes neither the code nor the behavior of a meningioma, for every subtype, mitotic band and brain-invasion answer',
+      subs.length > 5 && bands.length > 2 && diffs.length === 0, diffs.length + ' differ: ' + diffs.slice(0, 3).join('; '));
+    t('a rhabdoid meningioma with BAP1 loss and a grade 3 count records Papillary meningioma 9538/3', res('rhabdoid', 'g3_band', undefined, 'altered') === '9538/3', res('rhabdoid', 'g3_band', undefined, 'altered'));
+  }
+  {
+    /* A follicular lymphoma grade ticked twice or more records the highest grade. The expected code is read
+       from the digits in each marker's own words, a second reading of the same text. */
+    begin(dts.get(2), 'g2_lymphoid_main', 'g2_follicular', 'C77.9');
+    const n = ctx.findNode('g2_follicular');
+    const grp = n.marker_groups.find((g) => /^Grade stated/.test(g.group_label));
+    const names = grp ? grp.markers : [];
+    const gradeOf = (m) => Math.max(...(m.match(/[123]/g) || [0]).map(Number));
+    const want = { 3: '9698', 2: '9691', 1: '9695' };
+    const bad = [];
+    for (let mask = 1; mask < (1 << names.length); mask++) {
+      const ticked = names.filter((_, i) => mask & (1 << i));
+      ctx.state.markers = {};
+      for (const m of ['Follicular pattern, adult type', 'BCL2 positive', 'CD10'].concat(ticked)) ctx.state.markers[m] = 'pos';
+      const r = ctx.matchRules(n.resolution_logic), got = r ? r.morphology_code : 'none';
+      const expect = want[Math.max(...ticked.map(gradeOf))];
+      if (got !== expect) bad.push(ticked.join(' + ') + ' -> ' + got + ' (wanted ' + expect + ')');
+    }
+    t('a follicular lymphoma grade ticked twice or more records the highest grade, for every combination of the six grade markers',
+      names.length === 6 && bad.length === 0, names.length + ' grade markers; ' + bad.slice(0, 3).join('; '));
+  }
+  {
+    /* A retinocytomatous area does not set the code when the report states a poorer grade or a growth pattern. */
+    const rb = async (needle) => {
+      begin(dts.get(5), 'g5_retinoblastoma', 'rb_retinocytoma_word', 'C69.2');
+      const n = ctx.findNode('rb_retinocytoma_word');
+      const i = n.options.findIndex((o) => (o.label || '').includes(needle));
+      if (i < 0) return 'no option "' + needle + '"';
+      await tap('opt', i);
+      const e = ctx.state.result && ctx.state.result.entry;
+      return e ? e.morphology_code + '/' + e.behavior_code : 'no code (stage ' + ctx.state.stage + ')';
+    };
+    const g3 = await rb('states a poorly differentiated grade'), dif = await rb('also states a diffuse infiltrating growth pattern'), low = await rb('no poorer grade and no severe anaplasia');
+    t('a retinocytomatous area inside a tumour with a poorer grade or severe anaplasia records Retinoblastoma, undifferentiated 9512/3', g3 === '9512/3', g3);
+    t('a retinocytomatous area with a stated diffuse infiltrating pattern records Retinoblastoma, diffuse 9513/3', dif === '9513/3', dif);
+    t('a retinocytomatous area with nothing poorer stated still records Retinoblastoma, differentiated 9511/3', low === '9511/3', low);
+  }
   return rows;
 }
 
@@ -1334,10 +1561,10 @@ console.log('\nExpress lane — a term filed under several groups is settled by 
 {
   /* An engine that throws inside a scenario fails the section by name rather
      than ending the run with a stack trace. */
-  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, siteSingles: 0, terms: 0, skipped: 0, rewinds: 0, fails: [] };
+  const r = { routed: 0, mismatch: 0, tie: 0, single: 0, siteSingles: 0, terms: 0, skipped: 0, rewinds: 0, keepWalks: 0, anySite: 0, fails: [] };
   if (ONLY !== 'ux') try { await expressLane(ctx, r); } catch (e) { r.fails.push('the engine threw: ' + e.message); }
-  console.log('  %s  %d multi-group term(s) and %d single-group term(s) whose group reads the site, x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) of a group that reads no site enter it directly; %d stepped-back case(s); %d term(s) not reachable from the results',
-    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.siteSingles, r.routed, r.mismatch, r.tie, r.single, r.rewinds, r.skipped);
+  console.log('  %s  %d multi-group term(s) and %d single-group term(s) whose group reads the site, x every site: %d routed to one group, %d stopped (no group), %d stopped (tie); %d single-group term(s) of a group that reads no site are asked the site and only record it (%d sites tried, each entering the group); %d stepped-back case(s); %d guided walk(s) that must keep a group on site; %d (term, site) pair(s) routed to a group that occurs at any site; %d term(s) not reachable from the results',
+    r.fails.length ? 'FAIL' : 'OK  ', r.terms, r.siteSingles, r.routed, r.mismatch, r.tie, r.single, r.recorded || 0, r.rewinds, r.keepWalks, r.anySite, r.skipped);
   for (const f of r.fails.slice(0, Math.max(SHOW, 5))) console.log('        ' + f);
   if (r.fails.length > Math.max(SHOW, 5)) console.log('        ... and ' + (r.fails.length - Math.max(SHOW, 5)) + ' more');
   bad += r.fails.length;

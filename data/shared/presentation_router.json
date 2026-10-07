@@ -177,13 +177,19 @@
           "drop": [
             1
           ],
-          "because": "Nodal disease is Group II, not a leukaemia."
+          "because": "Nodal disease is Group II, not a leukaemia.",
+          "keep_on_site": [
+            2
+          ]
         },
         "extranodal": {
           "drop": [
             1
           ],
-          "because": "Extranodal disease is Group II, not a leukaemia."
+          "because": "Extranodal disease is Group II, not a leukaemia.",
+          "keep_on_site": [
+            2
+          ]
         }
       },
       "ask_before_site": true,
@@ -347,6 +353,7 @@
     "2": {
       "name": "Lymphomas and Reticuloendothelial Neoplasms",
       "built": true,
+      "occurs_at_any_site": true,
       "trees": [
         {
           "tree_id": "g2_lymphoid_main",
@@ -900,6 +907,7 @@
               "C54.8",
               "C54.9",
               "C55.9",
+              "C57.8",
               "C58.9",
               "C61.9",
               "C63.0",
@@ -919,6 +927,7 @@
               "C67.7",
               "C67.8",
               "C67.9",
+              "C68.8",
               "C69.0",
               "C69.1",
               "C69.2",
@@ -933,7 +942,14 @@
               "C74.9",
               "C75.4",
               "C75.5",
+              "C76.0",
+              "C76.1",
+              "C76.2",
               "C76.3",
+              "C76.4",
+              "C76.5",
+              "C76.7",
+              "C76.8",
               "C80.9"
             ],
             "tree_id": "g10_extragonadal",

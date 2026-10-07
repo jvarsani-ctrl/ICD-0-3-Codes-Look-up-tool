@@ -6259,7 +6259,7 @@
           "step_number": 3,
           "step_label": "Ependymal morphology",
           "question": "Which ependymal morphology does the report describe? Answer this before any stain is interpreted.",
-          "hint": "Subependymoma and myxopapillary ependymoma RETAIN H3 K27me3, so they must be excluded on morphology first — otherwise a retained stain on one of them reads as a posterior fossa ependymoma that is not PFA, which is a different tumour. Papillary, clear cell, cellular and tanycytic ependymoma are morphological patterns, not types: CNS5 demoted them and ICD-O-3.2 agrees, carrying clear cell, cellular and tanycytic as Related terms of 9391/3.",
+          "hint": "Subependymoma and myxopapillary ependymoma RETAIN H3 K27me3, so they must be excluded on morphology first — otherwise a retained stain on one of them reads as a posterior fossa ependymoma that is not PFA, which is a different tumour. Papillary, clear cell, cellular and tanycytic ependymoma are morphological patterns, not types: CNS5 demoted them and ICD-O-3.2 agrees, carrying clear cell, cellular and tanycytic as Related terms of 9391/3. If the file records both 'papillary' and 'anaplastic' ependymoma, choose papillary ependymoma (9393), the higher code.",
           "clinical_alert": null,
           "coding_note": "CNS5 replaced the histological scheme with anatomical compartment x molecular group, deleted anaplastic ependymoma as a type and moved myxopapillary ependymoma from grade 1 to grade 2. The codes 9392 and 9393 remain in ICD-O-3.2 and in ICCC-3; the diagnoses do not exist in CNS5, so they are coded only where the file itself states them.",
           "captured_variables": [
@@ -9356,7 +9356,7 @@
           "step_number": 3,
           "step_label": "Histologic grade of the diffuse glioma",
           "question": "On the H&E alone, is this diffuse glioma low grade or high grade?",
-          "hint": "Grade first, type second. In a child the molecular shortcuts that define an adult glioblastoma do NOT apply: cIMPACT-NOW update 11 says a TERT promoter mutation is not a solitary defining feature in a histologically low-grade tumour at any age, and EGFR amplification and +7/-10 are not solitary defining features below 40 years. Below 18, none of the three stands alone. Grade this on the slide.",
+          "hint": "Grade first, type second. In a child the molecular shortcuts that define an adult glioblastoma do NOT apply: cIMPACT-NOW update 11 says a TERT promoter mutation is not a solitary defining feature in a histologically low-grade tumour at any age, and EGFR amplification and +7/-10 are not solitary defining features below 40 years. Below 18, none of the three stands alone. Grade this on the slide. If the report describes both low-grade and high-grade areas, choose HIGH.",
           "coding_note": "Revision 2 §4.3. The Santosh rule allowing glioblastoma IDH-wildtype to be assigned at RL III on histology alone is scoped to 55 years and over and NEVER applies in this registry — no such branch exists in this tree (Revision 2 §1.7).",
           "captured_variables": [
             "diffuse_glioma_grade_band",
@@ -10157,7 +10157,7 @@
           "step_number": 4,
           "step_label": "IDH and 1p/19q",
           "question": "What did IDH and 1p/19q testing show?",
-          "hint": "Where both are unavailable — which is the usual case — the honest output is 9450/3 with a named provisional and low confidence, not a molecular diagnosis. The RL III surrogate route (HIP1R, vimentin, H3 K27me3) approximates 1p/19q status; it does not establish it, and no branch here rests on it.",
+          "hint": "Where both are unavailable — which is the usual case — the honest output is 9450/3 with a named provisional and low confidence, not a molecular diagnosis. The RL III surrogate route (HIP1R, vimentin, H3 K27me3) approximates 1p/19q status; it does not establish it, and no branch here rests on it. Where the report states both grade 2 and grade 3 for a codeleted tumour, choose the option with brisk mitoses, microvascular proliferation or necrosis.",
           "coding_note": "Revision 2 §4.8. Note the two strings that differ by one comma and live in different fields: ICD-O-3.2's Related term of 9450/3 is 'Oligodendroglioma, IDH-mutant and 1p/19q-codeleted'; CNS5 Table 1 prints 'Oligodendroglioma, IDH-mutant, and 1p/19q-codeleted'. Never substitute one for the other.",
           "captured_variables": [
             "idh_status",
@@ -13552,7 +13552,7 @@
           "step_number": 3,
           "step_label": "Obsolete or superseded diagnosis — code as documented",
           "question": "The file records a diagnosis that is no longer a WHO CNS5 type and no material remains for review. Which string does it use?",
-          "hint": "These codes are retained so historical cases are not lost. NONE of them may be assigned prospectively to a new case: if tissue or blocks still exist, go back and work the case up properly instead of choosing here.",
+          "hint": "These codes are retained so historical cases are not lost. NONE of them may be assigned prospectively to a new case: if tissue or blocks still exist, go back and work the case up properly instead of choosing here. Where the file records both 'anaplastic' and 'papillary' ependymoma, choose \"Papillary ependymoma\" (9393), the higher code.",
           "coding_note": "Revision 2 §1.2, §4.6, §4.9 and §4.10. Eight of these codes had no diagnostic content anywhere in the previous revision and remain legacy strings. The unused astrocytoma range-expansion artefacts are absent from ICD-O-3.2 and are authored nowhere in this tool, so they are not offered here or anywhere else.",
           "captured_variables": [
             "workup_status",
@@ -22040,7 +22040,7 @@
           "step_number": 3,
           "step_label": "Reported grade",
           "question": "What grade, if any, does the histology report give this ependymal tumour?",
-          "hint": "Read the grade off the report; do not derive it. CNS5 states that a spinal ependymoma is CNS WHO grade 2 or 3, and nothing in this tool's evidence set supplies a mitotic threshold for the spinal compartment that would let it choose.",
+          "hint": "Read the grade off the report; do not derive it. CNS5 states that a spinal ependymoma is CNS WHO grade 2 or 3, and nothing in this tool's evidence set supplies a mitotic threshold for the spinal compartment that would let it choose. If the report states two grades, such as grade 2-3, choose the higher.",
           "clinical_alert": null,
           "coding_note": "The captured grade feeds grade_resolution on the terminals downstream — Arabic on Track A, Roman on Track B. CNS5 deleted anaplastic ependymoma as a type; the word is captured separately because ICD-O-3.2 still carries 9392/3 and the registry codes the term the report used.",
           "captured_variables": [
@@ -22156,67 +22156,6 @@
                 "GFAP"
               ],
               "when": {
-                "anaplastic_term_reported": "y"
-              },
-              "morphology_code": "9392",
-              "behavior_code": "3",
-              "confidence": "medium",
-              "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "who_cns5",
-                "who_diagnosis": "Spinal ependymoma",
-                "descriptive_diagnosis": null,
-                "suffix": "none",
-                "grade_system": "arabic",
-                "grade": null,
-                "comment": null
-              },
-              "grade_resolution": {
-                "criterion": "CNS WHO grade 2 versus grade 3 for a morphologically defined spinal ependymoma (Revision 2 §4.0). CNS5 states the type carries grade 2 or 3; which one is a report finding, not a threshold this corpus publishes for the spinal compartment.",
-                "variable": "ependymoma_grade_reported",
-                "detection_method_required": [
-                  "Histology"
-                ],
-                "values": {
-                  "2": {
-                    "grade": "2",
-                    "grade_system": "arabic"
-                  },
-                  "3": {
-                    "grade": "3",
-                    "grade_system": "arabic"
-                  },
-                  "not_stated": {
-                    "grade": null,
-                    "reason": "The report states no grade. CNS5 grades spinal ependymoma 2 or 3 and no criterion in this corpus lets the tool choose between them, so the grade is omitted rather than guessed."
-                  }
-                },
-                "unresolved": {
-                  "grade": null,
-                  "defer_to": "histological_grade"
-                }
-              },
-              "resource_level_gate": {
-                "family": "ependymal",
-                "required_rl": "II",
-                "tier": "highly_recommended",
-                "referral_tier": "can_be_considered",
-                "unreachable_destination": {
-                  "morphology_code": "9391",
-                  "behavior_code": "3"
-                }
-              },
-              "upgrade_path": "MYCN FISH on fresh tissue (RL IV) would establish or exclude spinal ependymoma, MYCN-amplified, which is the one spinal ependymal type a high-grade morphology should raise.",
-              "coding_note": "The report used the word 'anaplastic', so ICD-O-3.2's 9392/3 carries it. CNS5 deleted anaplastic ependymoma as a type and expresses grade within the type, which is why the rendered diagnosis is 'Spinal ependymoma' with the grade resolved from the report. The code and the diagnosis are deliberately different objects here.",
-              "captures": {
-                "workup_status": "incomplete"
-              }
-            },
-            {
-              "positive": [
-                "GFAP"
-              ],
-              "when": {
                 "papillary_architecture_reported": "y"
               },
               "morphology_code": "9393",
@@ -22269,6 +22208,67 @@
               },
               "upgrade_path": "MYCN FISH on fresh tissue (RL IV) would establish or exclude spinal ependymoma, MYCN-amplified.",
               "coding_note": "9393 Papillary ependymoma is a legacy string with no diagnostic content — CNS5 demoted papillary architecture from a subtype to a morphological pattern, and ICD-O-3.2 agrees to the extent that clear cell, cellular and tanycytic became Related terms of 9391/3. It is emitted only because the report used the word; the rendered diagnosis is the CNS5 type.",
+              "captures": {
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "positive": [
+                "GFAP"
+              ],
+              "when": {
+                "anaplastic_term_reported": "y"
+              },
+              "morphology_code": "9392",
+              "behavior_code": "3",
+              "confidence": "medium",
+              "basis_of_diagnosis": 7,
+              "diagnosis_rendering": {
+                "track": "who_cns5",
+                "who_diagnosis": "Spinal ependymoma",
+                "descriptive_diagnosis": null,
+                "suffix": "none",
+                "grade_system": "arabic",
+                "grade": null,
+                "comment": null
+              },
+              "grade_resolution": {
+                "criterion": "CNS WHO grade 2 versus grade 3 for a morphologically defined spinal ependymoma (Revision 2 §4.0). CNS5 states the type carries grade 2 or 3; which one is a report finding, not a threshold this corpus publishes for the spinal compartment.",
+                "variable": "ependymoma_grade_reported",
+                "detection_method_required": [
+                  "Histology"
+                ],
+                "values": {
+                  "2": {
+                    "grade": "2",
+                    "grade_system": "arabic"
+                  },
+                  "3": {
+                    "grade": "3",
+                    "grade_system": "arabic"
+                  },
+                  "not_stated": {
+                    "grade": null,
+                    "reason": "The report states no grade. CNS5 grades spinal ependymoma 2 or 3 and no criterion in this corpus lets the tool choose between them, so the grade is omitted rather than guessed."
+                  }
+                },
+                "unresolved": {
+                  "grade": null,
+                  "defer_to": "histological_grade"
+                }
+              },
+              "resource_level_gate": {
+                "family": "ependymal",
+                "required_rl": "II",
+                "tier": "highly_recommended",
+                "referral_tier": "can_be_considered",
+                "unreachable_destination": {
+                  "morphology_code": "9391",
+                  "behavior_code": "3"
+                }
+              },
+              "upgrade_path": "MYCN FISH on fresh tissue (RL IV) would establish or exclude spinal ependymoma, MYCN-amplified, which is the one spinal ependymal type a high-grade morphology should raise.",
+              "coding_note": "The report used the word 'anaplastic', so ICD-O-3.2's 9392/3 carries it. CNS5 deleted anaplastic ependymoma as a type and expresses grade within the type, which is why the rendered diagnosis is 'Spinal ependymoma' with the grade resolved from the report. The code and the diagnosis are deliberately different objects here.",
               "captures": {
                 "workup_status": "incomplete"
               }
@@ -24095,7 +24095,7 @@
           "step_number": 3,
           "step_label": "H&E architecture",
           "question": "What architecture or cytology does the H&E report describe?",
-          "hint": "Pick the architecture the report actually names. The subtype chooses the code only where the tumour turns out to be grade 1 - a grade 2 meningioma of any architecture is coded 9539/1 and a grade 3 is coded 9530/3, so the mitotic count comes next whatever you pick here.",
+          "hint": "Pick the architecture the report actually names. For an architecture, the mitotic count and brain invasion come next and decide the grade and the final code. If the report names papillary or rhabdoid architecture and also calls the tumour atypical, anaplastic or grade 2 or 3, choose the architecture, not the grade option: ICD-O-3.2 lists papillary meningioma, with rhabdoid as a related term, at 9538/3, the higher code. If the report states two grades, such as grade 2-3, choose the higher grade.",
           "clinical_alert": null,
           "coding_note": "9531-9535 and 9537 exist at /0 ONLY - six of the twelve IIIe5 codes. That is why registering non-malignant tumours matters most in this subgroup (ruling 14-09-26): a malignant-only rule deletes the entire benign meningioma spectrum. The grade 1 / 2 / 3 code triple 9530/0 - 9539/1 - 9530/3 is the one ENCR Table 3 itself prints on the meningioma row.",
           "captured_variables": [
@@ -24734,7 +24734,7 @@
                 "BAP1 loss (nuclear expression lost in tumour cells)"
               ],
               "next_node": "mn_chr17q",
-              "coding_note": "Tested first because it is the rarest and the highest-consequence result. The high-risk tier it records is provisional and is carried to the terminal as a provisional_pending.",
+              "coding_note": "Tested first because it is the rarest and the highest-consequence result. The high-risk tier it records is provisional and is only recorded: it changes neither the code nor the grade.",
               "captures": {
                 "bap1_status": "altered",
                 "meningioma_risk_tier": "high_bap1_provisional"
@@ -25362,267 +25362,9 @@
           "question": "Everything needed to grade and code this meningioma has been recorded. Continue to resolve it.",
           "hint": "The grade is recorded because the classification requires it, not because it predicts anything here: Berghaus 2026 found that WHO grade, methylation class, UCSF class and the integrated risk score all fail to stratify progression-free survival at or below 21 years, and this registry's upper age bound is 18. Extent of resection, recorded earlier, was the dominant predictor in that series.",
           "clinical_alert": null,
-          "coding_note": "This node holds every Tier 0 outcome in one flat ordered list so the grading can be audited in one place. It reads only captured state and asks no marker, so its induced branch_sequence.order is legitimately empty (nodes.md). Rule order: BAP1 first (most specific), then by mitotic band with subtype-specific rules ahead of band-only ones, then the update 8 brain-invasion rule ahead of the grade 1 rules so an invasive otherwise-benign tumour has its grade omitted rather than set to 1, then the grade 1 and no-count rules by subtype, then the catch-all. The grade 1 / 2 / 3 code triple is 9530/0 - 9539/1 - 9530/3, which is the triple ENCR Table 3 itself prints on the meningioma row. Every Track A who_diagnosis on this node leads with 'Meningioma', because that is the ONLY meningioma entity in WHO CNS5 Table 1 - CNS5 collapsed the family into one type with fifteen subtypes. The subtype is written as a subtype so it can never be read as a separate CNS5 type. No entity_annotation is authored anywhere in this tree: that construct exists for CNS5 entities recorded WITHOUT a code, and every meningioma subtype this tree can reach has an ICD-O-3.2 code of its own.",
+          "coding_note": "This node holds every Tier 0 outcome in one flat ordered list so the grading can be audited in one place. It reads only captured state and asks no marker, so its induced branch_sequence.order is legitimately empty (nodes.md). Rule order: by mitotic band with subtype-specific rules ahead of band-only ones, then the update 8 brain-invasion rule ahead of the grade 1 rules so an invasive otherwise-benign tumour has its grade omitted rather than set to 1, then the grade 1 and no-count rules by subtype, then the catch-all. The grade 1 / 2 / 3 code triple is 9530/0 - 9539/1 - 9530/3, which is the triple ENCR Table 3 itself prints on the meningioma row. Every Track A who_diagnosis on this node leads with 'Meningioma', because that is the ONLY meningioma entity in WHO CNS5 Table 1 - CNS5 collapsed the family into one type with fifteen subtypes. The subtype is written as a subtype so it can never be read as a separate CNS5 type. No entity_annotation is authored anywhere in this tree: that construct exists for CNS5 entities recorded WITHOUT a code, and every meningioma subtype this tree can reach has an ICD-O-3.2 code of its own. BAP1 loss is recorded and changes neither the code nor the grade (registrar's decision, 7 October 2026): the first build let it pre-empt the subtype, so a rhabdoid or papillary meningioma recorded 9530 where ICD-O-3.2 lists 9538/3, and the clerk-facing hint on mn_paediatric_markers said BAP1 changes nothing. The BAP1 provisional note went with those rules; it was a risk statement, not a coding fact, and the tool shows no clinical warnings.",
           "marker_groups": [],
           "resolution_logic": [
-            {
-              "when": {
-                "bap1_status": "altered",
-                "mitotic_band": "g3_band"
-              },
-              "morphology_code": "9530",
-              "behavior_code": "3",
-              "confidence": "medium",
-              "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "who_cns5",
-                "who_diagnosis": "Anaplastic (malignant) meningioma",
-                "descriptive_diagnosis": null,
-                "suffix": "none",
-                "grade_system": "arabic",
-                "grade": "3",
-                "comment": null
-              },
-              "grade_resolution": {
-                "criterion": "CNS WHO grade of a meningioma on H&E (cIMPACT-NOW update 8, Tier 0): BAP1-altered tumour; the grade still comes from the count",
-                "variable": "mitotic_band",
-                "detection_method_required": [
-                  "Histology"
-                ],
-                "values": {
-                  "below_g2": {
-                    "grade": "1",
-                    "grade_system": "arabic"
-                  },
-                  "g2_band": {
-                    "grade": "2",
-                    "grade_system": "arabic"
-                  },
-                  "g3_band": {
-                    "grade": "3",
-                    "grade_system": "arabic"
-                  },
-                  "not_documented": {
-                    "grade": null,
-                    "reason": "The report states no mitotic count, so no grade is assigned."
-                  },
-                  "denominator_incompatible": {
-                    "grade": null,
-                    "reason": "The mitotic count was made in a field area other than 0.16 mm-squared and could not be converted, so no grade is assigned."
-                  }
-                },
-                "unresolved": {
-                  "grade": null,
-                  "defer_to": "histological_grade",
-                  "reason": "The mitotic count did not resolve to a band."
-                }
-              },
-              "provisional_pending": {
-                "reason": "BAP1-altered meningioma is recorded by Berghaus 2026 as a HIGH risk of recurrence, but that tier rests on 0.6% of the 0-21 group - about one patient - and the authors name low case numbers for BAP1-altered tumours as a limitation. The tier is a risk statement, not a CNS WHO grade, and the grade-2 / grade-3 equivalences Berghaus mentions are cited to a paper not held in this library. A BAP1 result read on immunohistochemistry alone should be confirmed by sequencing before the high-risk tier is relied on. Neither the code nor the grade on this branch depends on it.",
-                "resolving_test": "Molecular/PCR",
-                "alternative_entities": [
-                  "Meningioma with no established risk tier (BAP1 loss not confirmed on sequencing)"
-                ]
-              },
-              "coding_note": "BAP1 records a risk tier, not a grade, so the grade on this branch is the histological one. At grade 1 the family code 9530/0 is used rather than an architectural subtype code, because this branch is reached whatever the architecture was - the architecture stays on the record as the captured meningioma_subtype.",
-              "captures": {
-                "meningioma_risk_tier": "high_bap1_provisional"
-              }
-            },
-            {
-              "when": {
-                "bap1_status": "altered",
-                "mitotic_band": "g2_band"
-              },
-              "morphology_code": "9539",
-              "behavior_code": "1",
-              "confidence": "medium",
-              "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "who_cns5",
-                "who_diagnosis": "Atypical meningioma",
-                "descriptive_diagnosis": null,
-                "suffix": "none",
-                "grade_system": "arabic",
-                "grade": "2",
-                "comment": null
-              },
-              "grade_resolution": {
-                "criterion": "CNS WHO grade of a meningioma on H&E (cIMPACT-NOW update 8, Tier 0): BAP1-altered tumour; the grade still comes from the count",
-                "variable": "mitotic_band",
-                "detection_method_required": [
-                  "Histology"
-                ],
-                "values": {
-                  "below_g2": {
-                    "grade": "1",
-                    "grade_system": "arabic"
-                  },
-                  "g2_band": {
-                    "grade": "2",
-                    "grade_system": "arabic"
-                  },
-                  "g3_band": {
-                    "grade": "3",
-                    "grade_system": "arabic"
-                  },
-                  "not_documented": {
-                    "grade": null,
-                    "reason": "The report states no mitotic count, so no grade is assigned."
-                  },
-                  "denominator_incompatible": {
-                    "grade": null,
-                    "reason": "The mitotic count was made in a field area other than 0.16 mm-squared and could not be converted, so no grade is assigned."
-                  }
-                },
-                "unresolved": {
-                  "grade": null,
-                  "defer_to": "histological_grade",
-                  "reason": "The mitotic count did not resolve to a band."
-                }
-              },
-              "provisional_pending": {
-                "reason": "BAP1-altered meningioma is recorded by Berghaus 2026 as a HIGH risk of recurrence, but that tier rests on 0.6% of the 0-21 group - about one patient - and the authors name low case numbers for BAP1-altered tumours as a limitation. The tier is a risk statement, not a CNS WHO grade, and the grade-2 / grade-3 equivalences Berghaus mentions are cited to a paper not held in this library. A BAP1 result read on immunohistochemistry alone should be confirmed by sequencing before the high-risk tier is relied on. Neither the code nor the grade on this branch depends on it.",
-                "resolving_test": "Molecular/PCR",
-                "alternative_entities": [
-                  "Meningioma with no established risk tier (BAP1 loss not confirmed on sequencing)"
-                ]
-              },
-              "coding_note": "BAP1 records a risk tier, not a grade, so the grade on this branch is the histological one. At grade 1 the family code 9530/0 is used rather than an architectural subtype code, because this branch is reached whatever the architecture was - the architecture stays on the record as the captured meningioma_subtype.",
-              "captures": {
-                "meningioma_risk_tier": "high_bap1_provisional"
-              }
-            },
-            {
-              "when": {
-                "bap1_status": "altered",
-                "mitotic_band": "below_g2"
-              },
-              "morphology_code": "9530",
-              "behavior_code": "0",
-              "confidence": "medium",
-              "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "who_cns5",
-                "who_diagnosis": "Meningioma",
-                "descriptive_diagnosis": null,
-                "suffix": "none",
-                "grade_system": "arabic",
-                "grade": "1",
-                "comment": null
-              },
-              "grade_resolution": {
-                "criterion": "CNS WHO grade of a meningioma on H&E (cIMPACT-NOW update 8, Tier 0): BAP1-altered tumour; the grade still comes from the count",
-                "variable": "mitotic_band",
-                "detection_method_required": [
-                  "Histology"
-                ],
-                "values": {
-                  "below_g2": {
-                    "grade": "1",
-                    "grade_system": "arabic"
-                  },
-                  "g2_band": {
-                    "grade": "2",
-                    "grade_system": "arabic"
-                  },
-                  "g3_band": {
-                    "grade": "3",
-                    "grade_system": "arabic"
-                  },
-                  "not_documented": {
-                    "grade": null,
-                    "reason": "The report states no mitotic count, so no grade is assigned."
-                  },
-                  "denominator_incompatible": {
-                    "grade": null,
-                    "reason": "The mitotic count was made in a field area other than 0.16 mm-squared and could not be converted, so no grade is assigned."
-                  }
-                },
-                "unresolved": {
-                  "grade": null,
-                  "defer_to": "histological_grade",
-                  "reason": "The mitotic count did not resolve to a band."
-                }
-              },
-              "provisional_pending": {
-                "reason": "BAP1-altered meningioma is recorded by Berghaus 2026 as a HIGH risk of recurrence, but that tier rests on 0.6% of the 0-21 group - about one patient - and the authors name low case numbers for BAP1-altered tumours as a limitation. The tier is a risk statement, not a CNS WHO grade, and the grade-2 / grade-3 equivalences Berghaus mentions are cited to a paper not held in this library. A BAP1 result read on immunohistochemistry alone should be confirmed by sequencing before the high-risk tier is relied on. Neither the code nor the grade on this branch depends on it.",
-                "resolving_test": "Molecular/PCR",
-                "alternative_entities": [
-                  "Meningioma with no established risk tier (BAP1 loss not confirmed on sequencing)"
-                ]
-              },
-              "coding_note": "BAP1 records a risk tier, not a grade, so the grade on this branch is the histological one. At grade 1 the family code 9530/0 is used rather than an architectural subtype code, because this branch is reached whatever the architecture was - the architecture stays on the record as the captured meningioma_subtype.",
-              "captures": {
-                "meningioma_risk_tier": "high_bap1_provisional"
-              }
-            },
-            {
-              "when": {
-                "bap1_status": "altered",
-                "mitotic_band": [
-                  "not_documented",
-                  "denominator_incompatible"
-                ]
-              },
-              "morphology_code": "9530",
-              "behavior_code": "0",
-              "confidence": "low",
-              "basis_of_diagnosis": 7,
-              "diagnosis_rendering": {
-                "track": "adaptr_descriptive",
-                "who_diagnosis": null,
-                "descriptive_diagnosis": "Meningioma, NOS",
-                "suffix": "nos",
-                "grade_system": "roman",
-                "grade": null,
-                "comment": "The report gives no mitotic count in a denominator this tool can read, so the grade 2 and grade 3 thresholds cannot be applied and no CNS WHO grade is assigned. The architecture is established; the grade is not. A Roman ADAPTR grade is not asserted either - the histologic grade rests on the same missing count."
-              },
-              "grade_resolution": {
-                "criterion": "CNS WHO grade of a meningioma on H&E (cIMPACT-NOW update 8, Tier 0): BAP1-altered tumour with no readable mitotic count",
-                "variable": "mitotic_band",
-                "detection_method_required": [
-                  "Histology"
-                ],
-                "values": {
-                  "below_g2": {
-                    "grade": "1",
-                    "grade_system": "arabic"
-                  },
-                  "g2_band": {
-                    "grade": "2",
-                    "grade_system": "arabic"
-                  },
-                  "g3_band": {
-                    "grade": "3",
-                    "grade_system": "arabic"
-                  },
-                  "not_documented": {
-                    "grade": null,
-                    "reason": "The report states no mitotic count, so no grade is assigned."
-                  },
-                  "denominator_incompatible": {
-                    "grade": null,
-                    "reason": "The mitotic count was made in a field area other than 0.16 mm-squared and could not be converted, so no grade is assigned."
-                  }
-                },
-                "unresolved": {
-                  "grade": null,
-                  "defer_to": "histological_grade",
-                  "reason": "The mitotic count did not resolve to a band."
-                }
-              },
-              "provisional_pending": {
-                "reason": "BAP1-altered meningioma is recorded by Berghaus 2026 as a HIGH risk of recurrence, but that tier rests on 0.6% of the 0-21 group - about one patient - and the authors name low case numbers for BAP1-altered tumours as a limitation. The tier is a risk statement, not a CNS WHO grade, and the grade-2 / grade-3 equivalences Berghaus mentions are cited to a paper not held in this library. A BAP1 result read on immunohistochemistry alone should be confirmed by sequencing before the high-risk tier is relied on. Neither the code nor the grade on this branch depends on it.",
-                "resolving_test": "Molecular/PCR",
-                "alternative_entities": [
-                  "Meningioma with no established risk tier (BAP1 loss not confirmed on sequencing)"
-                ]
-              },
-              "captures": {
-                "meningioma_risk_tier": "high_bap1_provisional"
-              }
-            },
             {
               "when": {
                 "meningioma_subtype": "papillary",
@@ -27206,7 +26948,7 @@
           "branch_sequence": {
             "order": [],
             "intensity_markers": [],
-            "rule_count": 33
+            "rule_count": 29
           }
         }
       ],
@@ -29281,7 +29023,7 @@
           "step_number": 3,
           "step_label": "Legacy descriptor",
           "question": "Which words does the report actually use? Pick only what is written.",
-          "hint": "8002, 8003 and 8004 are legacy strings with no diagnostic content - they are reachable only because a report used the words, and they must never be reasoned towards. In a child, \"small cell\" CNS morphology is usually an embryonal tumour: where the pathologist did establish embryonal morphology the case is not IIIf at all, it belongs in its compartment tree at 9473/3, CNS embryonal tumor, NOS, which keeps the morphology that was established. 8002 discards it.",
+          "hint": "8002, 8003 and 8004 are legacy strings with no diagnostic content - they are reachable only because a report used the words, and they must never be reasoned towards. In a child, \"small cell\" CNS morphology is usually an embryonal tumour: where the pathologist did establish embryonal morphology the case is not IIIf at all, it belongs in its compartment tree at 9473/3, CNS embryonal tumor, NOS, which keeps the morphology that was established. 8002 discards it. If the report uses two of these descriptors for one tumour, choose the one with the higher code: small cell 8002, giant cell 8003, spindle cell 8004, clear cell 8005. Compare only descriptors of a tumour the report calls malignant.",
           "clinical_alert": null,
           "coding_note": "No differential leads here by design. Every option is a transcription of the report's own wording.",
           "captured_variables": [

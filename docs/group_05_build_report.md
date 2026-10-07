@@ -300,8 +300,19 @@ the correction.
 - **`"Moderate" anaplasia alone**, with no differentiation grade, is not covered by the contract's
   Mendoza bridge. Folded into the GX/`9510` default as the least-specific answer rather than
   guessed toward `9511` or `9512`; recorded in the node's `coding_note`.
-- **The alias express lane completes a case with no topography** (`TOPOGRAPHY —`). It bypasses site
-  capture by design. For this group the registry needs `C69.2`. Part of TODO §17's surface.
+- **Where a report states more than one grade, the higher governs** (registrar, 7 October 2026;
+  contract §2.4). The first build coded from the differentiation grade and set anaplasia aside, so a
+  G2 report with severe anaplasia recorded `9511`. Severe anaplasia now outranks G1 and G2 on
+  `rb_enucleation_report`, and `rb_retinocytoma_word` has a `9512` option for a retinocytomatous area
+  inside a tumour whose remainder is G3, G4 or severely anaplastic, and a second one for a stated diffuse
+  growth pattern (`9513`). Moderate anaplasia stays as above. That it changes no code where a differentiation
+  grade is stated, and that moderate anaplasia alone stays `9510`, were confirmed by the registrar on
+  7 October 2026 (TODO §33 records the evidence and the one question left for a pathologist).
+- **The alias express lane now records the site** (registrar, 7 October 2026). A typed Group V term
+  used to complete a case with no topography (`TOPOGRAPHY —`), because the lane bypassed site capture
+  for a group that reads no site. It now asks the organ system and region and only records the answer:
+  "Retinoblastoma" at the retina records `C69.2`, and the group never changes. A file that does not
+  state the site takes "The file does not state the site" and keeps the dash.
 - **Two claims in an early draft of contract §9 were wrong and were corrected against the
   primaries**: chromosome 6p gain does **not** significantly correlate with extraocular spread
   (P = 0.07, a trend — *the paper's own title and conclusion overstate its results*), and

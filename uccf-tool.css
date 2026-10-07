@@ -709,6 +709,13 @@ button, input, select, textarea { font: inherit; color: inherit; }
   color: var(--ink-900);
 }
 .escape--excluded:hover { background: var(--ink-100); }
+/* The file does not state the site → solid, ink-edged, rounded: an answer, not an exit. */
+.escape--site {
+  border: 2px solid var(--ink-600);
+  border-radius: var(--radius-sm);
+  color: var(--ink-900);
+}
+.escape--site:hover { background: var(--ink-100); }
 
 .actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-top: var(--sp-3); }
 

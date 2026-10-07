@@ -4068,7 +4068,7 @@
           "step_number": 4,
           "step_label": "Fatty tumour",
           "question": "Which fatty (adipocytic) tumour does the report diagnose?",
-          "hint": "In children most fatty tumours are lipoblastoma, which is benign. Atypical lipomatous tumour is not registered in this group; well-differentiated liposarcoma at a deep site such as the retroperitoneum is.",
+          "hint": "In children most fatty tumours are lipoblastoma, which is benign. Atypical lipomatous tumour is not registered in this group; well-differentiated liposarcoma at a deep site such as the retroperitoneum is. If the report names two of well-differentiated, myxoid, pleomorphic and dedifferentiated liposarcoma, as in a well-differentiated liposarcoma with dedifferentiated areas, choose the one with the higher code: well-differentiated 8851, myxoid 8852, pleomorphic 8854, dedifferentiated 8858. A report that names myxoid pleomorphic liposarcoma as one diagnosis takes its own option.",
           "clinical_alert": null,
           "coding_note": "Sbaraglia Table I and section Adipocytic tumours. Myxoid pleomorphic liposarcoma 8850/3 (no ICD-O-3.2 code; contract §3.3). Round cell liposarcoma: 8853/3 carries only [obs]; coded 8852/3 as high-grade myxoid liposarcoma (registrar questions C). Atypical lipomatous tumour 8850/1; lipoblastoma 8881/0.",
           "captured_variables": [
@@ -4180,7 +4180,7 @@
           "step_number": 4,
           "step_label": "Smooth muscle tumour",
           "question": "Which smooth muscle tumour does the report diagnose?",
-          "hint": "An EBV-associated smooth muscle tumour, which occurs in children with HIV or another immune deficiency, is not registered in this group. A leiomyosarcoma is.",
+          "hint": "An EBV-associated smooth muscle tumour, which occurs in children with HIV or another immune deficiency, is not registered in this group. A leiomyosarcoma is. If the report names both epithelioid and myxoid, choose myxoid leiomyosarcoma (8896), the higher code.",
           "clinical_alert": null,
           "coding_note": "Sbaraglia Table VI: EBV-associated smooth muscle tumour and STUMP are intermediate. ICD-O-3.2 holds 'Smooth muscle tumor, NOS' and 'Smooth muscle tumor of uncertain malignant potential' at 8897/1. Pfister Table 2 lists only the EBV-associated tumour among paediatric smooth muscle tumours (registrar questions G1). Inflammatory leiomyosarcoma codes 8890/3.",
           "captured_variables": [
@@ -4879,7 +4879,7 @@
           "step_number": 6,
           "step_label": "Solitary fibrous tumour",
           "question": "STAT6 is positive: this is a solitary fibrous tumour. Does the report call it malignant, or give it a WHO grade?",
-          "hint": "Only a malignant solitary fibrous tumour is registered in this group.",
+          "hint": "Only a malignant solitary fibrous tumour is registered in this group. If the report states two grades, such as grade 2-3, choose the higher.",
           "clinical_alert": null,
           "coding_note": "ICD-O-3.2: 8815/3 Solitary fibrous tumor, malignant; 8815/1 Solitary fibrous tumor, NOS; ICD-O-3.2 related terms put grade 3 at 8815/3 and grade 2 at 8815/1, and grade 1 is 8815/0 (Preferred 'Solitary fibrous tumor/Hemangiopericytoma, grade 1'). Sbaraglia section Pericytic (perivascular) tumours: STAT6 staining and a risk scheme, not mitotic count alone.",
           "captured_variables": [

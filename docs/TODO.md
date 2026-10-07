@@ -1617,3 +1617,141 @@ Spec `docs/superpowers/specs/2026-10-06-ux-overall-fixes-design.md`. Handover to
   they are not lists of one answer to pick. `FILTER_MIN_OPTIONS` in `app.js` turns the filter off for short lists.
 - `outActions()` and the override handler are untouched; `feature/report-an-error` (parked) rewrites them. Both
   branches change `renderOutput()`, so the second to merge resolves a few lines by hand.
+
+---
+
+## 32. ❓ FOR THE REGISTRAR — should the tool carry the ICD-O sixth digit (grade, differentiation, phenotype)?
+
+Registrar, 7 October 2026: wants the digit added, and wants its impact on reporting in a hospital-based
+registry researched first. Nothing is built.
+
+### What the tool does today
+
+It emits a four-digit morphology code and a behavior digit. No group prints or records a sixth digit.
+Group III prints a CNS WHO grade in a Grade row, which is a different scale from the sixth digit (WHO
+ICD-O-3 first revision, section 4.6, p. 27). Rule G cannot be applied as written because there is
+nowhere to put the digit. The audit of 7 October 2026 found this for Groups I to IX (rule G report)
+and for Group 10 (findings F-G-04 and F-G-07).
+
+### What the WHO manual says
+
+Rule G (section 4.1, p. 15; section 4.3.4 with Tables 21 and 22, pp. 21-22): assign the highest grade or
+differentiation described in the diagnostic statement, as the sixth digit; only malignant tumours are
+graded; 9 means not stated. For lymphomas and leukaemias the sixth digit may carry the phenotype
+instead (T-cell 5, B-cell 6, null cell 7, NK cell 8), which takes priority over grades 1 to 4 and which
+section 3.13.3 (p. 14) calls optional. The manual's own example is "malignant teratoma, anaplastic",
+coded 9082/34.
+
+### What to research
+
+First-pass desk research is in `docs/sixth_digit_research.md` (7 October 2026). Its main finding: NAACCR, which
+United States hospital registries follow, has not held grade as a sixth digit since cases diagnosed in 2018; it
+uses separate Grade Clinical, Pathological and Post Therapy items with a code set per tumour, and it has a complete
+retinoblastoma table (Grade 21) that matches our option wording. ENCR's 2023 minimum dataset lists grade without
+prescribing a digit. Paediatric completeness data and a childhood use case were not found.
+
+1. Which registry standards ask a hospital-based registry for grade or differentiation, whether they
+   hold it as the sixth digit of the morphology code or as a separate item, and what they use it for.
+2. How complete the item is in practice, and whether registries that collect it say it changed an
+   analysis or a treatment audit.
+3. Which paediatric tumours carry a grade that a clerk can read from the report, and which carry none.
+4. How the digit relates to the entities whose grade is already in the four-digit name (follicular
+   lymphoma grade 1 to 3, Hodgkin lymphoma nodular sclerosis grade 1 and 2, solitary fibrous tumour
+   grade 1 to 3). Coding the digit as well would record the grade twice.
+
+### Decisions the research feeds
+
+- Whether the digit is collected, and for which entities.
+- Where it appears in the output block. The registrar's output-block ruling of 6 October 2026 fixed the
+  rows, so a new row reopens it.
+- How the clerk gives it: a question per entity, or the report's own wording captured.
+- How it is labelled against the Group III CNS WHO grade, so the two scales are not read as one.
+- The lymphoma and leukaemia phenotype digit stays out unless the registrar says otherwise, because the
+  manual makes it optional.
+
+The dictionary side belongs to `REDCap Registry/`, never to this repository. The tool's design does not
+wait on it (registrar, 6 October 2026).
+
+### Retinoblastoma: what the sixth digit would settle
+
+Registrar, 7 October 2026: pathology reports vary by laboratory, some synoptic (College of American Pathologists
+style, with separate lines for growth pattern, histologic grade and anaplasia grade) and some one narrative
+diagnosis sentence. The tool therefore cannot ask growth pattern and grade as two questions and rely on the
+report to answer both. Grade is a sixth digit, which needs its own research and build, so
+`rb_enucleation_report` stays a single pick with hints until then.
+
+What the digit changes for this group:
+
+- A report can state a growth pattern and a grade together (the College of American Pathologists form has both).
+  With four digits the clerk must choose between `9513` (pattern) and `9511` or `9512` (grade) and loses the other.
+  With the digit, `9513` plus the grade digit keeps both.
+- The WHO manual's own example is "retinoblastoma, differentiated (9511/31)": the type and the digit are two
+  entries that must agree (WHO ICD-O-3 first revision, section 4.3.4, p. 21). Differentiated with G3 or G4, and
+  undifferentiated with G1 or G2, would contradict.
+- `G3` to `9512` is the build's mapping, not WHO's or the College of American Pathologists'. WHO Table 21 puts
+  "poorly differentiated" at digit 3, between differentiated and undifferentiated.
+- WHO's 5th-edition eye chapter treats differentiation and growth pattern as features of one retinoblastoma
+  entity. Whether `9511` and `9512` are subtypes and `9513` a pattern is open (Group V contract §10, registrar
+  item 5).
+- Pathology Outlines words G1 to G3 with proportions ("more than half", "less than half" of the tumour). The
+  College of American Pathologists protocol v4.0.0.0 (p. 4) gives "more than half" only for G4's anaplasia, and the
+  option labels follow that text. Settle which wording the registry reads before the digit is built.
+
+---
+
+## 33. ❓ FOR THE REGISTRAR — "take the higher" (WHO Rules G and K): what is built, and what waits
+
+Registrar, 7 October 2026: where a report states two grades, or two descriptive modifiers of one tumour that
+no single code covers, the clerk records the higher. It applies to grade-named ICD-O-3.2 entities and to
+descriptive modifiers, as a hint on the screen that offers both (WHO ICD-O-3 first revision, Rule G, p. 15;
+Rule K, p. 16; section 4.3.4, pp. 21-22).
+
+### Built
+
+- **Hints:** Hodgkin lymphoma nodular sclerosis (`g2_chl_subtype`); spinal ependymoma grade, diffuse glioma
+  grade, oligodendroglioma, meningioma architecture, central nervous system descriptors 8002 to 8005, and the
+  ependymoma 9392 and 9393 pair (`sp_ependymal_grade`, `st_diffuse_glioma_grade`, `st_oligo_molecular`,
+  `mn_he_subtype`, `un_report_descriptor`, `pf_ependymal_exclusions`, `st_legacy_documented`); hepatocellular
+  carcinoma 8172 to 8175 (`hp_hcc_subtype`); osteosarcoma, chondrosarcoma and chordoma (`bn_osteosarcoma`,
+  `bn_cartilage`, `bn_chordoma`); solitary fibrous tumour, liposarcoma, leiomyosarcoma (`st_sft_behaviour`,
+  `st_adipocytic`, `st_smooth_muscle`).
+- **Follicular lymphoma:** two new grade markers ("Grade 3 or grade 2-3 stated", "Grade 2 stated") and their
+  rules; the highest grade ticked wins.
+- **Meningioma:** BAP1 loss is recorded and changes neither the code nor the grade. The four rules that let it
+  pre-empt the subtype are gone, so a rhabdoid or papillary meningioma records 9538/3.
+- **Retinoblastoma:** the higher grade governs, severe anaplasia outranks G1 and G2, and a diffuse infiltrating
+  growth pattern outranks a grade (contract §2.4). Moderate anaplasia changes no code where a differentiation grade
+  is stated, and moderate anaplasia alone stays in the GX answer (`9510`). The registrar confirmed both on
+  7 October 2026. Mendoza p. 774 groups moderate with severe on nuclear size alone, and reports a "variable
+  association" between anaplasia and differentiation, which are "2 separate, albeit related, concepts" (Mendoza PR,
+  et al., American Journal of Ophthalmology 2015;159(4):764-776). An ophthalmic pathologist's answer to one
+  question would settle the doubt: "When a report gives moderate anaplasia and no differentiation grade, is that
+  differentiated or undifferentiated for ICD-O?" NAACCR's retinoblastoma grade table (Grade Manual v3.3, pp. 176 to
+  178) has G1 to G4 and the generic A to D and no place for a Mendoza anaplasia grade, which supports the
+  confirmation.
+- **Typed lane, Group II:** the 12 lymphoma and leukaemia terms filed under Groups I and II (ATL, CLL, SLL,
+  "B lymphoblastic leukemia/lymphoma" and others) enter Group II at a site that names neither group, with the site
+  recorded. The router marks Group II `occurs_at_any_site`. A site that names one of the term's groups still
+  decides, and a site that names both still stops (registrar, 7 October 2026, narrowing the 4 October ruling).
+
+### Waiting on the registrar
+
+- **Neuroendocrine tumour, grade 2 (`8249`, atypical carcinoid).** No group offers it. ICCC-2017 places 8249 in
+  Group XI by site (XIf1 to XIf11), and none of those ranges covers the kidney or the liver. Offering it in Groups
+  VI and VII needs an entry, aliases and a line on the REDCap-side list.
+- **A typed term filed under several groups** still stops when the picked site names none of its groups, unless
+  one of them occurs at any site (only Group II does). The other 37 multi-group terms stop there, as the
+  4 October ruling intends.
+- **Group 10**, merged after this tree was cut: `9082` and `9083` are reachable only through the mixed-tumour
+  screen; a named mixed term ends the case, so teratocarcinoma with a choriocarcinoma component records `9081`
+  where `9101` fits; Sertoli-Leydig intermediate differentiation ends in a behavior-1 exclusion with no hint to
+  take the poorer grade; a stain panel with embryonal and yolk sac markers records `9070`.
+
+### Known and not changed
+
+- `build/drive_first_tap.mjs` stopped at its fourth control, which looked for a `select` that is now a filtered
+  radio list. It predates this change and is fixed (7 October 2026).
+- `presentation_router.json`: `asked_by` on `primary_compartment` lists `unsure`, which does not set
+  `dual_group_discriminator`. The build now notes it.
+- `fl_grade` ("not graded" in three paediatric rules), `bap1_status` and `meningioma_risk_tier` are recorded and
+  read by nothing.

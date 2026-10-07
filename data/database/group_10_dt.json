@@ -3009,7 +3009,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3130,6 +3130,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -3149,6 +3150,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -3163,7 +3165,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -3210,7 +3219,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3331,6 +3340,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -3350,6 +3360,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -3364,7 +3375,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -3405,7 +3423,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3526,6 +3544,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -3545,6 +3564,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -3559,7 +3579,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -3600,7 +3627,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3721,6 +3748,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -3740,6 +3768,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -3754,7 +3783,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -3802,7 +3838,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -3923,6 +3959,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -3942,6 +3979,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -3956,7 +3994,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -3997,7 +4042,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc1, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa1 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb1 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc1; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4118,6 +4163,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -4137,6 +4183,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -4151,7 +4198,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb1",
@@ -4197,7 +4251,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc3, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa3 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb3 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc3; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc3, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa3 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb3 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc3; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4318,6 +4372,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -4337,6 +4392,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -4351,7 +4407,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb3",
@@ -4397,7 +4460,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc4, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa4 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb4 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc4; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc4, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa4 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb4 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc4; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4518,6 +4581,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -4537,6 +4601,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -4551,7 +4616,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb4",
@@ -4592,7 +4664,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc3, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa3 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb3 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc3; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc3, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa3 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb3 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc3; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4713,6 +4785,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -4732,6 +4805,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -4746,7 +4820,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb3",
@@ -4787,7 +4868,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -4908,6 +4989,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -4927,6 +5009,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -4941,7 +5024,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb2",
@@ -5036,7 +5126,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5157,6 +5247,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -5176,6 +5267,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -5190,7 +5282,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb2",
@@ -5231,7 +5330,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5352,6 +5451,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -5371,6 +5471,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -5385,7 +5486,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb2",
@@ -5426,7 +5534,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5547,6 +5655,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -5566,6 +5675,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -5580,7 +5690,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb2",
@@ -5621,7 +5738,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc2, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa2 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb2 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc2; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5742,6 +5859,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -5761,6 +5879,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -5775,7 +5894,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb2",
@@ -5843,7 +5969,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc6, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa6 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb6 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc6; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc6, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa6 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb6 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc6; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -5964,6 +6090,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -5983,6 +6110,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -5997,7 +6125,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb6",
@@ -6096,7 +6231,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa5 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa5 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -6217,6 +6352,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -6236,6 +6372,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -6250,7 +6387,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb5",
@@ -6345,7 +6489,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa5 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At C77.9, outside every Group X germ cell site range, ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5; Group X is not entered at C77.9, because its candidate groups do not list 10.",
+      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xa5 sites in the central nervous system (C70.0-C72.9, C75.1-C75.3) and the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 8 lookup codes outside every Group X germ cell site range (e.g. C77.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5; Group X is not entered at any of them, because their candidate groups do not list 10.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -6466,6 +6610,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -6485,6 +6630,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -6499,7 +6645,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb5",
@@ -6565,7 +6718,7 @@
         "C62.0-C62.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 25 lookup codes outside this code's site ranges (e.g. C70.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5.",
+      "topography_routing_note": "The entry's own subgroup, Xc5, is the default (design D20) and applies at its sites in the ovary and testis (C56.9, C62.0-C62.9); the ordered rules name the Xb5 sites outside the central nervous system and the gonads (C00.0-C55.9, C57.0-C61.9, C63.0-C69.9, C73.9-C75.0, C75.4-C76.8, C80.9), where ICCC-2017 places this (code, behaviour) instead. At the 32 lookup codes outside this code's site ranges (e.g. C70.0), ICCC-2017 places this code in no Group X subgroup and the output shows the default Xc5.",
       "iccc3_subgroup_by_topography": [
         {
           "topography_in": [
@@ -6656,6 +6809,7 @@
             "C54.8",
             "C54.9",
             "C55.9",
+            "C57.8",
             "C58.9",
             "C61.9",
             "C63.0",
@@ -6675,6 +6829,7 @@
             "C67.7",
             "C67.8",
             "C67.9",
+            "C68.8",
             "C69.0",
             "C69.1",
             "C69.2",
@@ -6689,7 +6844,14 @@
             "C74.9",
             "C75.4",
             "C75.5",
+            "C76.0",
+            "C76.1",
+            "C76.2",
             "C76.3",
+            "C76.4",
+            "C76.5",
+            "C76.7",
+            "C76.8",
             "C80.9"
           ],
           "iccc3_subgroup_id": "Xb5",

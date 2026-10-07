@@ -5146,17 +5146,26 @@
             {
               "label": "Lymph nodes only — no blood or marrow involvement",
               "refer_group": 2,
-              "reason": "Nodal-only disease with no blood or marrow involvement is a Group II lymphoma, not a Group I leukaemia. If the immunophenotype shows CD5+CD23+ clonal B cells the entity is small lymphocytic lymphoma and still codes 9823, but in Group II (IIb2); any other subtype is resolved by the Group II tree. No Group I code is emitted (DT master §6; Pathway §5.3)."
+              "reason": "Nodal-only disease with no blood or marrow involvement is a Group II lymphoma, not a Group I leukaemia. If the immunophenotype shows CD5+CD23+ clonal B cells the entity is small lymphocytic lymphoma and still codes 9823, but in Group II (IIb2); any other subtype is resolved by the Group II tree. No Group I code is emitted (DT master §6; Pathway §5.3).",
+              "captures": {
+                "topography": "C77.9"
+              }
             },
             {
               "label": "Spleen only (C42.2) — splenomegaly with no blood or marrow involvement",
               "refer_group": 2,
-              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for the lymphoid dual-group codes. A splenic presentation routes to Group II. No Group I code is emitted (Pathway §1 Ia4, §5.3.10)."
+              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for the lymphoid dual-group codes. A splenic presentation routes to Group II. No Group I code is emitted (Pathway §1 Ia4, §5.3.10).",
+              "captures": {
+                "topography": "C42.2"
+              }
             },
             {
               "label": "Extranodal tissue only (skin, gut, CNS, other) — no blood or marrow involvement",
               "refer_group": 2,
-              "reason": "Extranodal disease with no blood or marrow involvement is a Group II lymphoma. No Group I code is emitted (DT master §6)."
+              "reason": "Extranodal disease with no blood or marrow involvement is a Group II lymphoma. No Group I code is emitted (DT master §6).",
+              "captures": {
+                "topography": "C80.9"
+              }
             },
             {
               "label": "Compartment not stated in the file",
@@ -7301,7 +7310,10 @@
               "site": "C42.2 — Spleen",
               "refer_group": 2,
               "refer_code": "9591",
-              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for 9591 (Pathway §1 Ia4, §5.3.10). A splenic non-Hodgkin lymphoma NOS codes 9591 in Group II (IIb4). The code is the same; the group is not Group I, so no Group I code is emitted."
+              "reason": "C42.2 (spleen) is deliberately carved out of the Group I topography set for 9591 (Pathway §1 Ia4, §5.3.10). A splenic non-Hodgkin lymphoma NOS codes 9591 in Group II (IIb4). The code is the same; the group is not Group I, so no Group I code is emitted.",
+              "captures": {
+                "topography": "C42.2"
+              }
             },
             {
               "site": "A nodal or extranodal site — lymph nodes, gut, skin, CNS, other",
