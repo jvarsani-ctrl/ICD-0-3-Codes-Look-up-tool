@@ -1561,6 +1561,31 @@ coded 9082/34.
 The dictionary side belongs to `REDCap Registry/`, never to this repository. The tool's design does not
 wait on it (registrar, 6 October 2026).
 
+### Retinoblastoma: what the sixth digit would settle
+
+Registrar, 7 October 2026: pathology reports vary by laboratory, some synoptic (College of American Pathologists
+style, with separate lines for growth pattern, histologic grade and anaplasia grade) and some one narrative
+diagnosis sentence. The tool therefore cannot ask growth pattern and grade as two questions and rely on the
+report to answer both. Grade is a sixth digit, which needs its own research and build, so
+`rb_enucleation_report` stays a single pick with hints until then.
+
+What the digit changes for this group:
+
+- A report can state a growth pattern and a grade together (the College of American Pathologists form has both).
+  With four digits the clerk must choose between `9513` (pattern) and `9511` or `9512` (grade) and loses the other.
+  With the digit, `9513` plus the grade digit keeps both.
+- The WHO manual's own example is "retinoblastoma, differentiated (9511/31)": the type and the digit are two
+  entries that must agree (WHO ICD-O-3 first revision, section 4.3.4, p. 21). Differentiated with G3 or G4, and
+  undifferentiated with G1 or G2, would contradict.
+- `G3` to `9512` is the build's mapping, not WHO's or the College of American Pathologists'. WHO Table 21 puts
+  "poorly differentiated" at digit 3, between differentiated and undifferentiated.
+- WHO's 5th-edition eye chapter treats differentiation and growth pattern as features of one retinoblastoma
+  entity. Whether `9511` and `9512` are subtypes and `9513` a pattern is open (Group V contract §10, registrar
+  item 5).
+- Pathology Outlines words G1 to G3 with proportions ("more than half", "less than half" of the tumour). The
+  College of American Pathologists protocol v4.0.0.0 (p. 4) gives "more than half" only for G4's anaplasia, and the
+  option labels follow that text. Settle which wording the registry reads before the digit is built.
+
 ---
 
 ## 30. ❓ FOR THE REGISTRAR — "take the higher" (WHO Rules G and K): what is built, and what waits
@@ -1584,18 +1609,26 @@ Rule K, p. 16; section 4.3.4, pp. 21-22).
 - **Meningioma:** BAP1 loss is recorded and changes neither the code nor the grade. The four rules that let it
   pre-empt the subtype are gone, so a rhabdoid or papillary meningioma records 9538/3.
 - **Retinoblastoma:** the higher grade governs, severe anaplasia outranks G1 and G2, and a diffuse infiltrating
-  growth pattern outranks a grade (contract §2.4).
+  growth pattern outranks a grade (contract §2.4). Moderate anaplasia changes no code where a differentiation grade
+  is stated, and moderate anaplasia alone stays in the GX answer (`9510`). The registrar confirmed both on
+  7 October 2026. Mendoza p. 774 groups moderate with severe on nuclear size alone, and reports a "variable
+  association" between anaplasia and differentiation, which are "2 separate, albeit related, concepts" (Mendoza PR,
+  et al., American Journal of Ophthalmology 2015;159(4):764-776). An ophthalmic pathologist's answer to one
+  question would settle the doubt: "When a report gives moderate anaplasia and no differentiation grade, is that
+  differentiated or undifferentiated for ICD-O?"
+- **Typed lane, Group II:** the 12 lymphoma and leukaemia terms filed under Groups I and II (ATL, CLL, SLL,
+  "B lymphoblastic leukemia/lymphoma" and others) enter Group II at a site that names neither group, with the site
+  recorded. The router marks Group II `occurs_at_any_site`. A site that names one of the term's groups still
+  decides, and a site that names both still stops (registrar, 7 October 2026, narrowing the 4 October ruling).
 
 ### Waiting on the registrar
 
 - **Neuroendocrine tumour, grade 2 (`8249`, atypical carcinoid).** No group offers it. ICCC-2017 places 8249 in
   Group XI by site (XIf1 to XIf11), and none of those ranges covers the kidney or the liver. Offering it in Groups
   VI and VII needs an entry, aliases and a line on the REDCap-side list.
-- **Moderate anaplasia with a stated differentiation grade** changes no code in retinoblastoma. The sentence rests
-  on the 7 October decision alone; the Mendoza scale places moderate between the two ends and has no bridge.
-- **A typed term filed under several groups** still stops when the picked site names neither group (4 October
-  ruling). The record-only site step covers single-group terms only, so a lymphoma term filed under Groups I and II
-  and typed at a kidney stops for the registrar.
+- **A typed term filed under several groups** still stops when the picked site names none of its groups, unless
+  one of them occurs at any site (only Group II does). The other 37 multi-group terms stop there, as the
+  4 October ruling intends.
 - **Group 10**, merged after this tree was cut: `9082` and `9083` are reachable only through the mixed-tumour
   screen; a named mixed term ends the case, so teratocarcinoma with a choriocarcinoma component records `9081`
   where `9101` fits; Sertoli-Leydig intermediate differentiation ends in a behavior-1 exclusion with no hint to
@@ -1603,8 +1636,8 @@ Rule K, p. 16; section 4.3.4, pp. 21-22).
 
 ### Known and not changed
 
-- `build/drive_first_tap.mjs` stops at its fourth control, which looks for a `select` that is now a filtered
-  radio list. It predates this change.
+- `build/drive_first_tap.mjs` stopped at its fourth control, which looked for a `select` that is now a filtered
+  radio list. It predates this change and is fixed (7 October 2026).
 - `presentation_router.json`: `asked_by` on `primary_compartment` lists `unsure`, which does not set
   `dual_group_discriminator`. The build now notes it.
 - `fl_grade` ("not graded" in three paediatric rules), `bap1_status` and `meningioma_risk_tier` are recorded and

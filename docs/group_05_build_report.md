@@ -306,7 +306,8 @@ the correction.
   `rb_enucleation_report`, and `rb_retinocytoma_word` has a `9512` option for a retinocytomatous area
   inside a tumour whose remainder is G3, G4 or severely anaplastic, and a second one for a stated diffuse
   growth pattern (`9513`). Moderate anaplasia stays as above. That it changes no code where a differentiation
-  grade is stated rests on the 7 October decision alone, with no source: open for the registrar (TODO §30).
+  grade is stated, and that moderate anaplasia alone stays `9510`, were confirmed by the registrar on
+  7 October 2026 (TODO §30 records the evidence and the one question left for a pathologist).
 - **The alias express lane now records the site** (registrar, 7 October 2026). A typed Group V term
   used to complete a case with no topography (`TOPOGRAPHY —`), because the lane bypassed site capture
   for a group that reads no site. It now asks the organ system and region and only records the answer:

@@ -349,7 +349,7 @@ is: retinocytoma-grade or mild ≈ the differentiated end; severe ≈ the undiff
 the report states more than one grade, code the higher.** Severe anaplasia outranks a G1 or G2
 differentiation grade, and a G3 or G4 differentiation grade outranks mild anaplasia. Moderate
 anaplasia changes no code where a differentiation grade is stated; moderate anaplasia alone stays in
-the GX/`9510` option, which is open for the registrar (build report).
+the GX/`9510` option. The registrar confirmed both on 7 October 2026 (TODO §30).
 
 *Decision, 7 October 2026 (registrar).* The first build said "code from the differentiation grade"
 and recorded anaplasia as a prognostic finding that changes no code. That coded a G2 report with
