@@ -489,12 +489,23 @@ function rootOrders(q) {
   })(parts, []);
   return out;
 }
+/* The squashed form of every alias key, computed once per index object. searchAlias runs on every
+   keystroke, and normalizing all the keys each time made a search about fifty times dearer. */
+var squashedKeys = typeof WeakMap === 'function' ? new WeakMap() : null;
+function squashedAliasRows() {
+  var idx = state.aliasIndex || {};
+  var rows = squashedKeys && squashedKeys.get(idx);
+  if (!rows) {
+    rows = Object.keys(idx).map(function (k) { return { alias: k, hay: squashTerm(k) }; });
+    if (squashedKeys) squashedKeys.set(idx, rows);
+  }
+  return rows;
+}
 /* Fuzzy-ish match against the lightweight startup index (Architecture §4C). */
 function searchAlias(q) {
   var needles = [squashTerm(q)].concat(rootOrders(q)).filter(Boolean), out = [];
-  Object.keys(state.aliasIndex || {}).forEach(function (k) {
-    var hay = squashTerm(k);
-    if (needles.some(function (n) { return hay.indexOf(n) !== -1; })) out.push({ alias: k, groups: arr(state.aliasIndex[k]) });
+  squashedAliasRows().forEach(function (r) {
+    if (needles.some(function (n) { return r.hay.indexOf(n) !== -1; })) out.push({ alias: r.alias, groups: arr(state.aliasIndex[r.alias]) });
   });
   return out.sort(function (a, b) { return a.alias.length - b.alias.length; }).slice(0, 8);
 }
