@@ -182,6 +182,27 @@
       "note": "Group 9 added 2 October 2026 (Group 9 build contract §7.4). Botryoid embryonal rhabdomyosarcoma of the vagina and cervix (ICCC-3 IXa); yolk sac tumour of the vagina is Group X; carcinoma is Group XI."
     },
     {
+      "organ": "female_genital_upper",
+      "topography_range": "C54-C55, C58",
+      "codes": [
+        "C54.0",
+        "C54.1",
+        "C54.2",
+        "C54.3",
+        "C54.8",
+        "C54.9",
+        "C55.9",
+        "C58.9"
+      ],
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "label": "Uterus and placenta",
+      "note": "Added 6 October 2026 (Group 10 code review). Gestational trophoblastic tumours of the uterus and placenta are Group X (ICCC-2017 range 104, Xb5, sites 540-559 and 589); rhabdomyosarcoma is Group IX; carcinoma is Group XI."
+    },
+    {
       "organ": "male_genital_paratesticular",
       "topography_range": "C63",
       "codes": [
@@ -241,15 +262,18 @@
     },
     {
       "organ": "gonad_sacrococcygeal_midline",
-      "topography_range": "C56,C62",
+      "topography_range": "C56,C62,C76.3",
       "codes": [
         "C56.9",
-        "C62.9"
+        "C62.0",
+        "C62.1",
+        "C62.9",
+        "C76.3"
       ],
       "candidate_groups": [
         10
       ],
-      "label": "Ovary and testis"
+      "label": "Ovary, testis and sacrococcygeal region"
     },
     {
       "organ": "brain_cns",
@@ -427,19 +451,18 @@
     },
     {
       "organ": "ill_defined_sites",
-      "topography_range": "C76",
+      "topography_range": "C76 (not C76.3)",
       "codes": [
         "C76.0",
         "C76.1",
         "C76.2",
-        "C76.3",
         "C76.4",
         "C76.5",
         "C76.7",
         "C76.8"
       ],
       "label": "Ill-defined sites",
-      "note": "WHO ICD-O-3 Rule B and Rule A: a region, or a prefixed region (peri-, para-, area of), that the report gives with no tissue is recorded at the ill-defined subcategory. Offered after the organ systems; candidate_groups is route_by_morphology, so the presentation's own list decides the family."
+      "note": "WHO ICD-O-3 Rule B and Rule A: a region, or a prefixed region (peri-, para-, area of), that the report gives with no tissue is recorded at the ill-defined subcategory. Offered after the organ systems; candidate_groups is route_by_morphology, so the presentation's own list decides the family. C76.3 Pelvis, NOS is offered under Ovary, testis and sacrococcygeal region, where Group 10 placed it (design decision D19), so it is not listed twice."
     },
     {
       "organ": "unknown_primary",
@@ -1031,6 +1054,100 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C54.0": {
+      "code": "C54.0",
+      "label": "Isthmus uteri (Lower uterine segment)",
+      "redcap_code": "540",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.1": {
+      "code": "C54.1",
+      "label": "Endometrium (Endometrial gland, Endometrial stroma)",
+      "redcap_code": "541",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.2": {
+      "code": "C54.2",
+      "label": "Myometrium",
+      "redcap_code": "542",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.3": {
+      "code": "C54.3",
+      "label": "Fundus uteri",
+      "redcap_code": "543",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.8": {
+      "code": "C54.8",
+      "label": "Overlapping lesion of corpus uteri",
+      "redcap_code": "548",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C54.9": {
+      "code": "C54.9",
+      "label": "Corpus uteri (Body of uterus)",
+      "redcap_code": "549",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C55.9": {
+      "code": "C55.9",
+      "label": "Uterus, NOS (Uterine, NOS)",
+      "redcap_code": "559",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C58.9": {
+      "code": "C58.9",
+      "label": "Placenta (Fetal membranes)",
+      "redcap_code": "589",
+      "coarse_organ": "female_genital_upper",
+      "candidate_groups": [
+        10
+      ],
+      "candidate_groups_advisory": true
+    },
     "C63.0": {
       "code": "C63.0",
       "label": "Epididymis",
@@ -1184,6 +1301,24 @@
         10
       ]
     },
+    "C62.0": {
+      "code": "C62.0",
+      "label": "Undescended testis (site of neoplasm, Retained testis (site of neoplasm), Ectopic testis (site of neoplasm))",
+      "redcap_code": "620",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        10
+      ]
+    },
+    "C62.1": {
+      "code": "C62.1",
+      "label": "Descended testis (Scrotal testis)",
+      "redcap_code": "621",
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        10
+      ]
+    },
     "C62.9": {
       "code": "C62.9",
       "label": "Testis, NOS",
@@ -1199,7 +1334,8 @@
       "redcap_code": "709",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.9": {
@@ -1208,7 +1344,8 @@
       "redcap_code": "719",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.3": {
@@ -1217,7 +1354,8 @@
       "redcap_code": "723",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ],
       "note": "9380 (Glioma, NOS) at this site routes to Group III (IIIb) instead of IIId2 — see presentation_router.dual_group_rules['9380']."
     },
@@ -1227,7 +1365,8 @@
       "redcap_code": "729",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C75.1": {
@@ -1237,45 +1376,21 @@
       "coarse_organ": "pituitary",
       "candidate_groups": [
         3,
+        10,
         11
       ]
-    },
-    "C69.9": {
-      "code": "C69.9",
-      "label": "Eye, NOS",
-      "redcap_code": "699",
-      "coarse_organ": "eye",
-      "candidate_groups": [
-        5
-      ]
-    },
-    "C76.0": {
-      "code": "C76.0",
-      "label": "Head, face or neck, NOS",
-      "redcap_code": "760",
-      "coarse_organ": "ill_defined_sites",
-      "candidate_groups": "route_by_morphology"
-    },
-    "C76.1": {
-      "code": "C76.1",
-      "label": "Thorax, NOS",
-      "redcap_code": "761",
-      "coarse_organ": "ill_defined_sites",
-      "candidate_groups": "route_by_morphology"
-    },
-    "C76.2": {
-      "code": "C76.2",
-      "label": "Abdomen, NOS",
-      "redcap_code": "762",
-      "coarse_organ": "ill_defined_sites",
-      "candidate_groups": "route_by_morphology"
     },
     "C76.3": {
       "code": "C76.3",
       "label": "Pelvis, NOS",
       "redcap_code": "763",
-      "coarse_organ": "ill_defined_sites",
-      "candidate_groups": "route_by_morphology"
+      "coarse_organ": "gonad_sacrococcygeal_midline",
+      "candidate_groups": [
+        9,
+        10
+      ],
+      "candidate_groups_advisory": true,
+      "note": "Group 10 added 4 October 2026 (design decision D19). The Group 10 Diagnostic Pathway (section 2A) names C76.3 as the site of a sacrococcygeal germ cell tumour, the commonest extragonadal site. REDCap offers this site as Pelvis, NOS (763). Group 9 is listed because soft-tissue sarcomas of the pelvis are ICCC Group IX. The registrar confirms the site code (docs/group_10_registrar_review.md B2)."
     },
     "C76.4": {
       "code": "C76.4",
@@ -1375,6 +1490,36 @@
         9
       ]
     },
+    "C69.9": {
+      "code": "C69.9",
+      "label": "Eye, NOS",
+      "redcap_code": "699",
+      "coarse_organ": "eye",
+      "candidate_groups": [
+        5
+      ]
+    },
+    "C76.0": {
+      "code": "C76.0",
+      "label": "Head, face or neck, NOS",
+      "redcap_code": "760",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.1": {
+      "code": "C76.1",
+      "label": "Thorax, NOS",
+      "redcap_code": "761",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.2": {
+      "code": "C76.2",
+      "label": "Abdomen, NOS",
+      "redcap_code": "762",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
     "C77.9": {
       "code": "C77.9",
       "label": "Lymph node, NOS",
@@ -1400,7 +1545,8 @@
       "redcap_code": "752",
       "coarse_organ": "midline_cns_extension",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C75.3": {
@@ -1409,7 +1555,8 @@
       "redcap_code": "753",
       "coarse_organ": "midline_cns_extension",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C47.0": {
@@ -1552,7 +1699,8 @@
       "candidate_groups": [
         2,
         4,
-        9
+        9,
+        10
       ],
       "candidate_groups_advisory": true,
       "note": "Retroperitoneum carries three families in a child: neuroblastoma of the sympathetic chain (IV), soft tissue sarcoma (IX), and lymphoma presenting as a retroperitoneal nodal mass (II)."
@@ -1708,7 +1856,8 @@
       "redcap_code": "700",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C70.1": {
@@ -1717,7 +1866,8 @@
       "redcap_code": "701",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.1": {
@@ -1726,7 +1876,8 @@
       "redcap_code": "711",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.2": {
@@ -1735,7 +1886,8 @@
       "redcap_code": "712",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.3": {
@@ -1744,7 +1896,8 @@
       "redcap_code": "713",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.4": {
@@ -1753,7 +1906,8 @@
       "redcap_code": "714",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.5": {
@@ -1762,7 +1916,8 @@
       "redcap_code": "715",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.6": {
@@ -1771,7 +1926,8 @@
       "redcap_code": "716",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.7": {
@@ -1780,7 +1936,8 @@
       "redcap_code": "717",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.8": {
@@ -1789,7 +1946,8 @@
       "redcap_code": "718",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.0": {
@@ -1798,7 +1956,8 @@
       "redcap_code": "720",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.1": {
@@ -1807,7 +1966,8 @@
       "redcap_code": "721",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.2": {
@@ -1816,7 +1976,8 @@
       "redcap_code": "722",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.4": {
@@ -1825,7 +1986,8 @@
       "redcap_code": "724",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.5": {
@@ -1834,7 +1996,8 @@
       "redcap_code": "725",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C72.8": {
@@ -1843,7 +2006,8 @@
       "redcap_code": "728",
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ]
     },
     "C71.0": {
@@ -1852,7 +2016,8 @@
       "redcap_code": null,
       "coarse_organ": "brain_cns",
       "candidate_groups": [
-        3
+        3,
+        10
       ],
       "note": "NO REDCap topography option exists for this code — the `topo_code` dropdown jumps 709 to 711. Verified against ICD coding/RedCap Options/Topography Redcap.md, 2026-09-14. The tool carries C71.0 because Group III keys its decision trees to anatomical compartment and a thalamic diffuse midline glioma lands here. Until the option is added the clerk has no dropdown value to record. See docs/TODO.md."
     },
@@ -2025,7 +2190,8 @@
       "coarse_organ": "mediastinum",
       "candidate_groups": [
         2,
-        4
+        4,
+        10
       ],
       "candidate_groups_advisory": true
     },
@@ -2047,7 +2213,8 @@
       "coarse_organ": "mediastinum",
       "candidate_groups": [
         2,
-        4
+        4,
+        10
       ],
       "candidate_groups_advisory": true
     },

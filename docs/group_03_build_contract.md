@@ -344,6 +344,16 @@ result excludes nothing. β-hCG is higher in CSF (≥8.2 IU/L, sensitivity 47%);
 serum (≥25 ng/mL). Never apply one compartment's cut-off to the other. Capture the number, not
 a yes/no — one control craniopharyngioma reached CSF β-hCG of 8 against a cut-off of 8.2.
 
+> **Cut-offs changed, registrar's ruling of 6 October 2026.** The `md_gct_*` gates now read the
+> SIOP cut-offs, the same in serum and cerebrospinal fluid: alpha-fetoprotein above 25 ng/mL and
+> β-hCG above 50 IU/L, "above" being strict (SIOP CNS GCT 96, Calaminus 2017, Methods; SIOP CNS
+> GCT II, Calaminus 2026, Table 2). They replace the Hu 2016 values above (serum αFP ≥ 25, CSF αFP
+> ≥ 3.8 ng/mL; serum β-hCG ≥ 2.5, CSF β-hCG ≥ 8.2 IU/L), which separate any intracranial germ cell
+> tumour from a non-germ-cell lesion rather than germinoma from a non-germinomatous tumour. The rule
+> stays one-directional and the routing is unchanged. Evidence and the trace of a β-hCG of 20 IU/L:
+> `docs/group_10_registrar_review.md` E6. Check: `check_brain_marker_cutoffs`; controls:
+> `build/negative_controls_group03.py`.
+
 **The two imaging-only endpoints** (§3.5) — keep both, gate both, and **do not give them the
 same confidence.**
 

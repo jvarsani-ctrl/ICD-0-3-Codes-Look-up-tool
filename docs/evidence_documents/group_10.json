@@ -11,18 +11,35 @@
           "index": 0,
           "label_head": "A referral letter or clinical note only — no imaging report, no marker",
           "kind": "tier",
-          "requires": [],
+          "requires": [
+            "lab"
+          ],
           "any_of": [],
           "excludes": [
             "imaging",
             "cytology",
             "histology"
           ],
-          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the clinical-note question; label and captures are the tier's own. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
           "confidence": "high"
         },
         {
           "index": 1,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology",
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
           "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
           "kind": "tier",
           "requires": [
@@ -34,11 +51,11 @@
             "cytology",
             "histology"
           ],
-          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "rationale": "Routes to the age question and the marker gates since the registrar's ruling of 6 October 2026 on the SIOP cut-offs; under 24 months or with no age in the file it routes through the laboratory screen to the marker question, as before. The tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
           "confidence": "medium"
         },
         {
-          "index": 2,
+          "index": 3,
           "label_head": "An imaging report only — no marker result, no tissue",
           "kind": "tier",
           "requires": [
@@ -54,7 +71,22 @@
           "confidence": "high"
         },
         {
-          "index": 3,
+          "index": 4,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the cytology question; label and captures are the tier's own. Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
           "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
           "kind": "tier",
           "requires": [
@@ -62,25 +94,41 @@
           ],
           "any_of": [],
           "excludes": [
-            "histology"
+            "histology",
+            "lab"
           ],
-          "rationale": "Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
           "confidence": "high"
         },
         {
-          "index": 4,
+          "index": 6,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the histology question; label and captures are the tier's own. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
           "label_head": "A histology report — biopsy or resection",
           "kind": "tier",
           "requires": [
             "histology"
           ],
           "any_of": [],
-          "excludes": [],
-          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "excludes": [
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
           "confidence": "high"
         }
       ],
-      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology."
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
     },
     {
       "group": 10,
@@ -92,18 +140,35 @@
           "index": 0,
           "label_head": "A referral letter or clinical note only — no imaging report, no marker",
           "kind": "tier",
-          "requires": [],
+          "requires": [
+            "lab"
+          ],
           "any_of": [],
           "excludes": [
             "imaging",
             "cytology",
             "histology"
           ],
-          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the clinical-note question; label and captures are the tier's own. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
           "confidence": "high"
         },
         {
           "index": 1,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology",
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
           "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
           "kind": "tier",
           "requires": [
@@ -115,11 +180,11 @@
             "cytology",
             "histology"
           ],
-          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "rationale": "Routes through the laboratory screen to the marker question since 6 October 2026 (registrar): the tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
           "confidence": "medium"
         },
         {
-          "index": 2,
+          "index": 3,
           "label_head": "An imaging report only — no marker result, no tissue",
           "kind": "tier",
           "requires": [
@@ -135,7 +200,22 @@
           "confidence": "high"
         },
         {
-          "index": 3,
+          "index": 4,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the cytology question; label and captures are the tier's own. Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
           "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
           "kind": "tier",
           "requires": [
@@ -143,25 +223,41 @@
           ],
           "any_of": [],
           "excludes": [
-            "histology"
+            "histology",
+            "lab"
           ],
-          "rationale": "Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
           "confidence": "high"
         },
         {
-          "index": 4,
+          "index": 6,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the histology question; label and captures are the tier's own. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
           "label_head": "A histology report — biopsy or resection",
           "kind": "tier",
           "requires": [
             "histology"
           ],
           "any_of": [],
-          "excludes": [],
-          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "excludes": [
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
           "confidence": "high"
         }
       ],
-      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology."
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
     },
     {
       "group": 10,
@@ -173,18 +269,35 @@
           "index": 0,
           "label_head": "A referral letter or clinical note only — no imaging report, no marker",
           "kind": "tier",
-          "requires": [],
+          "requires": [
+            "lab"
+          ],
           "any_of": [],
           "excludes": [
             "imaging",
             "cytology",
             "histology"
           ],
-          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the clinical-note question; label and captures are the tier's own. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
           "confidence": "high"
         },
         {
           "index": 1,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology",
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
           "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
           "kind": "tier",
           "requires": [
@@ -196,11 +309,11 @@
             "cytology",
             "histology"
           ],
-          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "rationale": "Routes through the laboratory screen to the marker question since 6 October 2026 (registrar): the tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
           "confidence": "medium"
         },
         {
-          "index": 2,
+          "index": 3,
           "label_head": "An imaging report only — no marker result, no tissue",
           "kind": "tier",
           "requires": [
@@ -216,7 +329,22 @@
           "confidence": "high"
         },
         {
-          "index": 3,
+          "index": 4,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the cytology question; label and captures are the tier's own. Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
           "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
           "kind": "tier",
           "requires": [
@@ -224,25 +352,41 @@
           ],
           "any_of": [],
           "excludes": [
-            "histology"
+            "histology",
+            "lab"
           ],
-          "rationale": "Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Needs the Cytology document itself (effusion, aspirate, fluid cytology); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
           "confidence": "high"
         },
         {
-          "index": 4,
+          "index": 6,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the histology question; label and captures are the tier's own. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
           "label_head": "A histology report — biopsy or resection",
           "kind": "tier",
           "requires": [
             "histology"
           ],
           "any_of": [],
-          "excludes": [],
-          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "excludes": [
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
           "confidence": "high"
         }
       ],
-      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology."
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
     },
     {
       "group": 10,
@@ -254,18 +398,35 @@
           "index": 0,
           "label_head": "A referral letter or clinical note only — no imaging report, no marker",
           "kind": "tier",
-          "requires": [],
+          "requires": [
+            "lab"
+          ],
           "any_of": [],
           "excludes": [
             "imaging",
             "cytology",
             "histology"
           ],
-          "rationale": "Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the clinical-note question; label and captures are the tier's own. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
           "confidence": "high"
         },
         {
           "index": 1,
+          "label_head": "A referral letter or clinical note only — no imaging report, no marker",
+          "kind": "tier",
+          "requires": [],
+          "any_of": [],
+          "excludes": [
+            "imaging",
+            "cytology",
+            "histology",
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Lowest tier: fits when no imaging, cytology or histology document is ticked, so it catches nothing ticked, a lone Lab Report, and IHC or Gene reports without the document they are read against (all understate, the safe direction).",
+          "confidence": "high"
+        },
+        {
+          "index": 2,
           "label_head": "An imaging report and a serum or cerebrospinal fluid alpha-fetoprotein",
           "kind": "tier",
           "requires": [
@@ -277,11 +438,11 @@
             "cytology",
             "histology"
           ],
-          "rationale": "Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
+          "rationale": "Routes through the laboratory screen to the marker question since 6 October 2026 (registrar): the tier always has Lab Report ticked. Needs the Imaging Report and the Lab Report (assumed to hold the alpha-fetoprotein or human chorionic gonadotropin result); the label's 'no tissue' excludes Cytology and Histology Report. The next node asks for the specific marker result.",
           "confidence": "medium"
         },
         {
-          "index": 2,
+          "index": 3,
           "label_head": "An imaging report only — no marker result, no tissue",
           "kind": "tier",
           "requires": [
@@ -297,7 +458,22 @@
           "confidence": "high"
         },
         {
-          "index": 3,
+          "index": 4,
+          "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "cytology"
+          ],
+          "any_of": [],
+          "excludes": [
+            "histology"
+          ],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the cytology question; label and captures are the tier's own. Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "confidence": "high"
+        },
+        {
+          "index": 5,
           "label_head": "Cytology only — cerebrospinal fluid, effusion or fine-needle aspirate;",
           "kind": "tier",
           "requires": [
@@ -305,25 +481,41 @@
           ],
           "any_of": [],
           "excludes": [
-            "histology"
+            "histology",
+            "lab"
           ],
-          "rationale": "Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Needs the Cytology document itself (cerebrospinal-fluid cytology, effusion, aspirate); Histology Report excluded because the label says no tissue. IHC or genetics beside Cytology stays here (immunocytochemistry, no cell block named); imaging or lab beside Cytology also lands here.",
           "confidence": "high"
         },
         {
-          "index": 4,
+          "index": 6,
+          "label_head": "A histology report — biopsy or resection",
+          "kind": "tier",
+          "requires": [
+            "lab",
+            "histology"
+          ],
+          "any_of": [],
+          "excludes": [],
+          "rationale": "Registrar, 6 October 2026: the laboratory screen follows the checklist only when Lab Report is ticked. This copy of the tier below requires Lab Report and routes through the laboratory screen to the histology question; label and captures are the tier's own. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "confidence": "high"
+        },
+        {
+          "index": 7,
           "label_head": "A histology report — biopsy or resection",
           "kind": "tier",
           "requires": [
             "histology"
           ],
           "any_of": [],
-          "excludes": [],
-          "rationale": "Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
+          "excludes": [
+            "lab"
+          ],
+          "rationale": "Excludes Lab Report since 6 October 2026: a ticked Lab Report takes the copy above, which adds the laboratory screen. Histology Report ticked; the top tier regardless of other documents, with IHC and genetics refining it only beside the report.",
           "confidence": "high"
         }
       ],
-      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology."
+      "hint_was": "Pick the highest tier of evidence in the file. A radiology report counts as imaging. A pathology report on a biopsy or resection counts as histology. A biopsy or cytology report that calls the specimen inadequate or non-diagnostic counts as no tissue: pick from the other tiers."
     }
   ]
 }

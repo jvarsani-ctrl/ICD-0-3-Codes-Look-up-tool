@@ -1,6 +1,6 @@
 # The ICD-O sixth digit: how registries hold grade (first-pass research)
 
-Desk research of 7 October 2026 for TODO section 29. It asks what the main registry standards require for grade and
+Desk research of 7 October 2026 for TODO section 32. It asks what the main registry standards require for grade and
 differentiation, how they hold it, and what that means for a hospital-based registry. Nothing here is built.
 
 **How to read the evidence.** "Read" means I opened the document and the quoted passage is in it. "Reported" means a web
@@ -97,7 +97,7 @@ keeps the two apart: a four-digit histology and a separate grade code from the s
 
 ## What this means for the tool
 
-The research changes the question in TODO section 29. It is not only "should the tool carry the sixth digit?". There are
+The research changes the question in TODO section 32. It is not only "should the tool carry the sixth digit?". There are
 two models, and the evidence favours the second for a hospital registry:
 
 1. **A sixth digit appended to the morphology code.** This is the WHO manual's model and SEER's up to 2017. The code
