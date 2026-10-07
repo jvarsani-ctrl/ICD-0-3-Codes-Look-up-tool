@@ -1539,6 +1539,12 @@ coded 9082/34.
 
 ### What to research
 
+First-pass desk research is in `docs/sixth_digit_research.md` (7 October 2026). Its main finding: NAACCR, which
+United States hospital registries follow, has not held grade as a sixth digit since cases diagnosed in 2018; it
+uses separate Grade Clinical, Pathological and Post Therapy items with a code set per tumour, and it has a complete
+retinoblastoma table (Grade 21) that matches our option wording. ENCR's 2023 minimum dataset lists grade without
+prescribing a digit. Paediatric completeness data and a childhood use case were not found.
+
 1. Which registry standards ask a hospital-based registry for grade or differentiation, whether they
    hold it as the sixth digit of the morphology code or as a separate item, and what they use it for.
 2. How complete the item is in practice, and whether registries that collect it say it changed an
@@ -1615,7 +1621,9 @@ Rule K, p. 16; section 4.3.4, pp. 21-22).
   association" between anaplasia and differentiation, which are "2 separate, albeit related, concepts" (Mendoza PR,
   et al., American Journal of Ophthalmology 2015;159(4):764-776). An ophthalmic pathologist's answer to one
   question would settle the doubt: "When a report gives moderate anaplasia and no differentiation grade, is that
-  differentiated or undifferentiated for ICD-O?"
+  differentiated or undifferentiated for ICD-O?" NAACCR's retinoblastoma grade table (Grade Manual v3.3, pp. 176 to
+  178) has G1 to G4 and the generic A to D and no place for a Mendoza anaplasia grade, which supports the
+  confirmation.
 - **Typed lane, Group II:** the 12 lymphoma and leukaemia terms filed under Groups I and II (ATL, CLL, SLL,
   "B lymphoblastic leukemia/lymphoma" and others) enter Group II at a site that names neither group, with the site
   recorded. The router marks Group II `occurs_at_any_site`. A site that names one of the term's groups still
