@@ -176,13 +176,19 @@
           "drop": [
             1
           ],
-          "because": "Nodal disease is Group II, not a leukaemia."
+          "because": "Nodal disease is Group II, not a leukaemia.",
+          "keep_on_site": [
+            2
+          ]
         },
         "extranodal": {
           "drop": [
             1
           ],
-          "because": "Extranodal disease is Group II, not a leukaemia."
+          "because": "Extranodal disease is Group II, not a leukaemia.",
+          "keep_on_site": [
+            2
+          ]
         }
       },
       "ask_before_site": true,

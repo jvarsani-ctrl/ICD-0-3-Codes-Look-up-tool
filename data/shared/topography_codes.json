@@ -16,7 +16,8 @@
         2
       ],
       "note": "Group 1's Ia4 dual-group rule for 9591 turns on exactly the C42.2-vs-rest distinction, so these four codes are individually addressable below, never lumped as C42.x.",
-      "label": "Blood, bone marrow and haematopoietic system"
+      "label": "Blood, bone marrow and haematopoietic system",
+      "region_hint": "Every leukaemia except myeloid sarcoma is recorded at C42.1 Bone marrow, wherever the blasts were seen (WHO ICD-O-3 Rule E). Pick C42.2 Spleen only for a lymphoma that arose in the spleen; a myeloid sarcoma is recorded at the organ it arose in."
     },
     {
       "organ": "kidney",
@@ -122,7 +123,7 @@
     },
     {
       "organ": "urinary_bladder",
-      "topography_range": "C67",
+      "topography_range": "C67, C68.8",
       "codes": [
         "C67.0",
         "C67.1",
@@ -133,7 +134,8 @@
         "C67.6",
         "C67.7",
         "C67.8",
-        "C67.9"
+        "C67.9",
+        "C68.8"
       ],
       "candidate_groups": [
         9,
@@ -157,7 +159,7 @@
     },
     {
       "organ": "female_genital_lower",
-      "topography_range": "C51-C53",
+      "topography_range": "C51-C53, C57.8",
       "codes": [
         "C51.0",
         "C51.1",
@@ -168,7 +170,8 @@
         "C53.0",
         "C53.1",
         "C53.8",
-        "C53.9"
+        "C53.9",
+        "C57.8"
       ],
       "candidate_groups": [
         9,
@@ -316,6 +319,13 @@
       "organ": "lymph_node",
       "topography_range": "C77",
       "codes": [
+        "C77.0",
+        "C77.1",
+        "C77.2",
+        "C77.3",
+        "C77.4",
+        "C77.5",
+        "C77.8",
         "C77.9"
       ],
       "candidate_groups": [
@@ -414,6 +424,31 @@
         4
       ],
       "label": "Carotid body and other paraganglia"
+    },
+    {
+      "organ": "ill_defined_sites",
+      "topography_range": "C76",
+      "codes": [
+        "C76.0",
+        "C76.1",
+        "C76.2",
+        "C76.3",
+        "C76.4",
+        "C76.5",
+        "C76.7",
+        "C76.8"
+      ],
+      "label": "Ill-defined sites",
+      "note": "WHO ICD-O-3 Rule B and Rule A: a region, or a prefixed region (peri-, para-, area of), that the report gives with no tissue is recorded at the ill-defined subcategory. Offered after the organ systems; candidate_groups is route_by_morphology, so the presentation's own list decides the family."
+    },
+    {
+      "organ": "unknown_primary",
+      "topography_range": "C80.9",
+      "codes": [
+        "C80.9"
+      ],
+      "label": "Unknown primary site",
+      "note": "WHO ICD-O-3 Rule D: a lymphoma with no site indicated and an extranodal origin suspected is recorded at C80.9."
     }
   ],
   "topography_lookup": {
@@ -842,6 +877,17 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C68.8": {
+      "code": "C68.8",
+      "label": "Overlapping lesion of urinary organs",
+      "redcap_code": "688",
+      "coarse_organ": "urinary_bladder",
+      "candidate_groups": [
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C61.9": {
       "code": "C61.9",
       "label": "Prostate gland (Prostate, NOS)",
@@ -965,6 +1011,18 @@
       "code": "C53.9",
       "label": "Cervix uteri (Cervix, NOS, Uterine cervix)",
       "redcap_code": "539",
+      "coarse_organ": "female_genital_lower",
+      "candidate_groups": [
+        9,
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.8": {
+      "code": "C57.8",
+      "label": "Overlapping lesion of female genital organs (Tubo-ovarian, Utero-ovarian)",
+      "redcap_code": "578",
       "coarse_organ": "female_genital_lower",
       "candidate_groups": [
         9,
@@ -1191,6 +1249,132 @@
         5
       ]
     },
+    "C76.0": {
+      "code": "C76.0",
+      "label": "Head, face or neck, NOS",
+      "redcap_code": "760",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.1": {
+      "code": "C76.1",
+      "label": "Thorax, NOS",
+      "redcap_code": "761",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.2": {
+      "code": "C76.2",
+      "label": "Abdomen, NOS",
+      "redcap_code": "762",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.3": {
+      "code": "C76.3",
+      "label": "Pelvis, NOS",
+      "redcap_code": "763",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.4": {
+      "code": "C76.4",
+      "label": "Upper limb, NOS",
+      "redcap_code": "764",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.5": {
+      "code": "C76.5",
+      "label": "Lower limb, NOS",
+      "redcap_code": "765",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.7": {
+      "code": "C76.7",
+      "label": "Other ill-defined sites",
+      "redcap_code": "767",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C76.8": {
+      "code": "C76.8",
+      "label": "Overlapping lesion of ill-defined sites",
+      "redcap_code": "768",
+      "coarse_organ": "ill_defined_sites",
+      "candidate_groups": "route_by_morphology"
+    },
+    "C77.0": {
+      "code": "C77.0",
+      "label": "Lymph nodes of head, face and neck",
+      "redcap_code": "770",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.1": {
+      "code": "C77.1",
+      "label": "Intrathoracic lymph nodes",
+      "redcap_code": "771",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.2": {
+      "code": "C77.2",
+      "label": "Intra-abdominal lymph nodes",
+      "redcap_code": "772",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.3": {
+      "code": "C77.3",
+      "label": "Lymph nodes of axilla or arm",
+      "redcap_code": "773",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.4": {
+      "code": "C77.4",
+      "label": "Lymph nodes of inguinal region or leg",
+      "redcap_code": "774",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.5": {
+      "code": "C77.5",
+      "label": "Pelvic lymph nodes",
+      "redcap_code": "775",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
+    "C77.8": {
+      "code": "C77.8",
+      "label": "Lymph nodes of multiple regions",
+      "redcap_code": "778",
+      "coarse_organ": "lymph_node",
+      "candidate_groups": [
+        2,
+        9
+      ]
+    },
     "C77.9": {
       "code": "C77.9",
       "label": "Lymph node, NOS",
@@ -1206,7 +1390,7 @@
       "code": "C80.9",
       "label": "Unknown Primary Site",
       "redcap_code": "809",
-      "coarse_organ": null,
+      "coarse_organ": "unknown_primary",
       "candidate_groups": "route_by_morphology",
       "note": "Primary unknown — route by morphology (Architecture §6 / Design Spec §3.3); falls to Group XII only when morphology is itself unspecified (8000-8005)."
     },
@@ -1960,7 +2144,8 @@
       "redcap_code": "698",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        9
       ]
     }
   }

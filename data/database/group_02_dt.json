@@ -4815,7 +4815,7 @@
           "step_number": 3,
           "step_label": "CHL subtype",
           "question": "Classic Hodgkin lymphoma confirmed. Which architectural pattern does the report describe?",
-          "hint": "Architecture, not phenotype, decides the subtype. If the report does not state a pattern, say so — do not infer one from the clinical stage or the site.",
+          "hint": "Architecture, not phenotype, decides the subtype. If the report does not state a pattern, say so — do not infer one from the clinical stage or the site. If the report states both nodular sclerosis grades, record grade 2.",
           "clinical_alert": null,
           "coding_note": "Retained for epidemiology even though the subtypes have lost prognostic weight. Nodular sclerosis grading (British National Lymphoma Investigation grades 1 and 2) is optional — record it only where the report states it. Hodgkin granuloma (9661) and Hodgkin sarcoma (9662) are archaic synonyms of mixed cellularity and lymphocyte depletion respectively and are handled by the alias file, not by this node.",
           "options": [
@@ -5907,7 +5907,7 @@
           "step_number": 3,
           "step_label": "Follicular and marginal zone",
           "question": "A follicular, nodular or marginal-zone B-cell process. What does the report show? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
-          "hint": "In a child the commonest error here is grading. Paediatric-type follicular lymphoma looks high-grade on morphology and is indolent; paediatric nodal marginal zone lymphoma is now part of the same spectrum.",
+          "hint": "In a child the commonest error here is grading. Paediatric-type follicular lymphoma looks high-grade on morphology and is indolent; paediatric nodal marginal zone lymphoma is now part of the same spectrum. If the report states two grades, such as grade 2-3, answer Positive on the higher one. A grade is recorded only for an adult-pattern lymphoma that is BCL2 positive, and grade 1 also needs CD10; otherwise the code is Follicular lymphoma, NOS.",
           "clinical_alert": null,
           "coding_note": "ICC retains grades 1-2 / 3A / 3B; WHO-HAEM5 merges 1+2+3A as classic FL with grading optional and renames 3B follicular large B-cell lymphoma. Both 3B forms code 9698. Ki-67 is explicitly NOT part of grading. Record classification_used or the grade field is uninterpretable (Pathway §3.5, §5.3).",
           "marker_groups": [
@@ -5945,6 +5945,17 @@
                 "Skin-limited lesion on head or trunk",
                 "Cytogenetics / FISH report is in the file",
                 "FISH shows no BCL2-R, no BCL6-R, no MYC-R and no IRF4-R"
+              ]
+            },
+            {
+              "group_label": "Grade stated in the report (tick the highest if two are given)",
+              "markers": [
+                "Grade 3A stated",
+                "Grade 3B stated",
+                "Grade 3 or grade 2-3 stated (A or B not given)",
+                "Grade 1-2 stated",
+                "Grade 2 stated",
+                "Grade 1 stated"
               ]
             }
           ],
@@ -6054,11 +6065,9 @@
             {
               "positive": [
                 "Follicular pattern, adult type",
-                "BCL2 positive"
+                "BCL2 positive",
+                "Grade 3A stated"
               ],
-              "when": {
-                "fl_grade": "3A"
-              },
               "morphology_code": "9698",
               "confidence": "high",
               "coding_note": "Grade 3 follicular lymphoma. Under WHO-HAEM5 grade 3A is merged into classic FL and grading is optional; under ICC it is a distinct grade. Both grade 3A and 3B (WHO-HAEM5's 'follicular large B-cell lymphoma') code 9698. Record classification_used.",
@@ -6069,11 +6078,9 @@
             {
               "positive": [
                 "Follicular pattern, adult type",
-                "BCL2 positive"
+                "BCL2 positive",
+                "Grade 3B stated"
               ],
-              "when": {
-                "fl_grade": "3B"
-              },
               "morphology_code": "9698",
               "confidence": "high",
               "captures": {
@@ -6083,11 +6090,22 @@
             {
               "positive": [
                 "Follicular pattern, adult type",
-                "BCL2 positive"
+                "BCL2 positive",
+                "Grade 3 or grade 2-3 stated (A or B not given)"
               ],
-              "when": {
-                "fl_grade": "1-2"
+              "morphology_code": "9698",
+              "confidence": "high",
+              "captures": {
+                "workup_status": "complete"
               },
+              "coding_note": "Grade 3 follicular lymphoma with the sub-grade not given codes 9698, as 3A and 3B do. A report of grade 2-3 is ticked here: the higher grade governs."
+            },
+            {
+              "positive": [
+                "Follicular pattern, adult type",
+                "BCL2 positive",
+                "Grade 1-2 stated"
+              ],
               "morphology_code": "9691",
               "confidence": "medium",
               "coding_note": "ICD-O-3 carries separate codes for grade 1 (9695) and grade 2 (9691) but both current classifications report grades 1 and 2 together. Where the report says 'grade 1-2' without separating them, 9691 is used; where it says grade 1 explicitly, use the grade-1 option. Record classification_used.",
@@ -6099,11 +6117,22 @@
               "positive": [
                 "Follicular pattern, adult type",
                 "BCL2 positive",
-                "CD10"
+                "Grade 2 stated"
               ],
-              "when": {
-                "fl_grade": "1"
-              },
+              "morphology_code": "9691",
+              "confidence": "medium",
+              "coding_note": "Follicular lymphoma, grade 2 codes 9691, as grade 1-2 does. Where the report says grade 2-3, tick grade 3.",
+              "captures": {
+                "workup_status": "complete"
+              }
+            },
+            {
+              "positive": [
+                "Follicular pattern, adult type",
+                "BCL2 positive",
+                "CD10",
+                "Grade 1 stated"
+              ],
               "morphology_code": "9695",
               "confidence": "medium",
               "coding_note": "Follicular lymphoma, grade 1 — use only where the report states grade 1 alone, not 'grade 1-2'.",
@@ -6189,6 +6218,7 @@
               "Localised head-and-neck or Waldeyer's-ring mass, stage I–II",
               "Cytogenetics / FISH report is in the file",
               "Skin-limited lesion on head or trunk",
+              "Grade 1 stated",
               "CD20",
               "BCL6",
               "BCL2 negative",
@@ -6197,10 +6227,15 @@
               "In situ pattern — intact architecture, incidental finding",
               "Duodenal-type localised follicular lesion",
               "Testicular primary",
+              "Grade 3A stated",
+              "Grade 3B stated",
+              "Grade 3 or grade 2-3 stated (A or B not given)",
+              "Grade 1-2 stated",
+              "Grade 2 stated",
               "MNDA or IRTA1 positive"
             ],
             "intensity_markers": [],
-            "rule_count": 16
+            "rule_count": 18
           }
         },
         {

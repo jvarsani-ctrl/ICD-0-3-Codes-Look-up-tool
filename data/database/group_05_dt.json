@@ -459,9 +459,9 @@
           "step_number": 2,
           "step_label": "Enucleation or exenteration report",
           "question": "What does the enucleation or exenteration pathology report state about the tumour's differentiation, growth pattern, or anaplasia?",
-          "hint": "Code from the report's own stated wording — do not infer a grade or growth pattern yourself. Where the report gives a differentiation grade, use it. Where it gives a Mendoza anaplasia grade instead, retinocytoma-grade or mild anaplasia sits at the differentiated end and severe anaplasia at the undifferentiated end. Where both a differentiation grade and an anaplasia grade are given, code from the differentiation grade and record the anaplasia grade as a prognostic finding that changes no code. Enucleation is the treatment that produced this specimen, not an outstanding investigation — nothing further needs to be removed from the child to read a fuller report on tissue already in hand.",
+          "hint": "Code from the report's own stated wording — do not infer a grade or growth pattern yourself. Where the report gives a differentiation grade, use it. Where it gives a Mendoza anaplasia grade instead, retinocytoma-grade or mild anaplasia sits at the differentiated end and severe anaplasia at the undifferentiated end. Where the report states more than one grade, code the higher. Severe anaplasia outranks a G1 or G2 differentiation grade, and a G3 or G4 differentiation grade outranks mild anaplasia. Moderate anaplasia changes no code where a differentiation grade is stated. Where the report also states a diffuse infiltrating growth pattern, code diffuse (9513), the higher code. Enucleation is the treatment that produced this specimen, not an outstanding investigation — nothing further needs to be removed from the child to read a fuller report on tissue already in hand.",
           "clinical_alert": null,
-          "coding_note": "Mapping per College of American Pathologists Retinoblastoma Protocol v4.0.0.0 (2017) and build contract Sec.2.4. Mendoza bridge: 'Where the report states a Mendoza anaplasia grade instead of a differentiation grade, the bridge is: retinocytoma-grade or mild ~ the differentiated end; severe ~ the undifferentiated end' (contract Sec.2.4). The contract does not state where a report giving moderate anaplasia alone (no differentiation grade, and not severe) should fall; this build folds that case into the GX/9510 option as the conservative, least-specific default, rather than guessing toward 9511 or 9512 — flagged here for the registrar, not resolved. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 defines the scale. The retinocytoma homonym (contract Sec.2.3) is not resolved on this node: any report using the word 'retinocytoma' or 'retinoma' routes to rb_retinocytoma_word, which asks whether the word names a standalone lesion or an area of differentiation inside an active retinoblastoma, in the report's own words, and does not infer.",
+          "coding_note": "Mapping per College of American Pathologists Retinoblastoma Protocol v4.0.0.0 (2017) and build contract Sec.2.4. Where a report states more than one grade the higher governs (registrar's decision, 7 October 2026): the WHO ICD-O-3 first revision, section 4.3.4, pp. 21-22, assigns the higher of two stated degrees and sets 'anaplastic' at grade IV beside 'undifferentiated'; the College of American Pathologists protocol, p. 4, and Mendoza 2015, p. 765, grade anaplasia on its highest level in the tumour. Severe anaplasia therefore outranks G1 and G2. Moderate anaplasia alone stays unresolved, as below. A stated diffuse infiltrating growth pattern outranks a grade because 9513 is the higher code (Rule K; registrar's decision, 7 October 2026). Mendoza bridge: 'Where the report states a Mendoza anaplasia grade instead of a differentiation grade, the bridge is: retinocytoma-grade or mild ~ the differentiated end; severe ~ the undifferentiated end' (contract Sec.2.4). The contract does not state where a report giving moderate anaplasia alone (no differentiation grade, and not severe) should fall; this build folds that case into the GX/9510 option as the conservative, least-specific default, rather than guessing toward 9511 or 9512 — flagged here for the registrar, not resolved. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 defines the scale. The retinocytoma homonym (contract Sec.2.3) is not resolved on this node: any report using the word 'retinocytoma' or 'retinoma' routes to rb_retinocytoma_word, which asks whether the word names a standalone lesion or an area of differentiation inside an active retinoblastoma, in the report's own words, and does not infer.",
           "captured_variables": [
             "report_wording_match"
           ],
@@ -476,7 +476,7 @@
               }
             },
             {
-              "label": "Fleurette formation or neuronal differentiation (grade G1); numerous Flexner-Wintersteiner rosettes, moderately differentiated (grade G2); or, on the Mendoza anaplasia scale, a retinocytoma-grade area or mild anaplasia recorded within an otherwise viable retinoblastoma",
+              "label": "Fleurette formation or neuronal differentiation (grade G1); numerous Flexner-Wintersteiner rosettes, moderately differentiated (grade G2); or, on the Mendoza anaplasia scale, a retinocytoma-grade area or mild anaplasia recorded within an otherwise viable retinoblastoma; and no poorer grade or severe anaplasia stated",
               "morphology_code": "9511",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -485,7 +485,7 @@
               }
             },
             {
-              "label": "Occasional rosettes, poorly differentiated (grade G3); no rosettes present, anaplasia, poorly differentiated (grade G4); or, on the Mendoza anaplasia scale, severe anaplasia",
+              "label": "Occasional rosettes, poorly differentiated (grade G3); no rosettes present, anaplasia, poorly differentiated (grade G4); or, on the Mendoza anaplasia scale, severe anaplasia (also where a G1 or G2 grade is stated beside it)",
               "morphology_code": "9512",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -537,9 +537,9 @@
           "step_number": 3,
           "step_label": "Retinocytoma — which meaning",
           "question": "The enucleation or exenteration report uses the word 'retinocytoma' or 'retinoma'. What does the report actually describe?",
-          "hint": "'Retinocytoma' names two different things and only the report's own wording can decide which: a standalone benign lesion with no viable retinoblastoma anywhere in the specimen, or an area of differentiation — the lowest grade on Mendoza's anaplasia scale — inside an otherwise active, malignant retinoblastoma. Read what the rest of the report says about the specimen as a whole; do not infer from the word alone.",
+          "hint": "'Retinocytoma' names two different things and only the report's own wording can decide which: a standalone benign lesion with no viable retinoblastoma anywhere in the specimen, or an area of differentiation — the lowest grade on Mendoza's anaplasia scale — inside an otherwise active, malignant retinoblastoma. Read what the rest of the report says about the specimen as a whole; do not infer from the word alone. If the report also states a diffuse infiltrating growth pattern, choose the diffuse option: a growth pattern outranks a grade.",
           "clinical_alert": null,
-          "coding_note": "Build contract Sec.2.3: coding a retinocytomatous area within an active retinoblastoma as 9510/0 would record a benign tumour for a child who has a malignant one. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 runs the anaplasia scale retinocytoma/mild/moderate/severe inside an active retinoblastoma. Al-Hussaini M, Al Sharie S, Sultan H, Mohammad M, Yousef YA. Retinocytoma: understanding pathogenesis, diagnosis, and treatment approaches. International Journal of Retina and Vitreous 2025;11:20, confirms 9510/0 as the ICD-O code for standalone retinocytoma. Milman 2023 records that the World Health Organization classifies retinocytoma as premalignant on genetic and clinical grounds (biallelic RB1 mutations; can dedifferentiate into retinoblastoma), while ICD-O-3.2 codes it 9510/0, behaviour 0 (benign) — the behaviour code is IARC's, not the World Health Organization's, and the tool codes to ICD-O-3.2 (contract Sec.10.4). That divergence is a registrar item (Sec.11.6), not something this branch resolves.",
+          "coding_note": "Build contract Sec.2.3: coding a retinocytomatous area within an active retinoblastoma as 9510/0 would record a benign tumour for a child who has a malignant one. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 runs the anaplasia scale retinocytoma/mild/moderate/severe inside an active retinoblastoma. Al-Hussaini M, Al Sharie S, Sultan H, Mohammad M, Yousef YA. Retinocytoma: understanding pathogenesis, diagnosis, and treatment approaches. International Journal of Retina and Vitreous 2025;11:20, confirms 9510/0 as the ICD-O code for standalone retinocytoma. Milman 2023 records that the World Health Organization classifies retinocytoma as premalignant on genetic and clinical grounds (biallelic RB1 mutations; can dedifferentiate into retinoblastoma), while ICD-O-3.2 codes it 9510/0, behaviour 0 (benign) — the behaviour code is IARC's, not the World Health Organization's, and the tool codes to ICD-O-3.2 (contract Sec.10.4). That divergence is a registrar item (Sec.11.6), not something this branch resolves. A retinocytomatous area does not set the code where the report states G3, G4 or severe anaplasia for the rest of the tumour: the higher grade governs (registrar's decision, 7 October 2026; contract Sec.2.4).",
           "captured_variables": [
             "retinocytoma_word_meaning"
           ],
@@ -559,11 +559,31 @@
               }
             },
             {
-              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma — a 'retinocytomatous area', or retinocytoma-grade on the Mendoza anaplasia scale",
+              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma — a 'retinocytomatous area', or retinocytoma-grade on the Mendoza anaplasia scale — and the report states no poorer grade and no severe anaplasia for the rest of the tumour",
               "morphology_code": "9511",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
               "reason": "The report describes retinocytoma-grade differentiation within an active, viable retinoblastoma, not a standalone retinocytoma. On the Mendoza anaplasia bridge, retinocytoma-grade sits at the differentiated end. Recorded as Retinoblastoma, differentiated (9511/3).",
+              "captures": {
+                "retinocytoma_word_meaning": "area_within_active_tumour"
+              }
+            },
+            {
+              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma, and the report states a poorly differentiated grade (G3 or G4) or severe anaplasia for the rest of the tumour",
+              "morphology_code": "9512",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "The report describes retinocytoma-grade differentiation within an active, viable retinoblastoma and also states a poorly differentiated grade or severe anaplasia for the rest of the tumour. The higher grade governs, so the retinocytomatous area does not set the code. Recorded as Retinoblastoma, undifferentiated (9512/3).",
+              "captures": {
+                "retinocytoma_word_meaning": "area_within_active_tumour"
+              }
+            },
+            {
+              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma, and the report also states a diffuse infiltrating growth pattern",
+              "morphology_code": "9513",
+              "behavior_code": "3",
+              "basis_of_diagnosis": 7,
+              "reason": "The report describes retinocytoma-grade differentiation within an active, viable retinoblastoma and also states a diffuse infiltrating growth pattern. A stated growth pattern outranks a grade because 9513 is the higher code, so the retinocytomatous area does not set the code. Recorded as Retinoblastoma, diffuse (9513/3).",
               "captures": {
                 "retinocytoma_word_meaning": "area_within_active_tumour"
               }

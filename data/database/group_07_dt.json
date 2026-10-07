@@ -3434,7 +3434,7 @@
           "step_number": 3,
           "step_label": "Hepatocellular carcinoma — the subtype",
           "question": "Which hepatocellular carcinoma does the report name?",
-          "hint": "Code the subtype the report names. If the report places the tumour between hepatoblastoma and hepatocellular carcinoma, or calls it a hepatocellular neoplasm NOS, go back one step and choose that instead: those tumours are nuclear β-catenin positive and are not treated as hepatocellular carcinoma (López-Terrada 2025, pp. 30–31).",
+          "hint": "Code the subtype the report names. If the report places the tumour between hepatoblastoma and hepatocellular carcinoma, or calls it a hepatocellular neoplasm NOS, go back one step and choose that instead: those tumours are nuclear β-catenin positive and are not treated as hepatocellular carcinoma (López-Terrada 2025, pp. 30–31). If the report names two subtypes, choose the one with the higher code: scirrhous 8172, spindle cell 8173, clear cell 8174, pleomorphic 8175.",
           "clinical_alert": null,
           "coding_note": "ICD-O-3.2 carries five hepatocellular carcinoma subtype codes inside ICCC-2017 row 71, none of them a REDCap option yet (contract §2B): 8171 fibrolamellar, 8172 scirrhous, 8173 spindle cell, 8174 clear cell, 8175 pleomorphic. Fibrolamellar goes through the molecular node because a negative test can move it to 8170 (contract §3.2). Subtypes ICD-O-3.2 does not code separately stay on 8170.",
           "captured_variables": [
