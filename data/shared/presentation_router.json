@@ -822,17 +822,128 @@
           },
           {
             "topography_in": [
+              "C00.0",
+              "C00.1",
+              "C00.2",
+              "C00.3",
+              "C00.4",
+              "C00.5",
+              "C00.6",
+              "C00.8",
+              "C00.9",
+              "C01.9",
+              "C02.0",
+              "C02.1",
+              "C02.2",
+              "C02.3",
+              "C02.4",
+              "C02.8",
+              "C02.9",
+              "C03.0",
+              "C03.1",
+              "C03.9",
+              "C04.0",
+              "C04.1",
+              "C04.8",
+              "C04.9",
+              "C05.0",
+              "C05.1",
+              "C05.2",
+              "C05.8",
+              "C05.9",
+              "C06.0",
+              "C06.1",
+              "C06.2",
+              "C06.8",
+              "C06.9",
+              "C07.9",
+              "C08.0",
+              "C08.1",
+              "C08.8",
+              "C08.9",
+              "C09.0",
+              "C09.1",
+              "C09.8",
+              "C09.9",
+              "C10.0",
+              "C10.1",
+              "C10.2",
+              "C10.3",
+              "C10.4",
+              "C10.8",
+              "C10.9",
               "C11.0",
               "C11.1",
               "C11.2",
               "C11.3",
               "C11.8",
               "C11.9",
+              "C12.9",
+              "C13.0",
+              "C13.1",
+              "C13.2",
+              "C13.8",
+              "C13.9",
+              "C14.0",
+              "C14.2",
+              "C14.8",
+              "C15.0",
+              "C15.1",
+              "C15.2",
+              "C15.3",
+              "C15.4",
+              "C15.5",
+              "C15.8",
+              "C15.9",
+              "C16.0",
+              "C16.1",
+              "C16.2",
+              "C16.3",
+              "C16.4",
+              "C16.5",
+              "C16.6",
+              "C16.8",
+              "C16.9",
+              "C17.0",
+              "C17.1",
+              "C17.2",
+              "C17.3",
+              "C17.8",
+              "C17.9",
+              "C18.0",
+              "C18.1",
+              "C18.2",
+              "C18.3",
+              "C18.4",
+              "C18.5",
+              "C18.6",
+              "C18.7",
+              "C18.8",
+              "C18.9",
+              "C19.9",
+              "C20.9",
+              "C21.0",
+              "C21.1",
+              "C21.2",
+              "C21.8",
               "C22.0",
               "C22.1",
+              "C23.9",
               "C24.0",
+              "C24.1",
               "C24.8",
               "C24.9",
+              "C25.0",
+              "C25.1",
+              "C25.2",
+              "C25.3",
+              "C25.4",
+              "C25.7",
+              "C25.8",
+              "C25.9",
+              "C26.0",
+              "C26.8",
+              "C26.9",
               "C30.0",
               "C30.1",
               "C31.0",
@@ -841,6 +952,13 @@
               "C31.3",
               "C31.8",
               "C31.9",
+              "C32.0",
+              "C32.1",
+              "C32.2",
+              "C32.3",
+              "C32.8",
+              "C32.9",
+              "C33.9",
               "C34.0",
               "C34.1",
               "C34.2",
@@ -848,9 +966,15 @@
               "C34.8",
               "C34.9",
               "C37.9",
+              "C38.0",
               "C38.1",
               "C38.2",
               "C38.3",
+              "C38.4",
+              "C38.8",
+              "C39.0",
+              "C39.8",
+              "C39.9",
               "C40.0",
               "C40.1",
               "C40.2",
@@ -899,6 +1023,15 @@
               "C49.6",
               "C49.8",
               "C49.9",
+              "C50.0",
+              "C50.1",
+              "C50.2",
+              "C50.3",
+              "C50.4",
+              "C50.5",
+              "C50.6",
+              "C50.8",
+              "C50.9",
               "C51.0",
               "C51.1",
               "C51.2",
@@ -916,8 +1049,20 @@
               "C54.8",
               "C54.9",
               "C55.9",
+              "C57.0",
+              "C57.1",
+              "C57.2",
+              "C57.3",
+              "C57.4",
+              "C57.7",
               "C57.8",
+              "C57.9",
               "C58.9",
+              "C60.0",
+              "C60.1",
+              "C60.2",
+              "C60.8",
+              "C60.9",
               "C61.9",
               "C63.0",
               "C63.1",
@@ -926,6 +1071,8 @@
               "C63.8",
               "C63.9",
               "C64.9",
+              "C65.9",
+              "C66.9",
               "C67.0",
               "C67.1",
               "C67.2",
@@ -936,7 +1083,10 @@
               "C67.7",
               "C67.8",
               "C67.9",
+              "C68.0",
+              "C68.1",
               "C68.8",
+              "C68.9",
               "C69.0",
               "C69.1",
               "C69.2",
@@ -950,8 +1100,11 @@
               "C74.0",
               "C74.1",
               "C74.9",
+              "C75.0",
               "C75.4",
               "C75.5",
+              "C75.8",
+              "C75.9",
               "C76.0",
               "C76.1",
               "C76.2",
@@ -982,9 +1135,503 @@
     },
     "11": {
       "name": "Other Malignant Epithelial Neoplasms and Malignant Melanomas",
-      "built": false,
-      "trees": [],
-      "handoff": null
+      "built": true,
+      "occurs_at_routed_sites": true,
+      "trees": [
+        {
+          "tree_id": "g11_adrenal",
+          "entry_node": "ad_document_inventory"
+        },
+        {
+          "tree_id": "g11_thyroid",
+          "entry_node": "th_document_inventory"
+        },
+        {
+          "tree_id": "g11_nasopharynx",
+          "entry_node": "np_document_inventory"
+        },
+        {
+          "tree_id": "g11_salivary",
+          "entry_node": "sg_document_inventory"
+        },
+        {
+          "tree_id": "g11_colorectal",
+          "entry_node": "cr_document_inventory"
+        },
+        {
+          "tree_id": "g11_appendix",
+          "entry_node": "ap_document_inventory"
+        },
+        {
+          "tree_id": "g11_lung",
+          "entry_node": "lu_document_inventory"
+        },
+        {
+          "tree_id": "g11_thymus",
+          "entry_node": "ty_document_inventory"
+        },
+        {
+          "tree_id": "g11_melanoma",
+          "entry_node": "me_document_inventory"
+        },
+        {
+          "tree_id": "g11_skin",
+          "entry_node": "sk_document_inventory"
+        },
+        {
+          "tree_id": "g11_breast",
+          "entry_node": "br_document_inventory"
+        },
+        {
+          "tree_id": "g11_female_genital",
+          "entry_node": "fg_document_inventory"
+        },
+        {
+          "tree_id": "g11_urinary_male_genital",
+          "entry_node": "gu_document_inventory"
+        },
+        {
+          "tree_id": "g11_eye",
+          "entry_node": "ey_document_inventory"
+        },
+        {
+          "tree_id": "g11_head_neck",
+          "entry_node": "hn_document_inventory"
+        },
+        {
+          "tree_id": "g11_digestive",
+          "entry_node": "dg_document_inventory"
+        },
+        {
+          "tree_id": "g11_thoracic",
+          "entry_node": "tx_document_inventory"
+        },
+        {
+          "tree_id": "g11_endocrine",
+          "entry_node": "en_document_inventory"
+        },
+        {
+          "tree_id": "g11_unspecified",
+          "entry_node": "un_document_inventory"
+        }
+      ],
+      "tree_routing": {
+        "_comment": "Group XI keeps one tree per organ or site family (registrar, 8 October 2026, approach 3; Group 11 build contract §0.6 and §4.1), and the Stage 1 topography picks the tree, so the clerk is asked nothing extra. build/apply_group11_shared_layer.py writes these rules from the TREES table in build/group11_common.py, whose site ranges are expanded against Layer 1's REDCap topography list; C44.4 and C48.1 are not in that list and are not routed (contract §3.1). The melanoma tree, g11_melanoma, has no rule: every tree's histology screen reaches it by a cross-tree next_node (design D13). The group is marked occurs_at_routed_sites, as Group X is: the express lane enters a term filed under Group XI alone at a site a rule names when one of the term's entries lists the site in primary_sites.",
+        "variable": "topography",
+        "rules": [
+          {
+            "topography_in": [
+              "C74.0",
+              "C74.1",
+              "C74.9"
+            ],
+            "tree_id": "g11_adrenal",
+            "entry_node": "ad_document_inventory",
+            "label": "Adrenocortical carcinomas"
+          },
+          {
+            "topography_in": [
+              "C73.9"
+            ],
+            "tree_id": "g11_thyroid",
+            "entry_node": "th_document_inventory",
+            "label": "Thyroid carcinomas"
+          },
+          {
+            "topography_in": [
+              "C11.0",
+              "C11.1",
+              "C11.2",
+              "C11.3",
+              "C11.8",
+              "C11.9"
+            ],
+            "tree_id": "g11_nasopharynx",
+            "entry_node": "np_document_inventory",
+            "label": "Nasopharyngeal carcinomas"
+          },
+          {
+            "topography_in": [
+              "C07.9",
+              "C08.0",
+              "C08.1",
+              "C08.8",
+              "C08.9"
+            ],
+            "tree_id": "g11_salivary",
+            "entry_node": "sg_document_inventory",
+            "label": "Carcinomas of the salivary glands"
+          },
+          {
+            "topography_in": [
+              "C18.0",
+              "C18.2",
+              "C18.3",
+              "C18.4",
+              "C18.5",
+              "C18.6",
+              "C18.7",
+              "C18.8",
+              "C18.9",
+              "C19.9",
+              "C20.9",
+              "C21.0",
+              "C21.1",
+              "C21.2",
+              "C21.8"
+            ],
+            "tree_id": "g11_colorectal",
+            "entry_node": "cr_document_inventory",
+            "label": "Carcinomas of the colon and rectum"
+          },
+          {
+            "topography_in": [
+              "C18.1"
+            ],
+            "tree_id": "g11_appendix",
+            "entry_node": "ap_document_inventory",
+            "label": "Carcinomas of the appendix"
+          },
+          {
+            "topography_in": [
+              "C34.0",
+              "C34.1",
+              "C34.2",
+              "C34.3",
+              "C34.8",
+              "C34.9"
+            ],
+            "tree_id": "g11_lung",
+            "entry_node": "lu_document_inventory",
+            "label": "Carcinomas of the lung"
+          },
+          {
+            "topography_in": [
+              "C37.9",
+              "C38.1",
+              "C38.2",
+              "C38.3"
+            ],
+            "tree_id": "g11_thymus",
+            "entry_node": "ty_document_inventory",
+            "label": "Carcinomas of the thymus and mediastinum"
+          },
+          {
+            "topography_in": [
+              "C44.0",
+              "C44.1",
+              "C44.2",
+              "C44.3",
+              "C44.5",
+              "C44.6",
+              "C44.7",
+              "C44.8",
+              "C44.9",
+              "C51.9",
+              "C60.9",
+              "C63.2"
+            ],
+            "tree_id": "g11_skin",
+            "entry_node": "sk_document_inventory",
+            "label": "Skin carcinomas"
+          },
+          {
+            "topography_in": [
+              "C50.0",
+              "C50.1",
+              "C50.2",
+              "C50.3",
+              "C50.4",
+              "C50.5",
+              "C50.6",
+              "C50.8",
+              "C50.9"
+            ],
+            "tree_id": "g11_breast",
+            "entry_node": "br_document_inventory",
+            "label": "Carcinomas of the breast"
+          },
+          {
+            "topography_in": [
+              "C51.0",
+              "C51.1",
+              "C51.2",
+              "C51.8",
+              "C52.9",
+              "C53.0",
+              "C53.1",
+              "C53.8",
+              "C53.9",
+              "C54.0",
+              "C54.1",
+              "C54.2",
+              "C54.3",
+              "C54.8",
+              "C54.9",
+              "C55.9",
+              "C57.0",
+              "C57.1",
+              "C57.2",
+              "C57.3",
+              "C57.4",
+              "C57.7",
+              "C57.8",
+              "C57.9",
+              "C58.9"
+            ],
+            "tree_id": "g11_female_genital",
+            "entry_node": "fg_document_inventory",
+            "label": "Carcinomas of the female genital organs"
+          },
+          {
+            "topography_in": [
+              "C60.0",
+              "C60.1",
+              "C60.2",
+              "C60.8",
+              "C61.9",
+              "C63.0",
+              "C63.1",
+              "C63.7",
+              "C63.8",
+              "C63.9",
+              "C65.9",
+              "C66.9",
+              "C67.0",
+              "C67.1",
+              "C67.2",
+              "C67.3",
+              "C67.4",
+              "C67.5",
+              "C67.6",
+              "C67.7",
+              "C67.8",
+              "C67.9",
+              "C68.0",
+              "C68.1",
+              "C68.8",
+              "C68.9"
+            ],
+            "tree_id": "g11_urinary_male_genital",
+            "entry_node": "gu_document_inventory",
+            "label": "Carcinomas of the urinary tract and male genital organs"
+          },
+          {
+            "topography_in": [
+              "C69.0",
+              "C69.1",
+              "C69.2",
+              "C69.3",
+              "C69.4",
+              "C69.5",
+              "C69.6",
+              "C69.8",
+              "C69.9"
+            ],
+            "tree_id": "g11_eye",
+            "entry_node": "ey_document_inventory",
+            "label": "Carcinomas of the eye"
+          },
+          {
+            "topography_in": [
+              "C00.0",
+              "C00.1",
+              "C00.2",
+              "C00.3",
+              "C00.4",
+              "C00.5",
+              "C00.6",
+              "C00.8",
+              "C00.9",
+              "C01.9",
+              "C02.0",
+              "C02.1",
+              "C02.2",
+              "C02.3",
+              "C02.4",
+              "C02.8",
+              "C02.9",
+              "C03.0",
+              "C03.1",
+              "C03.9",
+              "C04.0",
+              "C04.1",
+              "C04.8",
+              "C04.9",
+              "C05.0",
+              "C05.1",
+              "C05.2",
+              "C05.8",
+              "C05.9",
+              "C06.0",
+              "C06.1",
+              "C06.2",
+              "C06.8",
+              "C06.9",
+              "C09.0",
+              "C09.1",
+              "C09.8",
+              "C09.9",
+              "C10.0",
+              "C10.1",
+              "C10.2",
+              "C10.3",
+              "C10.4",
+              "C10.8",
+              "C10.9",
+              "C12.9",
+              "C13.0",
+              "C13.1",
+              "C13.2",
+              "C13.8",
+              "C13.9",
+              "C14.0",
+              "C14.2",
+              "C14.8",
+              "C30.0",
+              "C30.1",
+              "C31.0",
+              "C31.1",
+              "C31.2",
+              "C31.3",
+              "C31.8",
+              "C31.9",
+              "C32.0",
+              "C32.1",
+              "C32.2",
+              "C32.3",
+              "C32.8",
+              "C32.9",
+              "C33.9"
+            ],
+            "tree_id": "g11_head_neck",
+            "entry_node": "hn_document_inventory",
+            "label": "Carcinomas of the head and neck"
+          },
+          {
+            "topography_in": [
+              "C15.0",
+              "C15.1",
+              "C15.2",
+              "C15.3",
+              "C15.4",
+              "C15.5",
+              "C15.8",
+              "C15.9",
+              "C16.0",
+              "C16.1",
+              "C16.2",
+              "C16.3",
+              "C16.4",
+              "C16.5",
+              "C16.6",
+              "C16.8",
+              "C16.9",
+              "C17.0",
+              "C17.1",
+              "C17.2",
+              "C17.3",
+              "C17.8",
+              "C17.9",
+              "C23.9",
+              "C24.0",
+              "C24.1",
+              "C24.8",
+              "C24.9",
+              "C25.0",
+              "C25.1",
+              "C25.2",
+              "C25.3",
+              "C25.4",
+              "C25.7",
+              "C25.8",
+              "C25.9",
+              "C26.0",
+              "C26.8",
+              "C26.9"
+            ],
+            "tree_id": "g11_digestive",
+            "entry_node": "dg_document_inventory",
+            "label": "Carcinomas of the other digestive organs"
+          },
+          {
+            "topography_in": [
+              "C38.0",
+              "C38.4",
+              "C38.8",
+              "C39.0",
+              "C39.8",
+              "C39.9"
+            ],
+            "tree_id": "g11_thoracic",
+            "entry_node": "tx_document_inventory",
+            "label": "Carcinomas of the pleura, heart and other thoracic sites"
+          },
+          {
+            "topography_in": [
+              "C75.0",
+              "C75.2",
+              "C75.4",
+              "C75.5",
+              "C75.8",
+              "C75.9"
+            ],
+            "tree_id": "g11_endocrine",
+            "entry_node": "en_document_inventory",
+            "label": "Carcinomas of the parathyroid and other endocrine glands"
+          },
+          {
+            "topography_in": [
+              "C48.0",
+              "C48.2",
+              "C48.8",
+              "C70.0",
+              "C70.1",
+              "C70.9",
+              "C71.1",
+              "C71.2",
+              "C71.3",
+              "C71.4",
+              "C71.5",
+              "C71.6",
+              "C71.7",
+              "C71.8",
+              "C71.9",
+              "C72.0",
+              "C72.1",
+              "C72.2",
+              "C72.3",
+              "C72.4",
+              "C72.5",
+              "C72.8",
+              "C72.9",
+              "C76.0",
+              "C76.1",
+              "C76.2",
+              "C76.3",
+              "C76.4",
+              "C76.5",
+              "C76.7",
+              "C76.8",
+              "C80.9"
+            ],
+            "tree_id": "g11_unspecified",
+            "entry_node": "un_document_inventory",
+            "label": "Carcinomas at another or an unspecified site"
+          }
+        ],
+        "default": {
+          "tree_id": "g11_unspecified",
+          "entry_node": "un_document_inventory",
+          "label": "Another or unspecified site",
+          "reason": "Every lookup code that lists Group 11 is named by a rule except C75.1, which no Group XI tree routes (contract §4.1) and which reaches this default; app.js requires a default."
+        }
+      },
+      "handoff": {
+        "group": 11,
+        "tree_id": "g11_unspecified",
+        "entry_node": "un_document_inventory"
+      }
     },
     "12": {
       "name": "Other and Unspecified Malignant Neoplasms",
@@ -1298,6 +1945,387 @@
           },
           "note": "At the liver (C22.0, C22.1) an ACTH-producing tumour is ICCC-3 Group VII, subgroup VIIb, hepatic carcinomas.",
           "authoring_note": "ICCC-2017 range 70 lists 8158 among the C22 carcinomas at sites 220,221, behaviour 3, subgroup VIIb, and group_07_dt.json carries 8158/3 'ACTH-producing tumor' as a VIIb entry. 8158 shared a rule with 8290 until 4 October 2026; the two no longer route alike, because ICCC-2017 gives 8290 no Group VII row and its XIf10 site list excludes 220-238, so 8158 was split into this rule. Without the branch a hepatic ACTH-producing tumour took the shared rule's group 11 default and never reached Group VII -- the same defect the Group VII build corrected for 8170 (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C74.0"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIa"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at site 740, behaviour 3, in subgroup XIa, Adrenocortical carcinomas. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C73.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIb"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at site 739, behaviour 3, in subgroup XIb, Thyroid carcinomas. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C07.9",
+              "C08.0",
+              "C08.1",
+              "C08.8",
+              "C08.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf1"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 079-089, behaviour 3, in subgroup XIf1, Carcinomas of salivary glands. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C18.0",
+              "C18.2",
+              "C18.3",
+              "C18.4",
+              "C18.5",
+              "C18.6",
+              "C18.7",
+              "C18.8",
+              "C18.9",
+              "C19.9",
+              "C20.9",
+              "C21.0",
+              "C21.1",
+              "C21.2",
+              "C21.8"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf2"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 180,182-189,199,209,210-218, behaviour 3, in subgroup XIf2, Carcinomas of colon and rectum. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C18.1"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf3"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at site 181, behaviour 3, in subgroup XIf3, Carcinomas of appendix. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C34.0",
+              "C34.1",
+              "C34.2",
+              "C34.3",
+              "C34.8",
+              "C34.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf4"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 340-349, behaviour 3, in subgroup XIf4, Carcinomas of lung. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C37.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf5"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at site 379, behaviour 3, in subgroup XIf5, Carcinomas of thymus. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C50.0",
+              "C50.1",
+              "C50.2",
+              "C50.3",
+              "C50.4",
+              "C50.5",
+              "C50.6",
+              "C50.8",
+              "C50.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf6"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 500-509, behaviour 3, in subgroup XIf6, Carcinomas of breast. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C53.0",
+              "C53.1",
+              "C53.8",
+              "C53.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf7"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 530-539, behaviour 3, in subgroup XIf7, Carcinomas of cervix uteri. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C67.0",
+              "C67.1",
+              "C67.2",
+              "C67.3",
+              "C67.4",
+              "C67.5",
+              "C67.6",
+              "C67.7",
+              "C67.8",
+              "C67.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf8"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 670-679, behaviour 3, in subgroup XIf8, Carcinomas of bladder. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C69.0",
+              "C69.1",
+              "C69.2",
+              "C69.3",
+              "C69.4",
+              "C69.5",
+              "C69.6",
+              "C69.8",
+              "C69.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf9"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 690-699, behaviour 3, in subgroup XIf9, Carcinomas of eye. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C00.0",
+              "C00.1",
+              "C00.2",
+              "C00.3",
+              "C00.4",
+              "C00.5",
+              "C00.6",
+              "C00.8",
+              "C00.9",
+              "C01.9",
+              "C02.0",
+              "C02.1",
+              "C02.2",
+              "C02.3",
+              "C02.4",
+              "C02.8",
+              "C02.9",
+              "C03.0",
+              "C03.1",
+              "C03.9",
+              "C04.0",
+              "C04.1",
+              "C04.8",
+              "C04.9",
+              "C05.0",
+              "C05.1",
+              "C05.2",
+              "C05.8",
+              "C05.9",
+              "C06.0",
+              "C06.1",
+              "C06.2",
+              "C06.8",
+              "C06.9",
+              "C09.0",
+              "C09.1",
+              "C09.8",
+              "C09.9",
+              "C10.0",
+              "C10.1",
+              "C10.2",
+              "C10.3",
+              "C10.4",
+              "C10.8",
+              "C10.9",
+              "C12.9",
+              "C13.0",
+              "C13.1",
+              "C13.2",
+              "C13.8",
+              "C13.9",
+              "C14.0",
+              "C14.2",
+              "C14.8",
+              "C15.0",
+              "C15.1",
+              "C15.2",
+              "C15.3",
+              "C15.4",
+              "C15.5",
+              "C15.8",
+              "C15.9",
+              "C16.0",
+              "C16.1",
+              "C16.2",
+              "C16.3",
+              "C16.4",
+              "C16.5",
+              "C16.6",
+              "C16.8",
+              "C16.9",
+              "C17.0",
+              "C17.1",
+              "C17.2",
+              "C17.3",
+              "C17.8",
+              "C17.9",
+              "C23.9",
+              "C24.0",
+              "C24.1",
+              "C24.8",
+              "C24.9",
+              "C25.0",
+              "C25.1",
+              "C25.2",
+              "C25.3",
+              "C25.4",
+              "C25.7",
+              "C25.8",
+              "C25.9",
+              "C26.0",
+              "C26.8",
+              "C26.9",
+              "C30.0",
+              "C30.1",
+              "C31.0",
+              "C31.1",
+              "C31.2",
+              "C31.3",
+              "C31.8",
+              "C31.9",
+              "C32.0",
+              "C32.1",
+              "C32.2",
+              "C32.3",
+              "C32.8",
+              "C32.9",
+              "C33.9",
+              "C38.0",
+              "C38.1",
+              "C38.2",
+              "C38.3",
+              "C38.4",
+              "C38.8",
+              "C39.0",
+              "C39.8",
+              "C39.9",
+              "C48.0",
+              "C48.2",
+              "C48.8",
+              "C51.0",
+              "C51.1",
+              "C51.2",
+              "C51.8",
+              "C51.9",
+              "C52.9",
+              "C54.0",
+              "C54.1",
+              "C54.2",
+              "C54.3",
+              "C54.8",
+              "C54.9",
+              "C55.9",
+              "C57.0",
+              "C57.1",
+              "C57.2",
+              "C57.3",
+              "C57.4",
+              "C57.7",
+              "C57.8",
+              "C57.9",
+              "C58.9",
+              "C60.0",
+              "C60.1",
+              "C60.2",
+              "C60.8",
+              "C60.9",
+              "C61.9",
+              "C63.0",
+              "C63.1",
+              "C63.2",
+              "C63.7",
+              "C63.8",
+              "C63.9",
+              "C65.9",
+              "C66.9",
+              "C68.0",
+              "C68.1",
+              "C68.8",
+              "C68.9",
+              "C75.0",
+              "C75.2",
+              "C75.3",
+              "C75.4",
+              "C75.5",
+              "C75.8",
+              "C75.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf10"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 000-069,090-109,129-179,239-339,380-399,480-488,510-529,540-559,570-619,630-639,659-669,680-689,750,752-759, behaviour 3, in subgroup XIf10, Carcinomas of other specified sites. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C76.0",
+              "C76.1",
+              "C76.2",
+              "C76.3",
+              "C76.4",
+              "C76.5",
+              "C76.7",
+              "C76.8",
+              "C80.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf11"
+          },
+          "authoring_note": "ICCC-2017 places 8158 at sites 760-768,809, behaviour 3, in subgroup XIf11, Carcinomas of unspecified site. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
         }
       ],
       "default": {
@@ -1323,6 +2351,392 @@
             "group": 3,
             "subgroup": "IIIe1"
           }
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C73.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIb"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at site 739, behaviour 3, in subgroup XIb, Thyroid carcinomas. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C11.0",
+              "C11.1",
+              "C11.2",
+              "C11.3",
+              "C11.8",
+              "C11.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIc"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 110-119, behaviour 3, in subgroup XIc, Nasopharyngeal carcinomas. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C07.9",
+              "C08.0",
+              "C08.1",
+              "C08.8",
+              "C08.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf1"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 079-089, behaviour 3, in subgroup XIf1, Carcinomas of salivary glands. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C18.0",
+              "C18.2",
+              "C18.3",
+              "C18.4",
+              "C18.5",
+              "C18.6",
+              "C18.7",
+              "C18.8",
+              "C18.9",
+              "C19.9",
+              "C20.9",
+              "C21.0",
+              "C21.1",
+              "C21.2",
+              "C21.8"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf2"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 180,182-189,199,209,210-218, behaviour 3, in subgroup XIf2, Carcinomas of colon and rectum. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C18.1"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf3"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at site 181, behaviour 3, in subgroup XIf3, Carcinomas of appendix. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C34.0",
+              "C34.1",
+              "C34.2",
+              "C34.3",
+              "C34.8",
+              "C34.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf4"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 340-349, behaviour 3, in subgroup XIf4, Carcinomas of lung. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C37.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf5"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at site 379, behaviour 3, in subgroup XIf5, Carcinomas of thymus. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C50.0",
+              "C50.1",
+              "C50.2",
+              "C50.3",
+              "C50.4",
+              "C50.5",
+              "C50.6",
+              "C50.8",
+              "C50.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf6"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 500-509, behaviour 3, in subgroup XIf6, Carcinomas of breast. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C53.0",
+              "C53.1",
+              "C53.8",
+              "C53.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf7"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 530-539, behaviour 3, in subgroup XIf7, Carcinomas of cervix uteri. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C67.0",
+              "C67.1",
+              "C67.2",
+              "C67.3",
+              "C67.4",
+              "C67.5",
+              "C67.6",
+              "C67.7",
+              "C67.8",
+              "C67.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf8"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 670-679, behaviour 3, in subgroup XIf8, Carcinomas of bladder. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C69.0",
+              "C69.1",
+              "C69.2",
+              "C69.3",
+              "C69.4",
+              "C69.5",
+              "C69.6",
+              "C69.8",
+              "C69.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf9"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 690-699, behaviour 3, in subgroup XIf9, Carcinomas of eye. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C00.0",
+              "C00.1",
+              "C00.2",
+              "C00.3",
+              "C00.4",
+              "C00.5",
+              "C00.6",
+              "C00.8",
+              "C00.9",
+              "C01.9",
+              "C02.0",
+              "C02.1",
+              "C02.2",
+              "C02.3",
+              "C02.4",
+              "C02.8",
+              "C02.9",
+              "C03.0",
+              "C03.1",
+              "C03.9",
+              "C04.0",
+              "C04.1",
+              "C04.8",
+              "C04.9",
+              "C05.0",
+              "C05.1",
+              "C05.2",
+              "C05.8",
+              "C05.9",
+              "C06.0",
+              "C06.1",
+              "C06.2",
+              "C06.8",
+              "C06.9",
+              "C09.0",
+              "C09.1",
+              "C09.8",
+              "C09.9",
+              "C10.0",
+              "C10.1",
+              "C10.2",
+              "C10.3",
+              "C10.4",
+              "C10.8",
+              "C10.9",
+              "C12.9",
+              "C13.0",
+              "C13.1",
+              "C13.2",
+              "C13.8",
+              "C13.9",
+              "C14.0",
+              "C14.2",
+              "C14.8",
+              "C15.0",
+              "C15.1",
+              "C15.2",
+              "C15.3",
+              "C15.4",
+              "C15.5",
+              "C15.8",
+              "C15.9",
+              "C16.0",
+              "C16.1",
+              "C16.2",
+              "C16.3",
+              "C16.4",
+              "C16.5",
+              "C16.6",
+              "C16.8",
+              "C16.9",
+              "C17.0",
+              "C17.1",
+              "C17.2",
+              "C17.3",
+              "C17.8",
+              "C17.9",
+              "C23.9",
+              "C24.0",
+              "C24.1",
+              "C24.8",
+              "C24.9",
+              "C25.0",
+              "C25.1",
+              "C25.2",
+              "C25.3",
+              "C25.4",
+              "C25.7",
+              "C25.8",
+              "C25.9",
+              "C26.0",
+              "C26.8",
+              "C26.9",
+              "C30.0",
+              "C30.1",
+              "C31.0",
+              "C31.1",
+              "C31.2",
+              "C31.3",
+              "C31.8",
+              "C31.9",
+              "C32.0",
+              "C32.1",
+              "C32.2",
+              "C32.3",
+              "C32.8",
+              "C32.9",
+              "C33.9",
+              "C38.0",
+              "C38.1",
+              "C38.2",
+              "C38.3",
+              "C38.4",
+              "C38.8",
+              "C39.0",
+              "C39.8",
+              "C39.9",
+              "C48.0",
+              "C48.2",
+              "C48.8",
+              "C51.0",
+              "C51.1",
+              "C51.2",
+              "C51.8",
+              "C51.9",
+              "C52.9",
+              "C54.0",
+              "C54.1",
+              "C54.2",
+              "C54.3",
+              "C54.8",
+              "C54.9",
+              "C55.9",
+              "C57.0",
+              "C57.1",
+              "C57.2",
+              "C57.3",
+              "C57.4",
+              "C57.7",
+              "C57.8",
+              "C57.9",
+              "C58.9",
+              "C60.0",
+              "C60.1",
+              "C60.2",
+              "C60.8",
+              "C60.9",
+              "C61.9",
+              "C63.0",
+              "C63.1",
+              "C63.2",
+              "C63.7",
+              "C63.8",
+              "C63.9",
+              "C65.9",
+              "C66.9",
+              "C68.0",
+              "C68.1",
+              "C68.8",
+              "C68.9",
+              "C75.0",
+              "C75.2",
+              "C75.3",
+              "C75.4",
+              "C75.5",
+              "C75.8",
+              "C75.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf10"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 000-069,090-109,129-179,239-339,380-399,480-488,510-529,540-559,570-619,630-639,659-669,680-689,750,752-759, behaviour 3, in subgroup XIf10, Carcinomas of other specified sites. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
+        },
+        {
+          "when": {
+            "topography_in": [
+              "C76.0",
+              "C76.1",
+              "C76.2",
+              "C76.3",
+              "C76.4",
+              "C76.5",
+              "C76.7",
+              "C76.8",
+              "C80.9"
+            ]
+          },
+          "result": {
+            "group": 11,
+            "subgroup": "XIf11"
+          },
+          "authoring_note": "ICCC-2017 places 8290 at sites 760-768,809, behaviour 3, in subgroup XIf11, Carcinomas of unspecified site. Written by build/apply_group11_shared_layer.py in the Group XI build, 8 October 2026, from ICCC-2017.sqlite against topography_codes.json. The branch changes nothing on screen: app.js reads resolveGroup() only for `note`, and this branch has none."
         }
       ],
       "default": {

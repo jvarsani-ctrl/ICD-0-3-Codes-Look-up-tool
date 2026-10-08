@@ -225,6 +225,7 @@
       "topography_range": "C24",
       "codes": [
         "C24.0",
+        "C24.1",
         "C24.8",
         "C24.9"
       ],
@@ -497,6 +498,328 @@
       "label": "Carotid body and other paraganglia"
     },
     {
+      "organ": "lip_oral_cavity",
+      "topography_range": "C00-C06",
+      "codes": [
+        "C00.0",
+        "C00.1",
+        "C00.2",
+        "C00.3",
+        "C00.4",
+        "C00.5",
+        "C00.6",
+        "C00.8",
+        "C00.9",
+        "C01.9",
+        "C02.0",
+        "C02.1",
+        "C02.2",
+        "C02.3",
+        "C02.4",
+        "C02.8",
+        "C02.9",
+        "C03.0",
+        "C03.1",
+        "C03.9",
+        "C04.0",
+        "C04.1",
+        "C04.8",
+        "C04.9",
+        "C05.0",
+        "C05.1",
+        "C05.2",
+        "C05.8",
+        "C05.9",
+        "C06.0",
+        "C06.1",
+        "C06.2",
+        "C06.8",
+        "C06.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Lip and oral cavity"
+    },
+    {
+      "organ": "salivary_glands",
+      "topography_range": "C07-C08",
+      "codes": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Major salivary glands"
+    },
+    {
+      "organ": "tonsil_oropharynx_hypopharynx",
+      "topography_range": "C09-C10, C12-C14",
+      "codes": [
+        "C09.0",
+        "C09.1",
+        "C09.8",
+        "C09.9",
+        "C10.0",
+        "C10.1",
+        "C10.2",
+        "C10.3",
+        "C10.4",
+        "C10.8",
+        "C10.9",
+        "C12.9",
+        "C13.0",
+        "C13.1",
+        "C13.2",
+        "C13.8",
+        "C13.9",
+        "C14.0",
+        "C14.2",
+        "C14.8"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Tonsil, oropharynx and hypopharynx"
+    },
+    {
+      "organ": "oesophagus",
+      "topography_range": "C15",
+      "codes": [
+        "C15.0",
+        "C15.1",
+        "C15.2",
+        "C15.3",
+        "C15.4",
+        "C15.5",
+        "C15.8",
+        "C15.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Oesophagus"
+    },
+    {
+      "organ": "stomach",
+      "topography_range": "C16",
+      "codes": [
+        "C16.0",
+        "C16.1",
+        "C16.2",
+        "C16.3",
+        "C16.4",
+        "C16.5",
+        "C16.6",
+        "C16.8",
+        "C16.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Stomach"
+    },
+    {
+      "organ": "small_intestine",
+      "topography_range": "C17",
+      "codes": [
+        "C17.0",
+        "C17.1",
+        "C17.2",
+        "C17.3",
+        "C17.8",
+        "C17.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Small intestine"
+    },
+    {
+      "organ": "colon_appendix_rectum_anus",
+      "topography_range": "C18-C21",
+      "codes": [
+        "C18.0",
+        "C18.1",
+        "C18.2",
+        "C18.3",
+        "C18.4",
+        "C18.5",
+        "C18.6",
+        "C18.7",
+        "C18.8",
+        "C18.9",
+        "C19.9",
+        "C20.9",
+        "C21.0",
+        "C21.1",
+        "C21.2",
+        "C21.8"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Colon, appendix, rectum and anus"
+    },
+    {
+      "organ": "gallbladder",
+      "topography_range": "C23",
+      "codes": [
+        "C23.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Gallbladder"
+    },
+    {
+      "organ": "pancreas",
+      "topography_range": "C25",
+      "codes": [
+        "C25.0",
+        "C25.1",
+        "C25.2",
+        "C25.3",
+        "C25.4",
+        "C25.7",
+        "C25.8",
+        "C25.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Pancreas"
+    },
+    {
+      "organ": "digestive_other",
+      "topography_range": "C26",
+      "codes": [
+        "C26.0",
+        "C26.8",
+        "C26.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Other and unspecified digestive organs"
+    },
+    {
+      "organ": "larynx_trachea",
+      "topography_range": "C32-C33",
+      "codes": [
+        "C32.0",
+        "C32.1",
+        "C32.2",
+        "C32.3",
+        "C32.8",
+        "C32.9",
+        "C33.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Larynx and trachea"
+    },
+    {
+      "organ": "heart_pleura_thorax",
+      "topography_range": "C38.0, C38.4-C38.8, C39",
+      "codes": [
+        "C38.0",
+        "C38.4",
+        "C38.8",
+        "C39.0",
+        "C39.8",
+        "C39.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Heart, pleura and other thoracic sites"
+    },
+    {
+      "organ": "breast",
+      "topography_range": "C50",
+      "codes": [
+        "C50.0",
+        "C50.1",
+        "C50.2",
+        "C50.3",
+        "C50.4",
+        "C50.5",
+        "C50.6",
+        "C50.8",
+        "C50.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Breast"
+    },
+    {
+      "organ": "female_genital_adnexa",
+      "topography_range": "C57.0-C57.7, C57.9",
+      "codes": [
+        "C57.0",
+        "C57.1",
+        "C57.2",
+        "C57.3",
+        "C57.4",
+        "C57.7",
+        "C57.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Fallopian tube, ligaments and other female genital organs"
+    },
+    {
+      "organ": "penis",
+      "topography_range": "C60",
+      "codes": [
+        "C60.0",
+        "C60.1",
+        "C60.2",
+        "C60.8",
+        "C60.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Penis"
+    },
+    {
+      "organ": "urinary_tract_other",
+      "topography_range": "C65-C66, C68.0-C68.1, C68.9",
+      "codes": [
+        "C65.9",
+        "C66.9",
+        "C68.0",
+        "C68.1",
+        "C68.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Renal pelvis, ureter and urethra"
+    },
+    {
+      "organ": "endocrine_other",
+      "topography_range": "C75.0, C75.8-C75.9",
+      "codes": [
+        "C75.0",
+        "C75.8",
+        "C75.9"
+      ],
+      "candidate_groups": [
+        11
+      ],
+      "label": "Parathyroid and other endocrine glands"
+    },
+    {
       "organ": "ill_defined_sites",
       "topography_range": "C76 (not C76.3)",
       "codes": [
@@ -666,6 +989,26 @@
         6
       ]
     },
+    "C65.9": {
+      "code": "C65.9",
+      "label": "Renal pelvis (Pelvis of kidney, Renal calyces, Renal calyx, Pelviureteric junction)",
+      "redcap_code": "659",
+      "coarse_organ": "urinary_tract_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C66.9": {
+      "code": "C66.9",
+      "label": "Ureter",
+      "redcap_code": "669",
+      "coarse_organ": "urinary_tract_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C40.0": {
       "code": "C40.0",
       "label": "Long bones of upper limb, scapula and associated joints",
@@ -810,6 +1153,96 @@
       "region_label": "Not otherwise specified",
       "candidate_groups": [
         9
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.0": {
+      "code": "C50.0",
+      "label": "Nipple (Areola)",
+      "redcap_code": "500",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.1": {
+      "code": "C50.1",
+      "label": "Central portion of breast",
+      "redcap_code": "501",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.2": {
+      "code": "C50.2",
+      "label": "Upper-inner quadrant of breast",
+      "redcap_code": "502",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.3": {
+      "code": "C50.3",
+      "label": "Lower-inner quadrant of breast",
+      "redcap_code": "503",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.4": {
+      "code": "C50.4",
+      "label": "Upper-outer quadrant of breast",
+      "redcap_code": "504",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.5": {
+      "code": "C50.5",
+      "label": "Lower-outer quadrant of breast",
+      "redcap_code": "505",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.6": {
+      "code": "C50.6",
+      "label": "Axillary tail of breast (Tail of breast, NOS)",
+      "redcap_code": "506",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.8": {
+      "code": "C50.8",
+      "label": "Overlapping lesion of breast",
+      "redcap_code": "508",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C50.9": {
+      "code": "C50.9",
+      "label": "Breast, NOS (Mammary gland)",
+      "redcap_code": "509",
+      "coarse_organ": "breast",
+      "candidate_groups": [
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1031,6 +1464,26 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C68.0": {
+      "code": "C68.0",
+      "label": "Urethra (Urethral gland, Cowper gland, Prostatic utricle)",
+      "redcap_code": "680",
+      "coarse_organ": "urinary_tract_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C68.1": {
+      "code": "C68.1",
+      "label": "Paraurethral gland",
+      "redcap_code": "681",
+      "coarse_organ": "urinary_tract_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C68.8": {
       "code": "C68.8",
       "label": "Overlapping lesion of urinary organs",
@@ -1038,6 +1491,16 @@
       "coarse_organ": "urinary_bladder",
       "candidate_groups": [
         9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C68.9": {
+      "code": "C68.9",
+      "label": "Urinary system, NOS",
+      "redcap_code": "689",
+      "coarse_organ": "urinary_tract_other",
+      "candidate_groups": [
         11
       ],
       "candidate_groups_advisory": true
@@ -1173,6 +1636,66 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C57.0": {
+      "code": "C57.0",
+      "label": "Fallopian tube (Uterine tube)",
+      "redcap_code": "570",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.1": {
+      "code": "C57.1",
+      "label": "Broad ligament (Mesovarium, Parovarian region)",
+      "redcap_code": "571",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.2": {
+      "code": "C57.2",
+      "label": "Round ligament",
+      "redcap_code": "572",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.3": {
+      "code": "C57.3",
+      "label": "Parametrium (Uterine ligament, Uterosacral ligament)",
+      "redcap_code": "573",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.4": {
+      "code": "C57.4",
+      "label": "Uterine adnexa (Adnexa, NOS)",
+      "redcap_code": "574",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.7": {
+      "code": "C57.7",
+      "label": "Other specified parts of female genital organs (Wol%an body, Wol%an duct)",
+      "redcap_code": "577",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C57.8": {
       "code": "C57.8",
       "label": "Overlapping lesion of female genital organs (Tubo-ovarian, Utero-ovarian)",
@@ -1181,6 +1704,16 @@
       "candidate_groups": [
         9,
         10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C57.9": {
+      "code": "C57.9",
+      "label": "Female genital tract, NOS (Female genital organs, NOS, Female genitourinary tract, NOS, Urethrovaginal septum, Vesicocervical tissue, Vesicovaginal septum)",
+      "redcap_code": "579",
+      "coarse_organ": "female_genital_adnexa",
+      "candidate_groups": [
         11
       ],
       "candidate_groups_advisory": true
@@ -1275,7 +1808,58 @@
       "redcap_code": "589",
       "coarse_organ": "female_genital_upper",
       "candidate_groups": [
-        10
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C60.0": {
+      "code": "C60.0",
+      "label": "Prepuce (Foreskin)",
+      "redcap_code": "600",
+      "coarse_organ": "penis",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C60.1": {
+      "code": "C60.1",
+      "label": "Glans penis",
+      "redcap_code": "601",
+      "coarse_organ": "penis",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C60.2": {
+      "code": "C60.2",
+      "label": "Body of penis (Corpus cavernosum, Corpus of penis)",
+      "redcap_code": "602",
+      "coarse_organ": "penis",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C60.8": {
+      "code": "C60.8",
+      "label": "Overlapping lesion of penis",
+      "redcap_code": "608",
+      "coarse_organ": "penis",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C60.9": {
+      "code": "C60.9",
+      "label": "Penis, NOS (Skin of penis)",
+      "redcap_code": "609",
+      "coarse_organ": "penis",
+      "candidate_groups": [
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1286,7 +1870,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1297,7 +1882,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1308,7 +1894,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1319,7 +1906,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1330,7 +1918,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1341,7 +1930,8 @@
       "coarse_organ": "male_genital_paratesticular",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -1352,6 +1942,16 @@
       "coarse_organ": "biliary_extrahepatic",
       "candidate_groups": [
         9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C24.1": {
+      "code": "C24.1",
+      "label": "Ampulla of Vater (Periampullary)",
+      "redcap_code": "241",
+      "coarse_organ": "biliary_extrahepatic",
+      "candidate_groups": [
         11
       ],
       "candidate_groups_advisory": true
@@ -1378,6 +1978,116 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C25.0": {
+      "code": "C25.0",
+      "label": "Head of pancreas",
+      "redcap_code": "250",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.1": {
+      "code": "C25.1",
+      "label": "Body of pancreas",
+      "redcap_code": "251",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.2": {
+      "code": "C25.2",
+      "label": "Tail of pancreas",
+      "redcap_code": "252",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.3": {
+      "code": "C25.3",
+      "label": "Pancreatic duct (Duct of Santorini, Duct of Wirsung)",
+      "redcap_code": "253",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.4": {
+      "code": "C25.4",
+      "label": "Islets of Langerhans (Islands of Langerhans, Endocrine pancreas)",
+      "redcap_code": "254",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.7": {
+      "code": "C25.7",
+      "label": "Other specified parts of pancreas (Neck of pancreas)",
+      "redcap_code": "257",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.8": {
+      "code": "C25.8",
+      "label": "Overlapping lesion of pancreas",
+      "redcap_code": "258",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C25.9": {
+      "code": "C25.9",
+      "label": "Pancreas, NOS",
+      "redcap_code": "259",
+      "coarse_organ": "pancreas",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C26.0": {
+      "code": "C26.0",
+      "label": "Intestinal tract, NOS (Bowel, NOS, Intestine, NOS)",
+      "redcap_code": "260",
+      "coarse_organ": "digestive_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C26.8": {
+      "code": "C26.8",
+      "label": "Overlapping lesion of digestive system (see section 4.2.6) (Note: Neoplasms of digestive organs whose point of origin cannot be assigned to any one of the categories C15 to C26.0)",
+      "redcap_code": "268",
+      "coarse_organ": "digestive_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C26.9": {
+      "code": "C26.9",
+      "label": "Gastrointestinal tract, NOS (Alimentary tract, NOS, Digestive organs, NOS)",
+      "redcap_code": "269",
+      "coarse_organ": "digestive_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C73.9": {
       "code": "C73.9",
       "label": "Thyroid gland (Thyroid, NOS, Thyroglossal duct)",
@@ -1396,7 +2106,8 @@
       "redcap_code": "740",
       "coarse_organ": "adrenal_paraspinal",
       "candidate_groups": [
-        4
+        4,
+        11
       ]
     },
     "C74.1": {
@@ -1405,7 +2116,8 @@
       "redcap_code": "741",
       "coarse_organ": "adrenal_paraspinal",
       "candidate_groups": [
-        4
+        4,
+        11
       ]
     },
     "C74.9": {
@@ -1414,7 +2126,8 @@
       "redcap_code": "749",
       "coarse_organ": "adrenal_paraspinal",
       "candidate_groups": [
-        4
+        4,
+        11
       ]
     },
     "C22.0": {
@@ -1434,6 +2147,16 @@
       "candidate_groups": [
         7
       ]
+    },
+    "C23.9": {
+      "code": "C23.9",
+      "label": "Gallbladder",
+      "redcap_code": "239",
+      "coarse_organ": "gallbladder",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
     },
     "C56.9": {
       "code": "C56.9",
@@ -1478,7 +2201,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.9": {
@@ -1488,7 +2212,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.3": {
@@ -1498,7 +2223,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ],
       "note": "9380 (Glioma, NOS) at this site routes to Group III (IIIb) instead of IIId2 — see presentation_router.dual_group_rules['9380']."
     },
@@ -1509,8 +2235,19 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
+    },
+    "C75.0": {
+      "code": "C75.0",
+      "label": "Parathyroid gland",
+      "redcap_code": "750",
+      "coarse_organ": "endocrine_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
     },
     "C75.1": {
       "code": "C75.1",
@@ -1530,7 +2267,8 @@
       "coarse_organ": "gonad_sacrococcygeal_midline",
       "candidate_groups": [
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true,
       "note": "Group 10 added 4 October 2026 (design decision D19). The Group 10 Diagnostic Pathway (section 2A) names C76.3 as the site of a sacrococcygeal germ cell tumour, the commonest extragonadal site. REDCap offers this site as Pelvis, NOS (763). Group 9 is listed because soft-tissue sarcomas of the pelvis are ICCC Group IX. The registrar confirms the site code (docs/group_10_registrar_review.md B2)."
@@ -1639,7 +2377,8 @@
       "redcap_code": "699",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ]
     },
     "C76.0": {
@@ -1689,7 +2428,8 @@
       "coarse_organ": "midline_cns_extension",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C75.3": {
@@ -1843,7 +2583,8 @@
         2,
         4,
         9,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true,
       "note": "Retroperitoneum carries three families in a child: neuroblastoma of the sympathetic chain (IV), soft tissue sarcoma (IX), and lymphoma presenting as a retroperitoneal nodal mass (II)."
@@ -1860,7 +2601,8 @@
       "candidate_groups": [
         2,
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true,
       "note": "Group 4 added 18 September 2026. C48.0 and C48.8 both carried [2, 4, 9] and C48.2 alone carried [2, 9], inside one crosswalk row -- an oversight, not a decision. The Group 4 build contract §5 assigns C48.2 to g4_sympathoadrenal, and narrowBySite() intersects the site's list with the archetype's: [2, 9] against solid_mass's [2, 4, 6, 7, 8, 9, 10] is non-empty, so the empty-intersection fallback never fires and Group 4 was dropped before its tree could be chosen. A retroperitoneal neuroblastoma extending into the peritoneum would have left the group silently."
@@ -1877,7 +2619,8 @@
       "candidate_groups": [
         2,
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2000,7 +2743,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C70.1": {
@@ -2010,7 +2754,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.1": {
@@ -2020,7 +2765,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.2": {
@@ -2030,7 +2776,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.3": {
@@ -2040,7 +2787,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.4": {
@@ -2050,7 +2798,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.5": {
@@ -2060,7 +2809,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.6": {
@@ -2070,7 +2820,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.7": {
@@ -2080,7 +2831,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.8": {
@@ -2090,7 +2842,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.0": {
@@ -2100,7 +2853,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.1": {
@@ -2110,7 +2864,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.2": {
@@ -2120,7 +2875,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.4": {
@@ -2130,7 +2886,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.5": {
@@ -2140,7 +2897,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C72.8": {
@@ -2150,7 +2908,8 @@
       "coarse_organ": "brain_cns",
       "candidate_groups": [
         3,
-        10
+        10,
+        11
       ]
     },
     "C71.0": {
@@ -2163,6 +2922,506 @@
         10
       ],
       "note": "NO REDCap topography option exists for this code — the `topo_code` dropdown jumps 709 to 711. Verified against ICD coding/RedCap Options/Topography Redcap.md, 2026-09-14. The tool carries C71.0 because Group III keys its decision trees to anatomical compartment and a thalamic diffuse midline glioma lands here. Until the option is added the clerk has no dropdown value to record. See docs/TODO.md."
+    },
+    "C00.0": {
+      "code": "C00.0",
+      "label": "External upper lip (Vermilion border of upper lip, Upper lip, NOS (excludes skin of upper lip C44.0))",
+      "redcap_code": "000",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.1": {
+      "code": "C00.1",
+      "label": "External lower lip (Vermilion border of lower lip, Lower lip, NOS (excludes skin of lower lip C44.0))",
+      "redcap_code": "001",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.2": {
+      "code": "C00.2",
+      "label": "External lip, NOS (Vermilion border of lip, NOS)",
+      "redcap_code": "002",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.3": {
+      "code": "C00.3",
+      "label": "Mucosa of upper lip (Frenulum of upper lip, Inner aspect of upper lip)",
+      "redcap_code": "003",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.4": {
+      "code": "C00.4",
+      "label": "Mucosa of lower lip (Inner aspect of lower lip, Frenulum of lower lip)",
+      "redcap_code": "004",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.5": {
+      "code": "C00.5",
+      "label": "Mucosa of lip, NOS (Inner aspect of lip, NOS, Internal lip, NOS, Frenulum of lip, NOS, Frenulum labii, NOS)",
+      "redcap_code": "005",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.6": {
+      "code": "C00.6",
+      "label": "Commissure of lip (Labial commissure)",
+      "redcap_code": "006",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.8": {
+      "code": "C00.8",
+      "label": "Overlapping lesion of lip",
+      "redcap_code": "008",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C00.9": {
+      "code": "C00.9",
+      "label": "Lip, NOS (excludes skin of lip C44.0)",
+      "redcap_code": "009",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C01.9": {
+      "code": "C01.9",
+      "label": "Base of tongue, NOS (Dorsal surface of base of tongue, Posterior third of tongue, Posterior tongue, NOS, Root of tongue)",
+      "redcap_code": "019",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.0": {
+      "code": "C02.0",
+      "label": "Dorsal surface of tongue, NOS (Anterior 2/3 of tongue, dorsal surface, Midline of tongue, Dorsal surface of anterior tongue)",
+      "redcap_code": "020",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.1": {
+      "code": "C02.1",
+      "label": "Border of tongue (Tip of tongue)",
+      "redcap_code": "021",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.2": {
+      "code": "C02.2",
+      "label": "Ventral surface of tongue, NOS (Anterior 2/3 of tongue, ventral surface, Frenulum linguae, Ventral surface of anterior tongue, NOS)",
+      "redcap_code": "022",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.3": {
+      "code": "C02.3",
+      "label": "Anterior 2/3 of tongue, NOS (Anterior tongue, NOS)",
+      "redcap_code": "023",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.4": {
+      "code": "C02.4",
+      "label": "Lingual tonsil",
+      "redcap_code": "024",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.8": {
+      "code": "C02.8",
+      "label": "Overlapping lesion of tongue (see section 4.2.6, Junctional zone of tongue)",
+      "redcap_code": "028",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C02.9": {
+      "code": "C02.9",
+      "label": "Tongue, NOS (Lingual, NOS)",
+      "redcap_code": "029",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C03.0": {
+      "code": "C03.0",
+      "label": "Upper gum (Maxillary gingiva, Upper alveolar mucosa, Upper alveolar ridge mucosa, Upper alveolus, Upper gingiva)",
+      "redcap_code": "030",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C03.1": {
+      "code": "C03.1",
+      "label": "Lower gum (Mandibular gingiva, Lower alveolar mucosa, Lower alveolar ridge mucosa, Lower alveolus, Lower gingiva)",
+      "redcap_code": "031",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C03.9": {
+      "code": "C03.9",
+      "label": "Gum, NOS (Gingiva, NOS, Alveolar mucosa, NOS, Alveolar ridge mucosa, NOS, Alveolus, NOS, Periodontal tissue, Tooth socket)",
+      "redcap_code": "039",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C04.0": {
+      "code": "C04.0",
+      "label": "Anterior floor of mouth",
+      "redcap_code": "040",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C04.1": {
+      "code": "C04.1",
+      "label": "Lateral floor of mouth",
+      "redcap_code": "041",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C04.8": {
+      "code": "C04.8",
+      "label": "Overlapping lesion of floor of mouth (see section 4.2.6)",
+      "redcap_code": "048",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C04.9": {
+      "code": "C04.9",
+      "label": "Floor of mouth, NOS",
+      "redcap_code": "049",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C05.0": {
+      "code": "C05.0",
+      "label": "Hard palate",
+      "redcap_code": "050",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C05.1": {
+      "code": "C05.1",
+      "label": "Soft palate, NOS (excludes nasopharyngeal surface of soft palate C11.3)",
+      "redcap_code": "051",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C05.2": {
+      "code": "C05.2",
+      "label": "Uvula",
+      "redcap_code": "052",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C05.8": {
+      "code": "C05.8",
+      "label": "Overlapping lesion of palate (see section 4.2.6, Junction of hard and soft palate)",
+      "redcap_code": "058",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C05.9": {
+      "code": "C05.9",
+      "label": "Palate, NOS (Roof of mouth)",
+      "redcap_code": "059",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C06.0": {
+      "code": "C06.0",
+      "label": "Cheek mucosa (Buccal mucosa, Internal cheek)",
+      "redcap_code": "060",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C06.1": {
+      "code": "C06.1",
+      "label": "Vestibule of mouth (Alveolar sulcus, Buccal sulcus, Labial sulcus)",
+      "redcap_code": "061",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C06.2": {
+      "code": "C06.2",
+      "label": "Retromolar area (Retromolar triangle, Retromolar trigone)",
+      "redcap_code": "062",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C06.8": {
+      "code": "C06.8",
+      "label": "Overlapping lesion of other and unspecified parts of mouth",
+      "redcap_code": "068",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C06.9": {
+      "code": "C06.9",
+      "label": "Mouth, NOS (Buccal cavity, Oral cavity, Oral mucosa, Minor salivary gland, NOS)",
+      "redcap_code": "069",
+      "coarse_organ": "lip_oral_cavity",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C07.9": {
+      "code": "C07.9",
+      "label": "Parotid gland (Parotid, NOS, Stensen duct, Parotid gland duct)",
+      "redcap_code": "079",
+      "coarse_organ": "salivary_glands",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C08.0": {
+      "code": "C08.0",
+      "label": "Submandibular gland (Submaxillary gland, Wharton duct, Submaxillary gland duct)",
+      "redcap_code": "080",
+      "coarse_organ": "salivary_glands",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C08.1": {
+      "code": "C08.1",
+      "label": "Sublingual gland (Sublingual gland duct)",
+      "redcap_code": "081",
+      "coarse_organ": "salivary_glands",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C08.8": {
+      "code": "C08.8",
+      "label": "Overlapping lesion of major salivary glands",
+      "redcap_code": "088",
+      "coarse_organ": "salivary_glands",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C08.9": {
+      "code": "C08.9",
+      "label": "Major salivary gland, NOS",
+      "redcap_code": "089",
+      "coarse_organ": "salivary_glands",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C09.0": {
+      "code": "C09.0",
+      "label": "Tonsillar fossa",
+      "redcap_code": "090",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C09.1": {
+      "code": "C09.1",
+      "label": "Tonsillar pillar (Faucial pillar, Glossopalatine fold)",
+      "redcap_code": "091",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C09.8": {
+      "code": "C09.8",
+      "label": "Overlapping lesion of tonsil",
+      "redcap_code": "098",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C09.9": {
+      "code": "C09.9",
+      "label": "Tonsil, NOS (excludes lingual tonsil C02.4 and pharyngeal tonsil C11.1, Faucial tonsil, Palatine tonsil)",
+      "redcap_code": "099",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.0": {
+      "code": "C10.0",
+      "label": "Vallecula",
+      "redcap_code": "100",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.1": {
+      "code": "C10.1",
+      "label": "Anterior surface of epiglottis",
+      "redcap_code": "101",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.2": {
+      "code": "C10.2",
+      "label": "Lateral wall of oropharynx (Lateral wall of mesopharynx)",
+      "redcap_code": "102",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.3": {
+      "code": "C10.3",
+      "label": "Posterior wall of oropharynx (Posterior wall of mesopharynx)",
+      "redcap_code": "103",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.4": {
+      "code": "C10.4",
+      "label": "Branchial cleft (site of neoplasm)",
+      "redcap_code": "104",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.8": {
+      "code": "C10.8",
+      "label": "Overlapping lesion of oropharynx",
+      "redcap_code": "108",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C10.9": {
+      "code": "C10.9",
+      "label": "Oropharynx, NOS (Mesopharynx, NOS, Fauces, NOS)",
+      "redcap_code": "109",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
     },
     "C11.0": {
       "code": "C11.0",
@@ -2237,6 +3496,486 @@
       ],
       "candidate_groups_advisory": true
     },
+    "C12.9": {
+      "code": "C12.9",
+      "label": "Pyriform sinus (Piriform sinus, Pyriform fossa, Piriform fossa)",
+      "redcap_code": "129",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C13.0": {
+      "code": "C13.0",
+      "label": "Postcricoid region (Cricopharynx, Cricoid, NOS)",
+      "redcap_code": "130",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C13.1": {
+      "code": "C13.1",
+      "label": "Hypopharyngeal aspect of aryepiglottic fold (Aryepiglottic fold, NOS (excludes laryngeal aspect of aryepiglottic fold C32.1), Arytenoid fold)",
+      "redcap_code": "131",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C13.2": {
+      "code": "C13.2",
+      "label": "Posterior wall of hypopharynx",
+      "redcap_code": "132",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C13.8": {
+      "code": "C13.8",
+      "label": "Overlapping lesion of hypopharynx",
+      "redcap_code": "138",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C13.9": {
+      "code": "C13.9",
+      "label": "Hypopharynx, NOS (Hypopharyngeal wall, Laryngopharynx)",
+      "redcap_code": "139",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C14.0": {
+      "code": "C14.0",
+      "label": "Pharynx, NOS (Pharyngeal wall, NOS, Wall of pharynx, NOS, Lateral wall of pharynx, NOS, Posterior wall of pharynx, NOS, Retropharynx, \"roat)",
+      "redcap_code": "140",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C14.2": {
+      "code": "C14.2",
+      "label": "Waldeyer ring",
+      "redcap_code": "142",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C14.8": {
+      "code": "C14.8",
+      "label": "Overlapping lesion of lip, oral cavity and pharynx",
+      "redcap_code": "148",
+      "coarse_organ": "tonsil_oropharynx_hypopharynx",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.0": {
+      "code": "C15.0",
+      "label": "Cervical esophagus",
+      "redcap_code": "150",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.1": {
+      "code": "C15.1",
+      "label": "Thoracic esophagus",
+      "redcap_code": "151",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.2": {
+      "code": "C15.2",
+      "label": "Abdominal esophagus",
+      "redcap_code": "152",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.3": {
+      "code": "C15.3",
+      "label": "Upper third of esophagus (Proximal third of esophagus)",
+      "redcap_code": "153",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.4": {
+      "code": "C15.4",
+      "label": "Middle third of esophagus",
+      "redcap_code": "154",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.5": {
+      "code": "C15.5",
+      "label": "Lower third of esophagus (Distal third of esophagus)",
+      "redcap_code": "155",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.8": {
+      "code": "C15.8",
+      "label": "Overlapping lesion of esophagus",
+      "redcap_code": "158",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C15.9": {
+      "code": "C15.9",
+      "label": "Esophagus, NOS",
+      "redcap_code": "159",
+      "coarse_organ": "oesophagus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.0": {
+      "code": "C16.0",
+      "label": "Cardia, NOS (Gastric cardia, Cardioesophageal junction, Esophagogastric junction, Gastroesophageal junction)",
+      "redcap_code": "160",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.1": {
+      "code": "C16.1",
+      "label": "Fundus of stomach (Gastric fundus)",
+      "redcap_code": "161",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.2": {
+      "code": "C16.2",
+      "label": "Body of stomach (Corpus of stomach, Gastric corpus)",
+      "redcap_code": "162",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.3": {
+      "code": "C16.3",
+      "label": "Gastric antrum (Antrum of stomach, Pyloric antrum)",
+      "redcap_code": "163",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.4": {
+      "code": "C16.4",
+      "label": "Pylorus (Pyloric canal, Prepylorus)",
+      "redcap_code": "164",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.5": {
+      "code": "C16.5",
+      "label": "Lesser curvature of stomach, NOS (If anatomic Location within stomach cannot be specified)",
+      "redcap_code": "165",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.6": {
+      "code": "C16.6",
+      "label": "Greater curvature of stomach, NOS (If anatomic Location within stomach cannot be specified)",
+      "redcap_code": "166",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.8": {
+      "code": "C16.8",
+      "label": "Overlapping lesion of stomach (If anatomic Location within stomach cannot be specified)",
+      "redcap_code": "168",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C16.9": {
+      "code": "C16.9",
+      "label": "Stomach, NOS (Gastric, NOS)",
+      "redcap_code": "169",
+      "coarse_organ": "stomach",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.0": {
+      "code": "C17.0",
+      "label": "Duodenum",
+      "redcap_code": "170",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.1": {
+      "code": "C17.1",
+      "label": "Jejunum",
+      "redcap_code": "171",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.2": {
+      "code": "C17.2",
+      "label": "Ileum (excludes ileocecal valve C18.0)",
+      "redcap_code": "172",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.3": {
+      "code": "C17.3",
+      "label": "Meckel diverticulum (site of neoplasm)",
+      "redcap_code": "173",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.8": {
+      "code": "C17.8",
+      "label": "Overlapping lesion of small intestine",
+      "redcap_code": "178",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C17.9": {
+      "code": "C17.9",
+      "label": "Small intestine, NOS (Small bowel, NOS)",
+      "redcap_code": "179",
+      "coarse_organ": "small_intestine",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.0": {
+      "code": "C18.0",
+      "label": "Cecum (Ileocecal valve, Ileocecal junction)",
+      "redcap_code": "180",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.1": {
+      "code": "C18.1",
+      "label": "Appendix",
+      "redcap_code": "181",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.2": {
+      "code": "C18.2",
+      "label": "Ascending colon (Right colon)",
+      "redcap_code": "182",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.3": {
+      "code": "C18.3",
+      "label": "Hepatic flexure of colon",
+      "redcap_code": "183",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.4": {
+      "code": "C18.4",
+      "label": "Transverse colon",
+      "redcap_code": "184",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.5": {
+      "code": "C18.5",
+      "label": "Splenic flexure of colon",
+      "redcap_code": "185",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.6": {
+      "code": "C18.6",
+      "label": "Descending colon (Left colon)",
+      "redcap_code": "186",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.7": {
+      "code": "C18.7",
+      "label": "Sigmoid colon (Sigmoid, NOS, Sigmoid #exure of colon, Pelvic colon)",
+      "redcap_code": "187",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.8": {
+      "code": "C18.8",
+      "label": "Overlapping lesion of colon",
+      "redcap_code": "188",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C18.9": {
+      "code": "C18.9",
+      "label": "Colon, NOS (Large intestine (excludes rectum, NOS C20.9 and recrectosigmoid junction C19.9), Large bowel, NOS)",
+      "redcap_code": "189",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C19.9": {
+      "code": "C19.9",
+      "label": "Rectosigmoid junction (Rectosigmoid, NOS, Rectosigmoid colon, Colon and rectum, Pelvirectal junction)",
+      "redcap_code": "199",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C20.9": {
+      "code": "C20.9",
+      "label": "Rectum, NOS (Rectal ampulla)",
+      "redcap_code": "209",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C21.0": {
+      "code": "C21.0",
+      "label": "Anus, NOS (excludes skin of anus and perianal skin C44.5)",
+      "redcap_code": "210",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C21.1": {
+      "code": "C21.1",
+      "label": "Anal canal (Anal sphincter)",
+      "redcap_code": "211",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C21.2": {
+      "code": "C21.2",
+      "label": "Cloacogenic zone",
+      "redcap_code": "212",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C21.8": {
+      "code": "C21.8",
+      "label": "Overlapping lesion of rectum, anus and anal canal (Anorectal junction, Anorectum)",
+      "redcap_code": "218",
+      "coarse_organ": "colon_appendix_rectum_anus",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
     "C30.0": {
       "code": "C30.0",
       "label": "Nasal cavity",
@@ -2244,7 +3983,8 @@
       "coarse_organ": "nasal_cavity_middle_ear",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2255,7 +3995,8 @@
       "coarse_organ": "nasal_cavity_middle_ear",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true,
       "note": "Topography Redcap.md pick 755 (C75.5, Aortic body and other paraganglia) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma. So a reported glomus jugulare tumour can plausibly be sited at either C30.1 or C75.5. Recorded, not resolved -- Group 4 build contract §7.1."
@@ -2267,7 +4008,8 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2278,7 +4020,8 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2289,7 +4032,8 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2300,7 +4044,8 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2311,7 +4056,8 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2322,7 +4068,88 @@
       "coarse_organ": "accessory_sinuses",
       "candidate_groups": [
         4,
-        9
+        9,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.0": {
+      "code": "C32.0",
+      "label": "Glottis (Intrinsic larynx, Laryngeal commissure, Vocal cord, NOS, True vocal cord, True cord)",
+      "redcap_code": "320",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.1": {
+      "code": "C32.1",
+      "label": "Supraglottis (Epiglottis, NOS (excludes anterior surface of epiglottis C10.1), Extrinsic larynx, Laryngeal aspect of aryepiglottic fold, Posterior surface of epiglottis, Ventricular band of larynx, False vocal cord, False cord)",
+      "redcap_code": "321",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.2": {
+      "code": "C32.2",
+      "label": "Subglottis",
+      "redcap_code": "322",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.3": {
+      "code": "C32.3",
+      "label": "Laryngeal cartilage (Arytenoid cartilage, Cricoid cartilage, Cuneiform cartilage, Thyroid cartilage)",
+      "redcap_code": "323",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.8": {
+      "code": "C32.8",
+      "label": "Overlapping lesion of larynx",
+      "redcap_code": "328",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C32.9": {
+      "code": "C32.9",
+      "label": "Larynx, NOS",
+      "redcap_code": "329",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C33.9": {
+      "code": "C33.9",
+      "label": "Trachea",
+      "redcap_code": "339",
+      "coarse_organ": "larynx_trachea",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.0": {
+      "code": "C38.0",
+      "label": "Heart (Endocardium, Epicardium, Myocardium, Pericardium, Cardiac ventricle, Cardiac atrium)",
+      "redcap_code": "380",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2334,7 +4161,8 @@
       "candidate_groups": [
         2,
         4,
-        10
+        10,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2345,7 +4173,8 @@
       "coarse_organ": "mediastinum",
       "candidate_groups": [
         2,
-        4
+        4,
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2357,7 +4186,58 @@
       "candidate_groups": [
         2,
         4,
-        10
+        10,
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.4": {
+      "code": "C38.4",
+      "label": "Pleura, NOS (Parietal pleura, Visceral pleura)",
+      "redcap_code": "384",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C38.8": {
+      "code": "C38.8",
+      "label": "Overlapping lesion of heart, mediastinum and pleura",
+      "redcap_code": "388",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C39.0": {
+      "code": "C39.0",
+      "label": "Upper respiratory tract, NOS",
+      "redcap_code": "390",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C39.8": {
+      "code": "C39.8",
+      "label": "Overlapping lesion of respiratory system and intrathoracic organs (Note: Neoplasm of respiratory and intrathoracic organs whose point of origin cannot be assigned to any one of the categories C30 to C39.0)",
+      "redcap_code": "398",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C39.9": {
+      "code": "C39.9",
+      "label": "Ill-defined sites within respiratory system (Respiratory tract, NOS)",
+      "redcap_code": "399",
+      "coarse_organ": "heart_pleura_thorax",
+      "candidate_groups": [
+        11
       ],
       "candidate_groups_advisory": true
     },
@@ -2367,7 +4247,8 @@
       "redcap_code": "754",
       "coarse_organ": "head_neck_paraganglia",
       "candidate_groups": [
-        4
+        4,
+        11
       ]
     },
     "C75.5": {
@@ -2376,9 +4257,30 @@
       "redcap_code": "755",
       "coarse_organ": "head_neck_paraganglia",
       "candidate_groups": [
-        4
+        4,
+        11
       ],
       "note": "REDCap's label for this pick (755) lists \"Glomus jugulare\" among its synonyms, and ICD-O-3.2 carries \"Glomus jugulare tumor, NOS\" as a Synonym on 8690/3 Middle ear paraganglioma (topography C30.1). So a reported glomus jugulare tumour can plausibly be sited at either C75.5 or C30.1. Recorded, not resolved -- Group 4 build contract §7.1."
+    },
+    "C75.8": {
+      "code": "C75.8",
+      "label": "Overlapping lesion of endocrine glands and related structures (Multiple endocrine glands, Pluriglandular)",
+      "redcap_code": "758",
+      "coarse_organ": "endocrine_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
+    },
+    "C75.9": {
+      "code": "C75.9",
+      "label": "Endocrine gland, NOS",
+      "redcap_code": "759",
+      "coarse_organ": "endocrine_other",
+      "candidate_groups": [
+        11
+      ],
+      "candidate_groups_advisory": true
     },
     "C69.0": {
       "code": "C69.0",
@@ -2386,7 +4288,8 @@
       "redcap_code": "690",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ]
     },
     "C69.1": {
@@ -2395,7 +4298,8 @@
       "redcap_code": "691",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ]
     },
     "C69.2": {
@@ -2404,7 +4308,8 @@
       "redcap_code": "692",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ],
       "note": "The topography Visser 2023 Table 3 names for retinoblastoma (Group 5 build contract §0.4). Added so a retina-sited retinoblastoma can reach Group V at all -- contract §7.1."
     },
@@ -2414,7 +4319,8 @@
       "redcap_code": "693",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ]
     },
     "C69.4": {
@@ -2424,7 +4330,8 @@
       "coarse_organ": "eye",
       "candidate_groups": [
         5,
-        4
+        4,
+        11
       ],
       "note": "Carries [5, 4], not [5] alone: intraocular medulloepithelioma (9501-9504) at the ciliary body is an ICCC-3 Group IV tumour, not Group V, and is a genuine leukocoria mimic. Group 5 build contract §5.3, §7.1."
     },
@@ -2434,7 +4341,8 @@
       "redcap_code": "695",
       "coarse_organ": "eye",
       "candidate_groups": [
-        5
+        5,
+        11
       ]
     },
     "C69.6": {
@@ -2444,7 +4352,8 @@
       "coarse_organ": "eye",
       "candidate_groups": [
         5,
-        9
+        9,
+        11
       ],
       "note": "Topography Redcap.md line 696 renders the last item of this pick's parenthetical synonym list as \"So! tissue of orbit\" -- ligature damage, the same defect class as line 56 (docs/TODO.md §1.3). Written here as \"Soft tissue of orbit\", per Group 5 build contract §7.1. The REDCap source file itself was not edited. Group 9 added 2 October 2026: the orbit is a classic site of embryonal rhabdomyosarcoma, ICCC-3 IXa at any site, and ICCC-2017 range 89 admits extraskeletal osteosarcoma at 696 (Group 9 build contract §7.4)."
     },
@@ -2455,7 +4364,8 @@
       "coarse_organ": "eye",
       "candidate_groups": [
         5,
-        9
+        9,
+        11
       ]
     }
   }

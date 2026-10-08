@@ -969,25 +969,6 @@
     "coding_note": "ICD-O-3.2 Synonym term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only."
   },
   {
-    "alias": "Keratoacanthoma",
-    "full_form": "Keratoacanthoma -> Squamous cell carcinoma, keratinizing, NOS (8071)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 related term",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8071"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Squamous cell carcinoma, keratinizing, NOS (8071/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only."
-  },
-  {
     "alias": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
     "full_form": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS -> Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072)",
     "also_known_as": [],
@@ -2677,82 +2658,6 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 related term for Adenocarcinoma in tubulovillous adenoma (8263/3).",
     "coding_note": "ICD-O-3.2 Related term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
-  },
-  {
-    "alias": "Oncocytic adenocarcinoma",
-    "full_form": "Oncocytic adenocarcinoma -> Oxyphilic adenocarcinoma (8290)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 synonym",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8290"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 synonym term for Oxyphilic adenocarcinoma (8290/3).",
-    "coding_note": "ICD-O-3.2 Synonym term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
-  },
-  {
-    "alias": "Follicular carcinoma, oxyphilic cell",
-    "full_form": "Follicular carcinoma, oxyphilic cell -> Oxyphilic adenocarcinoma (8290)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 related term",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8290"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
-  },
-  {
-    "alias": "Hurthle cell adenocarcinoma",
-    "full_form": "Hurthle cell adenocarcinoma -> Oxyphilic adenocarcinoma (8290)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 related term",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8290"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
-  },
-  {
-    "alias": "Hurthle cell carcinoma",
-    "full_form": "Hurthle cell carcinoma -> Oxyphilic adenocarcinoma (8290)",
-    "also_known_as": [],
-    "alias_type": "descriptive",
-    "origin_system": "ICD-O-3.2 related term",
-    "nci_concept_id": null,
-    "who_version_current": "ICD-O-3.2",
-    "maps_to_morphology_codes": [
-      "8290"
-    ],
-    "maps_to_iccc3_subgroup_id": "Xd",
-    "needs_ihc_tree": false,
-    "ihc_tree_id": "g10_extragonadal",
-    "tree_entry_node": "eg_document_inventory",
-    "clinical_alert": null,
-    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
-    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
   },
   {
     "alias": "Clear cell adenocarcinoma, NOS",

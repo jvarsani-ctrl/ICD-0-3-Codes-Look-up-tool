@@ -1,0 +1,3190 @@
+{
+  "part_id": "XIf1_salivary",
+  "sources": [
+    {
+      "file": "XIf1-salivary-gland__Skalova-2022.txt",
+      "citation": "Skalova A, Hyrcza MD, Leivo I. Update from the 5th Edition of the World Health Organization Classification of Head and Neck Tumors: Salivary Glands. Head Neck Pathol 2022;16(1):40-53. doi:10.1007/s12105-022-01420-1",
+      "who_volume": "WHO Classification of Head and Neck Tumours, 5th edition"
+    },
+    {
+      "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+      "citation": "International Collaboration on Cancer Reporting. Carcinomas of the Major Salivary Glands Histopathology Reporting Guide, 2nd edition, version 2.0. Sydney: ICCR; July 2024. ISBN 978-1-922324-51-1",
+      "who_volume": "WHO Classification of Head and Neck Tumours, 5th edition, 2024"
+    },
+    {
+      "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+      "citation": "Pfister SM, Reyes-Mugica M, Chan JKC, et al. A Summary of the Inaugural WHO Classification of Pediatric Tumors: Transitioning from the Optical into the Molecular Era. Cancer Discov 2022;12(2):331-355",
+      "who_volume": "WHO Classification of Paediatric Tumours, 5th edition, 2022"
+    },
+    {
+      "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+      "citation": "World Health Organization. International Classification of Diseases for Oncology, 3rd edition, 1st revision (ICD-O-3.1), section 4, Coding guidelines, printed pp. 14-28",
+      "who_volume": "not a tumour classification; the coding manual"
+    },
+    {
+      "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+      "citation": "Perez-de-Oliveira ME, et al. Epithelial salivary gland neoplasms in pediatric patients: A comprehensive review. Med Oral Patol Oral Cir Bucal 2025. doi:10.4317/medoral.26983. PMC12019652",
+      "who_volume": "not a WHO summary; paediatric evidence"
+    }
+  ],
+  "sites": [
+    {
+      "topography": "C07.9",
+      "iccc_subgroup": "XIf1"
+    },
+    {
+      "topography": "C08.0",
+      "iccc_subgroup": "XIf1"
+    },
+    {
+      "topography": "C08.1",
+      "iccc_subgroup": "XIf1"
+    },
+    {
+      "topography": "C08.8",
+      "iccc_subgroup": "XIf1"
+    },
+    {
+      "topography": "C08.9",
+      "iccc_subgroup": "XIf1"
+    }
+  ],
+  "entities": [
+    {
+      "who_term": "Mucoepidermoid carcinoma",
+      "code": "8430",
+      "behaviour": "3",
+      "icdo32_term": "Mucoepidermoid carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Mucoepidermoid carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "common",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 calls mucoepidermoid carcinoma the most common malignant salivary gland tumour in children and adolescents, and Pfister 2022 lists it among the malignant head and neck tumours of children. The World Health Organization codes it 8430/3.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "Regarding histological subtypes, MEC is the most common malignant SGT.",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 1,
+          "quote": "Pleomorphic adenoma and mucoepidermoid carcinoma are the most frequently observed entities.",
+          "from_image": false
+        },
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Mucoepidermoid carcinoma 8430/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Acinic cell carcinoma",
+      "code": "8550",
+      "behaviour": "3",
+      "icdo32_term": "Acinic cell adenocarcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Acinar cell carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "common",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 names acinic cell carcinoma the second most frequent malignant salivary gland tumour in children and adolescents, Pfister 2022 lists it among the malignant head and neck tumours of children, and the ICCR guide cites a paediatric survival series. ICD-O-3.2 prints the World Health Organization name only as the synonym Acinic cell adenocarcinoma; the preferred term at 8550/3 is Acinar cell carcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "Notably, AciCC and secretory carcinoma is the second and third most frequent malignant SGT",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "ACiCC - acinic cell carcinoma; SC - secretory carcinoma.",
+          "from_image": false
+        },
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Acinic cell carcinoma 8550/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 18,
+          "quote": "cell carcinoma of the salivary gland in the adult and paediatric population",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Salivary gland carcinoma NOS and emerging entities",
+      "code": "8140",
+      "behaviour": "3",
+      "icdo32_term": "Adenocarcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Adenocarcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "option",
+      "refer_group": null,
+      "why": "The not-otherwise-specified fallback of the histology screen. The World Health Organization codes salivary gland carcinoma NOS and its emerging entities 8140/3; Skalova 2022 places poorly differentiated and oncocytic carcinomas in this category.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Salivary gland carcinoma NOS and emerging entities 8140/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 1,
+          "quote": "Salivary carcinoma not otherwise specified (NOS) and emerging entities",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Carcinoma, no type named",
+      "code": "8010",
+      "behaviour": "3",
+      "icdo32_term": "Carcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Carcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "option",
+      "refer_group": null,
+      "why": "The not-otherwise-specified fallback for a report that names a carcinoma and no type. It is the ICD-O-3.2 code for the term; no World Health Organization source is needed.",
+      "cite": []
+    },
+    {
+      "who_term": "Adenoid cystic carcinoma",
+      "code": "8200",
+      "behaviour": "3",
+      "icdo32_term": "Adenoid cystic carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Adenoid cystic carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 states that adenoid cystic carcinoma is observed less frequently in paediatric patients than in adults; it gives no paediatric case count (data gap 2). A current World Health Organization salivary carcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "polymorphous adenocarcinoma and ACC are less frequently observed in pediatric patients",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "ACC - adenoid cystic carcinoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Adenoid cystic carcinoma 8200/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Secretory carcinoma",
+      "code": "8502",
+      "behaviour": "3",
+      "icdo32_term": "Secretory carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Secretory carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "common",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 names secretory carcinoma the third most frequent malignant salivary gland tumour in children and adolescents, after mucoepidermoid and acinic cell carcinoma. It resembles acinic cell carcinoma and carries an ETV6 translocation. A current World Health Organization salivary carcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "Notably, AciCC and secretory carcinoma is the second and third most frequent malignant SGT",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "ACiCC - acinic cell carcinoma; SC - secretory carcinoma.",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "subtype followed by AciCC (9 cases; 11.5%), and secretory carcinoma (6 cases; 7.7%).",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "Secretory carcinoma was first described in 2010, mimicking AciCC.",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Secretory carcinoma 8502/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 3,
+          "quote": "ETV6-NTRK3 fusion",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Microsecretory adenocarcinoma",
+      "code": "8502",
+      "behaviour": "3",
+      "icdo32_term": "",
+      "icdo32_level": "none",
+      "icdo32_preferred_term": "Secretory carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "A new World Health Organization 5th-edition entity. ICD-O-3.2 prints no term for it; the ICCR Table 1 gives it 8502/3, a code ICD-O-3.2 holds. The ICCR table prints it as Microsecretory carcinoma; the ICCR value list and Skalova 2022 call it microsecretory adenocarcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Microsecretory carcinoma 8502/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 2,
+          "quote": "Microsecretory adenocarcinoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 5,
+          "quote": "Microsecretory adenocarcinoma (MSA) is a newly identified",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Polymorphous adenocarcinoma (classic and cribriform subtypes)",
+      "code": "8525",
+      "behaviour": "3",
+      "icdo32_term": "Polymorphous adenocarcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Polymorphous adenocarcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 states that polymorphous adenocarcinoma is observed less frequently in paediatric patients than in adults; it gives no paediatric case count (data gap 2). Predominantly a minor salivary gland tumour. Cribriform adenocarcinoma of salivary gland origin is now its cribriform subtype and takes the same code. The ICCR table prints Polymorphous carcinoma, an ICD-O-3.2 synonym.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "polymorphous adenocarcinoma and ACC are less frequently observed in pediatric patients",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Polymorphous carcinoma 8525/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 7,
+          "quote": "it is predominantly seen in minor salivary glands",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 1,
+          "quote": "Cribriform adenocarcinoma of salivary gland origin (CASG) now represents a distinctive subtype of polymorphous",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Hyalinizing clear cell carcinoma",
+      "code": "8310",
+      "behaviour": "3",
+      "icdo32_term": "",
+      "icdo32_level": "none",
+      "icdo32_preferred_term": "Clear cell adenocarcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "ICD-O-3.2 prints no term for hyalinizing clear cell carcinoma; the ICCR Table 1 gives it 8310/3, whose preferred term is Clear cell adenocarcinoma, NOS.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Hyalinising clear cell carcinoma 8310/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 3,
+          "quote": "EWSR1-ATF1 fusions",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Basal cell adenocarcinoma",
+      "code": "8147",
+      "behaviour": "3",
+      "icdo32_term": "Basal cell adenocarcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Basal cell adenocarcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "A current World Health Organization salivary carcinoma with no paediatric report in this part's sources.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Basal cell adenocarcinoma 8147/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Salivary duct carcinoma",
+      "code": "8500",
+      "behaviour": "3",
+      "icdo32_term": "",
+      "icdo32_level": "none",
+      "icdo32_preferred_term": "Infiltrating duct carcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "ICD-O-3.2 prints no salivary duct carcinoma term; the ICCR Table 1 gives it 8500/3. ICD-O-3.1 Table 23 attaches 8500/3 to breast but lists the parotid and salivary glands as other primary sites, so the salivary site stands (Rule H).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Salivary duct carcinoma 8500/3",
+          "from_image": true
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 10,
+          "quote": "C07.9 Parotid gland C08._ Salivary gland",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Epithelial-myoepithelial carcinoma",
+      "code": "8562",
+      "behaviour": "3",
+      "icdo32_term": "Epithelial-myoepithelial carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Epithelial-myoepithelial carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "A current World Health Organization salivary carcinoma with no paediatric report in this part's sources.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Epithelial-myoepithelial carcinoma 8562/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Mucinous adenocarcinoma",
+      "code": "8480",
+      "behaviour": "3",
+      "icdo32_term": "Mucinous adenocarcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Mucinous adenocarcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Occurs typically in oral minor salivary glands; no paediatric report in this part's sources. Its signet ring subtype raises a Rule K question (registrar question 6).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Mucinous adenocarcinoma 8480/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 7,
+          "quote": "MA occurs typically in oral minor salivary glands",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Sclerosing microcystic adenocarcinoma",
+      "code": "8407",
+      "behaviour": "3",
+      "icdo32_term": "",
+      "icdo32_level": "none",
+      "icdo32_preferred_term": "Microcystic adnexal carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Described so far in minor salivary glands only. ICD-O-3.2 prints no term for it; the ICCR Table 1 gives it 8407/3. ICCC-2017 places 8407 only in XIe (skin, C44): at C07-C08 it lies outside every range, so under the registrar's ruling of 1 October 2026 it belongs to Group XI and takes XIf1 by site.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Sclerosing microcystic adenocarcinoma 8407/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 5,
+          "quote": "SMA has so far been described in minor salivary glands only",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Carcinoma ex pleomorphic adenoma",
+      "code": "8941",
+      "behaviour": "3",
+      "icdo32_term": "Carcinoma ex pleomorphic adenoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Carcinoma ex pleomorphic adenoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 states that malignant transformation of pleomorphic adenoma has not been reported in paediatric patients, so it stays a picker entry. The ICCR guide asks the pathologist to report the type of the carcinoma inside the pleomorphic adenoma and its extent of invasion; the World Health Organization codes the whole tumour 8941/3 (registrar questions 4 and 5).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "malignant transformation of pleomorphic adenoma (PA) has not been reported in pediatric patients",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Carcinoma ex pleomorphic adenoma 8941/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "The histologic type of the malignant component should be reported",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Sebaceous adenocarcinoma",
+      "code": "8410",
+      "behaviour": "3",
+      "icdo32_term": "Sebaceous adenocarcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Sebaceous carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "A current World Health Organization salivary carcinoma with no paediatric report in this part's sources.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Sebaceous adenocarcinoma 8410/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Lymphoepithelial carcinoma",
+      "code": "8082",
+      "behaviour": "3",
+      "icdo32_term": "Lymphoepithelial carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Lymphoepithelial carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "A current World Health Organization salivary carcinoma with no paediatric report in this part's sources. At C07-C08 ICCC-2017 places 8082 in XIf1; at the nasopharynx it is XIc.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Lymphoepithelial carcinoma 8082/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Squamous cell carcinoma (primary in the salivary gland)",
+      "code": "8070",
+      "behaviour": "3",
+      "icdo32_term": "Squamous cell carcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Squamous cell carcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "The ICCR guide states that squamous cell carcinoma in a salivary gland is typically a metastasis; the picker entry is for a report that states a salivary primary, and the deposit option covers the rest.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Squamous cell carcinoma 8070/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "The diagnosis of primary squamous cell carcinoma of the salivary gland should be used sparingly",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "typically a metastasis from another site",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Oncocytic carcinoma",
+      "code": "8290",
+      "behaviour": "3",
+      "icdo32_term": "Oncocytic carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Oxyphilic adenocarcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "The World Health Organization 5th edition moves oncocytic carcinoma into the emerging entities. ICD-O-3.2 prints the term itself at 8290/3, so the term's own code is used (registrar question 7).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 2,
+          "quote": "There is no consensus whether oncocytic carcinoma exists",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 2,
+          "quote": "has been moved into the emerging entities chapter",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Poorly differentiated carcinoma",
+      "code": "8020",
+      "behaviour": "3",
+      "icdo32_term": "Carcinoma, poorly differentiated, NOS",
+      "icdo32_level": "Related",
+      "icdo32_preferred_term": "Carcinoma, undifferentiated, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Skalova 2022 places poorly differentiated carcinomas in the not-otherwise-specified category; ICD-O-3.2 prints the term at 8020/3 (registrar question 7).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 1,
+          "quote": "Salivary carcinoma not otherwise specified (NOS) and emerging entities",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Small cell neuroendocrine carcinoma",
+      "code": "8041",
+      "behaviour": "3",
+      "icdo32_term": "Small cell neuroendocrine carcinoma",
+      "icdo32_level": "Related",
+      "icdo32_preferred_term": "Small cell carcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "The ICCR guide records primary salivary neuroendocrine carcinomas under other types; ICCC-2017 places 8041 in XIf1 at C07-C08.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "Primary salivary gland neuroendocrine carcinomas (small cell and large cell) are not specifically included",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Large cell neuroendocrine carcinoma",
+      "code": "8013",
+      "behaviour": "3",
+      "icdo32_term": "Large cell neuroendocrine carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Large cell neuroendocrine carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "As for small cell neuroendocrine carcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "Primary salivary gland neuroendocrine carcinomas (small cell and large cell) are not specifically included",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Pfister 2022 lists NUT carcinoma among malignant head and neck tumours of children without naming a salivary site, and neither salivary source lists it, so it is a picker entry here. ICCC-2017 places 8023 in XIf1 at C07-C08.",
+      "cite": [
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Nasopharyngeal carcinoma NUT carcinoma Melanotic neuroectodermal tumor of infancy",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Myoepithelial carcinoma",
+      "code": "8982",
+      "behaviour": "3",
+      "icdo32_term": "Myoepithelial carcinoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Myoepithelial carcinoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 12,
+      "why": "A World Health Organization salivary carcinoma that ICCC-2017 places in XIIa4 (other complex mixed and stromal neoplasms, every site), not in Group XI (registrar question 2).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Myoepithelial carcinoma 8982/3",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Carcinosarcoma of the salivary glands",
+      "code": "8980",
+      "behaviour": "3",
+      "icdo32_term": "Carcinosarcoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Carcinosarcoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 12,
+      "why": "ICCC-2017 places 8980 in XIIa4 at every site (registrar question 2).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Carcinosarcoma of the salivary glands 8980/3",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 2,
+          "quote": "Carcinosarcoma has remained as a separate entity in",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Malignant mixed tumour (term not used by the World Health Organization 5th edition)",
+      "code": "8940",
+      "behaviour": "3",
+      "icdo32_term": "Mixed tumor, salivary gland type, malignant",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Mixed tumor, malignant, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 12,
+      "why": "Not a World Health Organization 5th-edition entity, but ICD-O-3.2 keeps the term current at 8940/3 and ICCC-2017 places 8940 in XIIa4.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 11,
+          "quote": "“malignant mixed tumor”, and “adenocarcinoma, NOS”",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Intraductal carcinoma",
+      "code": "8500",
+      "behaviour": "2",
+      "icdo32_term": "Intraductal carcinoma, NOS",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Intraductal carcinoma, noninfiltrating, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "The World Health Organization codes it 8500/2, in situ, outside Group XI. Its intact myoepithelial layer shows its in situ nature.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Intraductal carcinoma 8500/2",
+          "from_image": true
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 7,
+          "quote": "Its in situ intraductal nature is demonstrated by an intact surrounding myoepithelial cell",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Intraductal carcinoma with invasion stated in the report",
+      "code": "8500",
+      "behaviour": "3",
+      "icdo32_term": "Infiltrating duct carcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Infiltrating duct carcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "registrar",
+      "refer_group": null,
+      "why": "Skalova 2022 reports frank invasive growth in some intraductal carcinomas. Rule F codes the behaviour the pathologist states, which gives 8500/3; the registrar confirms (registrar question 3).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 2,
+          "quote": "frank invasive growth with loss of myoepithelial cells can be seen",
+          "from_image": false
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "code as the pathologist indicates",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Sialoblastoma",
+      "code": "8974",
+      "behaviour": "1",
+      "icdo32_term": "Sialoblastoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Sialoblastoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Perez-de-Oliveira 2025 calls sialoblastoma a rare malignant neoplasm diagnosed mainly in the neonatal period or early childhood, most often in the parotid gland, and Pfister 2022 lists it among malignant head and neck tumours of children. Neither gives a code or behaviour; ICD-O-3.2 and the ICCR Table 1 print it at /1, outside Group XI and outside every ICCC-2017 range (registrar question 1).",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "rare malignant neoplasm primarily diagnosed in the neonatal period or early childhood",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "The parotid gland is the most common site for this tumor.",
+          "from_image": false
+        },
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 8,
+          "quote": "Sialoblastoma 8974/1",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "Sialoblastoma that the report calls malignant",
+      "code": "8974",
+      "behaviour": "3",
+      "icdo32_term": "",
+      "icdo32_level": "none",
+      "icdo32_preferred_term": "",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "registrar",
+      "refer_group": 12,
+      "why": "Rule F codes a behaviour the pathologist states. ICD-O-3.2 prints no 8974/3; ICCC-2017 places 8974 at /3 in XIIa4, so the proposed outcome is a Group 12 referral (registrar question 1). Perez-de-Oliveira 2025 calls sialoblastoma a malignant neoplasm without giving a behaviour code.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "code as the pathologist indicates",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "rare malignant neoplasm primarily diagnosed in the neonatal period or early childhood",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Pleomorphic adenoma (including metastasizing pleomorphic adenoma)",
+      "code": "8940",
+      "behaviour": "0",
+      "icdo32_term": "Pleomorphic adenoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Pleomorphic adenoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "common",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign. Perez-de-Oliveira 2025 calls pleomorphic adenoma the most prevalent salivary gland tumour in children and adolescents, and Pfister 2022 lists it among benign head and neck tumours of children; the ICCR guide states that metastasizing pleomorphic adenoma is benign under the World Health Organization classification.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "Regarding histopathological diagnoses, PA is the most prevalent neoplasm.",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 1,
+          "quote": "Pleomorphic adenoma and mucoepidermoid carcinoma are the most frequently observed entities.",
+          "from_image": false
+        },
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 7,
+          "quote": "technically considered benign under the recent WHO classification of tumours",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Warthin tumour",
+      "code": "8561",
+      "behaviour": "0",
+      "icdo32_term": "Warthin tumor",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Adenolymphoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 4,
+          "quote": "Warthin tumor, and necrotizing sialometaplasia",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Basal cell adenoma",
+      "code": "8147",
+      "behaviour": "0",
+      "icdo32_term": "Basal cell adenoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Basal cell adenoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign; the benign counterpart of basal cell adenocarcinoma.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 4,
+          "quote": "duct adenoma, basal cell adenoma, and canalicular adenoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Canalicular adenoma",
+      "code": "8149",
+      "behaviour": "0",
+      "icdo32_term": "Canalicular adenoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Canalicular adenoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 4,
+          "quote": "duct adenoma, basal cell adenoma, and canalicular adenoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Myoepithelioma",
+      "code": "8982",
+      "behaviour": "0",
+      "icdo32_term": "Myoepithelioma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Myoepithelioma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "common",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign. Perez-de-Oliveira 2025 Table 1 names pleomorphic adenoma and myoepithelioma as the main benign salivary gland tumours of children and adolescents. Skalova 2022 notes that a core biopsy may not separate it from myoepithelial carcinoma, so a report must state carcinoma before a carcinoma is coded.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+          "pdf_page": 5,
+          "quote": "PA and MEC are the most prevalent. Benign: PA and myoepithelioma.",
+          "from_image": false
+        },
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 2,
+          "quote": "myoepithelioma vs myoepithelial carcinoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Oncocytoma",
+      "code": "8290",
+      "behaviour": "0",
+      "icdo32_term": "Oncocytoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Oxyphilic adenoma",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+          "pdf_page": 10,
+          "quote": "oncocytic metaplasia, hyperplasia and oncocytoma may be challenging",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Sialadenoma papilliferum",
+      "code": "8406",
+      "behaviour": "0",
+      "icdo32_term": "Sialadenoma papilliferum",
+      "icdo32_level": "Related",
+      "icdo32_preferred_term": "Syringocystadenoma papilliferum",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Benign.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 3,
+          "quote": "Sialadenoma papilliferum",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Cystadenocarcinoma",
+      "code": "8440",
+      "behaviour": "3",
+      "icdo32_term": "Cystadenocarcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Cystadenocarcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "not_built",
+      "refer_group": null,
+      "why": "Every ICD-O-3.2 term at 8440/3 is [obs]. The World Health Organization 5th-edition salivary table in the ICCR guide lists no cystadenocarcinoma, and neither source names its successor (data gap 3). Skalova 2022 records that an earlier 'low-grade cribriform cystadenocarcinoma' was renamed intraductal carcinoma, which is 8500/2.",
+      "cite": [
+        {
+          "file": "XIf1-salivary-gland__Skalova-2022.txt",
+          "pdf_page": 7,
+          "quote": "was renamed as intraductal carcinoma (IC)",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Papillary cystadenocarcinoma",
+      "code": "8450",
+      "behaviour": "3",
+      "icdo32_term": "Papillary cystadenocarcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Papillary cystadenocarcinoma, NOS",
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "not_built",
+      "refer_group": null,
+      "why": "Every ICD-O-3.2 term at 8450/3 is [obs]; neither source lists the entity or names a successor.",
+      "cite": []
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "sg_site",
+      "node_type": "site_resolution",
+      "question": "Which salivary gland does the report name as the site of the tumour?",
+      "hint": "Pick a gland only when the report places the tumour in it. When the tumour spreads across more than one major salivary gland and the report does not say where it began, pick the overlapping lesion. A tumour of a minor salivary gland is coded to the place where that gland lies, such as the hard palate.",
+      "options": [
+        {
+          "label": "Parotid gland",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_document_inventory",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Site recorded as Parotid gland (C07.9).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "malignancies arising from the major salivary glands (parotid, submandibular and sublingual glands)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Submandibular gland",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_document_inventory",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Site recorded as Submandibular gland (C08.0).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "malignancies arising from the major salivary glands (parotid, submandibular and sublingual glands)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Sublingual gland",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_document_inventory",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Site recorded as Sublingual gland (C08.1).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "malignancies arising from the major salivary glands (parotid, submandibular and sublingual glands)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "More than one major salivary gland, and the report does not say where the tumour began",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_document_inventory",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Site recorded as Overlapping lesion of major salivary glands (C08.8).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 5,
+              "quote": "C08.8 Overlapping lesion of major salivary glands",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 5,
+              "quote": "its point of origin cannot be determined",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "A major salivary gland, with no gland named",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_document_inventory",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Site recorded as Major salivary gland, not otherwise specified (C08.9).",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "The region of a salivary gland, or beside it (for example periparotid), with no gland named as the site",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 11,
+          "recapture_site": true,
+          "reason": "A tumour placed beside or in the region of a gland is coded to head, face and neck, not otherwise specified (C76.0), unless the tumour type shows that it arose in the gland.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 1,
+              "quote": "unless the type of tumor indicates origin from a particular tissue",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 1,
+              "quote": "general rule also applies to imprecise phrases such as",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "A minor salivary gland, for example of the palate, lip, cheek or tongue",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 11,
+          "recapture_site": true,
+          "reason": "A minor salivary gland tumour is coded to the place where the gland lies, such as the hard palate (C05.0). When the report names no place, the site is mouth, not otherwise specified (C06.9).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 11,
+              "quote": "Neoplasms of the minor salivary glands can be found anywhere in the oral cavity",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 11,
+              "quote": "coders should use the topography code for oral cavity, C06.9, which includes",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "are staged according to their anatomical sub-site",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "sg_document_inventory",
+      "node_type": "document_inventory",
+      "question": "What is in the file for this tumour?",
+      "hint": "A radiology report counts as imaging. A fine needle aspiration report counts as cytology. A pathology report on a biopsy or resection counts as histology. A cytology or biopsy report that calls the specimen inadequate or non-diagnostic counts as no tissue.",
+      "options": [
+        {
+          "label": "A referral letter or clinical note that states a malignant salivary gland tumour, with no imaging report and no tissue",
+          "outcome": "code",
+          "code": "8000",
+          "behaviour": "3",
+          "basis": 1,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Neoplasm, malignant (8000/3) on clinical evidence.",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "An imaging report that states a malignant salivary gland tumour, with no tissue",
+          "outcome": "code",
+          "code": "8000",
+          "behaviour": "3",
+          "basis": 2,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Neoplasm, malignant (8000/3) on imaging evidence.",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "A note or report that calls the tumour possible, probable or suspected cancer only",
+          "outcome": "not_registrable",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "A possible or suspected cancer is not registered.",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "A cytology report (fine needle aspiration)",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": 5,
+          "next": "sg_cytology",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "(FNA) as an initial diagnostic approach, and the Milan",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 5,
+              "quote": "This dataset is based on histology, but if cytology is the only material available",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "A histology report on a biopsy or resection, with or without immunohistochemistry or gene reports",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": 7,
+          "next": "sg_histology",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": []
+        }
+      ]
+    },
+    {
+      "node_id": "sg_cytology",
+      "node_type": "morphology_only",
+      "question": "What does the cytology report call the tumour?",
+      "hint": "Code a carcinoma only when the report states one. Suspicious or atypical is not a diagnosis of cancer.",
+      "options": [
+        {
+          "label": "A named carcinoma type, such as mucoepidermoid carcinoma or acinic cell carcinoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": 5,
+          "next": "sg_histology",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "(FNA) as an initial diagnostic approach, and the Milan",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Carcinoma, with no type named",
+          "outcome": "code",
+          "code": "8010",
+          "behaviour": "3",
+          "basis": 5,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Carcinoma, NOS (8010/3) on cytology.",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "Malignant, with no tumour type named",
+          "outcome": "code",
+          "code": "8000",
+          "behaviour": "3",
+          "basis": 5,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Neoplasm, malignant (8000/3) on cytology.",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "Lymphoma",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 2,
+          "recapture_site": false,
+          "reason": "Lymphoma is coded in Group II, lymphomas and reticuloendothelial neoplasms.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "Melanomas, lymphomas, and sarcomas are dealt with in separate",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Suspicious for malignancy, atypical, benign, or non-diagnostic",
+          "outcome": "not_registrable",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "The cytology report does not state a malignant tumour, so nothing is registered.",
+          "recognition_aid": "",
+          "cite": []
+        }
+      ]
+    },
+    {
+      "node_id": "sg_histology",
+      "node_type": "morphology_only",
+      "question": "What does the histology report call the tumour?",
+      "hint": "The grade the report gives, and high grade transformation, do not change the code: pick the carcinoma type the report names.",
+      "options": [
+        {
+          "label": "Mucoepidermoid carcinoma",
+          "outcome": "code",
+          "code": "8430",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Mucoepidermoid carcinoma (8430/3).",
+          "recognition_aid": "The report may give a low, intermediate or high grade, or name a CRTC1::MAML2 or CRTC3::MAML2 fusion.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "Regarding histological subtypes, MEC is the most common malignant SGT.",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 1,
+              "quote": "Pleomorphic adenoma and mucoepidermoid carcinoma are the most frequently observed entities.",
+              "from_image": false
+            },
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Mucoepidermoid carcinoma 8430/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "Carcinoma types for which validated grading systems exist include adenoid cystic carcinoma, mucoepidermoid",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "CRTC1-MAML2",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Acinic cell carcinoma",
+          "outcome": "code",
+          "code": "8550",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Acinar cell carcinoma (8550/3).",
+          "recognition_aid": "The report may name an NR4A3 rearrangement, or high grade transformation.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "Notably, AciCC and secretory carcinoma is the second and third most frequent malignant SGT",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "ACiCC - acinic cell carcinoma; SC - secretory carcinoma.",
+              "from_image": false
+            },
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Acinic cell carcinoma 8550/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "NR4A3 fusion/activation",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 9,
+              "quote": "Tumours for which this phenomenon is well characterised include acinic cell",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Secretory carcinoma",
+          "outcome": "code",
+          "code": "8502",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Secretory carcinoma (8502/3).",
+          "recognition_aid": "Secretory carcinoma resembles acinic cell carcinoma. The report may name an ETV6 translocation, an ETV6::NTRK3 fusion or strong mammaglobin staining.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "Notably, AciCC and secretory carcinoma is the second and third most frequent malignant SGT",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "ACiCC - acinic cell carcinoma; SC - secretory carcinoma.",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "Secretory carcinoma was first described in 2010, mimicking AciCC.",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "presence of ETV6 translocation and if positive, reclassified as secretory carcinoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Secretory carcinoma 8502/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "ETV6-NTRK3 fusion",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 5,
+              "quote": "myxoid stroma and shows strong mammaglobin positivity",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Adenoid cystic carcinoma",
+          "outcome": "code",
+          "code": "8200",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Adenoid cystic carcinoma (8200/3).",
+          "recognition_aid": "The report may describe a tubular, cribriform or solid pattern, or name a MYB::NFIB fusion or another MYB or MYBL1 rearrangement.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "polymorphous adenocarcinoma and ACC are less frequently observed in pediatric patients",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "ACC - adenoid cystic carcinoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "CRTC1-MAML2 and MYB-NFIB fusion genes found in MEC and ACC, respectively",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Adenoid cystic carcinoma 8200/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 2,
+              "quote": "Tubular/cribriform pattern predominant",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "MYB fusion/activation/amplification",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Polymorphous adenocarcinoma, classic or cribriform subtype",
+          "outcome": "code",
+          "code": "8525",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Polymorphous adenocarcinoma (8525/3).",
+          "recognition_aid": "Cribriform adenocarcinoma of salivary gland origin is the cribriform subtype of polymorphous adenocarcinoma.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "polymorphous adenocarcinoma and ACC are less frequently observed in pediatric patients",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Polymorphous carcinoma 8525/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 1,
+              "quote": "Cribriform adenocarcinoma of salivary gland origin (CASG) now represents a distinctive subtype of polymorphous",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 7,
+              "quote": "(previously known as polymorphous low-grade adenocarcinoma)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Another carcinoma the report names, such as salivary duct carcinoma, epithelial-myoepithelial carcinoma or carcinoma ex pleomorphic adenoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_carcinoma_picker",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "Salivary gland carcinoma, not otherwise specified, or adenocarcinoma, not otherwise specified",
+          "outcome": "code",
+          "code": "8140",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Adenocarcinoma, NOS (8140/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Salivary gland carcinoma NOS and emerging entities 8140/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Carcinoma, with no type named",
+          "outcome": "code",
+          "code": "8010",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Carcinoma, NOS (8010/3).",
+          "recognition_aid": "",
+          "cite": []
+        },
+        {
+          "label": "Sialoblastoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_sialoblastoma",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "rare malignant neoplasm primarily diagnosed in the neonatal period or early childhood",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "The parotid gland is the most common site for this tumor.",
+              "from_image": false
+            },
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Sialoblastoma 8974/1",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "A benign tumour or a non-invasive carcinoma, such as pleomorphic adenoma, Warthin tumour, another adenoma, myoepithelioma, oncocytoma or intraductal carcinoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "sg_not_malignant",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Head and neck tumors Benign Squamous cell papilloma of larynx",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Lymphoma",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 2,
+          "recapture_site": false,
+          "reason": "Lymphoma is coded in Group II, lymphomas and reticuloendothelial neoplasms. A lymphoma in a lymph node within or beside the parotid takes a lymph node site; a lymphoma of the gland itself takes the gland's site.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "Melanomas, lymphomas, and sarcomas are dealt with in separate",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 2,
+              "quote": "Code extranodal lymphomas to the site of origin",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 9,
+              "quote": "intra- and peri-parotid or submandibular gland lymph nodes are commonly present",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Rhabdomyosarcoma or another sarcoma",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 9,
+          "recapture_site": false,
+          "reason": "A sarcoma of the salivary gland is coded in Group IX, soft-tissue and other extraosseous sarcomas.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "Melanomas, lymphomas, and sarcomas are dealt with in separate",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Melanoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "melanoma tree entry (controller binds the node id)",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Melanoma is coded through the melanoma questions.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 4,
+              "quote": "Melanomas, lymphomas, and sarcomas are dealt with in separate",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "A deposit (metastasis) of a tumour that began elsewhere, such as squamous cell carcinoma or melanoma in a lymph node of the parotid",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": true,
+          "reason": "A deposit is coded at the site where the tumour began. The next question asks for that site.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "typically a metastasis from another site",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 9,
+              "quote": "intra- and peri-parotid or submandibular gland lymph nodes are commonly present",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "sg_carcinoma_picker",
+      "node_type": "morphology_only",
+      "question": "Which carcinoma does the histology report name?",
+      "hint": "Type part of the name to filter the list. When the report names two carcinoma types for one tumour and no entry covers both, pick the one with the higher code number.",
+      "options": [
+        {
+          "label": "Microsecretory adenocarcinoma",
+          "outcome": "code",
+          "code": "8502",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Secretory carcinoma (8502/3), the code the World Health Organization gives microsecretory adenocarcinoma.",
+          "recognition_aid": "The report may name an MEF2C::SS18 fusion.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Microsecretory carcinoma 8502/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "MEF2C-SS18 fusion",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Hyalinizing clear cell carcinoma",
+          "outcome": "code",
+          "code": "8310",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Clear cell adenocarcinoma, NOS (8310/3).",
+          "recognition_aid": "The report may name an EWSR1::ATF1 fusion.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Hyalinising clear cell carcinoma 8310/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "EWSR1-ATF1 fusions",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Basal cell adenocarcinoma",
+          "outcome": "code",
+          "code": "8147",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Basal cell adenocarcinoma (8147/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Basal cell adenocarcinoma 8147/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Salivary duct carcinoma",
+          "outcome": "code",
+          "code": "8500",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Infiltrating duct carcinoma, NOS (8500/3), the code the World Health Organization gives salivary duct carcinoma, at the salivary gland site.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Salivary duct carcinoma 8500/3",
+              "from_image": true
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 10,
+              "quote": "C07.9 Parotid gland C08._ Salivary gland",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Epithelial-myoepithelial carcinoma",
+          "outcome": "code",
+          "code": "8562",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Epithelial-myoepithelial carcinoma (8562/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Epithelial-myoepithelial carcinoma 8562/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Mucinous adenocarcinoma",
+          "outcome": "code",
+          "code": "8480",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Mucinous adenocarcinoma (8480/3).",
+          "recognition_aid": "The report may describe a papillary, colloid, signet ring or mixed pattern, or an AKT1 E17K mutation.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Mucinous adenocarcinoma 8480/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 7,
+              "quote": "including papillary, signet ring, colloid, and mixed subtypes",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "AKT1 E17K mutations",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Sclerosing microcystic adenocarcinoma",
+          "outcome": "code",
+          "code": "8407",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Microcystic adnexal carcinoma (8407/3), the code the World Health Organization gives sclerosing microcystic adenocarcinoma.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Sclerosing microcystic adenocarcinoma 8407/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Carcinoma ex pleomorphic adenoma",
+          "outcome": "code",
+          "code": "8941",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Carcinoma ex pleomorphic adenoma (8941/3).",
+          "recognition_aid": "The report names the carcinoma inside the pleomorphic adenoma, most often salivary duct carcinoma, myoepithelial carcinoma or epithelial-myoepithelial carcinoma.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Carcinoma ex pleomorphic adenoma 8941/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "(most commonly salivary duct carcinoma, myoepithelial carcinoma, and epithelial-myoepithelial carcinoma)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Sebaceous adenocarcinoma",
+          "outcome": "code",
+          "code": "8410",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Sebaceous carcinoma (8410/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Sebaceous adenocarcinoma 8410/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Lymphoepithelial carcinoma",
+          "outcome": "code",
+          "code": "8082",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Lymphoepithelial carcinoma (8082/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Lymphoepithelial carcinoma 8082/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Squamous cell carcinoma, which the report states began in the salivary gland",
+          "outcome": "code",
+          "code": "8070",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Squamous cell carcinoma, NOS (8070/3).",
+          "recognition_aid": "The report may name sialodochodysplasia, or state that a skin or mucosal primary has been excluded.",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Squamous cell carcinoma 8070/3",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "The diagnosis of primary squamous cell carcinoma of the salivary gland should be used sparingly",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Oncocytic carcinoma",
+          "outcome": "code",
+          "code": "8290",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Oxyphilic adenocarcinoma (8290/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "There is no consensus whether oncocytic carcinoma exists",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Poorly differentiated carcinoma or undifferentiated carcinoma",
+          "outcome": "code",
+          "code": "8020",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Carcinoma, undifferentiated, NOS (8020/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 1,
+              "quote": "Salivary carcinoma not otherwise specified (NOS) and emerging entities",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Small cell neuroendocrine carcinoma",
+          "outcome": "code",
+          "code": "8041",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Small cell carcinoma, NOS (8041/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "Primary salivary gland neuroendocrine carcinomas (small cell and large cell) are not specifically included",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Large cell neuroendocrine carcinoma",
+          "outcome": "code",
+          "code": "8013",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Large cell neuroendocrine carcinoma (8013/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "Primary salivary gland neuroendocrine carcinomas (small cell and large cell) are not specifically included",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "NUT carcinoma",
+          "outcome": "code",
+          "code": "8023",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Nasopharyngeal carcinoma NUT carcinoma Melanotic neuroectodermal tumor of infancy",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Myoepithelial carcinoma",
+          "outcome": "refer",
+          "code": "8982",
+          "behaviour": "3",
+          "basis": null,
+          "next": null,
+          "refer_group": 12,
+          "recapture_site": false,
+          "reason": "Myoepithelial carcinoma (8982/3) is coded in Group XII, other and unspecified malignant neoplasms.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Myoepithelial carcinoma 8982/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Carcinosarcoma",
+          "outcome": "refer",
+          "code": "8980",
+          "behaviour": "3",
+          "basis": null,
+          "next": null,
+          "refer_group": 12,
+          "recapture_site": false,
+          "reason": "Carcinosarcoma, NOS (8980/3) is coded in Group XII, other and unspecified malignant neoplasms.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Carcinosarcoma of the salivary glands 8980/3",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Malignant mixed tumour",
+          "outcome": "refer",
+          "code": "8940",
+          "behaviour": "3",
+          "basis": null,
+          "next": null,
+          "refer_group": 12,
+          "recapture_site": false,
+          "reason": "Mixed tumor, malignant, NOS (8940/3) is coded in Group XII, other and unspecified malignant neoplasms.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 11,
+              "quote": "“malignant mixed tumor”, and “adenocarcinoma, NOS”",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "sg_sialoblastoma",
+      "node_type": "histology_subclassification",
+      "question": "Does the report call the sialoblastoma malignant?",
+      "hint": "",
+      "options": [
+        {
+          "label": "No, or the report gives no behaviour",
+          "outcome": "exclude",
+          "code": "8974",
+          "behaviour": "1",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Sialoblastoma (8974/1) is of uncertain behaviour and is not registered as a malignant tumour.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Sialoblastoma 8974/1",
+              "from_image": true
+            }
+          ]
+        },
+        {
+          "label": "Yes, the report calls it malignant",
+          "outcome": "refer",
+          "code": "8974",
+          "behaviour": "3",
+          "basis": null,
+          "next": null,
+          "refer_group": 12,
+          "recapture_site": false,
+          "reason": "A sialoblastoma the pathologist calls malignant takes behaviour 3 (8974/3) and is coded in Group XII, other and unspecified malignant neoplasms.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 2,
+              "quote": "code as the pathologist indicates",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "sg_not_malignant",
+      "node_type": "morphology_only",
+      "question": "Which tumour does the report name?",
+      "hint": "",
+      "options": [
+        {
+          "label": "Pleomorphic adenoma, including metastasizing pleomorphic adenoma",
+          "outcome": "exclude",
+          "code": "8940",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Pleomorphic adenoma (8940/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "Regarding histopathological diagnoses, PA is the most prevalent neoplasm.",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 1,
+              "quote": "Pleomorphic adenoma and mucoepidermoid carcinoma are the most frequently observed entities.",
+              "from_image": false
+            },
+            {
+              "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+              "pdf_page": 14,
+              "quote": "Pleomorphic adenoma Malignant Mucoepidermoid carcinoma Acinic cell carcinoma Sialoblastoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 7,
+              "quote": "technically considered benign under the recent WHO classification of tumours",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Myoepithelioma",
+          "outcome": "exclude",
+          "code": "8982",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Myoepithelioma, NOS (8982/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland-paediatric__Perez-de-Oliveira-2025.txt",
+              "pdf_page": 5,
+              "quote": "PA and MEC are the most prevalent. Benign: PA and myoepithelioma.",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "myoepithelioma vs myoepithelial carcinoma",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Warthin tumour",
+          "outcome": "exclude",
+          "code": "8561",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Adenolymphoma (8561/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 4,
+              "quote": "Warthin tumor, and necrotizing sialometaplasia",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Basal cell adenoma",
+          "outcome": "exclude",
+          "code": "8147",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Basal cell adenoma (8147/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "Basal cell adenoma",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Canalicular adenoma",
+          "outcome": "exclude",
+          "code": "8149",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Canalicular adenoma (8149/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 4,
+              "quote": "duct adenoma, basal cell adenoma, and canalicular adenoma",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Oncocytoma",
+          "outcome": "exclude",
+          "code": "8290",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Oxyphilic adenoma (8290/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 10,
+              "quote": "oncocytic metaplasia, hyperplasia and oncocytoma may be challenging",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Sialadenoma papilliferum",
+          "outcome": "exclude",
+          "code": "8406",
+          "behaviour": "0",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Syringocystadenoma papilliferum (8406/0) is benign and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 3,
+              "quote": "Sialadenoma papilliferum",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Intraductal carcinoma, with no invasion stated",
+          "outcome": "exclude",
+          "code": "8500",
+          "behaviour": "2",
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Intraductal carcinoma, noninfiltrating, NOS (8500/2) is in situ and is not registered in this group.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__ICCR-Major-Salivary-Glands-2nd.txt",
+              "pdf_page": 8,
+              "quote": "Intraductal carcinoma 8500/2",
+              "from_image": true
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 7,
+              "quote": "Its in situ intraductal nature is demonstrated by an intact surrounding myoepithelial cell",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Intraductal carcinoma, and the report states invasion or invasive growth",
+          "outcome": "code",
+          "code": "8500",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Infiltrating duct carcinoma, NOS (8500/3), because the report states invasion.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 2,
+              "quote": "frank invasive growth with loss of myoepithelial cells can be seen",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 2,
+              "quote": "code as the pathologist indicates",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Another benign tumour, such as sclerosing polycystic adenoma, keratocystoma, intercalated duct adenoma or striated duct adenoma",
+          "outcome": "not_registrable",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "A benign salivary gland tumour is not registered as a cancer.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 1,
+              "quote": "including sclerosing polycystic adenoma, keratocystoma",
+              "from_image": false
+            },
+            {
+              "file": "XIf1-salivary-gland__Skalova-2022.txt",
+              "pdf_page": 1,
+              "quote": "and striated duct adenoma among the benign neoplasms",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ihc_rules": [],
+  "tissue_free": [
+    {
+      "evidence": "A referral letter or clinical note that states a malignant salivary gland tumour, no imaging, no tissue",
+      "code": "8000",
+      "behaviour": "3",
+      "basis": 1,
+      "cite": []
+    },
+    {
+      "evidence": "An imaging report that states a malignant salivary gland tumour, no tissue",
+      "code": "8000",
+      "behaviour": "3",
+      "basis": 2,
+      "cite": []
+    }
+  ],
+  "lab_tests": [],
+  "rules_a_to_k": [
+    {
+      "rule": "A",
+      "applies": false,
+      "how": "The salivary glands are named organs, not ill-defined regions. A face or neck tumour reaches this tree only after the router's site capture names a salivary gland."
+    },
+    {
+      "rule": "B",
+      "applies": true,
+      "how": "sg_site hint ('Pick a gland only when the report places the tumour in it') and the option 'The region of a salivary gland, or beside it', whose reason gives C76.0 unless the tumour type shows origin in the gland (registrar question 9)."
+    },
+    {
+      "rule": "C",
+      "applies": true,
+      "how": "sg_site option 'More than one major salivary gland, and the report does not say where the tumour began' records C08.8, and the hint names the overlapping lesion."
+    },
+    {
+      "rule": "D",
+      "applies": true,
+      "how": "sg_histology Lymphoma option reason: a lymphoma in an intraparotid lymph node takes a lymph node site, a lymphoma of the gland takes the gland's site; Group II codes it."
+    },
+    {
+      "rule": "E",
+      "applies": false,
+      "how": "No leukaemia option at this site. A leukaemic deposit leaves through the deposit option."
+    },
+    {
+      "rule": "F",
+      "applies": true,
+      "how": "sg_sialoblastoma (the report calls it malignant: 8974/3, Group XII); sg_not_malignant (intraductal carcinoma with invasion stated: 8500/3); every exclusion reason names the code with its non-malignant behaviour. Codes whose WHO term ICD-O-3.2 does not print (acinic cell carcinoma, salivary duct carcinoma, hyalinizing clear cell carcinoma, microsecretory and sclerosing microcystic adenocarcinoma) take the code with behaviour 3, and the reason names the preferred term."
+    },
+    {
+      "rule": "G",
+      "applies": false,
+      "how": "No screen offers two grades: grade does not change any code here and the sixth digit is not built. The sg_histology hint says the grade does not change the code."
+    },
+    {
+      "rule": "H",
+      "applies": true,
+      "how": "Salivary duct carcinoma picker reason: 8500/3 is recorded at the salivary site although ICD-O ties the term to breast. sg_site minor salivary gland option reason: a minor salivary gland tumour takes the site where the gland lies, or C06.9 when none is named."
+    },
+    {
+      "rule": "J",
+      "applies": false,
+      "how": "Every term on these screens reaches its code through ICD-O-3.2 or the WHO table without reordering word roots."
+    },
+    {
+      "rule": "K",
+      "applies": true,
+      "how": "sg_carcinoma_picker hint: two carcinoma types for one tumour with no entry covering both take the higher code number. sg_histology hint: high grade transformation keeps the carcinoma type's code (8550 is higher than 8020 Dedifferentiated carcinoma). Carcinoma ex pleomorphic adenoma with a myoepithelial component and mucinous adenocarcinoma with a signet ring pattern wait on the registrar (questions 5 and 6)."
+    }
+  ],
+  "code_currency": [
+    {
+      "code": "8502",
+      "behaviour": "3",
+      "finding": "Currency check section 4: the REDCap label is 'Secretory carcinoma of breast'; the ICD-O-3.2 preferred term is Secretory carcinoma. The ICCR Table 1 also gives microsecretory adenocarcinoma 8502/3.",
+      "action": "Both options record 8502/3 with the reason naming Secretory carcinoma; the relabel goes on the REDCap-side list."
+    },
+    {
+      "code": "8525",
+      "behaviour": "3",
+      "finding": "Currency check section 4: the REDCap label is 'Polymorphous low grade adenocarcinoma'; the preferred term is Polymorphous adenocarcinoma. The ICCR Table 1 prints 'Polymorphous carcinoma', an ICD-O-3.2 synonym.",
+      "action": "Reason names Polymorphous adenocarcinoma; relabel goes on the REDCap-side list."
+    },
+    {
+      "code": "8941",
+      "behaviour": "3",
+      "finding": "Currency check section 4: the REDCap label is 'Carcinoma in pleomorphic adenoma' (a synonym); the preferred term is Carcinoma ex pleomorphic adenoma.",
+      "action": "Reason names Carcinoma ex pleomorphic adenoma; relabel goes on the REDCap-side list."
+    },
+    {
+      "code": "8410",
+      "behaviour": "3",
+      "finding": "Currency check section 4: the REDCap label is 'Sebaceous adenocarcinoma' (a synonym); the preferred term is Sebaceous carcinoma.",
+      "action": "Reason names Sebaceous carcinoma; relabel goes on the REDCap-side list."
+    },
+    {
+      "code": "8407",
+      "behaviour": "3",
+      "finding": "Currency check section 4: REDCap offers 8407 only under XIe, labelled 'Sclerosing sweat duct carcinoma'; the preferred term is Microcystic adnexal carcinoma. The REDCap XIf list has no 8407. ICCC-2017 places 8407 only in XIe (C44); at C07-C08 it lies in no range.",
+      "action": "Picker entry records 8407/3; the subgroup is XIf1 by site under the 1 October 2026 ruling. The missing XIf option goes on the REDCap-side list."
+    },
+    {
+      "code": "8550",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 does not print 'Acinic cell carcinoma'; the nearest term is the synonym Acinic cell adenocarcinoma, and the preferred term is Acinar cell carcinoma. 8550/1 Acinar cell tumor and its synonym Acinic cell tumor are [obs].",
+      "action": "Option label keeps the report term; reason names Acinar cell carcinoma (8550/3). No /1 option is built."
+    },
+    {
+      "code": "8430",
+      "behaviour": "1",
+      "finding": "8430/1 Mucoepidermoid tumor is [obs] in ICD-O-3.2.",
+      "action": "Not built; every mucoepidermoid carcinoma records 8430/3."
+    },
+    {
+      "code": "8500",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 prints no 'Salivary duct carcinoma'; the WHO code is 8500/3 Infiltrating duct carcinoma, NOS, site-associated with breast in ICD-O-3.1 Table 23, which lists parotid and salivary gland as other primary sites.",
+      "action": "Reason states the salivary site is kept (Rule H)."
+    },
+    {
+      "code": "8310",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 prints no 'Hyalinizing clear cell carcinoma'; the WHO code is 8310/3 Clear cell adenocarcinoma, NOS.",
+      "action": "Reason names Clear cell adenocarcinoma, NOS."
+    },
+    {
+      "code": "8440",
+      "behaviour": "3",
+      "finding": "Currency check section 2: every /3 term is [obs]; no successor printed. The ICCR salivary Table 1 lists no cystadenocarcinoma.",
+      "action": "not_built; data gap 3."
+    },
+    {
+      "code": "8450",
+      "behaviour": "3",
+      "finding": "Currency check section 2: every /3 term is [obs]; no successor printed.",
+      "action": "not_built."
+    },
+    {
+      "code": "8023",
+      "behaviour": "3",
+      "finding": "Currency check section 6: new in ICD-O-3.2 and not offered by REDCap.",
+      "action": "Picker entry; the missing REDCap option goes on the REDCap-side list."
+    },
+    {
+      "code": "8974",
+      "behaviour": "1",
+      "finding": "ICD-O-3.2 holds sialoblastoma at /1 only; ICCC-2017 holds 8974 at /3 only, in XIIa4. REDCap Group 11 does not offer 8974.",
+      "action": "Exclusion at /1; Rule F referral to Group XII at /3 waits on the registrar."
+    },
+    {
+      "code": "8982",
+      "behaviour": "3",
+      "finding": "Current (Myoepithelial carcinoma). Not in any ICCC-2017 Group XI range and not in the REDCap Group 11 list; ICCC places it in XIIa4.",
+      "action": "Referral to Group XII."
+    },
+    {
+      "code": "8980",
+      "behaviour": "3",
+      "finding": "Current (Carcinosarcoma, NOS). ICCC-2017 XIIa4; not in the REDCap Group 11 list.",
+      "action": "Referral to Group XII."
+    },
+    {
+      "code": "8940",
+      "behaviour": "3",
+      "finding": "Current (Mixed tumor, malignant, NOS; synonym Mixed tumor, salivary gland type, malignant). ICCC-2017 XIIa4. The WHO 5th-edition salivary table does not list it.",
+      "action": "Picker referral to Group XII."
+    }
+  ],
+  "conflicts": [
+    {
+      "other_group": 12,
+      "codes": [
+        "8982",
+        "8980",
+        "8940"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "The WHO lists myoepithelial carcinoma and carcinosarcoma as salivary carcinomas, but ICCC-2017 places 8982, 8980 and 8940 in XIIa4 at every site, so the tree refers them to Group XII."
+    },
+    {
+      "other_group": 12,
+      "codes": [
+        "8974"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "Sialoblastoma is /1 in ICD-O-3.2 and in the WHO table, outside every ICCC group; ICCC-2017 holds 8974/3 in XIIa4. A sialoblastoma the report calls malignant goes to Group XII."
+    },
+    {
+      "other_group": 12,
+      "codes": [
+        "8000"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "ICCC-2017 places 8000/3 at C07-C08 in XIIb, so a registration without tissue (basis 1 or 2) or a cytology report that says only 'malignant' is computed to Group XII, not XIf1."
+    },
+    {
+      "other_group": 11,
+      "codes": [
+        "8407"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "ICCC-2017 holds 8407 only in XIe (C44). At C07-C08 it lies in no range, so the subgroup computation from site must place it in XIf1 under the 1 October 2026 ruling, or it returns no subgroup."
+    },
+    {
+      "other_group": 2,
+      "codes": [
+        "9699",
+        "9680",
+        "9650"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "Lymphoma of the salivary gland is Group II (IIb2 for 9699 and 9680, IIa for 9650 at C07-C08). A lymphoma in an intraparotid lymph node takes a lymph node site under Rule D."
+    },
+    {
+      "other_group": 9,
+      "codes": [
+        "8900",
+        "8910",
+        "8920",
+        "9364"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "Rhabdomyosarcoma at C07-C08 is IXa; an extraosseous Ewing sarcoma (9364) there is IXd2, Group IX not Group VIII."
+    },
+    {
+      "other_group": 11,
+      "codes": [
+        "8720"
+      ],
+      "sites": [
+        "C07.9",
+        "C08.0",
+        "C08.1",
+        "C08.8",
+        "C08.9"
+      ],
+      "issue": "Melanoma at C07-C08 is XId and goes to the melanoma tree; a melanoma deposit in a parotid lymph node goes to the deposit option."
+    },
+    {
+      "other_group": 11,
+      "codes": [
+        "8082",
+        "8200",
+        "8430",
+        "8525",
+        "8480"
+      ],
+      "sites": [
+        "C00.0-C06.9",
+        "C09.0-C10.9",
+        "C11.0-C11.9",
+        "C12.9-C14.8",
+        "C30.0-C32.9"
+      ],
+      "issue": "A minor salivary gland carcinoma is coded at the site of the gland: XIf10 for the mouth and other head and neck mucosa, XIc for the nasopharynx. The sg_site option re-sites it."
+    }
+  ],
+  "data_gaps": [
+    {
+      "need": "Paediatric occurrence of the salivary carcinomas still in the picker: microsecretory adenocarcinoma, hyalinizing clear cell carcinoma, basal cell adenocarcinoma, salivary duct carcinoma, epithelial-myoepithelial carcinoma, mucinous adenocarcinoma, sclerosing microcystic adenocarcinoma, sebaceous adenocarcinoma, lymphoepithelial carcinoma, primary squamous cell carcinoma, oncocytic carcinoma, poorly differentiated carcinoma, small cell and large cell neuroendocrine carcinoma, and NUT carcinoma at a salivary site",
+      "why": "Perez-de-Oliveira 2025 names only mucoepidermoid, acinic cell, secretory and adenoid cystic carcinoma, polymorphous adenocarcinoma and sialoblastoma among the malignant salivary gland tumours of children, and states that carcinoma ex pleomorphic adenoma has not been reported in them. Pfister 2022 names NUT carcinoma in children without a salivary site and none of the other entities listed here, so each stays in the picker.",
+      "candidate_source": "A paediatric series of salivary gland carcinoma that reports every histological type, such as the 203-case series of Quixabeira et al. that Perez-de-Oliveira 2025 cites; or WHO Classification of Paediatric Tumours, 5th edition (2022), salivary gland chapter"
+    },
+    {
+      "need": "A paediatric case count for adenoid cystic carcinoma and polymorphous adenocarcinoma, and their order on the histology screen",
+      "why": "Perez-de-Oliveira 2025 says only that both are observed less frequently in paediatric patients than in adults, and its children's column in Table 1 lists mucoepidermoid, acinic cell and secretory carcinoma alone. The tree makes both options on that sentence and places adenoid cystic carcinoma before polymorphous adenocarcinoma without a paediatric source for the order. The controller decides whether one comparative sentence is enough for an option.",
+      "candidate_source": "The series of Quixabeira et al. or the earlier systematic review of 2,937 paediatric cases, both cited by Perez-de-Oliveira 2025"
+    },
+    {
+      "need": "What the WHO 5th edition salivary chapter calls cystadenocarcinoma (8440/3) and papillary cystadenocarcinoma (8450/3) now",
+      "why": "Every ICD-O-3.2 /3 term on both codes is [obs]; the ICCR Table 1 omits them and names no successor, so a report using either term has no current entry.",
+      "candidate_source": "WHO Classification of Head and Neck Tumours, 5th edition, salivary gland chapter (entity list with ICD-O codes)"
+    },
+    {
+      "need": "The Milan System for Reporting Salivary Gland Cytopathology categories",
+      "why": "Both sources recommend the Milan system but print none of its categories, so the cytology screen's wording for suspicious, atypical and uncertain-malignant-potential results is not sourced.",
+      "candidate_source": "Faquin WC, Rossi ED, editors. The Milan System for Reporting Salivary Gland Cytopathology, 2nd edition (2023)"
+    },
+    {
+      "need": "Which gene results the WHO counts as entity-defining for basis of diagnosis 8",
+      "why": "Skalova 2022 Table 1 gives the prevalence of each alteration, not whether it is diagnostic, so the tree cannot say when a gene report raises the basis from 7 to 8.",
+      "candidate_source": "WHO Classification of Head and Neck Tumours, 5th edition, essential and desirable diagnostic criteria per salivary entity"
+    },
+    {
+      "need": "Visser 2023 pages for registration without tissue",
+      "why": "The tissue-free entries follow the registrar's rule relayed by the controller; this part holds no copy of Visser 2023, so those entries carry no page cite.",
+      "candidate_source": "Visser O, et al. Front Oncol 2023;13:1250549 (held by the controller)"
+    },
+    {
+      "need": "A paediatric report of salivary gland carcinoma, not otherwise specified (8140/3) and carcinoma with no type named (8010/3)",
+      "why": "Both are options on the histology screen as not-otherwise-specified fallbacks, and neither rests on a paediatric source. Perez-de-Oliveira 2025 does not report either in children. The controller decides whether a fallback needs one.",
+      "candidate_source": "None needed if the controller keeps fallbacks without paediatric evidence"
+    },
+    {
+      "need": "Paediatric figures limited to ages 0 to 18",
+      "why": "Perez-de-Oliveira 2025 reviews patients aged 0 to 19 years, one year beyond the registrar's 0 to 18, and notes that some studies set the upper limit at 14. Its ranking of mucoepidermoid, acinic cell and secretory carcinoma pools those age limits.",
+      "candidate_source": "A paediatric salivary series that reports age in single years or with an upper limit of 18"
+    }
+  ]
+}

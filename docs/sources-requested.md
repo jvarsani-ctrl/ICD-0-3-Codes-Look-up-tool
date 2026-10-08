@@ -231,6 +231,59 @@ carry one source each, and `docs/group_baseline_documents.md` lists the ovary as
 
 ---
 
+## Group 11 — Other Malignant Epithelial Neoplasms and Malignant Melanomas, requested 8 October 2026
+
+**Nothing here blocks the Group XI build, which is done.** Each item would settle a data gap the evidence files name
+(`docs/group_11_registrar_review.md` part D). An entity that no source held reports at ages 0 to 18 is a picker entry
+and not a screen option (build contract D1), so a clerk reaches it by typing its name. Going without a paper leaves
+that placement as it is.
+
+### 14. Ozolek JA. *Selected topics in the pathology of the thyroid and parathyroid glands in children and adolescents.* Head and Neck Pathology 2021;15(1):85–106
+
+[10.1007/s12105-020-01274-5](https://doi.org/10.1007/s12105-020-01274-5) · PubMed Central PMC8010056 · **the publisher does not
+allow the full text to be downloaded; the registrar can supply the PDF.** **What it would settle:** follicular thyroid
+carcinoma and the rarer thyroid types in children (review B1, Q7), and parathyroid carcinoma in children (B1, Q113).
+**What it costs to go without:** the paediatric occurrence of those entities rests on Pfister 2022 Table 3 alone, and an
+entity no source reports in children stays a picker entry (D1).
+
+### 15. Cortes-Santiago N, et al. *Review of pediatric head and neck neoplasms that raise the possibility of a cancer predisposition syndrome.* Head and Neck Pathology 2021;15(1):144–158
+
+[10.1007/s12105-021-01292-x](https://doi.org/10.1007/s12105-021-01292-x) · PubMed Central PMC8010005 · **restricted as item 14.**
+**What it would settle:** head and neck squamous cell carcinoma in children (B1, Q105) and skin carcinomas in children
+(B1, Q31). **What it costs to go without:** the same: an entity no source reports in children stays a picker entry on the head and
+neck and skin trees.
+
+### 16. Cole GG, et al. *Morphologic and ancillary studies of pediatric acinic cell carcinoma: a single institute experience.* Head and Neck Pathology 2023
+
+[10.1007/s12105-022-01492-z](https://doi.org/10.1007/s12105-022-01492-z) · PubMed Central PMC10063734 · **restricted as item 14.**
+**What it would settle:** the report vocabulary and stains for paediatric acinic cell carcinoma, `8550/3` *Acinar cell
+carcinoma*. **What it costs to go without:** the entity's paediatric report vocabulary and stains have no paediatric series behind
+them on the salivary tree.
+
+### 17. Sthapit PR, et al. *Pediatric ocular surface squamous neoplasia in the absence of known risk factors and systemic conditions: a case series.* Ocular Oncology and Pathology 2025
+
+[10.1159/000546002](https://doi.org/10.1159/000546002) · PubMed Central PMC12143885 · **restricted as item 14.**
+**What it would settle:** conjunctival squamous cell carcinoma in children (B1, Q104). **What it costs to go without:** an entity
+no source reports in children stays a picker entry on the eye tree.
+
+### 18. The WHO 5th-edition volumes the Group XI data gaps name
+
+| Volume | Chapters | Data gaps it closes |
+|---|---|---|
+| Endocrine and Neuroendocrine Tumours, 5th edition (the registrar review dates it 2025; the summary papers cite 2022) | adrenal cortex, including cytology; thyroid | adrenal 2, 4 (the age range of the Wieneke criteria, review A2 and A7); thyroid 5 |
+| Paediatric Tumours, 5th edition (2022) | thyroid; salivary gland; skin; breast; and the other chapters named in review D2 | thyroid 1; salivary 1; skin 1; breast 1, 2, 4, 10 |
+| Skin Tumours, 5th edition (2025) | the entity list with ICD-O codes; the acral and mucosal melanoma chapters | skin 2; melanoma 2, 5 (review A16, A18) |
+| Eye and Orbit Tumours, 5th edition (2023) | the code list; uveal melanoma; grades of conjunctival intraepithelial neoplasia | eye 2, 3; melanoma 3 (review A1 Q25, A4 Q102) |
+
+The other volumes review D2 names (Head and Neck 2024, Thoracic 2021, Digestive System 2019, Breast 2019, Female Genital
+2020, Urinary and Male Genital 2022, Central Nervous System 2021) and the IARC/WHO Committee for ICD-O updates after
+2019 are listed there. The European Cooperative Study Group for Pediatric Rare Tumours and PARTNER recommendations of
+2021 (colorectal, pancreatic and neuroendocrine tumours in children) and Stachowicz-Stencel 2015 (thymic tumours, Eur J
+Cancer 2015;51(16):2444–2452) would settle the digestive and thymic gaps; review D1 and D3 list those and the other
+papers the gaps name.
+
+---
+
 ## One paper already on disk that nobody listed
 
 **Mudassar M, et al.** *Sub-categorization of Pediatric Small Round Blue Cell Tumors using

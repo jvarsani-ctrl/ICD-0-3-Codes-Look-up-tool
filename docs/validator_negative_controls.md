@@ -3361,3 +3361,94 @@ pass); G3-A to G3-G all caught (7 of 7, 1 of 1 probe passes).**
 End to end through the generator: `BRAIN_AFP_CUTOFF` set to 250 in `build/group10_tree.py` and
 the data regenerated gives 13 FAIL lines, the first "afp_csf_ng_ml 25.01 … reaches cn_markers …
 the ruling gives alpha-fetoprotein raised"; restored to 25 and regenerated, the check passes.
+
+
+---
+
+# Group 11 — Other malignant epithelial neoplasms and malignant melanomas (8 October 2026)
+
+Four rules of build contract §5 (rules 1, 2, 3 and 5), plus the registration changes Group 11
+needed in `build/build_database.py`. Rules 4, 6, 7 and 8 of the contract are on `docs/TODO.md`:
+the registrar trimmed this task on 8 October 2026 to save usage. Runner:
+`build/negative_controls_group11.py`. It mutates an in-memory copy of the tree file or the router,
+writes the router and the topography lookup to a temporary directory, runs one rule, and expects
+FAIL. A control counts as caught only when a FAIL message carries every fragment the runner names
+for it; a FAIL for another reason prints WRONG REASON. Before the controls, each rule and each
+registration check runs on the unmutated data and must pass. Nothing on disk changes and nothing
+is pinned to a commit. Exit status 0: **20 of 20 caught for the expected reason, 10 of 10 probes
+pass.**
+
+Registration. `GROUP11 = 11`; `BEHAVIOUR_DECLARED_BY_GROUP[GROUP11] = {"3"}` (ICCC-2017 ranges
+118–136 declare behaviour 3 on every row); `GROUP11` joins `ROUND_TRIP_GROUPS`, so the generic
+"names are REDCap wordings" NOTE is no longer printed for the group, and the 13 entries whose
+ICD-O-3.2 Preferred term is `[obs]` (the eleven all-`[obs]` pairs, 8551 and 8780) are WARN, never
+FAIL. `check_refer_terminals` admits `refer_group` equal to the file's own group only on a branch
+with `recapture_site: true` (contract D10), and `SELF_REFERRAL` is True in
+`build/group11_common.py`: all 18 deposit nodes that have a deposit question carry "A carcinoma or
+melanoma of another organ" → Group 11 with `recapture_site` (the melanoma tree's `me_deposit` has
+its own shape). `parse_classification_subgroups` reads two-digit subgroup ids (`XIf10`, `XIf11`)
+and a Group XII heading that has no colon; before, both rows of subgroups were filed under `XIf9`
+and every Group XII row under group 11.
+
+Each rule reads its source on every build. Rules 1, 3 and 5 read ICCC-2017.sqlite (rules 1 and 5
+main group XI, ranges 118–136; rule 1 also every other range) and `icdo32.sqlite`. The routed
+sites of every tree come from `group11_common.trees_table()`, the table the router and the trees
+are built from; the helpers Group 10 wrote for the same purpose were parameterised by group
+(`_iccc_ranges`, `_group10_tree_routing(repo, group)`), not copied. Rule 1 tests each emission at
+every routed site of its tree. It passes at a site when a Group XI range holds the pair there, or
+when no range of any group does (standing rule 3, design D11), and fails when another group holds
+it: 8170/3 in the lung is Group VII range 57. The melanoma tree routes no site, so its emissions
+must lie in an XId range. Rule 2 walks each tree from its entry and carries `evidence_tests` as
+`app.js` `capture()` does (`_group8_terminals_by_evidence`, unchanged): basis 1 may emit only
+8720/3 and only in `g11_skin` (Visser 2023 Table 3), basis 4 only a Table 4 pair with Imaging and
+Tumour markers on the path, and nothing else is reachable without histology or cytology, basis 2
+included. Rule 3 reads every emission against the eleven typed numbers and against every Preferred
+term `icdo32.sqlite` marks `[obs]`. Rule 5 holds the subgroup `app.js` shows to ICCC-2017 at every
+lookup topography and each routing rule to the sites `TREES` gives its tree. A lookup code that
+lists Group 11 and no rule names reaches the default, and is a NOTE: C75.1 is the one today.
+
+| | Control | Mutation | Caught by |
+|---|---|---|---|
+| R1-A | **a hepatic code in the lung** | `lu_picker` gains an `8170/3` branch | rule 1: "g11_lung lu_picker … emits 8170/3, which no ICCC-2017 Group XI range admits at 6 of this tree's 6 routed site(s) (C34.0 … C34.9), where another range holds it. Ranges holding 8170: 57 (VIIb, behaviour 3)" |
+| R1-B | a carcinoma code in the melanoma tree | `me_picker` gains an `8070/3` branch | rule 1: "g11_melanoma me_picker … emits 8070/3, which is no ICCC-2017 XId (malignant melanoma) code; this tree routes no site, so every emission must lie in an XId range" |
+| R1-C | a Group XI code hidden by an exclusion | the NIFTP exclusion in `th_not_malignant` names `8260/3` | rule 1: "excludes 8260/3, but ICCC-2017 range 120 (XIb) admits it at this tree's site, so the exclusion hides a Group XI code" |
+| R1-D | a fallback off its site | `th_ihc` `nos_fallback.code` → `8170` | rule 1: "g11_thyroid th_ihc: nos_fallback emits 8170/3 … at 1 of this tree's 1 routed site(s) (C73.9) … 57 (VIIb, behaviour 3)" |
+| R2-A | a specific code from a marker | the medullary option of `th_imaging_markers` emits `8260/3` at basis 4 | rule 2: "emits 8260/3 at basis 4. Basis 4 registers only the Visser 2023 Table 4 marker codes (8151, 8152, 8153, 8155, 8156, 8158, 8240, 8241, 8345)" |
+| R2-B | **the path, not the flag** | the histology tier of `th_document_inventory` captures `["Imaging"]` | rule 2: "g11_thyroid th_histology: 'Poorly differentiated thyroid carcinoma, or insular carcinoma', reached with evidence ['Imaging'], emits 8337/3 at basis 7 with no histology or cytology in the file" |
+| R2-C | the skin melanoma code outside the skin | the `8720/3` basis-1 branch of `sk_clinical` is copied into `lu_clinical` | rule 2: "g11_lung lu_clinical … emits 8720/3 at basis 1 in g11_lung. Only g11_skin registers a melanoma on clinical evidence" |
+| R2-D | basis 4 without the marker | the markers tier of `th_document_inventory` captures `["Imaging"]` only | rule 2: "th_imaging_markers … reached with evidence ['Imaging'], emits 8345/3 at basis 4 without both Imaging and Tumour markers on the path" |
+| R3-A | one of the eleven all-`[obs]` numbers | `th_picker` gains an `8130/3` branch | rule 3: "emits 8130/3, whose ICD-O-3.2 Preferred term is [obs] (design D3: such a pair stays off every screen)" |
+| R3-B | an `[obs]` Preferred term not in the typed list | `me_picker` gains an `8780/3` branch | rule 3: "emits 8780/3, whose ICD-O-3.2 Preferred term is [obs]". 8780 is read from `icdo32.sqlite`, not from the eleven |
+| R5-A | a subgroup rule lost | entry `8070/3` loses its `XIf4` rule | rule 5: "8070/3 shows subgroup 'XIf10' at C34.0, where ICCC-2017 places it in XIf4; 6 lookup topography code(s) disagree in all" |
+| R5-B | a lung site unrouted | `C34.0` dropped from the lung routing rule | rule 5: "the g11_lung rule omits 1 routed site(s) TREES gives it: C34.0" |
+| R5-C | a lung site routed to the thyroid | `C34.0` moves from the lung rule to the thyroid rule | rule 5: "the g11_thyroid rule names 1 code(s) TREES does not route to it: C34.0" |
+| R5-D | the default moved | `tree_routing.default` → `g11_lung` | rule 5: "groups["11"].tree_routing.default is 'g11_lung'; a topography no tree routes goes to g11_unspecified" |
+| R5-E | a rule routes to the melanoma tree | a rule sends `C77.9` to `g11_melanoma` | rule 5: "tree_routing.rules[18] routes to 'g11_melanoma', which is the melanoma tree, entered by a hop and named by no rule" |
+| R5-F | **a shadowed rule** | `C34.0` also named by the first (adrenal) rule | rule 5: "the router sends C34.0 to 'g11_adrenal'; TREES routes it to g11_lung (a rule listed earlier names it too)" |
+| REG-A | a self-referral with no `recapture_site` | the "another organ" option of `th_deposit` loses `recapture_site` | `check_refer_terminals`: "refer_group 11 is this group … The one exception is a recapture_site referral, which re-enters this group at the primary's site" |
+| REG-B | the round trip runs for Group 11 | the `8010/3` entry carries the name "Control name" | `check_icdo32_round_trip`: "the triple (8010, 'Control name', 3) does not exist in ICD-O-3.2" |
+| REG-C | the behaviour declaration is registered | the NIFTP exclusion names `8260/3`, behaviour 3 | `check_behaviour_exclusion`: "icdo_behaviour '3' IS in Group XI's own declaration (behaviour 3)". Without `BEHAVIOUR_DECLARED_BY_GROUP[GROUP11]` the check returns nothing |
+| REG-D | the two parser patterns | the old and the new pattern, applied to "XIf10 Carcinomas of other specified sites" and "## XII Other And Unspecified Malignant Neoplasms" | the old subgroup pattern does not match the first and the old heading pattern does not match the second; the new patterns match both |
+
+Probes (each passes on the committed data): rules 1, 2, 3 and 5; `check_refer_terminals`, which
+now sees 18 recapture self-referrals and rejects none; `check_icdo32_round_trip` (13 `[obs]`
+WARNs, no FAIL, no "REDCap wordings" NOTE); `check_behaviour_exclusion` (204 blocks); rule 5's
+NOTE for C75.1; and `parse_classification_subgroups` (XIf9, XIf10 and XIf11 apart, XIIa1 under
+group 12).
+
+**R1-A and R2-B are the two the contract names.** R1-A needs the all-groups range read: 8170 at
+the lung is in no Group XI range and in a Group VII range at every site, so "no range of any group
+holds it there" (the D11 allowance) does not apply. A rule that tested only Group XI ranges would
+either pass 8170 (no XI range, so "no XI range holds it") or fail every D11 code. R2-B changes
+only the captured `evidence_tests`: every terminal under `th_histology` still reads basis 7 and
+the option's `basis_evidence_tier` still reads "histology".
+
+**What the controls do not reach.** Rule 1's D11 allowance passes any code that no ICCC-2017 range
+holds at a site, so a code the registrar has not approved for that tree (a site-specific entity
+offered at an organ that does not hold it) passes as long as no range places it elsewhere. Rule 5
+does not test the lookup's `candidate_groups` against ICCC. The Layer 1 markdown for Group XI
+(`ICCC 2017 Cancer Classification.md`) still disagrees with `ICCC-2017.sqlite`: the seven skin
+codes 8090 to 8095 and 8097 read as outside every range, and the tokens `C80.90-C80.98` and
+`C80.98` do not parse. `check_iccc_subgroup_ranges` reports 12 WARNs for it (4 unreadable tokens,
+8 codes, the eighth being `8339`, which is outside every range by standing rule 3). The repair is
+a Layer 1 job and is not yet in `docs/group_11_layer1_repair.md`.

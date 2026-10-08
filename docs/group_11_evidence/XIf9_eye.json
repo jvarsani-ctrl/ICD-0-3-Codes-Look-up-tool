@@ -1,0 +1,3845 @@
+{
+ "part_id": "XIf9_eye",
+ "sources": [
+  {
+   "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+   "citation": "Milman T, Grossniklaus HE, Goldman-Levy G, et al. The 5th Edition of the World Health Organization Classification of Tumours of the Eye and Orbit. Ocul Oncol Pathol 2023;9(3-4):71-95. doi:10.1159/000530730",
+   "who_volume": "WHO Classification of Tumours, Eye and Orbit Tumours, 5th edition, 2023 (volume 13)"
+  },
+  {
+   "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+   "citation": "Pfister SM, Reyes-Mugica M, Chan JKC, et al. A Summary of the Inaugural WHO Classification of Pediatric Tumors: Transitioning from the Optical into the Molecular Era. Cancer Discov 2022;12(2):331-355",
+   "who_volume": "WHO Classification of Tumours, Paediatric Tumours, 5th edition, 2022"
+  },
+  {
+   "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+   "citation": "World Health Organization. International Classification of Diseases for Oncology, 3rd edition, 1st revision (ICD-O-3.1), section 4, Coding guidelines, printed pp. 14-28",
+   "who_volume": "ICD-O-3.1 coding manual (not a tumour classification)"
+  }
+ ],
+ "sites": [
+  {
+   "topography": "C69.0",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.1",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.2",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.3",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.4",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.5",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.6",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.8",
+   "iccc_subgroup": "XIf9"
+  },
+  {
+   "topography": "C69.9",
+   "iccc_subgroup": "XIf9"
+  }
+ ],
+ "entities": [
+  {
+   "who_term": "Conjunctival squamous cell carcinoma; squamous cell carcinoma of the lacrimal drainage system",
+   "code": "8070",
+   "behaviour": "3",
+   "icdo32_term": "Squamous cell carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous cell carcinoma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). Milman lists it at the conjunctiva (Table 3) and the lacrimal drainage system (Table 12).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous cell carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Malignant epithelial tumors of the lacrimal drainage system",
+     "from_image": false
+    },
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Eye tumors Conjunctival Neoplasms Hamartomas",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Squamous cell carcinoma with mucinous differentiation (conjunctiva)",
+   "code": "8070",
+   "behaviour": "3",
+   "icdo32_term": "Squamous cell carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous cell carcinoma, NOS",
+   "sites": [
+    "C69.0"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "WHO Eye5 names a squamous cell carcinoma with scattered mucin-containing cells, and no true glands, a squamous cell carcinoma with mucinous differentiation rather than an adenosquamous carcinoma. ICD-O-3.2 prints no term for it. 8070/3 follows the WHO name; Rule K would give the higher code 8480/3 Mucinous adenocarcinoma. The registrar decides.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "squamous cell carcinoma with mucinous differentiation",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 6,
+     "quote": "invasive nonkeratinizing squamous cell carcinoma with focal intracytoplasmic mucin",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "applied only to neoplasms with bi-phenotypic differentiation comprising squamous cell carcinoma and adenocarcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenosquamous carcinoma (conjunctiva)",
+   "code": "8560",
+   "behaviour": "3",
+   "icdo32_term": "Adenosquamous carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenosquamous carcinoma",
+   "sites": [
+    "C69.0",
+    "C69.1"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). WHO Eye5 keeps the term for tumours with both squamous cell carcinoma and true mucin-forming adenocarcinoma.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous cell carcinoma Adenosquamous carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "applied only to neoplasms with bi-phenotypic differentiation comprising squamous cell carcinoma and adenocarcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 5,
+     "quote": "invasive adenocarcinoma component is composed of epithelial cells with focal intracytoplasmic mucin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Mucoepidermoid carcinoma (lacrimal gland, lacrimal drainage system; the Eye4 term for some conjunctival carcinomas)",
+   "code": "8430",
+   "behaviour": "3",
+   "icdo32_term": "Mucoepidermoid carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Mucoepidermoid carcinoma",
+   "sites": [
+    "C69.0",
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). WHO Eye5 lists it in the lacrimal gland and drainage system. At the conjunctiva, Eye4 used adenosquamous carcinoma as the preferred term; a conjunctival report that still says mucoepidermoid carcinoma is coded as written, 8430/3.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Mucoepidermoid carcinoma (MEC)",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "Malignant lacrimal gland neoplasm characterized by squamous (epidermoid) cells, mucous cells",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "The term adenosquamous carcinoma, introduced in the Eye4 as the preferred term for mucoepidermoid carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Conjunctival squamous intraepithelial neoplasia, high grade",
+   "code": "8077",
+   "behaviour": "2",
+   "icdo32_term": "Squamous intraepithelial neoplasia, high grade",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous intraepithelial neoplasia, high grade",
+   "sites": [
+    "C69.0",
+    "C69.1"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "WHO Eye5 lists it among the premalignant conjunctival tumours. Behaviour /2 is outside Group XI.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous intraepithelial neoplasia",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "to delineate them from conjunctival squamous intraepithelial neoplasia",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Conjunctival squamous intraepithelial neoplasia, low grade",
+   "code": "8077",
+   "behaviour": "0",
+   "icdo32_term": "Squamous intraepithelial neoplasia, low grade",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous intraepithelial neoplasia, low grade",
+   "sites": [
+    "C69.0",
+    "C69.1"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Low-grade intraepithelial neoplasia is not malignant. Milman names the entity without its grades; ICD-O-3.2 codes the low grade /0.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous intraepithelial neoplasia",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Squamous cell carcinoma in situ of the conjunctiva or cornea",
+   "code": "8070",
+   "behaviour": "2",
+   "icdo32_term": "Squamous cell carcinoma in situ, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous cell carcinoma in situ, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "An in situ carcinoma has not invaded; behaviour /2 is outside Group XI.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous intraepithelial neoplasia",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 6,
+     "quote": "Carcinoma in situ and CIN III",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Conjunctival squamous papilloma; squamous papilloma of the lacrimal drainage system",
+   "code": "8052",
+   "behaviour": "0",
+   "icdo32_term": "Squamous papilloma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Squamous cell papilloma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Benign epithelial tumour (WHO Eye5 Tables 3 and 12).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival squamous papilloma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Papillomas (squamous and inverted)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Inverted papilloma of the lacrimal drainage system",
+   "code": "8121",
+   "behaviour": "1",
+   "icdo32_term": "Schneiderian papilloma, inverted",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Sinonasal papilloma, inverted",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Listed with the benign and premalignant drainage-system tumours; ICD-O-3.2 codes it /1.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Papillomas (squamous and inverted)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Conjunctival oncocytoma; lacrimal gland oncocytoma",
+   "code": "8290",
+   "behaviour": "0",
+   "icdo32_term": "Oncocytoma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Oxyphilic adenoma",
+   "sites": [
+    "C69.0",
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Benign epithelial tumour.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival oncocytoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Lacrimal gland oncocytoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Sebaceous carcinoma reported at the conjunctiva or caruncle",
+   "code": "8410",
+   "behaviour": "3",
+   "icdo32_term": "Sebaceous carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Sebaceous carcinoma",
+   "sites": [
+    "C69.0"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": null,
+   "why": "WHO Eye5 removed sebaceous carcinoma from the conjunctiva and caruncle chapter and covers it with the eyelid tumours. The eye tree sends it to the skin carcinoma tree at the eyelid (C44.1, XIe), inside Group XI. ICD-O-3.2 prints the skin site (C44._) beside the term. A report that places the tumour in the conjunctiva itself is a registrar question.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 7,
+     "quote": "Sebaceous carcinoma, covered in Tumors of the Eyelid chapter, has been removed",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 9,
+     "quote": "Malignant adnexal tumors of the eyelid Sebaceous carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Pleomorphic adenoma of the lacrimal gland",
+   "code": "8940",
+   "behaviour": "0",
+   "icdo32_term": "Pleomorphic adenoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Pleomorphic adenoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Benign lacrimal gland neoplasm.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Pleomorphic adenoma (PA) of the lacrimal gland",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "Benign lacrimal gland neoplasm consisting of a mixture of epithelial",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Myoepithelioma of the lacrimal gland",
+   "code": "8982",
+   "behaviour": "0",
+   "icdo32_term": "Myoepithelioma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Myoepithelioma, NOS",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Listed with the benign and premalignant lacrimal gland tumours.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Lacrimal gland oncocytoma Myoepithelioma Intraductal carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Benign and premalignant epithelial tumors of the lacrimal gland",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Intraductal carcinoma of the lacrimal gland",
+   "code": "8500",
+   "behaviour": "2",
+   "icdo32_term": "Intraductal carcinoma, NOS",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Intraductal carcinoma, noninfiltrating, NOS",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "WHO Eye5 lists intraductal carcinoma with the benign and premalignant lacrimal gland tumours; ICD-O-3.2 codes it /2.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Lacrimal gland oncocytoma Myoepithelioma Intraductal carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Benign and premalignant epithelial tumors of the lacrimal gland",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Carcinoma ex pleomorphic adenoma (lacrimal gland)",
+   "code": "8941",
+   "behaviour": "3",
+   "icdo32_term": "Carcinoma ex pleomorphic adenoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Carcinoma ex pleomorphic adenoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). ICD-O-3.2 prints the salivary gland sites (C07._, C08._) beside the term; the stated lacrimal gland site wins (Rule H).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Carcinoma ex PA",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "Malignant lacrimal gland neoplasm that shows presence of an epithelial and/or myoepithelial malignancy",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "histological areas compatible with PA or history of previous PA in the same site",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenoid cystic carcinoma (lacrimal gland)",
+   "code": "8200",
+   "behaviour": "3",
+   "icdo32_term": "Adenoid cystic carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenoid cystic carcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "Malignant lacrimal gland neoplasm composed of epithelial and myoepithelial cells",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "biphasic tumor composed of proliferating myoepithelial cells and luminal ductal cells",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Primary ductal adenocarcinoma of the lacrimal gland",
+   "code": "8500",
+   "behaviour": "3",
+   "icdo32_term": "Duct adenocarcinoma, NOS",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Infiltrating duct carcinoma, NOS",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). Milman prints no code. ICD-O-3.2 lists Duct adenocarcinoma, NOS at 8500/3; the breast site (C50._) printed beside the preferred term does not apply at the lacrimal gland (Rule H).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Primary ductal adenocarcinoma of the lacrimal gland",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "counterpart of salivary duct carcinoma, resembling invasive ductal carcinoma of the breast",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Secretory carcinoma (lacrimal gland)",
+   "code": "8502",
+   "behaviour": "3",
+   "icdo32_term": "Secretory carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Secretory carcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "Rare monophasic lacrimal gland carcinoma characterized by a rearrangement of the ETV6 gene",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "IHC positivity for S100 protein, mammaglobin, and NTRK",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Epithelial-myoepithelial carcinoma (lacrimal gland)",
+   "code": "8562",
+   "behaviour": "3",
+   "icdo32_term": "Epithelial-myoepithelial carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Epithelial-myoepithelial carcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Epithelial-myoepithelial carcinoma (EMC)",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "Low-grade malignant biphasic tumor of the lacrimal gland",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Acinic cell carcinoma (lacrimal gland)",
+   "code": "8550",
+   "behaviour": "3",
+   "icdo32_term": "Acinic cell adenocarcinoma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Acinar cell carcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). ICD-O-3.2 prints Acinar cell carcinoma as the preferred term; Acinic cell adenocarcinoma is its synonym.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "Rare malignant lacrimal gland neoplasm displaying predominantly serous acinar differentiation",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "tumor cells with acinar differentiation; zymogen granules in focal areas",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenocarcinoma, NOS (lacrimal gland; lacrimal drainage system)",
+   "code": "8140",
+   "behaviour": "3",
+   "icdo32_term": "Adenocarcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenocarcinoma, NOS",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Acinic cell carcinoma Adenocarcinoma, NOS",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Adenocarcinoma NOS of the lacrimal drainage system",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Lymphoepithelial carcinoma (lacrimal drainage system)",
+   "code": "8082",
+   "behaviour": "3",
+   "icdo32_term": "Lymphoepithelial carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Lymphoepithelial carcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Squamous cell carcinoma Lymphoepithelial carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Malignant epithelial tumors of the lacrimal drainage system",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenocarcinoma of the ciliary body epithelium",
+   "code": "8140",
+   "behaviour": "3",
+   "icdo32_term": "Adenocarcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenocarcinoma, NOS",
+   "sites": [
+    "C69.4"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). Milman prints no code; Adenocarcinoma, NOS is the ICD-O-3.2 term the WHO name reduces to.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Adenoma and adenocarcinoma of the ciliary body",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "PAX8 IHC is useful in distinguishing CBE adenoma and adenocarcinoma from melanocytic lesions",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "Adenocarcinoma demonstrates cohesive clusters of atypical cuboidal to large epithelioid epithelial cells",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenocarcinoma of the retinal pigment epithelium",
+   "code": "8140",
+   "behaviour": "3",
+   "icdo32_term": "Adenocarcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenocarcinoma, NOS",
+   "sites": [
+    "C69.2"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Neither Milman 2023 nor Pfister 2022 reports this carcinoma in children; Pfister 2022 Table 3 lists no carcinoma among the paediatric eye tumours. It is a picker entry (ruling 1). The topography of the retinal pigment epithelium is taken as retina (C69.2); see data gaps.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Adenoma and adenocarcinoma of the RPE",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "Documentation of PAS-positive basement material can be helpful",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Adenoma of the ciliary body epithelium; adenoma of the retinal pigment epithelium",
+   "code": "8140",
+   "behaviour": "0",
+   "icdo32_term": "Adenoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Adenoma, NOS",
+   "sites": [
+    "C69.2",
+    "C69.4"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Benign epithelial tumour.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Adenoma and adenocarcinoma of the ciliary body",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Adenoma and adenocarcinoma of the RPE",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Oncocytic carcinoma of the lacrimal gland (removed from WHO Eye5 as obsolete)",
+   "code": "8290",
+   "behaviour": "3",
+   "icdo32_term": "Oncocytic carcinoma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Oxyphilic adenocarcinoma",
+   "sites": [
+    "C69.5"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "WHO Eye5 removed oncocytic carcinoma of the lacrimal gland as an obsolete entity. ICD-O-3.2 keeps 8290/3 current, and the code is in the XIf9 inventory, so the picker would offer it. The registrar decides whether the eye picker holds it.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "Obsolete entities, such as oncocytic carcinoma, have been removed",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Medulloepithelioma of the ciliary body (including teratoid medulloepithelioma)",
+   "code": "9501",
+   "behaviour": "3",
+   "icdo32_term": "Medulloepithelioma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Medulloepithelioma, NOS",
+   "sites": [
+    "C69.4"
+   ],
+   "paediatric": "occurs",
+   "decision": "refer",
+   "refer_group": 4,
+   "why": "Pfister 2022 lists medulloepithelioma among the paediatric retinal and neuroepithelial tumours. ICCC-2017 places 9501-9504 at C00-C69 in IVb, so it refers to Group IV, whose tree holds the ciliary body site.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Medulloepithelioma of the ciliary body",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "expresses LIN28A and PAX8 by immunohistochemistry (IHC), which may help distinguish these tumors from retinoblastoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Medulloepithelioma of the optic disc and optic nerve",
+   "code": "9501",
+   "behaviour": "3",
+   "icdo32_term": "Medulloepithelioma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Medulloepithelioma, NOS",
+   "sites": [
+    "C72.3"
+   ],
+   "paediatric": "occurs",
+   "decision": "refer",
+   "refer_group": 3,
+   "why": "The optic nerve is C72.3; ICCC-2017 places 9501-9504 at C70-C72 in IIIc3, so it refers to Group III.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Medulloepithelioma of the optic disk and optic nerve",
+     "from_image": false
+    },
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Retinoblastoma",
+   "code": "9510",
+   "behaviour": "3",
+   "icdo32_term": "Retinoblastoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Retinoblastoma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "refer",
+   "refer_group": 5,
+   "why": "Pfister 2022 lists it as a paediatric eye tumour; ICCC-2017 places 9510-9514 in Group V at every site. Biopsy is usually avoided, so Group V registers it on eye examination and imaging; the eye carcinoma tree refers it before any 8000/3 answer.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "Generally, biopsy is avoided due to the risk of extraocular recurrence and metastasis",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "\"retinoblastoma\" (C69.2)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Retinocytoma (retinoma)",
+   "code": "9510",
+   "behaviour": "0",
+   "icdo32_term": "Retinocytoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Retinocytoma",
+   "sites": [
+    "C69.2"
+   ],
+   "paediatric": "occurs",
+   "decision": "refer",
+   "refer_group": 5,
+   "why": "WHO Eye5 classes it as premalignant; Group V's tree decides how a report that uses the word is recorded.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 8,
+     "quote": "Retinocytoma is classified as a premalignant tumor",
+     "from_image": false
+    },
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Ocular adnexal lymphomas; intraocular lymphomas (primary vitreoretinal and choroidal)",
+   "code": "9590",
+   "behaviour": "3",
+   "icdo32_term": "Malignant lymphoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Malignant lymphoma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 2,
+   "why": "Lymphoma is Group II (ICCC-2017 II at every site). Rule D records an extranodal lymphoma at its site of origin; Group II's tree assigns the code.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 16,
+     "quote": "Ocular adnexal lymphomas",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 16,
+     "quote": "Primary vitreoretinal large cell B-cell lymphoma",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Code extranodal lymphomas to the site of origin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Langerhans cell histiocytosis of the orbit",
+   "code": "9751",
+   "behaviour": "1",
+   "icdo32_term": "Langerhans cell histiocytosis, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Langerhans cell histiocytosis, NOS",
+   "sites": [
+    "C69.6"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 2,
+   "why": "ICCC-2017 places 9751 in IId (behaviour /3). Group II's tree decides the behaviour and whether it registers.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 16,
+     "quote": "Langerhans cell tumors",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Extramedullary myeloid sarcoma of the orbit",
+   "code": "9930",
+   "behaviour": "3",
+   "icdo32_term": "Myeloid sarcoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Myeloid sarcoma",
+   "sites": [
+    "C69.6"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 1,
+   "why": "ICCC-2017 places 9930 in Ib. Rule E keeps the site of a myeloid sarcoma (the orbit) rather than bone marrow.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 16,
+     "quote": "Extramedullary myeloid sarcoma",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Code all leukemias except myeloid sarcoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Rhabdomyosarcoma of the orbit",
+   "code": "8900",
+   "behaviour": "3",
+   "icdo32_term": "Rhabdomyosarcoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Rhabdomyosarcoma, NOS",
+   "sites": [
+    "C69.6"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 9,
+   "why": "ICCC-2017 places 8900-8920 in IXa at every site.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 20,
+     "quote": "Rhabdomyosarcoma family",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Teratoma of the orbit",
+   "code": "9080",
+   "behaviour": "1",
+   "icdo32_term": "Teratoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Teratoma, NOS",
+   "sites": [
+    "C69.6"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 10,
+   "why": "Germ cell tumour of the orbit (WHO Eye5 Table 14); Group X's tree decides mature, immature and malignant teratoma.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "Germ cell tumors Teratoma Yolk sac tumor",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Yolk sac tumour of the orbit",
+   "code": "9071",
+   "behaviour": "3",
+   "icdo32_term": "Yolk sac tumor, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Yolk sac tumor, NOS",
+   "sites": [
+    "C69.6"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 10,
+   "why": "ICCC-2017 places 9071 at C69 in Xb4.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "Germ cell tumors Teratoma Yolk sac tumor",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Conjunctival melanoma; choroidal, ciliary body and iris melanoma; primary orbital melanoma; melanoma involving the lacrimal drainage system",
+   "code": "8720",
+   "behaviour": "3",
+   "icdo32_term": "Malignant melanoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Malignant melanoma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": null,
+   "why": "Melanoma is XId at every site and is owned by the melanoma part; the eye tree hands it to the melanoma tree inside Group XI.",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 3,
+     "quote": "Conjunctival melanocytic intraepithelial lesions Conjunctival melanoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 10,
+     "quote": "Choroidal and ciliary body melanomas",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "Primary orbital melanoma",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Melanoma involving the lacrimal drainage system",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Pilocytic astrocytoma and other gliomas of the optic nerve",
+   "code": "9421",
+   "behaviour": "1",
+   "icdo32_term": "Pilocytic astrocytoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Pilocytic astrocytoma",
+   "sites": [
+    "C72.3"
+   ],
+   "paediatric": "occurs",
+   "decision": "refer",
+   "refer_group": 3,
+   "why": "Pfister 2022 lists optic nerve gliomas as paediatric eye tumours. The optic nerve is C72.3 and ICCC-2017 places 9421 in IIIb.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 12,
+     "quote": "Pilocytic astrocytoma and other gliomas of the optic nerve",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 12,
+     "quote": "Gliomas of the optic nerve",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Ewing sarcoma of the orbital bone",
+   "code": "9364",
+   "behaviour": "3",
+   "icdo32_term": "Ewing sarcoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Ewing sarcoma",
+   "sites": [
+    "C41.0"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 8,
+   "why": "A tumour of the orbital bone is recorded at the bone; ICCC-2017 places 9364 at C40-C41 in VIIIc2 (at the orbit soft tissue, C69.6, it is IXd2).",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 21,
+     "quote": "Other tumors of orbital bone Ewing sarcoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Carcinoma, type not stated (NOS fallback)",
+   "code": "8010",
+   "behaviour": "3",
+   "icdo32_term": "Carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Carcinoma, NOS",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "The NOS fallback of every eye histology screen and of the picker (node-type rule, not a paediatric claim).",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 6,
+     "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Malignant tumour, type not stated (tissue-free registration and non-typed malignant cytology)",
+   "code": "8000",
+   "behaviour": "3",
+   "icdo32_term": "Neoplasm, malignant",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Neoplasm, malignant",
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 12,
+   "why": "The eye tree records 8000/3 on a clinical note or imaging (registrar's tissue-free rule) and on cytology that names no tumour type. ICCC-2017 places 8000/3 at C69 in XIIb, so these cases leave Group XI when the subgroup is computed.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 6,
+     "quote": "nonspecific term \"malignant neoplasm\", 8000/3",
+     "from_image": false
+    }
+   ]
+  }
+ ],
+ "nodes": [
+  {
+   "node_id": "ey_evidence",
+   "node_type": "document_inventory",
+   "question": "What does the file hold about this tumour of the eye, the lacrimal gland or the orbit?",
+   "hint": "Choose the strongest evidence in the file. An immunohistochemistry or gene report on its own does not stand in for a histology report. A tumour the file calls possible or suspected is not registrable.",
+   "options": [
+    {
+     "label": "The file names retinoblastoma or retinocytoma (retinoma), from an eye examination, imaging or a pathology report",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 5,
+     "recapture_site": false,
+     "reason": "Retinoblastoma is recorded in Group V, which registers it on an eye examination or imaging, because a biopsy of the eye is usually avoided.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "Generally, biopsy is avoided due to the risk of extraocular recurrence and metastasis",
+       "from_image": false
+      },
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 12,
+       "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A referral letter or clinical note only",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 1,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3). A clinical note does not show the tumour type.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "An imaging report only (ultrasound, computed tomography or magnetic resonance imaging)",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 2,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3). An imaging report does not show the tumour type.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A cytology report (a fine-needle aspirate or another cytology sample)",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_cytology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen asks what the cytology report calls the tumour.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A histology report (biopsy or excision), with or without immunohistochemistry or gene reports",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_site",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen asks where the tumour arose.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "The file calls the tumour possible or suspected, with no diagnosis made",
+     "outcome": "not_registrable",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "A possible or suspected tumour is not registrable.",
+     "recognition_aid": "",
+     "cite": []
+    }
+   ]
+  },
+  {
+   "node_id": "ey_cytology",
+   "node_type": "histology_subclassification",
+   "question": "What does the cytology report call the tumour?",
+   "hint": "Use the report's own words.",
+   "options": [
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous cell carcinoma",
+     "outcome": "code",
+     "code": "8070",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Squamous cell carcinoma, NOS (8070/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous cell carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenocarcinoma",
+     "outcome": "code",
+     "code": "8140",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Adenocarcinoma, NOS (8140/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Acinic cell carcinoma Adenocarcinoma, NOS",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "Adenocarcinoma demonstrates cohesive clusters of atypical cuboidal to large epithelioid epithelial cells",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Another carcinoma the report names",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_carcinoma_other",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen lists the carcinomas; cytology is the basis of diagnosis (5).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Melanoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "mel_site",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Melanoma is recorded with the melanomas; the next screen asks about it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival melanocytic intraepithelial lesions Conjunctival melanoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Retinoblastoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 5,
+     "recapture_site": false,
+     "reason": "Retinoblastoma is recorded in Group V, which registers it on an eye examination or imaging, because a biopsy of the eye is usually avoided.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "Generally, biopsy is avoided due to the risk of extraocular recurrence and metastasis",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Medulloepithelioma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 4,
+     "recapture_site": false,
+     "reason": "Medulloepithelioma of the eye is recorded in Group IV.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "diagnosis is limited to a malignant round cell tumor",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "expresses LIN28A and PAX8 by immunohistochemistry (IHC), which may help distinguish these tumors from retinoblastoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphoma is recorded in Group II, at the part of the eye or orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Ocular adnexal lymphomas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Malignant cells, tumour type not stated",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "No malignant cells, or the sample is not diagnostic",
+     "outcome": "not_registrable",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "A cytology report without malignant cells does not register a tumour.",
+     "recognition_aid": "",
+     "cite": []
+    }
+   ]
+  },
+  {
+   "node_id": "ey_site",
+   "node_type": "site_resolution",
+   "question": "Where did the tumour arise?",
+   "hint": "Use the site the histology report or the operation note names. A tumour the report places at the limbus, where the cornea meets the conjunctiva, is recorded at the cornea (C69.1).",
+   "options": [
+    {
+     "label": "Conjunctiva",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_surface_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Conjunctiva (C69.0).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous cell carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Cornea, or the limbus",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_surface_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Cornea (C69.1).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Lacrimal gland",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_lacrimal_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Lacrimal gland (C69.5).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Benign and premalignant epithelial tumors of the lacrimal gland",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lacrimal sac or nasolacrimal duct (the tear drainage passages)",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_lacrimal_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Lacrimal gland and duct (C69.5), which holds the lacrimal sac and the nasolacrimal duct.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Malignant epithelial tumors of the lacrimal drainage system",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Retina, including the retinal pigment epithelium",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_intraocular_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Retina (C69.2).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the RPE",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Choroid",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_intraocular_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Choroid (C69.3).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Ciliary body or iris",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_intraocular_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Ciliary body (C69.4).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the ciliary body",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Orbit (the tissue around the eyeball, including the muscles that move the eye)",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_orbit_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Orbit (C69.6).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "More than one of these parts, and the report cannot say where the tumour began",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_orbit_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded at Overlapping lesion of eye and adnexa (C69.8), because the point of origin cannot be determined.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "its point of origin cannot be determined",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Eye, part not stated",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_orbit_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Site recorded as Eye, NOS (C69.9).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Eyelid, including the eyelid margin",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "sk_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "A tumour of the eyelid is recorded at the skin of the eyelid (C44.1), with the skin carcinomas.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 9,
+       "quote": "Malignant adnexal tumors of the eyelid Sebaceous carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Optic nerve",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 3,
+     "recapture_site": false,
+     "reason": "A tumour of the optic nerve is recorded at the optic nerve (C72.3) with the central nervous system tumours.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Gliomas of the optic nerve",
+       "from_image": false
+      },
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 12,
+       "quote": "Pilocytic astrocytoma and other gliomas of the optic nerve",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Medulloepithelioma of the optic disk and optic nerve",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Only a region around the eye (periorbital or periocular), with no part of the eye or eyelid named",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "site_capture",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A site named only by a prefix such as peri- is not an ICD-O site. The next screen asks which tissue the report names; with none, the site is head, face or neck (C76.0).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 1,
+       "quote": "unless the type of tumor indicates origin from a particular tissue",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A deposit (metastasis) of a tumour that began elsewhere, or a tumour that grew into the eye or orbit from a neighbouring part",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_deposit",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A tumour that began elsewhere is recorded at the site where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "into a separate section, Metastases to Intra-Ocular Structures",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "metastases to ocular adnexa are covered in a new section",
+       "from_image": false
+      },
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "is not a metastasis",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_surface_histology",
+   "node_type": "histology_subclassification",
+   "question": "What does the histology report call the tumour of the conjunctiva or cornea?",
+   "hint": "Use the report's own term. Squamous intraepithelial neoplasia, dysplasia and carcinoma in situ have not invaded and are not registrable.",
+   "options": [
+    {
+     "label": "A carcinoma the report names, such as squamous cell carcinoma, adenosquamous carcinoma or mucoepidermoid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_carcinoma_other",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen lists the carcinomas.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous cell carcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous cell carcinoma Adenosquamous carcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 7,
+       "quote": "The term adenosquamous carcinoma, introduced in the Eye4 as the preferred term for mucoepidermoid carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Sebaceous carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "sk_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded at the skin of the eyelid (C44.1) with the skin carcinomas: the WHO classification of eye tumours places sebaceous carcinoma with the eyelid tumours.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 7,
+       "quote": "Sebaceous carcinoma, covered in Tumors of the Eyelid chapter, has been removed",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 9,
+       "quote": "Malignant adnexal tumors of the eyelid Sebaceous carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Melanoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "mel_conjunctiva",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Melanoma is recorded with the melanomas; the next screen asks about it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival melanocytic intraepithelial lesions Conjunctival melanoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphoma is recorded in Group II, at the part of the eye or orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Ocular adnexal lymphomas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous intraepithelial neoplasia, high grade, or moderate or severe dysplasia",
+     "outcome": "exclude",
+     "code": "8077",
+     "behaviour": "2",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Squamous intraepithelial neoplasia, high grade (8077/2) has not invaded and is not registrable as a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous intraepithelial neoplasia",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous intraepithelial neoplasia, low grade, or mild dysplasia",
+     "outcome": "exclude",
+     "code": "8077",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Squamous intraepithelial neoplasia, low grade (8077/0) is not malignant.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous intraepithelial neoplasia",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous cell carcinoma in situ, with no invasion",
+     "outcome": "exclude",
+     "code": "8070",
+     "behaviour": "2",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Squamous cell carcinoma in situ, NOS (8070/2) has not invaded and is not registrable as a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "Carcinoma in situ and CIN III",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous papilloma",
+     "outcome": "exclude",
+     "code": "8052",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Squamous cell papilloma, NOS (8052/0) is benign.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous papilloma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Oncocytoma",
+     "outcome": "exclude",
+     "code": "8290",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Oxyphilic adenoma (8290/0) is benign; ICD-O-3.2 gives Oncocytoma as its synonym.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival oncocytoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A deposit of a tumour that began elsewhere",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_deposit",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A tumour that began elsewhere is recorded at the site where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "metastases to ocular adnexa are covered in a new section",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_lacrimal_histology",
+   "node_type": "histology_subclassification",
+   "question": "What does the histology report call the tumour of the lacrimal gland or the tear drainage passages?",
+   "hint": "Use the report's own term. Pleomorphic adenoma, oncocytoma, myoepithelioma, papillomas and intraductal carcinoma are not registrable.",
+   "options": [
+    {
+     "label": "A carcinoma the report names, such as adenoid cystic carcinoma, carcinoma ex pleomorphic adenoma or mucoepidermoid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_carcinoma_other",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen lists the carcinomas.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Carcinoma ex PA",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Mucoepidermoid carcinoma (MEC)",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Malignant epithelial tumors of the lacrimal drainage system",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Malignant mixed tumour, or malignant pleomorphic adenoma, and no carcinoma is named",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 12,
+     "recapture_site": false,
+     "reason": "A malignant mixed tumour (8940/3) is recorded with the other specified malignant tumours (Group XII). A carcinoma ex pleomorphic adenoma is a carcinoma: choose it from the carcinoma list instead.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "code as the pathologist indicates",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Melanoma of the lacrimal sac or duct",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "mel_eye",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Melanoma is recorded with the melanomas; the next screen asks about it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Melanoma involving the lacrimal drainage system",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphoma is recorded in Group II, at the part of the eye or orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Ocular adnexal lymphomas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Pleomorphic adenoma",
+     "outcome": "exclude",
+     "code": "8940",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Pleomorphic adenoma (8940/0) is benign.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Pleomorphic adenoma (PA) of the lacrimal gland",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 13,
+       "quote": "Benign lacrimal gland neoplasm consisting of a mixture of epithelial",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Oncocytoma",
+     "outcome": "exclude",
+     "code": "8290",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Oxyphilic adenoma (8290/0) is benign; ICD-O-3.2 gives Oncocytoma as its synonym.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Lacrimal gland oncocytoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Myoepithelioma",
+     "outcome": "exclude",
+     "code": "8982",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Myoepithelioma, NOS (8982/0) is benign.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Lacrimal gland oncocytoma Myoepithelioma Intraductal carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Intraductal carcinoma, with no invasion",
+     "outcome": "exclude",
+     "code": "8500",
+     "behaviour": "2",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Intraductal carcinoma, noninfiltrating, NOS (8500/2) has not invaded and is not registrable as a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Lacrimal gland oncocytoma Myoepithelioma Intraductal carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Squamous papilloma",
+     "outcome": "exclude",
+     "code": "8052",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Squamous cell papilloma, NOS (8052/0) is benign.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Papillomas (squamous and inverted)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Inverted papilloma",
+     "outcome": "exclude",
+     "code": "8121",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Sinonasal papilloma, inverted (8121/1) is not malignant.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Papillomas (squamous and inverted)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A deposit of a tumour that began elsewhere",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_deposit",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A tumour that began elsewhere is recorded at the site where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "metastases to ocular adnexa are covered in a new section",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_intraocular_histology",
+   "node_type": "histology_subclassification",
+   "question": "What does the histology report call the tumour inside the eye?",
+   "hint": "Use the report's own term. An adenoma of the ciliary body or of the retinal pigment epithelium is not malignant.",
+   "options": [
+    {
+     "label": "Retinoblastoma, or retinocytoma (retinoma)",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 5,
+     "recapture_site": false,
+     "reason": "Retinoblastoma is recorded in Group V, which registers it on an eye examination or imaging, because a biopsy of the eye is usually avoided.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 12,
+       "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 8,
+       "quote": "Retinocytoma is classified as a premalignant tumor",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Medulloepithelioma (diktyoma), including teratoid medulloepithelioma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 4,
+     "recapture_site": false,
+     "reason": "Medulloepithelioma of the eye is recorded in Group IV.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Medulloepithelioma of the ciliary body",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "expresses LIN28A and PAX8 by immunohistochemistry (IHC), which may help distinguish these tumors from retinoblastoma",
+       "from_image": false
+      },
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 12,
+       "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Melanoma of the choroid, ciliary body or iris",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "mel_eye",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Melanoma is recorded with the melanomas; the next screen asks about it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Choroidal and ciliary body melanomas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma, including vitreoretinal or choroidal lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphoma is recorded in Group II, at the part of the eye or orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Primary vitreoretinal large cell B-cell lymphoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenocarcinoma of the ciliary body epithelium or of the retinal pigment epithelium, or another carcinoma the report names",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_carcinoma_other",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen lists the carcinomas.",
+     "recognition_aid": "Reports describe cuboidal to epithelioid epithelial cells with basement membrane material that stains with periodic acid-Schiff, and PAX8 staining.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the ciliary body",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the RPE",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "presence of basement membrane material highlighted with periodic acid-Schiff",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 11,
+       "quote": "PAX8 IHC is useful in distinguishing CBE adenoma and adenocarcinoma from melanocytic lesions",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenoma of the ciliary body epithelium or of the retinal pigment epithelium",
+     "outcome": "exclude",
+     "code": "8140",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Adenoma, NOS (8140/0) is benign.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the ciliary body",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the RPE",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A deposit of a tumour that began elsewhere",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_deposit",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A tumour that began elsewhere is recorded at the site where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "into a separate section, Metastases to Intra-Ocular Structures",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_orbit_histology",
+   "node_type": "histology_subclassification",
+   "question": "What does the histology report call the tumour?",
+   "hint": "Use the report's own term.",
+   "options": [
+    {
+     "label": "A carcinoma the report names",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_carcinoma_other",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The next screen lists the carcinomas.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Rhabdomyosarcoma, or another soft-tissue sarcoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 9,
+     "recapture_site": false,
+     "reason": "Soft-tissue sarcomas are recorded in Group IX.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 20,
+       "quote": "Rhabdomyosarcoma family",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Myeloid sarcoma (granulocytic sarcoma, chloroma)",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 1,
+     "recapture_site": false,
+     "reason": "Myeloid sarcoma is recorded with the leukaemias in Group I, at the orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Extramedullary myeloid sarcoma",
+       "from_image": false
+      },
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "Code all leukemias except myeloid sarcoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphoma is recorded in Group II, at the part of the eye or orbit where it arose.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Ocular adnexal lymphomas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Langerhans cell histiocytosis",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Langerhans cell histiocytosis is recorded in Group II.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 16,
+       "quote": "Langerhans cell tumors",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Teratoma or yolk sac tumour",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 10,
+     "recapture_site": false,
+     "reason": "Germ cell tumours are recorded in Group X.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 15,
+       "quote": "Germ cell tumors Teratoma Yolk sac tumor",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Melanoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "mel_eye",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Melanoma is recorded with the melanomas; the next screen asks about it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 15,
+       "quote": "Primary orbital melanoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Retinoblastoma, including retinoblastoma that has spread into the orbit",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 5,
+     "recapture_site": false,
+     "reason": "Retinoblastoma is recorded in Group V, which registers it on an eye examination or imaging, because a biopsy of the eye is usually avoided.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 12,
+       "quote": "Retinocytoma Retinoblastoma Medulloepithelioma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A tumour of the bone of the orbital wall, such as Ewing sarcoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 8,
+     "recapture_site": true,
+     "reason": "A bone tumour is recorded at the bone where it arose, in Group VIII.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 21,
+       "quote": "Other tumors of orbital bone Ewing sarcoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A deposit (metastasis) of a tumour that began elsewhere, or a tumour that grew in from a neighbouring part",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "ey_deposit",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A tumour that began elsewhere is recorded at the site where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "metastases to ocular adnexa are covered in a new section",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_carcinoma_other",
+   "node_type": "histology_subclassification",
+   "question": "Which carcinoma does the report name?",
+   "hint": "Type part of the report's term to filter the list. If the report names two carcinoma types for one tumour and no single term covers both, choose the one with the higher code number.",
+   "options": [
+    {
+     "label": "Squamous cell carcinoma",
+     "outcome": "code",
+     "code": "8070",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Squamous cell carcinoma, NOS (8070/3).",
+     "recognition_aid": "Reports describe irregular islands and bands of invasive squamous cells.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 3,
+       "quote": "Conjunctival squamous cell carcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 5,
+       "quote": "Squamous cell carcinoma component is composed of irregular islands and bands of squamous cells",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenosquamous carcinoma",
+     "outcome": "code",
+     "code": "8560",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Adenosquamous carcinoma (8560/3).",
+     "recognition_aid": "Reports describe squamous cell carcinoma together with true glands of adenocarcinoma whose cells hold mucin.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 7,
+       "quote": "applied only to neoplasms with bi-phenotypic differentiation comprising squamous cell carcinoma and adenocarcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 5,
+       "quote": "invasive adenocarcinoma component is composed of epithelial cells with focal intracytoplasmic mucin",
+       "from_image": false
+      },
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 11,
+       "quote": "mixed adenocarcinoma and squamous cell carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Mucoepidermoid carcinoma",
+     "outcome": "code",
+     "code": "8430",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Mucoepidermoid carcinoma (8430/3).",
+     "recognition_aid": "Reports describe squamous (epidermoid) cells, intermediate cells and mucous cells in varying proportions.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "Malignant lacrimal gland neoplasm characterized by squamous (epidermoid) cells, mucous cells",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "squamous cells, intermediate cells, and mucous cells in varying proportions",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Carcinoma ex pleomorphic adenoma",
+     "outcome": "code",
+     "code": "8941",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma ex pleomorphic adenoma (8941/3), at the site the report names. The salivary gland site ICD-O-3.2 prints beside this term applies only when a report names no site.",
+     "recognition_aid": "Reports describe a carcinoma beside areas of pleomorphic adenoma, or at the site of an earlier pleomorphic adenoma.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 13,
+       "quote": "Malignant lacrimal gland neoplasm that shows presence of an epithelial and/or myoepithelial malignancy",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 13,
+       "quote": "histological areas compatible with PA or history of previous PA in the same site",
+       "from_image": false
+      },
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "use the appropriate code for the site given",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenoid cystic carcinoma",
+     "outcome": "code",
+     "code": "8200",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Adenoid cystic carcinoma (8200/3).",
+     "recognition_aid": "Reports describe ductal and myoepithelial cells in tubular, cribriform and solid patterns, often with perineural invasion.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 13,
+       "quote": "Malignant lacrimal gland neoplasm composed of epithelial and myoepithelial cells",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 13,
+       "quote": "biphasic tumor composed of proliferating myoepithelial cells and luminal ductal cells",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Ductal adenocarcinoma of the lacrimal gland (salivary duct-type carcinoma)",
+     "outcome": "code",
+     "code": "8500",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Infiltrating duct carcinoma, NOS (8500/3); ICD-O-3.2 lists Duct adenocarcinoma, NOS under this code. The breast site printed beside the preferred term does not apply when the report names the lacrimal gland.",
+     "recognition_aid": "Reports describe a high-grade adenocarcinoma resembling salivary duct carcinoma or ductal carcinoma of the breast, often with comedonecrosis.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Primary ductal adenocarcinoma of the lacrimal gland",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "counterpart of salivary duct carcinoma, resembling invasive ductal carcinoma of the breast",
+       "from_image": false
+      },
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "use the appropriate code for the site given",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Secretory carcinoma",
+     "outcome": "code",
+     "code": "8502",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Secretory carcinoma (8502/3).",
+     "recognition_aid": "Reports describe a tumour with vacuolated secretory material that stains for S100 protein and mammaglobin, often with an ETV6 gene rearrangement.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "Rare monophasic lacrimal gland carcinoma characterized by a rearrangement of the ETV6 gene",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "IHC positivity for S100 protein, mammaglobin, and NTRK",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Epithelial-myoepithelial carcinoma",
+     "outcome": "code",
+     "code": "8562",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Epithelial-myoepithelial carcinoma (8562/3).",
+     "recognition_aid": "Reports describe inner ductal cells surrounded by outer, usually clear, myoepithelial cells.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 14,
+       "quote": "Low-grade malignant biphasic tumor of the lacrimal gland",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Acinic cell carcinoma",
+     "outcome": "code",
+     "code": "8550",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Acinar cell carcinoma (8550/3); ICD-O-3.2 gives Acinic cell adenocarcinoma as its synonym.",
+     "recognition_aid": "Reports describe tumour cells with serous acinar differentiation and zymogen granules.",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 15,
+       "quote": "Rare malignant lacrimal gland neoplasm displaying predominantly serous acinar differentiation",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 15,
+       "quote": "tumor cells with acinar differentiation; zymogen granules in focal areas",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoepithelial carcinoma",
+     "outcome": "code",
+     "code": "8082",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Lymphoepithelial carcinoma (8082/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Squamous cell carcinoma Lymphoepithelial carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Adenocarcinoma, including adenocarcinoma of the ciliary body epithelium or of the retinal pigment epithelium",
+     "outcome": "code",
+     "code": "8140",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Adenocarcinoma, NOS (8140/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Acinic cell carcinoma Adenocarcinoma, NOS",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 12,
+       "quote": "Adenocarcinoma NOS of the lacrimal drainage system",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the ciliary body",
+       "from_image": false
+      },
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 10,
+       "quote": "Adenoma and adenocarcinoma of the RPE",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Carcinoma, type not stated",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 6,
+       "quote": "the appropriate code is C80.9 (unknown primary site) 8010/3 (carcinoma)",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "ey_deposit",
+   "node_type": "site_resolution",
+   "question": "Which tumour does the report say has spread to the eye or orbit?",
+   "hint": "A deposit is recorded at the site where the tumour began. The next screens ask about that tumour.",
+   "options": [
+    {
+     "label": "Neuroblastoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 4,
+     "recapture_site": true,
+     "reason": "Neuroblastoma is recorded in Group IV, at the site where it began.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A carcinoma or melanoma of another organ, or of the eyelid, sinuses or nasal cavity",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "site_capture",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "The next screen asks where the carcinoma or melanoma began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 17,
+       "quote": "metastases to ocular adnexa are covered in a new section",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A soft-tissue sarcoma, including rhabdomyosarcoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 9,
+     "recapture_site": true,
+     "reason": "Soft-tissue sarcomas are recorded in Group IX, at the site where they began.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A bone sarcoma, such as Ewing sarcoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 8,
+     "recapture_site": true,
+     "reason": "Bone sarcomas are recorded in Group VIII, at the bone where they began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+       "pdf_page": 21,
+       "quote": "Other tumors of orbital bone Ewing sarcoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Leukaemia",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 1,
+     "recapture_site": true,
+     "reason": "Leukaemia is recorded in Group I.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": true,
+     "reason": "Lymphoma is recorded in Group II.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A tumour of the brain or its coverings",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 3,
+     "recapture_site": true,
+     "reason": "Tumours of the brain and its coverings are recorded in Group III.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Nephroblastoma (Wilms tumour), or another kidney tumour",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 6,
+     "recapture_site": true,
+     "reason": "Kidney tumours are recorded in Group VI.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A germ cell tumour",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 10,
+     "recapture_site": true,
+     "reason": "Germ cell tumours are recorded in Group X.",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "The primary is not known and has not been found",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "site_capture_unknown_primary",
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "The next screen records an unknown primary site.",
+     "recognition_aid": "",
+     "cite": []
+    }
+   ]
+  }
+ ],
+ "ihc_rules": [
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "MYB",
+    "KIT"
+   ],
+   "negative": [],
+   "code": "8200",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "MYB+ (although less sensitive, may be used as a surrogate for",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "Positive MYB, KIT",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "S100 protein",
+    "SOX10",
+    "mammaglobin",
+    "NTRK (pan-TRK)"
+   ],
+   "negative": [
+    "CK5",
+    "p63",
+    "p40",
+    "androgen receptor"
+   ],
+   "code": "8502",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "S100+, SOX10+, mammaglobin+, CK18+",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "IHC positivity for S100 protein, mammaglobin, and NTRK",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "p63",
+    "p40"
+   ],
+   "negative": [
+    "S100 protein",
+    "SOX10"
+   ],
+   "code": "8430",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "P63+, p40+ S100−, SOX10−",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "pancytokeratin and CK7 (inner cells)",
+    "p63, SMA, calponin and S100 protein (outer myoepithelial cells)"
+   ],
+   "negative": [],
+   "code": "8562",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "Inner cells: panCK+, CK7+",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "NR4A3 or NR4A2",
+    "DOG1",
+    "SOX10"
+   ],
+   "negative": [
+    "p63",
+    "S100 protein",
+    "mammaglobin",
+    "pan-TRK"
+   ],
+   "code": "8550",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 15,
+     "quote": "NR4A3+ or NR4A2+ DOG1+, SOX10+",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "CK7",
+    "androgen receptor",
+    "GCDFP-15",
+    "HER2"
+   ],
+   "negative": [
+    "SMA",
+    "p63",
+    "calponin",
+    "ER",
+    "PR",
+    "PSA"
+   ],
+   "code": "8500",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 14,
+     "quote": "AE1/AE3+, CK7+, CK19+, EMA+",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_lacrimal_ihc",
+   "positive": [
+    "PLAG1 and HMGA2 in the pleomorphic adenoma component",
+    "p53 and c-MYC in the carcinoma"
+   ],
+   "negative": [],
+   "code": "8941",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 13,
+     "quote": "PA component: PLAG1+ and HMGA2+",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_intraocular_ihc",
+   "positive": [
+    "PAX8"
+   ],
+   "negative": [
+    "melanocytic markers"
+   ],
+   "code": "8140",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "PAX8 IHC is useful in distinguishing CBE adenoma and adenocarcinoma from melanocytic lesions",
+     "from_image": false
+    },
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "presence of basement membrane material highlighted with periodic acid-Schiff",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "ey_intraocular_ihc",
+   "positive": [
+    "LIN28A",
+    "PAX8"
+   ],
+   "negative": [],
+   "code": "9501",
+   "behaviour": "3",
+   "cite": [
+    {
+     "file": "XIf9-eye-XId-ocular-melanoma__Milman-2023.txt",
+     "pdf_page": 11,
+     "quote": "expresses LIN28A and PAX8 by immunohistochemistry (IHC), which may help distinguish these tumors from retinoblastoma",
+     "from_image": false
+    }
+   ]
+  }
+ ],
+ "tissue_free": [
+  {
+   "evidence": "A referral letter or clinical note that names a malignant tumour of the eye, lacrimal gland or orbit",
+   "code": "8000",
+   "behaviour": "3",
+   "basis": 1,
+   "cite": []
+  },
+  {
+   "evidence": "An imaging report (ultrasound, computed tomography or magnetic resonance imaging) that shows the tumour",
+   "code": "8000",
+   "behaviour": "3",
+   "basis": 2,
+   "cite": []
+  }
+ ],
+ "lab_tests": [],
+ "rules_a_to_k": [
+  {
+   "rule": "A",
+   "applies": true,
+   "how": "ey_site options: 'Eyelid, including the eyelid margin' carries the reason that an eyelid tumour is recorded at the skin of the eyelid (C44.1) and hands the case to the skin tree; 'Eye, part not stated' records C69.9."
+  },
+  {
+   "rule": "B",
+   "applies": true,
+   "how": "ey_site option 'Only a region around the eye (periorbital or periocular)': its reason states that a prefix site is not an ICD-O site and the next screen asks the tissue, falling back to C76.0."
+  },
+  {
+   "rule": "C",
+   "applies": true,
+   "how": "ey_site option 'More than one of these parts, and the report cannot say where the tumour began' records C69.8; the reason states the point of origin cannot be determined."
+  },
+  {
+   "rule": "D",
+   "applies": true,
+   "how": "Referral reasons for lymphoma (ey_surface, ey_lacrimal, ey_intraocular, ey_orbit) state that Group II records the lymphoma at the part of the eye or orbit where it arose."
+  },
+  {
+   "rule": "E",
+   "applies": true,
+   "how": "ey_orbit_histology option 'Myeloid sarcoma': the reason states it is recorded in Group I at the orbit, not at bone marrow."
+  },
+  {
+   "rule": "F",
+   "applies": true,
+   "how": "Exclusion option labels and reasons on the surface and lacrimal screens name the in situ, low-grade and benign behaviours (8077/2, 8077/0, 8070/2, 8500/2, 8940/0). The lacrimal option 'Malignant mixed tumour, or malignant pleomorphic adenoma' codes the stated malignant behaviour (8940/3) and refers it to Group XII."
+  },
+  {
+   "rule": "G",
+   "applies": false,
+   "how": "No eye code depends on grade and no screen in this part offers two grades. Mucoepidermoid carcinoma is graded in the report, but every grade records 8430/3."
+  },
+  {
+   "rule": "H",
+   "applies": true,
+   "how": "Reasons on the picker options for carcinoma ex pleomorphic adenoma (8941/3, printed site C07/C08) and ductal adenocarcinoma (8500/3, printed site C50) state that the stated lacrimal site wins. The sebaceous carcinoma option (printed site C44) sends the case to the eyelid. Retinoblastoma (printed site C69.2) refers to Group V. The deposit option on every screen applies the clause that the site is used only after a metastasis is ruled out."
+  },
+  {
+   "rule": "J",
+   "applies": false,
+   "how": "Every Milman eye term matches an ICD-O-3.2 term or synonym directly (checked in icdo32.sqlite); no word roots need reordering. ICD-O lists the combination 'mixed adenocarcinoma and squamous cell carcinoma' at 8560/3 itself."
+  },
+  {
+   "rule": "K",
+   "applies": true,
+   "how": "Hint on ey_carcinoma_other, the screen that offers both codes: 'If the report names two carcinoma types for one tumour and no single term covers both, choose the one with the higher code number.' Adenosquamous carcinoma needs no Rule K because 8560/3 covers both components. Squamous cell carcinoma with mucinous differentiation is a registrar question (8070/3 by the WHO name, 8480/3 by Rule K)."
+  }
+ ],
+ "code_currency": [
+  {
+   "code": "8410",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label 'Sebaceous adenocarcinoma' is a synonym; ICD-O-3.2 preferred term is Sebaceous carcinoma.",
+   "action": "Not output by the eye tree (sent to the eyelid skin tree); the skin tree carries the preferred term. REDCap-side list."
+  },
+  {
+   "code": "8941",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label 'Carcinoma in pleomorphic adenoma' is a synonym; ICD-O-3.2 preferred term is Carcinoma ex pleomorphic adenoma.",
+   "action": "The picker option names Carcinoma ex pleomorphic adenoma (8941/3). REDCap-side list."
+  },
+  {
+   "code": "8502",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label 'Secretory carcinoma of breast' is not an ICD-O-3.2 term; the preferred term is Secretory carcinoma.",
+   "action": "The picker option names Secretory carcinoma (8502/3). REDCap-side list: at the lacrimal gland the REDCap label names the wrong organ."
+  },
+  {
+   "code": "8077",
+   "behaviour": "2",
+   "finding": "Currency check section 5: REDCap offers 8077 'Squamous intraepithelial neoplasia, high grade' in XIf; ICD-O-3.2 holds 8077 at /0 and /2 only.",
+   "action": "Exclusion on ey_surface_histology (8077/2 and 8077/0). Not built as a code answer."
+  },
+  {
+   "code": "8010",
+   "behaviour": "3",
+   "finding": "Not in the currency check: the REDCap XIf consolidated list labels 8010 'Epithelial Tumor, NOS'. ICD-O-3.2 prints Carcinoma, NOS as the preferred term at 8010/3; 'Epithelial tumor, benign' is 8010/0 and 'Epithelial tumor, malignant' is the /3 synonym.",
+   "action": "Every 8010/3 answer names Carcinoma, NOS. Add the XIf label to the REDCap-side list."
+  },
+  {
+   "code": "8290",
+   "behaviour": "3",
+   "finding": "ICD-O-3.2 keeps 8290/3 current (preferred term Oxyphilic adenocarcinoma; Oncocytic carcinoma a synonym). WHO Eye5 removed oncocytic carcinoma of the lacrimal gland as obsolete (Milman 2023, PDF p. 15).",
+   "action": "Registrar question: whether the eye picker holds 8290/3."
+  },
+  {
+   "code": "8430",
+   "behaviour": "1",
+   "finding": "ICD-O-3.2 marks Mucoepidermoid tumor (8430/1) [obs]; only 8430/3 Mucoepidermoid carcinoma is current.",
+   "action": "No /1 option. A report that says mucoepidermoid tumour is coded from the pathologist's stated behaviour (Rule F)."
+  },
+  {
+   "code": "8200",
+   "behaviour": "3",
+   "finding": "ICD-O-3.2 marks Cylindroma, NOS and Adenocarcinoma, cylindroid [obs] at 8200/3; Adenoid cystic carcinoma is the current preferred term.",
+   "action": "The picker option names Adenoid cystic carcinoma only."
+  },
+  {
+   "code": "8550",
+   "behaviour": "1",
+   "finding": "ICD-O-3.2 marks Acinar cell tumor and Acinic cell tumor (8550/1) [obs].",
+   "action": "No /1 option; the picker offers 8550/3 under the preferred term Acinar cell carcinoma."
+  },
+  {
+   "code": "8500",
+   "behaviour": "3",
+   "finding": "Milman prints no code for primary ductal adenocarcinoma of the lacrimal gland. ICD-O-3.2 holds no 'salivary duct carcinoma' term; Duct adenocarcinoma, NOS is a synonym at 8500/3, whose preferred term carries the breast site (C50._).",
+   "action": "Picker option records 8500/3 with the Rule H reason. Confirm against the WHO Eye5 volume (data gap)."
+  },
+  {
+   "code": "XIf9 inventory",
+   "behaviour": "3",
+   "finding": "164 of the 174 XIf9 inventory records are current. Ten are wholly [obs] at /3: 8042, 8124, 8130, 8141, 8245, 8251, 8440, 8450, 8508, 8512.",
+   "action": "The eye picker's long tail is the 164 current XIf9 codes; the ten [obs] codes never appear (registrar, 8 October 2026)."
+  }
+ ],
+ "conflicts": [
+  {
+   "other_group": 5,
+   "codes": [
+    "9510"
+   ],
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "issue": "Retinoblastoma is Group V at every eye site and is registered there without tissue, because biopsy is avoided. The eye tree refers it on the evidence gate before the 8000/3 answers; without that option, an imaging-only retinoblastoma would record 8000/3 (XIIb). The router's C69 candidate groups (topography_codes.json) do not yet list Group 11; its note says to add it when Group 11 is built."
+  },
+  {
+   "other_group": 4,
+   "codes": [
+    "9501",
+    "9502",
+    "9503",
+    "9504"
+   ],
+   "sites": [
+    "C69.0-C69.9"
+   ],
+   "issue": "ICCC-2017 places medulloepithelioma at C00-C69 in IVb (behaviour /3 only). Group IV's tree already holds the ciliary body site (op_medulloepithelioma)."
+  },
+  {
+   "other_group": 3,
+   "codes": [
+    "9501",
+    "9502",
+    "9380",
+    "9421"
+   ],
+   "sites": [
+    "C72.3"
+   ],
+   "issue": "The optic nerve is C72.3, a central nervous system site: medulloepithelioma there is IIIc3 and optic nerve glioma is IIIb. The eye site screen refers optic nerve tumours to Group III."
+  },
+  {
+   "other_group": 12,
+   "codes": [
+    "8000"
+   ],
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "issue": "Tissue-free registration records 8000/3, and non-typed malignant cytology records 8000/3; ICCC-2017 places 8000/3 at C69 in XIIb, so these cases leave Group XI when the subgroup is computed."
+  },
+  {
+   "other_group": 12,
+   "codes": [
+    "8940",
+    "8982"
+   ],
+   "sites": [
+    "C69.5"
+   ],
+   "issue": "Malignant mixed tumour (8940/3) and myoepithelial carcinoma (8982/3) of the lacrimal gland are XIIa4 at every site, while carcinoma ex pleomorphic adenoma (8941/3) is XIf9. The lacrimal screen refers the malignant mixed tumour wording to Group XII. Myoepithelial carcinoma is not in the Milman list and has no option; a report naming it needs the Group XII tree."
+  },
+  {
+   "other_group": 1,
+   "codes": [
+    "9930"
+   ],
+   "sites": [
+    "C69.6"
+   ],
+   "issue": "Myeloid sarcoma of the orbit is Ib; Group I's tree already holds the orbit (C69.6). Rule E keeps the orbit as its site."
+  },
+  {
+   "other_group": 2,
+   "codes": [
+    "9590-9699",
+    "9751"
+   ],
+   "sites": [
+    "C69.0",
+    "C69.1",
+    "C69.2",
+    "C69.3",
+    "C69.4",
+    "C69.5",
+    "C69.6",
+    "C69.8",
+    "C69.9"
+   ],
+   "issue": "Ocular adnexal and intraocular lymphomas are Group II; Langerhans cell histiocytosis (9751) is IId."
+  },
+  {
+   "other_group": 9,
+   "codes": [
+    "8900-8920",
+    "9364"
+   ],
+   "sites": [
+    "C69.6"
+   ],
+   "issue": "Orbital rhabdomyosarcoma is IXa. Ewing sarcoma of the orbital soft tissue (C69.6) is IXd2, while Ewing sarcoma of the orbital bone (C41.0) is VIIIc2 (Group 8)."
+  },
+  {
+   "other_group": 10,
+   "codes": [
+    "9071",
+    "9080"
+   ],
+   "sites": [
+    "C69.6"
+   ],
+   "issue": "Orbital teratoma and yolk sac tumour are Xb at C69; Group X's tree holds the C69 sites."
+  },
+  {
+   "other_group": 8,
+   "codes": [
+    "9364"
+   ],
+   "sites": [
+    "C41.0"
+   ],
+   "issue": "A tumour of the bone of the orbital wall is recorded at the bone (C41.0), not at the orbit (C69.6)."
+  },
+  {
+   "other_group": 11,
+   "codes": [
+    "8410",
+    "8090",
+    "8247",
+    "8509",
+    "8200"
+   ],
+   "sites": [
+    "C44.1",
+    "C69.0"
+   ],
+   "issue": "Inside Group XI: eyelid tumours (sebaceous carcinoma, basal cell carcinoma, Merkel cell carcinoma, endocrine mucin-producing sweat gland carcinoma, adenoid cystic carcinoma of the eyelid) are XIe at C44.1. WHO Eye5 removed sebaceous carcinoma from the conjunctiva chapter. Melanoma (8720-8790) at every eye site is XId and goes to the melanoma tree."
+  }
+ ],
+ "data_gaps": [
+  {
+   "need": "A paediatric source for eye carcinomas: conjunctival squamous cell carcinoma (ocular surface squamous neoplasia) in children and adolescents, and lacrimal gland carcinoma (chiefly adenoid cystic carcinoma) in childhood.",
+   "why": "Neither Milman 2023 nor Pfister 2022 reports any eye carcinoma in a child, so ruling 1 makes every eye carcinoma a picker entry. With a paediatric report, conjunctival squamous cell carcinoma and lacrimal adenoid cystic carcinoma would become options on their site screens.",
+   "candidate_source": "PubMed: 'ocular surface squamous neoplasia children' and 'lacrimal gland adenoid cystic carcinoma childhood adolescence' (for example Tellado MV et al., Ophthalmology 1997, on lacrimal adenoid cystic carcinoma in childhood and adolescence; citation to be verified)."
+  },
+  {
+   "need": "The ICD-O codes the WHO Eye5 volume prints for its entities, especially squamous cell carcinoma with mucinous differentiation, primary ductal adenocarcinoma of the lacrimal gland and adenocarcinoma of the ciliary body and retinal pigment epithelium.",
+   "why": "Milman 2023 prints no codes; every code here is matched by term in icdo32.sqlite alone (screening file, gap 4). The mucinous-differentiation code is a registrar question until the WHO volume is read.",
+   "candidate_source": "WHO Classification of Tumours Editorial Board. Eye and orbit tumours, 5th ed., vol. 13 (IARC 2023), or its online edition."
+  },
+  {
+   "need": "The grades WHO Eye5 uses for conjunctival squamous intraepithelial neoplasia.",
+   "why": "Milman names the entity without grades; the exclusion options split it into low grade (8077/0) and high grade (8077/2) from ICD-O-3.2 alone.",
+   "candidate_source": "WHO Eye5 chapter on conjunctival squamous intraepithelial neoplasia."
+  },
+  {
+   "need": "ICD-O-3 topography index entries for the caruncle, the retinal pigment epithelium and the optic disc.",
+   "why": "Milman groups the caruncle with the conjunctiva and treats optic disc tumours with the optic nerve; no topography index is in this part's files. The site screen assumes conjunctiva (C69.0), retina (C69.2) and optic nerve (C72.3).",
+   "candidate_source": "ICD-O-3.2 topography alphabetic index."
+  },
+  {
+   "need": "Visser 2023 (Front Oncol 13:1250549) in this part's files.",
+   "why": "The tissue-free rows follow the registrar's brief; they carry no quotation because Visser is not among this part's sources. Table 4 names no eye entity.",
+   "candidate_source": "Visser 2023, Tables 2 to 4 (already held by the controller)."
+  }
+ ]
+}

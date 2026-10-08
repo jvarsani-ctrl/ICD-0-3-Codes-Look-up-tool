@@ -693,6 +693,15 @@ ICDO32_MATRIX_RULE = {
     # Group 7 open question 2(b), ruled 3 October 2026: calcifying nested stromal-epithelial
     # tumour reported as malignant or metastatic. ICCC-2017 row 67 places 8975/3 in VIIa1.
     (7, "8975", "3"): ("1", "Calcifying nested stromal-epithelial tumor"),
+    # Group 11 review A6, ruled 8 October 2026: Rule F, the pathologist's stated behaviour, wins,
+    # and the name stays the code's own. A hyalinizing trabecular tumour the report calls
+    # malignant: ICCC-2017 range 121 places 8336/3 at C73.9 in XIb.
+    (11, "8336", "3"): ("1", "Hyalinizing trabecular tumor"),
+    # The same ruling for two exclusions (check_behaviour_exclusion reads this table too): a
+    # carcinoma ex pleomorphic adenoma and an extramammary Paget disease the report calls in
+    # situ. Neither /2 is registered in Group XI.
+    (11, "8941", "2"): ("3", "Carcinoma ex pleomorphic adenoma"),
+    (11, "8542", "2"): ("3", "Paget disease, extramammary"),
 }
 
 
@@ -775,6 +784,11 @@ GROUP9 = 9
 # the same reason as GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs the name at module load time.
 GROUP10 = 10
 
+# Group 11 build contract §5 — Other Malignant Epithelial Neoplasms and Malignant Melanomas.
+# Defined here for the same reason as GROUP6: BEHAVIOUR_DECLARED_BY_GROUP needs the name at
+# module load time.
+GROUP11 = 11
+
 # Which groups have ADOPTED behaviour_exclusion, and what each one's ICCC-3 behaviour
 # declaration actually is. Read by check_behaviour_exclusion(), whose "subtle clause"
 # fails a block naming a behaviour the group DOES admit — so this table decides the
@@ -812,6 +826,11 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
     # central nervous system, where every behaviour_exclusion sits. Behaviour per site is
     # enforced by check_group10_codes_fit_site() (rule 1), which reads the ranges themselves.
     GROUP10: {"3"},
+    # GROUP11 added 8 October 2026 (Group 11 build contract §5). ICCC-2017.sqlite ranges
+    # 118-136 (XIa to XIf11) declare behaviour 3 on every row, verified the same day. Without
+    # this row every Group 11 behaviour_exclusion (8335/1, 8504/2, 8336/1, 8103/1, 8370/0 ...)
+    # goes unchecked.
+    GROUP11: {"3"},
 }
 
 # Groups whose morphology_name is checked against icdo32.sqlite by check_icdo32_round_trip().
@@ -820,7 +839,11 @@ BEHAVIOUR_DECLARED_BY_GROUP = {
 # 1 and 2 are outside it until their names move to ICD-O-3.2 terms, handed to those groups'
 # sessions the same day.
 # GROUP10 joins on its build contract §5: morphology_name is the ICD-O-3.2 preferred term.
-ROUND_TRIP_GROUPS = {GROUP1, GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9, GROUP10}
+# GROUP11 joins on its build contract §5: morphology_name is the ICD-O-3.2 Preferred term, and
+# the 13 entries whose Preferred term is [obs] (the eleven all-[obs] pairs, 8551 and 8780) are
+# WARNs in the round trip, never FAILs.
+ROUND_TRIP_GROUPS = {GROUP1, GROUP3, GROUP4, GROUP5, GROUP6, GROUP7, GROUP8, GROUP9, GROUP10,
+                     GROUP11}
 
 ROMAN_BY_GROUP = {
     1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI",
@@ -2382,10 +2405,16 @@ def check_refer_terminals(ctx: DTContext):
             elif not 1 <= grp <= 12:
                 out.append((FAIL, "refer terminal %s: refer_group %d is outside the "
                                   "ICCC-3 range 1-12" % (label, grp)))
-            elif grp == ctx.group:
+            elif grp == ctx.group and holder.get("recapture_site") is not True:
+                # One admitted case (Group 11 build contract D10): a deposit whose primary is
+                # a carcinoma or melanoma of another organ refers to the group's own number
+                # with recapture_site, so the case re-enters at the primary's site. Without
+                # recapture_site the hop would re-enter at the site the case already holds.
                 out.append((FAIL, "refer terminal %s: refer_group %d is this group — a "
                                   "referral must name a DIFFERENT group, or the branch "
-                                  "should emit a code here" % (label, grp)))
+                                  "should emit a code here. The one exception is a "
+                                  "recapture_site referral, which re-enters this group at "
+                                  "the primary's site" % (label, grp)))
 
             code = as_code(holder.get("morphology_code"))
             if code:
@@ -6520,7 +6549,16 @@ def check_behaviour_exclusion(ctx: DTContext, layer1: Path):
             term = be.get("icdo_term")
             if code and beh_s is not None and isinstance(term, str) and index:
                 terms = index.get((code, beh_s))
-                if not terms:
+                matrix = ICDO32_MATRIX_RULE.get((ctx.group, code, beh_s))
+                if not terms and matrix:
+                    # A stated-behaviour exclusion by registrar ruling: the name is the code's
+                    # term at its printed behaviour, and the ruling holds while that anchor does.
+                    if not (term == matrix[1] and term in (index.get((code, matrix[0])) or {})):
+                        out.append((FAIL, "%s: %s/%s is a matrix-rule exclusion anchored on %r "
+                                          "at %s/%s, which icdo32.sqlite no longer carries "
+                                          "under that name (or icdo_term %r differs)"
+                                    % (loc, code, beh_s, matrix[1], code, matrix[0], term)))
+                elif not terms:
                     out.append((FAIL, "%s: ICD-O-3.2 carries no term at all for %s/%s "
                                       "— icdo_code/icdo_behaviour do not round-trip "
                                       "(contract §3, §8 rule 1)" % (loc, code, beh_s)))
@@ -9566,7 +9604,7 @@ GROUP10_PLACENTAL_MARKER_PAIR = ("9100", "3")
 # code set goes through the full check.
 GROUP10_D21_NEUTRAL_ALIASES = {"teratoma": frozenset({"9080", "9084"})}
 
-_ICCC_X_CACHE: dict = {}
+_ICCC_RANGE_CACHE: dict = {}
 
 
 def _iccc_spans(raw):
@@ -9585,32 +9623,39 @@ def _in_spans(spans, value):
     return any(lo <= value <= hi for lo, hi in spans)
 
 
-def _group10_iccc_ranges(layer1):
+def _iccc_ranges(layer1, main_group):
     """
-    Every ICCC-2017 range for main group X, read from ICCC-2017.sqlite: a list of
-    {range_id, subgroup, codes, sites, behaviours}, where codes and sites are (lo, hi) spans
-    of the four-digit morphology and the three-digit topography, and behaviours is the set
-    the range declares ('0-1,3' -> {'0', '1', '3'}). Returns (ranges, error_or_None).
+    Every ICCC-2017 range of one main group ('X', 'XI'), or of every group when main_group is
+    None, read from ICCC-2017.sqlite: a list of {range_id, main_group, subgroup, codes, sites,
+    behaviours}, where codes and sites are (lo, hi) spans of the four-digit morphology and the
+    three-digit topography, and behaviours is the set the range declares ('0-1,3' -> {'0', '1',
+    '3'}). Returns (ranges, error_or_None). Groups 10 and 11 both read through this function.
     """
+    label = "main group %s" % main_group if main_group else "any group"
     path = _iccc_path(layer1)
     if path is None or not path.exists():
         return [], "ICCC-2017.sqlite not found at %s" % path
-    key = str(path)
-    if key in _ICCC_X_CACHE:
-        return _ICCC_X_CACHE[key], None
+    key = (str(path), main_group)
+    if key in _ICCC_RANGE_CACHE:
+        return _ICCC_RANGE_CACHE[key], None
     ranges = []
     try:
         con = sqlite3.connect("file:%s?mode=ro" % path, uri=True)
         try:
-            for range_id, subgroup, hist, sites, beh in con.execute(
-                    "SELECT cr.range_id, g.group_code, cr.icdo3_histology_raw, "
-                    "cr.icdo3_primary_site_raw, cr.icdo3_behavior FROM code_ranges cr "
-                    "JOIN groups g ON g.group_id = cr.group_id WHERE g.main_group = 'X' "
-                    "ORDER BY cr.range_id"):
+            sql = ("SELECT cr.range_id, g.main_group, g.group_code, cr.icdo3_histology_raw, "
+                   "cr.icdo3_primary_site_raw, cr.icdo3_behavior FROM code_ranges cr "
+                   "JOIN groups g ON g.group_id = cr.group_id")
+            args = ()
+            if main_group:
+                sql += " WHERE g.main_group = ?"
+                args = (main_group,)
+            for range_id, main, subgroup, hist, sites, beh in con.execute(
+                    sql + " ORDER BY cr.range_id", args):
                 behaviours = set()
                 for lo, hi in _iccc_spans(beh):
                     behaviours.update(str(b) for b in range(lo, hi + 1))
-                ranges.append({"range_id": range_id, "subgroup": str(subgroup),
+                ranges.append({"range_id": range_id, "main_group": str(main),
+                               "subgroup": str(subgroup),
                                "codes": _iccc_spans(hist), "sites": _iccc_spans(sites),
                                "behaviours": behaviours})
         finally:
@@ -9619,9 +9664,14 @@ def _group10_iccc_ranges(layer1):
         return [], "ICCC-2017.sqlite at %s could not be read: %s: %s" % (
             path, type(exc).__name__, exc)
     if not ranges:
-        return [], "ICCC-2017.sqlite at %s holds no range for main group X" % path
-    _ICCC_X_CACHE[key] = ranges
+        return [], "ICCC-2017.sqlite at %s holds no range for %s" % (path, label)
+    _ICCC_RANGE_CACHE[key] = ranges
     return ranges, None
+
+
+def _group10_iccc_ranges(layer1):
+    """Every ICCC-2017 range for main group X (see _iccc_ranges)."""
+    return _iccc_ranges(layer1, "X")
 
 
 def _group10_fitting_ranges(ranges, code, behaviour, sites):
@@ -9680,14 +9730,14 @@ def _group10_route(tree_routing, topo):
     return (tree_routing.get("default") or {}).get("tree_id")
 
 
-def _group10_tree_routing(repo: Path):
-    """(groups["10"].tree_routing or None, topography_lookup, findings) from the router and
-    data/shared/topography_codes.json."""
+def _group10_tree_routing(repo: Path, group_number: int = GROUP10):
+    """(groups[<group>].tree_routing or None, topography_lookup, findings) from the router and
+    data/shared/topography_codes.json. Group 10 by default; Group 11 reads it through here too."""
     router, found = load_json(Path(repo) / "data" / "shared" / "presentation_router.json")
     lookup, found_t = _load_topography_lookup(repo)
     findings = [f for f in found + found_t if f[0] == FAIL]
-    group = ((router or {}).get("groups") or {}).get(str(GROUP10)) if isinstance(router, dict) \
-        else None
+    group = ((router or {}).get("groups") or {}).get(str(group_number)) \
+        if isinstance(router, dict) else None
     tr = group.get("tree_routing") if isinstance(group, dict) else None
     return (tr if isinstance(tr, dict) else None), lookup, findings
 
@@ -10817,6 +10867,398 @@ def check_group10_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path
     return out
 
 
+# --------------------------------------------------------------------------------------
+# Group 11 build contract §5 — Other Malignant Epithelial Neoplasms and Malignant Melanomas.
+# Four rules, scoped to Group 11 and a no-op on every other group's file. GROUP11 is defined
+# beside GROUP10, above BEHAVIOUR_DECLARED_BY_GROUP. The rules reuse Group 10's group-neutral
+# helpers (_iccc_ranges, _group10_fitting_ranges, _group10_emissions, _group10_exclusions,
+# _group10_route, _group10_tree_routing, _group8_terminals_by_evidence). The contract's other
+# rules (4, 6, 7, 8) are on docs/TODO.md; the registrar trimmed this task on 8 October 2026.
+#
+# ICCC-3 Group XI is ranges 118-136, all behaviour 3. XIa, XIb, XIc, XId (melanoma) and XIe
+# are site-specific or histology-specific; XIf1 to XIf11 are one shared list of 174 codes that
+# differs only by site. The ranges are read from ICCC-2017.sqlite on every build. The routed
+# sites of every tree come from build/group11_common.trees_table(), the single source the
+# router and the trees are both built from; nothing below types a site.
+# --------------------------------------------------------------------------------------
+
+GROUP11_SKIN_TREE = "g11_skin"
+GROUP11_UNSPECIFIED_TREE = "g11_unspecified"
+GROUP11_MELANOMA_SUBGROUP = "XId"
+# Contract D7. Visser O, et al. Front Oncol 2023;13:1250549: rule 5 and Table 3 register a
+# melanoma of the skin on clinical evidence as 8720/3 at basis 1; Table 4 registers the marker
+# codes below at basis 4; rule 6 makes basis 4 need a clinical investigation that shows the
+# tumour; rule 4 makes "possible" not registrable.
+GROUP11_TISSUE_TESTS = {"Histology", "Cytology"}
+GROUP11_MARKER_EVIDENCE = {"Imaging", "Tumour markers"}
+# Registrar, 8 October 2026 (Group 11 review A8, E9): "We go with pediatric source". Ferrari
+# 2021, PDF p. 3: "When melanoma is suspected, initial excisional biopsy is required." Visser
+# Table 3's melanoma row is withdrawn for ages 0 to 18, so no Group XI pair records at basis 1.
+GROUP11_CLINICAL_PAIRS: set = set()
+GROUP11_MARKER_PAIRS = {(c, "3") for c in
+                        ("8345", "8240", "8151", "8152", "8153", "8155", "8156", "8241", "8158")}
+# Contract D3, §0.3. Every malignant ICD-O-3.2 term on these stems is [obs]. The list is typed
+# from the inventory; the rule also computes every [obs] Preferred term from icdo32.sqlite, so
+# 8551 and 8780 (an [obs] Preferred term with a live synonym) are held off screen as well.
+GROUP11_OBS_ONLY = ("8042", "8124", "8130", "8141", "8245", "8251", "8350", "8440", "8450",
+                    "8508", "8512")
+
+
+def _group11_trees():
+    """({tree_id: row}, error_or_None) from build/group11_common.trees_table(): each row has
+    tree_id, sites (C-codes expanded against Layer 1's REDCap topography list) and prefix. The
+    melanoma tree routes no site, so its row has an empty sites list."""
+    here = str(Path(__file__).resolve().parent)
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    try:
+        import group11_common
+        return {row["tree_id"]: row for row in group11_common.trees_table()}, None
+    except Exception as exc:    # an unreadable Layer 1 or a malformed TREES table
+        return {}, "build/group11_common.trees_table() failed: %s: %s" % (type(exc).__name__, exc)
+
+
+def check_group11_codes_fit_site(ctx: DTContext, layer1: Path):
+    """
+    GROUP 11 RULE 1 (contract §5, D11, standing rule 3) — every code a tree emits is a Group XI
+    code at every site the tree is routed to, or no ICCC-2017 range of any group holds it
+    there; and no behaviour exclusion is a Group XI code.
+
+    Source: ICCC-2017.sqlite, ranges 118-136 (main group XI) and every other range, read on
+    every build; the routed sites from build/group11_common.trees_table(). An emission (code
+    branch, immunohistochemistry rule, picker option, nos_fallback) passes at a site when a
+    Group XI range contains the code, declares the behaviour and covers the site, or when no
+    range of any group contains the code at that behaviour and site (the standing-rule-3
+    codes, design D11). It fails when ICCC-2017 places the pair in another group at the site:
+    8170/3 in the lung is Group VII. The melanoma tree routes no site; its emissions must lie
+    in an XId range, which covers every site.
+
+    A behaviour_exclusion fails when a Group XI range admits the pair at any of the tree's
+    sites: it hides a code the group registers.
+    """
+    if ctx.group != GROUP11:
+        return []
+    xi, err = _iccc_ranges(layer1, "XI")
+    everything, err_all = _iccc_ranges(layer1, None)
+    if err or err_all:
+        return [(WARN, "GROUP 11 RULE 1 could not read the ICCC-2017 ranges: %s. No emitted "
+                       "code is checked against its site" % (err or err_all))]
+    rows, terr = _group11_trees()
+    if terr:
+        return [(FAIL, "GROUP 11 RULE 1: %s, so no tree has a site" % terr)]
+    sites_of = {tid: sorted(_topo_index(s) for s in row["sites"]) for tid, row in rows.items()}
+    melanoma = [r for r in xi if r["subgroup"].startswith(GROUP11_MELANOMA_SUBGROUP)]
+    everywhere = [(0, 999)]
+
+    def holders(code):
+        hit = [r for r in everything if code and code.isdigit() and _in_spans(r["codes"], int(code))]
+        text = ", ".join("%d (%s, behaviour %s)" % (r["range_id"], r["subgroup"],
+                                                    ",".join(sorted(r["behaviours"])))
+                         for r in hit[:6])
+        return (text + (", ... (%d in all)" % len(hit) if len(hit) > 6 else "")) or "none"
+
+    def shown(sites):
+        return ", ".join(_topo_from_index(n) for n in sites[:6]) + (", ..." if len(sites) > 6 else "")
+
+    out, checked, excluded = [], 0, 0
+    for node_id, where, code, beh in _group10_emissions(ctx):
+        tree = ctx.node_tree.get(node_id)
+        checked += 1
+        if tree not in rows:
+            out.append((FAIL, "%s %s: %s emits %s/%s, but the tree is not in "
+                              "group11_common.TREES" % (tree, node_id, where, code, beh)))
+            continue
+        sites = sites_of[tree]
+        if not sites:
+            ok = any(_group10_fitting_ranges([dict(r, sites=everywhere)], code, beh, {0})
+                     for r in melanoma)
+            if not ok:
+                out.append((FAIL, "%s %s: %s emits %s/%s, which is no ICCC-2017 %s "
+                                  "(malignant melanoma) code; this tree routes no site, so every "
+                                  "emission must lie in an %s range. Ranges holding %s: %s"
+                            % (tree, node_id, where, code, beh, GROUP11_MELANOMA_SUBGROUP,
+                               GROUP11_MELANOMA_SUBGROUP, code, holders(code))))
+            continue
+        bad = []
+        for s in sites:
+            if _group10_fitting_ranges(xi, code, beh, {s}):
+                continue
+            if _group10_fitting_ranges(everything, code, beh, {s}):
+                bad.append(s)
+        if bad:
+            out.append((FAIL, "%s %s: %s emits %s/%s, which no ICCC-2017 Group XI range admits "
+                              "at %d of this tree's %d routed site(s) (%s), where another range "
+                              "holds it. Ranges holding %s: %s"
+                        % (tree, node_id, where, code, beh, len(bad), len(sites), shown(bad),
+                           code, holders(code))))
+    for node_id, where, code, beh in _group10_exclusions(ctx):
+        tree = ctx.node_tree.get(node_id)
+        excluded += 1
+        sites = set(sites_of.get(tree) or [])
+        if not sites:
+            fit = [r for r in melanoma if _in_spans(r["codes"], int(code)) and beh in r["behaviours"]] \
+                if code and code.isdigit() else []
+        else:
+            fit = _group10_fitting_ranges(xi, code, beh, sites)
+        if fit:
+            out.append((FAIL, "%s %s: %s excludes %s/%s, but ICCC-2017 range %d (%s) admits it "
+                              "at this tree's site, so the exclusion hides a Group XI code"
+                        % (tree, node_id, where, code, beh, fit[0]["range_id"],
+                           fit[0]["subgroup"])))
+    if not checked:
+        out.append((FAIL, "GROUP 11 RULE 1 found no emitted code in any tree"))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 11 RULE 1: %d emission(s) each lie in an ICCC-2017 Group XI range "
+                        "at every routed site of their tree, or in no range of any group there "
+                        "(melanoma: in XId); %d behaviour exclusion(s) lie in none"
+                        % (checked, excluded)))
+    return out
+
+
+def check_group11_no_pathology_codes(ctx: DTContext):
+    """
+    GROUP 11 RULE 2 (contract §5, D7) — a terminal reached with neither histology nor cytology
+    in the file registers what Visser 2023 allows and nothing more specific.
+
+    Source: Visser O, et al. Front Oncol 2023;13:1250549. Table 3: a melanoma of the skin is
+    8720/3 at basis 1 on clinical evidence. Table 4: a functioning neuroendocrine or
+    medullary tumour with its marker raised is 8345/3, 8240/3, 8151/3, 8152/3, 8153/3, 8155/3,
+    8156/3, 8241/3 or 8158/3 at basis 4. Rule 6: basis 4 needs a clinical investigation that
+    shows the tumour, here an imaging report. Rule 4: "possible" is not registrable. Every
+    other tissue-free case refers to Group XII (8000/3 is no Group XI code).
+
+    So on such a path: basis 1 emits only 8720/3, and only in g11_skin; basis 4 emits only a
+    Table 4 pair, with both Imaging and Tumour markers on the path; no other basis (2, 5, 7, 8)
+    is reachable.
+
+    Keyed off the PATH, as Group 10 rule 2 is: _group8_terminals_by_evidence carries
+    evidence_tests the way app.js capture() does, each capture replacing the last, so neither
+    the branch's own basis_of_diagnosis nor the basis_evidence_tier flag can make a terminal pass.
+    """
+    if ctx.group != GROUP11:
+        return []
+    out, checked = [], 0
+    for node_id, b, ev in _group8_terminals_by_evidence(ctx):
+        if ev is not None and GROUP11_TISSUE_TESTS & set(ev):
+            continue
+        checked += 1
+        code = as_code(b.get("morphology_code"))
+        src = ctx.nodes[node_id].get("nos_fallback") or {} if b.get("_fallback") else b
+        beh = _group10_behaviour(src.get("behavior_code"))
+        basis = src.get("basis_of_diagnosis")
+        try:
+            basis = int(basis)
+        except (TypeError, ValueError):
+            pass
+        tree = ctx.node_tree.get(node_id)
+        label = b.get("label") or b.get("finding") or ("nos_fallback" if b.get("_fallback")
+                                                       else node_id)
+        held = list(ev) if ev is not None else []
+        where = "%s %s: %r, reached with evidence %s" % (tree, node_id, label, held)
+        if basis == 1:
+            if (code, beh) not in GROUP11_CLINICAL_PAIRS:
+                out.append((FAIL, "%s, emits %s/%s at basis 1. On clinical evidence alone Group "
+                                  "XI registers nothing: a note refers to Group XII with 8000/3, "
+                                  "and a child's melanoma needs tissue (registrar, 8 October "
+                                  "2026; Ferrari 2021)" % (where, code, beh)))
+            elif tree != GROUP11_SKIN_TREE:
+                out.append((FAIL, "%s, emits %s/%s at basis 1 in %s. Only %s registers a "
+                                  "melanoma on clinical evidence (Visser 2023 Table 3, skin)"
+                            % (where, code, beh, tree, GROUP11_SKIN_TREE)))
+        elif basis == 4:
+            if (code, beh) not in GROUP11_MARKER_PAIRS:
+                out.append((FAIL, "%s, emits %s/%s at basis 4. Basis 4 registers only the Visser "
+                                  "2023 Table 4 marker codes (%s)"
+                            % (where, code, beh,
+                               ", ".join(sorted(c for c, _b in GROUP11_MARKER_PAIRS)))))
+            elif not (GROUP11_MARKER_EVIDENCE <= set(held)):
+                out.append((FAIL, "%s, emits %s/%s at basis 4 without both Imaging and Tumour "
+                                  "markers on the path. Basis 4 needs a marker result and a "
+                                  "clinical investigation showing the tumour (Visser 2023 "
+                                  "Table 4; rule 6)" % (where, code, beh)))
+        else:
+            out.append((FAIL, "%s, emits %s/%s at basis %r with no histology or cytology in the "
+                              "file. Without pathology Group XI registers at basis 1 or 4 only "
+                              "(Visser 2023 rules 4-6, Tables 3-4); every other case refers to "
+                              "Group XII" % (where, code, beh, basis)))
+    if not checked:
+        return [(FAIL, "GROUP 11 RULE 2 found no terminal reachable without histology or "
+                       "cytology: the clinical and marker routes are missing or the walk is "
+                       "broken")]
+    if not out:
+        out.append((OK, "GROUP 11 RULE 2: %d terminal(s) reachable without histology or "
+                        "cytology, none at basis 1, each a Visser Table 4 code at basis 4 with "
+                        "Imaging and Tumour markers on the path or a referral" % checked))
+    return out
+
+
+def check_group11_obs_never_emitted(ctx: DTContext, layer1: Path):
+    """
+    GROUP 11 RULE 3 (contract §5, D3) — no screen records a pair whose ICD-O-3.2 Preferred term
+    is [obs].
+
+    Eleven numbers carry a malignant label in REDCap and nothing but [obs] terms in ICD-O-3.2
+    (8042, 8124, 8130, 8141, 8245, 8251, 8350, 8440, 8450, 8508, 8512). They are entries, never
+    emitted. The rule also reads every (code, behaviour) a tree emits against icdo32.sqlite, so
+    8551 and 8780 (an [obs] Preferred term with a live synonym, held off screen as Group 10
+    holds its own) fail too. The emitted set is _group10_emissions(): code branches, picker
+    options, immunohistochemistry rules, bands and nos_fallback in every tree.
+    """
+    if ctx.group != GROUP11:
+        return []
+    index, err = load_icdo32(layer1)
+    out = []
+    if err:
+        out.append((WARN, "GROUP 11 RULE 3 could not read icdo32.sqlite: %s. Only the eleven "
+                          "typed all-[obs] numbers are checked" % err))
+    checked = 0
+    for node_id, where, code, beh in _group10_emissions(ctx):
+        checked += 1
+        typed = code in GROUP11_OBS_ONLY and beh in ("3", None)
+        computed = beh is not None and _icdo_preferred_obsolete(index, code, beh)
+        if typed or computed:
+            out.append((FAIL, "%s %s: %s emits %s/%s, whose ICD-O-3.2 Preferred term is [obs] "
+                              "(design D3: such a pair stays off every screen)"
+                        % (ctx.node_tree.get(node_id), node_id, where, code, beh)))
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 11 RULE 3: none of the %d emission(s) is one of the eleven "
+                        "all-[obs] numbers or a pair whose ICD-O-3.2 Preferred term is [obs]"
+                        % checked))
+    return out
+
+
+def check_group11_subgroups_and_routing(ctx: DTContext, layer1: Path, repo: Path):
+    """
+    GROUP 11 RULE 5 (contract §5, D11) — the subgroup the tool shows and the tree the router
+    picks agree with ICCC-2017 at every topography the lookup holds.
+
+    Sources: ICCC-2017.sqlite ranges 118-136; data/shared/presentation_router.json
+    groups["11"].tree_routing; data/shared/topography_codes.json; build/group11_common.TREES.
+
+    Subgroups. For every entry and every lookup topography where ICCC-2017 places the entry's
+    (code, behaviour) in Group XI, the subgroup app.js subgroupFor() shows (the first
+    iccc3_subgroup_by_topography rule whose topography_in holds the code, else the entry's own
+    iccc3_subgroup_id) is a subgroup ICCC-2017 gives that pair at that topography. The generic
+    check_iccc3_subgroup_by_topography is Group 3 only, and the Layer 1 markdown the other
+    subgroup check reads disagrees with ICCC-2017.sqlite on XIf10 for 8158.
+
+    Routing. Each tree's rules name exactly the routed sites TREES gives it; the router,
+    resolved as app.js routedTree() resolves it, sends each of those sites to that tree; no
+    rule routes to the melanoma tree (it is entered by a hop) or to a tree TREES lacks; the
+    default is g11_unspecified. A lookup code from which app.js can enter Group XI (its
+    candidate_groups lists 11, or is no list) and which no rule names reaches the default, which
+    is reported as a NOTE and not a FAIL: C75.1, which no Group XI tree routes, is one.
+    """
+    if ctx.group != GROUP11:
+        return []
+    xi, err = _iccc_ranges(layer1, "XI")
+    if err:
+        return [(WARN, "GROUP 11 RULE 5 could not read the ICCC-2017 Group XI ranges: %s. "
+                       "Subgroups and routing are NOT checked against the recode" % err)]
+    tr, lookup, out = _group10_tree_routing(repo, GROUP11)
+    rows, terr = _group11_trees()
+    if terr:
+        return out + [(FAIL, "GROUP 11 RULE 5: %s, so no routed site can be checked" % terr)]
+    topos = sorted(t for t in lookup if isinstance(t, str) and _TOPO_RE.match(t))
+    if not topos:
+        return out + [(FAIL, "GROUP 11 RULE 5: topography_codes.json enumerates no topography "
+                             "code, so no subgroup or route can be checked")]
+
+    pairs, entries_checked = 0, 0
+    for i, entry in enumerate(ctx.entries):
+        if not isinstance(entry, dict):
+            continue
+        code = as_code(entry.get("morphology_code"))
+        beh = _group10_behaviour(entry.get("behavior_code"))
+        rules = entry.get("iccc3_subgroup_by_topography") or []
+        wrong, entry_pairs = [], 0
+        for topo in topos:
+            want = {r["subgroup"] for r in
+                    _group10_fitting_ranges(xi, code, beh, {_topo_index(topo)})}
+            if not want:
+                continue
+            entry_pairs += 1
+            got = entry.get("iccc3_subgroup_id")
+            for rule in rules if isinstance(rules, list) else []:
+                if isinstance(rule, dict) and topo in (rule.get("topography_in") or []):
+                    got = rule.get("iccc3_subgroup_id")
+                    break
+            if got not in want:
+                wrong.append((topo, got, "/".join(sorted(want))))
+        pairs += entry_pairs
+        entries_checked += bool(entry_pairs)
+        if wrong:
+            topo, got, want = wrong[0]
+            out.append((FAIL, "morphology_entries[%d] %s/%s shows subgroup %r at %s, where "
+                              "ICCC-2017 places it in %s; %d lookup topography code(s) "
+                              "disagree in all (%s)"
+                        % (i, code, beh, got, topo, want, len(wrong),
+                           ", ".join(t for t, _g, _w in wrong[:6])
+                           + (", ..." if len(wrong) > 6 else ""))))
+
+    named_by_tree: dict = {}
+    reaches_default = []
+    if tr is None:
+        out.append((FAIL, "GROUP 11 RULE 5: presentation_router.json has no "
+                          "groups[\"11\"].tree_routing (contract §3.2)"))
+    else:
+        default = (tr.get("default") or {}).get("tree_id")
+        if default != GROUP11_UNSPECIFIED_TREE:
+            out.append((FAIL, "GROUP 11 RULE 5: groups[\"11\"].tree_routing.default is %r; a "
+                              "topography no tree routes goes to %s (contract §3.2)"
+                        % (default, GROUP11_UNSPECIFIED_TREE)))
+        for i, rule in enumerate(tr.get("rules") or []):
+            if not isinstance(rule, dict):
+                continue
+            tree = rule.get("tree_id")
+            if tree not in rows or not rows[tree]["sites"]:
+                out.append((FAIL, "GROUP 11 RULE 5: tree_routing.rules[%d] routes to %r, which "
+                                  "is %s (contract §4.1)"
+                            % (i, tree, "the melanoma tree, entered by a hop and named by no "
+                                        "rule" if tree in rows else "not a Group XI tree")))
+                continue
+            named_by_tree.setdefault(tree, set()).update(
+                t for t in rule.get("topography_in") or [] if isinstance(t, str))
+        for tid, row in rows.items():
+            if not row["sites"]:
+                continue
+            want_codes, got_codes = set(row["sites"]), named_by_tree.get(tid, set())
+            missing, extra = sorted(want_codes - got_codes), sorted(got_codes - want_codes)
+            if missing:
+                out.append((FAIL, "GROUP 11 RULE 5: the %s rule omits %d routed site(s) TREES "
+                                  "gives it: %s (contract §4.1)"
+                            % (tid, len(missing), ", ".join(missing))))
+            if extra:
+                out.append((FAIL, "GROUP 11 RULE 5: the %s rule names %d code(s) TREES does not "
+                                  "route to it: %s (contract §4.1)"
+                            % (tid, len(extra), ", ".join(extra))))
+            for site in sorted(want_codes & got_codes):
+                got = _group10_route(tr, site)
+                if got != tid:
+                    out.append((FAIL, "GROUP 11 RULE 5: the router sends %s to %r; TREES routes "
+                                      "it to %s (a rule listed earlier names it too)"
+                                % (site, got, tid)))
+        named = set().union(*named_by_tree.values()) if named_by_tree else set()
+        reaches_default = [t for t in topos if t not in named and (
+            not isinstance((lookup.get(t) or {}).get("candidate_groups"), list)
+            or GROUP11 in lookup[t]["candidate_groups"])]
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "GROUP 11 RULE 5: %d of %d entries are placed in Group XI by ICCC-2017 at "
+                        "some lookup topography, and each shows the ICCC-2017 subgroup at every "
+                        "one of the %d (entry, topography) pair(s) so placed; each of the %d "
+                        "routed trees' rules names exactly the sites TREES gives it, the router "
+                        "sends each there, and the default is %s"
+                        % (entries_checked, len(ctx.entries), pairs,
+                           len([r for r in rows.values() if r["sites"]]),
+                           GROUP11_UNSPECIFIED_TREE)))
+    if reaches_default:
+        out.append((NOTE, "GROUP 11 RULE 5: %d lookup code(s) from which app.js can enter Group "
+                          "XI are named by no routing rule and reach the default, %s: %s"
+                    % (len(reaches_default), GROUP11_UNSPECIFIED_TREE,
+                       ", ".join(reaches_default))))
+    return out
+
+
 _ICCC_GROUP_CODES: dict = {}
 
 
@@ -10923,8 +11365,11 @@ def parse_classification_subgroups(layer1: Path):
         text = path.read_text(encoding="utf-8")
     except OSError:
         return out
-    head_re = re.compile(r"^##\s+([IVX]+)\s*:")
-    sub_re = re.compile(r"^([IVX]+[a-z]\d?)\b")
+    # The Group XI table has XIf10 and XIf11, so a subgroup id carries up to two digits. The
+    # Layer 1 heading "## XII Other And Unspecified ..." has no colon after the numeral; without
+    # the second alternative every Group XII row would be filed under the group above it.
+    head_re = re.compile(r"^##\s+([IVX]+)(?:\s*:|\s)")
+    sub_re = re.compile(r"^([IVX]+[a-z]\d{0,2})\b")
     group, subgroup = None, None
     for raw in text.splitlines():
         hm = head_re.match(raw)
@@ -12841,6 +13286,12 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_group10_terms_offered_where_allowed, ctx)           # rule 6
         report.run(check_group10_every_gonadal_carcinoma_has_a_route, ctx, layer1)  # rule 7
         report.run(check_group10_picker_aliases_stay_unshared, ctx, repo)    # rule 8
+        # Group 11 build contract §5 — Other Malignant Epithelial Neoplasms and Malignant
+        # Melanomas. Four rules, scoped to Group 11 and a no-op on any other group's file.
+        report.run(check_group11_codes_fit_site, ctx, layer1)                  # rule 1
+        report.run(check_group11_no_pathology_codes, ctx)                       # rule 2
+        report.run(check_group11_obs_never_emitted, ctx, layer1)                # rule 3
+        report.run(check_group11_subgroups_and_routing, ctx, layer1, repo)      # rule 5
         # Registrar's ruling of 6 October 2026: SIOP brain marker cut-offs, Groups III and X.
         report.run(check_brain_marker_cutoffs, ctx)
         # the four new checks (three of them are per-file)

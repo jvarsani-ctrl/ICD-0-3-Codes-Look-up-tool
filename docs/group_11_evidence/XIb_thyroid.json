@@ -1,0 +1,3680 @@
+{
+ "part_id": "XIb_thyroid",
+ "sources": [
+  {
+   "file": "XIb-thyroid__Juhlin-2022.txt",
+   "citation": "Juhlin CC, Mete O, Baloch ZW. The 2022 WHO classification of thyroid tumors: novel concepts in nomenclature and grading. Endocrine-Related Cancer 2023;30(2):e220293. doi:10.1530/ERC-22-0293",
+   "who_volume": "WHO Classification of Endocrine and Neuroendocrine Tumours, 5th edition, 2022"
+  },
+  {
+   "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+   "citation": "International Collaboration on Cancer Reporting. Carcinoma of the Thyroid Histopathology Reporting Guide, 3rd edition, version 3.1. Sydney: ICCR; November 2025. ISBN 978-1-922324-71-9",
+   "who_volume": "WHO Classification of Endocrine and Neuroendocrine Tumours, 5th Edition (2025), as the dataset cites it (PDF p. 2, p. 8)"
+  },
+  {
+   "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+   "citation": "Pfister SM, Reyes-Mugica M, Chan JKC, et al. A Summary of the Inaugural WHO Classification of Pediatric Tumors: Transitioning from the Optical into the Molecular Era. Cancer Discovery 2022;12(2):331-355",
+   "who_volume": "WHO Classification of Paediatric Tumours, 5th edition, 2022"
+  },
+  {
+   "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+   "citation": "World Health Organization. International Classification of Diseases for Oncology, 3rd edition, 1st revision (ICD-O-3.1), section 4 'Coding guidelines for topography and morphology', printed pp. 14-28",
+   "who_volume": "not a tumour classification; the coding manual (PDF page 1 = printed p. 14)"
+  }
+ ],
+ "sites": [
+  {
+   "topography": "C73.9",
+   "iccc_subgroup": "XIb",
+   "note": "ICCC-2017 range 121 places 8330-8332, 8334-8337, 8340-8347, 8350 and 8588 in XIb at every site (000-809); range 120 places the general carcinoma list in XIb at C73.9 (739) only."
+  }
+ ],
+ "entities": [
+  {
+   "who_term": "Papillary thyroid carcinoma, classic (usual, conventional) subtype",
+   "code": "8260",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma of thyroid",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Papillary adenocarcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "option",
+   "refer_group": null,
+   "why": "Pfister 2022 Table 3 lists papillary thyroid carcinoma among paediatric endocrine tumours. ICCR Table 1 codes it 8260/3, where ICD-O-3.2 prints Papillary carcinoma of thyroid (C73.9) as a related term.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 14,
+     "quote": "Papillary thyroid carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Papillary thyroid carcinoma 8260/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "papillary carcinoma is the most common and",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite: 8260/3 Related 'Papillary carcinoma of thyroid' (C73.9); ICCC-2017: 8260 at 739 -> XIb"
+  },
+  {
+   "who_term": "Infiltrative follicular variant of papillary thyroid carcinoma",
+   "code": "8340",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, follicular variant",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary carcinoma, follicular variant",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "A subtype on the papillary carcinoma screen. ICCR Table 1 codes it 8340/3. Paediatric occurrence is reported for papillary thyroid carcinoma as a whole, not for this subtype.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Infiltrative follicular variant of papillary thyroid carcinoma 8340/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "Infiltrative follicular variant has a behaviour similar to classic papillary carcinoma",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8340 -> XIb at any site"
+  },
+  {
+   "who_term": "Tall cell subtype of papillary thyroid carcinoma",
+   "code": "8344",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, tall cell",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Papillary carcinoma, columnar cell",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "A subtype on the papillary carcinoma screen. ICD-O-3.2 prints Papillary carcinoma, tall cell as a synonym at 8344/3; ICCR Table 1 prints no separate code for tall cell.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Tall cell subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Tall cell subtype of papillary carcinoma is a more aggressive subtype",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite: 8344/3 Synonym 'Papillary carcinoma, tall cell'"
+  },
+  {
+   "who_term": "Columnar cell subtype of papillary thyroid carcinoma",
+   "code": "8344",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, columnar cell",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary carcinoma, columnar cell",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "A subtype on the papillary carcinoma screen. ICCR Table 1 codes columnar cell papillary thyroid carcinoma 8344/3.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Columnar cell papillary thyroid carcinoma 8344/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "subtype characterised by columnar cells with pseudostratified nuclei",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Oncocytic subtype of papillary thyroid carcinoma",
+   "code": "8342",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, oncocytic variant",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary carcinoma, oncocytic variant",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "A subtype on the papillary carcinoma screen. ICCR Table 1 codes oncocytic papillary thyroid carcinoma 8342/3.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Oncocytic papillary thyroid carcinoma 8342/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 5,
+     "quote": "oncocytic cells are defined as oncocytic PTC",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Invasive encapsulated follicular variant of papillary thyroid carcinoma",
+   "code": "8343",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, encapsulated, of thyroid",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary carcinoma, encapsulated, of thyroid",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "The WHO 5th edition classifies it apart from papillary carcinoma, but every report names it as a follicular variant of papillary carcinoma, so it sits on the papillary carcinoma screen. ICCR Table 1 codes it 8343/3 at every invasion extent.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Invasive encapsulated papillary thyroid carcinoma 8343/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "classified under a different section than PTC in the current WHO Classification",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "IEFVPTC similarly to follicular and oncocytic carcinoma are subdivided into",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Encapsulated subtype of papillary thyroid carcinoma (including encapsulated non-invasive papillary carcinoma)",
+   "code": "8343",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, encapsulated, of thyroid",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary carcinoma, encapsulated, of thyroid",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "ICCR lists an encapsulated subtype of papillary carcinoma and names an encapsulated non-invasive tumour with any NIFTP exclusion criterion an encapsulated non-invasive papillary carcinoma, which is malignant. ICD-O-3.2's term at 8343/3 is the encapsulated papillary carcinoma of thyroid.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Encapsulated subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "should be termed Encapsulated non-invasive papillary carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Diffuse sclerosing subtype of papillary thyroid carcinoma",
+   "code": "8260",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma of thyroid",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Papillary adenocarcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "ICD-O-3.2 marks every 8350/3 term obsolete, including Papillary carcinoma, diffuse sclerosing. The WHO source lists diffuse sclerosing as a papillary carcinoma subtype and prints no code of its own for it, so the subtype takes the papillary carcinoma code 8260/3. ICCR ties its good survival to the young age of patients but gives no ages. Registrar to confirm (question 3).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Diffuse sclerosing subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "possibly because of the young age of the patients",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Papillary thyroid carcinoma 8260/3",
+     "from_image": true
+    }
+   ],
+   "verified_by": "icdo32.sqlite: every 8350/3 term [obs]"
+  },
+  {
+   "who_term": "Solid, hobnail, Warthin-like, spindle cell, clear cell and fibromatosis-like stroma subtypes of papillary thyroid carcinoma",
+   "code": "8260",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma of thyroid",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Papillary adenocarcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "ICD-O-3.2 prints no term for these subtypes and ICCR Table 1 gives them no code of their own, so each takes the papillary carcinoma code 8260/3. Rule K would move clear cell to 8310/3; registrar to confirm (question 4).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Hobnail subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Warthin-like subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "Other subtypes that may have distinctive histologic characteristics but are rare",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Papillary microcarcinoma (a size term, not a WHO subtype)",
+   "code": "8341",
+   "behaviour": "3",
+   "icdo32_term": "Papillary microcarcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Papillary microcarcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "option",
+   "refer_group": null,
+   "why": "ICD-O-3.2 holds Papillary microcarcinoma as a current term. The WHO 5th edition asks that small tumours be subtyped like any papillary carcinoma, so a report that names a subtype is coded by Rule K (question 5); a report that uses only the size term records 8341/3.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "papillary microcarcinoma is not a histological subtype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 4,
+     "quote": "Hence, sub-centimeter PTCs should also be histologically subtyped",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Poorly differentiated thyroid carcinoma (including insular carcinoma and poorly differentiated oncocytic thyroid carcinoma)",
+   "code": "8337",
+   "behaviour": "3",
+   "icdo32_term": "Poorly differentiated thyroid carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Poorly differentiated thyroid carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "option",
+   "refer_group": null,
+   "why": "Juhlin reports DICER1-associated poorly differentiated thyroid carcinoma in adolescents. ICCR Table 1 codes it 8337/3 (insular carcinoma).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 5,
+     "quote": "is also noted in some PDTC cases in adolescents",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Insular carcinoma 8337/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 12,
+     "quote": "display a solid, trabecular, and/or insular growth pattern",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Medullary thyroid carcinoma",
+   "code": "8345",
+   "behaviour": "3",
+   "icdo32_term": "Medullary thyroid carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Medullary thyroid carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "option",
+   "refer_group": null,
+   "why": "Pfister 2022 Table 3 lists medullary thyroid carcinoma among paediatric endocrine tumours; ICCR Table 1 codes it 8345/3. The low-grade or high-grade grade does not change the code.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 14,
+     "quote": "Medullary thyroid carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Medullary thyroid carcinoma 8345/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 12,
+     "quote": "This C cell derived carcinoma can now be graded under low and high grade",
+     "from_image": false
+    },
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 19,
+     "quote": "Multiple endocrine neoplasia type 2",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8345 -> XIb at any site"
+  },
+  {
+   "who_term": "Spindle epithelial tumour with thymus-like elements",
+   "code": "8588",
+   "behaviour": "3",
+   "icdo32_term": "Spindle epithelial tumor with thymus-like element",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Spindle epithelial tumor with thymus-like element",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "option",
+   "refer_group": null,
+   "why": "Pfister 2022 Table 3 lists it among paediatric thyroid tumours. ICCC places 8588 in XIb at every site.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 14,
+     "quote": "Spindle epithelial tumor with thymus-like elements",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "spindle epithelial tumor with thymus-like elements",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8588 -> XIb at any site"
+  },
+  {
+   "who_term": "Follicular thyroid carcinoma, minimally invasive",
+   "code": "8335",
+   "behaviour": "3",
+   "icdo32_term": "Follicular carcinoma, minimally invasive",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Follicular carcinoma, minimally invasive",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "None of the four sources reports follicular carcinoma in children (data gap 1; registrar question 1). The picker entry leads to the invasion screen, which separates 8335/3, 8339/3, 8330/3 and the 8335/1 exclusion as the currency check requires.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 4,
+     "quote": "minimally invasive FTC, encapsulated angioinvasive FTC and widely invasive FTC",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "minimally invasive (CI only), encapsulated angioinvasive (any focus of vascular invasion)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Follicular thyroid carcinoma, encapsulated angioinvasive",
+   "code": "8339",
+   "behaviour": "3",
+   "icdo32_term": "Follicular carcinoma, encapsulated, angioinvasive",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Follicular carcinoma, encapsulated, angioinvasive",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "New in ICD-O-3.2 and outside every ICCC-2017 range; standing rule 3 places it in XIb at the thyroid. REDCap does not offer it (currency check section 6), so the entry declares awaiting_layer1.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "FTC, encapsulated angioinvasive",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "minimally invasive (CI only), encapsulated angioinvasive (any focus of vascular invasion)",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8339 -> no group at 739",
+   "awaiting_layer1": true
+  },
+  {
+   "who_term": "Follicular thyroid carcinoma, widely invasive, or with no invasion extent stated",
+   "code": "8330",
+   "behaviour": "3",
+   "icdo32_term": "Follicular carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Follicular carcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICD-O-3.2 prints no widely invasive term; ICCR Table 1 codes follicular thyroid carcinoma 8330/3.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Follicular thyroid carcinoma 8330/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "grossly apparent extensive invasion of the thyroid and/or extra-thyroid tissue",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Oncocytic carcinoma of the thyroid (minimally invasive, encapsulated angioinvasive or widely invasive)",
+   "code": "8290",
+   "behaviour": "3",
+   "icdo32_term": "Oncocytic carcinoma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Oxyphilic adenocarcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 codes oncocytic carcinoma of the thyroid 8290/3 and gives its invasion subtypes no code of their own. No paediatric report in this part's sources.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Oncocytic carcinoma of the thyroid 8290/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "defined as a tumour composed of 75% of oncocytes",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Anaplastic thyroid carcinoma",
+   "code": "8020",
+   "behaviour": "3",
+   "icdo32_term": "Anaplastic undifferentiated carcinoma",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Carcinoma, undifferentiated, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 codes anaplastic thyroid carcinoma 8020/3, not 8021/3 Carcinoma, anaplastic, NOS. No paediatric report in this part's sources.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Anaplastic thyroid carcinoma 8020/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 12,
+     "quote": "are now recognised as a subtype of anaplastic thyroid carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Mixed medullary-follicular carcinoma",
+   "code": "8346",
+   "behaviour": "3",
+   "icdo32_term": "Mixed medullary-follicular carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Mixed medullary-follicular carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 code; no paediatric report.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Mixed medullary-follicular carcinoma 8346/3",
+     "from_image": true
+    }
+   ]
+  },
+  {
+   "who_term": "Mixed medullary-papillary carcinoma",
+   "code": "8347",
+   "behaviour": "3",
+   "icdo32_term": "Mixed medullary-papillary carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Mixed medullary-papillary carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 code; no paediatric report.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Mixed medullary-papillary carcinoma 8347/3",
+     "from_image": true
+    }
+   ]
+  },
+  {
+   "who_term": "Cribriform-morular thyroid carcinoma",
+   "code": "8201",
+   "behaviour": "3",
+   "icdo32_term": "Cribriform carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Cribriform carcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "Renamed from the cribriform-morular variant of papillary carcinoma and now a tumour of uncertain histogenesis; ICCR Table 1 codes it 8201/3. It must not be coded as papillary carcinoma 8260/3.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Cribriform carcinoma, not otherwise specified (NOS) 8201/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "these neoplasms are now labeled as cribriform morular thyroid carcinomas",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 1,
+     "quote": "cribriform-morular variant of PTC is redefined as cribriform-morular thyroid carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Mucoepidermoid carcinoma of the thyroid",
+   "code": "8430",
+   "behaviour": "3",
+   "icdo32_term": "Mucoepidermoid carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Mucoepidermoid carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 code. Pfister lists mucoepidermoid carcinoma among paediatric head and neck tumours, which is the salivary gland entity, not the thyroid one.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Mucoepidermoid carcinoma 8430/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 6,
+     "quote": "exceedingly rare neoplasms and include mucoepidermoid",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Sclerosing mucoepidermoid carcinoma with eosinophilia",
+   "code": "8430",
+   "behaviour": "3",
+   "icdo32_term": "Mucoepidermoid carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Mucoepidermoid carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICD-O-3.2 holds no term of its own; the entity is a mucoepidermoid carcinoma by name, so 8430/3. The WHO places it among tumours of uncertain histogenesis.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 3,
+     "quote": "Sclerosing mucoepidermoid carcinoma with eosinophilia",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "These tumors lack PAX8 and thyroglobulin expression",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Secretory carcinoma of the thyroid",
+   "code": "8502",
+   "behaviour": "3",
+   "icdo32_term": "Secretory carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Secretory carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR Table 1 code. Juhlin reports thyroid secretory carcinoma at a later age of onset. ICCC-2017 places 8502 in no group at C73.9; standing rule 3 puts it in XIb. REDCap's XIb list does not offer it.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Secretory carcinoma 8502/3",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "have been particularly reported in a later age onset",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8502 -> no group at 739"
+  },
+  {
+   "who_term": "Intrathyroid thymic carcinoma (formerly carcinoma showing thymus-like differentiation)",
+   "code": "8589",
+   "behaviour": "3",
+   "icdo32_term": "Intrathyroid thymic carcinoma",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Intrathyroid thymic carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICD-O-3.2 prints it with (C73.9). No paediatric report.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 3,
+     "quote": "Intrathyroid thymic carcinoma",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "to lessen the ambiguity regarding origin of this rare malignancy",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Thymoma within the thyroid (types A, AB, B1, B2, B3)",
+   "code": "8580",
+   "behaviour": "3",
+   "icdo32_term": "Thymoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Thymoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "ICCR lists thymic neoplasms within the thyroid. ICCC-2017 places 8580-8586 in no group at C73.9; standing rule 3 puts them in XIb when recorded at the thyroid. The typed codes 8581-8585 are listed in the long tail. Topography is registrar question 7.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 3,
+     "quote": "Thymic neoplasms within the thyroid",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "The intrathyroidal thymic tumors include thymoma and thymic carcinoma families",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8580 -> no group at 739"
+  },
+  {
+   "who_term": "Thymic carcinoma within the thyroid",
+   "code": "8586",
+   "behaviour": "3",
+   "icdo32_term": "Thymic carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Thymic carcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "picker",
+   "refer_group": null,
+   "why": "As for thymoma within the thyroid.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "The intrathyroidal thymic tumors include thymoma and thymic carcinoma families",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 8586 -> no group at 739"
+  },
+  {
+   "who_term": "Differentiated high-grade thyroid carcinoma, dominant type not named",
+   "code": null,
+   "behaviour": "3",
+   "icdo32_term": "none",
+   "icdo32_level": "none",
+   "icdo32_preferred_term": "",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "ICCR asks that high-grade differentiated carcinomas be subclassified by their dominant type, which the tree codes as that type. ICD-O-3.2 holds no term for the high-grade category, and neither source prints a code for one whose type is not named.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 12,
+     "quote": "HGDTCs need be subclassified according to their dominant histotype",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "High grade differentiated thyroid carcinoma, not",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Squamous cell carcinoma of the thyroid (WHO 5th edition: a subtype of anaplastic thyroid carcinoma)",
+   "code": "8070",
+   "behaviour": "3",
+   "icdo32_term": "Squamous cell carcinoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Squamous cell carcinoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "The report's term matches 8070/3, and Rule K gives 8070/3 for an anaplastic carcinoma of squamous subtype; the WHO entity it now belongs to is anaplastic thyroid carcinoma, 8020/3. Registrar question 4.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 6,
+     "quote": "classify SCC of the thyroid as a morphological pattern/subtype of ACA",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 12,
+     "quote": "are now recognised as a subtype of anaplastic thyroid carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Mixed medullary and oncocytic carcinoma",
+   "code": null,
+   "behaviour": "3",
+   "icdo32_term": "none",
+   "icdo32_level": "none",
+   "icdo32_preferred_term": "",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "ICCR lists it; neither ICD-O-3.2 nor ICCR Table 1 gives it a code. Rule K gives 8345/3; the mixed medullary and follicular-cell carcinoma family code is 8346/3. Registrar question 4.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 3,
+     "quote": "Mixed medullary and oncocytic carcinoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Embryonal thyroid neoplasm (thyroblastoma)",
+   "code": null,
+   "behaviour": "3",
+   "icdo32_term": "none",
+   "icdo32_level": "none",
+   "icdo32_preferred_term": "",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "registrar",
+   "refer_group": null,
+   "why": "ICCR lists thyroblastoma; ICD-O-3.2 holds no term for it, and neither source prints a code. Not built until the registrar rules (data gap 2).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 3,
+     "quote": "Embryonal thyroid neoplasm, thyroblastoma",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite: no term matching thyroblastoma"
+  },
+  {
+   "who_term": "Papillary carcinoma, diffuse sclerosing (ICD-O-3.2 term on 8350/3)",
+   "code": "8350",
+   "behaviour": "3",
+   "icdo32_term": "Papillary carcinoma, diffuse sclerosing",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Nonencapsulated sclerosing carcinoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "not_built",
+   "refer_group": null,
+   "why": "Every 8350/3 term is [obs] in ICD-O-3.2 (registrar, 8 October 2026: never on a screen). The WHO source now calls the entity the diffuse sclerosing subtype of papillary thyroid carcinoma; ICD-O-3.2 prints no successor, and the tree records the subtype as papillary carcinoma 8260/3 (question 3).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 2,
+     "quote": "Diffuse sclerosing subtype",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite: 8350/3 four terms, all [obs]"
+  },
+  {
+   "who_term": "Non-invasive follicular thyroid neoplasm with papillary-like nuclear features",
+   "code": "8349",
+   "behaviour": "1",
+   "icdo32_term": "Non-invasive follicular thyroid neoplasm with papillary-like nuclear features (NIFTP)",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Non-invasive follicular thyroid neoplasm with papillary-like nuclear features (NIFTP)",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "A low-risk neoplasm, not malignant; ICD-O-3.2 behaviour /1.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 3,
+     "quote": "completely follicular-patterned with PTC-related nuclear atypia lacking high-grade features",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "As NIFTP is not overtly malignant",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Follicular tumour of uncertain malignant potential",
+   "code": "8335",
+   "behaviour": "1",
+   "icdo32_term": "Follicular tumor of uncertain malignant potential",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Follicular tumor of uncertain malignant potential",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Questionable capsular or vascular invasion without papillary carcinoma nuclei; ICD-O-3.2 behaviour /1.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 10,
+     "quote": "If an encapsulated follicular patterned tumour has questionable capsular/vascular invasion",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "labelled as follicular tumour of uncertain malignant potential (FT-UMP)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Follicular carcinoma, encapsulated, with no invasion stated",
+   "code": "8335",
+   "behaviour": "1",
+   "icdo32_term": "Follicular carcinoma, encapsulated, NOS",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Follicular tumor of uncertain malignant potential",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "ICD-O-3.2 moved Follicular carcinoma, encapsulated, NOS to 8335/1 (currency check section 3). A report that uses this term and describes no invasion is outside the malignant scope. Registrar to confirm (question 2).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "primarily depends on the identification of invasion of the tumour capsule",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite: 8335/1 Synonym 'Follicular carcinoma, encapsulated, NOS'"
+  },
+  {
+   "who_term": "Well differentiated tumour of uncertain malignant potential",
+   "code": "8348",
+   "behaviour": "1",
+   "icdo32_term": "Well differentiated tumor of uncertain malignant potential",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Well differentiated tumor of uncertain malignant potential",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Questionable invasion with questionable or present papillary carcinoma nuclei; ICD-O-3.2 behaviour /1.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 11,
+     "quote": "well differentiated tumour of uncertain malignant potential (WDT-UMP)",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Hyalinizing trabecular tumour",
+   "code": "8336",
+   "behaviour": "1",
+   "icdo32_term": "Hyalinizing trabecular tumor",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Hyalinizing trabecular tumor",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "ICD-O-3.2 moved 8336 from /0 to /1 (currency check section 3). Not malignant.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 9,
+     "quote": "Hyalinizing trabecular tumour 8336/1",
+     "from_image": true
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 3,
+     "quote": "these entities clinically behave in more or less benign fashion",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Follicular adenoma of the thyroid (including follicular adenoma with papillary architecture)",
+   "code": "8330",
+   "behaviour": "0",
+   "icdo32_term": "Follicular adenoma, NOS",
+   "icdo32_level": "Preferred",
+   "icdo32_preferred_term": "Follicular adenoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "occurs",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Pfister lists follicular adenoma of the thyroid in children. Benign.",
+   "cite": [
+    {
+     "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+     "pdf_page": 13,
+     "quote": "Follicular adenoma of the thyroid",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 3,
+     "quote": "Follicular adenoma with papillary architecture is a well-demarcated",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Oncocytic adenoma of the thyroid",
+   "code": "8290",
+   "behaviour": "0",
+   "icdo32_term": "Oncocytic adenoma",
+   "icdo32_level": "Synonym",
+   "icdo32_preferred_term": "Oxyphilic adenoma",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "exclusion",
+   "refer_group": null,
+   "why": "Benign.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 3,
+     "quote": "a diagnosis of oncocytic follicular adenoma requires",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 18,
+     "quote": "follicular adenoma, oncocytic adenoma, NIFTP and follicular nodular disease",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "who_term": "Teratoma of the thyroid",
+   "code": "9080",
+   "behaviour": "1",
+   "icdo32_term": "Immature teratoma of thyroid",
+   "icdo32_level": "Related",
+   "icdo32_preferred_term": "Teratoma, NOS",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 10,
+   "why": "A germ cell tumour. ICCC-2017 places malignant teratoma 9080 at C73.9 in Xb2, and ICD-O-3.2 codes immature teratoma of thyroid 9080/1 (currency check section 3), which Group X holds as an exclusion.",
+   "cite": [],
+   "verified_by": "icdo32.sqlite: 9080/1 Related 'Immature teratoma of thyroid' (C73.9); ICCC-2017: 9080 at 739 -> Xb2"
+  },
+  {
+   "who_term": "Lymphoma of the thyroid",
+   "code": null,
+   "behaviour": "3",
+   "icdo32_term": "none",
+   "icdo32_level": "none",
+   "icdo32_preferred_term": "",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 2,
+   "why": "Lymphomas are Group II; a lymphoma that arises in the thyroid is extranodal and keeps the thyroid as its site (Rule D).",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Code extranodal lymphomas to the site of origin",
+     "from_image": false
+    }
+   ],
+   "verified_by": "ICCC-2017: 9680 and 9699 at 739 -> IIb2"
+  },
+  {
+   "who_term": "Sarcoma of the thyroid",
+   "code": null,
+   "behaviour": "3",
+   "icdo32_term": "none",
+   "icdo32_level": "none",
+   "icdo32_preferred_term": "",
+   "sites": [
+    "C73.9"
+   ],
+   "paediatric": "not_reported",
+   "decision": "refer",
+   "refer_group": 9,
+   "why": "Soft-tissue sarcomas are Group IX at the thyroid.",
+   "cite": [],
+   "verified_by": "ICCC-2017: 8800 at 739 -> IXe; 9120 at 739 -> IXd8"
+  }
+ ],
+ "nodes": [
+  {
+   "node_id": "th_evidence",
+   "node_type": "document_inventory",
+   "question": "What is in the file for this thyroid tumour?",
+   "hint": "Choose the strongest report in the file. A thyroid carcinoma reported in a neck lymph node or in the perithyroid tissue is recorded at the thyroid (C73.9). A report that calls the tumour possible or suspected does not register it.",
+   "options": [
+    {
+     "label": "A referral letter or clinical note only",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 1,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3), basis of diagnosis clinical.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    },
+    {
+     "label": "An imaging report only (ultrasound, CT, MRI or a nuclear medicine scan)",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 2,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3), basis of diagnosis imaging.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    },
+    {
+     "label": "Imaging that shows a thyroid tumour, with a calcitonin result",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_lab",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "The calcitonin result decides whether the case can be recorded as medullary thyroid carcinoma without tissue.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    },
+    {
+     "label": "A cytology report (fine-needle aspiration)",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_cytology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A histology report, with or without immunohistochemistry or gene reports",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_histology",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": []
+    }
+   ]
+  },
+  {
+   "node_id": "th_lab",
+   "node_type": "lab_results",
+   "question": "What does the serum calcitonin result show?",
+   "hint": "Use the reference range printed on the laboratory report. A raised calcitonin registers a case only when imaging shows the thyroid tumour.",
+   "options": [
+    {
+     "label": "Raised above the laboratory's reference range",
+     "outcome": "code",
+     "code": "8345",
+     "behaviour": "3",
+     "basis": 4,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Medullary thyroid carcinoma (8345/3), basis of diagnosis tumour marker.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    },
+    {
+     "label": "Within the reference range",
+     "outcome": "code",
+     "code": "8000",
+     "behaviour": "3",
+     "basis": 2,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Neoplasm, malignant (8000/3), basis of diagnosis imaging.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    }
+   ]
+  },
+  {
+   "node_id": "th_cytology",
+   "node_type": "morphology_only",
+   "question": "What does the cytology report call the tumour?",
+   "hint": "Use the cytology report's own conclusion. Follicular carcinoma is diagnosed by invasion of the capsule or vessels, which only histology shows.",
+   "options": [
+    {
+     "label": "Papillary thyroid carcinoma",
+     "outcome": "code",
+     "code": "8260",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary adenocarcinoma, NOS (8260/3). ICD-O-3.2 gives Papillary carcinoma of thyroid as a related term of this code.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Papillary thyroid carcinoma 8260/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Medullary thyroid carcinoma",
+     "outcome": "code",
+     "code": "8345",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Medullary thyroid carcinoma (8345/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Medullary thyroid carcinoma 8345/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Malignant, carcinoma of a type the report does not name",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 5,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Follicular neoplasm, or suspicious for a follicular neoplasm",
+     "outcome": "not_registrable",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not registrable. Cytology cannot show the capsular or vascular invasion that defines follicular carcinoma; register the case when histology reports it.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "primarily depends on the identification of invasion of the tumour capsule",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Suspicious for malignancy, indeterminate, or benign",
+     "outcome": "not_registrable",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not registrable. A suspected or benign cytology result does not register a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [],
+     "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+    }
+   ]
+  },
+  {
+   "node_id": "th_histology",
+   "node_type": "histology_subclassification",
+   "question": "What does the histology report call the tumour?",
+   "hint": "Use the report's final diagnosis. When the report names a well-differentiated carcinoma with a poorly differentiated or anaplastic component, choose the higher-grade tumour (WHO coding Rule G). The benign and uncertain tumours at the end of this list are not recorded as cancers.",
+   "options": [
+    {
+     "label": "Papillary thyroid carcinoma, any subtype, including papillary microcarcinoma and the encapsulated follicular variant",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_ptc_subtype",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "Reports describe papillae or follicles lined by cells with the nuclear features of papillary carcinoma.",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 14,
+       "quote": "Papillary thyroid carcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "Classic PTC with a papillary growth and florid nuclear atypia",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Poorly differentiated thyroid carcinoma, or insular carcinoma",
+     "outcome": "code",
+     "code": "8337",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Poorly differentiated thyroid carcinoma (8337/3).",
+     "recognition_aid": "Reports describe solid, trabecular or insular growth without papillary carcinoma nuclei, with convoluted nuclei, 3 or more mitoses per 2 mm2, or tumour necrosis.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "is also noted in some PDTC cases in adolescents",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Insular carcinoma 8337/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 12,
+       "quote": "display a solid, trabecular, and/or insular growth pattern",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Medullary thyroid carcinoma, or C-cell carcinoma",
+     "outcome": "code",
+     "code": "8345",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Medullary thyroid carcinoma (8345/3).",
+     "recognition_aid": "Reports describe a tumour of C cells that stains for calcitonin; the report may grade it low or high, which does not change the code.",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 14,
+       "quote": "Medullary thyroid carcinoma",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Medullary thyroid carcinoma 8345/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "verified by calcitonin immunohistochemistry",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Spindle epithelial tumour with thymus-like elements",
+     "outcome": "code",
+     "code": "8588",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Spindle epithelial tumor with thymus-like element (8588/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 14,
+       "quote": "Spindle epithelial tumor with thymus-like elements",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "A carcinoma whose type the report does not name, with immunohistochemistry results",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_ihc",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "A carcinoma whose type the report does not name, with no immunohistochemistry",
+     "outcome": "code",
+     "code": "8010",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, NOS (8010/3).",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Another carcinoma the report names",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_picker",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": []
+    },
+    {
+     "label": "Non-invasive follicular thyroid neoplasm with papillary-like nuclear features",
+     "outcome": "exclude",
+     "code": "8349",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Non-invasive follicular thyroid neoplasm with papillary-like nuclear features (NIFTP) is 8349/1 in ICD-O-3.2, not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 10,
+       "quote": "As NIFTP is not overtly malignant",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Follicular tumour of uncertain malignant potential",
+     "outcome": "exclude",
+     "code": "8335",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Follicular tumor of uncertain malignant potential is 8335/1 in ICD-O-3.2, not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "labelled as follicular tumour of uncertain malignant potential (FT-UMP)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Well differentiated tumour of uncertain malignant potential",
+     "outcome": "exclude",
+     "code": "8348",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Well differentiated tumor of uncertain malignant potential is 8348/1 in ICD-O-3.2, not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "well differentiated tumour of uncertain malignant potential (WDT-UMP)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Hyalinizing trabecular tumour, or hyalinizing trabecular adenoma",
+     "outcome": "exclude",
+     "code": "8336",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Hyalinizing trabecular tumor is 8336/1 in ICD-O-3.2, not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Hyalinizing trabecular tumour 8336/1",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Follicular adenoma, including follicular adenoma with papillary architecture",
+     "outcome": "exclude",
+     "code": "8330",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Follicular adenoma, NOS is 8330/0 in ICD-O-3.2, a benign tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+       "pdf_page": 13,
+       "quote": "Follicular adenoma of the thyroid",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Oncocytic adenoma, or Hurthle cell adenoma",
+     "outcome": "exclude",
+     "code": "8290",
+     "behaviour": "0",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Oxyphilic adenoma is 8290/0 in ICD-O-3.2, a benign tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 3,
+       "quote": "a diagnosis of oncocytic follicular adenoma requires",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Thyroid follicular nodular disease, goitre or an adenomatous nodule",
+     "outcome": "not_registrable",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not registrable. Follicular nodular disease is not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 2,
+       "quote": "making it impossible to distinguish between non-neoplastic and benign neoplastic follicular neoplasms",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Lymphoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 2,
+     "recapture_site": false,
+     "reason": "Lymphomas are ICCC-3 Group II. A lymphoma that arises in the thyroid keeps the thyroid as its site (C73.9).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "Code extranodal lymphomas to the site of origin",
+       "from_image": false
+      }
+     ],
+     "verified_by": "ICCC-2017: 9680, 9699 at 739 -> IIb2"
+    },
+    {
+     "label": "Sarcoma, for example angiosarcoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 9,
+     "recapture_site": false,
+     "reason": "Soft-tissue sarcomas are ICCC-3 Group IX.",
+     "recognition_aid": "",
+     "cite": [],
+     "verified_by": "ICCC-2017: 8800 at 739 -> IXe; 9120 at 739 -> IXd8"
+    },
+    {
+     "label": "Teratoma",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": 10,
+     "recapture_site": false,
+     "reason": "Teratomas are ICCC-3 Group X.",
+     "recognition_aid": "",
+     "cite": [],
+     "verified_by": "ICCC-2017: 9080 at 739 -> Xb2; icdo32.sqlite 9080/1 Immature teratoma of thyroid"
+    },
+    {
+     "label": "A deposit (metastasis) of a tumour that began outside the thyroid",
+     "outcome": "refer",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": true,
+     "reason": "A deposit is coded at the primary site of the tumour. The next screen asks where it began.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+       "pdf_page": 2,
+       "quote": "is not a metastasis",
+       "from_image": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "th_ptc_subtype",
+   "node_type": "histology_subclassification",
+   "question": "Which subtype of papillary thyroid carcinoma does the report name?",
+   "hint": "A high-grade papillary carcinoma (tumour necrosis, or 5 or more mitoses per 2 mm2) is coded by its subtype. If the report names more than one subtype, or a subtype with papillary microcarcinoma, choose the one with the higher code (WHO coding Rule K): tall cell and columnar cell 8344, encapsulated 8343, oncocytic 8342, papillary microcarcinoma 8341, infiltrative follicular variant 8340, every other subtype 8260. A report that says papillary and follicular carcinoma is the infiltrative follicular variant (8340).",
+   "options": [
+    {
+     "label": "Classic (usual or conventional) subtype",
+     "outcome": "code",
+     "code": "8260",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary adenocarcinoma, NOS (8260/3). ICD-O-3.2 gives Papillary carcinoma of thyroid as a related term of this code.",
+     "recognition_aid": "Reports describe true papillae lined by cells with the nuclear features of papillary carcinoma.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "Classic PTC with a papillary growth and florid nuclear atypia",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Papillary thyroid carcinoma 8260/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Infiltrative follicular variant, or follicular variant that is not encapsulated",
+     "outcome": "code",
+     "code": "8340",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, follicular variant (8340/3).",
+     "recognition_aid": "Reports describe follicles with papillary carcinoma nuclei growing into the surrounding thyroid.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "infiltrative follicular variant PTC growing into the surrounding thyroid parenchyma",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Infiltrative follicular variant of papillary thyroid carcinoma 8340/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Encapsulated follicular variant with capsular or vascular invasion (invasive encapsulated follicular variant)",
+     "outcome": "code",
+     "code": "8343",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, encapsulated, of thyroid (8343/3).",
+     "recognition_aid": "Reports describe an encapsulated follicular-patterned tumour with papillary carcinoma nuclei that invades its capsule or vessels.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 4,
+       "quote": "Encapsulated FVPTCs are RAS-driven lesions with a similar invasive pattern as FTCs",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Invasive encapsulated papillary thyroid carcinoma 8343/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Encapsulated subtype, including encapsulated non-invasive papillary carcinoma",
+     "outcome": "code",
+     "code": "8343",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, encapsulated, of thyroid (8343/3).",
+     "recognition_aid": "An encapsulated tumour without invasion is called encapsulated non-invasive papillary carcinoma when it has psammoma bodies, true papillae or BRAF p.V600E.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 10,
+       "quote": "should be termed Encapsulated non-invasive papillary carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Tall cell subtype",
+     "outcome": "code",
+     "code": "8344",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, columnar cell (8344/3). ICD-O-3.2 gives Papillary carcinoma, tall cell as a synonym of this code.",
+     "recognition_aid": "Reports describe pink cells at least three times as tall as they are wide, in a tram-track pattern.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "eosinophilic tumor cells with a height of at least three times the width",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Columnar cell subtype",
+     "outcome": "code",
+     "code": "8344",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, columnar cell (8344/3).",
+     "recognition_aid": "Reports describe columnar cells with stacked (pseudostratified) nuclei in papillae and gland-like spaces.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "columnar cells with pseudostratification arranged in papillary and pseudoglandular formations",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Columnar cell papillary thyroid carcinoma 8344/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Oncocytic subtype",
+     "outcome": "code",
+     "code": "8342",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, oncocytic variant (8342/3).",
+     "recognition_aid": "Reports describe papillary carcinoma in which 75% or more of the cells are oncocytic.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "oncocytic cells are defined as oncocytic PTC",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Oncocytic papillary thyroid carcinoma 8342/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Diffuse sclerosing subtype",
+     "outcome": "code",
+     "code": "8260",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary adenocarcinoma, NOS (8260/3). ICD-O-3.2 marks Papillary carcinoma, diffuse sclerosing (8350/3) obsolete.",
+     "recognition_aid": "Reports describe tumour cells in solid nests, sometimes with squamous metaplasia, in dense fibrous tissue with many psammoma bodies and chronic inflammation.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "dense fibrotic stroma with multiple psammoma bodies and associated chronic inflammation",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "Diffuse sclerosing subtype",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    },
+    {
+     "label": "Solid, hobnail, Warthin-like, spindle cell or clear cell subtype, or papillary carcinoma with fibromatosis-like stroma",
+     "outcome": "code",
+     "code": "8260",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary adenocarcinoma, NOS (8260/3). ICD-O-3.2 holds no separate term for this subtype.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "Hobnail subtype",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "Warthin-like subtype",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "Solid subtype",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Papillary microcarcinoma, with no subtype named",
+     "outcome": "code",
+     "code": "8341",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary microcarcinoma (8341/3).",
+     "recognition_aid": "The report uses papillary microcarcinoma for a papillary carcinoma 10 mm or smaller.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 10,
+       "quote": "papillary microcarcinoma is not a histological subtype",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "No subtype named",
+     "outcome": "code",
+     "code": "8260",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary adenocarcinoma, NOS (8260/3). ICD-O-3.2 gives Papillary carcinoma of thyroid as a related term of this code.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Papillary thyroid carcinoma 8260/3",
+       "from_image": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node_id": "th_ftc_invasion",
+   "node_type": "histology_subclassification",
+   "question": "What invasion does the report describe for the follicular carcinoma?",
+   "hint": "Follicular carcinoma is defined by invasion of the capsule or vessels. A tumour with 75% or more oncocytic cells is an oncocytic carcinoma, coded 8290/3 at every invasion extent.",
+   "options": [
+    {
+     "label": "Minimally invasive: capsular invasion only",
+     "outcome": "code",
+     "code": "8335",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Follicular carcinoma, minimally invasive (8335/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "minimally invasive (CI only), encapsulated angioinvasive (any focus of vascular invasion)",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Encapsulated angioinvasive: invasion of a blood vessel",
+     "outcome": "code",
+     "code": "8339",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Follicular carcinoma, encapsulated, angioinvasive (8339/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "FTC, encapsulated angioinvasive",
+       "from_image": false
+      }
+     ],
+     "awaiting_layer1": true
+    },
+    {
+     "label": "Widely invasive",
+     "outcome": "code",
+     "code": "8330",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Follicular carcinoma, NOS (8330/3).",
+     "recognition_aid": "Reports describe extensive invasion of the thyroid or the tissue around it, often with loss of the capsule.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "grossly apparent extensive invasion of the thyroid and/or extra-thyroid tissue",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Follicular thyroid carcinoma 8330/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Invasive, extent not described",
+     "outcome": "code",
+     "code": "8330",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Follicular carcinoma, NOS (8330/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Follicular thyroid carcinoma 8330/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Encapsulated, with questionable invasion (uncertain malignant potential)",
+     "outcome": "exclude",
+     "code": "8335",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Follicular tumor of uncertain malignant potential is 8335/1 in ICD-O-3.2, not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 10,
+       "quote": "If an encapsulated follicular patterned tumour has questionable capsular/vascular invasion",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Encapsulated follicular carcinoma, no invasion described",
+     "outcome": "exclude",
+     "code": "8335",
+     "behaviour": "1",
+     "basis": null,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Not recorded. Follicular tumor of uncertain malignant potential is 8335/1 in ICD-O-3.2, which holds Follicular carcinoma, encapsulated, NOS as a synonym of this code. It is not a malignant tumour.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "primarily depends on the identification of invasion of the tumour capsule",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    }
+   ]
+  },
+  {
+   "node_id": "th_dhgtc",
+   "node_type": "histology_subclassification",
+   "question": "What is the dominant type of the high-grade differentiated thyroid carcinoma?",
+   "hint": "The report names a carcinoma with tumour necrosis or 5 or more mitoses per 2 mm2 that keeps its papillary, follicular or oncocytic pattern. It is coded by that type.",
+   "options": [
+    {
+     "label": "High-grade papillary thyroid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_ptc_subtype",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "High grade papillary thyroid carcinoma, specify subtype",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "High-grade follicular thyroid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_ftc_invasion",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "High grade follicular thyroid carcinoma, specify",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "High-grade invasive encapsulated follicular variant of papillary thyroid carcinoma",
+     "outcome": "code",
+     "code": "8343",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Papillary carcinoma, encapsulated, of thyroid (8343/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "High grade invasive encapsulated follicular variant",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "High-grade oncocytic carcinoma of the thyroid",
+     "outcome": "code",
+     "code": "8290",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Oxyphilic adenocarcinoma (8290/3). ICD-O-3.2 gives Oncocytic carcinoma as a synonym of this code.",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 2,
+       "quote": "High grade oncocytic carcinoma of the thyroid",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "The report does not name the dominant type",
+     "outcome": "code",
+     "code": null,
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 12,
+       "quote": "HGDTCs need be subclassified according to their dominant histotype",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    }
+   ]
+  },
+  {
+   "node_id": "th_ihc",
+   "node_type": "ihc_checklist",
+   "question": "Answer each stain as the report states it.",
+   "hint": "The histology report calls the tumour a carcinoma without naming its type. Answer 'Not done or not readable' for a stain the report does not mention. Thyroglobulin, TTF-1 and PAX8 show that a tumour comes from follicular cells; they do not name its type.",
+   "markers": [
+    "calcitonin",
+    "thyroglobulin",
+    "beta-catenin (nuclear)",
+    "GATA3",
+    "mammaglobin",
+    "S100 protein",
+    "TTF-1"
+   ],
+   "nos_fallback": {
+    "code": "8010",
+    "behaviour": "3",
+    "basis": 7,
+    "reason": "Recorded as Carcinoma, NOS (8010/3)."
+   },
+   "options": []
+  },
+  {
+   "node_id": "th_picker",
+   "node_type": "morphology_only",
+   "question": "Which carcinoma does the report name?",
+   "hint": "Type part of the report's term to filter the list. A carcinoma first diagnosed outside the thyroid is coded at its primary site.",
+   "options": [
+    {
+     "label": "Follicular thyroid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_ftc_invasion",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "Reports describe a follicular tumour without papillary carcinoma nuclei that invades its capsule or vessels.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "defined by invasiveness in the absence of diagnostic nuclear features of papillary thyroid carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Oncocytic carcinoma of the thyroid, or Hurthle cell carcinoma, at any invasion extent",
+     "outcome": "code",
+     "code": "8290",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Oxyphilic adenocarcinoma (8290/3). ICD-O-3.2 gives Oncocytic carcinoma as a synonym of this code.",
+     "recognition_aid": "Reports describe an invasive tumour in which 75% or more of the cells are oncocytes, without papillary carcinoma nuclei.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Oncocytic carcinoma of the thyroid 8290/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 11,
+       "quote": "defined as a tumour composed of 75% of oncocytes",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "High-grade differentiated thyroid carcinoma",
+     "outcome": "go",
+     "code": null,
+     "behaviour": null,
+     "basis": null,
+     "next": "th_dhgtc",
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 5,
+       "quote": "differentiated high-grade thyroid carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Anaplastic (undifferentiated) thyroid carcinoma",
+     "outcome": "code",
+     "code": "8020",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Carcinoma, undifferentiated, NOS (8020/3). ICD-O-3.2 gives Anaplastic undifferentiated carcinoma as a related term of this code.",
+     "recognition_aid": "Reports describe a high-grade spindled, pleomorphic or squamoid carcinoma; a papillary or follicular component may be present.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Anaplastic thyroid carcinoma 8020/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 12,
+       "quote": "A better differentiated component such as PTC",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Mixed medullary-follicular carcinoma",
+     "outcome": "code",
+     "code": "8346",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Mixed medullary-follicular carcinoma (8346/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Mixed medullary-follicular carcinoma 8346/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Mixed medullary-papillary carcinoma",
+     "outcome": "code",
+     "code": "8347",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Mixed medullary-papillary carcinoma (8347/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Mixed medullary-papillary carcinoma 8347/3",
+       "from_image": true
+      }
+     ]
+    },
+    {
+     "label": "Cribriform-morular thyroid carcinoma, or the cribriform-morular variant of papillary carcinoma",
+     "outcome": "code",
+     "code": "8201",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Cribriform carcinoma, NOS (8201/3).",
+     "recognition_aid": "Reports describe cribriform and morular growth with nuclear and cytoplasmic beta-catenin staining.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Cribriform carcinoma, not otherwise specified (NOS) 8201/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "presence of nuclear and cytoplasmic beta-catenin expression",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Mucoepidermoid carcinoma, including sclerosing mucoepidermoid carcinoma with eosinophilia",
+     "outcome": "code",
+     "code": "8430",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Mucoepidermoid carcinoma (8430/3).",
+     "recognition_aid": "Reports describe mucinous, intermediate and squamous cells in solid and cystic growth.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Mucoepidermoid carcinoma 8430/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "confirmed by positive p63 and CK5 immunostaining",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Secretory carcinoma",
+     "outcome": "code",
+     "code": "8502",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Secretory carcinoma (8502/3).",
+     "recognition_aid": "Reports describe pink cells with vacuolated cytoplasm that stain for GATA3, mammaglobin and S100 protein, often with an ETV6::NTRK3 fusion.",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 9,
+       "quote": "Secretory carcinoma 8502/3",
+       "from_image": true
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "positive for GATA3, mammaglobin, GCDFP15 and S100 protein",
+       "from_image": false
+      },
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "all thyroid SCs displayed ETV6::NTRK3 fusions",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Intrathyroid thymic carcinoma, or carcinoma showing thymus-like differentiation",
+     "outcome": "code",
+     "code": "8589",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Intrathyroid thymic carcinoma (8589/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 3,
+       "quote": "Intrathyroid thymic carcinoma",
+       "from_image": false
+      }
+     ]
+    },
+    {
+     "label": "Thymoma within the thyroid",
+     "outcome": "code",
+     "code": "8580",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Thymoma, NOS (8580/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+       "pdf_page": 3,
+       "quote": "Thymic neoplasms within the thyroid",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    },
+    {
+     "label": "Thymic carcinoma within the thyroid",
+     "outcome": "code",
+     "code": "8586",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Thymic carcinoma, NOS (8586/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 7,
+       "quote": "The intrathyroidal thymic tumors include thymoma and thymic carcinoma families",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    },
+    {
+     "label": "Squamous cell carcinoma of the thyroid",
+     "outcome": "code",
+     "code": "8070",
+     "behaviour": "3",
+     "basis": 7,
+     "next": null,
+     "refer_group": null,
+     "recapture_site": false,
+     "reason": "Recorded as Squamous cell carcinoma, NOS (8070/3).",
+     "recognition_aid": "",
+     "cite": [
+      {
+       "file": "XIb-thyroid__Juhlin-2022.txt",
+       "pdf_page": 6,
+       "quote": "classify SCC of the thyroid as a morphological pattern/subtype of ACA",
+       "from_image": false
+      }
+     ],
+     "pending_registrar": true
+    }
+   ],
+   "long_tail": "every code in picker_long_tail below, one option each, labelled with its ICD-O-3.2 preferred term"
+  }
+ ],
+ "picker_long_tail": [
+  {
+   "code": "8011",
+   "behaviour": "3",
+   "label": "Epithelioma, malignant",
+   "reason": "Recorded as Epithelioma, malignant (8011/3).",
+   "basis": 7
+  },
+  {
+   "code": "8012",
+   "behaviour": "3",
+   "label": "Large cell carcinoma, NOS",
+   "reason": "Recorded as Large cell carcinoma, NOS (8012/3).",
+   "basis": 7
+  },
+  {
+   "code": "8013",
+   "behaviour": "3",
+   "label": "Large cell neuroendocrine carcinoma",
+   "reason": "Recorded as Large cell neuroendocrine carcinoma (8013/3).",
+   "basis": 7
+  },
+  {
+   "code": "8014",
+   "behaviour": "3",
+   "label": "Large cell carcinoma with rhabdoid phenotype",
+   "reason": "Recorded as Large cell carcinoma with rhabdoid phenotype (8014/3).",
+   "basis": 7
+  },
+  {
+   "code": "8015",
+   "behaviour": "3",
+   "label": "Glassy cell carcinoma",
+   "reason": "Recorded as Glassy cell carcinoma (8015/3).",
+   "basis": 7
+  },
+  {
+   "code": "8022",
+   "behaviour": "3",
+   "label": "Pleomorphic carcinoma",
+   "reason": "Recorded as Pleomorphic carcinoma (8022/3).",
+   "basis": 7
+  },
+  {
+   "code": "8023",
+   "behaviour": "3",
+   "label": "Nuclear protein in testis (NUT)-associated carcinoma",
+   "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3).",
+   "basis": 7
+  },
+  {
+   "code": "8030",
+   "behaviour": "3",
+   "label": "Giant cell and spindle cell carcinoma",
+   "reason": "Recorded as Giant cell and spindle cell carcinoma (8030/3).",
+   "basis": 7
+  },
+  {
+   "code": "8031",
+   "behaviour": "3",
+   "label": "Giant cell carcinoma",
+   "reason": "Recorded as Giant cell carcinoma (8031/3).",
+   "basis": 7
+  },
+  {
+   "code": "8032",
+   "behaviour": "3",
+   "label": "Spindle cell carcinoma, NOS",
+   "reason": "Recorded as Spindle cell carcinoma, NOS (8032/3).",
+   "basis": 7
+  },
+  {
+   "code": "8033",
+   "behaviour": "3",
+   "label": "Pseudosarcomatous carcinoma",
+   "reason": "Recorded as Pseudosarcomatous carcinoma (8033/3).",
+   "basis": 7
+  },
+  {
+   "code": "8034",
+   "behaviour": "3",
+   "label": "Polygonal cell carcinoma",
+   "reason": "Recorded as Polygonal cell carcinoma (8034/3).",
+   "basis": 7
+  },
+  {
+   "code": "8035",
+   "behaviour": "3",
+   "label": "Carcinoma with osteoclast-like giant cells",
+   "reason": "Recorded as Carcinoma with osteoclast-like giant cells (8035/3).",
+   "basis": 7
+  },
+  {
+   "code": "8041",
+   "behaviour": "3",
+   "label": "Small cell carcinoma, NOS",
+   "reason": "Recorded as Small cell carcinoma, NOS (8041/3).",
+   "basis": 7
+  },
+  {
+   "code": "8051",
+   "behaviour": "3",
+   "label": "Verrucous carcinoma, NOS",
+   "reason": "Recorded as Verrucous carcinoma, NOS (8051/3).",
+   "basis": 7
+  },
+  {
+   "code": "8052",
+   "behaviour": "3",
+   "label": "Papillary squamous cell carcinoma",
+   "reason": "Recorded as Papillary squamous cell carcinoma (8052/3).",
+   "basis": 7
+  },
+  {
+   "code": "8054",
+   "behaviour": "3",
+   "label": "Warty carcinoma",
+   "reason": "Recorded as Warty carcinoma (8054/3).",
+   "basis": 7
+  },
+  {
+   "code": "8071",
+   "behaviour": "3",
+   "label": "Squamous cell carcinoma, keratinizing, NOS",
+   "reason": "Recorded as Squamous cell carcinoma, keratinizing, NOS (8071/3).",
+   "basis": 7
+  },
+  {
+   "code": "8072",
+   "behaviour": "3",
+   "label": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
+   "reason": "Recorded as Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072/3).",
+   "basis": 7
+  },
+  {
+   "code": "8073",
+   "behaviour": "3",
+   "label": "Squamous cell carcinoma, small cell, nonkeratinizing",
+   "reason": "Recorded as Squamous cell carcinoma, small cell, nonkeratinizing (8073/3).",
+   "basis": 7
+  },
+  {
+   "code": "8074",
+   "behaviour": "3",
+   "label": "Squamous cell carcinoma, spindle cell",
+   "reason": "Recorded as Squamous cell carcinoma, spindle cell (8074/3).",
+   "basis": 7
+  },
+  {
+   "code": "8075",
+   "behaviour": "3",
+   "label": "Squamous cell carcinoma, adenoid",
+   "reason": "Recorded as Squamous cell carcinoma, adenoid (8075/3).",
+   "basis": 7
+  },
+  {
+   "code": "8082",
+   "behaviour": "3",
+   "label": "Lymphoepithelial carcinoma",
+   "reason": "Recorded as Lymphoepithelial carcinoma (8082/3).",
+   "basis": 7
+  },
+  {
+   "code": "8120",
+   "behaviour": "3",
+   "label": "Transitional cell carcinoma, NOS",
+   "reason": "Recorded as Transitional cell carcinoma, NOS (8120/3).",
+   "basis": 7
+  },
+  {
+   "code": "8121",
+   "behaviour": "3",
+   "label": "Schneiderian carcinoma",
+   "reason": "Recorded as Schneiderian carcinoma (8121/3).",
+   "basis": 7
+  },
+  {
+   "code": "8122",
+   "behaviour": "3",
+   "label": "Urothelial carcinoma, sarcomatoid",
+   "reason": "Recorded as Urothelial carcinoma, sarcomatoid (8122/3).",
+   "basis": 7
+  },
+  {
+   "code": "8131",
+   "behaviour": "3",
+   "label": "Urothelial carcinoma, micropapillary",
+   "reason": "Recorded as Urothelial carcinoma, micropapillary (8131/3).",
+   "basis": 7
+  },
+  {
+   "code": "8140",
+   "behaviour": "3",
+   "label": "Adenocarcinoma, NOS",
+   "reason": "Recorded as Adenocarcinoma, NOS (8140/3).",
+   "basis": 7
+  },
+  {
+   "code": "8158",
+   "behaviour": "3",
+   "label": "ACTH-producing tumor",
+   "reason": "Recorded as ACTH-producing tumor (8158/3).",
+   "basis": 7
+  },
+  {
+   "code": "8190",
+   "behaviour": "3",
+   "label": "Trabecular adenocarcinoma",
+   "reason": "Recorded as Trabecular adenocarcinoma (8190/3).",
+   "basis": 7
+  },
+  {
+   "code": "8200",
+   "behaviour": "3",
+   "label": "Adenoid cystic carcinoma",
+   "reason": "Recorded as Adenoid cystic carcinoma (8200/3).",
+   "basis": 7
+  },
+  {
+   "code": "8211",
+   "behaviour": "3",
+   "label": "Tubular adenocarcinoma",
+   "reason": "Recorded as Tubular adenocarcinoma (8211/3).",
+   "basis": 7
+  },
+  {
+   "code": "8230",
+   "behaviour": "3",
+   "label": "Solid carcinoma, NOS",
+   "reason": "Recorded as Solid carcinoma, NOS (8230/3).",
+   "basis": 7
+  },
+  {
+   "code": "8231",
+   "behaviour": "3",
+   "label": "Carcinoma simplex",
+   "reason": "Recorded as Carcinoma simplex (8231/3).",
+   "basis": 7
+  },
+  {
+   "code": "8244",
+   "behaviour": "3",
+   "label": "Mixed adenoneuroendocrine carcinoma",
+   "reason": "Recorded as Mixed adenoneuroendocrine carcinoma (8244/3).",
+   "basis": 7
+  },
+  {
+   "code": "8246",
+   "behaviour": "3",
+   "label": "Neuroendocrine carcinoma, NOS",
+   "reason": "Recorded as Neuroendocrine carcinoma, NOS (8246/3).",
+   "basis": 7
+  },
+  {
+   "code": "8261",
+   "behaviour": "3",
+   "label": "Adenocarcinoma in villous adenoma",
+   "reason": "Recorded as Adenocarcinoma in villous adenoma (8261/3).",
+   "basis": 7
+  },
+  {
+   "code": "8262",
+   "behaviour": "3",
+   "label": "Villous adenocarcinoma",
+   "reason": "Recorded as Villous adenocarcinoma (8262/3).",
+   "basis": 7
+  },
+  {
+   "code": "8263",
+   "behaviour": "3",
+   "label": "Adenocarcinoma in tubulovillous adenoma",
+   "reason": "Recorded as Adenocarcinoma in tubulovillous adenoma (8263/3).",
+   "basis": 7
+  },
+  {
+   "code": "8310",
+   "behaviour": "3",
+   "label": "Clear cell adenocarcinoma, NOS",
+   "reason": "Recorded as Clear cell adenocarcinoma, NOS (8310/3).",
+   "basis": 7
+  },
+  {
+   "code": "8320",
+   "behaviour": "3",
+   "label": "Granular cell carcinoma",
+   "reason": "Recorded as Granular cell carcinoma (8320/3).",
+   "basis": 7
+  },
+  {
+   "code": "8323",
+   "behaviour": "3",
+   "label": "Mixed cell adenocarcinoma",
+   "reason": "Recorded as Mixed cell adenocarcinoma (8323/3).",
+   "basis": 7
+  },
+  {
+   "code": "8331",
+   "behaviour": "3",
+   "label": "Follicular adenocarcinoma, well differentiated",
+   "reason": "Recorded as Follicular adenocarcinoma, well differentiated (8331/3).",
+   "basis": 7
+  },
+  {
+   "code": "8332",
+   "behaviour": "3",
+   "label": "Follicular adenocarcinoma, trabecular",
+   "reason": "Recorded as Follicular adenocarcinoma, trabecular (8332/3).",
+   "basis": 7
+  },
+  {
+   "code": "8333",
+   "behaviour": "3",
+   "label": "Fetal adenocarcinoma",
+   "reason": "Recorded as Fetal adenocarcinoma (8333/3).",
+   "basis": 7
+  },
+  {
+   "code": "8480",
+   "behaviour": "3",
+   "label": "Mucinous adenocarcinoma",
+   "reason": "Recorded as Mucinous adenocarcinoma (8480/3).",
+   "basis": 7
+  },
+  {
+   "code": "8481",
+   "behaviour": "3",
+   "label": "Mucin-producing adenocarcinoma",
+   "reason": "Recorded as Mucin-producing adenocarcinoma (8481/3).",
+   "basis": 7
+  },
+  {
+   "code": "8560",
+   "behaviour": "3",
+   "label": "Adenosquamous carcinoma",
+   "reason": "Recorded as Adenosquamous carcinoma (8560/3).",
+   "basis": 7
+  },
+  {
+   "code": "8562",
+   "behaviour": "3",
+   "label": "Epithelial-myoepithelial carcinoma",
+   "reason": "Recorded as Epithelial-myoepithelial carcinoma (8562/3).",
+   "basis": 7
+  },
+  {
+   "code": "8570",
+   "behaviour": "3",
+   "label": "Adenocarcinoma with squamous metaplasia",
+   "reason": "Recorded as Adenocarcinoma with squamous metaplasia (8570/3).",
+   "basis": 7
+  },
+  {
+   "code": "8571",
+   "behaviour": "3",
+   "label": "Adenocarcinoma with cartilaginous and osseous metaplasia",
+   "reason": "Recorded as Adenocarcinoma with cartilaginous and osseous metaplasia (8571/3).",
+   "basis": 7
+  },
+  {
+   "code": "8572",
+   "behaviour": "3",
+   "label": "Adenocarcinoma with spindle cell metaplasia",
+   "reason": "Recorded as Adenocarcinoma with spindle cell metaplasia (8572/3).",
+   "basis": 7
+  },
+  {
+   "code": "8573",
+   "behaviour": "3",
+   "label": "Adenocarcinoma with apocrine metaplasia",
+   "reason": "Recorded as Adenocarcinoma with apocrine metaplasia (8573/3).",
+   "basis": 7
+  },
+  {
+   "code": "8581",
+   "behaviour": "3",
+   "label": "Thymoma, type A",
+   "reason": "Recorded as Thymoma, type A (8581/3).",
+   "basis": 7
+  },
+  {
+   "code": "8582",
+   "behaviour": "3",
+   "label": "Thymoma, type AB",
+   "reason": "Recorded as Thymoma, type AB (8582/3).",
+   "basis": 7
+  },
+  {
+   "code": "8583",
+   "behaviour": "3",
+   "label": "Thymoma, type B1",
+   "reason": "Recorded as Thymoma, type B1 (8583/3).",
+   "basis": 7
+  },
+  {
+   "code": "8584",
+   "behaviour": "3",
+   "label": "Thymoma, type B2",
+   "reason": "Recorded as Thymoma, type B2 (8584/3).",
+   "basis": 7
+  },
+  {
+   "code": "8585",
+   "behaviour": "3",
+   "label": "Thymoma, type B3",
+   "reason": "Recorded as Thymoma, type B3 (8585/3).",
+   "basis": 7
+  }
+ ],
+ "picker_held_back": [
+  {
+   "code": "8050",
+   "behaviour": "3",
+   "why": "Papillary carcinoma in the thyroid is 8260/3 (ICD-O-3.2 related term Papillary carcinoma of thyroid, C73.9); 8050/3 in the thyroid picker invites the wrong code."
+  },
+  {
+   "code": "8510",
+   "behaviour": "3",
+   "why": "Medullary carcinoma in the thyroid is 8345/3 Medullary thyroid carcinoma (C73.9); 8510/3 in the thyroid picker invites the wrong code."
+  },
+  {
+   "code": "8021",
+   "behaviour": "3",
+   "why": "The WHO source codes anaplastic thyroid carcinoma 8020/3 (ICCR Table 1); 8021/3 in the thyroid picker invites a second code for one entity."
+  }
+ ],
+ "obsolete_not_built": [
+  {
+   "code": "8130",
+   "behaviour": "3",
+   "icdo32_preferred_term": "Papillary urothelial carcinoma"
+  },
+  {
+   "code": "8141",
+   "behaviour": "3",
+   "icdo32_preferred_term": "Scirrhous adenocarcinoma"
+  },
+  {
+   "code": "8245",
+   "behaviour": "3",
+   "icdo32_preferred_term": "Adenocarcinoid tumor"
+  },
+  {
+   "code": "8350",
+   "behaviour": "3",
+   "icdo32_preferred_term": "Nonencapsulated sclerosing carcinoma"
+  },
+  {
+   "code": "8440",
+   "behaviour": "3",
+   "icdo32_preferred_term": "Cystadenocarcinoma, NOS"
+  }
+ ],
+ "ihc_rules": [
+  {
+   "panel": "th_ihc",
+   "positive": [
+    "calcitonin"
+   ],
+   "negative": [
+    "thyroglobulin"
+   ],
+   "code": "8345",
+   "behaviour": "3",
+   "reason": "Recorded as Medullary thyroid carcinoma (8345/3).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 19,
+     "quote": "calcitonin, chromogranin, synaptophysin, carcinoembryonic antigen (CEA) and thyroglobulin may be performed",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "verified by calcitonin immunohistochemistry",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 19,
+     "quote": "Thyroglobulin, thyroid transcription factor-1 (TTF-1) and PAX8 may indicate",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "th_ihc",
+   "positive": [
+    "beta-catenin (nuclear)"
+   ],
+   "negative": [
+    "thyroglobulin"
+   ],
+   "code": "8201",
+   "behaviour": "3",
+   "reason": "Recorded as Cribriform carcinoma, NOS (8201/3).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "presence of nuclear and cytoplasmic beta-catenin expression",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "these tumors lack expression of thyroglobulin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "th_ihc",
+   "positive": [
+    "GATA3",
+    "mammaglobin",
+    "S100 protein"
+   ],
+   "negative": [
+    "TTF-1",
+    "thyroglobulin"
+   ],
+   "code": "8502",
+   "behaviour": "3",
+   "reason": "Recorded as Secretory carcinoma (8502/3).",
+   "cite": [
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "positive for GATA3, mammaglobin, GCDFP15 and S100 protein",
+     "from_image": false
+    },
+    {
+     "file": "XIb-thyroid__Juhlin-2022.txt",
+     "pdf_page": 7,
+     "quote": "consistently negative for TTF1 and thyroglobulin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "panel": "th_ihc",
+   "positive": [],
+   "negative": [],
+   "code": "8010",
+   "behaviour": "3",
+   "fallback": true,
+   "reason": "Recorded as Carcinoma, NOS (8010/3). Thyroglobulin, TTF-1 and PAX8 show follicular-cell origin without naming the type.",
+   "cite": [
+    {
+     "file": "XIb-thyroid__ICCR-Thyroid-3rd.txt",
+     "pdf_page": 19,
+     "quote": "Thyroglobulin, thyroid transcription factor-1 (TTF-1) and PAX8 may indicate",
+     "from_image": false
+    }
+   ]
+  }
+ ],
+ "tissue_free": [
+  {
+   "evidence": "A referral letter or clinical note only",
+   "code": "8000",
+   "behaviour": "3",
+   "basis": 1,
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+  },
+  {
+   "evidence": "An imaging report only",
+   "code": "8000",
+   "behaviour": "3",
+   "basis": 2,
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+  },
+  {
+   "evidence": "Imaging that shows a thyroid tumour with a raised serum calcitonin",
+   "code": "8345",
+   "behaviour": "3",
+   "basis": 4,
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+  },
+  {
+   "evidence": "A raised calcitonin with no imaging that shows a tumour",
+   "code": null,
+   "behaviour": null,
+   "basis": null,
+   "not_registrable": true,
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached. Rule 6: basis 4 never stands alone."
+  },
+  {
+   "evidence": "A report that calls a thyroid malignancy possible or suspected",
+   "code": null,
+   "behaviour": null,
+   "basis": null,
+   "not_registrable": true,
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached. Rule 4."
+  }
+ ],
+ "lab_tests": [
+  {
+   "test": "Calcitonin",
+   "specimen": "serum",
+   "role": "With imaging that shows a thyroid tumour, a raised serum calcitonin registers medullary thyroid carcinoma 8345/3 at basis 4. The thyroid sources name calcitonin and carcinoembryonic antigen only as immunostains on tissue; none gives a serum test a diagnostic role.",
+   "cite": [],
+   "source_note": "Visser O, et al. Front Oncol 2023;13:1250549, Table 4 and rules 4 to 6, as the task brief and docs/group_11_build_contract.md section 0.5 give them. Visser is not in this part's file set, so no page quote is attached."
+  }
+ ],
+ "rules_a_to_k": [
+  {
+   "rule": "A",
+   "applies": false,
+   "how": "The thyroid is a named organ, not an ill-defined region. A neck mass that histology calls a thyroid carcinoma is placed by Rule H.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 1,
+     "quote": "If the diagnosis does not specify the tissue of origin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "B",
+   "applies": true,
+   "how": "Hint on th_evidence: a thyroid carcinoma reported in the perithyroid tissue is recorded at the thyroid, because the tumour type shows its tissue.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 1,
+     "quote": "unless the type of tumor indicates origin from a particular tissue",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "C",
+   "applies": false,
+   "how": "C73 has one subcategory, C73.9; no .8 overlap code exists for the thyroid.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "its point of origin cannot be determined",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "D",
+   "applies": true,
+   "how": "Reason on the Lymphoma referral on th_histology: a thyroid lymphoma is extranodal and keeps C73.9.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Code extranodal lymphomas to the site of origin",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "E",
+   "applies": false,
+   "how": "No leukaemia is offered at the thyroid.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Code all leukemias except myeloid sarcoma",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "F",
+   "applies": true,
+   "how": "The exclusion options on th_histology and th_ftc_invasion give the ICD-O-3.2 behaviour in their reason. A report that itself calls one of those tumours malignant is registrar question 9; no screen offers a stated-behaviour code.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "code as the pathologist indicates",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "G",
+   "applies": true,
+   "how": "Hint on th_histology: a well-differentiated carcinoma with a poorly differentiated or anaplastic component is coded as the higher-grade tumour. Grade words are part of the entity name in poorly differentiated thyroid carcinoma (8337) and Follicular adenocarcinoma, well differentiated (8331); the sixth digit is not built.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "Assign the highest grade or differentiation code described in the diagnostic statement",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 9,
+     "quote": "are used as integral parts of approximately 15 histologic terms for neoplasms",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "H",
+   "applies": true,
+   "how": "Hint on th_evidence: a lymph node or perithyroid specimen showing a thyroid carcinoma is recorded at C73.9, the site ICD-O-3.2 prints beside 8260/3 Papillary carcinoma of thyroid, 8330, 8335, 8337, 8339, 8340, 8341, 8343, 8345 and 8589. The deposit option on th_histology refers a tumour that began elsewhere.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "If no site is indicated in the diagnosis, use the suggested code",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 2,
+     "quote": "is not a metastasis",
+     "from_image": false
+    }
+   ],
+   "verified_by": "icdo32.sqlite code_reference (C73.9) on those terms"
+  },
+  {
+   "rule": "J",
+   "applies": true,
+   "how": "Hint on th_ptc_subtype: a report that says papillary and follicular carcinoma is the listed combination 8340/3.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 3,
+     "quote": "Change the order of word roots in a compound term",
+     "from_image": false
+    },
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 11,
+     "quote": "most common combinations have been listed in ICD-O",
+     "from_image": false
+    }
+   ]
+  },
+  {
+   "rule": "K",
+   "applies": true,
+   "how": "Hint on th_ptc_subtype lists the subtype codes so the clerk records the higher one when the report names two subtypes. Where Rule K and the WHO entity disagree (clear cell, squamous, mixed medullary and oncocytic, anaplastic with a differentiated component) the screens follow the WHO entity pending registrar question 4.",
+   "cite": [
+    {
+     "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+     "pdf_page": 3,
+     "quote": "When no single code includes all diagnostic terms, use the numerically higher code number",
+     "from_image": false
+    }
+   ]
+  }
+ ],
+ "code_currency": [
+  {
+   "code": "8335",
+   "behaviour": "3",
+   "finding": "Currency check section 3: 8335 moved /3 to /1; Follicular carcinoma, minimally invasive stays 8335/3, and Follicular carcinoma, encapsulated, NOS is now a synonym at 8335/1.",
+   "action": "th_ftc_invasion codes capsular invasion only 8335/3 and sends questionable or undescribed invasion in an encapsulated tumour to the 8335/1 exclusion."
+  },
+  {
+   "code": "8339",
+   "behaviour": "3",
+   "finding": "Currency check sections 3 and 6: new in ICD-O-3.2, outside every ICCC-2017 range, not in REDCap.",
+   "action": "Built on th_ftc_invasion with awaiting_layer1; listed in codes-awaiting-redcap.md and on the REDCap-side list."
+  },
+  {
+   "code": "8336",
+   "behaviour": "1",
+   "finding": "Currency check section 3: /0 to /1, now Hyalinizing trabecular tumor; section 5: REDCap XIb offers 8336 as Hyalinizing trabecular adenoma, with no malignant form.",
+   "action": "Exclusion on th_histology; REDCap-side list."
+  },
+  {
+   "code": "8350",
+   "behaviour": "3",
+   "finding": "Currency check section 2: every /3 term [obs], including Papillary carcinoma, diffuse sclerosing. REDCap XIb offers 8350 Nonencapsulated sclerosing carcinoma.",
+   "action": "Not built. The diffuse sclerosing subtype option on th_ptc_subtype records 8260/3 (registrar question 3). REDCap-side list: retire 8350."
+  },
+  {
+   "code": "8330",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Follicular adenocarcinoma, NOS is a synonym; preferred is Follicular carcinoma, NOS.",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8337",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Insular carcinoma is a synonym; preferred is Poorly differentiated thyroid carcinoma.",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8342",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Papillary carcinoma, oxyphilic cell is a synonym; preferred is Papillary carcinoma, oncocytic variant.",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8343",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Papillary carcinoma, encapsulated is not an ICD-O-3.2 term; preferred is Papillary carcinoma, encapsulated, of thyroid.",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8345",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Medullary carcinoma with amyloid stroma is a related term; preferred is Medullary thyroid carcinoma. The synonym Parafollicular cell carcinoma is [obs].",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8589",
+   "behaviour": "3",
+   "finding": "Currency check section 4: REDCap label Carcinoma showing thymus-like element is a synonym; preferred is Intrathyroid thymic carcinoma.",
+   "action": "The tool shows the preferred term; REDCap-side list."
+  },
+  {
+   "code": "8344",
+   "behaviour": "3",
+   "finding": "ICD-O-3.2 holds tall cell as a synonym at 8344/3; REDCap offers only the preferred Papillary carcinoma, columnar cell.",
+   "action": "Tall cell and columnar cell both record 8344/3 under the preferred term."
+  },
+  {
+   "code": "8502",
+   "behaviour": "3",
+   "finding": "REDCap's XIb list does not offer 8502, and its XIc and XIf label Secretory carcinoma of breast is not the ICD-O-3.2 preferred term Secretory carcinoma (currency check section 4). ICCC-2017 places 8502 in no group at C73.9.",
+   "action": "Picker entry at C73.9, XIb by standing rule 3; REDCap-side list."
+  },
+  {
+   "code": "8580",
+   "behaviour": "3",
+   "finding": "Currency check section 3: thymoma types 8580-8585 moved /1 to /3. ICCC-2017 places 8580-8586 in no group at C73.9; REDCap's XIb list does not offer them.",
+   "action": "Picker entries, pending registrar question 7 on topography."
+  },
+  {
+   "code": "8020",
+   "behaviour": "3",
+   "finding": "ICCR Table 1 codes anaplastic thyroid carcinoma 8020/3. ICD-O-3.2 also holds 8021/3 Carcinoma, anaplastic, NOS as current.",
+   "action": "Anaplastic thyroid carcinoma records 8020/3; 8021/3 is held back from the thyroid picker."
+  },
+  {
+   "code": "8050",
+   "behaviour": "3",
+   "finding": "Papillary carcinoma, NOS is 8050/3, but ICD-O-3.2 prints Papillary carcinoma of thyroid (C73.9) as a related term of 8260/3.",
+   "action": "Every papillary carcinoma at the thyroid records 8260/3; 8050/3 is held back from the thyroid picker."
+  },
+  {
+   "code": "8510",
+   "behaviour": "3",
+   "finding": "Medullary carcinoma, NOS is 8510/3; ICD-O-3.2 prints Medullary thyroid carcinoma (C73.9) at 8345/3.",
+   "action": "Every medullary carcinoma at the thyroid records 8345/3; 8510/3 is held back from the thyroid picker."
+  },
+  {
+   "code": "8330",
+   "behaviour": "1",
+   "finding": "Atypical follicular adenoma, the only 8330/1 term, is [obs].",
+   "action": "Never on a screen. Not in Group XI scope (behaviour /1)."
+  },
+  {
+   "code": "9080",
+   "behaviour": "1",
+   "finding": "Currency check section 3: Immature teratoma of thyroid moved /3 to /1; a Group X code at a Group XI site.",
+   "action": "The Teratoma option on th_histology refers to Group X, which holds the exclusion."
+  }
+ ],
+ "conflicts": [
+  {
+   "other_group": 10,
+   "codes": [
+    "9080"
+   ],
+   "sites": [
+    "C73.9"
+   ],
+   "issue": "Teratoma of the thyroid is Group X: ICCC-2017 puts malignant teratoma 9080 at C73.9 in Xb2, and ICD-O-3.2 codes immature teratoma of thyroid 9080/1. The thyroid tree refers it."
+  },
+  {
+   "other_group": 10,
+   "codes": [
+    "9080"
+   ],
+   "sites": [
+    "C73.9"
+   ],
+   "issue": "ICCR lists thyroblastoma as an embryonal thyroid neoplasm, and ICD-O-3.2 gives it no code. A clerk without a code may reach for Teratoma, malignant, NOS 9080/3, which ICCC-2017 places at C73.9 in Group X (Xb2). Registrar question 6."
+  },
+  {
+   "other_group": 10,
+   "codes": [
+    "8330",
+    "8335",
+    "8337",
+    "8340",
+    "8341",
+    "8343",
+    "8344",
+    "8260",
+    "9090"
+   ],
+   "sites": [
+    "C56.9"
+   ],
+   "issue": "ICCC-2017 range 121 places 8330-8347 in XIb at every site, so a thyroid-type carcinoma in struma ovarii coded 8330 or 8340 is XIb, while 8260 at the ovary is Xd and 9090/3 Struma ovarii, malignant is Xc2. None of this part's sources covers struma ovarii; the ovary tree must choose one route."
+  },
+  {
+   "other_group": 12,
+   "codes": [
+    "8000"
+   ],
+   "sites": [
+    "C73.9"
+   ],
+   "issue": "The evidence gate records 8000/3 on clinical or imaging evidence, and ICCC-2017 places 8000 at C73.9 in XIIb, not XIb. The subgroup computed at output will be XIIb for those cases."
+  },
+  {
+   "other_group": 2,
+   "codes": [],
+   "sites": [
+    "C73.9"
+   ],
+   "issue": "Thyroid lymphoma refers to Group II and keeps C73.9 (Rule D)."
+  },
+  {
+   "other_group": 9,
+   "codes": [
+    "8800",
+    "9120"
+   ],
+   "sites": [
+    "C73.9"
+   ],
+   "issue": "Sarcoma of the thyroid refers to Group IX (8800 IXe, 9120 IXd8 at C73.9)."
+  },
+  {
+   "other_group": 11,
+   "codes": [
+    "8580",
+    "8581",
+    "8582",
+    "8583",
+    "8584",
+    "8585",
+    "8586",
+    "8589"
+   ],
+   "sites": [
+    "C73.9",
+    "C37.9"
+   ],
+   "issue": "Thymus tree overlap (XIf): 8589 is XIb at C73.9 but XIf elsewhere; thymoma and thymic carcinoma within the thyroid have no ICCC group at C73.9. Whether an intrathyroid thymoma is recorded at C73.9 or C37.9 is registrar question 7."
+  },
+  {
+   "other_group": 11,
+   "codes": [
+    "8430",
+    "8502"
+   ],
+   "sites": [
+    "C73.9",
+    "C07.9",
+    "C08.9"
+   ],
+   "issue": "Salivary gland tree overlap: mucoepidermoid and secretory carcinoma use the salivary codes; at C73.9 8430 is XIb and 8502 has no ICCC group."
+  }
+ ],
+ "data_gaps": [
+  {
+   "need": "Paediatric occurrence of follicular thyroid carcinoma, oncocytic carcinoma, the invasive encapsulated follicular variant, anaplastic carcinoma, cribriform-morular carcinoma and the rarer thyroid entities",
+   "why": "Ruling 1 makes an entity a histology-screen option only on a paediatric report. Pfister 2022 Table 3 lists papillary and medullary carcinoma and the spindle epithelial tumour with thymus-like elements; Juhlin reports poorly differentiated carcinoma in adolescents. Follicular carcinoma therefore sits in the picker until a source reports it in children.",
+   "candidate_source": "WHO Classification of Paediatric Tumours, 5th edition, thyroid chapter; Francis GL, et al. Management guidelines for children with thyroid nodules and differentiated thyroid cancer. Thyroid 2015;25:716-759"
+  },
+  {
+   "need": "The ICD-O codes the WHO 5th edition gives to differentiated high-grade thyroid carcinoma (dominant type not named) and to thyroblastoma",
+   "why": "Neither code is in ICD-O-3.2 or ICCR Table 1; both entities wait on the registrar.",
+   "candidate_source": "Baloch ZW, et al. Overview of the 2022 WHO Classification of Thyroid Neoplasms. Endocrine Pathology 2022;33:27-63, which tabulates ICD-O codes"
+  },
+  {
+   "need": "A source for serum calcitonin as a registration marker",
+   "why": "The th_lab screen and the basis-4 tissue-free code rest on Visser 2023 Table 4, which is not in this part's file set.",
+   "candidate_source": "Visser O, et al. Front Oncol 2023;13:1250549 (the controller holds docs/references/visser-2023-key-points.md)"
+  },
+  {
+   "need": "Thyroid cytology reporting categories and which of them a registry may record",
+   "why": "th_cytology uses generic labels; none of the sources covers fine-needle aspiration categories.",
+   "candidate_source": "Ali SZ, et al. The 2023 Bethesda System for Reporting Thyroid Cytopathology. Thyroid 2023;33:1039-1044"
+  },
+  {
+   "need": "Immunohistochemistry that separates intrathyroid thymic carcinoma and the spindle epithelial tumour with thymus-like elements from other thyroid carcinomas",
+   "why": "The th_ihc panel has no rule for either; both fall to the 8010/3 fallback if the report does not name them.",
+   "candidate_source": "WHO Classification of Endocrine and Neuroendocrine Tumours, 5th edition, thyroid chapters"
+  },
+  {
+   "need": "Coding of thyroid-type carcinoma arising in struma ovarii",
+   "why": "Three routes give three groups (XIb, Xd, Xc2); see conflicts.",
+   "candidate_source": "WHO Classification of Female Genital Tumours, 5th edition, monodermal teratoma chapter"
+  }
+ ],
+ "registrar_questions": [
+  "1. My sources report papillary and medullary thyroid carcinoma, the spindle epithelial tumour with thymus-like elements, and poorly differentiated carcinoma in adolescents, but not follicular thyroid carcinoma. Should follicular carcinoma (and its invasion screen) be a histology-screen option now, or stay in the picker until a paediatric source is found?",
+  "2. A report that says encapsulated follicular carcinoma and describes no capsular or vascular invasion: ICD-O-3.2 codes Follicular carcinoma, encapsulated, NOS 8335/1, outside the malignant scope. Confirm the tree excludes it.",
+  "3. The diffuse sclerosing subtype of papillary carcinoma: every 8350/3 term is obsolete and the WHO table gives the subtype no code of its own. Confirm it records 8260/3.",
+  "4. Where Rule K and the WHO entity give different codes, which wins? Clear cell papillary carcinoma (Rule K 8310/3, WHO subtype 8260/3); squamous cell carcinoma of the thyroid (term 8070/3, WHO entity anaplastic 8020/3); anaplastic carcinoma with a papillary or follicular component (Rule K 8260/3 or 8330/3, WHO 8020/3); mixed medullary and oncocytic carcinoma (Rule K 8345/3, family code 8346/3). The screens follow the WHO entity until you rule.",
+  "5. Papillary microcarcinoma with a named subtype: Rule K keeps 8341/3 over classic 8260/3 and gives 8344/3 for tall cell. Confirm, given that the WHO 5th edition asks pathologists to subtype small tumours and not to use the size term.",
+  "6. Thyroblastoma and a high-grade differentiated thyroid carcinoma whose dominant type is not named have no ICD-O-3.2 code in the sources. What should each record?",
+  "7. Thymoma or thymic carcinoma found within the thyroid: is the site C73.9 or C37.9? At C73.9 ICCC-2017 gives 8580-8586 no group.",
+  "8. Oncocytic carcinoma reported as minimally invasive or encapsulated angioinvasive: confirm it records 8290/3, not 8335/3 or 8339/3 (the invasion words carry no code of their own).",
+  "9. Rule F: a report that itself calls a hyalinizing trabecular tumour or another /1 thyroid tumour malignant. Is it recorded (for example 8336/3, which ICCC-2017 range 121 would place in XIb), or excluded?"
+ ],
+ "notes": "Facts read from icdo32.sqlite and ICCC-2017.sqlite carry a verified_by field rather than a page quote. Cites with from_image true were read from the PDF page image (ICCR Table 1, PDF p. 9)."
+}

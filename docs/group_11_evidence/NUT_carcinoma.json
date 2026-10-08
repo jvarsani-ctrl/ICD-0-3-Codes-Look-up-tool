@@ -1,0 +1,1780 @@
+{
+  "part_id": "NUT_carcinoma",
+  "sources": [
+    {
+      "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+      "citation": "Luo J, Bishop JA, DuBois SG, Hanna GJ, Sholl LM, Stelow EB, Thompson LDR, Shapiro GI, French CA. Hiding in plain sight: NUT carcinoma is an unrecognized subtype of squamous cell carcinoma of the lungs and head and neck. Nat Rev Clin Oncol 2025;22:292–306. doi:10.1038/s41571-025-00986-3",
+      "who_volume": "Cites WHO Classification of Tumours: Thoracic Tumours, 5th edn, 2021, pp. 364–367; Head and Neck Tumours Part A, 5th edn, 2024, pp. 65–67; Paediatric Tumours, 5th edn, 2022, pp. 908–909"
+    },
+    {
+      "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+      "citation": "Lemelle L, Moya-Plana A, Dumont B, Fresneau B, Laprie A, Claude L, et al. NUT carcinoma in children, adolescents and young adults. Bull Cancer 2022;109:491–504. doi:10.1016/j.bulcan.2022.01.015",
+      "who_volume": "Cites the 2015 World Health Organization classification of lung tumours (Travis 2015, reference 39) for the rename to NUT carcinoma"
+    },
+    {
+      "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+      "citation": "Pfister SM, Reyes-Mugica M, Chan JKC, et al. A Summary of the Inaugural WHO Classification of Pediatric Tumors: Transitioning from the Optical into the Molecular Era. Cancer Discov 2022;12(2):331–355",
+      "who_volume": "WHO Classification of Tumours: Paediatric Tumours, 5th ed., 2022"
+    },
+    {
+      "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+      "citation": "World Health Organization. International Classification of Diseases for Oncology, 3rd edition, 1st revision (ICD-O-3.1), section 4 Coding guidelines, printed pp. 14–28",
+      "who_volume": "ICD-O-3.1 coding manual (not a tumour classification)"
+    }
+  ],
+  "sites": [
+    {
+      "topography": "C73.9",
+      "iccc_subgroup": "XIb"
+    },
+    {
+      "topography": "C11.0–C11.9",
+      "iccc_subgroup": "XIc"
+    },
+    {
+      "topography": "C44.0–C44.9, C51.9, C60.9, C63.2",
+      "iccc_subgroup": "XIe"
+    },
+    {
+      "topography": "C07.9–C08.9",
+      "iccc_subgroup": "XIf1"
+    },
+    {
+      "topography": "C18.0, C18.2–C18.9, C19.9, C20.9, C21.0–C21.8",
+      "iccc_subgroup": "XIf2"
+    },
+    {
+      "topography": "C18.1",
+      "iccc_subgroup": "XIf3"
+    },
+    {
+      "topography": "C34.0–C34.9",
+      "iccc_subgroup": "XIf4"
+    },
+    {
+      "topography": "C37.9",
+      "iccc_subgroup": "XIf5"
+    },
+    {
+      "topography": "C50.0–C50.9",
+      "iccc_subgroup": "XIf6"
+    },
+    {
+      "topography": "C53.0–C53.9",
+      "iccc_subgroup": "XIf7"
+    },
+    {
+      "topography": "C67.0–C67.9",
+      "iccc_subgroup": "XIf8"
+    },
+    {
+      "topography": "C69.0–C69.9",
+      "iccc_subgroup": "XIf9"
+    },
+    {
+      "topography": "C00.0–C06.9, C09.0–C10.9, C12.9–C17.9, C23.9–C33.9, C38.0–C39.9, C48.0–C48.8, C51.0–C51.8, C52.9, C54.0–C55.9, C57.0–C60.8, C61.9, C63.0–C63.1, C63.7–C63.9, C65.9–C66.9, C68.0–C68.9, C70.0–C72.9, C75.0–C75.9 (includes nasal cavity C30.0, paranasal sinuses C31, larynx C32, mediastinum C38.1–C38.3, overlapping C39.8, pancreas C25, central nervous system C70–C72)",
+      "iccc_subgroup": "XIf10"
+    },
+    {
+      "topography": "C76.0–C76.8, C80.9",
+      "iccc_subgroup": "XIf11"
+    },
+    {
+      "topography": "C64.9",
+      "iccc_subgroup": "VIb (refer to Group VI)"
+    },
+    {
+      "topography": "C22.0, C22.1",
+      "iccc_subgroup": "VIIb (refer to Group VII)"
+    },
+    {
+      "topography": "C56.9, C62.0–C62.9",
+      "iccc_subgroup": "Xd (refer to Group X)"
+    },
+    {
+      "topography": "C40.0–C41.9, C47, C49, C74, C77, C42",
+      "iccc_subgroup": "none: ICCC-2017 has no range for 8023 at these sites (registrar)"
+    }
+  ],
+  "entities": [
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C34.0–C34.9",
+        "C37.9",
+        "C38.1–C38.3",
+        "C39.8"
+      ],
+      "paediatric": "occurs",
+      "decision": "option",
+      "refer_group": null,
+      "why": "NUT carcinoma arises in the lung and mediastinum in children and adolescents: a 13-year-old boy (Lemelle) and an 11-year-old girl (Luo, reference 34). The lung tree and the thymus tree each offer it; a mediastinal or overlapping lesion reaches it through the general carcinoma tree.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "Radiological appearance of a thoracic NUT carcinoma in a 13-year-old boy",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "Intrathoracic carcinoma in an 11-year-old girl showing a translocation t(15;19)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "initially considered an aggressive thymic carcinoma of children and adolescents",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "this cancer remains primarily a subcategory of thymic neoplasms and has its own category within",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "In 70% of cases, the primary lesion is located in the lung and",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 9,
+          "quote": "63 (including 25 children) | Median: 16 years | Thorax: 56%, Head and neck: 21%",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C30.0",
+        "C31.0–C31.9",
+        "C11.0–C11.9",
+        "C00.0–C14.8 (other head and neck mucosal sites)",
+        "C32.0–C32.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "option",
+      "refer_group": null,
+      "why": "The WHO Paediatric Tumours volume lists NUT carcinoma among the malignant head and neck tumours, and the paranasal sinuses are its most common head and neck site. Nasal cavity and sinus primaries are XIf10; a nasopharynx primary is XIc.",
+      "cite": [
+        {
+          "file": "ALL-paediatric-occurrence__Pfister-2022.txt",
+          "pdf_page": 14,
+          "quote": "Head and neck tumors | Malignant | NUT carcinoma",
+          "from_image": true
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "Paediatric Tumours only lists NUT carcinoma",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "The paranasal sinuses constitute the most common site of NC in the head and neck",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 8,
+          "quote": "typically presents with a mass in the sinonasal tract",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 8,
+          "quote": "Median 18.1 years (range: 12.3-49.7 years) | Chest: 8; head and Neck 3; multifocal 1",
+          "from_image": true
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "undifferentiated carcinoma of the nasopharyngeal type or salivary gland carcinoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C07.9–C08.9",
+        "C73.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Luo reports NUT carcinoma of the salivary gland and the thyroid as rare atypical sites, and neither source reports a child at these sites. The salivary and thyroid trees list 8023/3 in the long-tail picker.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "the rare (8%) cases of NUT carcinoma arising in atypical sites",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "NUT carcinoma of the salivary glands",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "Thyroid carcinoma with NSD3::NUTM1 fusion",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C44.0–C44.9",
+        "C51.9",
+        "C60.9",
+        "C63.2"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Luo names skin among the sites outside the thorax and head and neck, with no child case. A NUTM1 fusion in a skin poroma or porocarcinoma is not NUT carcinoma, so the skin screen keeps 8023/3 in the picker.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "around 10% of NUT carcinomas arise in sites outside of the thorax",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "(for example, kidney, skin, or thyroid)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "NUTM1-rearranged porocarcinomas arise within the skin",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C25.0–C25.9",
+        "C67.0–C67.9",
+        "C70.0–C72.9",
+        "C80.9",
+        "other XIf10 sites"
+      ],
+      "paediatric": "rare",
+      "decision": "option",
+      "refer_group": null,
+      "why": "Lemelle lists the pancreas, bladder, kidneys and central nervous system as rare sites, and Luo cites a 2-year-old with a pancreatic or hepatic primary and a newborn with disseminated tumour. The general carcinoma tree offers 8023/3 on its shared histology screen; an unknown primary records C80.9 (XIf11).",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "a 2-year-old with a pancreatic/hepatic primary",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "NUT midline carcinoma in a newborn with multiorgan disseminated",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "the rare (8%) cases of NUT carcinoma arising in atypical sites",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C18.0–C21.8",
+        "C50.0–C50.9",
+        "C53.0–C53.9",
+        "C69.0–C69.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "picker",
+      "refer_group": null,
+      "why": "Neither source reports NUT carcinoma of the colorectum, appendix, breast, cervix or eye, though ICCC-2017 places 8023/3 there (XIf2, XIf3, XIf6, XIf7, XIf9). It is a picker entry on the colorectum tree; on the general carcinoma tree it is a picker entry at these sites if the histology screen filters by site, and the shared NUT option covers them if it does not.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "the rare (8%) cases of NUT carcinoma arising in atypical sites",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "around 10% of NUT carcinomas arise in sites outside of the thorax",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C64.9"
+      ],
+      "paediatric": "occurs",
+      "decision": "refer",
+      "refer_group": 6,
+      "why": "ICCC-2017 places 8023/3 at the kidney in VIb Renal carcinomas. Lemelle and Luo report kidney primaries; the Group VI tree owns the code at C64.9.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "(for example, kidney, skin, or thyroid)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 8,
+          "quote": "Mediastinum: 4, sinonasal: 4, neck: 2, lung: 1, lung and mediastinum: 1, kidney: 1",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C22.0",
+        "C22.1"
+      ],
+      "paediatric": "rare",
+      "decision": "refer",
+      "refer_group": 7,
+      "why": "ICCC-2017 places 8023/3 at the liver in VIIb Hepatic carcinomas. Luo cites a 2-year-old with a pancreatic or hepatic primary; the liver is also a common deposit site, so a liver sample is a primary only when the file says so.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "a 2-year-old with a pancreatic/hepatic primary",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 8,
+          "quote": "Common sites of metastasis of NUT carcinoma include bone and liver",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C56.9",
+        "C62.0–C62.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 10,
+      "why": "ICCC-2017 places 8023/3 at the ovary and testis in Xd Gonadal carcinomas. Neither source reports a gonadal primary.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "around 10% of NUT carcinomas arise in sites outside of the thorax",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "icdo32_term": "NUT carcinoma",
+      "icdo32_level": "Synonym",
+      "icdo32_preferred_term": "Nuclear protein in testis (NUT)-associated carcinoma",
+      "sites": [
+        "C40.0–C41.9",
+        "C49.0–C49.9",
+        "C47.0–C47.9",
+        "C74.0–C74.9"
+      ],
+      "paediatric": "rare",
+      "decision": "registrar",
+      "refer_group": null,
+      "why": "Lemelle reports an iliac bone primary and the Chau registry 6% bone or soft-tissue primaries. ICCC-2017 has no range for 8023 at bone, soft tissue, peripheral nerve or adrenal, so the subgroup cannot be computed from the site.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 8,
+          "quote": "Thoracic: 51%; head and neck: 41%; bone/soft tissue: 6%; other sites: 7%.",
+          "from_image": true
+        }
+      ]
+    },
+    {
+      "who_term": "NUTM1-rearranged sarcoma",
+      "code": "8805",
+      "behaviour": "3",
+      "icdo32_term": "Undifferentiated sarcoma",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Undifferentiated sarcoma",
+      "sites": [
+        "C00.0–C39.9",
+        "C44.0–C76.8",
+        "C80.9",
+        "C40.0–C41.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 9,
+      "why": "A sarcoma with a NUTM1 fusion to CIC, BCORL1, MXD1, MXD4 or MGA is not NUT carcinoma. It refers to Group IX, or Group VIII in bone (ICCC-2017: 8805/3 is IXe outside bone, VIIIe at C40–C41); the receiving group chooses the code.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "other NUTM1 fusion partners (that is, CIC, MXD4 and YAP1) are typically WHO-unclassified sarcomas",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "Undifferentiated epithelioid sarcoma",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "most often in the abdomen, soft tissue or central nervous system",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "other tumours involving the NUT gene have also been reported",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUTM1-rearranged leukaemia",
+      "code": "9811",
+      "behaviour": "3",
+      "icdo32_term": "B lymphoblastic leukemia/lymphoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "B lymphoblastic leukemia/lymphoma, NOS",
+      "sites": [
+        "C42.1"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 1,
+      "why": "NUTM1 is a recurrent fusion partner in B-cell precursor acute lymphoblastic leukaemia. It refers to Group I (ICCC-2017: 9811/3 at C42.1 is Ia1); Rule E records C42.1.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "NUTM1 is a recurrent fusion gene partner in B-cell precursor acute lymphoblastic leukemia",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "NUTM1-rearranged leukaemias | Blood or bone marrow | Leukaemia",
+          "from_image": true
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "Code all leukemias except myeloid sarcoma (9930/3) to C42.1 (bone marrow)",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "NUTM1-rearranged porocarcinoma",
+      "code": "8409",
+      "behaviour": "3",
+      "icdo32_term": "Porocarcinoma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Porocarcinoma, NOS",
+      "sites": [
+        "C44.0–C44.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "refer",
+      "refer_group": 11,
+      "why": "A YAP1::NUTM1 porocarcinoma of the skin is a cutaneous adnexal carcinoma, not NUT carcinoma. The NUT screen returns the clerk to the skin histology screen, where the skin part codes it (8409/3, XIe).",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "NUTM1-rearranged porocarcinomas arise within the skin",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "NUTM1-rearranged skin cancers | YAP1 | Skin adnexa | Porocarcinoma",
+          "from_image": true
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "fusions in poroma and porocarcinoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "who_term": "Poroma with YAP1::NUTM1 fusion",
+      "code": "8409",
+      "behaviour": "0",
+      "icdo32_term": "Poroma, NOS",
+      "icdo32_level": "Preferred",
+      "icdo32_preferred_term": "Poroma, NOS",
+      "sites": [
+        "C44.0–C44.9"
+      ],
+      "paediatric": "not_reported",
+      "decision": "exclusion",
+      "refer_group": null,
+      "why": "Poroma is benign (/0) and Group XI declares /3 only. The NUT screen returns the clerk to the skin histology screen, where the skin part excludes it.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "fusions in poroma and porocarcinoma",
+          "from_image": false
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "nut_site_option",
+      "node_type": "morphology_only",
+      "question": "What does the histology report call the tumour?",
+      "hint": "",
+      "hint_cite": [],
+      "applies_to": "One option added to the histology screen of the lung, thymus, nasopharynx and general carcinoma trees. On the thyroid, salivary gland and colorectum trees the 8023/3 entry sits in the long-tail picker and, when chosen, also goes to nut_result, so the deposit, referral and basis screens still apply. The question is the calling tree's own.",
+      "options": [
+        {
+          "label": "NUT carcinoma (also written NUT midline carcinoma, BRD4::NUTM1 carcinoma or carcinoma with t(15;19) translocation), or a carcinoma reported with a NUT immunostain or a NUTM1 gene result",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "nut_result",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "The next screen asks what the file reports about NUT.",
+          "recognition_aid": "Reports describe a poorly differentiated or undifferentiated carcinoma, sometimes with abrupt keratinization, and nuclear staining for NUT.",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "then known as carcinoma with t(15;19) translocation, as a type of thymic carcinoma",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 4,
+              "quote": "NUT midline carcinoma was originally named because of its midline location",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "in favour of undifferentiated or poorly differentiated carcinoma",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 3,
+              "quote": "Only a third of cases exhibit frank squamous differentiation",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "diffuse nuclear positivity of tumour cells (microgranular staining)",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "nut_result",
+      "node_type": "histology_subclassification",
+      "question": "What does the file report for this tumour?",
+      "hint": "Choose the first answer that matches the file. Keratin, p63, p40 and CD99 stains do not decide NUT carcinoma; a NUT immunostain or a NUTM1 gene test does.",
+      "hint_cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "This epithelial epidermoid marker is nonspecific in this setting",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "falsely suggested by tumour expression of CD99",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 6,
+          "quote": "most NUT carcinomas (85%) express keratins",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+          "from_image": false
+        }
+      ],
+      "options": [
+        {
+          "label": "The sample is a deposit in a lymph node, bone, liver or another organ, and the file names a different site where the tumour began",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": true,
+          "reason": "NUT carcinoma is recorded at the site where it began. The next screen asks for that site.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 8,
+              "quote": "Common sites of metastasis of NUT carcinoma include bone and liver",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "Cervical lymph node involvement is common in paranasal sinus NC",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 7,
+              "quote": "Supraclavicular lymph node, metastatic signet ring cell",
+              "from_image": false
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 7,
+              "quote": "Codes for this case as recorded in registry",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The report calls the tumour a sarcoma with a NUTM1 rearrangement (for example undifferentiated epithelioid sarcoma with CIC, BCORL1 or MXD1), and it arises in a bone",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 8,
+          "recapture_site": false,
+          "reason": "A NUTM1-rearranged sarcoma is not NUT carcinoma. It is coded with the malignant bone tumours (Group VIII).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "other NUTM1 fusion partners (that is, CIC, MXD4 and YAP1) are typically WHO-unclassified sarcomas",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 5,
+              "quote": "Undifferentiated epithelioid sarcoma",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "other tumours involving the NUT gene have also been reported",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The report calls the tumour a sarcoma with a NUTM1 rearrangement, at any site other than bone",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 9,
+          "recapture_site": false,
+          "reason": "A NUTM1-rearranged sarcoma is not NUT carcinoma. It is coded with the soft-tissue and other extraosseous sarcomas (Group IX).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "other NUTM1 fusion partners (that is, CIC, MXD4 and YAP1) are typically WHO-unclassified sarcomas",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 5,
+              "quote": "most often in the abdomen, soft tissue or central nervous system",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 5,
+              "quote": "Undifferentiated epithelioid sarcoma",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The report calls the tumour a leukaemia with a NUTM1 rearrangement",
+          "outcome": "refer",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": null,
+          "refer_group": 1,
+          "recapture_site": false,
+          "reason": "A NUTM1-rearranged leukaemia is not NUT carcinoma. It is coded with the leukaemias (Group I).",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 13,
+              "quote": "NUTM1 is a recurrent fusion gene partner in B-cell precursor acute lymphoblastic leukemia",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 5,
+              "quote": "NUTM1-rearranged leukaemias | Blood or bone marrow | Leukaemia",
+              "from_image": true
+            },
+            {
+              "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+              "pdf_page": 2,
+              "quote": "Code all leukemias except myeloid sarcoma (9930/3) to C42.1 (bone marrow)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The report calls a skin tumour a poroma or porocarcinoma with a YAP1::NUTM1 fusion",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "site_histology",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "A NUTM1 fusion in a poroma or porocarcinoma of the skin is not NUT carcinoma. Choose poroma or porocarcinoma on the skin histology screen.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 5,
+              "quote": "NUTM1-rearranged porocarcinomas arise within the skin",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 12,
+              "quote": "fusions in poroma and porocarcinoma",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "other NUTM1 fusion partners (that is, CIC, MXD4 and YAP1) are typically WHO-unclassified sarcomas",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The diagnosis names NUT carcinoma or NUT midline carcinoma",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "nut_basis",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "The next screen asks whether a NUTM1 gene result is on file.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 4,
+              "quote": "NUT midline carcinoma was originally named because of its midline location",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "The diagnosis names another carcinoma (for example poorly differentiated carcinoma), and the file reports a NUT immunostain or a NUTM1 gene test",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "nut_ihc",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "The next screen asks which NUT results the file reports.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 7,
+              "quote": "In the context of a tumour with a carcinoma histology",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 7,
+              "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "can confirm the diagnosis with a sensitivity of 87% and a specificity of 100%",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "nut_basis",
+      "node_type": "histology_subclassification",
+      "question": "Does the file hold a positive NUTM1 gene result?",
+      "hint": "A NUTM1 result is written as a NUTM1 (NUT) rearrangement, a translocation t(15;19), or a fusion such as BRD4::NUTM1, BRD3::NUTM1 or NSD3::NUTM1, found by FISH, RT-PCR or sequencing.",
+      "hint_cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "The NUTM1 fusion partners that characterize NUT carcinoma include BRD4",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "be detected with DNA-based or preferably RNA-based sequencing for NUTM1 fusions",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "confirmed by molecular biology (FISH, RT-PCR, RNA sequencing)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "then known as carcinoma with t(15;19) translocation, as a type of thymic carcinoma",
+          "from_image": false
+        }
+      ],
+      "options": [
+        {
+          "label": "Yes: a NUTM1 rearrangement or fusion is reported",
+          "outcome": "code",
+          "code": "8023",
+          "behaviour": "3",
+          "basis": 8,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3). Squamous features named in the same report do not change the code.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "the translocation involving BRD3/4 and NUT is specific for NC",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 2,
+              "quote": "The definitive diagnosis of NC is based on cytogenetics and/or molecular biology",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 6,
+              "quote": "NUT carcinoma typically exhibits features of either a poorly differentiated carcinoma or poorly differentiated SCC",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "No: the diagnosis rests on the histology report, with or without a NUT immunostain",
+          "outcome": "code",
+          "code": "8023",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3). Squamous features named in the same report do not change the code.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 2,
+              "quote": "The diagnosis is guided by anti-NUT nuclear immunostaining",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "can confirm the diagnosis with a sensitivity of 87% and a specificity of 100%",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "consisting of a single immunohistochemical stain for NUT protein expression",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 6,
+              "quote": "NUT carcinoma typically exhibits features of either a poorly differentiated carcinoma or poorly differentiated SCC",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "node_id": "nut_ihc",
+      "node_type": "ihc_checklist",
+      "question": "Which NUT results does the file report?",
+      "hint": "Choose the first answer that matches. A NUT immunostain counts only when the report states nuclear staining in more than half (over 50%) of the tumour cells.",
+      "hint_cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "In the context of a tumour with a carcinoma histology",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "diffuse nuclear positivity of tumour cells (microgranular staining)",
+          "from_image": false
+        }
+      ],
+      "options": [
+        {
+          "label": "A NUTM1 rearrangement or fusion found by FISH, RT-PCR or sequencing",
+          "outcome": "code",
+          "code": "8023",
+          "behaviour": "3",
+          "basis": 8,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3). Squamous features named in the same report do not change the code.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "be detected with DNA-based or preferably RNA-based sequencing for NUTM1 fusions",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "confirmed by molecular biology (FISH, RT-PCR, RNA sequencing)",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "the translocation involving BRD3/4 and NUT is specific for NC",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 2,
+              "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "A NUT immunostain with nuclear staining in more than half (over 50%) of the tumour cells",
+          "outcome": "code",
+          "code": "8023",
+          "behaviour": "3",
+          "basis": 7,
+          "next": null,
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Recorded as Nuclear protein in testis (NUT)-associated carcinoma (8023/3). Squamous features named in the same report do not change the code.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 7,
+              "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 6,
+              "quote": "can confirm the diagnosis with a sensitivity of 87% and a specificity of 100%",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "diffuse nuclear positivity of tumour cells (microgranular staining)",
+              "from_image": false
+            }
+          ]
+        },
+        {
+          "label": "Neither: the NUT immunostain is negative or stains half of the tumour cells or fewer, and no NUTM1 rearrangement is reported",
+          "outcome": "go",
+          "code": null,
+          "behaviour": null,
+          "basis": null,
+          "next": "site_histology",
+          "refer_group": null,
+          "recapture_site": false,
+          "reason": "Not recorded as NUT carcinoma. Choose the term the histology report gives the tumour on the site's histology screen.",
+          "recognition_aid": "",
+          "cite": [
+            {
+              "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+              "pdf_page": 7,
+              "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+              "from_image": false
+            },
+            {
+              "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+              "pdf_page": 7,
+              "quote": "the translocation involving BRD3/4 and NUT is specific for NC",
+              "from_image": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ihc_rules": [
+    {
+      "panel": "nut_ihc",
+      "positive": [
+        "NUTM1 rearrangement or fusion (FISH, RT-PCR or sequencing)"
+      ],
+      "negative": [],
+      "code": "8023",
+      "behaviour": "3",
+      "basis": 8,
+      "order": 1,
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "be detected with DNA-based or preferably RNA-based sequencing for NUTM1 fusions",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "confirmed by molecular biology (FISH, RT-PCR, RNA sequencing)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "the translocation involving BRD3/4 and NUT is specific for NC",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "panel": "nut_ihc",
+      "positive": [
+        "NUT immunostain: nuclear staining in more than 50% of tumour cells"
+      ],
+      "negative": [],
+      "code": "8023",
+      "behaviour": "3",
+      "basis": 7,
+      "order": 2,
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "In the context of a tumour with a carcinoma histology",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "can confirm the diagnosis with a sensitivity of 87% and a specificity of 100%",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "diffuse nuclear positivity of tumour cells (microgranular staining)",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "panel": "nut_ihc",
+      "positive": [],
+      "negative": [
+        "NUTM1 rearrangement or fusion",
+        "NUT immunostain in more than 50% of tumour cells"
+      ],
+      "code": null,
+      "behaviour": null,
+      "basis": null,
+      "order": 3,
+      "fallback": true,
+      "note": "Fallback: no NUT code. The clerk returns to the calling tree's histology screen and the report's own term gives the code. If the engine requires a fixed fallback code, 8010/3 Carcinoma, NOS is the nearest code that covers every carcinoma reaching this panel.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 7,
+          "quote": "diffuse (>50% of nuclei) positive for nuclear staining by NUT IHC is 100% specific",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "the translocation involving BRD3/4 and NUT is specific for NC",
+          "from_image": false
+        }
+      ]
+    }
+  ],
+  "tissue_free": [
+    {
+      "evidence": "A referral or clinical note only, at any site",
+      "code": "8000",
+      "behaviour": "3",
+      "basis": 1,
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 2,
+          "quote": "The definitive diagnosis of NC is based on cytogenetics and/or molecular biology",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 8,
+          "quote": "Radiographically, NUT carcinomas seem indistinguishable from squamous NSCLC and HNSCCs",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "evidence": "An imaging report only, with or without a blood test result",
+      "code": "8000",
+      "behaviour": "3",
+      "basis": 2,
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 5,
+          "quote": "The imaging features of NC are non-specific",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 8,
+          "quote": "Radiographically, NUT carcinomas seem indistinguishable from squamous NSCLC and HNSCCs",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "evidence": "A cytology report (for example a fine-needle aspirate of a lymph node) that names NUT carcinoma",
+      "code": "8023",
+      "behaviour": "3",
+      "basis": 5,
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 5,
+          "quote": "biopsy/cyto-aspiration of any suspicious enlarged lymph nodes",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 8,
+          "quote": "Cytopathologic features of NUT midline carcinoma: a series of 26 specimens",
+          "from_image": false
+        }
+      ]
+    }
+  ],
+  "lab_tests": [],
+  "rules_a_to_k": [
+    {
+      "rule": "A",
+      "applies": true,
+      "how": "On the calling tree's site screen, not on the NUT screens. A NUT carcinoma presenting as a neck mass is usually a cervical lymph-node deposit of a sinonasal primary; the deposit option on nut_result sends it to its primary site rather than to an ill-defined region.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 1,
+          "quote": "should be coded to C44.6 (skin of arm) rather than to C76.4",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 6,
+          "quote": "Cervical lymph node involvement is common in paranasal sinus NC",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "B",
+      "applies": false,
+      "how": "No prefix site occurs in the NUT carcinoma vocabulary. Paranasal sinus is an ICD-O site (C31), so Rule B does not move it to C76.",
+      "cite": []
+    },
+    {
+      "rule": "C",
+      "applies": true,
+      "how": "Hint on the lung and thymus trees' site screens: a thoracic tumour involving both the lung and the mediastinum, with no stated site of origin, is recorded as C39.8 Overlapping lesion of respiratory and intrathoracic organs (XIf10).",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 5,
+          "quote": "its point of origin cannot be determined",
+          "from_image": false
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 5,
+          "quote": "Overlapping lesion of respiratory and intrathoracic",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "metastatic mediastinopulmonary NUT carcinoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "D",
+      "applies": false,
+      "how": "NUT carcinoma is not a lymphoma; no screen in this part records a lymphoma.",
+      "cite": []
+    },
+    {
+      "rule": "E",
+      "applies": true,
+      "how": "Reason on the nut_result leukaemia referral: a NUTM1-rearranged leukaemia goes to Group I, which records C42.1.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "Code all leukemias except myeloid sarcoma (9930/3) to C42.1 (bone marrow)",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "NUTM1 is a recurrent fusion gene partner in B-cell precursor acute lymphoblastic leukemia",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "F",
+      "applies": true,
+      "how": "Every code option records /3: ICD-O-3.2 holds 8023 at /3 only and no human in situ or benign NUT lesion is reported. The behaviour reaches the clerk in each reason, which names 8023/3. A benign poroma with a NUTM1 fusion is excluded on the skin screen.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "code should be used even if the exact term is not listed in ICD-O",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 3,
+          "quote": "Lack of precancerous lesions identified in people",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "G",
+      "applies": false,
+      "how": "No grade screen: NUT carcinoma is a poorly differentiated carcinoma by definition, and the sixth digit is not built.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "as a poorly differentiated carcinoma with rearrangements involving NUTM1",
+          "from_image": false
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 2,
+          "quote": "code to the higher grade",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "H",
+      "applies": true,
+      "how": "ICD-O-3.2 prints no topography beside 8023, and 'midline' in NUT midline carcinoma names no site: most tumours are lateral. The NUT path never sets a site; the calling tree's site screen does. The option label lists NUT midline carcinoma as a name only.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 10,
+          "quote": "Use the topography code provided when a topographic site is not stated in the diagnosis",
+          "from_image": false
+        },
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 11,
+          "quote": "Pseudo-topographic morphology terms",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "the primary tumour is actually strictly lateralized in 2/3 of cases",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "NUT midline carcinoma was originally named because of its midline location",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "J",
+      "applies": false,
+      "how": "No compound word roots occur in the NUT carcinoma terms.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 3,
+          "quote": "Change the order of word roots in a compound term",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "rule": "K",
+      "applies": true,
+      "how": "Reason on every 8023/3 option: squamous features named in the same report do not change the code. The WHO entity is a carcinoma with squamous or poorly differentiated features, so 8023/3 is the single code that includes every term. Strict numeric Rule K would choose 8070/3 to 8072/3; the registrar rules on this.",
+      "cite": [
+        {
+          "file": "RULES-A-K__WHO-ICD-O-3-1-manual-extract.txt",
+          "pdf_page": 3,
+          "quote": "When no single code includes all diagnostic terms, use the numerically higher code number",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 6,
+          "quote": "NUT carcinoma typically exhibits features of either a poorly differentiated carcinoma or poorly differentiated SCC",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "Squamous or poorly differentiated carcinoma",
+          "from_image": false
+        }
+      ]
+    }
+  ],
+  "code_currency": [
+    {
+      "code": "8023",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 Preferred term 'Nuclear protein in testis (NUT)-associated carcinoma', synonyms 'NUT carcinoma' and 'NUT midline carcinoma'; held at /3 only; no term is [obs]. New in ICD-O-3.2 and absent from the REDCap Group 11 option list (Code Currency Check 2026-10-08, section 6). That check names XIc, XIf4, XIf5 and XIe; ICCC-2017's 8010–8041 ranges place 8023/3 at every Group XI carcinoma site (XIb, XIc, XIe, XIf1 to XIf11) and in VIb, VIIb and Xd.",
+      "action": "Build one entry 8023/3 with the subgroup computed from the site. Put 8023/3 on the REDCap-side list in docs/TODO.md section 7 and the Group 11 Layer 1 repair package. Correct the currency check's subgroup column to the full ICCC-2017 list."
+    },
+    {
+      "code": "8409",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 Preferred term 'Porocarcinoma, NOS'; the REDCap Group 11 string is '8409 - Eccrine poroma, malignant', an ICD-O-3.2 synonym.",
+      "action": "The skin part owns 8409/3; the NUT screen only returns the clerk there. Note the string difference on the REDCap-side list."
+    },
+    {
+      "code": "8000",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 Preferred term 'Neoplasm, malignant'.",
+      "action": "Tissue-free registration at basis 1 or 2 records 8000/3 (Visser 2023 rule); no tumour marker registers NUT carcinoma."
+    },
+    {
+      "code": "8805",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 Preferred term 'Undifferentiated sarcoma'. Used only to verify the referral group: ICCC-2017 places it in VIIIe at C40–C41 and IXe elsewhere.",
+      "action": "Referral only; the receiving group chooses the sarcoma code."
+    },
+    {
+      "code": "9811",
+      "behaviour": "3",
+      "finding": "ICD-O-3.2 Preferred term 'B lymphoblastic leukemia/lymphoma, NOS'. ICCC-2017 places it in Ia1 at C42.1.",
+      "action": "Referral only; Group I chooses the code."
+    }
+  ],
+  "conflicts": [
+    {
+      "other_group": 6,
+      "codes": [
+        "8023"
+      ],
+      "sites": [
+        "C64.9"
+      ],
+      "issue": "ICCC-2017 places 8023/3 at the kidney in VIb, and both sources report kidney primaries. The Group VI renal tree must offer 8023/3; a Group XI tree that meets a kidney primary refers it to Group VI.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "(for example, kidney, skin, or thyroid)",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 7,
+      "codes": [
+        "8023"
+      ],
+      "sites": [
+        "C22.0",
+        "C22.1"
+      ],
+      "issue": "ICCC-2017 places 8023/3 at the liver in VIIb, and Luo cites a 2-year-old with a pancreatic or hepatic primary. The liver is also a common deposit site, so a liver sample is recorded at the liver only when the file says the tumour began there.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "a 2-year-old with a pancreatic/hepatic primary",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 8,
+          "quote": "Common sites of metastasis of NUT carcinoma include bone and liver",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 10,
+      "codes": [
+        "8023"
+      ],
+      "sites": [
+        "C56.9",
+        "C62.0–C62.9",
+        "C34.0–C34.9",
+        "C38.1–C38.3"
+      ],
+      "issue": "ICCC-2017 places 8023/3 at the ovary and testis in Xd. A pulmonary NUT carcinoma with a ZNF532::NUTM1 fusion can show a germ cell phenotype, so a thoracic tumour reported with germ cell markers and a NUTM1 result belongs here, not in Group X.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 12,
+          "quote": "Misleading germ cell phenotype in pulmonary NUT carcinoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 8,
+      "codes": [
+        "8023",
+        "9364",
+        "8805"
+      ],
+      "sites": [
+        "C40.0–C41.9"
+      ],
+      "issue": "NUT carcinoma is misdiagnosed as Ewing sarcoma, which CD99 staining suggests; the later corrected report is coded. A NUTM1-rearranged sarcoma of bone goes to Group VIII. 8023/3 at bone has no ICCC-2017 range (registrar).",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 3,
+          "quote": "and more rarely as a small-cell carcinoma, Ewing sarcoma or leukaemia",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 7,
+          "quote": "falsely suggested by tumour expression of CD99",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 8,
+          "quote": "proposed in only 50% of cases and corrected by molecular analysis",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 9,
+      "codes": [
+        "9364",
+        "8805"
+      ],
+      "sites": [
+        "C49.0–C49.9",
+        "C70.0–C72.9",
+        "C18.0–C18.9"
+      ],
+      "issue": "NUTM1-rearranged sarcomas (CIC, BCORL1, MXD1, MXD4, MGA partners) arise in soft tissue, the central nervous system and the colon and go to Group IX. An alias 'NUTM1' that maps only to 8023/3 would misroute them.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 2,
+          "quote": "other NUTM1 fusion partners (that is, CIC, MXD4 and YAP1) are typically WHO-unclassified sarcomas",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "most often in the abdomen, soft tissue or central nervous system",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 5,
+          "quote": "Undifferentiated epithelioid sarcoma",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 1,
+      "codes": [
+        "9811"
+      ],
+      "sites": [
+        "C42.1"
+      ],
+      "issue": "NUT carcinoma can present like leukaemia, and NUTM1 is a fusion partner in B-cell precursor acute lymphoblastic leukaemia, which Group I codes.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 3,
+          "quote": "and more rarely as a small-cell carcinoma, Ewing sarcoma or leukaemia",
+          "from_image": false
+        },
+        {
+          "file": "NUT-carcinoma-any-site__Luo-2025.txt",
+          "pdf_page": 13,
+          "quote": "NUTM1 is a recurrent fusion gene partner in B-cell precursor acute lymphoblastic leukemia",
+          "from_image": false
+        }
+      ]
+    },
+    {
+      "other_group": 3,
+      "codes": [
+        "8023"
+      ],
+      "sites": [
+        "C70.0–C72.9"
+      ],
+      "issue": "Lemelle reports central nervous system primaries. ICCC-2017 places 8023/3 at C70–C72 in XIf10, not Group III, so a Group III tree that meets a NUT carcinoma refers it to Group XI.",
+      "cite": [
+        {
+          "file": "NUT-carcinoma-paediatric__Lemelle-2022.txt",
+          "pdf_page": 4,
+          "quote": "such as pancreas, bladder, kidneys, central nervous system or iliac bone",
+          "from_image": false
+        }
+      ]
+    }
+  ],
+  "data_gaps": [
+    {
+      "need": "The WHO 5th edition NUT carcinoma chapters' essential and desirable diagnostic criteria: Thoracic Tumours (2021) pp. 364–367, Head and Neck Tumours Part A (2024) pp. 65–67, Paediatric Tumours (2022) pp. 908–909.",
+      "why": "Neither file states the WHO's own wording on whether a NUT immunostain alone is diagnostic, the antibody clone (C52B) or the speckled staining pattern the controller named. The 50% threshold rests on Luo's figure legend and the 100% specificity on Lemelle; the C52B clone and 'speckled' appear in neither file (Lemelle calls the pattern 'microgranular').",
+      "candidate_source": "Haack H et al. Diagnosis of NUT midline carcinoma using a NUT-specific monoclonal antibody. Am J Surg Pathol 2009;33:984–991 (Luo reference 26); WHO Classification of Tumours online, NUT carcinoma chapters."
+    },
+    {
+      "need": "Site distribution of NUT carcinoma for ages 0 to 18 inclusive.",
+      "why": "The sources give median ages of 23.6 and 18.1 years and mixed child-and-adult series; no site table separates children. The option-versus-picker split for nasopharynx, salivary gland, thyroid and skin rests on absence of a child report in two papers.",
+      "candidate_source": "Bauer DE et al. Clinicopathologic features and long-term outcomes of NUT midline carcinoma. Clin Cancer Res 2012 (63 patients, 25 children; Luo reference 40); Chau NG et al. JNCI Cancer Spectr 2020;4:pkz094."
+    },
+    {
+      "need": "Age of the reported thyroid and salivary gland NUT carcinomas.",
+      "why": "Decides whether 8023/3 is an option or a picker entry on the thyroid and salivary gland trees.",
+      "candidate_source": "Barletta JA et al. Am J Surg Pathol 2022;46:1706–1715 (thyroid); Agaimy A et al. Am J Surg Pathol 2018;42:877–884 (salivary glands)."
+    },
+    {
+      "need": "A corrected citation in the Lemelle text-file header.",
+      "why": "The header gives 'Eur J Cancer 2022'; the PDF is Bull Cancer 2022;109:491–504, doi 10.1016/j.bulcan.2022.01.015. Lemelle cites the 2015 WHO lung classification, not a 5th edition volume.",
+      "candidate_source": ""
+    },
+    {
+      "need": "The ICCC subgroup for 8023/3 at bone, soft tissue, peripheral nerve, adrenal and lymph node.",
+      "why": "ICCC-2017 has no range for 8023 at C40–C41, C47, C49, C74 or C77, and Lemelle reports an iliac bone primary; the general tree cannot compute a subgroup.",
+      "candidate_source": ""
+    }
+  ],
+  "registrar_questions": [
+    "Rule K: a diagnosis that names NUT carcinoma and squamous cell carcinoma together. Record 8023/3 (the WHO entity includes squamous features, so one code covers every term), or the numerically higher 8070/3 to 8072/3? This evidence recommends 8023/3.",
+    "A histology report that names only a poorly differentiated carcinoma but states nuclear NUT staining in more than 50% of tumour cells: may the tool record 8023/3 at basis 7 when the diagnosis line does not name NUT carcinoma, including when a NUTM1 FISH test is negative? Luo gives the stain 100% specificity in a carcinoma; Lemelle calls the molecular test definitive; Luo cites a false-negative FISH case.",
+    "NUT carcinoma primary in bone (C40–C41), soft tissue (C49), peripheral nerve (C47) or adrenal (C74): ICCC-2017 has no range for 8023 there. Which subgroup does the tool output (XIf10 by analogy, or not classified)?",
+    "Is the WHO Paediatric Tumours listing of NUT carcinoma among head and neck tumours enough to make 8023/3 an option on the nasopharynx and salivary gland trees, or an option only where a child case is reported (lung, mediastinum, nasal cavity and sinuses) and a picker entry elsewhere?",
+    "A cytology report that names NUT carcinoma with a NUT immunostain on the cell block: basis 5 (cytology) or basis 7 (immunohistochemistry)?",
+    "Basis 8 for a NUTM1 break-apart FISH result that names no fusion partner, in a carcinoma: is it entity-specific? The WHO defines NUT carcinoma by NUTM1 rearrangement in a carcinoma; Lemelle says the partner is identified only by some techniques."
+  ]
+}

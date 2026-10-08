@@ -236,7 +236,7 @@ ctl("R4-D the tree_routing default becomes g10_cns",
     ["tree_routing.default is 'g10_cns'", "goes to g10_extragonadal"], router_mutate=r4d)
 ctl("R4-E C38.1, which lists Group 10, removed from every routing rule",
     bd.check_group10_subgroups_and_routing,
-    ["C38.1 can enter Group X", "[2, 4, 10]", "reaches the default"], router_mutate=r4e)
+    ["C38.1 can enter Group X", "[2, 4, 10, 11]", "reaches the default"], router_mutate=r4e)
 ctl("R4-F C11.0, which does not list Group 10, dropped from the Xb rule",
     bd.check_group10_subgroups_and_routing,
     ["the g10_extragonadal rule omits 1 lookup code(s) ICCC-2017 places in Xb: C11.0"],

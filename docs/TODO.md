@@ -247,6 +247,8 @@ after it and silently invalidates stored data with nothing that trips a Data Qua
 | **IX** | `ix_morph` | **14** — `8825`, `9220`, `8832` (labels naming a benign or behaviour-1 lesion on a malignant code); `9364` to *Ewing sarcoma*; `8811`, `8963`, `9133`, `9187`, `8921` (synonym, not the preferred term); `9540`, `8851`, `9186`, `8804`, `8842` (missing qualifier) | **3** — `9260` (Ewing sarcoma, a retired number now meaning aneurysmal bone cyst), `9150` (deleted, moved to `8815`), `8833` (behaviour 1 only) | **4** — `8714/3`, `9045/3`, `9137/3`, `9542/3` | Ready to review, not applied. 57 more options sit below behaviour 3 and await the registrar (Group 9 registrar questions G1). `ix_morph` stores the code itself, not a pick number, so relabelling changes nothing a calculation reads | `docs/group_09_layer1_repair.md` |
 | **IX** | `topo_code` | — | — | `444, Skin of scalp and neck` | Open — Group 9 registrar questions H2 | same, §7 |
 | **X** | `x_morph` | **67** — led by `9064` (the `/2` in situ term for Germinoma), `9100` (the `/0` mole for choriocarcinoma) and `9086` (a placeholder label; the 1 October 2026 snapshot has no `9086` choice) | **0 proposed** — 5 numbers ICD-O-3.2 deleted and 28 below-behaviour-3 options await the registrar | **6** — `8023`, `8054`, `8230`, `8231`, `8482`, `9102` | Ready to review, not applied. `x_morph` stores the four-digit number as the choice code, so relabelling changes no stored value | `docs/group_10_layer1_repair.md`; §27 below |
+| **XI** | `xi_morph` | classes B 31, C 22 and D 7 of the 282 options: labels that are a non-Preferred term, drift from ICD-O-3.2, or name a benign, borderline or in situ term on a number the tool emits at behaviour 3; led by `8504` (the in situ term *Intracystic carcinoma, NOS* for *Encapsulated papillary carcinoma with invasion*) and `8770` (the benign *Epithelioid and spindle cell nevus* for *Malignant Spitz tumor*) | **13** class O1 numbers whose every behaviour-3 term is `[obs]`, led by `8130`; **16** class H rows on numbers ICCC-2017 places in Groups III and VII, once the owning dropdown carries each number. `8551`, `8780` and **50** class E options with no behaviour-3 term await the registrar | **12** — `8023` *Nuclear protein in testis (NUT)-associated carcinoma*, `8339` *Follicular carcinoma, encapsulated, angioinvasive*, and ten more in §7.1 of the package | Ready to review, not applied. `xi_morph` holds one row per four-digit number, so a relabel changes no stored value | `docs/group_11_layer1_repair.md`; §35 below |
+| **XI** | `topo_code` | — | — | `444, Skin of scalp and neck` (also owed to Group IX, above), `481, Specified parts of peritoneum` | Open | same, §8 |
 
 ### 7.1 Group IV — `iv_morph`, 11 of 26 options are invalid
 
@@ -1535,7 +1537,7 @@ those codes would have reached, was removed in the same change (design D16, revi
 
 ---
 
-*Last updated 6 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): §28 item 4 closed by the registrar's decision on Group X review B1, option (a). Previously 4 October 2026, on the same branch: adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
+*Last updated 8 October 2026, on the Group XI branch (`claude/group-11-carcinomas`): adds §35, the Group XI rules deferred by the registrar's trim and the seven open problems the build found, and the Group XI rows of §7. Previously 6 October 2026, on the Group X branch (`claude/group-10-tumor-pathway-3a99f7`): §28 item 4 closed by the registrar's decision on Group X review B1, option (a). Previously 4 October 2026, on the same branch: adds §27 the Group X codes the REDCap dropdown does not offer correctly, §28 no route reaches Group X's central nervous system tree, §29 the Group VIII cytology capture, §30 the "Also called" row keyed by code, and §31 the router's extragonadal list after the Group 9 merge (closed the same day by merging `main`), and the Group X row of §7. Previously 4 October 2026, merging the Group VIII branch (`claude/group-8-tumor-pathway-64edbc`): its §22–§25 are renumbered §23–§26 after the Group VII §22 — §23 the Group IV CD99 referral, §24 the alias index size, §25 ICCC-2017 range 60, §26 the Group VIII codes the REDCap dropdown does not offer correctly; §8 closed and deleted (the `9260` router rule is re-keyed to `9364` and `9365`); §7 gains the Group VIII row; §20 recounted. Previously 4 October 2026, with §22 — the Group VII items still open after the Group VII merge — and the
 Group VII row of §7. Previously 23 September 2026, on the Group VI branch (`group-06-renal`), with §19–§21 from the
 engine gate and §19 closed by the registrar the same day. Previously 22 September 2026 on the same branch, closing §12 for all
 but `9473`. Previously 22 September 2026 on the Group 5 branch (`group-05-retinoblastoma`), with
@@ -1827,3 +1829,186 @@ items ("fix whatever you can"); what the assistant decided is in `docs/group_10_
 - The deposit check (`check_deposit_referrals`) finds a deposit referral by its node id and by the words in its own label or
   reason. A deposit referral whose node and text say neither is not found; the gate's sweep proves every branch that
   declares `recapture_site`, and a branch that loses the flag is caught only where the words are.
+
+---
+
+## 35. Group XI: rules deferred by the registrar's trim, and the open problems the build found
+
+**Written 8 October 2026 with the Group XI build** (`claude/group-11-carcinomas`; `docs/group_11_build_report.md`).
+The registrar was near a usage limit and trimmed the build: five items of the contract were not built (35.1).
+The controlling session found seven problems that no gate sees (35.2 to 35.8). Each says what closes it. The
+questions only the registrar can answer are in `docs/group_11_registrar_review.md`, and the REDCap changes owed are
+the Group XI rows of §7 and `docs/group_11_layer1_repair.md`.
+
+### 35.1 Deferred by the trim: contract §5 rules 4, 6, 7 and 8, and the engine-gate picker sweep
+
+The build has four of the eight Group XI rules (1, 2, 3 and 5; `docs/validator_negative_controls.md`, Group 11
+section). Rules 4, 6, 7 and 8 are not written. Each is specified in `docs/group_11_build_contract.md` §5, and each needs its
+negative controls in `build/negative_controls_group11.py` before it counts (standing rule 10).
+
+| Rule | Asserts | What stands in for it now | What closes it |
+|---|---|---|---|
+| 4 `check_group11_every_code_has_a_route` | every live `/3` code ICCC-2017 places in Group XI at a tree's routed sites is an option or a picker entry in that tree; picker `search_terms` are live ICD-O-3.2 synonyms and related terms | `build/group11_tree.py` builds each picker from the ICCC-2017 ranges and `icdo32.sqlite`, and `python3 build/group11_tree.py --report` prints each tree's offered, held, obsolete and D11 codes. Nothing fails the build if a code is lost | write the rule from `ICCC-2017.sqlite` and `icdo32.sqlite`, not from the generator's own list; control: delete one picker entry |
+| 6 `check_group11_alias_terms_match_icdo32` | Group X rule 3 in its site form: an alias equal to an ICD-O-3.2 term maps to that term's code, and an organ-naming term is not an alias of a code another tree emits at another organ | the alias generator reads ICD-O-3.2 terms (contract §6). Nothing checks the 354 aliases after generation | write the rule; control: point one alias at a code the term does not name |
+| 7 `check_group11_picker_aliases_stay_unshared` | Group X rule 8: a picker-only alias is held by no other group | the generator leaves out a string another group holds (contract §6). Nothing proves it | write the rule over the alias files; control: copy one Group X string into Group XI's file. Rule 7 and §35.3 interact: if the registrar relaxes Group X rule 8, rule 7 changes with it |
+| 8 `check_group11_deposits_recapture` | every option labelled as a deposit, or whose reason says "primary", carries `recapture_site: true`; a leukaemia referral records C42.1 | `check_refer_terminals` admits a Group XI self-referral only with `recapture_site: true` (control REG-A catches it), and 18 deposit nodes carry the flag. A deposit option that does not refer to Group XI is not checked | write the rule; control: remove the flag from one deposit option and from one leukaemia referral |
+| Engine-gate picker sweep | `build/check_engine_flow.mjs` sweeps Group X's gonadal carcinoma pickers: every ICD-O-3.2 name the search box indexes for a picker code is found by that picker's filter | The 19 Group XI pickers are not swept | generalise the sweep to every node carrying `prefill_filter_from_search` (cross_group_B); control: remove one `search_terms` entry from a Group XI picker |
+
+### 35.2 The front door does not offer Group XI
+
+The guided route narrows a presentation's group list by the site's list. Group XI is not offered under
+"Mass / swelling" (98 routed sites, among them the thyroid, lung, thymus, nasopharynx, skin, cervix and brain),
+"Cutaneous / mucosal lesion" (87 sites; at the skin the list narrows to Groups IX and II), "Lymphadenopathy" (76) or
+"Organ-functional sign" (38). A clerk with a thyroid mass is offered Groups II and X and never Group XI. Group XI is
+reachable today through the search box, "Incidental imaging finding", "Not sure" and referrals from other groups.
+
+Adding 11 to those presentations as data removes other groups at some sites, because the presentation's list is
+intersected with the site's. **What closes it:** an `app.js` feature, a presentation-level list of groups added back
+only at sites whose own list names them, as `keep_on_site` does for a discriminator. It is an engine request for the
+"ICD Overall fixes" session, not built here (memory rule). The registrar's rulings on whether Group XI belongs on the
+site lists and the presentations are review B5 (`docs/group_11_registrar_review.md`).
+
+### 35.3 Group X's carcinoma search terms collide with Group XI's sites
+
+Group X's gonadal carcinoma picker holds 224 generic carcinoma strings as aliases ("Carcinoma, NOS",
+"Adenocarcinoma, NOS", "Squamous cell carcinoma, NOS", "Papillary carcinoma of thyroid", "NUT carcinoma",
+"Mucoepidermoid carcinoma" and others). Group X rule 8 forbids a second group filing a string Group X holds, so Group XI
+files none of them. Typed at a site whose list names Groups 10 and 11, such a term enters Group X's extragonadal tree,
+which refers the carcinoma on to Group XI. Typed at a Group XI-only site it stops. The guided route codes these
+carcinomas correctly.
+
+**What closes it:** two changes. The registrar relaxes Group X rule 8 so both groups may file a string (review B6 item 1
+proposed moving the strings to Group XI and was not built), and `app.js` breaks the tie by the entries'
+`primary_sites` (the "ICD Overall fixes" session). Group X rule 8, Group XI rule 7 (35.1) and the engine-gate sweep
+change together.
+
+### 35.4 The search box does not reach 53 sites a Group XI case otherwise reaches only by referral
+
+The search box keeps a group at a site its own routing names when the group is marked `occurs_at_routed_sites`.
+`occursAtRoutedSites()` in `app.js` ignores the router default. A Group XI case at bone, liver, soft tissue, lymph
+node, gonad, kidney, C71.0 or C75.3 (53 sites in all) therefore stops when typed and is reached only by a referral from
+another group.
+
+**What closes it:** an `app.js` change so that a group's router default counts as routing, or a data list of the
+sites. Engine request for the "ICD Overall fixes" session. Only the first changes no data.
+
+### 35.5 C75.1 lists Group 11 and no rule routes it
+
+`topography_codes.json` lists Group 11 at C75.1, and ICCC-2017 range 134 covers C75.1 for the shared carcinoma list
+(its topography ends `750-759`; range 135, for `8158` and `8290`, leaves it out). No `tree_routing` rule names C75.1, so a
+case there reaches the default tree `g11_unspecified`. The build prints a NOTE (rule 5). The contract (§0.1 item 3)
+lists the pituitary among the sites no Group XI range covers, which is wrong for range 134.
+
+**What closes it:** the registrar's decision, either C75.1 joins the `g11_endocrine` rule (C75.0, C75.2, C75.4, C75.5,
+C75.8, C75.9 today) or Group 11 leaves C75.1's list. A pituitary carcinoma refers to Group III in the endocrine and
+unspecified evidence part, and the choice should follow that.
+
+**Added 8 October 2026 (review E4):** "Oxyphilic adenocarcinoma" and "Oncocytic carcinoma" are now filed under Groups 3
+and 11. A search at C75.1 meets both groups on the site's list, so it stops for referral. Before E4, only Group 3 held these
+terms, and a search for them entered Group III at C75.1 and stopped at every other site. The same decision closes this.
+
+### 35.6 Layer 1 Markdown for Group XI is malformed
+
+In `ICD coding/ICCC 2017 Cancer Classification.md` the token `C80.90-C80.98` (line 180, the XIe row) stands for
+`8090-8098`, and `C80.98` (lines 182, 183, 193) stands for `8098`. The table therefore omits `8090`–`8095`, `8097` and
+`8339`, and the build prints 12 warnings that those codes are outside every range, although `ICCC-2017.sqlite` range 124
+places the skin codes in XIe. Separately, the ligature "ft" is printed "!" in `Topography Redcap.md` for the REDCap codes
+058, 113, 186 and 696, the same fault as §1.3.
+
+**What closes it:** repairs in the vault, not from this repository: `docs/group_11_layer1_repair.md` §9.1 gives the
+lines and the corrected text, and §9.2 the two option-file labels. Eleven of the 12 warnings clear when
+`ICCC 2017 Cancer Classification.md` is repaired. The twelfth, for `8339`, stays: no ICCC-2017 range holds it, and
+standing rule 3 places it in XIb.
+
+### 35.7 A tissue-free referral to Group IV or Group X is a hint, not an option
+
+A case with imaging that shows a mass, raised catecholamines and no tissue belongs with Group IV (neuroblastoma); raised
+alpha-fetoprotein or human chorionic gonadotropin belongs with Group X. The Group XI trees say so in a hint. They cannot
+offer the referral as an option, because D7 and the no-pathology rule (rule 2) let a tissue-free path refer only to
+Group XII.
+
+**What closes it:** the registrar's ruling that a tissue-free path may refer to Group IV or Group X, then a change to rule
+2 and to the options. Until then the clerk reads the hint.
+
+### 35.8 Myeloid sarcoma is not offered as a site-keeping Group I referral in the Group XI trees
+
+Group X offers "Myeloid sarcoma" as its own option that keeps the site it arose in; a leukaemia records the bone
+marrow, C42.1 (§34, F-E-01). The Group XI trees offer the leukaemia referral that records C42.1 and no myeloid sarcoma
+option. `check_leukaemia_referrals_record_marrow` lists the nodes.
+
+**What closes it:** one option per Group XI deposit and "not a carcinoma" node, referring to Group I and
+keeping the site, and the check's exemption for a myeloid sarcoma node (the node and the words together, §34). It is a
+data change in the Group XI tree modules; the registrar approves the option wording.
+
+### 35.9 Cribriform carcinoma of the skin is not built (registrar, 8 October 2026)
+
+An older skin report may say "cribriform carcinoma". ICD-O-3.2 holds 8201/3 Cribriform carcinoma, NOS, current and
+not `[obs]`, with no printed site. The WHO skin 5th edition downgraded the entity to "cutaneous cribriform tumour",
+an indolent adnexal neoplasm (Goldman-Lévy 2025, printed p. 559, PDF p. 5). No ICCC-2017 range holds 8201 at the skin.
+Jay ruled: "Cribriform carcinoma -> Do not add, note it down somewhere" (review A1 (c), E3). So no Group XI tree
+offers 8201/3 at the skin, and the skin picker does not hold it. Recorded here.
+
+**Still open from the recheck:** the skin tree's exclusion line "Cutaneous cribriform tumour" carries behaviour /0.
+The source says "indolent", not "benign", and prints no code or behaviour (`docs/group_11_evidence/registrar_A1c_recheck.md`).
+The registrar decides whether the line keeps /0 or names no behaviour.
+
+### 35.10 Gastric carcinoma with lymphoid stroma needs research (registrar, 8 October 2026)
+
+A stomach report may say "carcinoma with lymphoid stroma" (also "lymphoepithelioma-like carcinoma"). ICCR Stomach prints
+8512/3 (PDF pp. 13, 15). Every ICD-O-3.2 term on 8512/3 is obsolete (*Medullary carcinoma with lymphoid stroma*). Two
+current codes are candidates: 8510/3 *Medullary carcinoma, NOS* and 8082/3 *Lymphoepithelial carcinoma*. Jay ruled on
+review A5 that the other obsolete terms take Rule K: "But Stomach (Q50), keep it out. It needs research." No Group XI tree
+offers the entity, and the digestive picker does not hold 8512.
+
+**What closes it:** a source that codes gastric carcinoma with lymphoid stroma in ICD-O-3.2, such as the WHO digestive
+system volume (5th edition) or an IARC coding note. Then Jay's ruling on the code.
+
+### 35.11 Rule F stated behaviour: pilot it live (registrar, 8 October 2026)
+
+Jay ruled on review A6: "I stand with rule F. But the behaviour doesn't need to be hard coded to the morphology code. This
+needs to be piloted live ... Only in cases where the behaviour code changes the name of the cancer, is where its okay to be
+hard coded."
+
+**Built in Group XI (review E7):** where the pathologist's stated behaviour differs from the behaviour ICD-O-3.2 prints, and
+the name stays the same, the tree records the stated behaviour. Each pair is in `build_database.ICDO32_MATRIX_RULE`,
+anchored on the code's printed term:
+- 8336/3 *Hyalinizing trabecular tumor*: a thyroid tumour the report calls malignant. It is registered in XIb.
+- 8941/2 *Carcinoma ex pleomorphic adenoma*: a salivary tumour the report calls in situ. It is excluded.
+- 8542/2 *Paget disease, extramammary*: a vulval lesion the report calls in situ. It is excluded.
+
+Where the behaviour changes the name, the behaviour stays tied to the code. Examples: 8370/0 adenoma against 8370/3
+carcinoma; 8825/1 inflammatory myofibroblastic tumour against 8825/3 myofibroblastic sarcoma; 8580/0 microscopic thymoma.
+
+**The pilot:**
+1. Run live cases through these three screens and through any report whose stated behaviour differs from the printed one.
+2. Record each case where the tool's behaviour and the report's differ.
+3. From the pilot, decide whether stated behaviour becomes a general question at every terminal, instead of being added one
+   pair at a time.
+
+8336/3 has no REDCap option. When the pilot confirms it, it goes on the REDCap-side list (§7, standing rule 16).
+
+**Other groups:** the same ruling answers Group X review A1, A6 and A10 and Group VIII review A1. Those groups' sessions
+apply it.
+
+### 35.12 Sialoblastoma is referred to Group XII as malignant (registrar, 8 October 2026)
+
+Jay ruled on review A11: "I would go with what papers tell here." Two sources call sialoblastoma malignant: Pfister 2022 (the WHO
+classification of paediatric tumours), which lists it under malignant head and neck tumours (PDF p. 13, Table 3), and
+Perez-de-Oliveira 2025, PMC section 5. The salivary tree refers every sialoblastoma to Group XII with `refer_code` 8974.
+
+**Owed by Group XII when it is built:** ICCC-2017 places 8974 at behaviour 3 in XIIa4, but ICD-O-3.2 prints only 8974/1
+*Sialoblastoma*, and so does ICCR. Group XII needs 8974/3 as a registrar-ruled pair in `build_database.ICDO32_MATRIX_RULE`,
+anchored on the /1 term, and 8974/3 goes on the REDCap-side list (§7, standing rule 16).
+
+### Known and not changed
+
+- The 17 `refer_group: 11` branches in other groups land through the router and continue in Group XI with the case's
+  site, or ask the primary's site where they carry `recapture_site` (contract §7). Five referral reasons in Groups VII and
+  X say that carcinomas of other organs are Group XI, which is false for renal carcinoma (VIb), cholangiocarcinoma
+  (VIIb at any site) and a carcinoma at the liver, and Group III's meningeal triage calls meningeal melanocytoma XId. They
+  are handed to the Group VII, Group X and Group III sessions (review B7).
+- The router's `8158` and `8290` rules resolve at C74.0 and C73.9 and in the Group XI subgroups. Their ovary, testis and
+  kidney branches are left to their owners (review B7).
+- Group X's ovary picker records `8452/3` *Solid pseudopapillary neoplasm of pancreas* (review A21). It belongs to the
+  Group X session.
+- The four Group XI evidence texts the publisher withholds are requested in `docs/sources-requested.md`.
