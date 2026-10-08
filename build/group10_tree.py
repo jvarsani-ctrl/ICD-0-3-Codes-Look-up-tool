@@ -98,8 +98,7 @@ IHC_CONFIRMS = ("Immunohistochemistry, where the report does not describe it, co
 # The upgrade line for a terminal whose report does not determine the type. Without one, app.js
 # prints "None — fully subtyped at this evidence tier" (code review, 6 October 2026).
 TYPE_NOT_STATED = ("The report does not state the tumour's type. A report that names it gives "
-                   "that type's own code; where this step does not list it, record it with "
-                   "'Override this code'.")
+                   "that type's own code: go back and take the option that names it.")
 
 BEH_TEXT = {"0": "behaviour 0, benign", "1": "behaviour 1, uncertain or borderline",
             "2": "behaviour 2, in situ"}
@@ -206,11 +205,18 @@ def nonrep(label, reason, captures=None, note=None, heading=None):
                  heading=heading)
 
 
-def refer(label, group, reason, captures=None, note=None):
+def refer(label, group, reason, captures=None, note=None, recapture=False):
     """A cross-group referral. No refer_code: every unspecified code a Group X referral could
     name (8000, 8001) is also a Group X entry, and check_refer_terminals fails a refer_code
-    this file owns outright. The reason names the code instead."""
-    return _tail({"label": label, "refer_group": group, "reason": reason}, captures, note)
+    this file owns outright. The reason names the code instead.
+
+    recapture: the site on the case is not the primary's (a metastatic deposit, or a site the
+    receiving group's tissue rule replaces), so the hop asks for the primary's site and does not
+    carry this one (`recapture_site`, WHO Rules A and H: code the primary)."""
+    b = {"label": label, "refer_group": group, "reason": reason}
+    if recapture:
+        b["recapture_site"] = True
+    return _tail(b, captures, note)
 
 
 def node(node_id, node_type, step, step_label, question, hint, options, captured, note,
@@ -228,6 +234,12 @@ def node(node_id, node_type, step, step_label, question, hint, options, captured
 # ------------------------------------------------------------------------------------------
 # Sites
 # ------------------------------------------------------------------------------------------
+# ICD-O-3.2 lists "Embryonal carcinoma, infantile" and "Embryonal carcinoma, polyembryonal type"
+# as synonyms of 9071/3 and 9072/3. A report that uses either reads like Embryonal carcinoma (9070),
+# and the express lane carries only the group into the tree, so the option labels name the synonym
+# a clerk would otherwise take for 9070 (audit of 7 October 2026, F-J-02).
+YOLK_SAC_LABEL = "Yolk sac tumour (endodermal sinus tumour, or infantile embryonal carcinoma)"
+POLYEMBRYOMA_LABEL = "Polyembryoma (or embryonal carcinoma, polyembryonal type)"
 GONADS = ("ovary", "testis")
 # One record per site tree. family / family_term: the germinoma-family code and the name the
 # site's reports use for it (D3). fluid: what its cytology samples. yolk_sac /
@@ -237,23 +249,24 @@ SITES = {
     "cns": {
         "prefix": "cn_", "tree": "g10_cns", "family": "9064", "family_term": "germinoma",
         "fluid": "cerebrospinal fluid",
-        "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
+        "yolk_sac": YOLK_SAC_LABEL,
         "choriocarcinoma": "Choriocarcinoma"},
     "ovary": {
         "prefix": "ov_", "tree": "g10_ovary", "family": "9060", "family_term": "dysgerminoma",
         "fluid": "ascitic fluid or a fine-needle aspirate", "where": "the ovary",
-        "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
+        "yolk_sac": YOLK_SAC_LABEL,
         "choriocarcinoma": "Non-gestational choriocarcinoma"},
     "testis": {
         "prefix": "ts_", "tree": "g10_testis", "family": "9061", "family_term": "seminoma",
         "fluid": "a fine-needle aspirate", "where": "the testis",
-        "yolk_sac": "Yolk sac tumour, prepubertal or postpubertal type",
+        "yolk_sac": "Yolk sac tumour, prepubertal or postpubertal type (or infantile "
+                    "embryonal carcinoma)",
         "yolk_sac_reason": "WHO 2022 codes both types 9071/3 (Moch 2022, Table 3, p. 464).",
         "choriocarcinoma": "Choriocarcinoma"},
     "extragonadal": {
         "prefix": "eg_", "tree": "g10_extragonadal", "family": "9064",
         "family_term": "germinoma", "fluid": "an effusion or a fine-needle aspirate",
-        "yolk_sac": "Yolk sac tumour (endodermal sinus tumour)",
+        "yolk_sac": YOLK_SAC_LABEL,
         "choriocarcinoma": "Choriocarcinoma, gestational or non-gestational"},
 }
 
@@ -334,8 +347,9 @@ def unspecified(site, label, basis, morph, why, captures=None, note=None, after=
 # pp. 197-218) reports beta human chorionic gonadotropin in mIU/mL (p. 206); Coskun 2023 (J
 # Pediatr Adolesc Gynecol 36:112-115, pp. 112-113) reports CA-125 in U/mL and calcium in mg/dL.
 # The build cannot check that a unit is right; it refuses an empty or repeated list.
-LAB_HINT = ("Enter each number as the report gives it, with its unit. Leave a test the file "
-            "does not hold empty.")
+LAB_HINT = ("Enter each number as the report gives it, with its unit. Put > or < before a "
+            "limit the report prints, such as >1210. Leave a test the file does not hold "
+            "empty.")
 AFP_UNITS = ("ng/mL", "µg/L", "IU/mL", "kU/L")
 BHCG_UNITS = ("IU/L", "mIU/mL")
 LDH_UNITS = ("U/L", "IU/L")
@@ -609,14 +623,18 @@ def n_markers(site):
 #
 # Each number is typed once. The gates replace cn_labs_markers on the marker tier from 24
 # months; under 24 months the gates are never asked and the laboratory screen records the
-# values. A gate asks only what can still change the code (Group III's md_gct_* pattern), so a
-# value after the deciding one is not asked. A raised value in either compartment decides;
-# "not raised" needs both compartments entered and at or below the cut-off; a value not
-# entered (not in the file, or in a unit the tool does not convert) never counts as normal and
-# sends the case to cn_markers. The units are ng/mL and IU/L, SIOP's. The evidence file's
-# Units paragraph equates ng/mL with µg/L and IU/L with mIU/mL. Calaminus 2026 gives 25 ng/mL
-# = 20.8 kU/L for alpha-fetoprotein; no unit choice is built on a gate, so a value in kU/L or
-# IU/mL is left empty and goes to the report question.
+# values. A raised value in either compartment decides (alpha-fetoprotein first, then β-hCG).
+# Each gate has three answers besides a number: "Not documented in the file" (the file holds no
+# result for the test) is read as not raised, and the gate asks the next one; "in the file, but in
+# another unit or only described" (a result the clerk cannot enter as a number in the gate's unit)
+# sends the case to the report question, which applies the cut-offs to what the report gives.
+# After the fourth gate, no raised value means neither marker is raised, and the imaging question
+# follows. Registrar, 7 October 2026: "not in the file counts as not raised". It replaced the
+# build's earlier rule that a value not entered never counted as normal and sent the case to the
+# report question, which let a laboratory's own "raised" flag override a number below the cut-off
+# (audit of Group X, F-F-07). The units are ng/mL and IU/L, SIOP's. The evidence file's Units
+# paragraph equates ng/mL with µg/L and IU/L with mIU/mL. Calaminus 2026 gives 25 ng/mL
+# = 20.8 kU/L for alpha-fetoprotein; no unit choice is built on a gate.
 BRAIN_AGE_MONTHS = 24
 BRAIN_AFP_CUTOFF = 25   # ng/mL, serum and cerebrospinal fluid
 BRAIN_HCG_CUTOFF = 50   # IU/L, serum and cerebrospinal fluid
@@ -646,34 +664,72 @@ def brain_gate_nos():
                       "the type." % rec("9064", "3", 4)}
 
 
-def brain_gate(node_id, marker, compartment, raised, not_raised, not_entered,
-               not_raised_captures=None, note=""):
-    """One SIOP gate: above the cut-off -> raised; at or below -> not_raised; no value ->
-    not_entered. The variable names match Group III's md_gct_* gates."""
+def brain_gate(node_id, marker, compartment, raised, next_gate, final_captures=None, note=""):
+    """One SIOP gate. Above the cut-off the marker is raised. At or below it, or with no result in
+    the file, the next gate is asked (a test with no result is not read as raised, registrar,
+    7 October 2026). A result in another unit, or only described, goes to the report question.
+    The variable names match Group III's md_gct_* gates. `final_captures` goes on the two bands
+    that leave the last gate."""
     m = BRAIN_MARKERS[marker]
     var = "%s_%s_%s" % (marker, compartment, "ng_ml" if marker == "afp" else "iu_l")
     label = "%s %s" % (COMPARTMENTS[compartment], m["name"])
-    low = {"range": "<=%d" % m["cut"], "unit": m["unit"], "next_node": not_raised}
-    if not_raised_captures:
-        low["captures"] = not_raised_captures
+    low = {"range": "<=%d" % m["cut"], "unit": m["unit"], "next_node": next_gate}
+    none = {"range": "not_documented", "unit": m["unit"], "next_node": next_gate}
+    if final_captures:
+        low["captures"] = final_captures
+        none["captures"] = dict(final_captures)
     return node(
         node_id, "numeric_gate", 2, label[0].upper() + label[1:],
         "%s, as the report gives it, in %s." % (label, m["unit_text"]),
         "A value above %d %s counts as raised, the SIOP cut-off for serum and cerebrospinal "
-        "fluid alike (%s). %s If the report gives %s, leave the number empty: the tool does "
-        "not convert units, and a value not entered is never read as normal."
+        "fluid alike (%s). %s If the file holds no result for this test, tick Not documented in "
+        "the file: a test with no result is not read as raised. If the file holds a result in "
+        "%s, or only calls it raised or normal, tick In the file, but in another unit or only "
+        "described: the report question then decides."
         % (m["cut"], m["unit_text"], SIOP_CITE, m["same"], m["other"]),
         None, [var],
         "Registrar's ruling, 6 October 2026: SIOP cut-off, strict 'above' (SIOP CNS GCT 96 "
-        "'> %d'; SIOP CNS GCT II requires '< %d' for germinoma). %s"
-        % (m["cut"], m["cut"], note),
+        "'> %d'; SIOP CNS GCT II requires '< %d' for germinoma). Registrar, 7 October 2026: not "
+        "documented counts as not raised; another unit or only described goes to the report "
+        "question. %s" % (m["cut"], m["cut"], note),
         variable=var, variable_label=label, unit=m["unit"],
         # A reading no band takes (none should exist) goes to the report question, never
         # throws: app.js fallbackTarget() reads insufficient_next_node first.
-        insufficient_next_node=nid("cns", "markers"), nos_fallback=brain_gate_nos(),
+        insufficient_next_node=nid("cns", "markers_cutoff"), nos_fallback=brain_gate_nos(),
         bands=[{"range": ">%d" % m["cut"], "unit": m["unit"], "next_node": raised},
-               low,
-               {"range": "not_documented", "unit": m["unit"], "next_node": not_entered}])
+               low, none,
+               {"range": "other_unit", "unit": m["unit"],
+                "next_node": nid("cns", "markers_cutoff")}])
+
+
+def n_markers_cutoff():
+    """The report question the marker gates fall back to when a result is in the file in another
+    unit or only described (from 24 months). It is cn_markers with its own hint. cn_markers tells the clerk to read
+    "raised" against the laboratory's range, which is right for an infant, whose alpha-fetoprotein
+    is high without a tumour, and wrong from 24 months, where the registrar's ruling of 6 October
+    2026 makes the SIOP cut-offs decide: a serum β-hCG of 20 IU/L that the laboratory flags as
+    raised is not raised, and the gates cannot say so when the cerebrospinal fluid value is
+    missing (audit of Group X, 7 October 2026, F-F-07)."""
+    n = n_markers("cns")
+    n["node_id"] = nid("cns", "markers_cutoff")
+    n["hint"] = (
+        "Apply the SIOP cut-offs to the numbers the report gives: alpha-fetoprotein above %d "
+        "ng/mL, or β-hCG above %d IU/L, in serum or in cerebrospinal fluid, whatever range the "
+        "laboratory prints (%s). If the report gives another unit, convert it first: 25 ng/mL "
+        "of alpha-fetoprotein is 20.8 kU/L (Calaminus 2026, Methods). If the report gives no "
+        "number and only calls a marker raised, use its word. Each coded option also needs the "
+        "diagnosis it names (%s, Table 4)."
+        % (BRAIN_AFP_CUTOFF, BRAIN_HCG_CUTOFF, SIOP_CITE, VISSER))
+    n["coding_note"] = (
+        "Registrar's ruling, 6 October 2026, and audit F-F-07. The fallback of the marker gates "
+        "from 24 months: reached when a gate is answered 'in the file, but in another unit or "
+        "only described' (R3.3, approved 7 October 2026), so a number the tool could not read "
+        "or a flag the report gives in words is judged against the cut-offs, not the "
+        "laboratory's own range. Same options as cn_markers, which keeps the laboratory-range "
+        "hint for an infant, an age not in the file, and non-diagnostic cytology. The numbers "
+        "typed on earlier gates cannot be shown here: app.js keeps gate values out of the "
+        "screens that follow (logged engine request R3.1, not built).")
+    return n
 
 
 def n_brain_age():
@@ -717,9 +773,9 @@ def n_brain_raised(marker):
     else:
         node_id, morph, tier = "cn_hcg_raised", "9064", "markers_hcg"
         question = ("Beta human chorionic gonadotropin (β-hCG) is above %d IU/L, and "
-                    "alpha-fetoprotein is %d ng/mL or below in serum and in cerebrospinal "
-                    "fluid. What do the imaging report and the file show?"
-                    % (BRAIN_HCG_CUTOFF, BRAIN_AFP_CUTOFF))
+                    "alpha-fetoprotein is not raised (%d ng/mL or below in serum and in "
+                    "cerebrospinal fluid, or not in the file). What do the imaging report and "
+                    "the file show?" % (BRAIN_HCG_CUTOFF, BRAIN_AFP_CUTOFF))
         reason = ("%s ICD-O-3.2 files Germ cell tumor, NOS under this number, and a germ cell "
                   "tumour with a raised human chorionic gonadotropin is registered to it "
                   "without tissue (%s, Table 4). The record does not assert that a germinoma "
@@ -753,26 +809,23 @@ def n_brain_raised(marker):
 
 
 def brain_marker_nodes():
-    """The age gate, six marker gates and two outcome nodes of the brain marker tier, in the
-    order a case meets them. Each gate's arguments are raised, not raised, not entered."""
-    fallback, neither = nid("cns", "markers"), imaging_node("cns", "markers")
+    """The age gate, the report fallback, four marker gates and two outcome nodes of the brain
+    marker tier, in the order a case meets them. A gate's `next_gate` is the one asked when its
+    marker is not raised."""
+    neither = imaging_node("cns", "markers")
     return [
         n_brain_age(),
-        brain_gate("cn_afp_serum", "afp", "serum", "cn_afp_raised", "cn_afp_csf",
-                   "cn_afp_csf_no_serum"),
-        brain_gate("cn_afp_csf", "afp", "csf", "cn_afp_raised", "cn_hcg_serum", fallback,
-                   note="Serum is at or below the cut-off; not raised needs both."),
-        brain_gate("cn_afp_csf_no_serum", "afp", "csf", "cn_afp_raised", fallback, fallback,
-                   note="No serum value: only a raised value here decides."),
+        n_markers_cutoff(),
+        brain_gate("cn_afp_serum", "afp", "serum", "cn_afp_raised", "cn_afp_csf"),
+        brain_gate("cn_afp_csf", "afp", "csf", "cn_afp_raised", "cn_hcg_serum",
+                   note="Serum alpha-fetoprotein was not raised or not in the file."),
         brain_gate("cn_hcg_serum", "hcg", "serum", "cn_hcg_raised", "cn_hcg_csf",
-                   "cn_hcg_csf_no_serum",
-                   note="Alpha-fetoprotein is at or below the cut-off in both compartments."),
-        brain_gate("cn_hcg_csf", "hcg", "csf", "cn_hcg_raised", neither, fallback,
-                   not_raised_captures={"basis_evidence_tier": "markers_not_raised"},
-                   note="All four values at or below the cut-offs: neither marker is raised, "
-                        "as cn_markers' 'Neither marker is raised' option."),
-        brain_gate("cn_hcg_csf_no_serum", "hcg", "csf", "cn_hcg_raised", fallback, fallback,
-                   note="No serum value: only a raised value here decides."),
+                   note="Alpha-fetoprotein was not raised or not in the file."),
+        brain_gate("cn_hcg_csf", "hcg", "csf", "cn_hcg_raised", neither,
+                   final_captures={"basis_evidence_tier": "markers_not_raised"},
+                   note="Neither marker is raised, as cn_markers' 'Neither marker is raised' "
+                        "option: every value entered is at or below its cut-off, and a test "
+                        "with no result in the file is not read as raised."),
         n_brain_raised("afp"),
         n_brain_raised("hcg"),
     ]
@@ -889,6 +942,22 @@ def n_cytology(site):
 # ------------------------------------------------------------------------------------------
 # Mixed tumours (D6) and the immunohistochemistry checklist (§4.2)
 # ------------------------------------------------------------------------------------------
+def malignant_teratoma_options():
+    """The two malignant teratoma terms ICD-O-3.2 prints at 9082/3 and 9083/3. A report that
+    names one of them and no second germ cell component is coded as written. Before the audit of
+    7 October 2026 they were reachable only through the mixed tumour screen, so a clerk had to
+    call the tumour mixed, or record Teratoma, malignant, NOS (9080/3), for a report that
+    said neither (F-G-01). The mixed screen still offers them, for a report that names one of
+    them beside other components."""
+    return [
+        code("Malignant teratoma, undifferentiated or anaplastic", "9082", "3", 7, rec("9082"),
+             note="F-G-01: also offered on the mixed screen; a single-term report does not "
+                  "have to be called mixed."),
+        code("Malignant teratoma, intermediate", "9083", "3", 7, rec("9083"),
+             note="F-G-01: as 9082."),
+    ]
+
+
 def n_mixed(site):
     """The named-term question. A term the report itself uses wins over its components
     (registrar's rule), so it is asked first, as a plain choice. A first_match tick list cannot
@@ -1179,7 +1248,9 @@ AID_SPERMATOCYTIC = ("Reports describe nodules of three kinds of cell: small cel
 # tubular or pseudoglandular; atypia usually marked, prominent nucleoli, frequent mitoses).
 AID_EMBRYONAL = ("Reports describe solid, papillary or gland-like growth of poorly "
                  "differentiated cells, usually markedly atypical, with prominent nucleoli and "
-                 "frequent mitoses.")
+                 "frequent mitoses. A report that says infantile embryonal carcinoma or "
+                 "polyembryonal embryonal carcinoma is not this option: ICD-O-3.2 lists those "
+                 "under the yolk sac tumour and the polyembryoma.")
 # Pathway §1 X_3, row 9072 ("Embryoid bodies"); Tourne p. 336 (embryonal carcinoma and yolk sac
 # tumour closely intermixed are described as polyembryoma).
 AID_POLYEMBRYOMA = ("Reports describe embryoid bodies: embryonal carcinoma and yolk sac tumour "
@@ -1341,6 +1412,30 @@ def named(label, morph, reason=None, upgrade=None, note=None):
     return code(label, morph, "3", 7, reason or rec(morph), upgrade=upgrade, note=note)
 
 
+def family_option(morph):
+    """One germinoma-family option, worded as the tree words it where it already offers it. A
+    report that says dysgerminoma, seminoma or anaplastic seminoma is coded as written (D3), at
+    any site ICD-O-3.2 and ICCC-2017 allow: ICCC-2017 places 9060 to 9065 in Xa1, Xb1 and Xc1, so
+    each of the three subgroups holds all of them. Before the audit of 7 October 2026 each tree
+    offered a different subset, so a stated site that differs from a term's usual one could not
+    keep the term (WHO Rule H) and the clerk had to pick a neighbour (F-H-02)."""
+    if morph == "9060":
+        return aid(named("Dysgerminoma", "9060", upgrade=IHC_CONFIRMS, note="D1, D3."),
+                   AID_GERMINOMA)
+    if morph == "9061":
+        return aid(named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3."), AID_GERMINOMA)
+    if morph == "9062":
+        return aid(named("Seminoma, anaplastic or with a high mitotic index", "9062",
+                          "%s ICD-O-3.2 gives it the synonym Seminoma with high mitotic index."
+                          % rec("9062"), note="D3."), AID_SEMINOMA_MITOTIC)
+    if morph == "9064":
+        return aid(named("Germinoma", "9064",
+                         "%s A report that uses the term germinoma is coded as written; "
+                         "dysgerminoma is 9060/3." % rec("9064"), upgrade=IHC_CONFIRMS,
+                         note="D1."), AID_GERMINOMA)
+    raise ValueError(morph)
+
+
 def germ_cell_core(site):
     """The germ cell options every site's histology node offers, in one order: embryonal
     carcinoma, polyembryoma, yolk sac tumour, choriocarcinoma, the mixed step, and a germ cell
@@ -1350,7 +1445,7 @@ def germ_cell_core(site):
     yolk = rec("9071") + (" " + st["yolk_sac_reason"] if st.get("yolk_sac_reason") else "")
     return [
         aid(named("Embryonal carcinoma", "9070", upgrade=IHC_CONFIRMS), AID_EMBRYONAL),
-        aid(named("Polyembryoma", "9072", note="D7."), AID_POLYEMBRYOMA),
+        aid(named(POLYEMBRYOMA_LABEL, "9072", note="D7."), AID_POLYEMBRYOMA),
         aid(named(st["yolk_sac"], "9071", yolk, upgrade=IHC_CONFIRMS), AID_YOLK_SAC),
         aid(named(st["choriocarcinoma"], "9100", note="D8."), AID_CHORIOCARCINOMA),
         aid(go("Mixed germ cell tumour — more than one germ cell component",
@@ -1385,6 +1480,7 @@ def n_histology_cns():
     s = "cns"
     return histology_node(s, [
         aid(named("Germinoma", "9064", upgrade=IHC_CONFIRMS), AID_GERMINOMA),
+        family_option("9060"), family_option("9061"), family_option("9062"),
         aid(code("Mature teratoma", "9080", "0", 7, "%s %s" % (rec("9080", "0"),
                                                                CNS_IN_GROUP_X),
                  note="D5. ICCC-2017 range 95 (Xa2) declares 0-1,3."), AID_MATURE_TERATOMA),
@@ -1399,6 +1495,7 @@ def n_histology_cns():
         aid(named("Teratoma with a somatic-type malignancy", "9084",
                   "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type malignancies."
                   % rec("9084"), note="D5. Louis 2021 Table 1, p. 1235."), AID_SOMATIC),
+    ] + malignant_teratoma_options() + [
     ], [
         refer("Not a germ cell tumour", 3,
               "A tumour of the brain or spinal cord that is not a germ cell tumour belongs to "
@@ -1415,6 +1512,7 @@ def n_histology_ovary():
         aid(named("Germinoma", "9064",
                   "%s A report that uses the term germinoma is coded as written; dysgerminoma "
                   "is 9060/3." % rec("9064"), upgrade=IHC_CONFIRMS, note="D1."), AID_GERMINOMA),
+        family_option("9061"), family_option("9062"),
         aid(go("A teratoma, struma ovarii or strumal carcinoid", nid(s, "teratoma")),
             AID_TERATOMA),
     ], [
@@ -1444,6 +1542,7 @@ def n_histology_testis():
         aid(named("Spermatocytic tumour", "9063",
                   "%s ICD-O-3.2 gives it the synonym Spermatocytic tumor." % rec("9063"),
                   note="D3. Moch 2022 Table 3, p. 464."), AID_SPERMATOCYTIC),
+        family_option("9060"), family_option("9064"),
         aid(go("A teratoma, dermoid cyst or epidermoid cyst", nid(s, "teratoma")),
             AID_TERATOMA),
     ], [
@@ -1455,8 +1554,9 @@ def n_histology_testis():
                      "germ cell neoplasia in situ", "9064", "2",
                      extra="WHO 2022 lists it among the non-invasive germ cell lesions (Moch "
                            "2022, Table 3, p. 464). WHO 2022's intratubular seminoma, embryonal "
-                           "carcinoma, yolk sac tumour and teratoma have no ICD-O-3.2 code of "
-                           "their own and take this one.",
+                           "carcinoma, yolk sac tumour and teratoma have no code of their own "
+                           "in ICD-O-3.2. This case is excluded; the one in situ code ICD-O-3.2 "
+                           "prints is 9064/2.",
                      note="D9, settled. Moch's intratubular 9061/2, 9070/2, 9071/2 and 9080/2 "
                           "are not ICD-O-3.2 codes; a report of any of them is this exclusion."),
             AID_GCNIS),
@@ -1473,7 +1573,8 @@ def n_histology_testis():
         go("A sex cord–stromal tumour — Leydig cell, Sertoli cell, granulosa cell or another",
            nid(s, "sex_cord")),
         named("Carcinoma", "8010", upgrade=TYPE_NOT_STATED,
-              note="D14: the testis tree offers 8010/3 only."),
+              note="D14: the testis tree offers 8010/3 here; the picker holds the rest of Xd."),
+        go_carcinoma_picker("testis"),
         go("Malignant tumour, type not determined", nid(s, "unspecified")),
         go("Another tumour type — neuroendocrine tumour, lymphoma, leukaemia, sarcoma, a "
            "metastatic deposit or another named tumour", nid(s, "other")),
@@ -1487,6 +1588,7 @@ def n_histology_extragonadal():
         aid(named("Germinoma", "9064", upgrade=IHC_CONFIRMS, note="D1."), AID_GERMINOMA),
         aid(named("Seminoma", "9061", upgrade=IHC_CONFIRMS, note="D3: coded as written."),
             AID_GERMINOMA),
+        family_option("9060"), family_option("9062"),
         aid(go("A teratoma or dermoid cyst", nid(s, "teratoma")), AID_TERATOMA),
     ], [
         aid(named("Epithelioid trophoblastic tumour", "9105", note="D8."), AID_ETT),
@@ -1539,6 +1641,7 @@ def n_teratoma_ovary():
                              extra="ICD-O-3.2 has no malignant code for it.",
                              note="D5, settled: ICD-O-3.2 has no 9091/3."),
                 AID_STRUMAL_CARCINOID),
+            *malignant_teratoma_options(),
             go("A teratoma with a yolk sac tumour or another malignant germ cell component",
                nid(s, "mixed")),
         ],
@@ -1579,6 +1682,7 @@ def n_teratoma_testis():
                       "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type "
                       "malignancies." % rec("9084"), note="D5. Moch 2022 Table 3, p. 464."),
                 AID_SOMATIC),
+            *malignant_teratoma_options(),
             go("Teratoma with another malignant germ cell component", nid(s, "mixed")),
         ],
         [], "Contract §4.4, D5. The prepubertal and postpubertal types enter only here, where "
@@ -1591,7 +1695,9 @@ def n_teratoma_extragonadal():
         nid(s, "teratoma"), "histology_subclassification", 4, "Teratoma",
         "Which teratoma does the report diagnose?",
         "Use the report's own term and site. ICD-O-3.2 codes immature teratoma of the lung, "
-        "thymus or thyroid differently from immature teratoma elsewhere.",
+        "thymus or thyroid differently from immature teratoma elsewhere, so take the option "
+        "that matches the site recorded at the first step: lung, thymus or thyroid, or any "
+        "other.",
         [
             aid(excl_outside("Mature teratoma", "mature teratoma", "9080", "0",
                              note="D5, settled."), AID_MATURE_TERATOMA),
@@ -1615,6 +1721,7 @@ def n_teratoma_extragonadal():
             aid(named("Teratoma with a somatic-type malignancy", "9084",
                       "%s ICD-O-3.2 gives it the synonym Teratoma with somatic type "
                       "malignancies." % rec("9084"), note="D5."), AID_SOMATIC),
+            *malignant_teratoma_options(),
             go("Teratoma with a yolk sac tumour or another malignant germ cell component",
                nid(s, "mixed")),
         ],
@@ -1764,6 +1871,155 @@ def n_sex_cord_testis():
             "juvenile granulosa 8622/0; mixed 8592/1; NOS 8590/1.")
 
 
+# ------------------------------------------------------------------------------------------
+# The gonadal carcinoma picker (registrar, 7 October 2026)
+# ------------------------------------------------------------------------------------------
+# ICCC-2017 subgroup Xd, "Gonadal carcinomas", holds 177 code lookups in three ranges: 113 at
+# the ovary and testis, 115 at the ovary only, 114 at every site. The ovary tree offers twelve of
+# its terms and the testis tree one, and 80 of the codes ICD-O-3.2 prints at /3 had no option
+# and no alias (audit of Group X, F-J-01, F-J-05). The registrar's design: after the site is
+# known, the clerk types the name of the tumour into the list's own filter box and the option
+# appears. One list per gonad tree holds every Xd code its other nodes do not offer, in code
+# order, each under its ICD-O-3.2 Preferred term; the filter also matches the term's ICD-O-3.2
+# synonyms and related terms (`search_terms`, never shown), the names the alias layer indexes. A
+# case that came from the search box starts with the typed term already in the filter
+# (`prefill_filter_from_search`). A code whose Preferred term ICD-O-3.2 marks [obs] is not
+# offered (8130, 8141, 8245, 8440, 8450): design D11 keeps an obsolete term off every screen.
+_XD: list | None = None
+
+
+def _iccc_path() -> Path:
+    return Path(os.environ.get("ICCC_DB", str(gi.DEFAULT_ICCC))).resolve()
+
+
+def xd_records() -> list:
+    """The Xd records of the Group X inventory (ICCC-2017.sqlite joined to icdo32.sqlite)."""
+    global _XD
+    if _XD is None:
+        payload = gi.build_inventory(_iccc_path(), _icdo_path(), "X")
+        _XD = [r for r in payload["records"] if str(r["iccc3_subgroup_id"]).startswith("Xd")]
+    return _XD
+
+
+_TERMS: dict | None = None
+
+
+def icdo_terms(code: str, beh: str) -> list:
+    """Every ICD-O-3.2 term at (code, behaviour) as (level, term, obsolete), from icdo32.sqlite."""
+    global _TERMS
+    if _TERMS is None:
+        path = _icdo_path()
+        if not path.exists():
+            raise TreeError("icdo32.sqlite not found at %s — set ICDO_DB" % path)
+        index: dict = {}
+        try:
+            con = sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)
+            try:
+                for c, b, level, t, obs in con.execute(
+                        "SELECT code4, behaviour, level, term, obs FROM icd_o_3_2_morphology "
+                        "WHERE code4 IS NOT NULL AND behaviour IS NOT NULL"):
+                    index.setdefault((str(c), str(b)), []).append(
+                        (str(level or "").strip(), str(t or "").strip(), bool((obs or "").strip())))
+            finally:
+                con.close()
+        except sqlite3.Error as exc:
+            raise TreeError("icdo32.sqlite at %s could not be read: %s" % (path, exc)) from None
+        _TERMS = index
+    return _TERMS.get((code, beh), [])
+
+
+def preferred_is_obsolete(code: str, beh: str) -> bool:
+    """ICD-O-3.2 marks the Preferred term of (code, behaviour) [obs]. The tool does not put an
+    obsolete term on a screen (build warning, rule 13), so no option offers such a pair."""
+    return any(level == "Preferred" and obs for level, _t, obs in icdo_terms(code, beh))
+
+
+def live_search_terms(code: str, beh: str) -> list:
+    """The ICD-O-3.2 Synonym and Related terms of (code, behaviour) that are not obsolete, in
+    that order. The alias layer indexes these same terms, so a name a clerk can type in the
+    search box is a name the picker's filter finds."""
+    out: list = []
+    for level in ("Synonym", "Related"):
+        for lv, t, obs in icdo_terms(code, beh):
+            if lv == level and not obs and t and t not in out:
+                out.append(t)
+    return out
+
+
+def _topo_number(code: str) -> int:
+    return int(code[1:3]) * 10 + int(code[4])
+
+
+def _covers_gonad(topography: list, site: str) -> bool:
+    """Does an inventory record's topography list (['C56.9', 'C62.0–C62.9'] or
+    ['C00.0–C80.9']) cover the gonad this tree is about?"""
+    want = 569 if site == "ovary" else 629
+    import re
+    for text in topography:
+        ends = re.findall(r"C\d\d\.\d", text)
+        if ends and _topo_number(ends[0]) <= want <= _topo_number(ends[-1]):
+            return True
+    return False
+
+
+def _emitted_pairs(nodes: list) -> set:
+    """Every (code, '3') a list of nodes can record, wherever it sits in them."""
+    out: set = set()
+
+    def walk(o):
+        if isinstance(o, dict):
+            if o.get("morphology_code") and str(o.get("behavior_code")) == "3":
+                out.add(str(o["morphology_code"]))
+            if isinstance(o.get("nos_fallback"), dict) and o["nos_fallback"].get("code"):
+                out.add(str(o["nos_fallback"]["code"]))
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+    walk(nodes)
+    return out
+
+
+def go_carcinoma_picker(site):
+    return go("Another carcinoma the report names — type its name to find it",
+              nid(site, "carcinoma_other"),
+              note="Registrar's design, 7 October 2026: the gonadal carcinoma picker (ICCC-2017 "
+                   "subgroup Xd).")
+
+
+def n_carcinoma_other(site, emitted):
+    """The list of every Xd code the site's other nodes do not offer."""
+    assert site in GONADS, site
+    opts = []
+    for r in sorted(xd_records(), key=lambda r: r["morphology_code"]):
+        if r["behavior_code"] != "3" or r["morphology_code"] in emitted:
+            continue
+        if not _covers_gonad(r["topography"], site):
+            continue
+        # A code whose Preferred term ICD-O-3.2 marks [obs] stays off every screen (design D11).
+        if preferred_is_obsolete(r["morphology_code"], "3"):
+            continue
+        o = named(term(r["morphology_code"], "3"), r["morphology_code"],
+                  note="Gonadal carcinoma picker: ICCC-2017 subgroup %s, ranges 113 to 115."
+                       % r["iccc3_subgroup_id"])
+        found = live_search_terms(r["morphology_code"], "3")
+        if found:
+            o["search_terms"] = found
+        opts.append(o)
+    n = node(
+        nid(site, "carcinoma_other"), "histology_subclassification", 5, "Another carcinoma",
+        "Which carcinoma does the report name?",
+        "Type part of the name in the box and the matching options appear. The other names "
+        "ICD-O-3.2 gives a tumour find it too. Use the report's own term.",
+        opts, [],
+        "Registrar's design, 7 October 2026 (audit of Group X, F-J-01, F-J-05): every Xd code "
+        "ICD-O-3.2 prints at /3 that the %s tree's other nodes do not offer, %d in all, in "
+        "code order." % (site, len(opts)))
+    n["prefill_filter_from_search"] = True
+    return n
+
+
 def n_epithelial_ovary():
     s = "ovary"
     return node(
@@ -1791,6 +2047,7 @@ def n_epithelial_ovary():
             named("Adenocarcinoma, type not stated", "8140", note="D14.",
                   upgrade=TYPE_NOT_STATED),
             named("Carcinoma, type not stated", "8010", note="D14.", upgrade=TYPE_NOT_STATED),
+            go_carcinoma_picker("ovary"),
         ] + [excl_d(label, label.lower(), icdo, beh, "D14", decision=True)
              for label, icdo, beh in (
                  ("Serous borderline tumour", "8442", "1"),
@@ -1799,8 +2056,8 @@ def n_epithelial_ovary():
                  ("Endometrioid borderline tumour", "8380", "1"),
                  ("Serous cystadenoma", "8441", "0"),
                  ("Mucinous cystadenoma", "8470", "0"))],
-        [], "D14: the paediatric subset of Xd on the tree; every other Xd code is in the "
-            "inventory and reachable by search.")
+        [], "D14: the paediatric subset of Xd is offered here; every other Xd code is in the "
+            "gonadal carcinoma picker (ov_carcinoma_other), reached by the last carcinoma option.")
 
 
 def n_unspecified(site):
@@ -1866,12 +2123,14 @@ def n_deposit(site):
         "primary site. A deposit of a germ cell tumour that began at another site is coded "
         "there: go back to the site step and record the primary's topography. A lymphoma or "
         "leukaemia is answered at the step before." % (" in %s" % where if where else ""),
-        [refer(label, group, "%s Code the case at its primary." % why)
+        [refer(label, group, "%s Code the case at its primary." % why, recapture=True)
          for label, group, why in DEPOSIT_PRIMARIES] + [
             refer("The primary is not known and has not been found", 12,
                   "A deposit with no identified primary belongs in ICCC-3 Group XII, other "
                   "and unspecified malignant neoplasms. Code the case from the Group XII "
-                  "tree."),
+                  "tree.", captures={"topography": "C80.9"},
+                  note="WHO section 4.2.2: an unknown primary is C80.9, not the site of the "
+                       "deposit."),
         ],
         [], "Code review, 6 October 2026: the deposit was non_reportable, so a malignancy "
             "left the registry and an unknown primary had no route.")
@@ -1920,10 +2179,13 @@ def n_group_x_everywhere():
 # ICCC-2017 range 63 (Ewing sarcoma), 59 (osteosarcoma) and 60 (chondrosarcoma) place these
 # types at sites 760-768 in Group VIII; at the other extragonadal sites they are Group IX.
 BONE_TYPE_AT_PELVIS = refer(
-    "Ewing sarcoma, osteosarcoma or chondrosarcoma, with the site recorded as Pelvis, NOS "
-    "(C76.3)", 8,
-    "At Pelvis, NOS (C76.3) ICCC-3 places Ewing sarcoma, osteosarcoma and chondrosarcoma in "
-    "Group VIII (malignant bone tumours). Code the case from the Group VIII tree.")
+    "Ewing sarcoma, osteosarcoma or chondrosarcoma of bone", 8,
+    "Ewing sarcoma, osteosarcoma and chondrosarcoma of bone belong to ICCC-3 Group VIII "
+    "(malignant bone tumours) and are coded at the bone they arise in, not at Pelvis, NOS "
+    "(C76.3). Code the case from the Group VIII tree.",
+    recapture=True,
+    note="Rules A and B: the tissue's own site replaces the ill-defined C76 site. The label "
+         "named C76.3 until the audit of 7 October 2026; the hop carried it onto Group VIII.")
 
 
 def n_other_gonad(site):
@@ -1944,8 +2206,16 @@ def n_other_gonad(site):
                   % (rec("8246"), where), note="ICCC-2017 range 113: 8221-8241, 8244-8246."),
             refer_lymphoma(where),
             refer("Leukaemic infiltration", 1,
-                  "Leukaemic infiltration of %s is coded as the leukaemia, in ICCC-3 Group I. "
-                  "Code the case from the Group I (leukaemias) tree." % where),
+                  "Leukaemic infiltration of %s is coded as the leukaemia, in ICCC-3 Group I, "
+                  "and a leukaemia is recorded at the bone marrow (C42.1). Code the case from "
+                  "the Group I (leukaemias) tree." % where,
+                  captures={"topography": "C42.1"},
+                  note="Rule E (section 4.2.8): every leukaemia except myeloid sarcoma is "
+                       "C42.1, so the hop carries the marrow and not the gonad."),
+            refer("Myeloid sarcoma (granulocytic sarcoma)", 1,
+                  "A myeloid sarcoma of %s is coded to the site where it arose, in ICCC-3 "
+                  "Group I. Code the case from the Group I (leukaemias) tree." % where,
+                  note="Rule E: myeloid sarcoma (9930/3) is the exception and keeps its site."),
             refer("Rhabdomyosarcoma or another sarcoma", 9, SARCOMA_REASON),
             go_deposit(site),
             refer_carcinoma("A melanoma", "A melanoma of %s" % where),
@@ -1969,7 +2239,9 @@ def n_other_extragonadal():
                   "Neuroblastoma belongs to ICCC-3 Group IV. Code the case from the Group IV "
                   "tree."),
             BONE_TYPE_AT_PELVIS,
-            refer("A sarcoma", 9, SARCOMA_REASON),
+            refer("A sarcoma", 9, SARCOMA_REASON, recapture=True,
+                  note="Rules A and B: a soft tissue sarcoma is coded at its tissue's site, "
+                       "which is not the Pelvis, NOS (C76.3) that a sacrococcygeal case carries."),
             go_deposit(s),
             refer_carcinoma("Another carcinoma, or a melanoma", "A carcinoma or melanoma "
                             "outside the gonads"),
@@ -2044,7 +2316,11 @@ def _tree(tree_id, label, entry, topography, nodes):
 def trees() -> list:
     """Return the four trees as a fresh structure that shares no object with any other call or
     with itself (a JSON round trip), so callers may mutate it freely."""
-    out = [_tree(st["tree"], TREE_LABELS[site], nid(site, "document_inventory"),
-                 _topo(TOPOGRAPHY_RAW[site]), common(site) + SITE_NODES[site]())
-           for site, st in SITES.items()]
+    out = []
+    for site, st in SITES.items():
+        nodes = common(site) + SITE_NODES[site]()
+        if site in GONADS:
+            nodes.append(n_carcinoma_other(site, _emitted_pairs(nodes)))
+        out.append(_tree(st["tree"], TREE_LABELS[site], nid(site, "document_inventory"),
+                         _topo(TOPOGRAPHY_RAW[site]), nodes))
     return json.loads(json.dumps(out))

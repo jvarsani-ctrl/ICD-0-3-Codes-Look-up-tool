@@ -86,9 +86,17 @@ term at its (code, behaviour). Also:
 - `site_resolution` renders as an option list (`app.js` `nodeControl`).
 - Router `tree_routing` entries must be `document_inventory` nodes (`build_database.py`
   ~L10168).
-- A referral is a terminal screen; nothing carries into the target group (D18).
+- A referral to a built group continues in that group with the case's topography (registrar,
+  6 October 2026, which supersedes D18). A referral that names a deposit, or a tissue whose own
+  site replaces the one on the case, asks for the primary's site first (`recapture_site`, audit of
+  7 October 2026).
 - The search box asks the site of a group with `tree_routing` and keeps the group only if the
   site lists it (registrar, 4 October 2026), so Group X is always entered with a topography.
+  Group X is also marked `occurs_at_routed_sites`: the search box keeps a term filed under Group X
+  alone at a site one of its own `tree_routing` rules names, although the site's `candidate_groups`
+  omits 10, when the term's own entries list the site in `primary_sites` (audit of 7 October 2026).
+  A term ICCC-2017 places only at the gonads still stops at the liver. The front door still lists
+  Group X only where `candidate_groups` does (B2).
 - "Also called" lists aliases by four-digit code (D21).
 
 ### 0.5 ★ Visser Table 4 — what may be registered without tissue
@@ -155,7 +163,7 @@ environment, falling back to the module defaults.
 6. **Annotations** keyed by `code/behaviour` for every pair the tree emits (§4): 
    `diagnostic_tests_required`, `ihc_markers_required` where the IHC rules use them, and a
    `coding_note` naming the D-number and the node(s) that emit it. Pairs the tree never emits get
-   the templated note "In the inventory, not on the tree: reachable by search where aliased."
+   the templated note "In the inventory, not on the tree: no option emits it; the search box enters the group and never selects a code."
    The five Xa pairs below `/3` that the tree does not emit (`9100/0`, `9100/1`) say why (D8).
 7. **REDCap.** *Superseded on 4 October 2026 (standing rule 16; registrar, `main` commit
    `9c63a5f`):* the entries carry no REDCap fields. What REDCap owes is listed in `docs/TODO.md`

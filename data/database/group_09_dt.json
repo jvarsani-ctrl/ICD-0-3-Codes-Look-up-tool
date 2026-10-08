@@ -5083,6 +5083,7 @@
               "label": "Leukaemia, or myeloid sarcoma (granulocytic sarcoma, chloroma)",
               "refer_group": 1,
               "reason": "Leukaemia and myeloid sarcoma are ICCC-3 Group I.",
+              "recapture_site": true,
               "captures": {
                 "not_sarcoma_diagnosis": "leukaemia"
               }

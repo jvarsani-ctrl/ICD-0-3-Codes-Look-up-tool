@@ -218,9 +218,13 @@ def load():
     emitted: dict[str, set[str]] = {}
     ihc: set[str] = set()
     by_tree: dict[str, set[str]] = {}
+    from_picker: set[str] = set()
+    elsewhere: set[str] = set()
     for node_id, _where, code, beh in bd._group10_emissions(ctx):
         emitted.setdefault(code, set()).add(beh)
         by_tree.setdefault(ctx.node_tree[node_id], set()).add(code)
+        (from_picker if ctx.nodes[node_id].get("prefill_filter_from_search") is True
+         else elsewhere).add(code)
         if ctx.nodes[node_id].get("node_type") == "ihc_checklist":
             ihc.add(code)
     # A search enters the tree the router picks for the recorded site, and that tree asks the
@@ -251,7 +255,8 @@ def load():
     router = json.loads(ROUTER.read_text(encoding="utf-8"))
     handoff = router["groups"][str(GROUP)]["handoff"]
     entries = {(e["morphology_code"], e["behavior_code"]): e for e in dt["morphology_entries"]}
-    return emitted, ihc, index, pairs, opts, handoff, entries, searchable, sorted(reached)
+    return (emitted, ihc, index, pairs, opts, handoff, entries, searchable, sorted(reached),
+            from_picker - elsewhere)
 
 
 def d21_codes(pairs, emitted, text):
@@ -265,6 +270,17 @@ def d21_codes(pairs, emitted, text):
         if em and em <= term_behs:
             ok.append(code)
     return ok
+
+
+def other_groups_aliases() -> set:
+    """Every alias string, whitespace-normalised and lower-cased, that another group's file holds."""
+    held: set = set()
+    for path in sorted((REPO / "data" / "aliases").glob("aliases_group_*.json")):
+        if int(path.stem.rsplit("_", 1)[1]) == GROUP:
+            continue
+        for a in json.loads(path.read_text(encoding="utf-8")):
+            held.add(" ".join(a["alias"].lower().split()))
+    return held
 
 
 def report_shared(out: list[dict]) -> None:
@@ -289,8 +305,11 @@ def report_shared(out: list[dict]) -> None:
 
 
 def main() -> int:
-    emitted, ihc, index, pairs, opts, handoff, entries, searchable, reached = load()
+    (emitted, ihc, index, pairs, opts, handoff, entries, searchable, reached,
+     picker_only) = load()
     unsearchable: list[str] = []
+    held_elsewhere = other_groups_aliases()
+    left_with_group: list[str] = []
     redcap_names = {key(n) for rec in opts.values() for n in rec["names"]}
 
     def entry_at(code: str, beh: str) -> dict:
@@ -322,6 +341,15 @@ def main() -> int:
                 raise SystemExit("ERROR: alias %r maps to %s, which no tree emits" % (alias, c))
         if not set(codes) <= searchable:
             unsearchable.append(alias)
+            return
+        # A code only the gonadal carcinoma picker offers is not worth a term another group
+        # already files: the alias index would then list the term under both groups, and a
+        # term that on `main` entered the other group at any site (a Group VI or Group III
+        # term) would tie at the sites both name, or stop where the other group alone entered.
+        # The other group keeps the term; the picker's filter still finds it by its
+        # `search_terms` (review of 7 October 2026, finding 1).
+        if set(codes) <= picker_only and " ".join(alias.lower().split()) in held_elsewhere:
+            left_with_group.append(alias)
             return
         seen.add(alias.lower())
         by_source[source] += 1
@@ -420,6 +448,9 @@ def main() -> int:
           "offers that site's own terms."
           % (len(unsearchable), ", ".join(reached),
              (" (" + "; ".join(unsearchable) + ")") if unsearchable else ""), file=sys.stderr)
+    print("%d alias(es) left with the group that already holds them: %s"
+          % (len(set(left_with_group)), "; ".join(dict.fromkeys(left_with_group))),
+          file=sys.stderr)
     report_shared(out)
     return 0
 

@@ -403,3 +403,125 @@ an engine that adds the group to the survivors on real data. The synthetic fixtu
 and a free-text answer, "Not documented", a list choice enabling Continue, and the keyboard). Its fourth control now
 picks a radio, because the list is no longer a `select`. Control: a scratch copy that never fires the change event fails
 that check with `{"before":true,"after":true}`; the other seven pass.
+
+## 7 October 2026: the Group X audit
+
+Each control below was run on a scratch copy of the tree (the repository was not touched), the check was watched
+failing for the reason shown, and the clean tree passes. The gate computes every expected outcome from the router and
+the data, never from a flag the engine sets.
+
+### The typed lane enters a group at every site its own routing names
+
+The router marks Group X `occurs_at_routed_sites`. A typed Group X term used to stop at 102 of the 167 selectable sites (65 entered)
+because the site's `candidate_groups` omitted 10, with a screen that said the group does not code the term there. Now a
+term filed under Group X alone enters at a site a `tree_routing` rule names when its own entries list the site in
+`primary_sites`: a germ cell term at 167 of the 175 selectable sites (the 8 lymph node sites stay outside: no Group X
+germ cell range covers them). A term ICCC-2017 places only at the gonads is stopped where the site's own list omits
+Group 10, because the first version of this change entered such terms at the liver (found by the independent review);
+where the site's list names Group 10 or names no group it enters the site's tree, which refers a carcinoma on
+(third review, finding 3: this paragraph said "at every other site" before). A term filed under several groups, and a term
+whose group file is not loaded, stay strict. A site that names a group of the term still decides, and the group does not tie
+with it. The gate reads the expected outcome from the alias files and the entries by a second parser. On the real tree:
+8246 (term, site) pairs routed through a group that occurs at any site or at its routed sites, 6674 of them at routed
+sites. A synthetic fixture in the `ux` section pins the cases real data cannot tell apart.
+
+| Control | Scratch tree | Result |
+|---|---|---|
+| the defect | `app.js` before the change | FAIL: `a site that a routing rule names, and the site's own list omits, takes the group that occurs at its routed sites` |
+| the flag ignores the rule list | `occursAtRoutedSite` returns true on the flag alone | FAIL: `a site no routing rule names still stops, although the group routes a default tree` |
+| the default tree counts as a named site | `\|\| tr.default` added | FAIL: `"Adenocarcinoma, NOS" [10] at C77.0 [2,9]: expected a stop (no group), got stage node, group 10` |
+| the fallback added to the survivors, not only when there are none | `afterSearchSite` | FAIL: `"Carcinoid tumor, NOS" [6,10] at C64.9 [6]: expected Group 6, got stage search_unresolved, group null` |
+| the term's own entries not read (the flag and the rules alone) | `occursAtRoutedSite` | FAIL: `"Adenocarcinoma, NOS" [10] at C42.0 [1,2]: expected a stop (no group), got stage node, group 10`; and `a routed site the term's own entries do not list stops` |
+| a term filed under several groups taken by the fallback | the one-group test removed | FAIL: `a term filed under several groups is not taken by the routed-site fallback` |
+| the router's flag deleted | router edited | FAIL: `no term was routed by occurs_at_routed_sites` |
+| the flag a string, on an unbuilt group, or on a group with no routing rules | router edited | build FAIL: `occurs_at_routed_sites` must be true or absent; not on a group that is not built; not on a group with no `tree_routing` rules |
+| fix | none | OK |
+
+### A referral asks for the primary's site
+
+A referral can say `recapture_site`. The referral screen then does not print the deposit's site as the case's, and
+"Continue in Group N" drops the site, asks for the primary's, and enters the receiving group with it. A group that reads
+no site records the answer only and offers "The file does not state the site"; one that routes its trees from the site
+is given one. The gate drives every such branch in the data (60 to built groups, of 71 in all, in Groups III, VII, VIII, IX and X) through
+the referral, the hop, the site, the group's first screen, a step back to the organ system with a second site, and a step
+back to the referral.
+
+| Control | Scratch tree | Result |
+|---|---|---|
+| the defect | `app.js` before the change | FAIL: `23 problem(s): ... no recapture referral, stage output` (and the leukaemia and routed-site checks) |
+| the hop keeps the site | `delete state.captured.topography` removed | FAIL: `after the hop stage site, group 4, record group 4, topography C56.9` |
+| the referral screen prints the site | the row restored | FAIL: `the referral screen prints the deposit's site as the case's` |
+| no hop for a case with no site | `canHop` without the exemption | FAIL: `a referral that asks for the primary's site offers the hop into a group that routes by site although the case has no site` |
+| "not stated" offered to a group that reads the site | `siteRecordOnly = true` always | FAIL: `the "not stated" answer is offered to a group that reads the site` |
+| the flag left out of the snapshot | `snapshot()` | FAIL: `stepping back to the organ system gave stage site, record group null` |
+| the flag not cleared once the group is fixed | `enterRecordedGroup()` | FAIL: `after recording C42.0 stage handoff, group 2, topography C42.0, record group 2` |
+| the opening presentation's site list kept after the hop | `state.archetype` not cleared | FAIL: `after a recapture hop the primary's site is asked from every organ system, not only those the opening presentation fixed` (`system rows 1 then 1 of 28`) |
+| `recapture_site` false, or with a captured topography | data edited | build FAIL: `recapture_site must be true or absent`; `sets a topography and also asks for the primary's site` |
+| a deposit referral without it, or a leukaemia that does not set C42.1 | Groups III, VII, VIII and X edited | build FAIL: `a deposit is coded at its primary, but this referral does not ask for the primary's site`; `a leukaemia is recorded at the bone marrow, C42.1` |
+| the extragonadal bone sarcoma without it, a leukaemic infiltration that keeps the gonad, a myeloid sarcoma that sets a site | Group X edited | build FAIL: `GROUP 10 RULE 5` in each case |
+| a deposit node renamed so its id says neither word, with its flags removed (the review's own test) | Group VII edited | build FAIL: `hp_secondary_site (options[0]) ... a deposit is coded at its primary, but this referral does not ask for the primary's site`, found by the referral's own text |
+| a neuroblastoma-in-bone referral, or a spinal-canal neuroblastic referral, without the flag | Group VIII, Group III edited | build FAIL: `bn_round_cell (options[9]) ... does not ask for the primary's site`; `sp_extrinsic_gate (options[2]) ...` |
+| the leukaemic infiltration relabelled and its C42.1 removed | Group X edited | build FAIL: `GROUP 10 RULE 5: ov_other ... must record the bone marrow, C42.1` (before the review this passed, counting the branch but asserting nothing) |
+| "the primary is not known" without C80.9 | Group X edited | build FAIL: `ts_deposit (options[8]) ... a deposit whose primary is not known is recorded at C80.9` |
+| fix | none | OK |
+
+### The subgroup line at a site no Group X range covers
+
+C77.x is reached only by a referral hop, and the router sends it to the extragonadal tree. A pair with an Xb and an Xc
+subgroup shows Xb there, not the gonadal default. The build derives the expected line from ICCC-2017: 144 (entry,
+topography) pairs. Control: the C77 codes removed from one entry's Xb rule, so it falls back to Xc1: build FAIL
+`shows subgroup 'Xc1' at C77.0, a site outside every Group X germ cell range that only a referral hop reaches`.
+
+### The laboratory panel takes a limit
+
+`>1210` and `<0.5` are recorded as typed and printed with the number and unit; `>`, `<`, `>>5`, `>-5`, `5>`, `<1e3`,
+`=5` and `≥5` are still refused. Controls: the old pattern fails `>1210 refused` and the print check; a pattern that
+accepts `=` or repeated signs fails `>>5 accepted, ><5 accepted, =5 accepted`.
+
+### Added on the same day, under the registrar's delegation
+
+Each run on a scratch copy and watched failing for the reason shown.
+
+| Control | Scratch tree | Result |
+|---|---|---|
+| a Group II leukaemia referral without the bone marrow | Group II edited | build FAIL: `g2_compartment_gate (options[3]) '' -> Group 1: a leukaemia is recorded at the bone marrow, C42.1 (WHO Rule E)` |
+| Group VII's liver leukaemia referral without it | Group VII edited | build FAIL: `hp_histology (options[15]) ... -> Group 1: ... this referral sets None` |
+| a histology screen that lacks dysgerminoma, or a teratoma screen that lacks `9083/3` | Group X edited | build FAIL: `GROUP 10 RULE 6: ts_histology offers no option that records 9060/3 (Dysgerminoma)`; `eg_teratoma offers no option that records 9083/3` |
+| the marker gates' fallback hint back to the laboratory's range, or a hint that says the cut-offs are not applied, or a `<=` band pointed back at cn_markers | Group X edited | build FAIL: `BRAIN MARKERS — cn_markers_cutoff is where a walk from 24 months stops when a value was not entered, but its hint does not apply the SIOP cut-offs` (the review found the first version of this check missed the last two) |
+| a Group II referral that drops C42.1 and adds "This is not a myeloid sarcoma." | Group II edited | build FAIL: `g2_precursor (resolution_logic[0]) '' -> Group 1: a leukaemia is recorded at the bone marrow, C42.1` (the first version let any mention of the words through) |
+| fix | none | OK, 1142 checks |
+
+### The marker gates' second answer, the three sites and the gonadal carcinoma picker (registrar's approval, 7 October 2026)
+
+Each run on a scratch copy and watched failing for the reason shown.
+
+| Control | Scratch tree | Result |
+|---|---|---|
+| a gate that offers "another unit" with no band to send it to, or two answers that do not exclude each other | `app.js`, fixture | engine gate FAIL on the matching fixture check |
+| `cn_hcg_csf` sends "not documented" to the report question (the rule before the approval) | Group X edited | `negative_controls_group10.py` R5-I: `BRAIN MARKERS — ... hcg_csf_iu_l not entered ... reaches cn_markers_cutoff ... the ruling gives neither raised` |
+| `cn_hcg_csf` reads "in another unit or only described" as not raised | Group X edited | R5-K: `hcg_csf_iu_l in another unit or only described ... reaches cn_imaging_markers` |
+| `cn_afp_csf` sends "not documented" to the report question | Group X edited | R5-L |
+| a gate without an `other_unit` band (the walk cannot see it: the gate's fallback edge reaches the same question) | Group X edited | R5-M: `BRAIN MARKERS — cn_afp_serum has no other_unit band` |
+| the thymus dropped from the extragonadal routing rule | router edited | build FAIL: `GROUP 10 RULE 4: C37.9 can enter Group X ... but no tree_routing rule names it` |
+| an Xd code removed from the picker | Group X edited | build FAIL: `GROUP 10 RULE 7: g10_ovary offers no option that records 1 gonadal carcinoma code(s) ... 8560`; the engine gate fails its picker checks |
+| a search term that is not an ICD-O-3.2 synonym | Group X edited | build FAIL: `GROUP 10 RULE 7: ts_carcinoma_other 'Epithelioma, malignant': search term 'Not an ICD-O name' is not a live ICD-O-3.2 Synonym or Related term of 8011/3` |
+| synonyms not matched by the filter | `app.js` | gate FAIL: `an ICD-O-3.2 synonym finds the option although no label shows it` |
+| the typed term not carried into the filter, or refilled after the clerk clears it | `app.js` | gate FAIL: `a case from the search box starts with the typed term in the filter`; `clearing the box shows the whole list and does not refill it` |
+| fix | none | OK, 1152 checks; `negative_controls_group10.py` 36 of 36 caught, 6 of 6 probes pass (before the third review, below) |
+
+### The third independent review of the Group X batch (7 October 2026)
+
+An independent reader drove the real `app.js` against `main` and the branch and found five defects and one minor
+one. Each fix below was run on a scratch copy (`app.js`, Group X data) or in `negative_controls_group10.py` and
+watched failing for the reason shown.
+
+| Finding | Fix | Control | Result |
+|---|---|---|---|
+| 1. Nine aliases the picker added were strings another group already files (six Group VI, three Group III), so six Group VI terms that entered Group VI at every site on `main` stopped at 174 sites, and three Group III terms tied at the pituitary and the brain. A sweep of all 297,325 (term, site) cells against `main` now changes only `search_unresolved` to a Group X tree, in 6,674 cells. | `generate_group10_aliases.py` leaves a picker-only code's alias with the group that holds it; Group 10 rule 8 forbids sharing. | `negative_controls_group10.py` R8-A (a Group VI string on 8510), R8-B (a Group III string on 8158) | CAUGHT: `GROUP 10 RULE 8: ... 'Medullary carcinoma, NOS' is also held by Group 6` |
+| 2. Thirty-seven typed names (ICD-O-3.2 Related terms) opened the picker with the name in the box and no option visible. | `search_terms` are the live Synonym and Related terms; rule 7 accepts both and rejects an obsolete term. The engine gate checks every ICD-O-3.2 name the alias layer indexes for a picker code against the filter's own matcher. | the Related terms stripped from a scratch copy of the data | engine gate FAIL: `every ICD-O-3.2 name the search box indexes ... is found by that picker's filter box`; 398 pairs, `Keratoacanthoma` among those not found |
+| 2, residue. A curated name or the REDCap wording that the list cannot find (`Gastrinoma, NOS`) left the box hiding every row. | `optionList` starts no filter when no option matches the typed name. | the fallback removed from a scratch `app.js` | engine gate FAIL: `a typed name that matches no option starts no filter, so the whole list shows` |
+| 4. Six codes whose ICD-O-3.2 Preferred term is `[obs]` were on screen (five in the picker, `8630/3` on the sex cord screens), against the build's own warning and design D11. | Taken off; Group 10 rule 7 exempts them from "every Xd code has an option" and fails any option that records an obsolete pair. | an option for `8130/3` added to the picker | CAUGHT: R7-B `GROUP 10 RULE 7: an option records 1 pair(s) whose ICD-O-3.2 Preferred term is marked [obs] ... 8130/3` |
+| 2 and 4, rule 7's other two faces. | | an Xd code removed from the picker; a search term that is no ICD-O-3.2 term | CAUGHT: R7-A, R7-C |
+| 3, 5, 6. Documents. The claim that a gonad-only term stops at every other site was false where the site's list names Group 10; figures were stale (159 of 167 sites, 57 of 159, 82 and 86 options, "every one of the 136 entries"); the lymph node sentence ignored ranges 114 and 116. | `docs/TODO.md` §34, `docs/group_10_registrar_review.md`, this file, and the 8010/3 line in `generate_group10_entries.py`, corrected from computed counts. | none (text) | |
+| Found while rerunning the suites. Two controls in `negative_controls_ux.py` edited the old text of `canHop` in `app.js`, which the recapture hop had changed, so they reported "occurs 0 times" and checked nothing. | Both repointed at the current line; a third control added for the recapture exception (`r.recaptureSite === true ||`). | the exception removed from a scratch `app.js` | gate FAIL: `a referral that asks for the primary's site offers the hop into`; `negative_controls_ux.py`: every control behaves |
+| fix | | none | OK, 1162 checks; `negative_controls_group10.py` 41 of 41 caught, 8 of 8 probes pass; `negative_controls_ux.py` every control behaves; Groups III, VII, VIII and IX control suites pass |

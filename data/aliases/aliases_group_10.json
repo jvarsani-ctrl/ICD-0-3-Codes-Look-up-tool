@@ -38,6 +38,139 @@
     "coding_note": "ICD-O-3.2 Preferred term on 8010/3, read from icdo32.sqlite; D21 holds: Group X emits 8010 at /3 only."
   },
   {
+    "alias": "Epithelioma, malignant",
+    "full_form": "Epithelioma, malignant -> Epithelioma, malignant (8011)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8011"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Epithelioma, malignant, 8011/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8011/3, read from icdo32.sqlite; D21 holds: Group X emits 8011 at /3 only."
+  },
+  {
+    "alias": "Epithelioma, NOS",
+    "full_form": "Epithelioma, NOS -> Epithelioma, malignant (8011)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8011"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Epithelioma, malignant (8011/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8011/3, read from icdo32.sqlite; D21 holds: Group X emits 8011 at /3 only."
+  },
+  {
+    "alias": "Large cell carcinoma, NOS",
+    "full_form": "Large cell carcinoma, NOS -> Large cell carcinoma, NOS (8012)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8012"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Large cell carcinoma, NOS, 8012/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8012/3, read from icdo32.sqlite; D21 holds: Group X emits 8012 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Large cell neuroendocrine carcinoma",
+    "full_form": "Large cell neuroendocrine carcinoma -> Large cell neuroendocrine carcinoma (8013)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8013"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Large cell neuroendocrine carcinoma, 8013/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8013/3, read from icdo32.sqlite; D21 holds: Group X emits 8013 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Combined large cell neuroendocrine carcinoma",
+    "full_form": "Combined large cell neuroendocrine carcinoma -> Large cell neuroendocrine carcinoma (8013)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8013"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Large cell neuroendocrine carcinoma (8013/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8013/3, read from icdo32.sqlite; D21 holds: Group X emits 8013 at /3 only."
+  },
+  {
+    "alias": "Large cell carcinoma with rhabdoid phenotype",
+    "full_form": "Large cell carcinoma with rhabdoid phenotype -> Large cell carcinoma with rhabdoid phenotype (8014)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8014"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Large cell carcinoma with rhabdoid phenotype, 8014/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8014/3, read from icdo32.sqlite; D21 holds: Group X emits 8014 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Glassy cell carcinoma",
+    "full_form": "Glassy cell carcinoma -> Glassy cell carcinoma (8015)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8015"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Glassy cell carcinoma, 8015/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8015/3, read from icdo32.sqlite; D21 holds: Group X emits 8015 at /3 only. Also the REDCap option wording."
+  },
+  {
     "alias": "Carcinoma, undifferentiated, NOS",
     "full_form": "Carcinoma, undifferentiated, NOS -> Carcinoma, undifferentiated, NOS (8020)",
     "also_known_as": [],
@@ -114,6 +247,367 @@
     "coding_note": "ICD-O-3.2 Related term on 8020/3, read from icdo32.sqlite; D21 holds: Group X emits 8020 at /3 only."
   },
   {
+    "alias": "Carcinoma, anaplastic, NOS",
+    "full_form": "Carcinoma, anaplastic, NOS -> Carcinoma, anaplastic, NOS (8021)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8021"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Carcinoma, anaplastic, NOS, 8021/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8021/3, read from icdo32.sqlite; D21 holds: Group X emits 8021 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Pleomorphic carcinoma",
+    "full_form": "Pleomorphic carcinoma -> Pleomorphic carcinoma (8022)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8022"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Pleomorphic carcinoma, 8022/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8022/3, read from icdo32.sqlite; D21 holds: Group X emits 8022 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Nuclear protein in testis (NUT)-associated carcinoma",
+    "full_form": "Nuclear protein in testis (NUT)-associated carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8023"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Nuclear protein in testis (NUT)-associated carcinoma, 8023/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8023/3, read from icdo32.sqlite; D21 holds: Group X emits 8023 at /3 only."
+  },
+  {
+    "alias": "NUT carcinoma",
+    "full_form": "NUT carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8023"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Nuclear protein in testis (NUT)-associated carcinoma (8023/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8023/3, read from icdo32.sqlite; D21 holds: Group X emits 8023 at /3 only."
+  },
+  {
+    "alias": "NUT midline carcinoma",
+    "full_form": "NUT midline carcinoma -> Nuclear protein in testis (NUT)-associated carcinoma (8023)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8023"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Nuclear protein in testis (NUT)-associated carcinoma (8023/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8023/3, read from icdo32.sqlite; D21 holds: Group X emits 8023 at /3 only."
+  },
+  {
+    "alias": "Giant cell and spindle cell carcinoma",
+    "full_form": "Giant cell and spindle cell carcinoma -> Giant cell and spindle cell carcinoma (8030)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8030"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Giant cell and spindle cell carcinoma, 8030/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8030/3, read from icdo32.sqlite; D21 holds: Group X emits 8030 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Giant cell carcinoma",
+    "full_form": "Giant cell carcinoma -> Giant cell carcinoma (8031)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8031"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Giant cell carcinoma, 8031/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8031/3, read from icdo32.sqlite; D21 holds: Group X emits 8031 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Spindle cell carcinoma, NOS",
+    "full_form": "Spindle cell carcinoma, NOS -> Spindle cell carcinoma, NOS (8032)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8032"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Spindle cell carcinoma, NOS, 8032/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8032/3, read from icdo32.sqlite; D21 holds: Group X emits 8032 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Pseudosarcomatous carcinoma",
+    "full_form": "Pseudosarcomatous carcinoma -> Pseudosarcomatous carcinoma (8033)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8033"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Pseudosarcomatous carcinoma, 8033/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8033/3, read from icdo32.sqlite; D21 holds: Group X emits 8033 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Sarcomatoid carcinoma",
+    "full_form": "Sarcomatoid carcinoma -> Pseudosarcomatous carcinoma (8033)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8033"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Pseudosarcomatous carcinoma (8033/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8033/3, read from icdo32.sqlite; D21 holds: Group X emits 8033 at /3 only."
+  },
+  {
+    "alias": "Polygonal cell carcinoma",
+    "full_form": "Polygonal cell carcinoma -> Polygonal cell carcinoma (8034)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8034"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Polygonal cell carcinoma, 8034/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8034/3, read from icdo32.sqlite; D21 holds: Group X emits 8034 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Carcinoma with osteoclast-like giant cells",
+    "full_form": "Carcinoma with osteoclast-like giant cells -> Carcinoma with osteoclast-like giant cells (8035)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8035"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Carcinoma with osteoclast-like giant cells, 8035/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8035/3, read from icdo32.sqlite; D21 holds: Group X emits 8035 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Squamous carcinoma with osteoclast-like giant cells",
+    "full_form": "Squamous carcinoma with osteoclast-like giant cells -> Carcinoma with osteoclast-like giant cells (8035)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8035"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Carcinoma with osteoclast-like giant cells (8035/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8035/3, read from icdo32.sqlite; D21 holds: Group X emits 8035 at /3 only."
+  },
+  {
+    "alias": "Undifferentiated carcinoma with osteoclast-like giant cells",
+    "full_form": "Undifferentiated carcinoma with osteoclast-like giant cells -> Carcinoma with osteoclast-like giant cells (8035)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8035"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Carcinoma with osteoclast-like giant cells (8035/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8035/3, read from icdo32.sqlite; D21 holds: Group X emits 8035 at /3 only."
+  },
+  {
+    "alias": "Small cell carcinoma, NOS",
+    "full_form": "Small cell carcinoma, NOS -> Small cell carcinoma, NOS (8041)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8041"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Small cell carcinoma, NOS, 8041/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8041/3, read from icdo32.sqlite; D21 holds: Group X emits 8041 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Reserve cell carcinoma",
+    "full_form": "Reserve cell carcinoma -> Small cell carcinoma, NOS (8041)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8041"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Small cell carcinoma, NOS (8041/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8041/3, read from icdo32.sqlite; D21 holds: Group X emits 8041 at /3 only."
+  },
+  {
+    "alias": "Round cell carcinoma",
+    "full_form": "Round cell carcinoma -> Small cell carcinoma, NOS (8041)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8041"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Small cell carcinoma, NOS (8041/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8041/3, read from icdo32.sqlite; D21 holds: Group X emits 8041 at /3 only."
+  },
+  {
+    "alias": "Small cell carcinoma, pulmonary type",
+    "full_form": "Small cell carcinoma, pulmonary type -> Small cell carcinoma, NOS (8041)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8041"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Small cell carcinoma, NOS (8041/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8041/3, read from icdo32.sqlite; D21 holds: Group X emits 8041 at /3 only."
+  },
+  {
+    "alias": "Small cell neuroendocrine carcinoma",
+    "full_form": "Small cell neuroendocrine carcinoma -> Small cell carcinoma, NOS (8041)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8041"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Small cell carcinoma, NOS (8041/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8041/3, read from icdo32.sqlite; D21 holds: Group X emits 8041 at /3 only."
+  },
+  {
     "alias": "Small cell carcinoma, intermediate cell",
     "full_form": "Small cell carcinoma, intermediate cell -> Small cell carcinoma, intermediate cell (8044)",
     "also_known_as": [],
@@ -152,6 +646,823 @@
     "coding_note": "ICD-O-3.2 Related term on 8044/3, read from icdo32.sqlite; D21 holds: Group X emits 8044 at /3 only."
   },
   {
+    "alias": "Papillary carcinoma, NOS",
+    "full_form": "Papillary carcinoma, NOS -> Papillary carcinoma, NOS (8050)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8050"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Papillary carcinoma, NOS, 8050/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8050/3, read from icdo32.sqlite; D21 holds: Group X emits 8050 at /3 only."
+  },
+  {
+    "alias": "Verrucous carcinoma, NOS",
+    "full_form": "Verrucous carcinoma, NOS -> Verrucous carcinoma, NOS (8051)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8051"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Verrucous carcinoma, NOS, 8051/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8051/3, read from icdo32.sqlite; D21 holds: Group X emits 8051 at /3 only."
+  },
+  {
+    "alias": "Verrucous epidermoid carcinoma",
+    "full_form": "Verrucous epidermoid carcinoma -> Verrucous carcinoma, NOS (8051)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8051"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Verrucous carcinoma, NOS (8051/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8051/3, read from icdo32.sqlite; D21 holds: Group X emits 8051 at /3 only."
+  },
+  {
+    "alias": "Verrucous squamous cell carcinoma",
+    "full_form": "Verrucous squamous cell carcinoma -> Verrucous carcinoma, NOS (8051)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8051"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Verrucous carcinoma, NOS (8051/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8051/3, read from icdo32.sqlite; D21 holds: Group X emits 8051 at /3 only."
+  },
+  {
+    "alias": "Papillary squamous cell carcinoma",
+    "full_form": "Papillary squamous cell carcinoma -> Papillary squamous cell carcinoma (8052)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8052"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Papillary squamous cell carcinoma, 8052/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8052/3, read from icdo32.sqlite; D21 holds: Group X emits 8052 at /3 only."
+  },
+  {
+    "alias": "Papillary epidermoid carcinoma",
+    "full_form": "Papillary epidermoid carcinoma -> Papillary squamous cell carcinoma (8052)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8052"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Papillary squamous cell carcinoma (8052/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8052/3, read from icdo32.sqlite; D21 holds: Group X emits 8052 at /3 only."
+  },
+  {
+    "alias": "Warty carcinoma",
+    "full_form": "Warty carcinoma -> Warty carcinoma (8054)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8054"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Warty carcinoma, 8054/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8054/3, read from icdo32.sqlite; D21 holds: Group X emits 8054 at /3 only."
+  },
+  {
+    "alias": "Condylomatous carcinoma",
+    "full_form": "Condylomatous carcinoma -> Warty carcinoma (8054)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8054"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Warty carcinoma (8054/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8054/3, read from icdo32.sqlite; D21 holds: Group X emits 8054 at /3 only."
+  },
+  {
+    "alias": "Warty-basaloid carcinoma",
+    "full_form": "Warty-basaloid carcinoma -> Warty carcinoma (8054)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8054"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Warty carcinoma (8054/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8054/3, read from icdo32.sqlite; D21 holds: Group X emits 8054 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, NOS",
+    "full_form": "Squamous cell carcinoma, NOS -> Squamous cell carcinoma, NOS (8070)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, NOS, 8070/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8070/3, read from icdo32.sqlite; D21 holds: Group X emits 8070 at /3 only."
+  },
+  {
+    "alias": "Epidermoid carcinoma, NOS",
+    "full_form": "Epidermoid carcinoma, NOS -> Squamous cell carcinoma, NOS (8070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, NOS (8070/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8070/3, read from icdo32.sqlite; D21 holds: Group X emits 8070 at /3 only."
+  },
+  {
+    "alias": "Squamous carcinoma",
+    "full_form": "Squamous carcinoma -> Squamous cell carcinoma, NOS (8070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, NOS (8070/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8070/3, read from icdo32.sqlite; D21 holds: Group X emits 8070 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, usual type",
+    "full_form": "Squamous cell carcinoma, usual type -> Squamous cell carcinoma, NOS (8070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, NOS (8070/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8070/3, read from icdo32.sqlite; D21 holds: Group X emits 8070 at /3 only."
+  },
+  {
+    "alias": "Squamous cell epithelioma",
+    "full_form": "Squamous cell epithelioma -> Squamous cell carcinoma, NOS (8070)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8070"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, NOS (8070/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8070/3, read from icdo32.sqlite; D21 holds: Group X emits 8070 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, keratinizing, NOS",
+    "full_form": "Squamous cell carcinoma, keratinizing, NOS -> Squamous cell carcinoma, keratinizing, NOS (8071)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, keratinizing, NOS, 8071/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Epidermoid carcinoma, keratinizing",
+    "full_form": "Epidermoid carcinoma, keratinizing -> Squamous cell carcinoma, keratinizing, NOS (8071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, keratinizing, NOS (8071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, large cell, keratinizing",
+    "full_form": "Squamous cell carcinoma, large cell, keratinizing -> Squamous cell carcinoma, keratinizing, NOS (8071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, keratinizing, NOS (8071/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only."
+  },
+  {
+    "alias": "Keratoacanthoma",
+    "full_form": "Keratoacanthoma -> Squamous cell carcinoma, keratinizing, NOS (8071)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8071"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Squamous cell carcinoma, keratinizing, NOS (8071/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8071/3, read from icdo32.sqlite; D21 holds: Group X emits 8071 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS",
+    "full_form": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS -> Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8072"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, large cell, nonkeratinizing, NOS, 8072/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8072/3, read from icdo32.sqlite; D21 holds: Group X emits 8072 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Epidermoid carcinoma, large cell, nonkeratinizing",
+    "full_form": "Epidermoid carcinoma, large cell, nonkeratinizing -> Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8072"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8072/3, read from icdo32.sqlite; D21 holds: Group X emits 8072 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, nonkeratinizing, NOS",
+    "full_form": "Squamous cell carcinoma, nonkeratinizing, NOS -> Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8072"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, large cell, nonkeratinizing, NOS (8072/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8072/3, read from icdo32.sqlite; D21 holds: Group X emits 8072 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, small cell, nonkeratinizing",
+    "full_form": "Squamous cell carcinoma, small cell, nonkeratinizing -> Squamous cell carcinoma, small cell, nonkeratinizing (8073)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8073"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, small cell, nonkeratinizing, 8073/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8073/3, read from icdo32.sqlite; D21 holds: Group X emits 8073 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Epidermoid carcinoma, small cell, nonkeratinizing",
+    "full_form": "Epidermoid carcinoma, small cell, nonkeratinizing -> Squamous cell carcinoma, small cell, nonkeratinizing (8073)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8073"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, small cell, nonkeratinizing (8073/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8073/3, read from icdo32.sqlite; D21 holds: Group X emits 8073 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, spindle cell",
+    "full_form": "Squamous cell carcinoma, spindle cell -> Squamous cell carcinoma, spindle cell (8074)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8074"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, spindle cell, 8074/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8074/3, read from icdo32.sqlite; D21 holds: Group X emits 8074 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Epidermoid carcinoma, spindle cell",
+    "full_form": "Epidermoid carcinoma, spindle cell -> Squamous cell carcinoma, spindle cell (8074)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8074"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, spindle cell (8074/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8074/3, read from icdo32.sqlite; D21 holds: Group X emits 8074 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, sarcomatoid",
+    "full_form": "Squamous cell carcinoma, sarcomatoid -> Squamous cell carcinoma, spindle cell (8074)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8074"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, spindle cell (8074/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8074/3, read from icdo32.sqlite; D21 holds: Group X emits 8074 at /3 only."
+  },
+  {
+    "alias": "Pseudovascular squamous cell carcinoma",
+    "full_form": "Pseudovascular squamous cell carcinoma -> Squamous cell carcinoma, spindle cell (8074)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8074"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Squamous cell carcinoma, spindle cell (8074/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8074/3, read from icdo32.sqlite; D21 holds: Group X emits 8074 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, adenoid",
+    "full_form": "Squamous cell carcinoma, adenoid -> Squamous cell carcinoma, adenoid (8075)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8075"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Squamous cell carcinoma, adenoid, 8075/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8075/3, read from icdo32.sqlite; D21 holds: Group X emits 8075 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Squamous cell carcinoma, acantholytic",
+    "full_form": "Squamous cell carcinoma, acantholytic -> Squamous cell carcinoma, adenoid (8075)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8075"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, adenoid (8075/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8075/3, read from icdo32.sqlite; D21 holds: Group X emits 8075 at /3 only."
+  },
+  {
+    "alias": "Squamous cell carcinoma, pseudoglandular",
+    "full_form": "Squamous cell carcinoma, pseudoglandular -> Squamous cell carcinoma, adenoid (8075)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8075"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Squamous cell carcinoma, adenoid (8075/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8075/3, read from icdo32.sqlite; D21 holds: Group X emits 8075 at /3 only."
+  },
+  {
+    "alias": "Lymphoepithelial carcinoma",
+    "full_form": "Lymphoepithelial carcinoma -> Lymphoepithelial carcinoma (8082)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Lymphoepithelial carcinoma, 8082/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8082/3, read from icdo32.sqlite; D21 holds: Group X emits 8082 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Lymphoepithelioma",
+    "full_form": "Lymphoepithelioma -> Lymphoepithelial carcinoma (8082)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Lymphoepithelial carcinoma (8082/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8082/3, read from icdo32.sqlite; D21 holds: Group X emits 8082 at /3 only."
+  },
+  {
+    "alias": "Lymphoepithelioma-like carcinoma",
+    "full_form": "Lymphoepithelioma-like carcinoma -> Lymphoepithelial carcinoma (8082)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Lymphoepithelial carcinoma (8082/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8082/3, read from icdo32.sqlite; D21 holds: Group X emits 8082 at /3 only."
+  },
+  {
+    "alias": "Schmincke tumor",
+    "full_form": "Schmincke tumor -> Lymphoepithelial carcinoma (8082)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8082"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Lymphoepithelial carcinoma (8082/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8082/3, read from icdo32.sqlite; D21 holds: Group X emits 8082 at /3 only."
+  },
+  {
+    "alias": "Transitional cell carcinoma, NOS",
+    "full_form": "Transitional cell carcinoma, NOS -> Transitional cell carcinoma, NOS (8120)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8120"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Transitional cell carcinoma, NOS, 8120/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8120/3, read from icdo32.sqlite; D21 holds: Group X emits 8120 at /3 only."
+  },
+  {
+    "alias": "Urothelial carcinoma, NOS",
+    "full_form": "Urothelial carcinoma, NOS -> Transitional cell carcinoma, NOS (8120)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8120"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Transitional cell carcinoma, NOS (8120/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8120/3, read from icdo32.sqlite; D21 holds: Group X emits 8120 at /3 only."
+  },
+  {
+    "alias": "Squamotransitional carcinoma",
+    "full_form": "Squamotransitional carcinoma -> Transitional cell carcinoma, NOS (8120)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8120"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Transitional cell carcinoma, NOS (8120/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8120/3, read from icdo32.sqlite; D21 holds: Group X emits 8120 at /3 only."
+  },
+  {
+    "alias": "Transitional carcinoma",
+    "full_form": "Transitional carcinoma -> Transitional cell carcinoma, NOS (8120)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8120"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Transitional cell carcinoma, NOS (8120/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8120/3, read from icdo32.sqlite; D21 holds: Group X emits 8120 at /3 only."
+  },
+  {
+    "alias": "Schneiderian carcinoma",
+    "full_form": "Schneiderian carcinoma -> Schneiderian carcinoma (8121)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8121"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Schneiderian carcinoma, 8121/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8121/3, read from icdo32.sqlite; D21 holds: Group X emits 8121 at /3 only."
+  },
+  {
+    "alias": "Cylindrical cell carcinoma",
+    "full_form": "Cylindrical cell carcinoma -> Schneiderian carcinoma (8121)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8121"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Schneiderian carcinoma (8121/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8121/3, read from icdo32.sqlite; D21 holds: Group X emits 8121 at /3 only."
+  },
+  {
+    "alias": "Transitional cell carcinoma, sarcomatoid",
+    "full_form": "Transitional cell carcinoma, sarcomatoid -> Urothelial carcinoma, sarcomatoid (8122)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8122"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Urothelial carcinoma, sarcomatoid (8122/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8122/3, read from icdo32.sqlite; D21 holds: Group X emits 8122 at /3 only."
+  },
+  {
+    "alias": "Urothelial carcinoma, spindle cell",
+    "full_form": "Urothelial carcinoma, spindle cell -> Urothelial carcinoma, sarcomatoid (8122)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8122"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Urothelial carcinoma, sarcomatoid (8122/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8122/3, read from icdo32.sqlite; D21 holds: Group X emits 8122 at /3 only."
+  },
+  {
+    "alias": "Basaloid carcinoma",
+    "full_form": "Basaloid carcinoma -> Basaloid carcinoma (8123)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8123"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Basaloid carcinoma, 8123/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8123/3, read from icdo32.sqlite; D21 holds: Group X emits 8123 at /3 only. Also the REDCap option wording."
+  },
+  {
     "alias": "Adenocarcinoma, NOS",
     "full_form": "Adenocarcinoma, NOS -> Adenocarcinoma, NOS (8140)",
     "also_known_as": [],
@@ -188,6 +1499,538 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma, NOS (8140/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8140/3, read from icdo32.sqlite; D21 holds: Group X emits 8140 at /3 only."
+  },
+  {
+    "alias": "Superficial spreading adenocarcinoma",
+    "full_form": "Superficial spreading adenocarcinoma -> Superficial spreading adenocarcinoma (8143)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8143"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Superficial spreading adenocarcinoma, 8143/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8143/3, read from icdo32.sqlite; D21 holds: Group X emits 8143 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Gastrinoma",
+    "full_form": "Gastrinoma -> Gastrinoma (8153)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8153"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Gastrinoma, 8153/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8153/3, read from icdo32.sqlite; D21 holds: Group X emits 8153 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "G cell tumor",
+    "full_form": "G cell tumor -> Gastrinoma (8153)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8153"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Gastrinoma (8153/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8153/3, read from icdo32.sqlite; D21 holds: Group X emits 8153 at /3 only."
+  },
+  {
+    "alias": "Gastrin cell tumor",
+    "full_form": "Gastrin cell tumor -> Gastrinoma (8153)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8153"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Gastrinoma (8153/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8153/3, read from icdo32.sqlite; D21 holds: Group X emits 8153 at /3 only."
+  },
+  {
+    "alias": "Trabecular adenocarcinoma",
+    "full_form": "Trabecular adenocarcinoma -> Trabecular adenocarcinoma (8190)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8190"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Trabecular adenocarcinoma, 8190/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8190/3, read from icdo32.sqlite; D21 holds: Group X emits 8190 at /3 only."
+  },
+  {
+    "alias": "Trabecular carcinoma",
+    "full_form": "Trabecular carcinoma -> Trabecular adenocarcinoma (8190)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8190"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Trabecular adenocarcinoma (8190/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8190/3, read from icdo32.sqlite; D21 holds: Group X emits 8190 at /3 only."
+  },
+  {
+    "alias": "Adenoid cystic carcinoma",
+    "full_form": "Adenoid cystic carcinoma -> Adenoid cystic carcinoma (8200)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8200"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenoid cystic carcinoma, 8200/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8200/3, read from icdo32.sqlite; D21 holds: Group X emits 8200 at /3 only."
+  },
+  {
+    "alias": "Adenocystic carcinoma",
+    "full_form": "Adenocystic carcinoma -> Adenoid cystic carcinoma (8200)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8200"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenoid cystic carcinoma (8200/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8200/3, read from icdo32.sqlite; D21 holds: Group X emits 8200 at /3 only."
+  },
+  {
+    "alias": "Thymic carcinoma with adenoid cystic carcinoma-like features",
+    "full_form": "Thymic carcinoma with adenoid cystic carcinoma-like features -> Adenoid cystic carcinoma (8200)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8200"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenoid cystic carcinoma (8200/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8200/3, read from icdo32.sqlite; D21 holds: Group X emits 8200 at /3 only."
+  },
+  {
+    "alias": "Cribriform carcinoma, NOS",
+    "full_form": "Cribriform carcinoma, NOS -> Cribriform carcinoma, NOS (8201)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8201"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Cribriform carcinoma, NOS, 8201/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8201/3, read from icdo32.sqlite; D21 holds: Group X emits 8201 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma, cribriform comedo type",
+    "full_form": "Adenocarcinoma, cribriform comedo type -> Cribriform carcinoma, NOS (8201)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8201"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Cribriform carcinoma, NOS (8201/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8201/3, read from icdo32.sqlite; D21 holds: Group X emits 8201 at /3 only."
+  },
+  {
+    "alias": "Ductal carcinoma, cribriform type",
+    "full_form": "Ductal carcinoma, cribriform type -> Cribriform carcinoma, NOS (8201)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8201"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Cribriform carcinoma, NOS (8201/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8201/3, read from icdo32.sqlite; D21 holds: Group X emits 8201 at /3 only."
+  },
+  {
+    "alias": "Cribriform comedo type carcinoma",
+    "full_form": "Cribriform comedo type carcinoma -> Cribriform carcinoma, NOS (8201)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8201"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Cribriform carcinoma, NOS (8201/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8201/3, read from icdo32.sqlite; D21 holds: Group X emits 8201 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in adenomatous polyp",
+    "full_form": "Adenocarcinoma in adenomatous polyp -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma in adenomatous polyp, 8210/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in polyp, NOS",
+    "full_form": "Adenocarcinoma in polyp, NOS -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in adenomatous polyp (8210/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in polypoid adenoma",
+    "full_form": "Adenocarcinoma in polypoid adenoma -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in adenomatous polyp (8210/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in tubular adenoma",
+    "full_form": "Adenocarcinoma in tubular adenoma -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in adenomatous polyp (8210/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Carcinoma in adenomatous polyp",
+    "full_form": "Carcinoma in adenomatous polyp -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in adenomatous polyp (8210/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Carcinoma in polyp, NOS",
+    "full_form": "Carcinoma in polyp, NOS -> Adenocarcinoma in adenomatous polyp (8210)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8210"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in adenomatous polyp (8210/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8210/3, read from icdo32.sqlite; D21 holds: Group X emits 8210 at /3 only."
+  },
+  {
+    "alias": "Tubular adenocarcinoma",
+    "full_form": "Tubular adenocarcinoma -> Tubular adenocarcinoma (8211)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8211"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Tubular adenocarcinoma, 8211/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8211/3, read from icdo32.sqlite; D21 holds: Group X emits 8211 at /3 only."
+  },
+  {
+    "alias": "Tubular carcinoma",
+    "full_form": "Tubular carcinoma -> Tubular adenocarcinoma (8211)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8211"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Tubular adenocarcinoma (8211/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8211/3, read from icdo32.sqlite; D21 holds: Group X emits 8211 at /3 only."
+  },
+  {
+    "alias": "Serrated adenocarcinoma",
+    "full_form": "Serrated adenocarcinoma -> Serrated adenocarcinoma (8213)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8213"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Serrated adenocarcinoma, 8213/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8213/3, read from icdo32.sqlite; D21 holds: Group X emits 8213 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in multiple adenomatous polyps",
+    "full_form": "Adenocarcinoma in multiple adenomatous polyps -> Adenocarcinoma in multiple adenomatous polyps (8221)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8221"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma in multiple adenomatous polyps, 8221/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8221/3, read from icdo32.sqlite; D21 holds: Group X emits 8221 at /3 only."
+  },
+  {
+    "alias": "Solid carcinoma, NOS",
+    "full_form": "Solid carcinoma, NOS -> Solid carcinoma, NOS (8230)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8230"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Solid carcinoma, NOS, 8230/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8230/3, read from icdo32.sqlite; D21 holds: Group X emits 8230 at /3 only."
+  },
+  {
+    "alias": "Solid adenocarcinoma with mucin formation",
+    "full_form": "Solid adenocarcinoma with mucin formation -> Solid carcinoma, NOS (8230)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8230"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Solid carcinoma, NOS (8230/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8230/3, read from icdo32.sqlite; D21 holds: Group X emits 8230 at /3 only."
+  },
+  {
+    "alias": "Solid adenocarcinoma, NOS",
+    "full_form": "Solid adenocarcinoma, NOS -> Solid carcinoma, NOS (8230)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8230"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Solid carcinoma, NOS (8230/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8230/3, read from icdo32.sqlite; D21 holds: Group X emits 8230 at /3 only."
+  },
+  {
+    "alias": "Solid carcinoma with mucin formation",
+    "full_form": "Solid carcinoma with mucin formation -> Solid carcinoma, NOS (8230)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8230"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Solid carcinoma, NOS (8230/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8230/3, read from icdo32.sqlite; D21 holds: Group X emits 8230 at /3 only."
+  },
+  {
+    "alias": "Carcinoma simplex",
+    "full_form": "Carcinoma simplex -> Carcinoma simplex (8231)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8231"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Carcinoma simplex, 8231/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8231/3, read from icdo32.sqlite; D21 holds: Group X emits 8231 at /3 only."
   },
   {
     "alias": "Neuroendocrine tumor, NOS",
@@ -342,6 +2185,272 @@
     "coding_note": "ICD-O-3.2 Related term on 8240/3, read from icdo32.sqlite; D21 holds: Group X emits 8240 at /3 only."
   },
   {
+    "alias": "Enterochromaffin cell carcinoid",
+    "full_form": "Enterochromaffin cell carcinoid -> Enterochromaffin cell carcinoid (8241)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8241"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Enterochromaffin cell carcinoid, 8241/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8241/3, read from icdo32.sqlite; D21 holds: Group X emits 8241 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Carcinoid tumor, argentaffin",
+    "full_form": "Carcinoid tumor, argentaffin -> Enterochromaffin cell carcinoid (8241)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8241"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Enterochromaffin cell carcinoid (8241/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8241/3, read from icdo32.sqlite; D21 holds: Group X emits 8241 at /3 only."
+  },
+  {
+    "alias": "EC cell carcinoid",
+    "full_form": "EC cell carcinoid -> Enterochromaffin cell carcinoid (8241)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8241"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Enterochromaffin cell carcinoid (8241/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8241/3, read from icdo32.sqlite; D21 holds: Group X emits 8241 at /3 only."
+  },
+  {
+    "alias": "Serotonin producing carcinoid",
+    "full_form": "Serotonin producing carcinoid -> Enterochromaffin cell carcinoid (8241)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8241"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Enterochromaffin cell carcinoid (8241/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8241/3, read from icdo32.sqlite; D21 holds: Group X emits 8241 at /3 only."
+  },
+  {
+    "alias": "Serotonin producing tumor",
+    "full_form": "Serotonin producing tumor -> Enterochromaffin cell carcinoid (8241)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8241"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Enterochromaffin cell carcinoid (8241/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8241/3, read from icdo32.sqlite; D21 holds: Group X emits 8241 at /3 only."
+  },
+  {
+    "alias": "Goblet cell carcinoid",
+    "full_form": "Goblet cell carcinoid -> Goblet cell carcinoid (8243)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8243"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Goblet cell carcinoid, 8243/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8243/3, read from icdo32.sqlite; D21 holds: Group X emits 8243 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Mucinous carcinoid",
+    "full_form": "Mucinous carcinoid -> Goblet cell carcinoid (8243)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8243"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Goblet cell carcinoid (8243/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8243/3, read from icdo32.sqlite; D21 holds: Group X emits 8243 at /3 only."
+  },
+  {
+    "alias": "Mucocarcinoid tumor",
+    "full_form": "Mucocarcinoid tumor -> Goblet cell carcinoid (8243)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8243"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Goblet cell carcinoid (8243/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8243/3, read from icdo32.sqlite; D21 holds: Group X emits 8243 at /3 only."
+  },
+  {
+    "alias": "Mixed adenoneuroendocrine carcinoma",
+    "full_form": "Mixed adenoneuroendocrine carcinoma -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mixed adenoneuroendocrine carcinoma, 8244/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Combined carcinoid and adenocarcinoma",
+    "full_form": "Combined carcinoid and adenocarcinoma -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mixed adenoneuroendocrine carcinoma (8244/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only."
+  },
+  {
+    "alias": "Composite carcinoid",
+    "full_form": "Composite carcinoid -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mixed adenoneuroendocrine carcinoma (8244/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only."
+  },
+  {
+    "alias": "MANEC",
+    "full_form": "MANEC -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mixed adenoneuroendocrine carcinoma (8244/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only."
+  },
+  {
+    "alias": "Mixed carcinoid and adenocarcinoma",
+    "full_form": "Mixed carcinoid and adenocarcinoma -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mixed adenoneuroendocrine carcinoma (8244/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only."
+  },
+  {
+    "alias": "Mixed carcinoid-adenocarcinoma",
+    "full_form": "Mixed carcinoid-adenocarcinoma -> Mixed adenoneuroendocrine carcinoma (8244)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8244"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mixed adenoneuroendocrine carcinoma (8244/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8244/3, read from icdo32.sqlite; D21 holds: Group X emits 8244 at /3 only."
+  },
+  {
     "alias": "Neuroendocrine carcinoma, NOS",
     "full_form": "Neuroendocrine carcinoma, NOS -> Neuroendocrine carcinoma, NOS (8246)",
     "also_known_as": [],
@@ -378,6 +2487,272 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Neuroendocrine carcinoma, NOS (8246/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8246/3, read from icdo32.sqlite; D21 holds: Group X emits 8246 at /3 only."
+  },
+  {
+    "alias": "Papillary adenocarcinoma, NOS",
+    "full_form": "Papillary adenocarcinoma, NOS -> Papillary adenocarcinoma, NOS (8260)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8260"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Papillary adenocarcinoma, NOS, 8260/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8260/3, read from icdo32.sqlite; D21 holds: Group X emits 8260 at /3 only."
+  },
+  {
+    "alias": "Papillary carcinoma of thyroid",
+    "full_form": "Papillary carcinoma of thyroid -> Papillary adenocarcinoma, NOS (8260)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8260"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Papillary adenocarcinoma, NOS (8260/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8260/3, read from icdo32.sqlite; D21 holds: Group X emits 8260 at /3 only."
+  },
+  {
+    "alias": "Papillary renal cell carcinoma",
+    "full_form": "Papillary renal cell carcinoma -> Papillary adenocarcinoma, NOS (8260)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8260"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Papillary adenocarcinoma, NOS (8260/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8260/3, read from icdo32.sqlite; D21 holds: Group X emits 8260 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma in villous adenoma",
+    "full_form": "Adenocarcinoma in villous adenoma -> Adenocarcinoma in villous adenoma (8261)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8261"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma in villous adenoma, 8261/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8261/3, read from icdo32.sqlite; D21 holds: Group X emits 8261 at /3 only."
+  },
+  {
+    "alias": "Villous adenocarcinoma",
+    "full_form": "Villous adenocarcinoma -> Villous adenocarcinoma (8262)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8262"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Villous adenocarcinoma, 8262/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8262/3, read from icdo32.sqlite; D21 holds: Group X emits 8262 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Adenocarcinoma in tubulovillous adenoma",
+    "full_form": "Adenocarcinoma in tubulovillous adenoma -> Adenocarcinoma in tubulovillous adenoma (8263)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8263"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma in tubulovillous adenoma, 8263/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
+  },
+  {
+    "alias": "Tubulopapillary adenocarcinoma",
+    "full_form": "Tubulopapillary adenocarcinoma -> Adenocarcinoma in tubulovillous adenoma (8263)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8263"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma in tubulovillous adenoma (8263/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
+  },
+  {
+    "alias": "Papillotubular adenocarcinoma",
+    "full_form": "Papillotubular adenocarcinoma -> Adenocarcinoma in tubulovillous adenoma (8263)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8263"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenocarcinoma in tubulovillous adenoma (8263/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
+  },
+  {
+    "alias": "Villoglandular carcinoma",
+    "full_form": "Villoglandular carcinoma -> Adenocarcinoma in tubulovillous adenoma (8263)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8263"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenocarcinoma in tubulovillous adenoma (8263/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
+  },
+  {
+    "alias": "Villoglandular variant of endometrioid adenocarcinoma",
+    "full_form": "Villoglandular variant of endometrioid adenocarcinoma -> Adenocarcinoma in tubulovillous adenoma (8263)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8263"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenocarcinoma in tubulovillous adenoma (8263/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8263/3, read from icdo32.sqlite; D21 holds: Group X emits 8263 at /3 only."
+  },
+  {
+    "alias": "Oncocytic adenocarcinoma",
+    "full_form": "Oncocytic adenocarcinoma -> Oxyphilic adenocarcinoma (8290)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8290"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Oxyphilic adenocarcinoma (8290/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
+  },
+  {
+    "alias": "Follicular carcinoma, oxyphilic cell",
+    "full_form": "Follicular carcinoma, oxyphilic cell -> Oxyphilic adenocarcinoma (8290)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8290"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
+  },
+  {
+    "alias": "Hurthle cell adenocarcinoma",
+    "full_form": "Hurthle cell adenocarcinoma -> Oxyphilic adenocarcinoma (8290)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8290"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
+  },
+  {
+    "alias": "Hurthle cell carcinoma",
+    "full_form": "Hurthle cell carcinoma -> Oxyphilic adenocarcinoma (8290)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8290"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Oxyphilic adenocarcinoma (8290/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8290/3, read from icdo32.sqlite; D21 holds: Group X emits 8290 at /3 only."
   },
   {
     "alias": "Clear cell adenocarcinoma, NOS",
@@ -475,6 +2850,63 @@
     "coding_note": "ICD-O-3.2 Synonym term on 8313/3, read from icdo32.sqlite; D21 holds: Group X emits 8313 at /3 only."
   },
   {
+    "alias": "Granular cell carcinoma",
+    "full_form": "Granular cell carcinoma -> Granular cell carcinoma (8320)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8320"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Granular cell carcinoma, 8320/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8320/3, read from icdo32.sqlite; D21 holds: Group X emits 8320 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Granular cell adenocarcinoma",
+    "full_form": "Granular cell adenocarcinoma -> Granular cell carcinoma (8320)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8320"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Granular cell carcinoma (8320/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8320/3, read from icdo32.sqlite; D21 holds: Group X emits 8320 at /3 only."
+  },
+  {
+    "alias": "Mixed cell adenocarcinoma",
+    "full_form": "Mixed cell adenocarcinoma -> Mixed cell adenocarcinoma (8323)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8323"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mixed cell adenocarcinoma, 8323/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8323/3, read from icdo32.sqlite; D21 holds: Group X emits 8323 at /3 only."
+  },
+  {
     "alias": "Endometrioid adenocarcinoma, NOS",
     "full_form": "Endometrioid adenocarcinoma, NOS -> Endometrioid adenocarcinoma, NOS (8380)",
     "also_known_as": [],
@@ -530,6 +2962,158 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 related term for Endometrioid adenocarcinoma, NOS (8380/3).",
     "coding_note": "ICD-O-3.2 Related term on 8380/3, read from icdo32.sqlite; D21 holds: Group X emits 8380 at /3 only."
+  },
+  {
+    "alias": "Endometrioid adenofibroma, malignant",
+    "full_form": "Endometrioid adenofibroma, malignant -> Endometrioid adenofibroma, malignant (8381)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8381"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Endometrioid adenofibroma, malignant, 8381/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8381/3, read from icdo32.sqlite; D21 holds: Group X emits 8381 at /3 only."
+  },
+  {
+    "alias": "Endometrioid cystadenofibroma, malignant",
+    "full_form": "Endometrioid cystadenofibroma, malignant -> Endometrioid adenofibroma, malignant (8381)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8381"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Endometrioid adenofibroma, malignant (8381/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8381/3, read from icdo32.sqlite; D21 holds: Group X emits 8381 at /3 only."
+  },
+  {
+    "alias": "Endometrioid adenocarcinoma, secretory variant",
+    "full_form": "Endometrioid adenocarcinoma, secretory variant -> Endometrioid adenocarcinoma, secretory variant (8382)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8382"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Endometrioid adenocarcinoma, secretory variant, 8382/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8382/3, read from icdo32.sqlite; D21 holds: Group X emits 8382 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Endometrioid adenocarcinoma, ciliated cell variant",
+    "full_form": "Endometrioid adenocarcinoma, ciliated cell variant -> Endometrioid adenocarcinoma, ciliated cell variant (8383)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8383"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Endometrioid adenocarcinoma, ciliated cell variant, 8383/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8383/3, read from icdo32.sqlite; D21 holds: Group X emits 8383 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Adenocarcinoma, endocervical type, NOS",
+    "full_form": "Adenocarcinoma, endocervical type, NOS -> Adenocarcinoma, endocervical type, NOS (8384)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8384"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma, endocervical type, NOS, 8384/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8384/3, read from icdo32.sqlite; D21 holds: Group X emits 8384 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Sebaceous carcinoma",
+    "full_form": "Sebaceous carcinoma -> Sebaceous carcinoma (8410)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8410"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Sebaceous carcinoma, 8410/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8410/3, read from icdo32.sqlite; D21 holds: Group X emits 8410 at /3 only."
+  },
+  {
+    "alias": "Sebaceous adenocarcinoma",
+    "full_form": "Sebaceous adenocarcinoma -> Sebaceous carcinoma (8410)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8410"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Sebaceous carcinoma (8410/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8410/3, read from icdo32.sqlite; D21 holds: Group X emits 8410 at /3 only."
+  },
+  {
+    "alias": "Mucoepidermoid carcinoma",
+    "full_form": "Mucoepidermoid carcinoma -> Mucoepidermoid carcinoma (8430)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8430"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucoepidermoid carcinoma, 8430/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8430/3, read from icdo32.sqlite; D21 holds: Group X emits 8430 at /3 only. Also the REDCap option wording."
   },
   {
     "alias": "Serous carcinoma, NOS",
@@ -663,6 +3247,44 @@
     "clinical_alert": null,
     "notes": "An ICD-O-3.2 synonym term for Serous carcinoma, NOS (8441/3).",
     "coding_note": "ICD-O-3.2 Synonym term on 8441/3, read from icdo32.sqlite; D21 holds: Group X emits 8441 at /3 only."
+  },
+  {
+    "alias": "Solid pseudopapillary neoplasm of pancreas",
+    "full_form": "Solid pseudopapillary neoplasm of pancreas -> Solid pseudopapillary neoplasm of pancreas (8452)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8452"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Solid pseudopapillary neoplasm of pancreas, 8452/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8452/3, read from icdo32.sqlite; D21 holds: Group X emits 8452 at /3 only."
+  },
+  {
+    "alias": "Solid pseudopapillary carcinoma",
+    "full_form": "Solid pseudopapillary carcinoma -> Solid pseudopapillary neoplasm of pancreas (8452)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8452"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Solid pseudopapillary neoplasm of pancreas (8452/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8452/3, read from icdo32.sqlite; D21 holds: Group X emits 8452 at /3 only."
   },
   {
     "alias": "Low grade serous carcinoma",
@@ -950,6 +3572,728 @@
     "coding_note": "ICD-O-3.2 Synonym term on 8480/3, read from icdo32.sqlite; D21 holds: Group X emits 8480 at /3 only."
   },
   {
+    "alias": "Mucin-producing adenocarcinoma",
+    "full_form": "Mucin-producing adenocarcinoma -> Mucin-producing adenocarcinoma (8481)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8481"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucin-producing adenocarcinoma, 8481/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8481/3, read from icdo32.sqlite; D21 holds: Group X emits 8481 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Mucin-producing carcinoma",
+    "full_form": "Mucin-producing carcinoma -> Mucin-producing adenocarcinoma (8481)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8481"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucin-producing adenocarcinoma (8481/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8481/3, read from icdo32.sqlite; D21 holds: Group X emits 8481 at /3 only."
+  },
+  {
+    "alias": "Mucin-secreting adenocarcinoma",
+    "full_form": "Mucin-secreting adenocarcinoma -> Mucin-producing adenocarcinoma (8481)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8481"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucin-producing adenocarcinoma (8481/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8481/3, read from icdo32.sqlite; D21 holds: Group X emits 8481 at /3 only."
+  },
+  {
+    "alias": "Mucin-secreting carcinoma",
+    "full_form": "Mucin-secreting carcinoma -> Mucin-producing adenocarcinoma (8481)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8481"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Mucin-producing adenocarcinoma (8481/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8481/3, read from icdo32.sqlite; D21 holds: Group X emits 8481 at /3 only."
+  },
+  {
+    "alias": "Mucinous carcinoma, gastric type",
+    "full_form": "Mucinous carcinoma, gastric type -> Mucinous carcinoma, gastric type (8482)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8482"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Mucinous carcinoma, gastric type, 8482/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8482/3, read from icdo32.sqlite; D21 holds: Group X emits 8482 at /3 only."
+  },
+  {
+    "alias": "Signet ring cell carcinoma",
+    "full_form": "Signet ring cell carcinoma -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Signet ring cell carcinoma, 8490/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Acinar adenocarcinoma, signet ring-like variant",
+    "full_form": "Acinar adenocarcinoma, signet ring-like variant -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Signet ring cell carcinoma (8490/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only."
+  },
+  {
+    "alias": "Mucinous carcinoma, signet ring cell type",
+    "full_form": "Mucinous carcinoma, signet ring cell type -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Signet ring cell carcinoma (8490/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only."
+  },
+  {
+    "alias": "Signet ring cell adenocarcinoma",
+    "full_form": "Signet ring cell adenocarcinoma -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Signet ring cell carcinoma (8490/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only."
+  },
+  {
+    "alias": "Poorly cohesive carcinoma",
+    "full_form": "Poorly cohesive carcinoma -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Signet ring cell carcinoma (8490/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only."
+  },
+  {
+    "alias": "Signet ring cell/histiocytoid carcinoma",
+    "full_form": "Signet ring cell/histiocytoid carcinoma -> Signet ring cell carcinoma (8490)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8490"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Signet ring cell carcinoma (8490/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8490/3, read from icdo32.sqlite; D21 holds: Group X emits 8490 at /3 only."
+  },
+  {
+    "alias": "Encysted papillary carcinoma with invasion",
+    "full_form": "Encysted papillary carcinoma with invasion -> Encapsulated papillary carcinoma with invasion (8504)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8504"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Encapsulated papillary carcinoma with invasion (8504/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8504/3, read from icdo32.sqlite; D21 holds: Group X emits 8504 at /3 only."
+  },
+  {
+    "alias": "Intracystic papillary carcinoma with invasion",
+    "full_form": "Intracystic papillary carcinoma with invasion -> Encapsulated papillary carcinoma with invasion (8504)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8504"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Encapsulated papillary carcinoma with invasion (8504/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8504/3, read from icdo32.sqlite; D21 holds: Group X emits 8504 at /3 only."
+  },
+  {
+    "alias": "Medullary adenocarcinoma",
+    "full_form": "Medullary adenocarcinoma -> Medullary carcinoma, NOS (8510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8510"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Medullary carcinoma, NOS (8510/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8510/3, read from icdo32.sqlite; D21 holds: Group X emits 8510 at /3 only."
+  },
+  {
+    "alias": "Medullary-like carcinoma",
+    "full_form": "Medullary-like carcinoma -> Medullary carcinoma, NOS (8510)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8510"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Medullary carcinoma, NOS (8510/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8510/3, read from icdo32.sqlite; D21 holds: Group X emits 8510 at /3 only."
+  },
+  {
+    "alias": "Acinar cell carcinoma",
+    "full_form": "Acinar cell carcinoma -> Acinar cell carcinoma (8550)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8550"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Acinar cell carcinoma, 8550/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8550/3, read from icdo32.sqlite; D21 holds: Group X emits 8550 at /3 only."
+  },
+  {
+    "alias": "Acinar adenocarcinoma, NOS",
+    "full_form": "Acinar adenocarcinoma, NOS -> Acinar cell carcinoma (8550)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8550"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Acinar cell carcinoma (8550/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8550/3, read from icdo32.sqlite; D21 holds: Group X emits 8550 at /3 only."
+  },
+  {
+    "alias": "Acinar carcinoma",
+    "full_form": "Acinar carcinoma -> Acinar cell carcinoma (8550)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8550"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Acinar cell carcinoma (8550/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8550/3, read from icdo32.sqlite; D21 holds: Group X emits 8550 at /3 only."
+  },
+  {
+    "alias": "Acinic cell adenocarcinoma",
+    "full_form": "Acinic cell adenocarcinoma -> Acinar cell carcinoma (8550)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8550"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Acinar cell carcinoma (8550/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8550/3, read from icdo32.sqlite; D21 holds: Group X emits 8550 at /3 only."
+  },
+  {
+    "alias": "Adenosquamous carcinoma",
+    "full_form": "Adenosquamous carcinoma -> Adenosquamous carcinoma (8560)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8560"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenosquamous carcinoma, 8560/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8560/3, read from icdo32.sqlite; D21 holds: Group X emits 8560 at /3 only."
+  },
+  {
+    "alias": "Mixed adenocarcinoma and epidermoid carcinoma",
+    "full_form": "Mixed adenocarcinoma and epidermoid carcinoma -> Adenosquamous carcinoma (8560)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8560"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenosquamous carcinoma (8560/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8560/3, read from icdo32.sqlite; D21 holds: Group X emits 8560 at /3 only."
+  },
+  {
+    "alias": "Mixed adenocarcinoma and squamous cell carcinoma",
+    "full_form": "Mixed adenocarcinoma and squamous cell carcinoma -> Adenosquamous carcinoma (8560)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8560"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenosquamous carcinoma (8560/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8560/3, read from icdo32.sqlite; D21 holds: Group X emits 8560 at /3 only."
+  },
+  {
+    "alias": "Squamoid eccrine ductal carcinoma",
+    "full_form": "Squamoid eccrine ductal carcinoma -> Adenosquamous carcinoma (8560)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8560"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenosquamous carcinoma (8560/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8560/3, read from icdo32.sqlite; D21 holds: Group X emits 8560 at /3 only."
+  },
+  {
+    "alias": "Epithelial-myoepithelial carcinoma",
+    "full_form": "Epithelial-myoepithelial carcinoma -> Epithelial-myoepithelial carcinoma (8562)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8562"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Epithelial-myoepithelial carcinoma, 8562/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8562/3, read from icdo32.sqlite; D21 holds: Group X emits 8562 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Adenocarcinoma with squamous metaplasia",
+    "full_form": "Adenocarcinoma with squamous metaplasia -> Adenocarcinoma with squamous metaplasia (8570)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8570"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma with squamous metaplasia, 8570/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8570/3, read from icdo32.sqlite; D21 holds: Group X emits 8570 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Adenoacanthoma",
+    "full_form": "Adenoacanthoma -> Adenocarcinoma with squamous metaplasia (8570)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8570"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with squamous metaplasia (8570/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8570/3, read from icdo32.sqlite; D21 holds: Group X emits 8570 at /3 only."
+  },
+  {
+    "alias": "Endometrioid carcinoma with squamous differentiation",
+    "full_form": "Endometrioid carcinoma with squamous differentiation -> Adenocarcinoma with squamous metaplasia (8570)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8570"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenocarcinoma with squamous metaplasia (8570/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8570/3, read from icdo32.sqlite; D21 holds: Group X emits 8570 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma with cartilaginous and osseous metaplasia",
+    "full_form": "Adenocarcinoma with cartilaginous and osseous metaplasia -> Adenocarcinoma with cartilaginous and osseous metaplasia (8571)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8571"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma with cartilaginous and osseous metaplasia, 8571/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8571/3, read from icdo32.sqlite; D21 holds: Group X emits 8571 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Adenocarcinoma with cartilaginous metaplasia",
+    "full_form": "Adenocarcinoma with cartilaginous metaplasia -> Adenocarcinoma with cartilaginous and osseous metaplasia (8571)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8571"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with cartilaginous and osseous metaplasia (8571/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8571/3, read from icdo32.sqlite; D21 holds: Group X emits 8571 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma with chondroid differentiation",
+    "full_form": "Adenocarcinoma with chondroid differentiation -> Adenocarcinoma with cartilaginous and osseous metaplasia (8571)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8571"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with cartilaginous and osseous metaplasia (8571/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8571/3, read from icdo32.sqlite; D21 holds: Group X emits 8571 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma with osseous metaplasia",
+    "full_form": "Adenocarcinoma with osseous metaplasia -> Adenocarcinoma with cartilaginous and osseous metaplasia (8571)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8571"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with cartilaginous and osseous metaplasia (8571/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8571/3, read from icdo32.sqlite; D21 holds: Group X emits 8571 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma with spindle cell metaplasia",
+    "full_form": "Adenocarcinoma with spindle cell metaplasia -> Adenocarcinoma with spindle cell metaplasia (8572)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8572"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma with spindle cell metaplasia, 8572/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8572/3, read from icdo32.sqlite; D21 holds: Group X emits 8572 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Acinar adenocarcinoma, sarcomatoid variant",
+    "full_form": "Acinar adenocarcinoma, sarcomatoid variant -> Adenocarcinoma with spindle cell metaplasia (8572)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8572"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with spindle cell metaplasia (8572/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8572/3, read from icdo32.sqlite; D21 holds: Group X emits 8572 at /3 only."
+  },
+  {
+    "alias": "Fibromatosis-like metaplastic carcinoma",
+    "full_form": "Fibromatosis-like metaplastic carcinoma -> Adenocarcinoma with spindle cell metaplasia (8572)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8572"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Adenocarcinoma with spindle cell metaplasia (8572/3).",
+    "coding_note": "ICD-O-3.2 Related term on 8572/3, read from icdo32.sqlite; D21 holds: Group X emits 8572 at /3 only."
+  },
+  {
+    "alias": "Adenocarcinoma with apocrine metaplasia",
+    "full_form": "Adenocarcinoma with apocrine metaplasia -> Adenocarcinoma with apocrine metaplasia (8573)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8573"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Adenocarcinoma with apocrine metaplasia, 8573/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8573/3, read from icdo32.sqlite; D21 holds: Group X emits 8573 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Carcinoma with apocrine metaplasia",
+    "full_form": "Carcinoma with apocrine metaplasia -> Adenocarcinoma with apocrine metaplasia (8573)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8573"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Adenocarcinoma with apocrine metaplasia (8573/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8573/3, read from icdo32.sqlite; D21 holds: Group X emits 8573 at /3 only."
+  },
+  {
+    "alias": "Hepatoid adenocarcinoma",
+    "full_form": "Hepatoid adenocarcinoma -> Hepatoid adenocarcinoma (8576)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8576"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Hepatoid adenocarcinoma, 8576/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 8576/3, read from icdo32.sqlite; D21 holds: Group X emits 8576 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Hepatoid carcinoma",
+    "full_form": "Hepatoid carcinoma -> Hepatoid adenocarcinoma (8576)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8576"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Hepatoid adenocarcinoma (8576/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 8576/3, read from icdo32.sqlite; D21 holds: Group X emits 8576 at /3 only."
+  },
+  {
     "alias": "Thecoma, malignant",
     "full_form": "Thecoma, malignant -> Thecoma, malignant (8600)",
     "also_known_as": [],
@@ -1157,6 +4501,101 @@
     "clinical_alert": null,
     "notes": "Steroid cell tumor, malignant, 8670/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 8670/3, read from icdo32.sqlite; D21 holds: Group X emits 8670 at /3 only."
+  },
+  {
+    "alias": "Brenner tumor, malignant",
+    "full_form": "Brenner tumor, malignant -> Brenner tumor, malignant (9000)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9000"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Brenner tumor, malignant, 9000/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9000/3, read from icdo32.sqlite; D21 holds: Group X emits 9000 at /3 only."
+  },
+  {
+    "alias": "Serous adenocarcinofibroma",
+    "full_form": "Serous adenocarcinofibroma -> Serous adenocarcinofibroma (9014)",
+    "also_known_as": [],
+    "alias_type": "who_preferred",
+    "origin_system": "ICD-O-3.2",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9014"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "Serous adenocarcinofibroma, 9014/3.",
+    "coding_note": "ICD-O-3.2 Preferred term on 9014/3, read from icdo32.sqlite; D21 holds: Group X emits 9014 at /3 only."
+  },
+  {
+    "alias": "Malignant serous adenofibroma",
+    "full_form": "Malignant serous adenofibroma -> Serous adenocarcinofibroma (9014)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9014"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous adenocarcinofibroma (9014/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9014/3, read from icdo32.sqlite; D21 holds: Group X emits 9014 at /3 only."
+  },
+  {
+    "alias": "Malignant serous cystadenofibroma",
+    "full_form": "Malignant serous cystadenofibroma -> Serous adenocarcinofibroma (9014)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 synonym",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9014"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 synonym term for Serous adenocarcinofibroma (9014/3).",
+    "coding_note": "ICD-O-3.2 Synonym term on 9014/3, read from icdo32.sqlite; D21 holds: Group X emits 9014 at /3 only."
+  },
+  {
+    "alias": "Serous cystadenocarcinofibroma",
+    "full_form": "Serous cystadenocarcinofibroma -> Serous adenocarcinofibroma (9014)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "ICD-O-3.2 related term",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "9014"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "An ICD-O-3.2 related term for Serous adenocarcinofibroma (9014/3).",
+    "coding_note": "ICD-O-3.2 Related term on 9014/3, read from icdo32.sqlite; D21 holds: Group X emits 9014 at /3 only."
   },
   {
     "alias": "Mucinous adenocarcinofibroma",
@@ -1993,6 +5432,44 @@
     "clinical_alert": null,
     "notes": "Trophoblastic tumor, epithelioid, 9105/3.",
     "coding_note": "ICD-O-3.2 Preferred term on 9105/3, read from icdo32.sqlite; D21 holds: Group X emits 9105 at /3 only. Also the REDCap option wording."
+  },
+  {
+    "alias": "Gastrinoma, NOS",
+    "full_form": "Gastrinoma, NOS -> Gastrinoma (8153)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8153"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option wording for 8153. It equals an ICD-O-3.2 term of 8153/3 apart from a trailing NOS.",
+    "coding_note": "x_morph option string for 8153 that differs from the ICD-O-3.2 preferred term. Offered so a clerk who types the dropdown wording finds the code; it is not a test of REDCap (standing rule 16)."
+  },
+  {
+    "alias": "Adenocarcinoma, endocervical type",
+    "full_form": "Adenocarcinoma, endocervical type -> Adenocarcinoma, endocervical type, NOS (8384)",
+    "also_known_as": [],
+    "alias_type": "descriptive",
+    "origin_system": "REDCap option label",
+    "nci_concept_id": null,
+    "who_version_current": "ICD-O-3.2",
+    "maps_to_morphology_codes": [
+      "8384"
+    ],
+    "maps_to_iccc3_subgroup_id": "Xd",
+    "needs_ihc_tree": false,
+    "ihc_tree_id": "g10_extragonadal",
+    "tree_entry_node": "eg_document_inventory",
+    "clinical_alert": null,
+    "notes": "The REDCap option wording for 8384. It equals an ICD-O-3.2 term of 8384/3 apart from a trailing NOS.",
+    "coding_note": "x_morph option string for 8384 that differs from the ICD-O-3.2 preferred term. Offered so a clerk who types the dropdown wording finds the code; it is not a test of REDCap (standing rule 16)."
   },
   {
     "alias": "Yolk sac tumor",

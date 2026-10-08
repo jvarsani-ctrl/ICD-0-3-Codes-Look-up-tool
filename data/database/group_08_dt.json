@@ -2256,7 +2256,8 @@
             {
               "label": "Neuroblastoma",
               "refer_group": 4,
-              "reason": "Neuroblastoma in bone is metastatic, and neuroblastoma belongs to ICCC-3 Group IV. Code the primary tumour from the Group IV tree."
+              "reason": "Neuroblastoma in bone is metastatic, and neuroblastoma belongs to ICCC-3 Group IV. Code the primary tumour from the Group IV tree.",
+              "recapture_site": true
             },
             {
               "label": "Round cell sarcoma or undifferentiated round cell sarcoma, not further classified",
@@ -2333,7 +2334,8 @@
                 "PHOX2B"
               ],
               "refer_group": 4,
-              "reason": "PHOX2B marks neuroblastoma, a Group IV tumour. Code the primary from the Group IV tree."
+              "reason": "PHOX2B marks neuroblastoma, a Group IV tumour. Code the primary from the Group IV tree.",
+              "recapture_site": true
             },
             {
               "positive": [
@@ -2820,37 +2822,44 @@
             {
               "label": "Neuroblastoma",
               "refer_group": 4,
-              "reason": "Code the primary neuroblastoma from the Group IV tree."
+              "reason": "Code the primary neuroblastoma from the Group IV tree.",
+              "recapture_site": true
             },
             {
               "label": "Rhabdomyosarcoma",
               "refer_group": 9,
-              "reason": "Code the primary rhabdomyosarcoma from the Group IX tree."
+              "reason": "Code the primary rhabdomyosarcoma from the Group IX tree.",
+              "recapture_site": true
             },
             {
               "label": "Renal tumour (Wilms tumour, clear cell sarcoma of the kidney)",
               "refer_group": 6,
-              "reason": "Code the primary renal tumour from the Group VI tree."
+              "reason": "Code the primary renal tumour from the Group VI tree.",
+              "recapture_site": true
             },
             {
               "label": "Retinoblastoma",
               "refer_group": 5,
-              "reason": "Code the primary retinoblastoma from the Group V tree."
+              "reason": "Code the primary retinoblastoma from the Group V tree.",
+              "recapture_site": true
             },
             {
               "label": "Liver tumour (hepatoblastoma, hepatocellular carcinoma)",
               "refer_group": 7,
-              "reason": "Code the primary liver tumour from the Group VII tree."
+              "reason": "Code the primary liver tumour from the Group VII tree.",
+              "recapture_site": true
             },
             {
               "label": "Germ cell tumour",
               "refer_group": 10,
-              "reason": "Code the primary germ cell tumour from the Group X tree."
+              "reason": "Code the primary germ cell tumour from the Group X tree.",
+              "recapture_site": true
             },
             {
               "label": "Carcinoma or melanoma (for example nasopharyngeal carcinoma)",
               "refer_group": 11,
-              "reason": "Code the primary carcinoma or melanoma from the Group XI tree."
+              "reason": "Code the primary carcinoma or melanoma from the Group XI tree.",
+              "recapture_site": true
             },
             {
               "label": "A bone sarcoma that has spread from another bone (osteosarcoma, Ewing sarcoma, chondrosarcoma)",
@@ -2860,7 +2869,10 @@
             {
               "label": "Primary not found, and the tumour type is not stated",
               "refer_group": 12,
-              "reason": "A metastasis whose primary is not found and whose type is not stated is an unspecified malignancy of unknown primary site, which belongs to ICCC-3 Group XII."
+              "reason": "A metastasis whose primary is not found and whose type is not stated is an unspecified malignancy of unknown primary site, which belongs to ICCC-3 Group XII.",
+              "captures": {
+                "topography": "C80.9"
+              }
             }
           ],
           "nos_fallback": null

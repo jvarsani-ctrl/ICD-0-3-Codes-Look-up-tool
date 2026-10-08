@@ -84,6 +84,7 @@ var state = {
   labs: [],              /* the laboratory panel as recorded: values the clerk typed. Never read by a rule */
   candidates: [],        /* groups still possible — narrowed, never asked for blind */
   searchTerm: null,      /* the express-lane alias that set the candidates, if one did */
+  recordGroup: null,     /* the group a referral hop enters once the clerk has recorded the primary site; null otherwise */
   dt: null, aliases: null,
   captured: {},          /* every resolution_logic[].when variable reads here */
   markers: {},
@@ -132,6 +133,7 @@ function snapshot() {
     stage: state.stage, archetype: state.archetype, group: state.group,
     organSystem: state.organSystem, candidates: state.candidates,
     searchTerm: state.searchTerm || null, siteRecordOnly: state.siteRecordOnly || false,
+    recordGroup: state.recordGroup === undefined ? null : state.recordGroup,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
     markers: state.markers, workup: state.workup, result: state.result, labs: state.labs,
     pending: state.pending || null, firedAlert: state.firedAlert || null,
@@ -679,7 +681,9 @@ function regionOptions(row) {
 function renderSite() {
   var origin = state.captured.tumour_origin;
   return panel('Stage 1 · organ system', 'Which organ system does the tumour arise in?',
-    state.searchTerm
+    state.recordGroup
+      ? 'The referral continues in Group ' + state.recordGroup + '. Record the site of the primary tumour, not the site of the deposit.'
+      : state.searchTerm
       ? (arr((state.aliasIndex || {})[state.searchTerm]).length > 1
           ? 'The search term “' + state.searchTerm + '” is filed under more than one group, and the primary site decides which. Code the primary, not the biopsy site.'
           : (state.siteRecordOnly
@@ -695,7 +699,7 @@ function renderSite() {
          finds "Ovary and testis" and "femur" finds "Bone and joints". */
       return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes',
         find: regionOptions(c).map(function (r) { return r.label + ' ' + r.topography; }).join(' ') };
-    })) + (state.siteRecordOnly && state.searchTerm
+    })) + (state.siteRecordOnly && (state.searchTerm || state.recordGroup)
       ? '<div class="escapes"><button class="escape escape--site" data-act="site-unstated">The file does not state the site</button></div>' : ''));
 }
 function renderSiteRegion() {
@@ -936,8 +940,21 @@ function optionList(n) {
     return { label: optionLabel(o),
              meta: [priorText(o.prior_probability), rl].filter(Boolean).join(' · ') || null,
              alert: o.clinical_alert || null,
-             aid: o.recognition_aid || null };
+             aid: o.recognition_aid || null,
+             /* Other names the tumour goes by (ICD-O-3.2 synonyms): the filter box matches them
+                and the screen never shows them. */
+             find: arr(o.search_terms).join(' ') };
   });
+  /* A long list the clerk finds an answer in by typing may start with the term already
+     searched, when the case came from the search box (`prefill_filter_from_search`). Typed
+     once, offered once: clearing the box shows the whole list, and the box is not refilled. A
+     term that matches no option starts no filter: a box that hides every row strands the clerk
+     on a name the list cannot find, and the whole list at least shows what it holds. */
+  var filterKey = items.some(function (it) { return it.aid; }) ? 'optsel' : 'opt';
+  if (n.prefill_filter_from_search === true && state.searchTerm && state.draft['f:' + filterKey] === undefined) {
+    var typed = state.searchTerm;
+    state.draft['f:' + filterKey] = items.some(function (it) { return findMatch(findText(it), typed); }) ? typed : '';
+  }
   /* A recognition aid is clerk-facing text in report vocabulary, shown under
      the option the clerk has SELECTED and nowhere else (registrar, 6 October
      2026). A list that carries any is answered select, then Confirm; every
@@ -1120,8 +1137,10 @@ function labUnit(lab, r) {
   var units = arr(lab.units);
   return r && units.indexOf(r.unit) !== -1 ? r.unit : (units[0] || '');
 }
-/* Digits with at most one decimal mark, as a report prints a result. */
-var LAB_NUMBER = /^\d+(?:[.,]\d+)?$/;
+/* Digits with at most one decimal mark, as a report prints a result, and after one leading > or <
+   where the report prints a limit (">1210", "<0.5"). The limit is recorded as typed and shown with
+   the number, so a value below detection is not entered as a measured one. */
+var LAB_NUMBER = /^(?:[<>]\s*)?\d+(?:[.,]\d+)?$/;
 function labControl(n) {
   var d = labDraft();
   var h = '<div class="labs">' + arr(n.labs).map(function (lab, i) {
@@ -1165,10 +1184,10 @@ function labsContinue(n, before) {
     if (labRowAbsent(r)) {
       rows.push({ id: lab.id, label: lab.label, value: '', unit: '', inFile: false });
     } else if (!LAB_NUMBER.test(typed)) {
-      row.error = 'Enter a number: digits with one decimal mark. “' + typed + '” is not one.';
+      row.error = 'Enter a number: digits with one decimal mark, after a > or < where the report gives a limit. “' + typed + '” is not one.';
       bad = true;
     } else {
-      rows.push({ id: lab.id, label: lab.label, value: typed, unit: unit, inFile: true });
+      rows.push({ id: lab.id, label: lab.label, value: typed.replace(/\s+/g, ''), unit: unit, inFile: true });
     }
     typedRows[lab.id] = row;
   });
@@ -1552,14 +1571,19 @@ function bandUnits(n) {
   });
   return out;
 }
+/* A gate offers "in the file, but in another unit or only described" only where it declares a band for
+   it, so a gate that has nowhere to send that answer does not ask it. */
+function offersOtherUnit(n) {
+  return arr(n.bands).some(function (b) { return b.range === OTHER_UNIT; });
+}
 function numericGate(n) {
-  var undoc = state.draft.not_documented === true;
+  var undoc = state.draft.not_documented === true, other = state.draft.other_unit === true;
   var units = bandUnits(n),
     label = tokenLabel(UNIT_LABELS, n.unit) || (units.length === 1 ? units[0] : '');
   return '<label class="field"><span class="field__label">' + esc(n.variable_label || n.variable) +
     (label ? ' (' + esc(label) + ')' : '') + '</span>' +
     '<input type="number" step="any" data-act="draft" data-k="value" value="' +
-    esc(state.draft.value === undefined ? '' : state.draft.value) + '"' + (undoc ? ' disabled' : '') + '></label>' +
+    esc(state.draft.value === undefined ? '' : state.draft.value) + '"' + (undoc || other ? ' disabled' : '') + '></label>' +
     /* One sentence for every kind of unit. It was written for counts and said
        "denominator" and "count" under a serum concentration too (Group III's
        pineal marker screens, 6 October 2026). A unit carries its own
@@ -1569,7 +1593,9 @@ function numericGate(n) {
       esc(units.join(', and ')) + '. Check that the report gives the value in the same unit, ' +
       'and a count over the same denominator, before entering it.</p>' : '') +
     '<div class="checks"><label class="check"><input type="checkbox" data-act="draft" data-k="not_documented"' +
-    (undoc ? ' checked' : '') + '> Not documented in the file</label></div>' +
+    (undoc ? ' checked' : '') + '> Not documented in the file</label>' +
+    (offersOtherUnit(n) ? '<label class="check"><input type="checkbox" data-act="draft" data-k="other_unit"' +
+      (other ? ' checked' : '') + '> In the file, but in another unit or only described</label>' : '') + '</div>' +
     '<div class="actions"><button class="btn" data-act="resolve">Continue</button></div>';
 }
 
@@ -1790,9 +1816,14 @@ function bandStep(text) {
   var dot = String(text).indexOf('.');
   return dot === -1 ? 1 : Math.pow(10, -(String(text).length - dot - 1));
 }
+/* A numeric gate's reading is a number, null ("Not documented in the file": the file holds no
+   result for the test), or OTHER_UNIT (the file holds a result the clerk cannot enter as a number
+   in the gate's unit: another unit, or only described). */
+var OTHER_UNIT = 'other_unit';
 function inBand(range, v) {
   if (range === 'not_documented') return v === null;
-  if (v === null || v === undefined) return false;
+  if (range === OTHER_UNIT) return v === OTHER_UNIT;
+  if (typeof v !== 'number') return false;
   var m;
   if ((m = /^>=\s*([\d.]+)$/.exec(range))) return v >= +m[1];
   if ((m = /^>\s*([\d.]+)$/.exec(range))) return v > +m[1];
@@ -2286,7 +2317,7 @@ function canHop(r) {
   /* A group that routes its trees from the topography cannot take a case that
      has none: it would enter that group's default tree in silence. The referral
      screen stays as it was, and the case is started again from its site. */
-  return !(groupMeta(r.group).tree_routing && !state.captured.topography);
+  return r.recaptureSite === true || !(groupMeta(r.group).tree_routing && !state.captured.topography);
 }
 function hopAction(r) {
   if (!canHop(r)) return '';
@@ -2299,15 +2330,33 @@ function hopToGroup(before) {
   if (!canHop(r)) { state.error = 'This referral names no built group to continue in.'; return; }
   var target = r.group;
   pushTrail('Referral', 'Group ' + target + (groupMeta(target).name ? ' — ' + groupMeta(target).name : ''), before);
+  var recapture = r.recaptureSite === true;
   state.captured = caseFacts();
+  /* A referral that says the case's site is not the primary's leaves the site behind: the
+     clerk records the primary's before the case enters the receiving group. */
+  if (recapture) { delete state.captured.topography; delete state.captured.organ_system; state.organSystem = null; }
   state.markers = {}; state.workup = []; state.pending = null; state.pendingGrade = null;
   state.grade = null; state.entity = null; state.firedAlert = null; state.draft = {};
   state.result = null; state.treeId = null; state.nodeId = null; state.searchTerm = null; state.siteRecordOnly = false;
+  state.recordGroup = null;
+  /* The presentation that opened the case limited which systems it listed (a blood presentation
+     lists the marrow alone); the primary's site is asked from the whole list. */
+  if (recapture) state.archetype = null;
   state.group = target; state.candidates = [target];
   /* "Suggested based on" keeps the evidence that led to the hop: the new
      group's entry point is the old one. */
   state.hopFrom = state.trailAtGroupEntry;
-  return afterGroup();
+  if (!recapture) return afterGroup();
+  state.recordGroup = target;
+  state.stage = 'boot';
+  return loadGroupData(target).then(function () {
+    /* A step back or a new case while the file was loading replaced this one. */
+    if (state.recordGroup !== target || state.stage !== 'boot') return;
+    /* A group that reads no site is asked the site and only records it, as the typed lane does;
+       one that routes its trees from the site has to be given one. */
+    state.siteRecordOnly = !groupReadsSite(target);
+    state.stage = 'site';
+  });
 }
 
 /* A terminal for a case that IS a malignancy but belongs to a DIFFERENT ICCC-3
@@ -2324,7 +2373,10 @@ function refer(target) {
     alert: target.clinical_alert || null,
     group: target.refer_group,
     codeHint: target.refer_code || null,
-    note: target.reason || null
+    note: target.reason || null,
+    /* The site carried on the case is not the site of the primary (a metastatic deposit), so
+       the hop asks for the primary's site instead of taking it with the case. */
+    recaptureSite: target.recapture_site === true
   };
   state.stage = 'output';
 }
@@ -2474,7 +2526,7 @@ function renderOutput() {
       '<div class="orow"><b>Code here</b><span>None. Emitting a code from this group would put the case in the wrong ICCC-3 group.</span></div>' +
       (r.codeHint ? orow('Code there', r.codeHint) : '') +
       (r.note ? orow('Why', r.note) : '') +
-      orow('Topography code', topographyText(state.captured.topography)) +
+      (r.recaptureSite ? '' : orow('Topography code', topographyText(state.captured.topography))) +
       orow('Suggested based on', basisFromTrail() || '—') +
       labResultsBlock() + hopAction(r) + outActions() + '</div>';
   }
@@ -2711,14 +2763,14 @@ function handleOption(act, el) {
        search term and group. The guided route starts without them, or its
        site step would become the express lane's. */
     case 'guided':
-      state.searchTerm = null; state.siteRecordOnly = false; state.group = null; state.candidates = [];
+      state.searchTerm = null; state.siteRecordOnly = false; state.recordGroup = null; state.group = null; state.candidates = [];
       state.stage = 'archetype'; break;
     case 'query': state.query = el.value; break;
     case 'alias': {
       var hit = searchAlias(state.query)[i];
       pushTrail('Search', hit.alias, before);
       state.searchTerm = hit.alias;
-      state.siteRecordOnly = false;
+      state.siteRecordOnly = false; state.recordGroup = null;
       state.candidates = hit.groups.slice();
       state.group = null;
       /* The express lane bypasses the clinical scaffold and enters at the
@@ -2764,7 +2816,7 @@ function handleOption(act, el) {
       return afterSystem();
     }
     case 'site-unstated':
-      if (!state.siteRecordOnly || !state.searchTerm) return;
+      if (!state.siteRecordOnly || !(state.searchTerm || state.recordGroup)) return;
       pushTrail('Topography', 'not stated in the file', before);
       return enterRecordedGroup();
     case 'site_region': {
@@ -2914,6 +2966,11 @@ function handleOption(act, el) {
     case 'draft': {
       var k = el.getAttribute('data-k');
       state.draft[k] = el.type === 'checkbox' ? el.checked : el.value;
+      /* The two answers to "no number" exclude each other, and a number excludes both. */
+      if (el.type === 'checkbox' && el.checked) {
+        if (k === 'not_documented') state.draft.other_unit = false;
+        if (k === 'other_unit') state.draft.not_documented = false;
+      }
       return;
     }
     case 'feature': state.draft['f' + i] = el.checked; return;
@@ -2973,7 +3030,7 @@ function handleOption(act, el) {
 function captureLive(n) {
   if (n.node_type !== 'numeric_gate') return;
   var undoc = state.draft.not_documented === true;
-  state.captured[n.variable] =
+  state.captured[n.variable] = state.draft.other_unit === true && !undoc ? OTHER_UNIT :
     (undoc || state.draft.value === '' || state.draft.value === undefined) ? null : Number(state.draft.value);
 }
 
@@ -3050,6 +3107,7 @@ function resolveNode(n, before) {
          against, so the trail can never be read back against the wrong
          denominator. A band with no unit keeps the node's own, unchanged. */
       var bu = bandUnitText(band);
+      if (v === OTHER_UNIT) return advance(band, n.step_label || 'Value', 'in another unit or only described', before);
       return advance(band, n.step_label || 'Value',
         (v === null ? 'not documented' : v + (bu ? ' ' + bu : tokenLabel(UNIT_LABELS, n.unit))) +
         ' → ' + band.range + (bu ? ' ' + bu : ''), before);
@@ -3175,6 +3233,7 @@ function afterSystem() {
   return afterSite();
 }
 function afterSite() {
+  if (state.recordGroup !== null && state.recordGroup !== undefined) return enterRecordedGroup();
   if (state.searchTerm) return afterSearchSite();
   narrowBySite();
   var d = discriminator();
@@ -3202,6 +3261,38 @@ function groupReadsSite(g) {
   return found;
 }
 
+/* A topography code as one number ("C56.9" is 569), and whether a list of sites such as
+   ["C00.0-C55.9", "C56.9"] covers a code. Only the first two codes in a string are read. */
+function topoNumber(code) {
+  var m = /^C(\d\d)\.(\d)$/.exec(String(code));
+  return m ? +m[1] * 10 + +m[2] : null;
+}
+function sitesCover(sites, code) {
+  var n = topoNumber(code);
+  return n !== null && arr(sites).some(function (s) {
+    var m = String(s).match(/C\d\d\.\d/g) || [], lo = topoNumber(m[0]), hi = m.length > 1 ? topoNumber(m[1]) : lo;
+    return lo !== null && hi !== null && n >= lo && n <= hi;
+  });
+}
+/* A group that routes its trees from the topography can declare `occurs_at_routed_sites`: a
+   term filed under that group alone occurs at a site one of the group's own routing rules names
+   AND its own entries list. The rules say where the group codes, so a site's candidate list is
+   not asked to repeat them; the entries' `primary_sites` say where this term occurs, so a term
+   ICCC-2017 places only at the gonads is still stopped at the liver. The default tree does not
+   count: it is what an unnamed site falls to. A term filed under several groups, or one whose
+   group file is not loaded, or one that names no entry, has no evidence here and stops. */
+function occursAtRoutedSite(g) {
+  var meta = groupMeta(g), tr = meta.tree_routing, topo = state.captured[tr && (tr.variable || 'topography')];
+  if (meta.occurs_at_routed_sites !== true || !tr || firstTopographyMatch(tr.rules, topo) === null) return false;
+  if (arr((state.aliasIndex || {})[state.searchTerm]).length !== 1) return false;
+  var c = cachedGroup(g), codes = [];
+  if (!c) return false;
+  arr(c.aliases).forEach(function (a) { if (a.alias === state.searchTerm) codes = codes.concat(arr(a.maps_to_morphology_codes)); });
+  return codes.length > 0 && arr(c.dt && c.dt.morphology_entries).some(function (e) {
+    return codes.indexOf(String(e.morphology_code)) !== -1 && sitesCover(e.primary_sites, topo);
+  });
+}
+
 /* The express lane's site step. The groups the search term is filed under
    are intersected with the groups the topography carries, and only one
    survivor enters a tree — routed, not asked, and recorded in the trail so the
@@ -3224,11 +3315,12 @@ function afterSearchSite() {
     ? term.filter(function (g) { return site.indexOf(g) !== -1; })
     : term.slice();
   /* A group the router declares as occurring at any site (a lymphoma arises in any
-     organ) survives a site that names none of the term's groups. Only then: where
-     the site names a group of the term, that group is the answer and the any-site
-     group does not tie with it (registrar, 7 October 2026). */
+     organ), or at every site its own routing rules name, survives a site that names
+     none of the term's groups. Only then: where the site names a group of the term,
+     that group is the answer and these groups do not tie with it (registrar,
+     7 October 2026). */
   if (Array.isArray(site) && !state.candidates.length) {
-    state.candidates = term.filter(function (g) { return groupMeta(g).occurs_at_any_site === true; });
+    state.candidates = term.filter(function (g) { return groupMeta(g).occurs_at_any_site === true || occursAtRoutedSite(g); });
   }
   /* `group` is cleared because a step back to a Tree entry restores the group
      the case was routed to, and a stop must not name it. */
@@ -3242,12 +3334,18 @@ function afterSearchSite() {
    group, so the site decides nothing: it is recorded and the case enters that
    group. A site the group's candidate list does not name is not a conflict. */
 function enterRecordedGroup() {
-  var groups = arr((state.aliasIndex || {})[state.searchTerm]);
-  /* Only a term filed under one group is entered without its site deciding. */
-  if (!state.siteRecordOnly || groups.length !== 1) return;
-  var only = groups[0];
+  var only = state.recordGroup;
+  if (only === null || only === undefined) {
+    var groups = arr((state.aliasIndex || {})[state.searchTerm]);
+    /* Only a term filed under one group is entered without its site deciding. */
+    if (!state.siteRecordOnly || groups.length !== 1) return;
+    only = groups[0];
+  }
   state.candidates = [only];
   state.group = only;
+  /* The referral's job is done once the group is fixed; a group that then asks its tree must not
+     find the flag still set. */
+  state.recordGroup = null;
   return afterGroup();
 }
 /* A group whose trees are keyed to a fact the router has ALREADY captured
@@ -3311,7 +3409,7 @@ function enterGroup(group, treeId, entryNode) {
 
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
-  state.organSystem = null; state.candidates = []; state.searchTerm = null; state.siteRecordOnly = false;
+  state.organSystem = null; state.candidates = []; state.searchTerm = null; state.siteRecordOnly = false; state.recordGroup = null;
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];

@@ -98,8 +98,22 @@ prints it. This is the same question as Group VIII review A1; one answer serves 
 ### A11. Gonadal carcinomas on the tree (D14)
 
 The ovary tree offers twelve carcinoma terms, including small cell carcinoma of the ovary,
-hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystadenomas. The other
-84 Xd codes are in the inventory and reachable by search only.
+hypercalcaemic type (`8044/3`), and excludes the borderline tumours and cystadenomas. **Decided and
+built 7 October 2026 (registrar's design): the gonadal carcinoma picker.** The other 80 Xd codes had no
+option and no alias, so a report that named one (adenosquamous carcinoma `8560/3`, squamous cell
+carcinoma `8070/3`) recorded `8010/3` or `8140/3` (audit, F-J-01 and F-J-05). Each gonad tree now
+ends its carcinoma options with "Another carcinoma the report names — type its name to find it", a
+list of every subgroup Xd code ICD-O-3.2 prints at /3 that the tree does not otherwise offer (77 at the
+ovary, 81 at the testis), filtered by typing; the search box reaches it with the typed name already in
+the filter. TODO §34.
+
+**Five of the 80 stay off the screen, and that is a question for you.** ICD-O-3.2 marks the Preferred
+term of `8130/3`, `8141/3`, `8245/3`, `8440/3` and `8450/3` `[obs]`, and design D11 keeps an obsolete
+term off every screen (the build has warned about each since Group X was built; `8630/3`, malignant
+androblastoma, is in the same class and stays off the tree as before). A report that names one of them
+finds no option and no alias, so the clerk records the nearest current code, as before. If you want the
+obsolete codes offered, say so; the picker takes them back by deleting one filter
+(`build/group10_tree.py`, `preferred_is_obsolete`) and Group 10 rule 7 then stops exempting them.
 
 ### A12. Three teratoma searches find nothing (D21)
 
@@ -127,7 +141,7 @@ codes and at no other:
 
 - At the 24 sites, every presentation except "Organ-functional sign" offers Group III and Group X,
   and the clerk chooses by the pathology report. "Organ-functional sign" lists Group 3 and not
-  Group 10, so it still goes to Group III alone.
+  Group 10, so it still goes to Group III alone (section F explains why that stays).
 - At C75.1 *Pituitary gland*, "Mass / swelling" offered Groups III and XI and now offers Groups III
   and X: Group XI, which is not built, leaves that one picker. "Incidental imaging finding", "Not
   sure / mixed presentation", "Lymphadenopathy" and "Cutaneous / mucosal lesion" offer Groups III,
@@ -187,13 +201,28 @@ trophoblastic tumour is recorded at its own site (ICCC-2017 range 104, Xb5, site
 tumour at C76.3 *Pelvis, NOS* (the pathway's choice; no Layer 1 file records the ICD-O-3 index
 entry)? And should C76.3 also offer Group IV — which needs a Group IV tree to declare C76.3?
 
-**Referrals from other sites also lead nowhere.** Groups VII, VIII and IX refer germ cell tumours
-to Group X: Group VII "at any site including the liver", Group VIII from a bone deposit, Group IX
-from soft tissue. The liver (C22.0, C22.1), bone (C40–C41) and soft tissue (C49.x) do not list
-Group 10, so the front door never offers Group X there, and the search box stops with the same
-untrue message that C71.0 gave before the B1 decision. Group VII's own alias "Yolk sac tumour of the liver" leads straight
-into it. The same three options as B1 apply; option (a) here means listing Group 10 at the sites
-where extragonadal germ cell tumours arise — the build added only C38.1, C38.3, C48.0 and C76.3.
+**Referrals and the search box outside the central nervous system.** Groups VII, VIII and IX refer
+germ cell tumours to Group X: Group VII "at any site including the liver", Group VIII from a bone
+deposit, Group IX from soft tissue. Since 6 October 2026 a referral to a built group continues
+there, and since 7 October 2026 the search box enters Group X at every site its `tree_routing` rules
+name and its own entries place the term (`occurs_at_routed_sites`), so "Yolk sac tumor, NOS" typed
+at the liver, bone or soft tissue enters `g10_extragonadal` and no longer stops with the untrue
+message that C71.0 gave before the B1 decision. 233 of the 306 Group X aliases name a tumour that no
+entry places at the liver (the gonadal carcinomas, "Carcinoma, NOS" and others). The entry check stops such
+a term only where the site's own list omits Group 10 and no entry of the term lists the site, for example
+the liver. Where the site's list names Group 10 (64 sites) or names no group (8 sites, C76.x and C80.9) the
+term enters the tree the site routes to, and that tree sends it on: the extragonadal tree through "Another
+carcinoma, or a melanoma" to Group XI, the brain tree through "Not a germ cell tumour" to Group III. The 8
+lymph node sites (C77.0 to C77.9) stay outside, because no Group X germ cell range covers them; 20 aliases
+whose entries do cover them (ICCC-2017 ranges 114 and 116, "at every site": the sex cord-stromal tumours and
+the ovarian-type carcinomas) stop there too, as the typed lane does at any site Group X does not route
+(TODO §34, known and not changed). **Still open: the front door.** The liver (C22.0, C22.1), bone (C40–C41), soft tissue
+(C49.x) and the other routed sites do not list Group 10 in `candidate_groups`, so the guided route
+never offers Group X there. Listing it adds a family question at the kidney, liver, bone and soft
+tissue for every "Mass / swelling" case, because that presentation lists 10; B1 accepted that
+question at the 24 central nervous system codes, and you decide whether to accept it at the rest.
+Option (a) here means listing Group 10 at the sites where extragonadal germ cell tumours arise — the
+build added only C38.1, C38.3, C48.0 and C76.3.
 
 ### B3. The subgroup line (D20)
 
@@ -500,7 +529,60 @@ measured, it goes to "tissue required" and, with no tissue, the same 8000/1 at b
   second entry.
 - A referral from Group III does not carry the typed marker values (`caseFacts()` keeps the case
   facts only), so a Group III marker case enters its values again in Group X.
-- `numeric_gate` has no "given in another unit" answer: a value left empty for its unit shows as
-  "not documented" in the trail.
+- `numeric_gate` had no "given in another unit" answer; R3.3 (7 October 2026) added one for a gate that
+  declares an `other_unit` band, and a value left empty for its unit is "not documented" in the trail.
 - The "Uncertain subtype" escape asserts no basis of diagnosis; its result carries no basis row. The
   gates' fallback names basis 4 for the validator's rule 2 only.
+
+---
+
+## F. Decided under delegation, 7 October 2026 (audit of Group X)
+
+The registrar delegated the open items to the assistant: "Based on your assessment, fix whatever
+you can, you have my full permission." Each decision below is the
+assistant's, made on the evidence in `docs/TODO.md` §34 and reversible in the file named. Anything
+that needed a registry policy, a code ICD-O-3.2 does not print, or an engine feature was left alone
+and stays listed in §34.
+
+- **B2, the front door: left as it is.** The search box and the referral hop now reach Group X at every
+  site its routing names, and the pathway's own sacrococcygeal site (C76.3) lists Group X; the
+  guided route reaches Group X at 65 of the 167 sites Group X's routing names. Listing
+  it at the kidney, liver, bone and soft tissue would add a "which family?" question to the
+  commonest childhood masses to serve a rare tumour. Revisit if an abstractor reports a miss.
+  Reversible in `data/shared/topography_codes.json`.
+- **"Organ-functional sign" still goes to Group III alone at the brain** (F-H-12): tried and
+  reverted. Listing Group 10 on that presentation sends a case at 28 sites outside the brain
+  (the mediastinum, retroperitoneum, vagina, uterus, cervix and spermatic cord) into Group X with
+  no choice, because the engine narrows a presentation's list by the site's list and falls back to
+  the site's whole list only when the two share nothing. No data-only list avoids it. The fix is a
+  per-site extension in the engine, as `keep_on_site` does for a discriminator, and the router
+  note on the presentation says so.
+- **A9, D3: the germinoma family is offered at every site** (F-H-02). Dysgerminoma, seminoma,
+  anaplastic seminoma and germinoma are each offered by all four histology screens, so a report's
+  own term is coded as written wherever ICD-O-3.2 and ICCC-2017 allow it (WHO Rule H). Build
+  check: Group 10 rule 6.
+- **A8, the two single-term malignant teratomas** (F-G-01). `9082/3` and `9083/3` are offered on every
+  teratoma screen and on the central nervous system histology screen, so a report that names one
+  and no second component is not called mixed. The mixed screen still offers them. A report that
+  states both takes neither a hint nor an order: Rule G (the higher grade) and Rule K (the higher
+  code) disagree there and the manual has no worked example. Left as an open item with F-K-02.
+- **F-F-07, the brain markers from 24 months: the question is fixed, the numbers are not.** When a
+  gate falls back to the report question because a value was not entered, the question is now
+  `cn_markers_cutoff`, whose hint applies the SIOP cut-offs to the numbers the report gives and
+  does not leave "raised" to the laboratory's range. cn_markers keeps the laboratory-range hint
+  for an infant, an age not in the file, and non-diagnostic cytology. Not done, because it needs
+  the engine: the question cannot show the numbers already typed (logged request R3.1). The second
+  half, a gate's "in another unit or only described" answer (R3.3), was built the same day on the
+  registrar's approval (below).
+- **Group II's referrals to Group I record the bone marrow** (WHO Rule E), as every other group's
+  now do. Build check: referrals to Group I.
+- **Approved by the registrar the same day:** (1) the thymus, lung and thyroid are added to Stage 1 (A7:
+  the sites, not the policy; an immature teratoma there is still `9080/1` and still not registered);
+  (2) R3.3, a numeric gate's "in another unit or only described" answer, with "not documented in the
+  file" read as not raised on Group X's brain marker gates, which supersedes the "Not done" note on
+  F-F-07 above except for R3.1; (3) the gonadal carcinoma picker (A11), by the registrar's own design:
+  type the tumour's name after the site is known and the option appears.
+- **Left for you:** A1, A6 and A10 (what the registry does with a tumour ICD-O-3.2 prints at /0 or
+  /1 that a pathologist calls malignant, which includes whether an immature teratoma of the thymus,
+  lung or thyroid is registered), A12, the sixth digit and `8249` (kept on the list, TODO §33). Each
+  is a registry policy, or needs a code or an engine feature that is not the assistant's to add.

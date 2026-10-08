@@ -68,8 +68,13 @@ def nonrep(label, reason, captures=None, note=None):
     return _tail({"label": label, "non_reportable": True, "reason": reason}, captures, note)
 
 
-def refer(label, group, reason, captures=None, note=None, key="label"):
-    return _tail({key: label, "refer_group": group, "reason": reason}, captures, note)
+def refer(label, group, reason, captures=None, note=None, key="label", recapture=False):
+    """recapture: the site on the case is a deposit's, not the primary's, so the referral asks for
+    the primary's site and the hop does not carry this one (`recapture_site`)."""
+    b = {key: label, "refer_group": group, "reason": reason}
+    if recapture:
+        b["recapture_site"] = True
+    return _tail(b, captures, note)
 
 
 def node(node_id, node_type, step, step_label, question, hint, options, captured, note,
@@ -543,7 +548,7 @@ NODES = [
                   "from the Group IX (soft tissue sarcomas) tree."),
             refer("Neuroblastoma", 4,
                   "Neuroblastoma in bone is metastatic, and neuroblastoma belongs to ICCC-3 "
-                  "Group IV. Code the primary tumour from the Group IV tree."),
+                  "Group IV. Code the primary tumour from the Group IV tree.", recapture=True),
             code("Round cell sarcoma or undifferentiated round cell sarcoma, not further "
                  "classified", "8803", 7,
                  "Recorded as Small cell sarcoma (8803/3), whose ICD-O-3.2 synonym is Round "
@@ -587,7 +592,7 @@ NODES = [
             refer(["CD45"], 2, "CD45 marks a lymphoid neoplasm. Code the case from the Group "
                   "II (lymphomas) tree.", key="positive"),
             refer(["PHOX2B"], 4, "PHOX2B marks neuroblastoma, a Group IV tumour. Code the "
-                  "primary from the Group IV tree.", key="positive"),
+                  "primary from the Group IV tree.", key="positive", recapture=True),
             refer(["Myogenin"], 9, "Myogenin marks rhabdomyosarcoma, a Group IX tumour. Code "
                   "the case from the Group IX tree.", key="positive"),
             refer(["MyoD1"], 9, "MyoD1 marks rhabdomyosarcoma, a Group IX tumour. Code the "
@@ -799,18 +804,19 @@ NODES = [
         "Which primary tumour has spread to the bone?",
         "A metastasis in bone is coded from its primary tumour's group.",
         [
-            refer("Neuroblastoma", 4, "Code the primary neuroblastoma from the Group IV tree."),
+            refer("Neuroblastoma", 4, "Code the primary neuroblastoma from the Group IV tree.", recapture=True),
             refer("Rhabdomyosarcoma", 9, "Code the primary rhabdomyosarcoma from the Group IX "
-                  "tree."),
+                  "tree.", recapture=True),
             refer("Renal tumour (Wilms tumour, clear cell sarcoma of the kidney)", 6,
-                  "Code the primary renal tumour from the Group VI tree."),
-            refer("Retinoblastoma", 5, "Code the primary retinoblastoma from the Group V tree."),
+                  "Code the primary renal tumour from the Group VI tree.", recapture=True),
+            refer("Retinoblastoma", 5, "Code the primary retinoblastoma from the Group V tree.",
+                  recapture=True),
             refer("Liver tumour (hepatoblastoma, hepatocellular carcinoma)", 7,
-                  "Code the primary liver tumour from the Group VII tree."),
+                  "Code the primary liver tumour from the Group VII tree.", recapture=True),
             refer("Germ cell tumour", 10, "Code the primary germ cell tumour from the Group X "
-                  "tree."),
+                  "tree.", recapture=True),
             refer("Carcinoma or melanoma (for example nasopharyngeal carcinoma)", 11,
-                  "Code the primary carcinoma or melanoma from the Group XI tree."),
+                  "Code the primary carcinoma or melanoma from the Group XI tree.", recapture=True),
             go("A bone sarcoma that has spread from another bone (osteosarcoma, Ewing sarcoma, "
                "chondrosarcoma)", "bn_histology_line",
                note="A bone sarcoma metastatic to bone is still Group VIII; code it by its "
@@ -818,7 +824,7 @@ NODES = [
             refer("Primary not found, and the tumour type is not stated", 12,
                   "A metastasis whose primary is not found and whose type is not stated is "
                   "an unspecified malignancy of unknown primary site, which belongs to "
-                  "ICCC-3 Group XII."),
+                  "ICCC-3 Group XII.", captures={"topography": "C80.9"}),
         ],
         [],
         "Receives Group III's pf_secondary_deposit and un_metastatic_deposit 'bone' "

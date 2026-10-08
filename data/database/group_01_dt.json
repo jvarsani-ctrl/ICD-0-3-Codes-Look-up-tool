@@ -4651,6 +4651,14 @@
               }
             },
             {
+              "site": "Ovary (C56.9)",
+              "morphology_code": "9930",
+              "captures": {
+                "topography": "C56.9",
+                "myeloid_sarcoma_present": true
+              }
+            },
+            {
               "site": "Gastrointestinal tract (C26.9)",
               "morphology_code": "9930",
               "captures": {
