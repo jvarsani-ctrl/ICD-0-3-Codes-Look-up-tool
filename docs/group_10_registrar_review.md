@@ -107,13 +107,13 @@ list of every subgroup Xd code ICD-O-3.2 prints at /3 that the tree does not oth
 ovary, 81 at the testis), filtered by typing; the search box reaches it with the typed name already in
 the filter. TODO §34.
 
-**Five of the 80 stay off the screen, and that is a question for you.** ICD-O-3.2 marks the Preferred
-term of `8130/3`, `8141/3`, `8245/3`, `8440/3` and `8450/3` `[obs]`, and design D11 keeps an obsolete
-term off every screen (the build has warned about each since Group X was built; `8630/3`, malignant
-androblastoma, is in the same class and stays off the tree as before). A report that names one of them
-finds no option and no alias, so the clerk records the nearest current code, as before. If you want the
-obsolete codes offered, say so; the picker takes them back by deleting one filter
-(`build/group10_tree.py`, `preferred_is_obsolete`) and Group 10 rule 7 then stops exempting them.
+**Five of the 80 stay off the screen. Decided by the registrar, 8 October 2026: they stay off.**
+ICD-O-3.2 marks the Preferred term of `8130/3`, `8141/3`, `8245/3`, `8440/3` and `8450/3` `[obs]`, and
+design D11 keeps an obsolete term off every screen (the build has warned about each since Group X was
+built; `8630/3`, malignant androblastoma, is in the same class and stays off the tree as before). A
+report that names one of them finds no option and no alias, so the clerk records the nearest current
+code, as before. Group 10 rule 7 exempts these pairs from "every Xd code has an option" and fails any
+option that records one, so the ruling is enforced by the build.
 
 ### A12. Three teratoma searches find nothing (D21)
 
