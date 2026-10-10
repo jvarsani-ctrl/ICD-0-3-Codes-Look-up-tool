@@ -2539,7 +2539,7 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "What reports are in this patient's file?",
-          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "hint": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
           "tick_list": {
             "vocabulary": "evidence_documents",
             "resolve": "ask_siblings"
@@ -2564,7 +2564,7 @@
               }
             },
             {
-              "label": "Marrow aspirate / blood film morphology only (no flow cytometry, no IHC)",
+              "label": "Bone marrow aspirate (BMA), blood film or trephine morphology only — no flow cytometry, no IHC",
               "ticks": {
                 "any_of": [
                   "cytology",
@@ -2585,7 +2585,7 @@
               }
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology + flow cytometry and/or IHC — no genetic tests",
               "ticks": {
                 "requires": [
                   "lab"
@@ -2610,7 +2610,7 @@
               }
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology + flow cytometry and/or IHC — no genetic tests",
               "ticks": {
                 "requires": [
                   "ihc"
@@ -2635,7 +2635,7 @@
               }
             },
             {
-              "label": "Morphology + flow/IHC + cytogenetics / FISH",
+              "label": "Morphology + flow/IHC + karyotype or FISH only (including BCR::ABL1 FISH)",
               "ticks": {
                 "requires": [
                   "lab",
@@ -2659,7 +2659,7 @@
               }
             },
             {
-              "label": "Morphology + flow/IHC + cytogenetics / FISH",
+              "label": "Morphology + flow/IHC + karyotype or FISH only (including BCR::ABL1 FISH)",
               "ticks": {
                 "requires": [
                   "ihc",
@@ -2685,7 +2685,57 @@
               }
             },
             {
-              "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
+              "label": "Morphology + flow/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
+              "next_node": "ac_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Flow cytometry",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ac_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing (including BCR::ABL1 RT-PCR)",
               "ticks": {
                 "requires": [
                   "lab",
@@ -2710,7 +2760,7 @@
               }
             },
             {
-              "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
+              "label": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing (including BCR::ABL1 RT-PCR)",
               "ticks": {
                 "requires": [
                   "ihc",
@@ -2939,7 +2989,7 @@
               }
             },
             {
-              "label": "Report present — no defining abnormality found",
+              "label": "A genetics report is in the file and none of the abnormalities below were found (for example BCR::ABL1 negative)",
               "next_node": "ac_blast_gate",
               "captures": {
                 "aml_defining_genetic_abnormality": false,
@@ -2951,7 +3001,7 @@
               }
             },
             {
-              "label": "Karyotype normal — FISH / RT-PCR NOT performed",
+              "label": "Karyotype normal, and no FISH or RT-PCR in the file",
               "next_node": "ac_blast_gate",
               "coding_note": "A normal karyotype closes nothing. The cryptic set (ETV6::RUNX1, CBFA2T3::GLIS2, FIP1L1::PDGFRA, masked hypodiploidy) is invisible on karyotype.",
               "captures": {
@@ -2964,7 +3014,7 @@
               }
             },
             {
-              "label": "t(9;22) BCR::ABL1 positive",
+              "label": "BCR::ABL1 positive: t(9;22) on karyotype, or positive on FISH or RT-PCR",
               "next_node": "ac_blast_gate",
               "coding_note": "BCR::ABL1 does NOT override the blast threshold — AML-BCR::ABL1 still requires ≥20% (WHO-HAEM5) / ≥10% (ICC). Lineage assignment decides between 9812, 9806 and 9912.",
               "captures": {
@@ -3757,7 +3807,7 @@
               "coding_note": "No ICD-O-3.2 code exists for these. They fall back to 9811 with the genotype recorded, or the information is lost permanently (Pathway §5.2)."
             },
             {
-              "finding": "Karyotype normal — FISH / RT-PCR NOT performed",
+              "finding": "Karyotype normal, with no FISH or RT-PCR for ETV6::RUNX1 (a BCR::ABL1 result alone does not count)",
               "detection_method": "karyotype_only",
               "next_node": "ac_cryptic_fish_prompt",
               "coding_note": "A normal karyotype does not exclude ETV6::RUNX1 or masked hypodiploidy. Do not resolve to NOS yet.",
@@ -3766,7 +3816,7 @@
               }
             },
             {
-              "finding": "Karyotype normal AND FISH / RT-PCR negative for the cryptic set",
+              "finding": "Karyotype normal, and FISH or RT-PCR negative for ETV6::RUNX1",
               "detection_method": "karyotype_and_fish",
               "satisfies_tests": [
                 "Cytogenetics/FISH",
@@ -3774,7 +3824,7 @@
               ],
               "morphology_code": "9811",
               "coding_note": "The cryptic branch has been properly closed — 9811 is a defensible terminal here, not an incomplete workup.",
-              "upgrade_path": "None — the cryptic set has been excluded by an adequate method.",
+              "upgrade_path": "None — ETV6::RUNX1 was excluded by FISH or RT-PCR.",
               "captures": {
                 "cryptic_genetics_tested": "FISH performed",
                 "karyotype_result_status": "received"
@@ -3810,13 +3860,13 @@
           "node_type": "document_inventory",
           "step_number": 4,
           "step_label": "FISH status",
-          "question": "A normal karyotype cannot exclude the cryptic set. Has FISH or RT-PCR been performed since?",
+          "question": "A normal karyotype cannot exclude ETV6::RUNX1. Has FISH or RT-PCR for ETV6::RUNX1 been performed since?",
           "hint": "This branch deliberately cannot close to NOS. It closes to 9811 only with the missing test named on the record.",
           "clinical_alert": null,
           "coding_note": "The cryptic set for B-ALL is ETV6::RUNX1 (FISH or RT-PCR) and masked hypodiploidy (SNP array or DNA index). A normal karyotype must never close either branch (Pathway §4.4).",
           "options": [
             {
-              "label": "FISH / RT-PCR now available — go back and enter the result",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 now available — go back and enter the result",
               "next_node": "ac_ball_cytogenetics",
               "captures": {
                 "cryptic_genetics_tested": "FISH performed",
@@ -3824,11 +3874,11 @@
               }
             },
             {
-              "label": "FISH / RT-PCR requested — result pending",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 requested — result pending",
               "next_node": "ac_cryptic_unresolved"
             },
             {
-              "label": "FISH / RT-PCR not available at this facility",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 not available at this facility",
               "next_node": "ac_cryptic_unresolved"
             }
           ],
@@ -3838,8 +3888,8 @@
           "node_id": "ac_cryptic_unresolved",
           "node_type": "morphology_only",
           "step_number": 4,
-          "step_label": "Cryptic set unresolved",
-          "question": "Record why the cryptic set could not be tested. The case codes 9811 with the missing test named.",
+          "step_label": "ETV6::RUNX1 not tested",
+          "question": "Record why ETV6::RUNX1 could not be tested. The case codes 9811 with the missing test named.",
           "hint": "9811 here is an honest incomplete-workup terminal, not a considered NOS. The record must say which.",
           "coding_note": "A case coded NOS must record WHY, via karyotype_result_status (pending / not done / unavailable / declined). \"Cytogenetics unavailable at UCI\" is a legitimate permanent terminal state (Pathway §2.5).",
           "options": [
@@ -3869,7 +3919,7 @@
               "label": "Test declined or not done for another reason",
               "morphology_code": "9811",
               "confidence": "medium",
-              "upgrade_path": "FISH or RT-PCR for the cryptic set would upgrade this code; the test was not done.",
+              "upgrade_path": "FISH or RT-PCR for ETV6::RUNX1 would upgrade this code; the test was not done.",
               "captures": {
                 "karyotype_result_status": "not done",
                 "cryptic_genetics_tested": "not tested"
@@ -4712,7 +4762,7 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "What reports are in this patient's file?",
-          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "hint": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
           "tick_list": {
             "vocabulary": "evidence_documents",
             "resolve": "ask_siblings"
@@ -4738,7 +4788,7 @@
               }
             },
             {
-              "label": "Blood film and/or marrow morphology only (no flow cytometry, no IHC)",
+              "label": "Bone marrow aspirate (BMA), blood film or trephine morphology only — no flow cytometry, no IHC",
               "ticks": {
                 "any_of": [
                   "cytology",
@@ -4760,7 +4810,7 @@
               }
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology + flow cytometry and/or IHC — no genetic tests",
               "ticks": {
                 "requires": [
                   "lab"
@@ -4786,7 +4836,7 @@
               }
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology + flow cytometry and/or IHC — no genetic tests",
               "ticks": {
                 "requires": [
                   "ihc"
@@ -4812,7 +4862,111 @@
               }
             },
             {
-              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
+              "label": "Morphology + flow/IHC + karyotype or FISH only",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + karyotype or FISH only",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + PCR or sequencing only",
+              "ticks": {
+                "requires": [
+                  "lab",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Flow cytometry",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + PCR or sequencing only",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ],
+                "excludes": [
+                  "lab"
+                ]
+              },
+              "next_node": "ml_compartment_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "workup_status": "complete",
+                "htlv1_status": "not tested",
+                "karyotype_result_status": "not done"
+              }
+            },
+            {
+              "label": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing",
               "ticks": {
                 "requires": [
                   "lab",
@@ -4838,7 +4992,7 @@
               }
             },
             {
-              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
+              "label": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing",
               "ticks": {
                 "requires": [
                   "ihc",
@@ -7382,7 +7536,7 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "What reports are in this patient's file?",
-          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "hint": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
           "tick_list": {
             "vocabulary": "evidence_documents",
             "resolve": "ask_siblings"
@@ -7408,7 +7562,7 @@
               }
             },
             {
-              "label": "Blood film and/or marrow morphology only (no cytogenetics, no molecular)",
+              "label": "Bone marrow aspirate (BMA), blood film or trephine morphology only — no karyotype, FISH, PCR or sequencing",
               "ticks": {
                 "any_of": [
                   "cytology",
@@ -7429,7 +7583,7 @@
               }
             },
             {
-              "label": "Morphology + cytogenetics / FISH",
+              "label": "Morphology + karyotype or FISH only (including BCR::ABL1 FISH)",
               "ticks": {
                 "requires": [
                   "genetics"
@@ -7450,7 +7604,28 @@
               }
             },
             {
-              "label": "Morphology + cytogenetics / FISH + molecular / PCR / NGS",
+              "label": "Morphology + PCR or sequencing only (including BCR::ABL1 RT-PCR, JAK2, CALR, MPL and NGS)",
+              "ticks": {
+                "requires": [
+                  "genetics"
+                ],
+                "any_of": [
+                  "cytology",
+                  "histology"
+                ]
+              },
+              "next_node": "mpn_prior_therapy_gate",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "complete"
+              }
+            },
+            {
+              "label": "Morphology + karyotype or FISH, and PCR or sequencing (including BCR::ABL1 RT-PCR)",
               "ticks": {
                 "requires": [
                   "genetics"
@@ -8804,7 +8979,7 @@
           "step_number": 2,
           "step_label": "Evidence in file",
           "question": "What reports are in this patient's file?",
-          "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
+          "hint": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
           "tick_list": {
             "vocabulary": "evidence_documents",
             "resolve": "ask_siblings"
@@ -8832,7 +9007,7 @@
               }
             },
             {
-              "label": "Blood film / marrow aspirate morphology only (no trephine, no IHC, no cytogenetics)",
+              "label": "Bone marrow aspirate (BMA) or blood film morphology only — no trephine, no IHC, no genetic tests",
               "ticks": {
                 "any_of": [
                   "cytology",
@@ -8851,7 +9026,7 @@
               }
             },
             {
-              "label": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)",
+              "label": "Bone marrow aspirate (BMA) + trephine biopsy with IHC (CD61 / CD41 performed) — no genetic tests",
               "ticks": {
                 "requires": [
                   "cytology",
@@ -8876,7 +9051,7 @@
               }
             },
             {
-              "label": "Marrow + trephine/IHC + cytogenetics / FISH",
+              "label": "Marrow + trephine/IHC + karyotype or FISH only (including BCR::ABL1 FISH)",
               "ticks": {
                 "requires": [
                   "cytology",
@@ -8899,7 +9074,30 @@
               }
             },
             {
-              "label": "Marrow + trephine/IHC + cytogenetics + molecular / PCR / NGS",
+              "label": "Marrow + trephine/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
+              "ticks": {
+                "requires": [
+                  "cytology",
+                  "histology",
+                  "ihc",
+                  "genetics"
+                ]
+              },
+              "next_node": "mds_marrow_pattern",
+              "captures": {
+                "evidence_tests": [
+                  "Histology",
+                  "IHC",
+                  "Molecular/PCR"
+                ],
+                "karyotype_result_status": "not done",
+                "workup_status": "complete",
+                "germline_predisposition": "not tested",
+                "ibmfs_exclusion_status": "not tested"
+              }
+            },
+            {
+              "label": "Marrow + trephine/IHC + karyotype or FISH, and PCR or sequencing (including BCR::ABL1 RT-PCR)",
               "ticks": {
                 "requires": [
                   "cytology",

@@ -3087,7 +3087,7 @@
       "prompt": "Tick every report that is in the file.",
       "context_prompt": "Does one of these apply?",
       "none_label": "None of these. Code from the reports ticked above.",
-      "sibling_prompt": "More than one description fits what is in the file. Pick the one that describes it.",
+      "sibling_prompt": "The reports ticked fit more than one description. Pick the one that says what the reports contain.",
       "items": [
         {
           "id": "referral",

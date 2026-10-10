@@ -1062,7 +1062,7 @@ function tickControl(n) {
 function tickSiblings(n, tl) {
   var offered = tickOffered(n, arr(state.captured[tl.variable]));
   return '<p class="node__hint">' + esc(tl.sibling_prompt ||
-    'More than one description fits what is in the file. Pick the one that describes it.') + '</p>' +
+    'The reports ticked fit more than one description. Pick the one that says what the reports contain.') + '</p>' +
     pick('tickopt', offered.map(function (c) {
       return { label: optionLabel(c.o), meta: priorText(c.o.prior_probability) || null, alert: c.o.clinical_alert || null };
     }));
