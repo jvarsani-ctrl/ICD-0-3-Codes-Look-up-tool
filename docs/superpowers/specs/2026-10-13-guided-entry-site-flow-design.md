@@ -19,7 +19,7 @@ Branch: `claude/guided-entry-site-flow`, from `origin/main`. Separate from PR #1
 | 2 | "Where is the disease centred?" marrow / nodes / other organ | Body system (15). Skipped when the presentation fixes the system, as blood and marrow does |
 | 3 | "Which organ system?" (flat list of 48 crosswalk rows). For blood and marrow it is a one-option confirmation tap | Organ within the system. Skipped when the system has one organ |
 | 4 | "Where in …?" (the ICD-O code list) | Unchanged, except its question for blood and marrow is reworded. Skipped when the organ has one code |
-| 5 | none | "Is the bone marrow also involved?" Asked only when it can change the group (see below) |
+| 5 | none | "Is the bone marrow also involved?" Yes / No / Not known yet. Asked only when it can change the group (see below) |
 
 The 48 crosswalk rows stay as they are. They become step 3. The new layer is step 2.
 
@@ -88,9 +88,11 @@ Organ labels name what they bundle. "Major salivary glands" becomes "Salivary gl
 The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 and 9827 read `primary_compartment`: marrow is Group I, anything else is Group II, and marrow blasts ≥25% override it for 9811–9819. Today the compartment is asked before the site, and its answer shields Group I from the site narrowing. If the site were asked first with no other change, a lymph node would remove Group I, because the lymph node row lists Groups II and IX only.
 
 **Design.**
-- The discriminator `primary_compartment` becomes a yes/no question, "Is the bone marrow also involved?", with answers `marrow` (Yes) and `not_marrow` (No). Nodal and extranodal merge. In all three rules above they route identically, because the extranodal answer falls to the same default as nodal. The rules' nodal and extranodal branches become one `not_marrow` branch.
+- The discriminator `primary_compartment` becomes a three-answer question, "Is the bone marrow also involved?", with answers `marrow` (Yes), `not_marrow` (No) and `not_known` (Not known yet). Nodal and extranodal merge. In all three rules above they route identically, because the extranodal answer falls to the same default as nodal. The rules' nodal and extranodal branches become one `not_marrow` branch.
 - **Yes** sets `marrow`, drops Group II, and carries `keep_on_site: [1]` so the site cannot remove Group I.
 - **No** sets `not_marrow` and drops Group I.
+- **Not known yet** sets `not_known`, drops nothing, and carries `keep_on_site: [1]`. Both Groups I and II stay offered, and the "which family?" question decides. It exists because a clerk holding a blood count or a nodal biopsy often has no marrow result yet, and a blood count cannot answer the question: no rule in the router or in any group's data uses one to choose between Groups I and II. The marrow rules read the marrow blast percentage. The one place a count separates the groups is inside a single code (chronic lymphocytic leukaemia against small lymphocytic lymphoma, 9823).
+- **What the rules do with `not_known`.** The three dual-group rules fall to Group II when no branch matches, so a case answered "Not known yet" and then filed under Group I could be sent to Group II when its morphology is reached. The plan first reads how `dual_group_rules` are evaluated once the clerk has chosen a group, and then gives each of the three rules an explicit `not_known` branch that keeps the clerk's chosen group. A new build check requires every rule that reads `primary_compartment` to carry a branch for all three answers. If a rule cannot honour the chosen group, the plan stops and returns to the registrar.
 - **Auto-answer.** When the chosen code is C42.0, C42.1, C42.3 or C42.4, the compartment is `marrow` and the question is not shown. That list is the one the `9811-9819` rule already carries. A build check requires the discriminator's list to equal it, so there is one truth. The spleen (C42.2) is the only C42 code that is asked.
 - **When it is asked.** The discriminator declares an `ask_when` condition in the router: Group I is among the presentation's candidates before the site narrows them, and the chosen site's own candidate list includes Group II. The engine reads the declaration and holds no group numbers. Examples: a kidney tumour never sees it (the kidney lists Group VI only); a lymph node or the thyroid under "enlarged lymph nodes" or "not sure" does.
 - The question is asked after the site, so it sits between the region step and the group decision. `ask_before_site` is dropped from this discriminator.
@@ -105,6 +107,7 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 ## 6. Verification
 
 - Engine gate (`build/check_engine_flow.mjs`), new cases:
+  - Lymph node, "Not known yet": Groups I and II are both offered at the family question, and a Group I choice is not sent to Group II afterwards.
   - ALL with enlarged nodes: pick the lymph node, answer Yes, end in Group I.
   - The same case, answer No: Group II.
   - Lymphoma in a node, with no marrow involvement: Group II.
@@ -114,7 +117,7 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
   - A search-led entry still reaches its group.
   - Marrow blasts ≥25% with answer No: the plan first reads when `marrow_blast_percentage` is captured relative to the group decision, then pins the result to today's behaviour. The old nodal answer dropped Group I in the same place, so the test records what happens now and does not promise a change.
 - **Routing unchanged.** For every group, the router's group outputs are identical before and after for every case that does not involve the compartment. The plan states the comparison method.
-- Negative controls for each new build check, run in memory against the real check: an organ in two systems, an organ in none, an unknown organ id, an empty system, a duplicate label, a discriminator auto-answer list that differs from the 9811-9819 rule, a rule branch reading `nodal`.
+- Negative controls for each new build check, run in memory against the real check: an organ in two systems, an organ in none, an unknown organ id, an empty system, a duplicate label, a discriminator auto-answer list that differs from the 9811-9819 rule, a rule branch reading `nodal`, a rule that reads `primary_compartment` with no `not_known` branch.
 - The in-app browser: drive the blood and marrow path and the lymph node path through the real page, and check the trail text.
 
 ## Not in this change
@@ -128,4 +131,3 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 
 1. The trail headings in section 5.
 2. Whether the plan should add the ICD-O-3.2 topography-chapter check if a source file exists.
-3. **A third answer to the marrow question.** A clerk with swollen nodes often does not yet know the marrow result. "No" drops Group I, as the old nodal answer did, so an unknown marrow reads as a firm no. A third answer, "Not known yet", would drop nothing and leave the "which family?" question to decide. A blood count cannot stand in for the answer: no rule in the router or in any group's data uses one to choose between Groups I and II. The marrow rules read the marrow blast percentage. The one place a count separates the groups is inside a single code (chronic lymphocytic leukaemia against small lymphocytic lymphoma, 9823), not in this question. A clerk holding a count but no marrow result has no honest Yes or No. This goes beyond the yes/no design approved in conversation. It is a small data addition, and the registrar decides whether it belongs.
