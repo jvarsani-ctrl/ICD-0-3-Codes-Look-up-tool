@@ -1102,8 +1102,14 @@ function tickControl(n) {
   var on = ticksNow(tl);
   var h = '<p class="node__hint" id="tick-prompt">' + esc(tl.prompt || 'Tick every item that applies.') + '</p>' +
     '<div class="checks" role="group" aria-labelledby="tick-prompt">' + tl.items.map(function (it) {
+      /* The line under the name shows only while the box is ticked: it says what the document is, and an
+         unticked list stays as short as the names. */
+      var ticked = on.indexOf(it.id) !== -1, about = ticked && it.about;
       return '<label class="check"><input type="checkbox" data-act="tick" data-id="' + esc(it.id) + '"' +
-        (on.indexOf(it.id) !== -1 ? ' checked' : '') + '> ' + esc(it.label) + '</label>';
+        (ticked ? ' checked' : '') + (about ? ' aria-describedby="about-' + esc(it.id) + '"' : '') + '> ' +
+        '<span class="check__body"><span class="check__text">' + esc(it.label) + '</span>' +
+        (about ? '<span class="check__about" id="about-' + esc(it.id) + '">' + esc(it.about) + '</span>' : '') +
+        '</span></label>';
     }).join('') + '</div>';
   var ctx = tickContexts(n);
   if (ctx.length && tl.resolve === 'ask_siblings') {

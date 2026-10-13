@@ -3251,7 +3251,7 @@
     }
   },
   "tick_vocabularies": {
-    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order.",
+    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order. An item may carry `about`: one short line that the engine shows under the box only while it is ticked, so the clerk can see what the document is without a grey line on every row.",
     "evidence_documents": {
       "variable": "documents_in_file",
       "label": "Documents in file",
@@ -3262,31 +3262,38 @@
       "items": [
         {
           "id": "referral",
-          "label": "Referral Letter/Clinical Note"
+          "label": "Referral letter or clinical notes",
+          "about": "A letter or notes from the referring clinician."
         },
         {
           "id": "imaging",
-          "label": "Imaging Report"
+          "label": "Imaging report",
+          "about": "X-ray, ultrasound, CT or MRI."
         },
         {
           "id": "lab",
-          "label": "Lab Report"
+          "label": "Laboratory results",
+          "about": "Blood or urine tests: blood count, tumour markers such as AFP and hCG, hormone levels, flow cytometry."
         },
         {
           "id": "cytology",
-          "label": "Cytology"
+          "label": "Cytology report",
+          "about": "Cells from a needle aspirate, a fluid, a blood film or a marrow aspirate smear."
         },
         {
           "id": "histology",
-          "label": "Histology Report"
+          "label": "Histology report",
+          "about": "A biopsy or surgical specimen, including a bone marrow trephine."
         },
         {
           "id": "ihc",
-          "label": "IHC Report"
+          "label": "Immunohistochemistry (IHC) report",
+          "about": "Stains on tissue or cells that show which proteins the tumour carries."
         },
         {
           "id": "genetics",
-          "label": "Gene reports for cancer"
+          "label": "Genetic test report",
+          "about": "Karyotype, FISH, PCR or sequencing."
         }
       ]
     }

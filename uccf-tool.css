@@ -643,6 +643,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .checks { display: flex; flex-direction: column; gap: var(--sp-1); margin-bottom: var(--sp-3); }
 .check { display: flex; align-items: flex-start; gap: var(--sp-2); font-size: var(--fs-body); }
 .check input { margin-top: 3px; }
+/* The name, and under it the one line that says what the document is, shown only while the box is ticked. */
+.check__body { display: flex; flex-direction: column; }
+.check__about { font-size: var(--fs-small); color: var(--ink-700); font-weight: var(--w-regular); }
 /* The rows a thumb taps — the document boxes, the radio rows under a filter and the
    "Not in the file" box — are 44px tall, the target size WCAG 2.5.5 asks for. */
 .checks .check, .labrow__absent { min-height: 44px; align-items: center; }

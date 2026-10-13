@@ -942,10 +942,21 @@ async function uxScenarios(ctx) {
   };
   begin(fxDt, 'fx', 'fx_gate', 'C56.9');
   const screenA = rend(() => ctx.renderLiveNode());
-  const DOCS = ['Referral Letter/Clinical Note', 'Imaging Report', 'Lab Report', 'Cytology', 'Histology Report', 'IHC Report', 'Gene reports for cancer'];
-  t('the checklist shows the seven documents in the registrar\'s words, and one Continue',
-    DOCS.every((d) => screenA.includes('> ' + d + '</label>')) && countButtons(screenA, 'tick') === 7 && countButtons(screenA, 'tick-continue') === 1,
+  const DOCS = ['Referral letter or clinical notes', 'Imaging report', 'Laboratory results', 'Cytology report', 'Histology report', 'Immunohistochemistry (IHC) report', 'Genetic test report'];
+  t('the checklist shows the seven documents by name, and one Continue',
+    DOCS.every((d) => screenA.includes('<span class="check__text">' + ctx.esc(d) + '</span>')) && countButtons(screenA, 'tick') === 7 && countButtons(screenA, 'tick-continue') === 1,
     'the screen is missing a document or a Continue');
+  /* The line that says what a document is shows under its name only while its box is ticked. */
+  const labAbout = (router.tick_vocabularies.evidence_documents.items.find((x) => x.id === 'lab') || {}).about;
+  t('no document is explained until its box is ticked', !/check__about/.test(screenA), 'an explanation shows with nothing ticked');
+  await tick('lab', true);
+  const screenLab = rend(() => ctx.renderLiveNode());
+  t('ticking Laboratory results shows what it means, under its name and under no other', !!labAbout && screenLab.includes(ctx.esc(labAbout)) &&
+    (screenLab.match(/check__about/g) || []).length === 1 && screenLab.indexOf('check__text">Laboratory results') < screenLab.indexOf(ctx.esc(labAbout)),
+    'about: ' + labAbout + ', lines shown: ' + (screenLab.match(/check__about/g) || []).length);
+  await tick('lab', false);
+  t('unticking it takes the line away again', !/check__about/.test(rend(() => ctx.renderLiveNode())), 'the line stayed after the box was cleared');
+  begin(fxDt, 'fx', 'fx_gate', 'C56.9');
   t('a special situation is offered under the boxes, defaulting to none', /None of these/.test(screenA) && /Specimen inadequate/.test(screenA), 'no context list');
   t('the context list carries its own filter box', countButtons(screenA, 'filter') === 1, 'filter boxes: ' + countButtons(screenA, 'filter'));
   let st = await run(['imaging', 'lab']);
@@ -965,7 +976,7 @@ async function uxScenarios(ctx) {
   t('a special situation routes at once, whatever is ticked', st.nodeId === 'fx_inadequate', 'went to ' + st.nodeId);
   await run(['imaging']);
   t('a tier the engine takes by itself stays out of "Suggested based on", which lists the documents ticked',
-    /Imaging Report/.test(ctx.basisFromTrail()) && !/Imaging only/.test(ctx.basisFromTrail()) && /Imaging only/.test(ctx.state.trail.map((x) => x.value).join('|')),
+    /Imaging report/.test(ctx.basisFromTrail()) && !/Imaging only/.test(ctx.basisFromTrail()) && /Imaging only/.test(ctx.state.trail.map((x) => x.value).join('|')),
     'basis: ' + ctx.basisFromTrail());
   await run(['histology', 'ihc']); await tap('tickopt', 1);
   t('a tier the clerk picks on the second screen is their answer and stays in "Suggested based on"',
@@ -973,7 +984,7 @@ async function uxScenarios(ctx) {
   {
     await run(['imaging', 'lab']);
     const trail = ctx.state.trail.map((x) => x.label + ': ' + x.value);
-    t('the trail names the documents ticked, then the tier taken', /Imaging Report, Lab Report/.test(trail.join(' | ')) && ctx.state.trail.length === 2, JSON.stringify(trail));
+    t('the trail names the documents ticked, then the tier taken', /Imaging report, Laboratory results/.test(trail.join(' | ')) && ctx.state.trail.length === 2, JSON.stringify(trail));
     await tap('rewind', 1);
     const again = rend(() => ctx.renderLiveNode());
     t('stepping back to the tier taken automatically shows the checklist, with the documents ticked as they were',
@@ -1197,7 +1208,7 @@ async function uxScenarios(ctx) {
     t('the panel is one trail entry that summarises it, and stays out of "Suggested based on"',
       ctx.state.trail.length === 1 && /Alpha-fetoprotein \(AFP\) 2\.1 IU\/mL/.test(ctx.state.trail[0].value) && /1 not in the file/.test(ctx.state.trail[0].value) && !/2\.1/.test(ctx.basisFromTrail()),
       JSON.stringify(ctx.state.trail.map((x) => x.value)) + ' | basis ' + ctx.basisFromTrail());
-    t('a result in the panel ticks Lab Report on the checklist that follows',
+    t('a result in the panel ticks Laboratory results on the checklist that follows',
       JSON.stringify(ctx.state.captured.documents_in_file) === '["lab"]' && /data-id="lab" checked/.test(rend(() => ctx.renderLiveNode())), 'captured ' + JSON.stringify(ctx.state.captured.documents_in_file));
     startLabs();
     await tap('labs-continue');

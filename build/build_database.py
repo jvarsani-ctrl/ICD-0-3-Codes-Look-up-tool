@@ -11980,11 +11980,17 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             break
     for vname_, voc in sorted(vocabularies.items()):
         for text in [voc.get(k) for k in ("prompt", "context_prompt", "none_label", "sibling_prompt")] + \
-                    [it.get("label") for it in voc.get("items", []) if isinstance(it, dict)]:
+                    [it.get("label") for it in voc.get("items", []) if isinstance(it, dict)] + \
+                    [it.get("about") for it in voc.get("items", []) if isinstance(it, dict)]:
             for tok in INTERNAL_IDENTIFIER_TOKENS:
                 if isinstance(text, str) and tok in text:
                     out.append((FAIL, "router tick_vocabularies.%s: %r contains the internal identifier "
                                       "%r; a clerk reads this text" % (vname_, text, tok)))
+    for vname_, voc in sorted(vocabularies.items()):
+        for it in voc.get("items", []):
+            if isinstance(it, dict) and "about" in it and (not isinstance(it["about"], str) or not it["about"].strip()):
+                out.append((FAIL, "router tick_vocabularies.%s item %r: `about` must be a non-empty line of text, "
+                                  "not %r; the engine shows it under the ticked box" % (vname_, it.get("id"), it["about"])))
     for node_id, node in sorted(ctx.nodes.items()):
         tl = node.get("tick_list")
         options = node.get("options") if isinstance(node.get("options"), list) else []
