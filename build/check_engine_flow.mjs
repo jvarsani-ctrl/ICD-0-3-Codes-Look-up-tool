@@ -945,6 +945,17 @@ async function uxScenarios(ctx) {
     await run(['imaging', 'lab']);
     const trail = ctx.state.trail.map((x) => x.label + ': ' + x.value);
     t('the trail names the documents ticked, then the tier taken', /Imaging Report, Lab Report/.test(trail.join(' | ')) && ctx.state.trail.length === 2, JSON.stringify(trail));
+    {
+      /* The tier is the engine's description of the boxes ticked. Drawn as a second row it reads as
+         a second question (registrar, 13 October 2026), so neither layout draws it, but it stays
+         in the trail: indexes, stepping back and the case record are unchanged. */
+      const rail = rend(() => ctx.renderRail()), rows = rend(() => ctx.renderTrailRows());
+      const kept = ctx.state.trail.map((x) => x.value).join('|');
+      t('the engine\'s own tier row is drawn in neither layout, though it stays in the trail',
+        /Imaging Report, Lab Report/.test(rail) && /Imaging Report, Lab Report/.test(rows) &&
+        !/Imaging and markers/.test(rail) && !/Imaging and markers/.test(rows) && /Imaging and markers/.test(kept),
+        'rail: ' + rail.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 200));
+    }
     await tap('rewind', 1);
     const again = rend(() => ctx.renderLiveNode());
     t('stepping back to the tier taken automatically shows the checklist, with the documents ticked as they were',

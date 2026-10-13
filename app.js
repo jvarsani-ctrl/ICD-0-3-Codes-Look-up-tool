@@ -402,9 +402,18 @@ function contextLabel() {
 
 /* The rail and the transcript are NOT two implementations. They are one
    caseTrail array rendered two ways (engine.md §3). */
+/* A trail entry the engine took by itself and marked quiet is its own description of what
+   the clerk ticked ("Morphology and flow cytometry" beside "Marrow aspirate, Flow cytometry"),
+   not an answer. Drawn as a second row it reads as a second question and the clerk asks
+   what the difference is (registrar, 13 October 2026). It stays in the trail, so stepping
+   back and the indexes are unchanged; it is only not drawn. An entry the clerk typed (the
+   laboratory results) is quiet but not automatic, so it stays. */
+function drawnInTrail(t) { return !(t.quiet && t.automatic); }
+
 function renderRail() {
   var h = '<div class="tag rail__title">This case</div>';
   state.trail.forEach(function (t, i) {
+    if (!drawnInTrail(t)) return;
     h += '<button class="rail__row" data-act="rewind" data-i="' + i + '">' +
          '<b>' + esc(t.label) + '</b><span>' + esc(t.value) + '</span></button>';
   });
@@ -415,6 +424,7 @@ function renderRail() {
 }
 function renderTrailRows() {
   return state.trail.map(function (t, i) {
+    if (!drawnInTrail(t)) return '';
     return '<button class="trail-row" data-act="rewind" data-i="' + i + '">' +
       '<em>' + esc(t.label) + '</em>' +
       '<b><span class="trail-row__tick">&check;</span> ' + esc(t.value) + '</b>' +
