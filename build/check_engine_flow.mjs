@@ -1074,7 +1074,10 @@ async function uxScenarios(ctx) {
     t('picker: the screen offers the whole panel to add from, no result buttons and no "not done"',
       countButtons(hp, 'pickadd') === 4 && countButtons(hp, 'markerset') === 0 && !/not done|not read/i.test(hp.replace(/A marker you do not add is treated as not done\./, '')),
       'pickadd ' + countButtons(hp, 'pickadd') + ', markerset ' + countButtons(hp, 'markerset'));
+    t('picker: the markers are a dropdown that opens from the search box, not a list standing open on the screen',
+      /<div class="optbox optbox--dropdown">/.test(hp) && /placeholder="Search or choose a marker"/.test(hp), hp.slice(0, 240));
     await tap('pickadd', 0);
+    t('picker: choosing a marker moves the focus to that marker\'s results, which closes the dropdown', /data-act="markerset"\]\[data-m="A"\]/.test(ctx.state.focusNext || ''), 'focusNext ' + ctx.state.focusNext);
     hp = screenP();
     t('picker: an added marker gets a row with its results and leaves the list; strength is offered only where a rule grades it',
       countButtons(hp, 'pickadd') === 3 && /aria-label="A: Positive"/.test(hp) && /aria-label="A: Strongly positive"/.test(hp) &&

@@ -499,6 +499,38 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* The filter box above a list of options, and the line shown when it hides them all. */
 .optbox { margin-bottom: var(--sp-3); }
 .optbox__find { margin-bottom: var(--sp-2); }
+/* A list that opens from its search box (the marker picker). Closed until the box or a row has the
+   focus; open, it opens in place (a floating list is clipped by the frame the tool runs in), scrolls,
+   and shows only the markers not yet added. Choosing one redraws the screen, which closes it and
+   leaves that marker as its own row. */
+.optbox--dropdown .optbox__find { position: relative; margin-bottom: 0; }
+.optbox--dropdown .optbox__find input { padding-right: calc(var(--sp-5) + var(--sp-3)); }
+.optbox--dropdown .optbox__find::after {
+  content: "";
+  position: absolute;
+  right: var(--sp-3);
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -6px;
+  border: solid var(--color-muted);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.optbox--dropdown .opts, .optbox--dropdown .optbox__none { display: none; }
+.optbox--dropdown:focus-within .opts {
+  display: flex;
+  max-height: 18rem;
+  overflow-y: auto;
+  margin: var(--sp-1) 0 0;
+  padding: var(--sp-1);
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+.optbox--dropdown:focus-within .optbox__none:not([hidden]) { display: block; }
 .optbox .opts, .optbox .checks { margin-bottom: 0; }
 .optbox__none { margin: var(--sp-2) 0 0; color: var(--color-muted); font-size: var(--fs-small); }
 .opt__label { font-weight: var(--w-semi); font-size: var(--fs-body); }
