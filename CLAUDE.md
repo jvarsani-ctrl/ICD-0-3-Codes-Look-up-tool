@@ -90,7 +90,13 @@ These apply to every session and every subagent working in this repository.
 11. **A green data build is not a working tool.** `build_database.py` validates
     the data; `check_engine_flow.mjs` drives the engine. The defects that forced
     the engine gate into existence sat in the seam between them. Drive the UI
-    before believing a pass.
+    before believing a pass. Registrar's ruling, 13 October 2026: drive several
+    varied scenarios through the real page, on every task, and make them awkward
+    on purpose: a test ticked without the one beneath it, a missing result, a rare
+    entity. Read the output (code, topography, group, trail) as well as the path.
+    One such scenario found that a marrow aspirate with PCR and no flow or IHC
+    was routed past the genetics question, so a BCR::ABL1-positive ALL could not
+    be coded; every automated check had passed.
 12. **Build every part before verifying.** Finish the whole piece, then verify
     once. Per-part checks spend time on failures a later part removes: on
     Group 1, validating between trees gave 132, then 88, then 4 failures that
