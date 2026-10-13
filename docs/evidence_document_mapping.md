@@ -19,6 +19,8 @@ What each document was taken to mean:
 | IHC Report | immunohistochemistry panel, including in-situ hybridisation read as a stain (for example EBER) |
 | Gene reports for cancer | karyotype, FISH, RT-PCR, sequencing or NGS, MLPA, methylation profiling, clonality testing |
 
+**Renamed on 13 October 2026.** The clerk reads: Referral letter or clinical notes; Imaging report; Laboratory results (was Lab Report); Cytology report; Histology report; Immunohistochemistry (IHC) report; Genetic test report (was Gene reports for cancer). While a box is ticked, one line from the item's `about` in the router says what the document is, for example "Blood or urine tests: blood count, tumour markers such as AFP and hCG, hormone levels, flow cytometry." The tables in this document keep the earlier names, which the rules and rationales were written against; the ids in `docs/evidence_documents/` did not change.
+
 The three haematology readings in bold (flow cytometry as Lab Report, blood film and marrow aspirate as Cytology, trephine as Histology Report) are the registrar's to confirm.
 
 ## Added on 6 October, after review

@@ -17,7 +17,8 @@
       ],
       "note": "Group 1's Ia4 dual-group rule for 9591 turns on exactly the C42.2-vs-rest distinction, so these four codes are individually addressable below, never lumped as C42.x.",
       "label": "Blood, bone marrow and haematopoietic system",
-      "region_hint": "Every leukaemia except myeloid sarcoma is recorded at C42.1 Bone marrow, wherever the blasts were seen (WHO ICD-O-3 Rule E). Pick C42.2 Spleen only for a lymphoma that arose in the spleen; a myeloid sarcoma is recorded at the organ it arose in."
+      "region_hint": "Every leukaemia except myeloid sarcoma is recorded at C42.1 Bone marrow, wherever the blasts were seen (WHO ICD-O-3 Rule E). Pick C42.2 Spleen only for a lymphoma that arose in the spleen; a myeloid sarcoma is recorded at the organ it arose in.",
+      "region_question": "Which of these does the disease arise in?"
     },
     {
       "organ": "kidney",
@@ -539,7 +540,7 @@
       "candidate_groups": [
         11
       ],
-      "label": "Lip and oral cavity"
+      "label": "Lip, tongue, gum, floor of mouth, palate and cheek"
     },
     {
       "organ": "salivary_glands",
@@ -554,7 +555,7 @@
       "candidate_groups": [
         11
       ],
-      "label": "Major salivary glands"
+      "label": "Salivary glands (parotid, submandibular, sublingual)"
     },
     {
       "organ": "tonsil_oropharynx_hypopharynx",

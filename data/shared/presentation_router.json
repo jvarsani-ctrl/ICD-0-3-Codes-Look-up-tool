@@ -1,9 +1,9 @@
 {
-  "_comment": "Shared cross-group front door. See Architecture & File System §4C/§5/§6 and Decision Tree JSON Build master §3A-§3C/§6. Router-tier only: clinical_presentation (Stage 0) and site_capture (Stage 1) live here, never in a group_XX_dt.json. Moment 1 narrowing implemented 4 Sep 2026: the presentation gives an advisory candidate list, the discriminator drops what its answer excludes, and the topography intersects what is left. The family question is asked only when more than one group survives all three, and never when none of the survivors is built.",
+  "_comment": "Shared cross-group front door. See Architecture & File System §4C/§5/§6 and Decision Tree JSON Build master §3A-§3C/§6. Router-tier only: clinical_presentation (Stage 0) and site_capture (Stage 1) live here, never in a group_XX_dt.json. Moment 1 narrowing implemented 4 Sep 2026: the presentation gives an advisory candidate list, the discriminator drops what its answer excludes, and the topography intersects what is left. The family question is asked only when more than one group survives all three, and never when none of the survivors is built. | site_systems: the body systems the clerk picks before an organ. Each lists crosswalk organ ids; every organ sits in exactly one (build check). The grouping follows the ICD-O topography site blocks, with two departures: Lymph nodes is its own system and Reproductive organs merges the female and male genital blocks. A discriminator may declare ask_when {candidates_include, site_lists}: ask it after the site, only when every listed group is still a candidate and the chosen site's own list names every listed group; and auto_answer {answer: {topography_in}}: set the answer from the recorded topography and show no question. A dual-group result of group null means the case keeps the group the clerk was routed to.",
   "archetypes": [
     {
       "archetype_id": "blood_marrow",
-      "label": "Blood / marrow signs (cytopenias, blasts)",
+      "label": "Pale, bruising or bleeding, repeated infections or bone pain, with an abnormal blood count",
       "typical_groups": [
         1
       ],
@@ -18,7 +18,7 @@
     },
     {
       "archetype_id": "solid_mass",
-      "label": "Mass / swelling (solid tumour)",
+      "label": "A lump, mass or swelling",
       "typical_groups": [
         4,
         6,
@@ -45,7 +45,7 @@
     },
     {
       "archetype_id": "lymphadenopathy",
-      "label": "Lymphadenopathy",
+      "label": "Enlarged lymph nodes",
       "typical_groups": [
         2,
         1,
@@ -64,7 +64,7 @@
     },
     {
       "archetype_id": "organ_functional_sign",
-      "label": "Organ-functional sign (leukocoria, proptosis, haematuria, jaundice + AFP, raised ICP)",
+      "label": "A symptom from an organ, such as a white pupil, a bulging eye, blood in the urine, jaundice or signs of raised pressure in the head",
       "typical_groups": [
         3,
         5,
@@ -84,7 +84,7 @@
     },
     {
       "archetype_id": "cutaneous_mucosal_lesion",
-      "label": "Cutaneous / mucosal lesion",
+      "label": "A lesion, sore or growth on the skin or on a mucous surface",
       "typical_groups": [
         9,
         2
@@ -99,7 +99,7 @@
     },
     {
       "archetype_id": "incidental_imaging_finding",
-      "label": "Incidental imaging finding",
+      "label": "An abnormal mass found by chance on a scan or X-ray",
       "typical_groups": "all",
       "site_capture": true,
       "candidate_groups": [
@@ -122,7 +122,7 @@
     },
     {
       "archetype_id": "unsure",
-      "label": "Not sure / mixed presentation",
+      "label": "More than one of these, or not sure",
       "typical_groups": "all",
       "site_capture": true,
       "candidate_groups": [
@@ -141,25 +141,27 @@
       ],
       "candidate_groups_advisory": true,
       "scaffold": "skip the archetype scaffold → straight to site capture",
-      "notes": "Ambiguous or blurred presentations (leukaemia/lymphoma overlap, a mass with cytopenias) degrade gracefully to site-first entry rather than a silent wrong guess. candidate_groups was the string \"all\" until 4 Sep 2026; the engine read it as an empty list and this presentation could not be used at all."
+      "notes": "Ambiguous or blurred presentations (leukaemia/lymphoma overlap, a mass with cytopenias) degrade gracefully to site-first entry rather than a silent wrong guess. candidate_groups was the string \"all\" until 4 Sep 2026; the engine read it as an empty list and this presentation could not be used at all.",
+      "dual_group_discriminator": "primary_compartment"
     }
   ],
   "discriminators": {
     "primary_compartment": {
       "variable": "primary_compartment",
-      "question": "Where is the disease centred?",
+      "step_label": "Marrow blasts",
+      "question": "How many blasts does the marrow aspirate show?",
       "options": [
         {
           "value": "marrow",
-          "label": "Blood and bone marrow"
+          "label": "More than 25% blasts"
         },
         {
-          "value": "nodal",
-          "label": "Lymph nodes"
+          "value": "not_marrow",
+          "label": "25% or less"
         },
         {
-          "value": "extranodal",
-          "label": "An organ or tissue outside nodes and marrow"
+          "value": "not_known",
+          "label": "No marrow aspirate yet"
         }
       ],
       "asked_by": [
@@ -170,32 +172,61 @@
       "narrows": {
         "marrow": {
           "drop": [
-            2
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
           ],
-          "because": "Marrow-based disease is Group I, not a lymphoma."
+          "because": "More than 25% blasts in the marrow is a leukaemia, and only Group I holds leukaemias: a lymphoma (Group II), a solid tumour or a sarcoma is not (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote).",
+          "keep_on_site": [
+            1
+          ]
         },
-        "nodal": {
+        "not_marrow": {
           "drop": [
             1
           ],
-          "because": "Nodal disease is Group II, not a leukaemia.",
+          "because": "25% blasts or fewer, with a mass or enlarged nodes, is a lymphoma and not a leukaemia (the same footnote).",
           "keep_on_site": [
             2
           ]
         },
-        "extranodal": {
-          "drop": [
-            1
-          ],
-          "because": "Extranodal disease is Group II, not a leukaemia.",
+        "not_known": {
+          "drop": [],
+          "because": "Without a marrow aspirate the split between leukaemia and lymphoma is not settled, so neither group is dropped (Group 2 Diagnostic Pathway, section 2.2).",
           "keep_on_site": [
+            1,
             2
           ]
         }
       },
-      "ask_before_site": true,
-      "hint": "Marrow means the blood and bone marrow are the main site. Nodal means lymph nodes. Extranodal means a solid organ or tissue outside nodes and marrow. This is the split between a leukaemia and a lymphoma.",
-      "authoring_note": "Group I vs Group II split for 9811-9819 (B-ALL family), 9823 (SLL/CLL), 9827 (ATLL) when the compartment (not topography alone) determines the group. See dual_group_rules."
+      "ask_when": {
+        "candidates_include": [
+          1
+        ],
+        "site_lists": [
+          2
+        ]
+      },
+      "auto_answer": {
+        "marrow": {
+          "topography_in": [
+            "C42.0",
+            "C42.1",
+            "C42.3",
+            "C42.4"
+          ]
+        }
+      },
+      "hint": "Take the figure from the marrow aspirate report. More than 25% blasts points to leukaemia. 25% or less, with a mass or enlarged lymph nodes, points to lymphoma. A blood film or blood count alone does not answer this.",
+      "authoring_note": "Group I vs Group II split for 9811-9819 (B-ALL family), 9823 (SLL/CLL) and 9827 (ATLL). Asked AFTER the site and only when ask_when holds, so keep_on_site can protect a group from the site step. auto_answer sets the answer from the recorded topography and shows no question; its list must equal the topography_in list of the 9811-9819 rule (build check). The 25% edge is Murphy's: more than 25% is the leukaemia side. Research: docs/superpowers/specs/2026-10-13-guided-entry-site-flow-design.md section 4."
     },
     "tumour_origin": {
       "variable": "tumour_origin",
@@ -232,6 +263,146 @@
       "authoring_note": "Group VIII vs Group IX split for 9364 Ewing sarcoma and 9365 Askin tumour. ICD-O-3.2 deleted 9260/3 and moved Ewing sarcoma to 9364/3. See dual_group_rules."
     }
   },
+  "site_systems": [
+    {
+      "system_id": "blood_haematopoietic",
+      "label": "Blood, bone marrow and haematopoietic system",
+      "organs": [
+        "blood_marrow_haematopoietic"
+      ]
+    },
+    {
+      "system_id": "lymph_nodes",
+      "label": "Lymph nodes",
+      "organs": [
+        "lymph_node"
+      ]
+    },
+    {
+      "system_id": "brain_cns",
+      "label": "Brain and central nervous system",
+      "organs": [
+        "brain_cns"
+      ]
+    },
+    {
+      "system_id": "soft_tissue",
+      "label": "Soft tissue and peripheral nerves",
+      "organs": [
+        "soft_tissue_peripheral_nerve",
+        "soft_tissue_connective",
+        "soft_tissue_retroperitoneum_peritoneum"
+      ]
+    },
+    {
+      "system_id": "endocrine",
+      "label": "Endocrine glands",
+      "organs": [
+        "adrenal_paraspinal",
+        "thyroid",
+        "pituitary",
+        "midline_cns_extension",
+        "head_neck_paraganglia",
+        "endocrine_other"
+      ]
+    },
+    {
+      "system_id": "eye",
+      "label": "Eye",
+      "organs": [
+        "eye"
+      ]
+    },
+    {
+      "system_id": "head_neck",
+      "label": "Head and neck",
+      "organs": [
+        "nasopharynx",
+        "nasal_cavity_middle_ear",
+        "accessory_sinuses",
+        "lip_oral_cavity",
+        "salivary_glands",
+        "tonsil_oropharynx_hypopharynx"
+      ]
+    },
+    {
+      "system_id": "chest_airway",
+      "label": "Chest and airway",
+      "organs": [
+        "mediastinum",
+        "lung",
+        "thymus",
+        "larynx_trachea",
+        "heart_pleura_thorax"
+      ]
+    },
+    {
+      "system_id": "digestive",
+      "label": "Digestive system",
+      "organs": [
+        "liver",
+        "biliary_extrahepatic",
+        "gallbladder",
+        "oesophagus",
+        "stomach",
+        "small_intestine",
+        "colon_appendix_rectum_anus",
+        "pancreas",
+        "digestive_other"
+      ]
+    },
+    {
+      "system_id": "urinary",
+      "label": "Urinary system",
+      "organs": [
+        "kidney",
+        "urinary_bladder",
+        "urinary_tract_other"
+      ]
+    },
+    {
+      "system_id": "reproductive",
+      "label": "Reproductive organs",
+      "organs": [
+        "prostate",
+        "penis",
+        "male_genital_paratesticular",
+        "gonad_sacrococcygeal_midline",
+        "female_genital_lower",
+        "female_genital_upper",
+        "female_genital_adnexa"
+      ]
+    },
+    {
+      "system_id": "bone_joints",
+      "label": "Bone and joints",
+      "organs": [
+        "bone"
+      ]
+    },
+    {
+      "system_id": "skin",
+      "label": "Skin",
+      "organs": [
+        "skin"
+      ]
+    },
+    {
+      "system_id": "breast",
+      "label": "Breast",
+      "organs": [
+        "breast"
+      ]
+    },
+    {
+      "system_id": "ill_defined",
+      "label": "Ill-defined or unknown site",
+      "organs": [
+        "ill_defined_sites",
+        "unknown_primary"
+      ]
+    }
+  ],
   "site_to_group": {
     "C40-C41": [
       8,
@@ -1660,18 +1831,6 @@
       "branches": [
         {
           "when": {
-            "captured_variable": "marrow_blast_percentage",
-            "operator": ">=",
-            "value": 25
-          },
-          "result": {
-            "group": 1,
-            "subgroup": "Ia1"
-          },
-          "note": "≥25% marrow blasts overrides a nodal/extranodal presentation — routes to Group I regardless of compartment."
-        },
-        {
-          "when": {
             "captured_variable": "primary_compartment",
             "equals": "marrow"
           },
@@ -1697,7 +1856,7 @@
         {
           "when": {
             "captured_variable": "primary_compartment",
-            "equals": "nodal"
+            "equals": "not_marrow"
           },
           "result": {
             "group": 2,
@@ -1707,12 +1866,13 @@
         {
           "when": {
             "captured_variable": "primary_compartment",
-            "equals": "extranodal"
+            "equals": "not_known"
           },
           "result": {
-            "group": 2,
-            "subgroup": "IIb1"
-          }
+            "group": null,
+            "subgroup": null
+          },
+          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
@@ -1757,12 +1917,23 @@
         {
           "when": {
             "captured_variable": "primary_compartment",
-            "equals": "nodal"
+            "equals": "not_marrow"
           },
           "result": {
             "group": 2,
             "subgroup": "IIb2"
           }
+        },
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "not_known"
+          },
+          "result": {
+            "group": null,
+            "subgroup": null
+          },
+          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
@@ -1793,13 +1964,23 @@
         {
           "when": {
             "captured_variable": "primary_compartment",
-            "equals": "nodal"
+            "equals": "not_marrow"
           },
           "result": {
             "group": 2,
             "subgroup": "IIb3"
+          }
+        },
+        {
+          "when": {
+            "captured_variable": "primary_compartment",
+            "equals": "not_known"
           },
-          "note": "Lymphoma phase."
+          "result": {
+            "group": null,
+            "subgroup": null
+          },
+          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
@@ -3080,7 +3261,7 @@
     }
   },
   "tick_vocabularies": {
-    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order. An item may carry `credits`, the diagnostic tests ticking it proves were done; when a vocabulary has them the engine records exactly the union of the ticked items' credits as the case's evidence, and an option's own `captures.evidence_tests` is used only when nothing ticked credits anything. A vocabulary may set `tiers_exclusive`: no ticked set may fit two tiers, so the clerk is never asked to choose between tiers and the ticks alone decide the route.",
+    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order. An item may carry `credits`, the diagnostic tests ticking it proves were done; when a vocabulary has them the engine records exactly the union of the ticked items' credits as the case's evidence, and an option's own `captures.evidence_tests` is used only when nothing ticked credits anything. A vocabulary may set `tiers_exclusive`: no ticked set may fit two tiers, so the clerk is never asked to choose between tiers and the ticks alone decide the route. An item may carry `about`: one short line that the engine shows under the box only while it is ticked, so the clerk can see what the document is without a grey line on every row.",
     "evidence_documents": {
       "variable": "documents_in_file",
       "label": "Documents in file",
@@ -3091,31 +3272,38 @@
       "items": [
         {
           "id": "referral",
-          "label": "Referral Letter/Clinical Note"
+          "label": "Referral letter or clinical notes",
+          "about": "A letter or notes from the referring clinician."
         },
         {
           "id": "imaging",
-          "label": "Imaging Report"
+          "label": "Imaging report",
+          "about": "X-ray, ultrasound, CT or MRI."
         },
         {
           "id": "lab",
-          "label": "Lab Report"
+          "label": "Laboratory results",
+          "about": "Blood or urine tests: blood count, tumour markers such as AFP and hCG, hormone levels, flow cytometry."
         },
         {
           "id": "cytology",
-          "label": "Cytology"
+          "label": "Cytology report",
+          "about": "Cells from a needle aspirate, a fluid, a blood film or a marrow aspirate smear."
         },
         {
           "id": "histology",
-          "label": "Histology Report"
+          "label": "Histology report",
+          "about": "A biopsy or surgical specimen, including a bone marrow trephine."
         },
         {
           "id": "ihc",
-          "label": "IHC Report"
+          "label": "Immunohistochemistry (IHC) report",
+          "about": "Stains on tissue or cells that show which proteins the tumour carries."
         },
         {
           "id": "genetics",
-          "label": "Gene reports for cancer"
+          "label": "Genetic test report",
+          "about": "Karyotype, FISH, PCR or sequencing."
         }
       ]
     },
@@ -3130,47 +3318,74 @@
         {
           "id": "referral",
           "label": "Referral / clinical note",
-          "credits": ["Referral only"]
+          "credits": [
+            "Referral only"
+          ],
+          "about": "A letter or notes from the referring clinician."
         },
         {
           "id": "marrow_aspirate",
           "label": "Marrow aspirate or blood film",
-          "credits": ["Histology"]
+          "credits": [
+            "Histology"
+          ],
+          "about": "Cells from a marrow aspirate smear or a blood film, read under the microscope."
         },
         {
           "id": "trephine",
           "label": "Trephine biopsy",
-          "credits": ["Histology"]
+          "credits": [
+            "Histology"
+          ],
+          "about": "A core of bone marrow, cut into thin sections and read under the microscope."
         },
         {
           "id": "flow",
           "label": "Flow cytometry",
-          "credits": ["Flow cytometry"]
+          "credits": [
+            "Flow cytometry"
+          ],
+          "about": "Cells in a blood or marrow sample sorted by the proteins on their surface."
         },
         {
           "id": "ihc",
           "label": "IHC",
-          "credits": ["IHC"]
+          "credits": [
+            "IHC"
+          ],
+          "about": "Stains on tissue or cells that show which proteins the tumour carries."
         },
         {
           "id": "karyotype",
           "label": "Karyotype",
-          "credits": ["Cytogenetics/FISH"]
+          "credits": [
+            "Cytogenetics/FISH"
+          ],
+          "about": "A picture of the chromosomes of the tumour cells."
         },
         {
           "id": "fish",
           "label": "FISH",
-          "credits": ["Cytogenetics/FISH"]
+          "credits": [
+            "Cytogenetics/FISH"
+          ],
+          "about": "A fluorescent probe that looks for one chromosome change in the cells."
         },
         {
           "id": "pcr",
           "label": "PCR",
-          "credits": ["Molecular/PCR"]
+          "credits": [
+            "Molecular/PCR"
+          ],
+          "about": "A test for one known fusion gene, such as BCR::ABL1 or ETV6::RUNX1."
         },
         {
           "id": "sequencing",
           "label": "Sequencing",
-          "credits": ["Molecular/PCR"]
+          "credits": [
+            "Molecular/PCR"
+          ],
+          "about": "Reads the gene letters to find mutations, including next-generation sequencing."
         }
       ]
     }

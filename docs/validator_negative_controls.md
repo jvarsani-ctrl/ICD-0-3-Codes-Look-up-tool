@@ -3452,3 +3452,12 @@ codes 8090 to 8095 and 8097 read as outside every range, and the tokens `C80.90-
 `C80.98` do not parse. `check_iccc_subgroup_ranges` reports 12 WARNs for it (4 unreadable tokens,
 8 codes, the eighth being `8339`, which is outside every range by standing rule 3). The repair is
 a Layer 1 job and is not yet in `docs/group_11_layer1_repair.md`.
+
+## Compartment discriminator, 13 October 2026
+
+Registrar's ruling: only the hard controls. `check_compartment_discriminator` is quiet on the real data and
+fires when a group file captures a value the marrow question no longer offers: `group_01_dt.json` edited in a
+scratch copy to capture `primary_compartment = nodal` (the retired value Group 2 still captured six times before
+this change) gives `group_01_dt.json captures primary_compartment = ['nodal'], which the question does not
+offer (marrow, not_marrow, not_known); a rule reading it never matches`. The fault sits between two layers: the
+router's rules and the trees' captures each look correct alone.

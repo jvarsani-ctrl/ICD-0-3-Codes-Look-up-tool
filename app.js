@@ -81,6 +81,8 @@ var state = {
   router: null, topography: null, aliasIndex: null,
   archetype: null, group: null, treeId: null, nodeId: null,
   organSystem: null,     /* the crosswalk row picked at Stage 1, before the region */
+  review: null,          /* the trail step open for review, or null. A view only: it is not part of the case and not in snapshot() */
+  system: null,          /* the body system picked before the organ; null while none is, or when the router declares none */
   labs: [],              /* the laboratory panel as recorded: values the clerk typed. Never read by a rule */
   candidates: [],        /* groups still possible — narrowed, never asked for blind */
   searchTerm: null,      /* the express-lane alias that set the candidates, if one did */
@@ -131,7 +133,7 @@ function arr(v) { return Array.isArray(v) ? v : []; }
 function snapshot() {
   return JSON.stringify({
     stage: state.stage, archetype: state.archetype, group: state.group,
-    organSystem: state.organSystem, candidates: state.candidates,
+    organSystem: state.organSystem, system: state.system, candidates: state.candidates,
     searchTerm: state.searchTerm || null, siteRecordOnly: state.siteRecordOnly || false,
     recordGroup: state.recordGroup === undefined ? null : state.recordGroup,
     treeId: state.treeId, nodeId: state.nodeId, captured: state.captured,
@@ -170,8 +172,13 @@ function restore(snap, upto) {
    is no longer in. Rewinding to an automatic entry rewinds to the clerk's
    answer that produced it instead (see 'rewind'). */
 function pushTrail(label, value, before, automatic) {
-  state.trail.push({ label: label, value: value, before: before, automatic: !!automatic });
+  /* `screen` is the window the clerk was looking at when they answered, kept so the step can be
+     opened again for review without touching the case. */
+  state.trail.push({ label: label, value: value, before: before, automatic: !!automatic, screen: lastScreen });
 }
+/* The live screen as it was last drawn: the question the next answer belongs to. Review windows
+   are never recorded here, only the screen of the case itself. */
+var lastScreen = '';
 
 /* --------------------------------------------------------------- fetching */
 /* `no-cache` forces a revalidation against the server on every load. It does
@@ -299,7 +306,9 @@ function resolveGroup(code, topo) {
     for (j = 0; j < arr(r.branches).length; j++) {
       var b = r.branches[j];
       if (branchMatches(b.when, topo)) {
-        return { group: b.result.group, subgroup: b.result.subgroup, note: b.note || r.note };
+        /* A result with group null keeps the group the case was routed to: a branch that
+           cannot name a group (no marrow aspirate yet) only adds its note. */
+        return { group: b.result.group === null ? state.group : b.result.group, subgroup: b.result.subgroup, note: b.note || r.note };
       }
     }
     if (r.default) return { group: r.default.group, subgroup: r.default.subgroup, note: r.note };
@@ -336,7 +345,9 @@ function render() {
   var held = sameScreen ? focusKey(document.activeElement) : null;
   byId('rail').innerHTML = renderRail();
   byId('trail-rows').innerHTML = renderTrailRows();
-  byId('slot').innerHTML = renderStage() + (state.confirmExit ? renderExitConfirm() : '');
+  var screen = renderStage();
+  if (state.review === null) lastScreen = screen;
+  byId('slot').innerHTML = screen + (state.confirmExit ? renderExitConfirm() : '');
   if (state.focusNext) { focusFound(state.focusNext); state.focusNext = null; }
   else if (held) focusFound(held);
   /* The question sits below the screen's content, so a long list must not hide it.
@@ -414,22 +425,30 @@ function renderRail() {
   var h = '<div class="tag rail__title">This case</div>';
   state.trail.forEach(function (t, i) {
     if (!drawnInTrail(t)) return;
-    h += '<button class="rail__row" data-act="rewind" data-i="' + i + '">' +
+    h += '<button class="rail__row' + (state.review === i ? ' rail__row--reviewing' : '') + '" data-act="review" data-i="' + i + '">' +
          '<b>' + esc(t.label) + '</b><span>' + esc(t.value) + '</span></button>';
   });
-  h += '<div class="rail__row rail__row--now"><b>' + esc(currentLabel()) +
-       '</b><span>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : '… in progress') + '</span></div>';
+  var nowText = '<b>' + esc(currentLabel()) + '</b><span>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : '… in progress') + '</span>';
+  /* While a step is open for review, the current step is the way back to it. */
+  h += state.review !== null
+    ? '<button class="rail__row rail__row--now" data-act="review-exit">' + nowText + '</button>'
+    : '<div class="rail__row rail__row--now">' + nowText + '</div>';
   if (!state.result) h += '<div class="rail__row rail__row--todo"><b>Output</b><span>not yet</span></div>';
   return h;
 }
 function renderTrailRows() {
-  return state.trail.map(function (t, i) {
+  var rows = state.trail.map(function (t, i) {
     if (!drawnInTrail(t)) return '';
-    return '<button class="trail-row" data-act="rewind" data-i="' + i + '">' +
+    return '<button class="trail-row' + (state.review === i ? ' trail-row--reviewing' : '') + '" data-act="review" data-i="' + i + '">' +
       '<em>' + esc(t.label) + '</em>' +
       '<b><span class="trail-row__tick">&check;</span> ' + esc(t.value) + '</b>' +
-      '<u>change</u></button>';
+      '<u>view</u></button>';
   }).join('');
+  if (state.review !== null) {
+    rows += '<button class="trail-row trail-row--now" data-act="review-exit"><em>' + esc(currentLabel()) +
+      '</em><b>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : 'where you were') + '</b><u>back here</u></button>';
+  }
+  return rows;
 }
 function currentLabel() {
   if (state.result) return 'Output';
@@ -441,13 +460,37 @@ function currentLabel() {
   return state.stage.replace(/_/g, ' ');
 }
 
+/* A step opened for review: the window the clerk answered, locked, with the choice they made
+   highlighted, and two buttons. Looking changes nothing: every later step and the result stay.
+   Only "Move back here" rewinds the case. A listed option is highlighted when its text is the
+   answer (or sits inside it, as a topography region does); ticked boxes and chosen radios are
+   kept in the saved window as the clerk left them; a typed value shows in "Your answer". */
+function highlightAnswer(html, value) {
+  var want = esc(value);
+  return html.replace(/<button class="opt"([^>]*)>(\s*)<span class="opt__label">([^<]*)/g, function (m, attrs, sp, label) {
+    var hit = label && (label === want || (label.length >= 6 && want.indexOf(label) !== -1));
+    return hit ? '<button class="opt opt--selected"' + attrs + '>' + sp + '<span class="opt__label">' + label : m;
+  });
+}
+function renderReview() {
+  var t = state.trail[state.review];
+  return '<div class="review"><div class="tag review__over">Reviewing · ' + esc(t.label) + '</div>' +
+    '<p class="review__answer">Your answer: <b>' + esc(t.value) + '</b></p>' +
+    '<div class="review__window" inert>' +
+    (t.screen ? highlightAnswer(t.screen, t.value) : '<p class="node__hint">This step\'s window was not kept.</p>') + '</div>' +
+    '<div class="actions"><button class="btn" data-act="rewind" data-i="' + state.review + '">Move back here</button>' +
+    '<button class="btn btn--ghost" data-act="review-exit">Back to where I was</button></div></div>';
+}
+
 function renderStage() {
   if (state.error) return banner('error', 'Cannot continue', state.error) +
     '<div class="actions"><button class="btn" data-act="retry">Retry</button></div>';
+  if (state.review !== null && state.trail[state.review]) return renderReview();
   switch (state.stage) {
     case 'boot':      return '<p class="node__hint">Loading…</p>';
     case 'landing':   return renderLanding();
     case 'archetype': return renderArchetype();
+    case 'site_system': return renderSiteSystem();
     case 'site':      return renderSite();
     case 'site_region': return renderSiteRegion();
     case 'discriminator': return renderDiscriminator();
@@ -646,20 +689,29 @@ function renderArchetype() {
   return panel('Stage 0 · presentation', 'What is the dominant presentation?',
     'Describe what you see in the file. If it blurs archetypes, choose "not sure".',
     pick('archetype', arr(state.router.archetypes).map(function (a) {
-      return { label: a.label, meta: a.scaffold };
+      /* `scaffold` describes the path for whoever maintains the router; it is not shown. */
+      return { label: a.label };
     })));
 }
 
-/* Site is asked in two taps, organ SYSTEM then REGION, and both come from the
-   shared topography crosswalk so site is expressed in ONE vocabulary that
+/* Site is asked in three taps: body SYSTEM, then ORGAN, then REGION. The systems
+   come from the router (`site_systems`); the organs and regions come from the
+   shared topography crosswalk, so site is expressed in ONE vocabulary that
    site_capture, the narrowing below and the output block all consult
    (Architecture §4C).
 
-   It used to be one tap that returned `codes[0]` for whichever row was picked,
-   so "bone" always recorded C40.9 and the other six bone codes were
-   unreachable — and "soft tissue" always recorded C47.9, which is the
-   autonomic nervous system, for a rhabdomyosarcoma of the thigh. Layer 1 has
-   twenty-one soft-tissue codes; the crosswalk carried two. */
+   A screen that offers one answer is not shown. A presentation that fixes the
+   system (a blood presentation lists the marrow alone) skips the system
+   screen, a system holding one organ skips the organ screen, and an organ
+   holding one code skips the region screen. The clerk is asked only what the
+   case has not already said.
+
+   The organ row used to be asked straight off one flat list, and for years it
+   returned `codes[0]` for whichever row was picked, so "bone" always recorded
+   C40.9 and the other six bone codes were unreachable — and "soft tissue"
+   always recorded C47.9, which is the autonomic nervous system, for a
+   rhabdomyosarcoma of the thigh. Layer 1 has twenty-one soft-tissue codes; the
+   crosswalk carried two. */
 function systemRows() {
   var a = state.archetype, cross = arr(state.topography.coarse_organ_crosswalk);
   if (a && a.auto_topography) {
@@ -688,10 +740,42 @@ function regionOptions(row) {
     return { topography: code, label: t.region_label || t.label || code, meta: code };
   });
 }
-function renderSite() {
+/* The body systems worth listing: the router's own order, each holding the
+   organs of systemRows() that belong to it. A declared tissue origin puts the
+   systems that hold a matching organ first, as it does for organs. Null when the
+   router declares no `site_systems`, and the organ list is asked as before. An organ
+   no system names is not lost: it is listed under "Other sites". */
+function siteSystems() {
+  var list = arr(state.router && state.router.site_systems);
+  if (!list.length) return null;
+  var rows = systemRows(), origin = state.captured.tumour_origin, byOrgan = {}, placed = {};
+  rows.forEach(function (r) { byOrgan[r.organ] = r; });
+  var out = list.map(function (sys) {
+    var held = arr(sys.organs).filter(function (o) { return byOrgan[o]; });
+    held.forEach(function (o) { placed[o] = true; });
+    return { system: sys, organs: held };
+  });
+  var orphans = rows.map(function (r) { return r.organ; }).filter(function (o) { return !placed[o]; });
+  if (orphans.length) out.push({ system: { system_id: '_other', label: 'Other sites', organs: orphans }, organs: orphans });
+  out = out.filter(function (x) { return x.organs.length; });
+  if (!origin) return out;
+  function first(x) { return x.organs.some(function (o) { return byOrgan[o].tissue_origin === origin; }) ? 0 : 1; }
+  return out.slice().sort(function (x, y) { return first(x) - first(y); });
+}
+/* The organs on offer: the chosen system's, or all of them when no system was asked. */
+function organRows() {
+  var rows = systemRows();
+  if (!state.system) return rows;
+  var ids = arr(state.system.organs);
+  return rows.filter(function (r) { return ids.indexOf(r.organ) !== -1; });
+}
+function renderSiteEscape() {
+  return state.siteRecordOnly && (state.searchTerm || state.recordGroup)
+    ? '<div class="escapes"><button class="escape escape--site" data-act="site-unstated">The file does not state the site</button></div>' : '';
+}
+function siteHint() {
   var origin = state.captured.tumour_origin;
-  return panel('Stage 1 · organ system', 'Which organ system does the tumour arise in?',
-    state.recordGroup
+  return state.recordGroup
       ? 'The referral continues in Group ' + state.recordGroup + '. Record the site of the primary tumour, not the site of the deposit.'
       : state.searchTerm
       ? (arr((state.aliasIndex || {})[state.searchTerm]).length > 1
@@ -699,22 +783,33 @@ function renderSite() {
           : (state.siteRecordOnly
               ? 'The primary site is recorded with “' + state.searchTerm + '”. Code the primary, not the biopsy site.'
               : 'The primary site decides how “' + state.searchTerm + '” is coded, so it is asked first. Code the primary, not the biopsy site.'))
-      : state.archetype.site_capture === false
-      ? 'Site is fixed for this presentation — one tap confirms which system to record.'
       : (origin
           ? 'Use the clinical examination notes and the imaging reports.'
-          : 'The organ of origin, not the region of the swelling. Code the primary, not the biopsy site.'),
-    pick('site', systemRows().map(function (c) {
-      /* A system answers to the names of the regions inside it, so "ovary"
-         finds "Ovary and testis" and "femur" finds "Bone and joints". */
-      return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes',
-        find: regionOptions(c).map(function (r) { return r.label + ' ' + r.topography; }).join(' ') };
-    })) + (state.siteRecordOnly && (state.searchTerm || state.recordGroup)
-      ? '<div class="escapes"><button class="escape escape--site" data-act="site-unstated">The file does not state the site</button></div>' : ''));
+          : 'Where the disease starts, not where the swelling shows. Code the primary, not the biopsy site.');
+}
+/* What a row answers to when the clerk types: a system answers to the names of the
+   organs and regions inside it, an organ to its regions, so "parotid" finds Head and
+   neck and "femur" finds Bone and joints. */
+function organFind(c) {
+  return regionOptions(c).map(function (r) { return r.label + ' ' + r.topography; }).join(' ');
+}
+function renderSiteSystem() {
+  return panel('Stage 1 · body system', 'Which body system does the disease start in?', siteHint(),
+    pick('site_system', siteSystems().map(function (x) {
+      var rows = x.organs.map(function (o) { return systemRows().filter(function (r) { return r.organ === o; })[0]; });
+      return { label: x.system.label, meta: x.organs.length === 1 ? '1 organ' : x.organs.length + ' organs',
+        find: rows.map(function (r) { return systemLabel(r) + ' ' + organFind(r); }).join(' ') };
+    })) + renderSiteEscape());
+}
+function renderSite() {
+  return panel('Stage 1 · organ', 'Which organ does the disease start in?', siteHint(),
+    pick('site', organRows().map(function (c) {
+      return { label: systemLabel(c), meta: c.topography_range + ' · ' + arr(c.codes).length + ' codes', find: organFind(c) };
+    })) + renderSiteEscape());
 }
 function renderSiteRegion() {
   var row = state.organSystem;
-  return panel('Stage 1 · region', 'Where in ' + systemLabel(row).toLowerCase() + '?',
+  return panel('Stage 1 · region', row.region_question || ('Where in ' + systemLabel(row).toLowerCase() + '?'),
     'This is the topography code the registry records. ' + (row.region_hint ||
       'Pick the one the report supports; NOS is a legitimate answer where it does not say.'),
     pick('site_region', regionOptions(row).map(function (o) {
@@ -733,7 +828,7 @@ function renderDiscriminator() {
   /* `hint` is clerk-facing. `settles` / `authoring_note` explains the fork to
      whoever maintains the router and must never reach this screen — it names
      ICCC subgroups and JSON keys the abstractor has no use for. */
-  return panel('Stage 1 · ' + String(d.variable).replace(/_/g, ' '), d.question, d.hint || null,
+  return panel('Stage 1 · ' + String(d.step_label || d.variable).replace(/_/g, ' ').toLowerCase(), d.question, d.hint || null,
     pick('discriminator', arr(d.options).map(function (o) {
       return { label: typeof o === 'string' ? String(o).replace(/_/g, ' ') : o.label };
     })));
@@ -1056,8 +1151,14 @@ function tickControl(n) {
   var on = ticksNow(tl);
   var h = '<p class="node__hint" id="tick-prompt">' + esc(tl.prompt || 'Tick every item that applies.') + '</p>' +
     '<div class="checks" role="group" aria-labelledby="tick-prompt">' + tl.items.map(function (it) {
+      /* The line under the name shows only while the box is ticked: it says what the document is, and an
+         unticked list stays as short as the names. */
+      var ticked = on.indexOf(it.id) !== -1, about = ticked && it.about;
       return '<label class="check"><input type="checkbox" data-act="tick" data-id="' + esc(it.id) + '"' +
-        (on.indexOf(it.id) !== -1 ? ' checked' : '') + '> ' + esc(it.label) + '</label>';
+        (ticked ? ' checked' : '') + (about ? ' aria-describedby="about-' + esc(it.id) + '"' : '') + '> ' +
+        '<span class="check__body"><span class="check__text">' + esc(it.label) + '</span>' +
+        (about ? '<span class="check__about" id="about-' + esc(it.id) + '">' + esc(it.about) + '</span>' : '') +
+        '</span></label>';
     }).join('') + '</div>';
   var ctx = tickContexts(n);
   if (ctx.length && tl.resolve === 'ask_siblings') {
@@ -2450,7 +2551,7 @@ function hopToGroup(before) {
   state.captured = caseFacts();
   /* A referral that says the case's site is not the primary's leaves the site behind: the
      clerk records the primary's before the case enters the receiving group. */
-  if (recapture) { delete state.captured.topography; delete state.captured.organ_system; state.organSystem = null; }
+  if (recapture) { delete state.captured.topography; delete state.captured.organ_system; state.organSystem = null; state.system = null; }
   state.markers = {}; state.workup = []; state.pending = null; state.pendingGrade = null;
   state.grade = null; state.entity = null; state.firedAlert = null; state.draft = {};
   state.result = null; state.treeId = null; state.nodeId = null; state.searchTerm = null; state.siteRecordOnly = false;
@@ -2471,7 +2572,7 @@ function hopToGroup(before) {
     /* A group that reads no site is asked the site and only records it, as the typed lane does;
        one that routes its trees from the site has to be given one. */
     state.siteRecordOnly = !groupReadsSite(target);
-    state.stage = 'site';
+    return enterSite();
   });
 }
 
@@ -2857,6 +2958,9 @@ function handleOption(act, el) {
      show is the one being left, and a second tap on it would act on a case
      already on its way elsewhere. */
   if (state.stage === 'boot' && !state.error) return;
+  /* While a step is open for review the case itself cannot be changed: its window is locked, and
+     only the way back, the way out and Home act. */
+  if (state.review !== null && ['review', 'review-exit', 'rewind', 'home', 'home-yes', 'home-no'].indexOf(act) === -1) return;
   var n = node(), before = snapshot(), i = +el.getAttribute('data-i');
   /* Anything but Home itself dismisses the "leave this case?" question. */
   if (act !== 'home') state.confirmExit = false;
@@ -2896,7 +3000,7 @@ function handleOption(act, el) {
          tree may capture a site the case does not have. The primary site
          settles it instead (afterSearchSite), and the clerk is not asked for
          a group (registrar, 4 October 2026). */
-      if (hit.groups.length > 1) { state.stage = 'site'; return; }
+      if (hit.groups.length > 1) return enterSite();
       /* A term filed under ONE group is still asked its site when that
          group's data reads the site: a tree routed from the topography, or a
          rule keyed on it. Entered without one, every such rule fails open —
@@ -2909,13 +3013,13 @@ function handleOption(act, el) {
       return loadGroupData(only).then(function () {
         /* A second tap while this group's file was loading replaced the case. */
         if (state.searchTerm !== hit.alias) return;
-        if (groupReadsSite(only)) { state.stage = 'site'; return; }
+        if (groupReadsSite(only)) return enterSite();
         /* A group that reads no site is asked it too, and the answer is only
            recorded: the term already fixes the group, so the site never narrows
            or stops the case. Without it the output printed Topography as a dash
            for most typed terms (registrar, 7 October 2026). */
         state.siteRecordOnly = true;
-        state.stage = 'site';
+        return enterSite();
       });
     }
     case 'archetype': {
@@ -2924,11 +3028,16 @@ function handleOption(act, el) {
       pushTrail('Presentation', a.label, before);
       return afterArchetype();
     }
+    case 'site_system': {
+      var sys = siteSystems()[i];
+      state.system = sys.system;
+      pushTrail('Site of origin', sys.system.label, before);
+      return afterSystemChoice();
+    }
     case 'site': {
-      var row = systemRows()[i];
-      state.organSystem = row;
-      state.captured.organ_system = row.organ;
-      pushTrail('Organ system', systemLabel(row), before);
+      var row = organRows()[i];
+      chooseOrgan(row);
+      pushTrail('Organ', systemLabel(row), before);
       return afterSystem();
     }
     case 'site-unstated':
@@ -2945,8 +3054,12 @@ function handleOption(act, el) {
       var d = discriminator(), o = d.options[i];
       var val = typeof o === 'string' ? o : o.value;
       state.captured[d.variable] = val;
-      pushTrail(d.variable.replace(/_/g, ' '), String(val).replace(/_/g, ' '), before);
+      pushTrail(String(d.step_label || d.variable).replace(/_/g, ' '),
+        typeof o === 'string' ? String(val).replace(/_/g, ' ') : (o.label || String(val).replace(/_/g, ' ')), before);
       if (d.ask_before_site) return afterDiscriminator();
+      /* Asked after the site, and the site step has not run yet: afterSite() narrows by
+         the answer first, then by the site, so the answer can protect a group from it. */
+      if (d.ask_when) return afterSite();
       narrowByDiscriminator();
       return afterSite();
     }
@@ -3139,7 +3252,16 @@ function handleOption(act, el) {
       pushTrail('Override', code + ' — ' + reason, before);
       return finish({ morphology_code: code, upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
     }
+    /* Open a step for review. An automatic step opens the clerk's answer that produced it. */
+    case 'review': {
+      var rv = i;
+      while (rv > 0 && state.trail[rv].automatic) rv--;
+      state.review = rv;
+      return;
+    }
+    case 'review-exit': state.review = null; return;
     case 'rewind': {
+      state.review = null;
       var j = i;
       while (j > 0 && state.trail[j].automatic) j--;
       var ticked = state.trail[j].ticks, typedLabs = state.trail[j].labDraft;
@@ -3360,7 +3482,46 @@ function afterArchetype() {
 }
 function afterDiscriminator() {
   narrowByDiscriminator();
+  return enterSite();
+}
+/* Start the site questions. The clerk is asked the system only when more than one is
+   on offer, and the organ only when the system holds more than one. */
+function enterSite() {
+  state.system = null;
+  var list = siteSystems();
+  if (!list) { state.stage = 'site'; return; }
+  if (list.length === 1) { state.system = list[0].system; return afterSystemChoice(); }
+  state.stage = 'site_system';
+}
+function chooseOrgan(row) {
+  state.organSystem = row;
+  state.captured.organ_system = row.organ;
+}
+function afterSystemChoice() {
+  var rows = organRows();
+  if (rows.length === 1) { chooseOrgan(rows[0]); return afterSystem(); }
   state.stage = 'site';
+}
+/* A discriminator may take its answer from the recorded topography (`auto_answer`:
+   answer → a topography_in list, the shape the dual-group branches use) and show no
+   question. Null when no answer's list holds the site. */
+function autoAnswer(d) {
+  var spec = (d && d.auto_answer) || {}, topo = state.captured.topography, hit = null;
+  Object.keys(spec).forEach(function (answer) {
+    if (hit === null && branchMatches(spec[answer], topo)) hit = answer;
+  });
+  return hit;
+}
+/* `ask_when`: the question is worth asking only when every listed group is still a
+   candidate and the chosen site's own list names every listed group — the case where
+   the answer can change which family the case belongs to. Read before the site has
+   narrowed the candidates. */
+function askWhenHolds(d) {
+  var w = d.ask_when || {}, t = (state.topography.topography_lookup || {})[state.captured.topography];
+  var site = t && t.candidate_groups;
+  if (!Array.isArray(site)) return false;
+  return arr(w.candidates_include).every(function (g) { return state.candidates.indexOf(g) !== -1; }) &&
+    arr(w.site_lists).every(function (g) { return site.indexOf(g) !== -1; });
 }
 function afterSystem() {
   var codes = arr(state.organSystem && state.organSystem.codes);
@@ -3371,9 +3532,20 @@ function afterSystem() {
 function afterSite() {
   if (state.recordGroup !== null && state.recordGroup !== undefined) return enterRecordedGroup();
   if (state.searchTerm) return afterSearchSite();
-  narrowBySite();
   var d = discriminator();
-  if (d && !d.ask_before_site && state.captured[d.variable] === undefined) {
+  /* A discriminator with `ask_when` is settled BEFORE the site narrows the candidates, so its
+     answer can keep a group the site's own list does not name (a leukaemia that presents in a
+     lymph node). It is answered from the topography, asked, or skipped when it cannot matter. */
+  if (d && d.ask_when) {
+    if (state.captured[d.variable] === undefined) {
+      var auto = autoAnswer(d);
+      if (auto !== null) state.captured[d.variable] = auto;
+      else if (askWhenHolds(d)) { state.stage = 'discriminator'; return; }
+    }
+    narrowByDiscriminator();
+  }
+  narrowBySite();
+  if (d && !d.ask_before_site && !d.ask_when && state.captured[d.variable] === undefined) {
     state.stage = 'discriminator'; return;
   }
   var cands = arr(state.candidates);
@@ -3545,13 +3717,13 @@ function enterGroup(group, treeId, entryNode) {
 
 function reset() {
   state.stage = 'landing'; state.archetype = null; state.group = null;
-  state.organSystem = null; state.candidates = []; state.searchTerm = null; state.siteRecordOnly = false; state.recordGroup = null;
+  state.organSystem = null; state.system = null; state.candidates = []; state.searchTerm = null; state.siteRecordOnly = false; state.recordGroup = null;
   state.treeId = null; state.nodeId = null; state.captured = {}; state.markers = {};
   state.draft = {}; state.pending = null; state.firedAlert = null;
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
   state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
   state.error = null; state.query = ''; state.confirmExit = false; state.hopFrom = null; state.labs = [];
-  state.focusNext = null;
+  state.focusNext = null; state.review = null;
 }
 
 /* ============================================================================

@@ -12050,11 +12050,17 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             break
     for vname_, voc in sorted(vocabularies.items()):
         for text in [voc.get(k) for k in ("prompt", "context_prompt", "none_label", "sibling_prompt")] + \
-                    [it.get("label") for it in voc.get("items", []) if isinstance(it, dict)]:
+                    [it.get("label") for it in voc.get("items", []) if isinstance(it, dict)] + \
+                    [it.get("about") for it in voc.get("items", []) if isinstance(it, dict)]:
             for tok in INTERNAL_IDENTIFIER_TOKENS:
                 if isinstance(text, str) and tok in text:
                     out.append((FAIL, "router tick_vocabularies.%s: %r contains the internal identifier "
                                       "%r; a clerk reads this text" % (vname_, text, tok)))
+    for vname_, voc in sorted(vocabularies.items()):
+        for it in voc.get("items", []):
+            if isinstance(it, dict) and "about" in it and (not isinstance(it["about"], str) or not it["about"].strip()):
+                out.append((FAIL, "router tick_vocabularies.%s item %r: `about` must be a non-empty line of text, "
+                                  "not %r; the engine shows it under the ticked box" % (vname_, it.get("id"), it["about"])))
     for node_id, node in sorted(ctx.nodes.items()):
         tl = node.get("tick_list")
         options = node.get("options") if isinstance(node.get("options"), list) else []
@@ -12595,15 +12601,17 @@ def check_routing_narrows(repo: Path, contexts: dict):
                 continue
             # `keep_on_site` protects a group from the site step, so it has to name a
             # group the presentations that ask this discriminator can actually offer,
-            # it cannot also be dropped by the same answer, and the discriminator must
-            # be asked before the site: narrowBySite() reads the answer when it runs.
+            # it cannot also be dropped by the same answer, and the answer must exist
+            # before the site step runs: narrowBySite() reads it when it runs. A
+            # discriminator asked before the site (`ask_before_site`) or settled before
+            # the site narrows the candidates (`ask_when`) satisfies that.
             kept = rule.get("keep_on_site")
             if kept is None:
                 continue
-            if not d.get("ask_before_site"):
+            if not (d.get("ask_before_site") or d.get("ask_when")):
                 out.append((FAIL, "discriminator %s, answer %r: `keep_on_site` needs `ask_before_site` "
-                                  "true, or the site step runs before the answer exists and the "
-                                  "protection never applies" % (key, answer)))
+                                  "or `ask_when`, or the site step runs before the answer exists and "
+                                  "the protection never applies" % (key, answer)))
             if not isinstance(kept, list) or not kept or not all(isinstance(g, int) and 1 <= g <= 12 for g in kept):
                 out.append((FAIL, "discriminator %s, answer %r: `keep_on_site` must be a non-empty "
                                   "list of group numbers 1-12, not %r" % (key, answer, kept)))
@@ -12781,6 +12789,181 @@ def check_presentation_router(repo: Path, contexts: dict):
     if not any(lvl == FAIL for lvl, _ in out):
         out.append((OK, "router integrity: %d entry_node handoff(s), %d site_to_group "
                         "value(s)" % (n_handoffs, n_sites)))
+    return out
+
+
+def check_site_systems(repo: Path, contexts: dict):
+    """The body system the clerk picks before an organ must hold every organ once.
+
+    The system screen is built from the router's `site_systems`, and the organ screen
+    lists the organs the chosen system names. Each has a way of failing silently:
+
+      * an organ in no system is unreachable: the clerk has no row to tap for it, and a
+        case whose tumour sits there cannot be recorded;
+      * an organ in two systems is listed twice, so the same site is recorded by two
+        routes that nothing keeps in step;
+      * a system naming an organ the crosswalk does not have is an empty row;
+      * a system with no organs, or two with one label, is a screen row that answers
+        nothing or two rows the clerk cannot tell apart.
+    """
+    out = []
+    router, f1 = load_json(repo / "data" / "shared" / "presentation_router.json")
+    topo, f2 = load_json(repo / "data" / "shared" / "topography_codes.json")
+    out += list(f1) + list(f2)
+    if router is None or topo is None:
+        return out
+    systems = router.get("site_systems")
+    organs = [c.get("organ") for c in topo.get("coarse_organ_crosswalk") or []]
+    if not isinstance(systems, list) or not systems:
+        return out + [(FAIL, "presentation_router.json has no `site_systems` list, so the clerk is "
+                             "asked a flat list of %d organs" % len(organs))]
+    seen_id, seen_label, held = {}, {}, {}
+    for i, sysdef in enumerate(systems):
+        sid = sysdef.get("system_id") if isinstance(sysdef, dict) else None
+        label = sysdef.get("label") if isinstance(sysdef, dict) else None
+        listed = sysdef.get("organs") if isinstance(sysdef, dict) else None
+        if not sid or not label:
+            out.append((FAIL, "site_systems[%d] needs a `system_id` and a clerk-facing `label`" % i))
+            continue
+        if sid in seen_id:
+            out.append((FAIL, "site_systems: system_id %r is used twice" % sid))
+        seen_id[sid] = True
+        if label in seen_label:
+            out.append((FAIL, "site_systems: label %r is used by two systems, so the clerk cannot "
+                              "tell the rows apart" % label))
+        seen_label[label] = True
+        if not isinstance(listed, list) or not listed:
+            out.append((FAIL, "site_systems %r holds no organs, so its row answers nothing" % sid))
+            continue
+        for o in listed:
+            if o not in organs:
+                out.append((FAIL, "site_systems %r names organ %r, which the crosswalk does not have" % (sid, o)))
+            held.setdefault(o, []).append(sid)
+    for o in organs:
+        where = held.get(o, [])
+        if not where:
+            out.append((FAIL, "organ %r is in no system, so the clerk has no row to tap for it" % o))
+        elif len(where) > 1:
+            out.append((FAIL, "organ %r is in %d systems (%s), so one site has two routes"
+                        % (o, len(where), ", ".join(where))))
+    if not any(level == FAIL for level, _ in out):
+        out.append((OK, "site systems: %d systems hold all %d crosswalk organs, each exactly once"
+                    % (len(systems), len(organs))))
+    return out
+
+
+def check_compartment_discriminator(repo: Path, contexts: dict):
+    """A discriminator that is asked after the site, or answered from it, must be read
+    consistently by everything that reads its variable.
+
+    The marrow-aspirate question (`primary_compartment`) is settled before the site
+    narrows the candidates, so its answer can keep Group I for a leukaemia that
+    presents in a lymph node. Four things go wrong without being seen:
+
+      * a dual-group rule that reads the variable and has no branch for one of its
+        answers falls to the rule's default for that answer, so a clerk who said
+        "no marrow aspirate yet" is sent to a group the answer never chose;
+      * a rule branch, or a group file's `captures`, that names a value the question
+        no longer offers (`nodal`, `extranodal`) is dead: it never matches, and the
+        case falls to the default;
+      * an `auto_answer` list that differs from the topography list the rule itself
+        carries gives two answers to one site, depending on which was read;
+      * an `ask_when` or `auto_answer` that names no real group or code is a question
+        that is never asked or an answer that is never set.
+    """
+    out = []
+    router, f1 = load_json(repo / "data" / "shared" / "presentation_router.json")
+    topo, f2 = load_json(repo / "data" / "shared" / "topography_codes.json")
+    out += list(f1) + list(f2)
+    if router is None or topo is None:
+        return out
+    lookup = topo.get("topography_lookup") or {}
+    rules = router.get("dual_group_rules") or {}
+    checked = 0
+    for key, d in (router.get("discriminators") or {}).items():
+        if not (d.get("ask_when") or d.get("auto_answer")):
+            continue
+        checked += 1
+        var = d.get("variable")
+        values = [o if isinstance(o, str) else o.get("value") for o in d.get("options") or []]
+        w = d.get("ask_when")
+        if w is not None:
+            for field in ("candidates_include", "site_lists"):
+                g = (w or {}).get(field) if isinstance(w, dict) else None
+                if not isinstance(g, list) or not g or not all(isinstance(x, int) and 1 <= x <= 12 for x in g):
+                    out.append((FAIL, "discriminator %s: ask_when.%s must be a non-empty list of group "
+                                      "numbers 1-12, not %r" % (key, field, g)))
+            if d.get("ask_before_site"):
+                out.append((FAIL, "discriminator %s sets both `ask_before_site` and `ask_when`; the engine "
+                                  "would ask it before the site and never read `ask_when`" % key))
+        auto = d.get("auto_answer") or {}
+        for answer, spec in auto.items():
+            if answer not in values:
+                out.append((FAIL, "discriminator %s: auto_answer names %r, which is not one of its options %r"
+                            % (key, answer, values)))
+            codes = (spec or {}).get("topography_in") if isinstance(spec, dict) else None
+            if not isinstance(codes, list) or not codes:
+                out.append((FAIL, "discriminator %s: auto_answer %r needs a non-empty `topography_in` list" % (key, answer)))
+                continue
+            for c in codes:
+                if c not in lookup:
+                    out.append((FAIL, "discriminator %s: auto_answer %r names %s, which is not a topography code"
+                                % (key, answer, c)))
+        # every rule that reads the variable: one branch per answer, none for any other value
+        for rkey, rule in sorted(rules.items()):
+            if rkey.startswith("_") or not isinstance(rule, dict):
+                continue
+            reads = [b for b in rule.get("branches") or []
+                     if (b.get("when") or {}).get("captured_variable") == var]
+            if not reads:
+                continue
+            equals = [str((b["when"]).get("equals")) for b in reads if "equals" in b["when"]]
+            for v in values:
+                if v not in equals:
+                    out.append((FAIL, "dual_group_rule %r reads %s but has no branch for the answer %r, so "
+                                      "that answer falls to the rule's default group" % (rkey, var, v)))
+            for v in equals:
+                if v not in values:
+                    out.append((FAIL, "dual_group_rule %r reads %s = %r, which the question no longer offers; "
+                                      "the branch never matches" % (rkey, var, v)))
+            # the topography list the rule carries for an answer's group must equal the auto-answer
+            for answer, spec in auto.items():
+                want = (spec or {}).get("topography_in") if isinstance(spec, dict) else None
+                grp = [b["result"].get("group") for b in reads if str(b["when"].get("equals")) == answer]
+                if not grp or not isinstance(want, list):
+                    continue
+                for b in rule.get("branches") or []:
+                    have = (b.get("when") or {}).get("topography_in")
+                    if have is not None and (b.get("result") or {}).get("group") == grp[0] and set(have) != set(want):
+                        out.append((FAIL, "discriminator %s: auto_answer %r lists %s but dual_group_rule %r "
+                                          "carries %s for the same group, so one site would have two answers"
+                                    % (key, answer, sorted(want), rkey, sorted(have))))
+        # group files: a tree that captures the variable must capture a value the question offers
+        for path in sorted((repo / "data" / "database").glob("group_*_dt.json")):
+            data, ff = load_json(path)
+            out += [f for f in ff if f[0] == FAIL]
+            if data is None:
+                continue
+            stray = set()
+            def walk(o):
+                if isinstance(o, dict):
+                    for k2, v in o.items():
+                        if k2 == var and not isinstance(v, (dict, list)) and v not in values:
+                            stray.add(str(v))
+                        walk(v)
+                elif isinstance(o, list):
+                    for v in o:
+                        walk(v)
+            walk(data)
+            if stray:
+                out.append((FAIL, "%s captures %s = %s, which the question does not offer (%s); a rule reading "
+                                  "it never matches" % (path.name, var, sorted(stray), ", ".join(values))))
+    if not checked:
+        out.append((FAIL, "no discriminator declares `ask_when` or `auto_answer`, so the marrow-aspirate "
+                          "question is never settled before the site narrows the candidates"))
+    if not any(level == FAIL for level, _ in out):
+        out.append((OK, "compartment discriminator: %d question(s) settled before the site step; every dual-group "
+                        "rule that reads one has a branch per answer and no dead value" % checked))
     return out
 
 
@@ -13412,6 +13595,8 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report.run(check_presentation_router, repo, contexts)
     report.run(check_routing_narrows, repo, contexts)
     report.run(check_router_branch_when_vocabulary, repo, contexts)
+    report.run(check_site_systems, repo, contexts)
+    report.run(check_compartment_discriminator, repo, contexts)
     report.run(check_router_cns_topography_completeness, repo, contexts)
     report.run(check_group7_router_c22, repo, layer1)    # Group 7 contract §8 rule 9
 

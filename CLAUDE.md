@@ -78,7 +78,15 @@ These apply to every session and every subagent working in this repository.
     purpose, watch the check fail for the right reason, restore, watch it pass.
     Key a check off the source of truth, never off a flag in the thing being
     checked. A check that tests a destination rather than a condition passes
-    while the engine never reads the branch at all.
+    while the engine never reads the branch at all. Registrar's ruling,
+    13 October 2026: write only the hard controls. A breakage whose result is
+    plain from the check's own name (deleting a list the check says must
+    exist, deleting a branch it says must exist, naming an organ that is not
+    there) proves nothing, so skip it. Run the ones that could pass for the
+    wrong reason: restore a plausible pre-fix behaviour in a scratch copy of
+    the engine, or break a seam between two layers. Test that each new feature
+    works as intended on the real data. Never edit the real data or the real
+    tests to run a control.
 11. **A green data build is not a working tool.** `build_database.py` validates
     the data; `check_engine_flow.mjs` drives the engine. The defects that forced
     the engine gate into existence sat in the seam between them. Drive the UI
