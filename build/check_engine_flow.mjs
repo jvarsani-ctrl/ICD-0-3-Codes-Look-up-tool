@@ -2232,6 +2232,20 @@ async function uxScenarios(ctx) {
       aPos === '9866' && aNpm === '9877' && aNone === '9861' && !ctx.findNode('ac_apl_confirm'), [aPos, aNpm, aNone, !!ctx.findNode('ac_apl_confirm')].join(' '));
     await apl('PML::RARA NEGATIVE — NPM1 wild-type');
     t('PML::RARA negative with NPM1 wild-type returns to the AML genetics ladder', ctx.state.nodeId === 'ac_aml_genetics_upgrade', ctx.state.nodeId);
+    /* PML::RARA not tested, reached from the lineage rules, must not close at AML NOS: a BCR::ABL1 result given earlier would be
+       thrown away (registrar, 13 October 2026). It goes on to the AML genetics ladder. The closing question stays for the two routes
+       with no earlier genetics to honour: the morphology-only route and the ladder's own "APL-like phenotype" option, which would
+       otherwise loop. */
+    begin(dt1, TREE, 'ac_apl_status_lineage', 'C42.1'); await pickBy('ac_apl_status_lineage', 'PML::RARA not tested');
+    const fromLineage = ctx.state.nodeId;
+    const closing = await apl('PML::RARA not tested');
+    begin(dt1, TREE, 'ac_lineage_assignment', 'C42.1');
+    for (const m of ['cMPO', 'CD33']) { const i = ctx.pickerAvailable(ctx.node()).indexOf(m); await tap('pickadd', i); await mset(m, 'pos'); }
+    await tap('resolve');
+    const ladderApl = (ctx.findNode('ac_aml_genetics_upgrade').options || []).filter((o) => o.next_node === 'ac_apl_status').length;
+    t('PML::RARA not tested after the lineage rules goes on to the AML genetics ladder; the ladder\'s APL-like option still closes at 9861 and cannot loop',
+      fromLineage === 'ac_aml_genetics_upgrade' && closing === '9861' && ctx.state.nodeId === 'ac_apl_status_lineage' && ladderApl === 1,
+      'from lineage ' + fromLineage + ', closing ' + closing + ', after markers ' + ctx.state.nodeId + ', ladder options to the closing question ' + ladderApl);
   }
   return rows;
 }

@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 80,
-    "total_decision_nodes": 97,
+    "total_decision_nodes": 98,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -3261,7 +3261,7 @@
                 "HLA-DR",
                 "CD34"
               ],
-              "next_node": "ac_apl_status",
+              "next_node": "ac_apl_status_lineage",
               "coding_note": "APL flow signature: HLA-DR−, CD34−, MPO bright, CD33 bright, high side scatter. Confirm PML::RARA before coding 9866."
             },
             {
@@ -3273,7 +3273,7 @@
                 "HLA-DR",
                 "CD34"
               ],
-              "next_node": "ac_apl_status",
+              "next_node": "ac_apl_status_lineage",
               "coding_note": "Microgranular variant (M3v) has lower side scatter and frequent CD2/CD34 — still 9866 once PML::RARA is confirmed."
             },
             {
@@ -4430,6 +4430,56 @@
               "morphology_code": "9861",
               "confidence": "medium",
               "upgrade_path": "FISH, RT-PCR/RQ-PCR or anti-PML immunostaining for PML::RARA would confirm or exclude APL (9866). Until then this case must not be coded 9866."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ac_apl_status_lineage",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "PML::RARA status",
+          "question": "Has PML::RARA been tested, and what did it show?",
+          "hint": "Presumptive ATRA on hypergranular promyelocytes plus coagulopathy is the right clinical call. It is not a coding decision.",
+          "clinical_alert": null,
+          "coding_note": "For coding purposes 9866 needs FISH, RT-PCR/RQ-PCR/RT-QLAMP or anti-PML immunostaining. Morphology plus DIC alone is not enough (Pathway §3.6).",
+          "options": [
+            {
+              "label": "PML::RARA POSITIVE — FISH, RT-PCR/RQ-PCR or anti-PML immunostain",
+              "captures": {
+                "pml_rara_status": "positive"
+              },
+              "morphology_code": "9866",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "PML::RARA confirmed — 9866. Document the DIC screen and ATRA initiation."
+            },
+            {
+              "label": "PML::RARA NEGATIVE — NPM1 mutation found (CD4 positive, low/normal side scatter, high WBC)",
+              "captures": {
+                "pml_rara_status": "negative",
+                "npm1_status": "mutated",
+                "cd4_status": "positive",
+                "side_scatter_pattern": "low"
+              },
+              "morphology_code": "9877",
+              "coding_note": "APL excluded, NPM1-mutated AML confirmed — 9877, the documented APL mimic (Pathway §3.6)."
+            },
+            {
+              "label": "PML::RARA NEGATIVE — NPM1 wild-type or not tested",
+              "next_node": "ac_aml_genetics_upgrade",
+              "captures": {
+                "pml_rara_status": "negative",
+                "npm1_status": "not tested"
+              },
+              "coding_note": "APL excluded. Return to the AML genetics ladder for the correct entity."
+            },
+            {
+              "label": "PML::RARA not tested / result pending / unavailable",
+              "coding_note": "APL is not confirmed or excluded here. The AML genetics ladder follows, so a finding already on file (BCR::ABL1, KMT2A-r, NPM1) is coded; an APL-like phenotype with PML::RARA pending closes there at 9861 with PML::RARA named as the upgrade.",
+              "captures": {
+                "pml_rara_status": "not tested"
+              },
+              "next_node": "ac_aml_genetics_upgrade"
             }
           ],
           "nos_fallback": null
