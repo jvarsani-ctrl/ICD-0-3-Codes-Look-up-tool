@@ -91,7 +91,7 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 
 **Design.**
 - The discriminator `primary_compartment` keeps its name and becomes a question about the marrow aspirate: "How many blasts does the marrow aspirate show?" The answers are `marrow` ("More than 25% blasts"), `not_marrow` ("25% or less") and `not_known` ("No marrow aspirate yet"). The hint says that over 25% points to leukaemia and 25% or less, with a mass or enlarged nodes, points to lymphoma. Nodal and extranodal merge: in all three rules that read the compartment they route identically, because extranodal falls to the same default as nodal.
-- **More than 25%** sets `marrow`, drops Group II, and carries `keep_on_site: [1]` so the site cannot remove Group I.
+- **More than 25%** sets `marrow`, drops every group except Group I, and carries `keep_on_site: [1]` so the site cannot remove Group I. Only Group I holds leukaemias. At a lymph node this also removes Group IX, which the node lists for lymphadenopathic Kaposi sarcoma (Group 9 build contract §3.5; Kamiyango et al., *Cancer and Metastasis Reviews* 2019), so the clerk is not offered a sarcoma family after saying the marrow is leukaemic. The case goes straight into Group I.
 - **25% or less** sets `not_marrow` and drops Group I.
 - **No marrow aspirate yet** sets `not_known`, drops nothing, and carries `keep_on_site: [1]`. Both Groups I and II stay offered and the "which family?" question decides.
 - **The blood film is not an input.** Murphy's footnote also asks for a normal peripheral blood picture. The film is mentioned in the hint only. A missing film never blocks an answer: the marrow aspirate decides. A blood film or blood flow showing blasts with no marrow done answers "No marrow aspirate yet". A blood-only route is a decision for the registrar and is not built.
@@ -112,7 +112,7 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 
 - Engine gate (`build/check_engine_flow.mjs`), new cases:
   - Lymph node, "No marrow aspirate yet": Groups I and II are both offered at the family question, and a Group I choice is not sent to Group II afterwards.
-  - ALL with enlarged nodes: pick the lymph node, answer "More than 25% blasts", end in Group I.
+  - ALL with enlarged nodes: pick the lymph node, answer "More than 25% blasts", and enter Group I directly, with no family question and no Group IX.
   - The same case, answer "25% or less": Group II.
   - Lymphoma in a node, with no marrow involvement: Group II.
   - Kidney tumour: the marrow question is never asked.

@@ -172,9 +172,19 @@
       "narrows": {
         "marrow": {
           "drop": [
-            2
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
           ],
-          "because": "More than 25% blasts in the marrow is a leukaemia, not a lymphoma (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote).",
+          "because": "More than 25% blasts in the marrow is a leukaemia, and only Group I holds leukaemias: a lymphoma (Group II), a solid tumour or a sarcoma is not (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote).",
           "keep_on_site": [
             1
           ]

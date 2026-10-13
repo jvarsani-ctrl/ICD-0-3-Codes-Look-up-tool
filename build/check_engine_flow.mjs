@@ -1979,16 +1979,17 @@ async function uxScenarios(ctx) {
     t('the marrow question reads as the registrar worded it, with its three answers', /How many blasts does the marrow aspirate show\?/.test(q) &&
       /More than 25% blasts/.test(q) && /25% or less/.test(q) && /No marrow aspirate yet/.test(q) && /points to leukaemia/.test(q), q.slice(0, 400));
     await answer('marrow');
-    t('more than 25% blasts keeps Group I for a node that is the site, and drops Group II', JSON.parse(cands()).includes(1) && !JSON.parse(cands()).includes(2), cands());
-    t('the trail shows the answer in words, never the stored value', labelsOf().join() === 'Presentation,Site of origin,Topography,Marrow blasts' &&
+    t('more than 25% blasts at a lymph node leaves Group I alone: Group II and the soft-tissue sarcomas of Group IX are dropped, and the case goes straight in',
+      cands() === '[1]' && ctx.state.group === 1 && ctx.state.stage !== 'group', ctx.state.stage + ' group ' + ctx.state.group + ' ' + cands());
+    t('the trail shows the answer in words, never the stored value', labelsOf().slice(0, 4).join() === 'Presentation,Site of origin,Topography,Marrow blasts' &&
       ctx.state.trail.every((x) => x.value !== 'marrow') && ctx.state.trail.slice(-1)[0].value === 'More than 25% blasts', JSON.stringify(ctx.state.trail.map((x) => x.label + ': ' + x.value)));
     await tap('rewind', labelsOf().indexOf('Site of origin'));
     t('stepping back to the site of origin shows the system screen with the earlier answers gone', ctx.state.stage === 'site_system' &&
       ctx.state.captured.primary_compartment === undefined && ctx.state.system === null && labelsOf().join() === 'Presentation' && cands() === JSON.stringify([1, 2, 9]), ctx.state.stage + ' ' + cands());
     await start('lymphadenopathy'); await toSite('lymph_nodes', 'lymph_node', 'C77.0'); await answer('not_marrow');
-    t('25% or less sends a lymph node to the lymphomas: Group I is dropped', !JSON.parse(cands()).includes(1) && JSON.parse(cands()).includes(2), cands());
+    t('25% or less sends a lymph node to the lymphomas and sarcomas: Group I is dropped, Groups II and IX stay (a node biopsy can show Kaposi sarcoma)', cands() === '[2,9]', cands());
     await start('lymphadenopathy'); await toSite('lymph_nodes', 'lymph_node', 'C77.0'); await answer('not_known');
-    t('no marrow aspirate yet drops nothing: both Groups I and II stay on offer', JSON.parse(cands()).includes(1) && JSON.parse(cands()).includes(2), cands());
+    t('no marrow aspirate yet drops nothing: Groups I, II and IX all stay on offer', cands() === '[1,2,9]', cands());
 
     /* The question is asked only where it can change the family. */
     await start('unsure'); await toSite('urinary', 'kidney', 'C64.9');
