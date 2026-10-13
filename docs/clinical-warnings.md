@@ -392,7 +392,7 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ NPM1-mutated AML mimics APL (CD34−, HLA-DR−, MPO+, coagulopathy) but is CD4-positive with normal/low side scatter and a high WBC. Confirm PML::RARA before coding 9866.
 
 
-### tree_acute_leukemia · ac_apl_confirm
+### tree_acute_leukemia · ac_apl_confirm (node removed 13 October 2026; the warning applies at the PML::RARA question, `ac_apl_status`)
 
 **the node — APL confirmation**
 

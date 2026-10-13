@@ -316,6 +316,8 @@ haematopoietic system answer it without a question. The 25% figure is the Murphy
 convention (Rosolen et al., *J Clin Oncol* 2015;33:2112, Table 1 footnote); WHO 5th edition and
 ICC give no percentage, and the router's separate blast-percentage branch is removed.
 
+A marrow aspirate, blood film or trephine with a genetic test and no flow cytometry or IHC now goes to the genetics question (`ac_morph_genetics_context`) before the marrow report. The finding is recorded as a genotype annotation and the code stays at the lineage the smear supports, because lineage decides whether a BCR::ABL1 result means 9812, 9806, 9875 or 9837. The free-text box after the PML::RARA question is removed: that question settles the code on its own.
+
 The marker picker is a dropdown: closed until its search box is opened, it lists only the markers not yet added, and choosing one closes it and leaves that marker as its own row with its result buttons, focused.
 
 Every step stays on the case trail, before and after a result. Clicking a step opens that step's own window, locked, with the earlier choice highlighted and the answer repeated above it; nothing is deleted by looking. Two buttons sit in the window: "Move back here", which rewinds the case to that step and removes the steps after it, and "Back to where I was". The current step on the list also returns. A step keeps the window the clerk answered in (`screen` on its trail entry).

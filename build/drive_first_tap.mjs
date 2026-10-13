@@ -102,7 +102,6 @@ try {
      the press are real. */
   const NODES = [
     { group: 1, tree: 'tree_acute_leukemia', node: 'ac_blast_gate', sel: 'input[type="number"][data-act="draft"]', text: '25' },
-    { group: 1, tree: 'tree_acute_leukemia', node: 'ac_apl_confirm', sel: 'textarea[data-act="draft"]', text: 'PML::RARA detected' },
   ];
   for (const c of NODES) {
     await send('Page.navigate', { url: 'http://localhost:' + PORT + '/?t=' + Date.now() });
