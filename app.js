@@ -402,9 +402,18 @@ function contextLabel() {
 
 /* The rail and the transcript are NOT two implementations. They are one
    caseTrail array rendered two ways (engine.md §3). */
+/* A trail entry the engine took by itself and marked quiet is its own description of what
+   the clerk ticked ("Morphology and flow cytometry" beside "Marrow aspirate, Flow cytometry"),
+   not an answer. Drawn as a second row it reads as a second question and the clerk asks
+   what the difference is (registrar, 13 October 2026). It stays in the trail, so stepping
+   back and the indexes are unchanged; it is only not drawn. An entry the clerk typed (the
+   laboratory results) is quiet but not automatic, so it stays. */
+function drawnInTrail(t) { return !(t.quiet && t.automatic); }
+
 function renderRail() {
   var h = '<div class="tag rail__title">This case</div>';
   state.trail.forEach(function (t, i) {
+    if (!drawnInTrail(t)) return;
     h += '<button class="rail__row" data-act="rewind" data-i="' + i + '">' +
          '<b>' + esc(t.label) + '</b><span>' + esc(t.value) + '</span></button>';
   });
@@ -415,6 +424,7 @@ function renderRail() {
 }
 function renderTrailRows() {
   return state.trail.map(function (t, i) {
+    if (!drawnInTrail(t)) return '';
     return '<button class="trail-row" data-act="rewind" data-i="' + i + '">' +
       '<em>' + esc(t.label) + '</em>' +
       '<b><span class="trail-row__tick">&check;</span> ' + esc(t.value) + '</b>' +
@@ -883,7 +893,7 @@ function nodeControl(n) {
       return optionList(n);
     case 'cytogenetics_dropdown':  return cytogeneticsSelect(n);
     case 'ihc_checklist':
-      return n.branch_sequence ? markerFlow(n) : markerGrid(n);
+      return n.marker_entry === 'picker' ? markerPicker(n) : n.branch_sequence ? markerFlow(n) : markerGrid(n);
     case 'numeric_gate':           return numericGate(n);
     case 'lab_results':            return labControl(n);
     case 'molecular_freetext':     return freeText(n);
@@ -1062,10 +1072,32 @@ function tickControl(n) {
 function tickSiblings(n, tl) {
   var offered = tickOffered(n, arr(state.captured[tl.variable]));
   return '<p class="node__hint">' + esc(tl.sibling_prompt ||
-    'More than one description fits what is in the file. Pick the one that describes it.') + '</p>' +
+    'The reports ticked fit more than one description. Pick the one that says what the reports contain.') + '</p>' +
     pick('tickopt', offered.map(function (c) {
       return { label: optionLabel(c.o), meta: priorText(c.o.prior_probability) || null, alert: c.o.clinical_alert || null };
     }));
+}
+/* What the ticks prove was done. A vocabulary whose items carry `credits` names, for each
+   box, the diagnostic tests ticking it proves are in the file. The case's evidence is then
+   exactly the union of the ticked boxes' credits, so the tool can never record a test the
+   clerk did not tick: a tier's own `captures.evidence_tests` describes a tier, and a tier
+   says more or less than the file holds. That list is kept only as the fallback when nothing
+   ticked credits anything (the referral tier on an empty checklist). Returns a copy; the
+   option in the data is never changed. A vocabulary with no `credits` is left alone. */
+function tickCredited(o, tl, ids) {
+  if (!tl.items.some(function (it) { return it.credits; })) return o;
+  var credits = [];
+  tl.items.forEach(function (it) {
+    if (ids.indexOf(it.id) === -1) return;
+    arr(it.credits).forEach(function (t) { if (credits.indexOf(t) === -1) credits.push(t); });
+  });
+  if (!credits.length) return o;
+  var copy = {};
+  Object.keys(o).forEach(function (k) { copy[k] = o[k]; });
+  copy.captures = {};
+  Object.keys(o.captures || {}).forEach(function (k) { copy.captures[k] = o.captures[k]; });
+  copy.captures.evidence_tests = credits;
+  return copy;
 }
 /* Continue on the checklist. The ticks go on the trail and onto the case, then
    the destination is the special situation chosen, the first fit, the one tier
@@ -1081,18 +1113,18 @@ function tickContinue(n, before) {
   if (tl.resolve === 'first_match') {
     var hit = tickOffered(n, ids)[0];
     if (!hit) throw new Error('No option on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
-    return advance(hit.o, label, optionLabel(hit.o), after, true);
+    return advance(tickCredited(hit.o, tl, ids), label, optionLabel(hit.o), after, true);
   }
   var pickedCtx = Number(state.draft.ctx) || 0;
   if (pickedCtx > 0) {
     var c = tickContexts(n)[pickedCtx - 1];
-    if (c) return advance(c.o, label, optionLabel(c.o), after, true);
+    if (c) return advance(tickCredited(c.o, tl, ids), label, optionLabel(c.o), after, true);
   }
   var offered = tickOffered(n, ids);
   if (!offered.length) throw new Error('No tier on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
   if (offered.length === 1) {
     var at = state.trail.length;
-    var went = advance(offered[0].o, label, optionLabel(offered[0].o), after, true);
+    var went = advance(tickCredited(offered[0].o, tl, ids), label, optionLabel(offered[0].o), after, true);
     /* The tier is the engine's description of the documents ticked, not the clerk's
        answer, and its wording can say more or less than they ticked ("no imaging
        report" beside an imaging report). The documents ticked are the evidence, so
@@ -1546,6 +1578,90 @@ function markerGrid(n) {
   }).join('');
   h += '<p class="node__hint">Tap once for positive, again for strong, again for weak, again for negative.</p>';
   h += '<div class="actions"><button class="btn" data-act="resolve">Continue</button></div>';
+  return h;
+}
+
+/* ============================================================================
+   Marker entry as a picker (registrar, 13 October 2026)
+
+   A node that sets `marker_entry: "picker"` is answered by searching for the
+   markers the report lists and giving each a result, instead of by walking the
+   flow chart one marker at a time. A marker the clerk does not add is not done,
+   and the matcher already treats a marker never recorded as the same evidence as
+   one that was negative or unreadable (ruling 11), so nothing a clerk leaves out
+   can be read as a result. The clerk is never asked what was done after saying
+   what was done: that is why the picker has no "not done" answer.
+
+   The answers offered for a marker are Positive and Negative, plus Strongly or
+   Weakly positive where ANY rule on the node grades it that way. markerAnswers()
+   offers intensity only where a LIVE rule grades it, which is right mid-walk and
+   wrong here, where nothing has been walked and a marker must offer every grade a
+   rule can read.
+
+   The node still carries its `branch_sequence`: the build requires it and the
+   flow-chart sweep reads it. The engine just does not draw it for a picker node.
+   `marker_count_variable`, when the node names one, is captured on Continue as the
+   number of the panel's markers that were given a result, so a rule can say
+   "nothing was entered" with a `when` and the clerk is not asked about a panel
+   they have just said they did not run.
+   ========================================================================= */
+function pickerMarkers(n) {
+  var seen = {}, out = [];
+  arr(n.marker_groups).forEach(function (g) {
+    arr(g.markers).forEach(function (m) { if (!seen[m]) { seen[m] = true; out.push(m); } });
+  });
+  return out;
+}
+function pickerAnswers(n, m) {
+  var wants = {};
+  arr(n.resolution_logic).forEach(function (r) { var w = markerNeed(r, m); if (w) wants[w] = true; });
+  var out = [{ v: 'pos', label: 'Positive' }];
+  if (wants.strong) out.push({ v: 'strong', label: 'Strongly positive' });
+  if (wants.weak) out.push({ v: 'weak', label: 'Weakly positive' });
+  out.push({ v: 'neg', label: 'Negative' });
+  return out;
+}
+/* The markers on screen as added: those added this visit, in the order added, then any
+   the case already holds for this panel (a marker answered on an earlier screen, or
+   a clerk who stepped back), in panel order. */
+function pickerAdded(n) {
+  var panel = pickerMarkers(n), added = [];
+  arr(state.draft.added).forEach(function (m) { if (panel.indexOf(m) !== -1 && added.indexOf(m) === -1) added.push(m); });
+  panel.forEach(function (m) {
+    var v = state.markers[m];
+    if (v !== undefined && v !== MARKER_UNREAD && added.indexOf(m) === -1) added.push(m);
+  });
+  return added;
+}
+function pickerAvailable(n) {
+  var added = pickerAdded(n);
+  return pickerMarkers(n).filter(function (m) { return added.indexOf(m) === -1; });
+}
+function markerPicker(n) {
+  var added = pickerAdded(n), h = '<p class="node__hint">Add each marker the report lists, and give it a result. ' +
+    'A marker you do not add is treated as not done.</p>';
+  if (added.length) {
+    h += '<div class="pickrows">' + added.map(function (m) {
+      var v = state.markers[m];
+      return '<div class="pickrow"><b class="pickrow__name">' + esc(m) + '</b><div class="states">' +
+        pickerAnswers(n, m).map(function (a) {
+          var on = v === a.v;
+          return '<button class="state" data-act="markerset" data-m="' + esc(m) + '" data-v="' + esc(a.v) + '"' +
+            (on ? ' data-on aria-pressed="true"' : ' aria-pressed="false"') +
+            ' aria-label="' + esc(m) + ': ' + esc(a.label) + '">' +
+            (on ? '<span class="state__tick">&check;</span> ' : '') + esc(a.label) + '</button>';
+        }).join('') + '</div>' +
+        '<button class="pickrow__remove" data-act="pickremove" data-m="' + esc(m) + '" aria-label="Remove ' + esc(m) + '">Remove</button></div>';
+    }).join('') + '</div>';
+  }
+  var avail = pickerAvailable(n);
+  if (avail.length) {
+    h += '<div class="tag">' + (added.length ? 'Add another marker' : 'Search for a marker') + '</div>' +
+      pick('pickadd', avail.map(function (m) { return { label: m }; }), { key: 'pickadd', filter: true });
+  }
+  var open = added.filter(function (m) { return state.markers[m] === undefined; });
+  h += '<div class="actions"><button class="btn" data-act="resolve"' + (open.length ? ' disabled' : '') + '>Continue</button></div>';
+  if (open.length) h += '<p class="node__hint">Choose a result for ' + esc(open.join(', ')) + ', or remove ' + (open.length > 1 ? 'them' : 'it') + '.</p>';
   return h;
 }
 
@@ -2883,9 +2999,10 @@ function handleOption(act, el) {
     }
     case 'labs-continue': return labsContinue(n, before);
     case 'tickopt': {
-      var pick2 = tickOffered(n, arr(state.captured[tickList(n).variable]))[i];
+      var tl2 = tickList(n), ids2 = arr(state.captured[tl2.variable]);
+      var pick2 = tickOffered(n, ids2)[i];
       if (!pick2) return;
-      return advance(pick2.o, n.step_label || 'Answer', optionLabel(pick2.o), before);
+      return advance(tickCredited(pick2.o, tl2, ids2), n.step_label || 'Answer', optionLabel(pick2.o), before);
     }
     /* A referral to a built group continues into that group's tree. */
     case 'hop': return hopToGroup(before);
@@ -2955,6 +3072,20 @@ function handleOption(act, el) {
     case 'markerset': {
       var mk = el.getAttribute('data-m'), mv = el.getAttribute('data-v');
       if (mv === 'clear') delete state.markers[mk]; else state.markers[mk] = mv;
+      return;
+    }
+    /* The picker: add a marker from the search list, or take one back off. */
+    case 'pickadd': {
+      var pm = pickerAvailable(n)[i];
+      if (!pm) return;
+      state.draft.added = pickerAdded(n).concat([pm]);
+      state.draft['f:pickadd'] = '';
+      return;
+    }
+    case 'pickremove': {
+      var rm = el.getAttribute('data-m');
+      delete state.markers[rm];
+      state.draft.added = arr(state.draft.added).filter(function (x) { return x !== rm; });
       return;
     }
     case 'marker': {
@@ -3083,6 +3214,11 @@ function resolveNode(n, before) {
   }
   switch (n.node_type) {
     case 'ihc_checklist': {
+      if (n.marker_entry === 'picker' && n.marker_count_variable) {
+        state.captured[n.marker_count_variable] = pickerMarkers(n).filter(function (m) {
+          return state.markers[m] !== undefined && state.markers[m] !== MARKER_UNREAD;
+        }).length;
+      }
       var rule = matchRules(n.resolution_logic);
       var summary = Object.keys(state.markers).map(function (m) {
         var v = state.markers[m];

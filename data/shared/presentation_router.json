@@ -3080,14 +3080,14 @@
     }
   },
   "tick_vocabularies": {
-    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order.",
+    "_comment": "Closed lists a tick_list node may point to by name (spec 2026-10-06-ux-overall-fixes-design.md section 4). The engine knows no item by name; it reads them here. `variable` is the case variable the ticked ids are kept in, an array in list order. An item may carry `credits`, the diagnostic tests ticking it proves were done; when a vocabulary has them the engine records exactly the union of the ticked items' credits as the case's evidence, and an option's own `captures.evidence_tests` is used only when nothing ticked credits anything. A vocabulary may set `tiers_exclusive`: no ticked set may fit two tiers, so the clerk is never asked to choose between tiers and the ticks alone decide the route.",
     "evidence_documents": {
       "variable": "documents_in_file",
       "label": "Documents in file",
       "prompt": "Tick every report that is in the file.",
       "context_prompt": "Does one of these apply?",
       "none_label": "None of these. Code from the reports ticked above.",
-      "sibling_prompt": "More than one description fits what is in the file. Pick the one that describes it.",
+      "sibling_prompt": "The reports ticked fit more than one description. Pick the one that says what the reports contain.",
       "items": [
         {
           "id": "referral",
@@ -3116,6 +3116,61 @@
         {
           "id": "genetics",
           "label": "Gene reports for cancer"
+        }
+      ]
+    },
+    "haematology_tests": {
+      "variable": "tests_in_file",
+      "label": "Tests in file",
+      "prompt": "Tick every test that is in the file.",
+      "context_prompt": "Does one of these apply?",
+      "none_label": "None of these. Code from the tests ticked above.",
+      "tiers_exclusive": true,
+      "items": [
+        {
+          "id": "referral",
+          "label": "Referral / clinical note",
+          "credits": ["Referral only"]
+        },
+        {
+          "id": "marrow_aspirate",
+          "label": "Marrow aspirate or blood film",
+          "credits": ["Histology"]
+        },
+        {
+          "id": "trephine",
+          "label": "Trephine biopsy",
+          "credits": ["Histology"]
+        },
+        {
+          "id": "flow",
+          "label": "Flow cytometry",
+          "credits": ["Flow cytometry"]
+        },
+        {
+          "id": "ihc",
+          "label": "IHC",
+          "credits": ["IHC"]
+        },
+        {
+          "id": "karyotype",
+          "label": "Karyotype",
+          "credits": ["Cytogenetics/FISH"]
+        },
+        {
+          "id": "fish",
+          "label": "FISH",
+          "credits": ["Cytogenetics/FISH"]
+        },
+        {
+          "id": "pcr",
+          "label": "PCR",
+          "credits": ["Molecular/PCR"]
+        },
+        {
+          "id": "sequencing",
+          "label": "Sequencing",
+          "credits": ["Molecular/PCR"]
         }
       ]
     }

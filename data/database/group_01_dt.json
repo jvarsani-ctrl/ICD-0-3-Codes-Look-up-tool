@@ -2538,10 +2538,10 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file?",
+          "question": "What tests are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
           "tick_list": {
-            "vocabulary": "evidence_documents",
+            "vocabulary": "haematology_tests",
             "resolve": "ask_siblings"
           },
           "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0).",
@@ -2550,191 +2550,59 @@
               "label": "Referral / clinical note only — no marrow report",
               "ticks": {
                 "excludes": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "ac_clinical_alias",
               "captures": {
                 "evidence_tests": [
                   "Referral only"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "not done"
-              }
+                ]
+              },
+              "next_node": "ac_clinical_alias"
             },
             {
-              "label": "Marrow aspirate / blood film morphology only (no flow cytometry, no IHC)",
+              "label": "Marrow aspirate, blood film or trephine morphology only — no flow cytometry, no IHC",
               "ticks": {
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ],
                 "excludes": [
-                  "lab",
+                  "flow",
                   "ihc"
                 ]
               },
-              "next_node": "ac_morphology_only",
-              "captures": {
-                "evidence_tests": [
-                  "Histology"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete"
-              }
+              "next_node": "ac_morphology_only"
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology and flow cytometry",
               "ticks": {
                 "requires": [
-                  "lab"
+                  "flow"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
-                ],
-                "excludes": [
-                  "genetics"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Flow cytometry"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete"
-              }
+              "next_node": "ac_prior_therapy_gate"
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology and IHC, no flow cytometry",
               "ticks": {
                 "requires": [
                   "ihc"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ],
                 "excludes": [
-                  "lab",
-                  "genetics"
+                  "flow"
                 ]
               },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete"
-              }
-            },
-            {
-              "label": "Morphology + flow/IHC + cytogenetics / FISH",
-              "ticks": {
-                "requires": [
-                  "lab",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ]
-              },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Flow cytometry",
-                  "Cytogenetics/FISH"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete"
-              }
-            },
-            {
-              "label": "Morphology + flow/IHC + cytogenetics / FISH",
-              "ticks": {
-                "requires": [
-                  "ihc",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ],
-                "excludes": [
-                  "lab"
-                ]
-              },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Cytogenetics/FISH"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete"
-              }
-            },
-            {
-              "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
-              "ticks": {
-                "requires": [
-                  "lab",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ]
-              },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Flow cytometry",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete"
-              }
-            },
-            {
-              "label": "Morphology + flow/IHC + cytogenetics + molecular / PCR / NGS",
-              "ticks": {
-                "requires": [
-                  "ihc",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ],
-                "excludes": [
-                  "lab"
-                ]
-              },
-              "next_node": "ac_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete"
-              }
+              "next_node": "ac_prior_therapy_gate"
             },
             {
               "label": "Trisomy 21 (Down syndrome) confirmed or suspected — neonatal or infant blasts",
@@ -2939,7 +2807,7 @@
               }
             },
             {
-              "label": "Report present — no defining abnormality found",
+              "label": "Genetics report in the file: no defining abnormality found (for example BCR::ABL1 negative)",
               "next_node": "ac_blast_gate",
               "captures": {
                 "aml_defining_genetic_abnormality": false,
@@ -2951,7 +2819,7 @@
               }
             },
             {
-              "label": "Karyotype normal — FISH / RT-PCR NOT performed",
+              "label": "Karyotype normal, and no FISH or RT-PCR in the file",
               "next_node": "ac_blast_gate",
               "coding_note": "A normal karyotype closes nothing. The cryptic set (ETV6::RUNX1, CBFA2T3::GLIS2, FIP1L1::PDGFRA, masked hypodiploidy) is invisible on karyotype.",
               "captures": {
@@ -2964,7 +2832,7 @@
               }
             },
             {
-              "label": "t(9;22) BCR::ABL1 positive",
+              "label": "BCR::ABL1 positive: t(9;22) on karyotype, or positive on FISH or RT-PCR",
               "next_node": "ac_blast_gate",
               "coding_note": "BCR::ABL1 does NOT override the blast threshold — AML-BCR::ABL1 still requires ≥20% (WHO-HAEM5) / ≥10% (ICC). Lineage assignment decides between 9812, 9806 and 9912.",
               "captures": {
@@ -3088,8 +2956,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Lineage markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "General positivity cutoff is ≥10% of gated blasts. MPO positivity is the Bras rule: ≥20% of leukaemic cells above a lymphocyte-derived threshold.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Lineage is intensity-relative, not binary (Pathway §2.3). CD79a is only valid if T lineage is not under consideration. KMT2A-r BCP-ALL can drop out of the scheme (CD10-negative, weak cCD22/cCD79a) and must not default to AML or MPAL.",
           "marker_groups": [
@@ -3518,6 +3387,19 @@
               "next_node": "ac_aml_genetics_upgrade"
             },
             {
+              "when": {
+                "lineage_markers_entered": 0
+              },
+              "morphology_code": "9801",
+              "confidence": "low",
+              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish AUL, ALAL-NOS or a definite lineage.",
+              "captures": {
+                "workup_status": "incomplete",
+                "alal_subtype": null
+              },
+              "coding_note": "No marker was entered, so the panel was not run or not available. Asking what the panel covered would ask the clerk to describe a panel they have just said they did not have. This is the 'panel incomplete, not performed' outcome of ac_alal_resolve, reached directly. 9801 in its NOS sense: do NOT report as AUL."
+            },
+            {
               "next_node": "ac_alal_resolve",
               "coding_note": "No lineage-defining combination met. Panel adequacy is the second gate — resolve AUL vs ALAL-NOS vs 'lineage not established' before emitting 9801 (Pathway §4.1)."
             }
@@ -3532,7 +3414,8 @@
             "myeloid_marker_count",
             "alal_subtype",
             "blast_percent_band",
-            "therapy_related_qualifier"
+            "therapy_related_qualifier",
+            "lineage_markers_entered"
           ],
           "nos_fallback": {
             "code": "9801",
@@ -3567,8 +3450,9 @@
               "CD19",
               "cMPO"
             ],
-            "rule_count": 41
-          }
+            "rule_count": 42
+          },
+          "marker_count_variable": "lineage_markers_entered"
         },
         {
           "node_id": "ac_alal_resolve",
@@ -3757,7 +3641,7 @@
               "coding_note": "No ICD-O-3.2 code exists for these. They fall back to 9811 with the genotype recorded, or the information is lost permanently (Pathway §5.2)."
             },
             {
-              "finding": "Karyotype normal — FISH / RT-PCR NOT performed",
+              "finding": "Karyotype normal, with no FISH or RT-PCR for ETV6::RUNX1 (a BCR::ABL1 result alone does not count)",
               "detection_method": "karyotype_only",
               "next_node": "ac_cryptic_fish_prompt",
               "coding_note": "A normal karyotype does not exclude ETV6::RUNX1 or masked hypodiploidy. Do not resolve to NOS yet.",
@@ -3766,7 +3650,7 @@
               }
             },
             {
-              "finding": "Karyotype normal AND FISH / RT-PCR negative for the cryptic set",
+              "finding": "Karyotype normal, and FISH or RT-PCR negative for ETV6::RUNX1",
               "detection_method": "karyotype_and_fish",
               "satisfies_tests": [
                 "Cytogenetics/FISH",
@@ -3774,7 +3658,7 @@
               ],
               "morphology_code": "9811",
               "coding_note": "The cryptic branch has been properly closed — 9811 is a defensible terminal here, not an incomplete workup.",
-              "upgrade_path": "None — the cryptic set has been excluded by an adequate method.",
+              "upgrade_path": "None — ETV6::RUNX1 was excluded by FISH or RT-PCR.",
               "captures": {
                 "cryptic_genetics_tested": "FISH performed",
                 "karyotype_result_status": "received"
@@ -3810,13 +3694,13 @@
           "node_type": "document_inventory",
           "step_number": 4,
           "step_label": "FISH status",
-          "question": "A normal karyotype cannot exclude the cryptic set. Has FISH or RT-PCR been performed since?",
+          "question": "A normal karyotype cannot exclude ETV6::RUNX1. Has FISH or RT-PCR for ETV6::RUNX1 been performed since?",
           "hint": "This branch deliberately cannot close to NOS. It closes to 9811 only with the missing test named on the record.",
           "clinical_alert": null,
           "coding_note": "The cryptic set for B-ALL is ETV6::RUNX1 (FISH or RT-PCR) and masked hypodiploidy (SNP array or DNA index). A normal karyotype must never close either branch (Pathway §4.4).",
           "options": [
             {
-              "label": "FISH / RT-PCR now available — go back and enter the result",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 now available — go back and enter the result",
               "next_node": "ac_ball_cytogenetics",
               "captures": {
                 "cryptic_genetics_tested": "FISH performed",
@@ -3824,11 +3708,11 @@
               }
             },
             {
-              "label": "FISH / RT-PCR requested — result pending",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 requested — result pending",
               "next_node": "ac_cryptic_unresolved"
             },
             {
-              "label": "FISH / RT-PCR not available at this facility",
+              "label": "FISH or RT-PCR for ETV6::RUNX1 not available at this facility",
               "next_node": "ac_cryptic_unresolved"
             }
           ],
@@ -3838,8 +3722,8 @@
           "node_id": "ac_cryptic_unresolved",
           "node_type": "morphology_only",
           "step_number": 4,
-          "step_label": "Cryptic set unresolved",
-          "question": "Record why the cryptic set could not be tested. The case codes 9811 with the missing test named.",
+          "step_label": "ETV6::RUNX1 not tested",
+          "question": "Record why ETV6::RUNX1 could not be tested. The case codes 9811 with the missing test named.",
           "hint": "9811 here is an honest incomplete-workup terminal, not a considered NOS. The record must say which.",
           "coding_note": "A case coded NOS must record WHY, via karyotype_result_status (pending / not done / unavailable / declined). \"Cytogenetics unavailable at UCI\" is a legitimate permanent terminal state (Pathway §2.5).",
           "options": [
@@ -3869,7 +3753,7 @@
               "label": "Test declined or not done for another reason",
               "morphology_code": "9811",
               "confidence": "medium",
-              "upgrade_path": "FISH or RT-PCR for the cryptic set would upgrade this code; the test was not done.",
+              "upgrade_path": "FISH or RT-PCR for ETV6::RUNX1 would upgrade this code; the test was not done.",
               "captures": {
                 "karyotype_result_status": "not done",
                 "cryptic_genetics_tested": "not tested"
@@ -4711,10 +4595,10 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file?",
+          "question": "What tests are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
           "tick_list": {
-            "vocabulary": "evidence_documents",
+            "vocabulary": "haematology_tests",
             "resolve": "ask_siblings"
           },
           "coding_note": "This tree owns the mature lymphoid leukaemias: Ia2 (9823, 9832, 9833, 9940), Ia3 (9827, 9831, 9834, 9948) and the Ia4 NOS codes (9820, 9591). Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). Precursor (blast) disease belongs to the acute tree; leukaemic Burkitt is no longer a Group I code at all and is referred to Group II (Pathway §3.3, §5.3.11).",
@@ -4723,147 +4607,59 @@
               "label": "Referral / clinical note only — no blood film, no marrow, no flow report",
               "ticks": {
                 "excludes": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "ml_clinical_alias",
               "captures": {
                 "evidence_tests": [
                   "Referral only"
-                ],
-                "workup_status": "not done",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "not done"
-              }
+                ]
+              },
+              "next_node": "ml_clinical_alias"
             },
             {
-              "label": "Blood film and/or marrow morphology only (no flow cytometry, no IHC)",
+              "label": "Blood film, marrow aspirate or trephine morphology only — no flow cytometry, no IHC",
               "ticks": {
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ],
                 "excludes": [
-                  "lab",
+                  "flow",
                   "ihc"
                 ]
               },
-              "next_node": "ml_morphology_only",
-              "captures": {
-                "evidence_tests": [
-                  "Histology"
-                ],
-                "workup_status": "incomplete",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "not done"
-              }
+              "next_node": "ml_morphology_only"
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology and flow cytometry",
               "ticks": {
                 "requires": [
-                  "lab"
+                  "flow"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
-                ],
-                "excludes": [
-                  "genetics"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "ml_compartment_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "Flow cytometry",
-                  "IHC"
-                ],
-                "workup_status": "incomplete",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "not done"
-              }
+              "next_node": "ml_compartment_gate"
             },
             {
-              "label": "Morphology + flow cytometry and/or IHC",
+              "label": "Morphology and IHC, no flow cytometry",
               "ticks": {
                 "requires": [
                   "ihc"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ],
                 "excludes": [
-                  "lab",
-                  "genetics"
+                  "flow"
                 ]
               },
-              "next_node": "ml_compartment_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC"
-                ],
-                "workup_status": "incomplete",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "not done"
-              }
-            },
-            {
-              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
-              "ticks": {
-                "requires": [
-                  "lab",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ]
-              },
-              "next_node": "ml_compartment_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "Flow cytometry",
-                  "IHC",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
-                ],
-                "workup_status": "complete",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "received"
-              }
-            },
-            {
-              "label": "Morphology + flow / IHC + cytogenetics / FISH / molecular / PCR",
-              "ticks": {
-                "requires": [
-                  "ihc",
-                  "genetics"
-                ],
-                "any_of": [
-                  "cytology",
-                  "histology"
-                ],
-                "excludes": [
-                  "lab"
-                ]
-              },
-              "next_node": "ml_compartment_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
-                ],
-                "workup_status": "complete",
-                "htlv1_status": "not tested",
-                "karyotype_result_status": "received"
-              }
+              "next_node": "ml_compartment_gate"
             },
             {
               "label": "The marrow shows 20% or more blasts — an acute leukaemia, not a mature lymphoid neoplasm",
@@ -5280,8 +5076,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Lineage markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "General positivity cutoff is 10% or more of the gated lymphoid population. This node assigns lineage only — the entity panel comes next.",
+          "marker_entry": "picker",
           "coding_note": "TdT or CD34 positivity means this is not a mature lymphoid neoplasm: hand the case to the acute tree rather than forcing a mature code (Pathway §3.3 discriminator table). Cross-tree next_node is schema-legal — all four trees share group_01_dt.json (Pathway §7.1).",
           "marker_groups": [
             {
@@ -5521,8 +5318,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Mature B entity markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
-          "hint": "CLL is CD20-dim; B-PLL and Burkitt are CD20-bright. Use the intensity taps — they are what separate these entities.",
+          "question": "Which markers does the report list, and what was each result?",
+          "hint": "CLL is CD20-dim; B-PLL and Burkitt are CD20-bright. Use Strongly positive and Weakly positive — they are what separate these entities.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Ia2 mature B leukaemias are adult entities (Pathway §7.5) and are retained, never removed, so a genuine rare paediatric case stays codeable. Mantle cell lymphoma (cyclin D1 / SOX11 positive) is the principal CLL mimic and is a Group II entity — it is referred, not coded here.",
           "marker_groups": [
@@ -6086,8 +5884,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Prolymphocytic lineage",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "Lineage is the whole question here. 9832 exists for the case where it genuinely cannot be established — not for the case where nobody looked.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Registry decision §5.3.5: 9832 (PLL, NOS) is KEPT LIVE as a fallback, not retired — ICD-O-3.2 lists it Preferred/current. Prefer 9833 (B-cell) or 9834 (T-cell) whenever lineage is determinable; 9832 is for the genuinely lineage-indeterminate residual only. B-PLL is a diagnosis of exclusion: rule out CLL transformation, mantle cell lymphoma and splenic marginal zone lymphoma (Pathway §3.11).",
           "marker_groups": [
@@ -6410,8 +6209,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Mature T / NK entity markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "No route from this node reaches 9827 directly. Every ATLL-shaped phenotype goes to the HTLV-1 gate first.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Do not default to 9827 without confirmed HTLV-1 positivity (Pathway §6). This node routes an ATLL phenotype to the mandatory serology gate; 9827 is emitted only downstream of a confirmed-positive answer. Adult-only entities in this branch (9834) are retained per §7.5 with a soft warning, never removed.",
           "marker_groups": [
@@ -7053,8 +6853,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Burkitt discriminators",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "MYC rearrangement is the gate — its absence excludes Burkitt. sIgM is unreliable in both directions and is deliberately not on this panel.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "BURKITT IS NO LONGER A GROUP I CODE. From 1 January 2021 leukaemic Burkitt codes 9687/3 in Group II (IIc); 9826/3 is retired and read-only for pre-2021 records. Registry ruling: adopt 9687, leukaemic Burkitt moves to Group II, NO Group I/II override — an override would break ICCC-3 comparability (Pathway §3.3, §5.3.11, §5.7c). This node therefore emits no Group I code on the Burkitt branch; it refers the case. 9687 does not exist in this file and must not be invented, and 9826 is terminal_reachable false and must never be emitted. Uganda-specific: endemic Burkitt is EBV-positive in about 95% with a typical jaw or facial mass; where FISH is unavailable, Ki-67 above 95% with MYC protein IHC above 80% predicts MYC rearrangement in about 99% and is the accepted surrogate.",
           "marker_groups": [
@@ -7381,10 +7182,10 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file?",
+          "question": "What tests are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
           "tick_list": {
-            "vocabulary": "evidence_documents",
+            "vocabulary": "haematology_tests",
             "resolve": "ask_siblings"
           },
           "coding_note": "Group I has no imaging-sufficient route — imaging is staging only (Pathway §0). This tree owns subgroup Ic (9863, 9875, 9876, 9950, 9960–9964) and, through its eosinophilia branch, the Ie clonal-eosinophilia codes 9965–9968. CMML and JMML belong to the MDS/JMML tree; acute leukaemia (blasts ≥20%) belongs to the acute tree unless BCR::ABL1 is positive, in which case a blast-phase CML stays here as 9875.",
@@ -7393,83 +7194,96 @@
               "label": "Referral / clinical note only — no blood film or marrow report",
               "ticks": {
                 "excludes": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "mpn_clinical_alias",
               "captures": {
                 "evidence_tests": [
                   "Referral only"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "not done",
-                "bcr_abl1_status": "not tested"
-              }
+                ]
+              },
+              "next_node": "mpn_clinical_alias"
             },
             {
-              "label": "Blood film and/or marrow morphology only (no cytogenetics, no molecular)",
+              "label": "Blood film, marrow aspirate or trephine morphology only — no gene test",
               "ticks": {
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ],
                 "excludes": [
-                  "genetics"
+                  "karyotype",
+                  "fish",
+                  "pcr",
+                  "sequencing"
                 ]
               },
-              "next_node": "mpn_morphology_only",
-              "captures": {
-                "evidence_tests": [
-                  "Histology"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete",
-                "bcr_abl1_status": "not tested"
-              }
+              "next_node": "mpn_morphology_only"
             },
             {
-              "label": "Morphology + cytogenetics / FISH",
+              "label": "Morphology and a karyotype",
               "ticks": {
                 "requires": [
-                  "genetics"
+                  "karyotype"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "Cytogenetics/FISH"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "incomplete"
-              }
+              "next_node": "mpn_prior_therapy_gate"
             },
             {
-              "label": "Morphology + cytogenetics / FISH + molecular / PCR / NGS",
+              "label": "Morphology and FISH, no karyotype",
               "ticks": {
                 "requires": [
-                  "genetics"
+                  "fish"
                 ],
                 "any_of": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
+                ],
+                "excludes": [
+                  "karyotype"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
+              "next_node": "mpn_prior_therapy_gate"
+            },
+            {
+              "label": "Morphology and PCR, no karyotype or FISH",
+              "ticks": {
+                "requires": [
+                  "pcr"
                 ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete"
-              }
+                "any_of": [
+                  "marrow_aspirate",
+                  "trephine"
+                ],
+                "excludes": [
+                  "karyotype",
+                  "fish"
+                ]
+              },
+              "next_node": "mpn_prior_therapy_gate"
+            },
+            {
+              "label": "Morphology and sequencing, no karyotype, FISH or PCR",
+              "ticks": {
+                "requires": [
+                  "sequencing"
+                ],
+                "any_of": [
+                  "marrow_aspirate",
+                  "trephine"
+                ],
+                "excludes": [
+                  "karyotype",
+                  "fish",
+                  "pcr"
+                ]
+              },
+              "next_node": "mpn_prior_therapy_gate"
             },
             {
               "label": "Hypereosinophilia is the dominant finding, whatever else is in the file",
@@ -8803,10 +8617,10 @@
           "node_type": "document_inventory",
           "step_number": 2,
           "step_label": "Evidence in file",
-          "question": "What reports are in this patient's file?",
+          "question": "What tests are in this patient's file?",
           "hint": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
           "tick_list": {
-            "vocabulary": "evidence_documents",
+            "vocabulary": "haematology_tests",
             "resolve": "ask_siblings"
           },
           "clinical_alert": null,
@@ -8816,111 +8630,67 @@
               "label": "Referral / clinical note only — no marrow report",
               "ticks": {
                 "excludes": [
-                  "cytology",
-                  "histology"
+                  "marrow_aspirate",
+                  "trephine"
                 ]
               },
-              "next_node": "mds_clinical_alias",
               "captures": {
                 "evidence_tests": [
                   "Referral only"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "not done",
-                "germline_predisposition": "not tested",
-                "ibmfs_exclusion_status": "not tested"
-              }
-            },
-            {
-              "label": "Blood film / marrow aspirate morphology only (no trephine, no IHC, no cytogenetics)",
-              "ticks": {
-                "any_of": [
-                  "cytology",
-                  "histology"
                 ]
               },
-              "next_node": "mds_morphology_only",
-              "captures": {
-                "evidence_tests": [
-                  "Histology"
+              "next_node": "mds_clinical_alias"
+            },
+            {
+              "label": "Blood film, marrow aspirate or trephine morphology only — no IHC",
+              "ticks": {
+                "any_of": [
+                  "marrow_aspirate",
+                  "trephine"
                 ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete",
-                "germline_predisposition": "not tested",
-                "ibmfs_exclusion_status": "not tested"
-              }
+                "excludes": [
+                  "ihc"
+                ]
+              },
+              "next_node": "mds_morphology_only"
+            },
+            {
+              "label": "Marrow aspirate and IHC, no trephine",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "marrow_aspirate"
+                ],
+                "excludes": [
+                  "trephine"
+                ]
+              },
+              "next_node": "mds_morphology_only"
+            },
+            {
+              "label": "Trephine and IHC, no marrow aspirate",
+              "ticks": {
+                "requires": [
+                  "ihc",
+                  "trephine"
+                ],
+                "excludes": [
+                  "marrow_aspirate"
+                ]
+              },
+              "next_node": "mds_morphology_only"
             },
             {
               "label": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)",
               "ticks": {
                 "requires": [
-                  "cytology",
-                  "histology",
+                  "marrow_aspirate",
+                  "trephine",
                   "ihc"
-                ],
-                "excludes": [
-                  "genetics"
                 ]
               },
               "next_node": "mds_marrow_pattern",
-              "coding_note": "CD61 or CD41 IHC on the trephine is mandatory in paediatric MDS — it identifies the micromegakaryocytes that separate refractory cytopenia of childhood from severe aplastic anaemia (Pathway §3.5).",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC"
-                ],
-                "karyotype_result_status": "not done",
-                "workup_status": "incomplete",
-                "germline_predisposition": "not tested",
-                "ibmfs_exclusion_status": "not tested"
-              }
-            },
-            {
-              "label": "Marrow + trephine/IHC + cytogenetics / FISH",
-              "ticks": {
-                "requires": [
-                  "cytology",
-                  "histology",
-                  "ihc",
-                  "genetics"
-                ]
-              },
-              "next_node": "mds_marrow_pattern",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Cytogenetics/FISH"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "incomplete",
-                "germline_predisposition": "not tested",
-                "ibmfs_exclusion_status": "not tested"
-              }
-            },
-            {
-              "label": "Marrow + trephine/IHC + cytogenetics + molecular / PCR / NGS",
-              "ticks": {
-                "requires": [
-                  "cytology",
-                  "histology",
-                  "ihc",
-                  "genetics"
-                ]
-              },
-              "next_node": "mds_marrow_pattern",
-              "captures": {
-                "evidence_tests": [
-                  "Histology",
-                  "IHC",
-                  "Cytogenetics/FISH",
-                  "Molecular/PCR"
-                ],
-                "karyotype_result_status": "received",
-                "workup_status": "complete",
-                "germline_predisposition": "not tested",
-                "ibmfs_exclusion_status": "not tested"
-              }
+              "coding_note": "CD61 or CD41 IHC on the trephine is mandatory in paediatric MDS — it identifies the micromegakaryocytes that separate refractory cytopenia of childhood from severe aplastic anaemia (Pathway §3.5)."
             },
             {
               "label": "Monocytosis-predominant picture — persistent monocytosis with or without splenomegaly (JMML / CMML suspicion)",
@@ -9927,8 +9697,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Megakaryocyte IHC",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "CD61 or CD41 identifies micromegakaryocytes. Their presence is what separates refractory cytopenia of childhood from severe aplastic anaemia.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "CD61 / CD41 IHC on the trephine is mandatory in this differential (Pathway §3.5). A negative panel does not by itself code aplastic anaemia — it routes to the aplastic-anaemia and IBMFS exclusions.",
           "marker_groups": [

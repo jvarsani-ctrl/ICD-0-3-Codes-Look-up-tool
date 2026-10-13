@@ -30,6 +30,65 @@ copy placed after it: same label, route and captures, rule "needs IHC Report, no
 from the tests it credits (an IHC report is not flow cytometry). The tier "morphology only" now also excludes IHC Report. The
 acute gate has three copies and the mature gate two; they are listed under `extra_options` in `docs/evidence_documents/group_01.json`.
 
+## Changed on 13 October 2026: Group I evidence gates are one box per test
+
+**Why.** The registrar tried to code a B-ALL with a negative BCR::ABL1 and could not choose an answer. The seven document boxes could not say which gene test was done, so the gate asked the clerk to choose between clustered tiers ("karyotype or FISH", "PCR or sequencing", "both"). The registrar's direction: no clusters, one box per test. Design in `docs/superpowers/specs/2026-10-13-haematology-test-ticks-design.md`.
+
+**What changed.** The four Group I gates (`ac_`, `ml_`, `mpn_`, `mds_document_inventory`) now use the vocabulary `haematology_tests` in the router. The tables under Group 1 below keep the 6 October document boxes and wording; **this section is current for Group I.** Groups II to XI are unchanged.
+
+| Box | Credits as evidence |
+|---|---|
+| Referral / clinical note | Referral only |
+| Marrow aspirate or blood film | Histology |
+| Trephine biopsy | Histology |
+| Flow cytometry | Flow cytometry |
+| IHC | IHC |
+| Karyotype | Cytogenetics/FISH |
+| FISH | Cytogenetics/FISH |
+| PCR | Molecular/PCR |
+| Sequencing | Molecular/PCR |
+
+**The evidence recorded is exactly what was ticked.** The engine adds up the credits of the ticked boxes (`tickCredited()` in `app.js`). A tier's own list of evidence is no longer trusted, because a tier says more or less than the file holds: the old "karyotype or FISH" tier credited FISH to a file that had only a karyotype, and a PCR-only file had no tier it fitted. The tier's list is the fallback only when nothing ticked credits anything (the referral route on an empty checklist). Karyotype and FISH are separate boxes because only a karyotype sees hyperdiploidy, hypodiploidy and complex karyotypes. Marrow aspirate and trephine are separate because the MDS gate needs both.
+
+**The tiers are routing rules the clerk never sees.** The vocabulary sets `tiers_exclusive`, so no ticked set fits two tiers and the "pick the one that describes it" question cannot appear. The build enumerates every ticked set (512 per gate) and fails if one fits no tier, if one fits two, or if a tier can never be offered. Routes are the ones the gates already had:
+
+| Gate | Route | Rule |
+|---|---|---|
+| all four | referral node | no aspirate and no trephine |
+| acute, mature lymphoid | morphology-only node | an aspirate or trephine, no flow cytometry, no IHC |
+| acute, mature lymphoid | next node of the tree | an aspirate or trephine, with flow; or with IHC and no flow |
+| MPN | morphology-only node | an aspirate or trephine, none of karyotype, FISH, PCR, sequencing |
+| MPN | prior-therapy node | an aspirate or trephine with a gene test (four exclusive cases) |
+| MDS | morphology-only node | morphology that is not aspirate + trephine + IHC (three exclusive cases) |
+| MDS | marrow-pattern node | aspirate, trephine and IHC |
+
+**Behaviour that differs from 6 October, so none of it is a surprise.**
+1. A file with morphology and a gene test but no flow or IHC still goes to the morphology-only node, as before. The gene test is now credited on the way.
+2. The special situations (Trisomy 21, extramedullary mass, malignancy excluded) are unchanged. Their own assumed evidence is replaced by the ticks when anything is ticked.
+3. `karyotype_result_status` and `workup_status` are no longer set at the gate. Nothing reads either.
+
+**The acute tree's genetics steps** are separate from the boxes and also changed. `ac_defining_genetics_context` offered only *BCR::ABL1 positive*, while the MPN and MDS trees already offered *BCR::ABL1 NEGATIVE*; its answers now say what they cover, including *Genetics report in the file: no defining abnormality found (for example BCR::ABL1 negative)*. `ac_ball_cytogenetics` carried a clinical hazard: its only answer containing *negative* was *Karyotype normal AND FISH / RT-PCR negative for the cryptic set*, which routes to 9811 and prints *None — the cryptic set has been excluded*. A clerk holding only a BCR::ABL1 negative would take it, and the tool would claim ETV6::RUNX1 was excluded when nobody had tested for it. Pathway §4.4 gives the method as FISH or RT-PCR for ETV6::RUNX1; a BCR::ABL1 result says nothing about it. The answers and the two follow-up prompts now name ETV6::RUNX1 and say a BCR::ABL1 result alone does not count. No route changed.
+
+**The marker screens are a picker** (second change of 13 October; design in `docs/superpowers/specs/2026-10-13-marker-picker-design.md`). The seven Group I marker checklists no longer ask one marker at a time. The clerk searches for the markers the report lists, adds each, and gives it a result. **A marker not added is not done.** The matcher already reads a marker never recorded as the same evidence as one recorded negative or unreadable (ruling 11), so nothing left out can be read as a result, and the picker has no "not done" answer.
+
+- **Results:** Positive and Negative for every marker, plus Strongly positive or Weakly positive on a marker only where **a rule on the node reads it that way**. In the acute node that is `cMPO` (strong) and `CD19` (strong and weak). 21 of its 41 rules read intensity, 22 readings in all, so plain positive/negative would have changed classifications.
+- **Continue waits** while an added marker has no result, so nothing is left half-answered. Each row has a Remove.
+- **Nothing entered:** the acute lineage step then records **9801 as "panel incomplete, not performed"** (low confidence, `workup_status: incomplete`) without asking what the panel covered. It is the outcome of the panel question's own "not performed" answer, reached directly.
+- **Reverses ruling 13** (4 September 2026) for these seven screens only: the flow chart, one marker at a time. The other 77 marker checklists in Groups II to XI are unchanged, and the build still requires a `branch_sequence` and proves a witness for every rule.
+- **Wording fixed with it:** the question read *What does the immunohistochemistry report say? The tool asks one marker at a time…*; it now reads *Which markers does the report list, and what was each result?* (the markers come from flow cytometry as much as IHC).
+
+**The two evidence rows are one.** After a tick gate the case showed *Tests in file: Marrow aspirate or blood film, Flow cytometry* and *Evidence in file: Morphology and flow cytometry*. The second was the engine's description of the tier it took, not an answer. Neither layout draws it any more; it stays in the case record. This applies to every group's tick gates.
+
+### Still open
+
+1. **Karyotype and FISH credit one test, and PCR and sequencing credit one.** They are separate boxes on the case but credit the merged tests (61 lines in Group I). Splitting the list also means the upgrade text. It matters clinically: PCR cannot find an ASXL1 mutation and sequencing can.
+2. **The ticks answer questions the tool asks again.** The genetics step still offers *"No cytogenetics / FISH / molecular report in the file"* after a gene test was ticked, and a clerk who ticked neither flow cytometry nor IHC at the gate is still asked for markers. Nothing reads the ticks after the gate.
+3. **AUL and ALAL-NOS are still asked, not derived.** When markers *were* entered and no rule settled the case, the panel question still appears. Deriving AUL (≤1 lineage-associated marker per lineage, five lineages excluded) needs a marker-to-lineage table the Pathway does not give, and its sourced exclusion markers cover four of the five lineages (the basophilic one is unsourced). **The registrar would need to supply that table.**
+4. **Masked hypodiploidy is not asked on the clerk's path.** Pathway §4.4 names it as a second cryptic abnormality (SNP array or DNA index), yet *negative for ETV6::RUNX1* closes to 9811 with *None* as the upgrade. This predates the change.
+5. **"Referral only" is listed as an outstanding test on 9801 reached with a full panel.** 9801 requires `Referral only` *and* `Flow cytometry`, and nothing credits `Referral only` unless the Referral box is ticked. This predates the change (the old tier did not credit it either) and looks like a defect in how that requirement is counted, not in the data.
+6. **Groups II to XI** have the old shapes: document boxes, the one-at-a-time marker screen. Each would need its own vocabulary of tests and a decision on the marker screen.
+7. Other "cryptic" wording remains for AMKL and PDGFRA (different entities).
+
 ## Group 1
 
 ### `ac_document_inventory` (tree `tree_acute_leukemia`)

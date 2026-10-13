@@ -11556,6 +11556,68 @@ GROUP3_UNANSWERABLE_IHC_EXEMPTION = {
 }
 
 
+MARKER_ENTRY_MODES = ("picker",)
+
+
+def check_marker_entry(ctx: DTContext):
+    """
+    A marker checklist may be answered as a picker (registrar, 13 October 2026): the clerk
+    searches for the markers the report lists and gives each a result, and a marker never
+    added is not done. The node says so with `marker_entry: "picker"`.
+
+    The flag is only honoured on an `ihc_checklist`, so a flag anywhere else would be read by
+    nothing and the node would draw its old screen: refused. The picker offers the node's
+    `marker_groups[]` and nothing else, so a picker with no markers on offer asks a question
+    nothing on the screen can answer.
+
+    `marker_count_variable` names the case variable the engine fills, on Continue, with the
+    number of the panel's markers that were given a result. It exists so a rule can say
+    "nothing was entered" with a `when`. It must be declared in `captured_variables[]` or the
+    rule that reads it is dead, it only means something on a picker, and a variable captured
+    and read by no rule is captured for nothing.
+    """
+    out = []
+    pickers = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        has_flag = "marker_entry" in node
+        has_count = "marker_count_variable" in node
+        if not (has_flag or has_count):
+            continue
+        if node.get("node_type") != "ihc_checklist":
+            out.append((FAIL, "node %s: `marker_entry` / `marker_count_variable` are read only on an "
+                              "ihc_checklist, and this is a %s, so the flag does nothing and the node "
+                              "draws its old screen" % (node_id, node.get("node_type"))))
+            continue
+        if has_flag and node["marker_entry"] not in MARKER_ENTRY_MODES:
+            out.append((FAIL, "node %s: marker_entry %r is not one of %s"
+                        % (node_id, node["marker_entry"], list(MARKER_ENTRY_MODES))))
+            continue
+        panel = [m for g in (node.get("marker_groups") or []) if isinstance(g, dict) for m in (g.get("markers") or [])]
+        if node.get("marker_entry") == "picker":
+            pickers += 1
+            if not panel:
+                out.append((FAIL, "node %s is a picker with no markers in marker_groups[], so the "
+                                  "search list is empty and nothing can be entered" % node_id))
+        if has_count:
+            var = node["marker_count_variable"]
+            if node.get("marker_entry") != "picker":
+                out.append((FAIL, "node %s names marker_count_variable %r but is not a picker, so the "
+                                  "engine never fills it" % (node_id, var)))
+            if not isinstance(var, str) or not var:
+                out.append((FAIL, "node %s: marker_count_variable must be a non-empty string" % node_id))
+                continue
+            if var not in (node.get("captured_variables") or []):
+                out.append((FAIL, "node %s: marker_count_variable %r is not in captured_variables[]" % (node_id, var)))
+            reads = [i for i, r in enumerate(node.get("resolution_logic") or [])
+                     if isinstance(r, dict) and var in (r.get("when") or {})]
+            if not reads:
+                out.append((FAIL, "node %s: marker_count_variable %r is read by no rule's `when`, so "
+                                  "it is captured for nothing" % (node_id, var)))
+    if not out:
+        out.append((OK, "marker entry: %d picker node(s), each with a panel to offer" % pickers))
+    return out
+
+
 def check_ihc_checklist_renders_a_control(ctx: DTContext):
     """
     An `ihc_checklist` node must render at least one input control.
@@ -11593,7 +11655,11 @@ def check_ihc_checklist_renders_a_control(ctx: DTContext):
         checked += 1
         bs = node.get("branch_sequence")
         order = bs.get("order") if isinstance(bs, dict) else None
-        has_control = bool(order) or bool(node.get("test_result_states"))
+        picker = (node.get("marker_entry") == "picker"
+                  and any(isinstance(g, dict) and g.get("markers") for g in (node.get("marker_groups") or [])))
+        # A picker node draws its search list from marker_groups[] (app.js markerPicker()), which is
+        # the one case where the panel alone is enough: the list IS the panel.
+        has_control = bool(order) or bool(node.get("test_result_states")) or picker
         if has_control:
             rendered += 1
             continue
@@ -11917,6 +11983,10 @@ def check_lab_results(ctx: DTContext, vocabularies=None, repo=None):
 # ticked. `ticks: {}` fits every set.
 TICK_FIELDS = ("requires", "any_of", "excludes")
 TICK_RESOLVE_MODES = ("ask_siblings", "first_match")
+# The atomic tests a tick may credit: the closed diagnostic-test list, without the one tolerated
+# compound form. A credit outside it can never match a `diagnostic_tests_required` entry, so the
+# test would silently never be recorded as done.
+TICK_CREDIT_TESTS = DIAGNOSTIC_TESTS - {"IHC or flow cytometry"}
 TICK_MAX_ITEMS = 12          # 2^12 = 4096 ticked sets per node is the enumeration budget
 
 
@@ -12029,6 +12099,22 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             continue
         if any(not isinstance(i.get("label"), str) or not i["label"].strip() for i in items):
             out.append((FAIL, "node %s: every tick_list item needs a clerk-facing label" % node_id))
+        for it in items:
+            if "credits" not in it:
+                continue
+            cr = it["credits"]
+            if not isinstance(cr, list) or not cr or any(not isinstance(c, str) for c in cr):
+                out.append((FAIL, "node %s: tick item %r: `credits` must be a non-empty list of "
+                                  "test names" % (node_id, it.get("id"))))
+                continue
+            bad = [c for c in cr if c not in TICK_CREDIT_TESTS]
+            if bad:
+                out.append((FAIL, "node %s: tick item %r credits %s, which is not in the closed test "
+                                  "list (%s). A credit that matches no `diagnostic_tests_required` "
+                                  "entry is a test the tool silently never records as done."
+                            % (node_id, it.get("id"), bad, ", ".join(sorted(TICK_CREDIT_TESTS)))))
+        if "tiers_exclusive" in merged and not isinstance(merged["tiers_exclusive"], bool):
+            out.append((FAIL, "node %s: `tiers_exclusive` must be true or false" % node_id))
         if len(ids) > TICK_MAX_ITEMS:
             out.append((FAIL, "node %s: %d tick items; the build enumerates every ticked set and "
                               "stops at %d" % (node_id, len(ids), TICK_MAX_ITEMS)))
@@ -12096,6 +12182,7 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
         ever_fits = {i: False for i in tiers}
         first_fits = {i: False for i in tiers}
         dead = []
+        overlaps = []
         for mask in range(1 << n):
             ticked = frozenset(ids[b] for b in range(n) if mask >> b & 1)
             fitting = [i for i in tiers if _tick_fits(options[i]["ticks"], ticked)]
@@ -12106,6 +12193,8 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             for i in fitting:
                 ever_fits[i] = True
             first_fits[fitting[0]] = True
+            if len(fitting) > 1:
+                overlaps.append((ticked, fitting))
         checked += 1
         if dead:
             def show(s):
@@ -12113,6 +12202,13 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             out.append((FAIL, "node %s: %d of %d ticked sets fit no option, so a clerk can tick "
                               "them and be stranded, e.g. %s"
                         % (node_id, len(dead), 1 << n, "; ".join(show(s) for s in sorted(dead, key=lambda s: (len(s), sorted(s)))[:3]))))
+        if merged.get("tiers_exclusive") is True and overlaps:
+            ex = sorted(overlaps, key=lambda t: (len(t[0]), sorted(t[0])))[:3]
+            out.append((FAIL, "node %s declares its tiers exclusive, so the ticks alone decide the route "
+                              "and the clerk is never asked to choose between tiers, but %d of %d ticked "
+                              "sets fit more than one tier, e.g. %s"
+                        % (node_id, len(overlaps), 1 << n,
+                           "; ".join("{%s} fits options %s" % (", ".join(sorted(t)) or "nothing", f) for t, f in ex))))
         never = [i for i in tiers if not ever_fits[i]]
         if never:
             out.append((FAIL, "node %s: option(s) %s fit no ticked set, so they can never be offered"
@@ -13302,6 +13398,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_no_clinical_alerts, ctx)
         report.run(check_flow_charts, ctx)
         report.run(check_ihc_checklist_renders_a_control, ctx)
+        report.run(check_marker_entry, ctx)
         report.run(check_no_internal_identifier_leaks, ctx)
         report.run(check_marker_names_verbatim, ctx)
         report.run(check_declared_states_consumed, ctx)

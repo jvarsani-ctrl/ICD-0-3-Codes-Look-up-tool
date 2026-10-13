@@ -19,6 +19,7 @@ The rules live in a mapping file, one per group, in docs/evidence_documents/grou
 
   { "group": 5,
     "nodes": [ { "node_id": "rb_document_inventory",
+                 "vocabulary": "evidence_documents",     (optional; names the router vocabulary)
                  "question_edit": "", "hint_edit": "",
                  "options": [ { "index": 0, "label_head": "...", "kind": "tier",
                                 "requires": [], "any_of": [], "excludes": ["imaging", ...],
@@ -139,7 +140,7 @@ def apply(group_data: dict, mapping: dict) -> list:
                 continue
             node[field] = edit
         node = put_after(node, "hint" if "hint" in node else "question", "tick_list",
-                         {"vocabulary": VOCABULARY, "resolve": "ask_siblings"})
+                         {"vocabulary": m.get("vocabulary", VOCABULARY), "resolve": "ask_siblings"})
         tree["nodes"][pos] = node
     return problems
 
