@@ -11556,6 +11556,68 @@ GROUP3_UNANSWERABLE_IHC_EXEMPTION = {
 }
 
 
+MARKER_ENTRY_MODES = ("picker",)
+
+
+def check_marker_entry(ctx: DTContext):
+    """
+    A marker checklist may be answered as a picker (registrar, 13 October 2026): the clerk
+    searches for the markers the report lists and gives each a result, and a marker never
+    added is not done. The node says so with `marker_entry: "picker"`.
+
+    The flag is only honoured on an `ihc_checklist`, so a flag anywhere else would be read by
+    nothing and the node would draw its old screen: refused. The picker offers the node's
+    `marker_groups[]` and nothing else, so a picker with no markers on offer asks a question
+    nothing on the screen can answer.
+
+    `marker_count_variable` names the case variable the engine fills, on Continue, with the
+    number of the panel's markers that were given a result. It exists so a rule can say
+    "nothing was entered" with a `when`. It must be declared in `captured_variables[]` or the
+    rule that reads it is dead, it only means something on a picker, and a variable captured
+    and read by no rule is captured for nothing.
+    """
+    out = []
+    pickers = 0
+    for node_id, node in sorted(ctx.nodes.items()):
+        has_flag = "marker_entry" in node
+        has_count = "marker_count_variable" in node
+        if not (has_flag or has_count):
+            continue
+        if node.get("node_type") != "ihc_checklist":
+            out.append((FAIL, "node %s: `marker_entry` / `marker_count_variable` are read only on an "
+                              "ihc_checklist, and this is a %s, so the flag does nothing and the node "
+                              "draws its old screen" % (node_id, node.get("node_type"))))
+            continue
+        if has_flag and node["marker_entry"] not in MARKER_ENTRY_MODES:
+            out.append((FAIL, "node %s: marker_entry %r is not one of %s"
+                        % (node_id, node["marker_entry"], list(MARKER_ENTRY_MODES))))
+            continue
+        panel = [m for g in (node.get("marker_groups") or []) if isinstance(g, dict) for m in (g.get("markers") or [])]
+        if node.get("marker_entry") == "picker":
+            pickers += 1
+            if not panel:
+                out.append((FAIL, "node %s is a picker with no markers in marker_groups[], so the "
+                                  "search list is empty and nothing can be entered" % node_id))
+        if has_count:
+            var = node["marker_count_variable"]
+            if node.get("marker_entry") != "picker":
+                out.append((FAIL, "node %s names marker_count_variable %r but is not a picker, so the "
+                                  "engine never fills it" % (node_id, var)))
+            if not isinstance(var, str) or not var:
+                out.append((FAIL, "node %s: marker_count_variable must be a non-empty string" % node_id))
+                continue
+            if var not in (node.get("captured_variables") or []):
+                out.append((FAIL, "node %s: marker_count_variable %r is not in captured_variables[]" % (node_id, var)))
+            reads = [i for i, r in enumerate(node.get("resolution_logic") or [])
+                     if isinstance(r, dict) and var in (r.get("when") or {})]
+            if not reads:
+                out.append((FAIL, "node %s: marker_count_variable %r is read by no rule's `when`, so "
+                                  "it is captured for nothing" % (node_id, var)))
+    if not out:
+        out.append((OK, "marker entry: %d picker node(s), each with a panel to offer" % pickers))
+    return out
+
+
 def check_ihc_checklist_renders_a_control(ctx: DTContext):
     """
     An `ihc_checklist` node must render at least one input control.
@@ -11593,7 +11655,11 @@ def check_ihc_checklist_renders_a_control(ctx: DTContext):
         checked += 1
         bs = node.get("branch_sequence")
         order = bs.get("order") if isinstance(bs, dict) else None
-        has_control = bool(order) or bool(node.get("test_result_states"))
+        picker = (node.get("marker_entry") == "picker"
+                  and any(isinstance(g, dict) and g.get("markers") for g in (node.get("marker_groups") or [])))
+        # A picker node draws its search list from marker_groups[] (app.js markerPicker()), which is
+        # the one case where the panel alone is enough: the list IS the panel.
+        has_control = bool(order) or bool(node.get("test_result_states")) or picker
         if has_control:
             rendered += 1
             continue
@@ -13332,6 +13398,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
         report.run(check_no_clinical_alerts, ctx)
         report.run(check_flow_charts, ctx)
         report.run(check_ihc_checklist_renders_a_control, ctx)
+        report.run(check_marker_entry, ctx)
         report.run(check_no_internal_identifier_leaks, ctx)
         report.run(check_marker_names_verbatim, ctx)
         report.run(check_declared_states_consumed, ctx)

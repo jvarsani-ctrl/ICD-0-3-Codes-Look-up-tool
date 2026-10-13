@@ -2807,7 +2807,7 @@
               }
             },
             {
-              "label": "A genetics report is in the file and none of the abnormalities below were found (for example BCR::ABL1 negative)",
+              "label": "Genetics report in the file: no defining abnormality found (for example BCR::ABL1 negative)",
               "next_node": "ac_blast_gate",
               "captures": {
                 "aml_defining_genetic_abnormality": false,
@@ -2956,8 +2956,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Lineage markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "General positivity cutoff is ≥10% of gated blasts. MPO positivity is the Bras rule: ≥20% of leukaemic cells above a lymphocyte-derived threshold.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Lineage is intensity-relative, not binary (Pathway §2.3). CD79a is only valid if T lineage is not under consideration. KMT2A-r BCP-ALL can drop out of the scheme (CD10-negative, weak cCD22/cCD79a) and must not default to AML or MPAL.",
           "marker_groups": [
@@ -3386,6 +3387,19 @@
               "next_node": "ac_aml_genetics_upgrade"
             },
             {
+              "when": {
+                "lineage_markers_entered": 0
+              },
+              "morphology_code": "9801",
+              "confidence": "low",
+              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish AUL, ALAL-NOS or a definite lineage.",
+              "captures": {
+                "workup_status": "incomplete",
+                "alal_subtype": null
+              },
+              "coding_note": "No marker was entered, so the panel was not run or not available. Asking what the panel covered would ask the clerk to describe a panel they have just said they did not have. This is the 'panel incomplete, not performed' outcome of ac_alal_resolve, reached directly. 9801 in its NOS sense: do NOT report as AUL."
+            },
+            {
               "next_node": "ac_alal_resolve",
               "coding_note": "No lineage-defining combination met. Panel adequacy is the second gate — resolve AUL vs ALAL-NOS vs 'lineage not established' before emitting 9801 (Pathway §4.1)."
             }
@@ -3400,7 +3414,8 @@
             "myeloid_marker_count",
             "alal_subtype",
             "blast_percent_band",
-            "therapy_related_qualifier"
+            "therapy_related_qualifier",
+            "lineage_markers_entered"
           ],
           "nos_fallback": {
             "code": "9801",
@@ -3435,8 +3450,9 @@
               "CD19",
               "cMPO"
             ],
-            "rule_count": 41
-          }
+            "rule_count": 42
+          },
+          "marker_count_variable": "lineage_markers_entered"
         },
         {
           "node_id": "ac_alal_resolve",
@@ -5060,8 +5076,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Lineage markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "General positivity cutoff is 10% or more of the gated lymphoid population. This node assigns lineage only — the entity panel comes next.",
+          "marker_entry": "picker",
           "coding_note": "TdT or CD34 positivity means this is not a mature lymphoid neoplasm: hand the case to the acute tree rather than forcing a mature code (Pathway §3.3 discriminator table). Cross-tree next_node is schema-legal — all four trees share group_01_dt.json (Pathway §7.1).",
           "marker_groups": [
             {
@@ -5301,8 +5318,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Mature B entity markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
-          "hint": "CLL is CD20-dim; B-PLL and Burkitt are CD20-bright. Use the intensity taps — they are what separate these entities.",
+          "question": "Which markers does the report list, and what was each result?",
+          "hint": "CLL is CD20-dim; B-PLL and Burkitt are CD20-bright. Use Strongly positive and Weakly positive — they are what separate these entities.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Ia2 mature B leukaemias are adult entities (Pathway §7.5) and are retained, never removed, so a genuine rare paediatric case stays codeable. Mantle cell lymphoma (cyclin D1 / SOX11 positive) is the principal CLL mimic and is a Group II entity — it is referred, not coded here.",
           "marker_groups": [
@@ -5866,8 +5884,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Prolymphocytic lineage",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "Lineage is the whole question here. 9832 exists for the case where it genuinely cannot be established — not for the case where nobody looked.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Registry decision §5.3.5: 9832 (PLL, NOS) is KEPT LIVE as a fallback, not retired — ICD-O-3.2 lists it Preferred/current. Prefer 9833 (B-cell) or 9834 (T-cell) whenever lineage is determinable; 9832 is for the genuinely lineage-indeterminate residual only. B-PLL is a diagnosis of exclusion: rule out CLL transformation, mantle cell lymphoma and splenic marginal zone lymphoma (Pathway §3.11).",
           "marker_groups": [
@@ -6190,8 +6209,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Mature T / NK entity markers",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "No route from this node reaches 9827 directly. Every ATLL-shaped phenotype goes to the HTLV-1 gate first.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "Do not default to 9827 without confirmed HTLV-1 positivity (Pathway §6). This node routes an ATLL phenotype to the mandatory serology gate; 9827 is emitted only downstream of a confirmed-positive answer. Adult-only entities in this branch (9834) are retained per §7.5 with a soft warning, never removed.",
           "marker_groups": [
@@ -6833,8 +6853,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Burkitt discriminators",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "MYC rearrangement is the gate — its absence excludes Burkitt. sIgM is unreliable in both directions and is deliberately not on this panel.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "BURKITT IS NO LONGER A GROUP I CODE. From 1 January 2021 leukaemic Burkitt codes 9687/3 in Group II (IIc); 9826/3 is retired and read-only for pre-2021 records. Registry ruling: adopt 9687, leukaemic Burkitt moves to Group II, NO Group I/II override — an override would break ICCC-3 comparability (Pathway §3.3, §5.3.11, §5.7c). This node therefore emits no Group I code on the Burkitt branch; it refers the case. 9687 does not exist in this file and must not be invented, and 9826 is terminal_reachable false and must never be emitted. Uganda-specific: endemic Burkitt is EBV-positive in about 95% with a typical jaw or facial mass; where FISH is unavailable, Ki-67 above 95% with MYC protein IHC above 80% predicts MYC rearrangement in about 99% and is the accepted surrogate.",
           "marker_groups": [
@@ -9676,8 +9697,9 @@
           "node_type": "ihc_checklist",
           "step_number": 3,
           "step_label": "Megakaryocyte IHC",
-          "question": "What does the immunohistochemistry report say? The tool asks one marker at a time and stops as soon as the answer can no longer change.",
+          "question": "Which markers does the report list, and what was each result?",
           "hint": "CD61 or CD41 identifies micromegakaryocytes. Their presence is what separates refractory cytopenia of childhood from severe aplastic anaemia.",
+          "marker_entry": "picker",
           "clinical_alert": null,
           "coding_note": "CD61 / CD41 IHC on the trephine is mandatory in this differential (Pathway §3.5). A negative panel does not by itself code aplastic anaemia — it routes to the aplastic-anaemia and IBMFS exclusions.",
           "marker_groups": [

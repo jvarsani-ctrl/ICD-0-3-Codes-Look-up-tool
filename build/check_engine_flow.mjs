@@ -1004,6 +1004,94 @@ async function uxScenarios(ctx) {
       sc.nodeId === 'fc_ref' && ev(sc) === 'Flow cytometry', 'went to ' + sc.nodeId + ' with ' + ev(sc));
   }
 
+  /* One marker's result, and taking a marker back off, through the handlers the picker's buttons call.
+     Shared by the fixture and the sweep below. */
+  const mset = async (m, v) => { try { await ctx.handleOption('markerset', fakeEl({ 'data-m': m, 'data-v': v })); } catch (e) { thrown = e.message; } };
+  const mdel = async (m) => { try { await ctx.handleOption('pickremove', fakeEl({ 'data-m': m })); } catch (e) { thrown = e.message; } };
+  /* ---- FIXTURE: the marker picker (registrar, 13 October 2026) ------------------------
+     The clerk adds the markers the report lists and gives each a result. A marker never added is
+     not done, and the matcher already reads a marker never recorded as the same evidence as one
+     recorded negative. The picker has no "not done" answer, and offers strength only where a
+     rule on the node grades it. */
+  {
+    const pk = {
+      node_id: 'fp_pick', node_type: 'ihc_checklist', step_label: 'Markers', question: 'q', hint: 'h',
+      marker_entry: 'picker', marker_count_variable: 'fp_entered', captured_variables: ['fp_entered'],
+      marker_groups: [{ group_label: 'Panel', markers: ['A', 'B', 'C', 'D'] }],
+      branch_sequence: { order: ['A', 'B'], intensity_markers: ['A'], rule_count: 4 },
+      resolution_logic: [
+        { when: { fp_entered: 0 }, next_node: 'fp_none' },
+        { positive: ['A:strong'], next_node: 'fp_strong' },
+        { positive: ['A'], negative: ['B'], next_node: 'fp_a_not_b' },
+        { next_node: 'fp_rest' },
+      ],
+      nos_fallback: { code: '8000', behavior_code: '3', name: 'x', reason: 'x' },
+    };
+    const dtp = { morphology_entries: [], decision_trees: [{ tree_id: 'fp', entry_node: 'fp_pick', nodes: [pk, ...['fp_none', 'fp_strong', 'fp_a_not_b', 'fp_rest'].map(stub)] }] };
+    const screenP = () => rend(() => ctx.renderLiveNode());
+    const openP = () => { begin(dtp, 'fp', 'fp_pick', 'C42.1'); return screenP(); };
+    let hp = openP();
+    t('picker: the screen offers the whole panel to add from, no result buttons and no "not done"',
+      countButtons(hp, 'pickadd') === 4 && countButtons(hp, 'markerset') === 0 && !/not done|not read/i.test(hp.replace(/A marker you do not add is treated as not done\./, '')),
+      'pickadd ' + countButtons(hp, 'pickadd') + ', markerset ' + countButtons(hp, 'markerset'));
+    await tap('pickadd', 0);
+    hp = screenP();
+    t('picker: an added marker gets a row with its results and leaves the list; strength is offered only where a rule grades it',
+      countButtons(hp, 'pickadd') === 3 && /aria-label="A: Positive"/.test(hp) && /aria-label="A: Strongly positive"/.test(hp) &&
+      !/aria-label="A: Weakly positive"/.test(hp) && /aria-label="A: Negative"/.test(hp), 'pickadd ' + countButtons(hp, 'pickadd'));
+    t('picker: Continue waits while an added marker has no result', /data-act="resolve" disabled/.test(hp), 'Continue was enabled');
+    await mset('A', 'strong'); hp = screenP();
+    t('picker: Continue is available once every added marker has a result', !/data-act="resolve" disabled/.test(hp), 'Continue stayed disabled');
+    await tap('resolve');
+    t('picker: Strongly positive A takes the rule that reads A strong, and the count is captured',
+      ctx.state.nodeId === 'fp_strong' && ctx.state.captured.fp_entered === 1, 'went to ' + ctx.state.nodeId + ', count ' + ctx.state.captured.fp_entered);
+    openP(); await tap('pickadd', 0); await mset('A', 'pos'); await tap('resolve');
+    t('picker: a marker never added is not done, so a rule that needs it negative is met without it',
+      ctx.state.nodeId === 'fp_a_not_b', 'went to ' + ctx.state.nodeId);
+    openP(); await tap('resolve');
+    t('picker: nothing entered is counted as zero and takes the rule that says so',
+      ctx.state.nodeId === 'fp_none' && ctx.state.captured.fp_entered === 0, 'went to ' + ctx.state.nodeId + ', count ' + ctx.state.captured.fp_entered);
+    openP(); await tap('pickadd', 0); await mset('A', 'strong'); await mdel('A'); await tap('resolve');
+    t('picker: a marker taken back off is as if it was never added',
+      ctx.state.nodeId === 'fp_none' && !ctx.state.markers.A, 'went to ' + ctx.state.nodeId + ', A ' + ctx.state.markers.A);
+  }
+
+  /* ---- SWEEP: every real marker picker --------------------------------------------- */
+  {
+    let nodesP = 0; const bad = [];
+    for (const [g, dt] of dts) for (const tree of dt.decision_trees) for (const n of tree.nodes) {
+      if (n.marker_entry !== 'picker') continue;
+      nodesP++; treeOfNode.set(n, tree.nodes);
+      const panel = [...new Set(n.marker_groups.flatMap((x) => x.markers))], where = 'group ' + g + ' ' + n.node_id;
+      const stuck = () => ctx.state.stage === 'node' && ctx.state.nodeId === n.node_id;
+      try {
+        begin(dt, tree.tree_id, n.node_id, 'C42.1');
+        const hh = rend(() => ctx.renderLiveNode());
+        if (countButtons(hh, 'pickadd') !== panel.length) bad.push(where + ': offers ' + countButtons(hh, 'pickadd') + ' of its ' + panel.length + ' markers');
+        await tap('resolve');
+        if (stuck()) bad.push(where + ': Continue with nothing entered did not leave the node');
+        begin(dt, tree.tree_id, n.node_id, 'C42.1');
+        for (let k = 0; k < panel.length; k++) { await tap('pickadd', 0); await mset(panel[k], 'pos'); }
+        await tap('resolve');
+        if (stuck()) bad.push(where + ': Continue with every marker positive did not leave the node');
+      } catch (e) { bad.push(where + ': threw ' + e.message); }
+    }
+    t('marker pickers in the data: ' + nodesP + ' node(s) offer every marker on their panel and resolve with nothing entered and with everything positive',
+      nodesP > 0 && !bad.length, bad.slice(0, 4).join('\n        '));
+    /* The acute lineage step: nothing entered must not ask what a panel covered when no panel was run. */
+    let acute = null, acTree = null;
+    for (const [g, dt] of dts) for (const tree of dt.decision_trees) for (const n of tree.nodes) if (n.node_id === 'ac_lineage_assignment') { acute = dt; acTree = tree; }
+    if (acute) {
+      treeOfNode.set(acTree.nodes.find((x) => x.node_id === 'ac_lineage_assignment'), acTree.nodes);
+      begin(acute, acTree.tree_id, 'ac_lineage_assignment', 'C42.1');
+      await tap('resolve');
+      const r = ctx.state.result;
+      t('acute lineage: nothing entered records 9801 as not performed, without asking what the panel covered',
+        !!r && String(r.code) === '9801' && ctx.state.nodeId !== 'ac_alal_resolve' && ctx.state.captured.workup_status === 'incomplete',
+        'node ' + ctx.state.nodeId + ', result ' + (r && r.code) + ', workup ' + ctx.state.captured.workup_status);
+    }
+  }
+
   /* ---- FIXTURE: first_match, the mixed-tumour shape ---------------------- */
   const mixed = {
     node_id: 'fx_mixed', node_type: 'histology_subclassification', step_label: 'Components', question: 'Which components does the report list?', nos_fallback: null,

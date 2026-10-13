@@ -576,6 +576,33 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .state__tick { font-weight: var(--w-bold); }
 
+/* The marker picker: one row per added marker, its results as the same square segments the
+   flow chart uses, and a plain Remove. The row is bordered so a marker with no result yet is
+   as visible as one with a result, because Continue waits on every added row. */
+.pickrows { display: grid; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.pickrow {
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-3);
+  border: 2px solid var(--ink-200);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.pickrow__name { font-weight: var(--w-bold); color: var(--ink-900); }
+.pickrow .states { margin-bottom: 0; }
+.pickrow__remove {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-small);
+  font-weight: var(--w-semi);
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* The flow chart (registrar ruling 13). A checklist node asks one marker at a
    time and shows what is still reachable, so the clerk can see the answer set
    shrink rather than reading every code the node could ever emit.
