@@ -640,7 +640,8 @@ function renderArchetype() {
   return panel('Stage 0 · presentation', 'What is the dominant presentation?',
     'Describe what you see in the file. If it blurs archetypes, choose "not sure".',
     pick('archetype', arr(state.router.archetypes).map(function (a) {
-      return { label: a.label, meta: a.scaffold };
+      /* `scaffold` describes the path for whoever maintains the router; it is not shown. */
+      return { label: a.label };
     })));
 }
 
