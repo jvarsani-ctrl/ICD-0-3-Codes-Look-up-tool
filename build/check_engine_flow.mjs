@@ -1983,6 +1983,40 @@ async function uxScenarios(ctx) {
       cands() === '[1]' && ctx.state.group === 1 && ctx.state.stage !== 'group', ctx.state.stage + ' group ' + ctx.state.group + ' ' + cands());
     t('the trail shows the answer in words, never the stored value', labelsOf().slice(0, 4).join() === 'Presentation,Site of origin,Topography,Marrow blasts' &&
       ctx.state.trail.every((x) => x.value !== 'marrow') && ctx.state.trail.slice(-1)[0].value === 'More than 25% blasts', JSON.stringify(ctx.state.trail.map((x) => x.label + ': ' + x.value)));
+    /* Opening a step: its own window, locked, the earlier choice highlighted, and nothing deleted.
+       Each answer is drawn before the next, as it is on the page, because the window kept for a step is
+       the screen as last drawn. */
+    {
+      const tapR = async (act, i) => { await tap(act, i); ctx.render(); };
+      ctx.reset(); Object.assign(ctx.state, { router, topography: topo, aliasIndex: {} }); ctx.render();
+      await tapR('guided', 0); await tapR('archetype', router.archetypes.findIndex((a) => a.archetype_id === 'lymphadenopathy'));
+      await tapR('site_system', ctx.siteSystems().findIndex((x) => x.system.system_id === 'lymph_nodes'));
+      await tapR('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === 'C77.0'));
+      await tapR('discriminator', ctx.discriminator().options.findIndex((o) => o.value === 'marrow'));
+      const live = { stage: ctx.state.stage, trail: ctx.state.trail.length, group: ctx.state.group }, k = labelsOf().indexOf('Marrow blasts');
+      await tap('review', k);
+      const win = rend(() => ctx.renderStage());
+      t('clicking a step opens that step\'s own window with the earlier choice highlighted, and nothing is deleted',
+        ctx.state.trail.length === live.trail && ctx.state.stage === live.stage && ctx.state.group === live.group && /Reviewing · Marrow blasts/.test(win) &&
+        (win.match(/opt--selected/g) || []).length === 1 && /opt--selected"[^>]*data-act="discriminator"[^>]*>\s*<span class="opt__label">More than 25% blasts/.test(win),
+        'trail ' + ctx.state.trail.length + '/' + live.trail + ', highlighted ' + (win.match(/opt--selected/g) || []).length);
+      t('the window is locked, and the only buttons that act are "Move back here" and "Back to where I was"',
+        /<div class="review__window" inert>/.test(win) && />Move back here</.test(win) && />Back to where I was</.test(win), win.slice(0, 200));
+      await tap('archetype', 0); await tap('discriminator', 1);
+      t('while a step is open the case cannot be changed from its locked window', ctx.state.trail.length === live.trail &&
+        ctx.state.archetype.archetype_id === 'lymphadenopathy' && ctx.state.captured.primary_compartment === 'marrow', 'the case changed under the review');
+      const railOpen = rend(() => ctx.renderRail()), rowsOpen = rend(() => ctx.renderTrailRows());
+      t('the current step stays on the list as a way back, and the reviewed row is marked', /rail__row--reviewing/.test(railOpen) && /trail-row--reviewing/.test(rowsOpen) &&
+        /data-act="review-exit"/.test(railOpen) && /data-act="review-exit"/.test(rowsOpen), 'no way back on the list');
+      await tap('review-exit');
+      t('Back to where I was shows the live screen again with every step in place', ctx.state.review === null && !/Reviewing/.test(rend(() => ctx.renderStage())) &&
+        ctx.state.trail.length === live.trail && ctx.state.stage === live.stage, ctx.state.stage + ' ' + ctx.state.trail.length);
+      await tap('review', labelsOf().indexOf('Site of origin')); await tap('rewind', labelsOf().indexOf('Site of origin'));
+      t('Move back here rewinds the case to that step and removes the steps after it', ctx.state.review === null && ctx.state.stage === 'site_system' &&
+        labelsOf().join() === 'Presentation', ctx.state.stage + ' ' + labelsOf().join());
+      /* The checks that follow expect the case the earlier ones left. */
+      await start('lymphadenopathy'); await toSite('lymph_nodes', 'lymph_node', 'C77.0'); await answer('marrow');
+    }
     await tap('rewind', labelsOf().indexOf('Site of origin'));
     t('stepping back to the site of origin shows the system screen with the earlier answers gone', ctx.state.stage === 'site_system' &&
       ctx.state.captured.primary_compartment === undefined && ctx.state.system === null && labelsOf().join() === 'Presentation' && cands() === JSON.stringify([1, 2, 9]), ctx.state.stage + ' ' + cands());

@@ -81,6 +81,7 @@ var state = {
   router: null, topography: null, aliasIndex: null,
   archetype: null, group: null, treeId: null, nodeId: null,
   organSystem: null,     /* the crosswalk row picked at Stage 1, before the region */
+  review: null,          /* the trail step open for review, or null. A view only: it is not part of the case and not in snapshot() */
   system: null,          /* the body system picked before the organ; null while none is, or when the router declares none */
   labs: [],              /* the laboratory panel as recorded: values the clerk typed. Never read by a rule */
   candidates: [],        /* groups still possible — narrowed, never asked for blind */
@@ -171,8 +172,13 @@ function restore(snap, upto) {
    is no longer in. Rewinding to an automatic entry rewinds to the clerk's
    answer that produced it instead (see 'rewind'). */
 function pushTrail(label, value, before, automatic) {
-  state.trail.push({ label: label, value: value, before: before, automatic: !!automatic });
+  /* `screen` is the window the clerk was looking at when they answered, kept so the step can be
+     opened again for review without touching the case. */
+  state.trail.push({ label: label, value: value, before: before, automatic: !!automatic, screen: lastScreen });
 }
+/* The live screen as it was last drawn: the question the next answer belongs to. Review windows
+   are never recorded here, only the screen of the case itself. */
+var lastScreen = '';
 
 /* --------------------------------------------------------------- fetching */
 /* `no-cache` forces a revalidation against the server on every load. It does
@@ -339,7 +345,9 @@ function render() {
   var held = sameScreen ? focusKey(document.activeElement) : null;
   byId('rail').innerHTML = renderRail();
   byId('trail-rows').innerHTML = renderTrailRows();
-  byId('slot').innerHTML = renderStage() + (state.confirmExit ? renderExitConfirm() : '');
+  var screen = renderStage();
+  if (state.review === null) lastScreen = screen;
+  byId('slot').innerHTML = screen + (state.confirmExit ? renderExitConfirm() : '');
   if (state.focusNext) { focusFound(state.focusNext); state.focusNext = null; }
   else if (held) focusFound(held);
   /* The question sits below the screen's content, so a long list must not hide it.
@@ -408,21 +416,29 @@ function contextLabel() {
 function renderRail() {
   var h = '<div class="tag rail__title">This case</div>';
   state.trail.forEach(function (t, i) {
-    h += '<button class="rail__row" data-act="rewind" data-i="' + i + '">' +
+    h += '<button class="rail__row' + (state.review === i ? ' rail__row--reviewing' : '') + '" data-act="review" data-i="' + i + '">' +
          '<b>' + esc(t.label) + '</b><span>' + esc(t.value) + '</span></button>';
   });
-  h += '<div class="rail__row rail__row--now"><b>' + esc(currentLabel()) +
-       '</b><span>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : '… in progress') + '</span></div>';
+  var nowText = '<b>' + esc(currentLabel()) + '</b><span>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : '… in progress') + '</span>';
+  /* While a step is open for review, the current step is the way back to it. */
+  h += state.review !== null
+    ? '<button class="rail__row rail__row--now" data-act="review-exit">' + nowText + '</button>'
+    : '<div class="rail__row rail__row--now">' + nowText + '</div>';
   if (!state.result) h += '<div class="rail__row rail__row--todo"><b>Output</b><span>not yet</span></div>';
   return h;
 }
 function renderTrailRows() {
-  return state.trail.map(function (t, i) {
-    return '<button class="trail-row" data-act="rewind" data-i="' + i + '">' +
+  var rows = state.trail.map(function (t, i) {
+    return '<button class="trail-row' + (state.review === i ? ' trail-row--reviewing' : '') + '" data-act="review" data-i="' + i + '">' +
       '<em>' + esc(t.label) + '</em>' +
       '<b><span class="trail-row__tick">&check;</span> ' + esc(t.value) + '</b>' +
-      '<u>change</u></button>';
+      '<u>view</u></button>';
   }).join('');
+  if (state.review !== null) {
+    rows += '<button class="trail-row trail-row--now" data-act="review-exit"><em>' + esc(currentLabel()) +
+      '</em><b>' + (state.stage === 'search_unresolved' ? 'the tool stops here' : 'where you were') + '</b><u>back here</u></button>';
+  }
+  return rows;
 }
 function currentLabel() {
   if (state.result) return 'Output';
@@ -434,9 +450,32 @@ function currentLabel() {
   return state.stage.replace(/_/g, ' ');
 }
 
+/* A step opened for review: the window the clerk answered, locked, with the choice they made
+   highlighted, and two buttons. Looking changes nothing: every later step and the result stay.
+   Only "Move back here" rewinds the case. A listed option is highlighted when its text is the
+   answer (or sits inside it, as a topography region does); ticked boxes and chosen radios are
+   kept in the saved window as the clerk left them; a typed value shows in "Your answer". */
+function highlightAnswer(html, value) {
+  var want = esc(value);
+  return html.replace(/<button class="opt"([^>]*)>(\s*)<span class="opt__label">([^<]*)/g, function (m, attrs, sp, label) {
+    var hit = label && (label === want || (label.length >= 6 && want.indexOf(label) !== -1));
+    return hit ? '<button class="opt opt--selected"' + attrs + '>' + sp + '<span class="opt__label">' + label : m;
+  });
+}
+function renderReview() {
+  var t = state.trail[state.review];
+  return '<div class="review"><div class="tag review__over">Reviewing · ' + esc(t.label) + '</div>' +
+    '<p class="review__answer">Your answer: <b>' + esc(t.value) + '</b></p>' +
+    '<div class="review__window" inert>' +
+    (t.screen ? highlightAnswer(t.screen, t.value) : '<p class="node__hint">This step\'s window was not kept.</p>') + '</div>' +
+    '<div class="actions"><button class="btn" data-act="rewind" data-i="' + state.review + '">Move back here</button>' +
+    '<button class="btn btn--ghost" data-act="review-exit">Back to where I was</button></div></div>';
+}
+
 function renderStage() {
   if (state.error) return banner('error', 'Cannot continue', state.error) +
     '<div class="actions"><button class="btn" data-act="retry">Retry</button></div>';
+  if (state.review !== null && state.trail[state.review]) return renderReview();
   switch (state.stage) {
     case 'boot':      return '<p class="node__hint">Loading…</p>';
     case 'landing':   return renderLanding();
@@ -2803,6 +2842,9 @@ function handleOption(act, el) {
      show is the one being left, and a second tap on it would act on a case
      already on its way elsewhere. */
   if (state.stage === 'boot' && !state.error) return;
+  /* While a step is open for review the case itself cannot be changed: its window is locked, and
+     only the way back, the way out and Home act. */
+  if (state.review !== null && ['review', 'review-exit', 'rewind', 'home', 'home-yes', 'home-no'].indexOf(act) === -1) return;
   var n = node(), before = snapshot(), i = +el.getAttribute('data-i');
   /* Anything but Home itself dismisses the "leave this case?" question. */
   if (act !== 'home') state.confirmExit = false;
@@ -3079,7 +3121,16 @@ function handleOption(act, el) {
       pushTrail('Override', code + ' — ' + reason, before);
       return finish({ morphology_code: code, upgrade_path: 'Abstractor override: ' + reason }, 'Abstractor override');
     }
+    /* Open a step for review. An automatic step opens the clerk's answer that produced it. */
+    case 'review': {
+      var rv = i;
+      while (rv > 0 && state.trail[rv].automatic) rv--;
+      state.review = rv;
+      return;
+    }
+    case 'review-exit': state.review = null; return;
     case 'rewind': {
+      state.review = null;
       var j = i;
       while (j > 0 && state.trail[j].automatic) j--;
       var ticked = state.trail[j].ticks, typedLabs = state.trail[j].labDraft;
@@ -3536,7 +3587,7 @@ function reset() {
   state.pendingGrade = null; state.grade = null; state.entity = null; state.basisCodes = [];
   state.trail = []; state.trailAtGroupEntry = 0; state.workup = []; state.result = null;
   state.error = null; state.query = ''; state.confirmExit = false; state.hopFrom = null; state.labs = [];
-  state.focusNext = null;
+  state.focusNext = null; state.review = null;
 }
 
 /* ============================================================================

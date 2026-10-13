@@ -404,6 +404,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .trail-row b { flex: 1; font-size: var(--fs-small); font-weight: var(--w-semi); }
 .trail-row u { text-decoration: none; color: var(--color-link); font-size: var(--fs-micro); font-weight: var(--w-bold); }
 .trail-row__tick { color: var(--color-success); font-weight: var(--w-bold); }
+/* A step open for review: its row is marked, and the window is the one the clerk answered, locked,
+   under the answer they gave. The current step stays on the list as the way back. */
+.trail-row--reviewing, .rail__row--reviewing { background: var(--color-upgrade-fill); border-color: var(--color-primary); }
+.trail-row--now { border-style: dashed; }
+.review__answer { margin: 0 0 var(--sp-2); font-size: var(--fs-small); color: var(--ink-700); }
+.review__window {
+  pointer-events: none;
+  opacity: 0.92;
+  padding: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}
 
 /* Shell selection. Transcript is the base case; the rail is the enhancement.
    880px is where a 196px rail plus a usable 640px canvas stops fitting.
