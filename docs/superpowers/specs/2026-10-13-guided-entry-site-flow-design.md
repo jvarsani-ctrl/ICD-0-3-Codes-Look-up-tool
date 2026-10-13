@@ -85,16 +85,20 @@ Organ labels name what they bundle. "Major salivary glands" becomes "Salivary gl
 
 ## 4. The marrow question
 
-The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 and 9827 read `primary_compartment`: marrow is Group I, anything else is Group II, and marrow blasts ≥25% override it for 9811–9819. Today the compartment is asked before the site, and its answer shields Group I from the site narrowing. If the site were asked first with no other change, a lymph node would remove Group I, because the lymph node row lists Groups II and IX only.
+The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 and 9827 read `primary_compartment`: marrow is Group I, anything else is Group II. Today the compartment is asked before the site, and its answer shields Group I from the site narrowing. If the site were asked first with no other change, a lymph node would remove Group I, because the lymph node row lists Groups II and IX only.
+
+**Research basis (13 October 2026).** WHO 5th edition (Alaggio et al., *Leukemia* 2022;36:1720, p. 1721; Tembhare et al., *J Clin Pathol* 2025;78:505, p. 507) and ICC (Duffield et al., *Virchows Arch* 2023) treat B-lymphoblastic leukaemia/lymphoma as one entity and give no marrow percentage. ICCC-2017 assigns 9811 and 9837 to Group I for C42.0, C42.1, C42.3, C42.4 and C80.9, and to Group II for C00.0–C41.9, C42.2 and C44.0–C77.9, with no blast percentage. The 25% figure is a staging convention: Murphy, as printed in the Table 1 footnote of Rosolen et al., *J Clin Oncol* 2015;33:2112 (p. 2115), and Cortelazzo et al., *Crit Rev Oncol Hematol* 2011;79:330 (pp. 331, 334). At 25% or less with a mass the disease is lymphoma. Above 25%, leukaemia is more likely. The registrar ruled that the question asks for this number, because a marrow report gives it directly.
 
 **Design.**
-- The discriminator `primary_compartment` becomes a three-answer question, "Is the bone marrow also involved?", with answers `marrow` (Yes), `not_marrow` (No) and `not_known` (Not known yet). Nodal and extranodal merge. In all three rules above they route identically, because the extranodal answer falls to the same default as nodal. The rules' nodal and extranodal branches become one `not_marrow` branch.
-- **Yes** sets `marrow`, drops Group II, and carries `keep_on_site: [1]` so the site cannot remove Group I.
-- **No** sets `not_marrow` and drops Group I.
-- **Not known yet** sets `not_known`, drops nothing, and carries `keep_on_site: [1]`. Both Groups I and II stay offered, and the "which family?" question decides. It exists because a clerk holding a blood count or a nodal biopsy often has no marrow result yet, and a blood count cannot answer the question: no rule in the router or in any group's data uses one to choose between Groups I and II. The marrow rules read the marrow blast percentage. The one place a count separates the groups is inside a single code (chronic lymphocytic leukaemia against small lymphocytic lymphoma, 9823).
-- **What the rules do with `not_known`.** The convention is in the Group 2 Diagnostic Pathway, section 2.2 (the compartment gate): with no marrow done, the gate cannot close, the case is coded at the tissue tier, `marrow_not_done` is flagged, and the Group I/II split stays provisional. `not_known` follows that. It keeps the clerk's chosen group, marks the split provisional through the existing `provisional_pending` / `workup_status` fields, and invents no new field. Without a branch the three dual-group rules fall to Group II, so a case answered "Not known yet" and filed under Group I could be sent to Group II when its morphology is reached. The plan first reads how `dual_group_rules` are evaluated once the clerk has chosen a group, then gives each of the three rules an explicit `not_known` branch. A new build check requires every rule that reads `primary_compartment` to carry a branch for all three answers. If a rule cannot honour the chosen group, the plan stops and returns to the registrar.
+- The discriminator `primary_compartment` keeps its name and becomes a question about the marrow aspirate: "How many blasts does the marrow aspirate show?" The answers are `marrow` ("More than 25% blasts"), `not_marrow` ("25% or less") and `not_known` ("No marrow aspirate yet"). The hint says that over 25% points to leukaemia and 25% or less, with a mass or enlarged nodes, points to lymphoma. Nodal and extranodal merge: in all three rules that read the compartment they route identically, because extranodal falls to the same default as nodal.
+- **More than 25%** sets `marrow`, drops Group II, and carries `keep_on_site: [1]` so the site cannot remove Group I.
+- **25% or less** sets `not_marrow` and drops Group I.
+- **No marrow aspirate yet** sets `not_known`, drops nothing, and carries `keep_on_site: [1]`. Both Groups I and II stay offered and the "which family?" question decides.
+- **The blood film is not an input.** Murphy's footnote also asks for a normal peripheral blood picture. The film is mentioned in the hint only. A missing film never blocks an answer: the marrow aspirate decides. A blood film or blood flow showing blasts with no marrow done answers "No marrow aspirate yet". A blood-only route is a decision for the registrar and is not built.
+- **What the rules do with `not_known`.** The convention is in the Group 2 Diagnostic Pathway, section 2.2 (the compartment gate): with no marrow done, the gate cannot close, the case is coded at the tissue tier, `marrow_not_done` is flagged, and the Group I/II split stays provisional. `not_known` follows that. It keeps the clerk's chosen group and marks the split provisional through the existing `provisional_pending` / `workup_status` mechanism, with no new field. Without a branch the dual-group rules fall to Group II, so the plan gives each of the three rules an explicit `not_known` branch after reading how `resolveGroup` is used once the clerk has chosen a group. A new build check requires every rule that reads `primary_compartment` to carry a branch for all three answers. If a rule cannot honour the chosen group, the plan stops and returns to the registrar.
+- **The router's separate blast branch is removed.** The first branch of the 9811–9819 rule (`marrow_blast_percentage ≥ 25`) and the ten routing notes in `group_01_dt.json` that repeat it are deleted. The question decides in one place, with Murphy's edge (more than 25% is Group I). The numeric blast gates inside the acute, Burkitt and MDS trees are unchanged.
 - **Auto-answer.** When the chosen code is C42.0, C42.1, C42.3 or C42.4, the compartment is `marrow` and the question is not shown. That list is the one the `9811-9819` rule already carries. A build check requires the discriminator's list to equal it, so there is one truth. The spleen (C42.2) is the only C42 code that is asked.
-- **When it is asked.** The discriminator declares an `ask_when` condition in the router: Group I is among the presentation's candidates before the site narrows them, and the chosen site's own candidate list includes Group II. The engine reads the declaration and holds no group numbers. Examples: a kidney tumour never sees it (the kidney lists Group VI only); a lymph node or the thyroid under "enlarged lymph nodes" or "not sure" does.
+- **When it is asked.** The discriminator declares an `ask_when` condition in the router: Group I is among the presentation's candidates before the site narrows them, and the chosen site's own candidate list includes Group II. The engine reads the declaration and holds no group numbers. A kidney tumour never sees it (the kidney lists Group VI only); a lymph node or the thyroid under "enlarged lymph nodes" or "not sure" does.
 - The question is asked after the site, so it sits between the region step and the group decision. `ask_before_site` is dropped from this discriminator.
 
 **Build check (new).** No `dual_group_rules` branch may read `nodal` or `extranodal`. This stops a future rule from depending on a distinction the question no longer draws.
@@ -102,20 +106,20 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 ## 5. Trail
 
 - The trail shows an answer's label, not its stored value ("Blood and bone marrow", not "marrow"). This is a bug today and applies to every discriminator.
-- Trail headings: **Site of origin** for the body-system answer, **Organ** for the organ answer, **Topography** for the code (unchanged), **Bone marrow also involved** for the marrow question. This is my reading of "rename primary compartment to site of origin": the old compartment question no longer exists in its old form, and "site of origin" now names the system and organ it was standing in for. The registrar may correct it on review.
+- Trail headings: **Site of origin** for the body-system answer, **Organ** for the organ answer, **Topography** for the code (unchanged), **Marrow blasts** for the marrow question. This is my reading of "rename primary compartment to site of origin": the old compartment question no longer exists in its old form, and "site of origin" now names the system and organ it was standing in for. The registrar may correct it on review.
 
 ## 6. Verification
 
 - Engine gate (`build/check_engine_flow.mjs`), new cases:
-  - Lymph node, "Not known yet": Groups I and II are both offered at the family question, and a Group I choice is not sent to Group II afterwards.
-  - ALL with enlarged nodes: pick the lymph node, answer Yes, end in Group I.
-  - The same case, answer No: Group II.
+  - Lymph node, "No marrow aspirate yet": Groups I and II are both offered at the family question, and a Group I choice is not sent to Group II afterwards.
+  - ALL with enlarged nodes: pick the lymph node, answer "More than 25% blasts", end in Group I.
+  - The same case, answer "25% or less": Group II.
   - Lymphoma in a node, with no marrow involvement: Group II.
   - Kidney tumour: the marrow question is never asked.
   - Spleen: asked.
   - Blood and marrow presentation: no system, organ or marrow question shown, and the compartment is `marrow`.
   - A search-led entry still reaches its group.
-  - Marrow blasts ≥25% with answer No: the plan first reads when `marrow_blast_percentage` is captured relative to the group decision, then pins the result to today's behaviour. The old nodal answer dropped Group I in the same place, so the test records what happens now and does not promise a change.
+  - After the router's blast branch is removed, a case answered "25% or less" that later enters a blast percentage above 25% in the acute tree stays where the clerk's answer put it. The numeric gate in the tree is not a routing step.
 - **Routing unchanged.** For every group, the router's group outputs are identical before and after for every case that does not involve the compartment. The plan states the comparison method.
 - Negative controls for each new build check, run in memory against the real check: an organ in two systems, an organ in none, an unknown organ id, an empty system, a duplicate label, a discriminator auto-answer list that differs from the 9811-9819 rule, a rule branch reading `nodal`, a rule that reads `primary_compartment` with no `not_known` branch.
 - The in-app browser: drive the blood and marrow path and the lymph node path through the real page, and check the trail text.
@@ -127,9 +131,9 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 - Reordering the presentation list.
 - Topography codes, the lookup rows and ICD-O data are unchanged. Only router JSON, the crosswalk's `label` and `region_question` fields, `app.js` and its CSS change.
 
-## Open for review
+## Defaults taken on build (13 October 2026)
+
+The registrar said "begin building" without answering two review items, so the build takes the defaults below. Either can be changed afterwards.
 
 1. The trail headings in section 5.
-2. Whether the plan should add the ICD-O-3.2 topography-chapter check if a source file exists.
-3. **The 25% boundary rests on one footnote.** The Group 2 Pathway (section 1, fact 1) traces the 25% ceiling to Murphy 1980, quoted inside Rosolen 2015. WHO-HAEM5 gives no percentage and ICC gives none. The registrar already decided to keep 25% as the Group I/II boundary (Pathway section 9.1, item 1); this spec changes nothing about it.
-4. **Router and pathway differ at the edge.** The router tests marrow blasts ≥25% alone. The pathway table (section 2.2) reads ">25% with abnormal peripheral blood". A case at exactly 25%, or with a normal peripheral film, would route differently. The spec leaves the router as it is; the registrar should say which wording governs.
+2. No ICD-O-3.2 topography-chapter check, because no source file is in the repository.
