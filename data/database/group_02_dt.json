@@ -3859,7 +3859,7 @@
               "captures": {
                 "marrow_blast_pct": null,
                 "marrow_positivity_method": null,
-                "primary_compartment": "nodal",
+                "primary_compartment": "not_marrow",
                 "workup_status": "incomplete"
               }
             },
@@ -3869,7 +3869,7 @@
               "coding_note": "Group II, and not Stage IV.",
               "captures": {
                 "marrow_positivity_method": "morphology",
-                "primary_compartment": "nodal"
+                "primary_compartment": "not_marrow"
               }
             },
             {
@@ -3878,7 +3878,7 @@
               "coding_note": "Group II, Stage IV-BM. Stays in this group.",
               "captures": {
                 "marrow_positivity_method": "morphology",
-                "primary_compartment": "nodal"
+                "primary_compartment": "not_marrow"
               }
             },
             {
@@ -3897,7 +3897,7 @@
               "coding_note": "Stays in Group II pending the blood film. Do not refer to Group I on the marrow percentage alone.",
               "captures": {
                 "marrow_positivity_method": "morphology",
-                "primary_compartment": "nodal",
+                "primary_compartment": "not_marrow",
                 "workup_status": "incomplete"
               }
             },
@@ -3907,7 +3907,7 @@
               "coding_note": "Do NOT upstage. Keep the assigned stage and record the modifier (Pathway §2.2).",
               "captures": {
                 "marrow_positivity_method": "immunophenotype",
-                "primary_compartment": "nodal"
+                "primary_compartment": "not_marrow"
               }
             },
             {
@@ -3915,7 +3915,7 @@
               "next_node": "g2_notlymphoma_gate",
               "captures": {
                 "marrow_positivity_method": "morphology",
-                "primary_compartment": "nodal",
+                "primary_compartment": "not_marrow",
                 "workup_status": "incomplete"
               }
             }

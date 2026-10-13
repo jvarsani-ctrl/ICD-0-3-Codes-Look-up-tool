@@ -525,3 +525,14 @@ watched failing for the reason shown.
 | 3, 5, 6. Documents. The claim that a gonad-only term stops at every other site was false where the site's list names Group 10; figures were stale (159 of 167 sites, 57 of 159, 82 and 86 options, "every one of the 136 entries"); the lymph node sentence ignored ranges 114 and 116. | `docs/TODO.md` §34, `docs/group_10_registrar_review.md`, this file, and the 8010/3 line in `generate_group10_entries.py`, corrected from computed counts. | none (text) | |
 | Found while rerunning the suites. Two controls in `negative_controls_ux.py` edited the old text of `canHop` in `app.js`, which the recapture hop had changed, so they reported "occurs 0 times" and checked nothing. | Both repointed at the current line; a third control added for the recapture exception (`r.recaptureSite === true ||`). | the exception removed from a scratch `app.js` | gate FAIL: `a referral that asks for the primary's site offers the hop into`; `negative_controls_ux.py`: every control behaves |
 | fix | | none | OK, 1162 checks; `negative_controls_group10.py` 41 of 41 caught, 8 of 8 probes pass; `negative_controls_ux.py` every control behaves; Groups III, VII, VIII and IX control suites pass |
+
+### Guided entry: body system, organ and the marrow question (13 October 2026)
+
+Registrar's ruling the same day: write only the hard controls (`CLAUDE.md`, rule 10). Each row restores a
+plausible pre-fix behaviour in a scratch copy of `app.js` (`APP=<copy> node build/check_engine_flow.mjs`) and
+must fail for the reason shown. The unbroken engine passes all 196 checks.
+
+| Breakage | Where | Result |
+|---|---|---|
+| The site narrows the candidates before the marrow question is settled (the order the engine had before this change). The design exists to prevent it: a leukaemia that presents in a lymph node loses Group I. | `app.js`, `afterSite()` | gate FAIL, 5 checks: `more than 25% blasts keeps Group I for a node that is the site` (candidates `[9]`), `no marrow aspirate yet drops nothing` (`[2,9]`), `a thyroid under "not sure" is asked`, the region check, the trail check |
+| A step back forgets the body system, so the case keeps the system it had chosen and lists only that system's organs. | `app.js`, `snapshot()` | gate FAIL, exactly one check: `stepping back to the site of origin shows the system screen with the earlier answers gone` |

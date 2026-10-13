@@ -1756,7 +1756,7 @@ Rule K, p. 16; section 4.3.4, pp. 21-22).
 - `build/drive_first_tap.mjs` stopped at its fourth control, which looked for a `select` that is now a filtered
   radio list. It predates this change and is fixed (7 October 2026).
 - `presentation_router.json`: `asked_by` on `primary_compartment` lists `unsure`, which does not set
-  `dual_group_discriminator`. The build now notes it.
+  `dual_group_discriminator`. The build now notes it. Fixed 13 October 2026: `unsure` sets it.
 - `fl_grade` ("not graded" in three paediatric rules), `bap1_status` and `meningioma_risk_tier` are recorded and
   read by nothing.
 

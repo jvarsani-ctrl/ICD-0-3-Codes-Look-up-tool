@@ -54,7 +54,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9812",
@@ -98,7 +98,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9813",
@@ -141,7 +141,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9814",
@@ -185,7 +185,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9815",
@@ -228,7 +228,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9816",
@@ -271,7 +271,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9817",
@@ -314,7 +314,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9818",
@@ -359,7 +359,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9819",
@@ -403,7 +403,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Nodal or extranodal presentation → Group II, IIb1. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1. Otherwise the marrow aspirate decides: more than 25% blasts → Group I, Ia1; 25% or less → Group II, IIb1 (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side."
     },
     {
       "morphology_code": "9835",
@@ -469,7 +469,7 @@
         "C80.9"
       ],
       "topography_dependent": true,
-      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1 (T-ALL). C42.2 (spleen) and every nodal or extranodal site (C00.0–C41.9, C44.0–C77.9) → Group II, IIb1 Precursor cell lymphomas, i.e. T-lymphoblastic lymphoma. Marrow blasts ≥25% resolves to Group I regardless of the nodal mass. Discriminator is the captured variable `primary_compartment`, asked router-side. Confirmed against Layer 1 ICCC-2017, which lists 9811–9818 and 9837 under both Ia1 and IIb1 by topography."
+      "topography_routing_note": "Dual-group by compartment. C42.0/C42.1/C42.3/C42.4 (blood/marrow/RES/haematopoietic system NOS) → Group I, Ia1 (T-ALL). C42.2 (spleen) and every nodal or extranodal site (C00.0–C41.9, C44.0–C77.9) → Group II, IIb1 Precursor cell lymphomas, i.e. T-lymphoblastic lymphoma. Otherwise the marrow aspirate decides: more than 25% blasts → Group I; 25% or less → Group II (Murphy staging, as printed in Rosolen et al., J Clin Oncol 2015;33:2112, Table 1 footnote). Discriminator is the captured variable `primary_compartment`, asked router-side. Confirmed against Layer 1 ICCC-2017, which lists 9811–9818 and 9837 under both Ia1 and IIb1 by topography."
     },
     {
       "morphology_code": "9823",

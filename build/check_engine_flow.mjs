@@ -424,12 +424,28 @@ async function expressLane(ctx, out) {
     await tap('alias', i);
     return true;
   };
+  /* The site is asked in up to three taps: body system, organ, region. A screen that offers one
+     answer is skipped, so each tap is made only if the case is on that screen. */
+  const atSite = () => ['site_system', 'site'].includes(ctx.state.stage);
+  const siteScreen = () => (ctx.state.stage === 'site_system' ? ctx.renderSiteSystem() : ctx.renderSite());
   const pickSite = async (code) => {
-    const r = ctx.systemRows().findIndex((row) => row.codes.includes(code));
-    await tap('site', r);
+    if (ctx.state.stage === 'site_system') {
+      const organ = ctx.systemRows().find((row) => row.codes.includes(code)).organ;
+      await tap('site_system', ctx.siteSystems().findIndex((x) => x.organs.includes(organ)));
+    }
+    if (ctx.state.stage === 'site') await tap('site', ctx.organRows().findIndex((row) => row.codes.includes(code)));
     if (ctx.state.stage === 'site_region') {
       await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
     }
+  };
+  /* Can this code be picked from the screen the case is on? A step back restores the system the
+     clerk had chosen, so the organ screen lists that system's organs only. */
+  const canPick = (code) => {
+    const st = ctx.state.stage;
+    if (st === 'site_system') return true;
+    if (st === 'site') return ctx.organRows().some((row) => row.codes.includes(code));
+    if (st === 'site_region') return ctx.regionOptions(ctx.state.organSystem).some((o) => o.topography === code);
+    return false;
   };
   const fail = (m) => out.fails.push(m);
   const hasSiteWhen = (o) => !!o && typeof o === 'object' && (Array.isArray(o) ? o.some(hasSiteWhen) :
@@ -485,15 +501,15 @@ async function expressLane(ctx, out) {
       const g = groups[0], at0 = '"' + term + '" [' + g + ']';
       if (!(router.groups || {})[String(g)].built) {
         /* An unbuilt group stops at its handoff: no tree, so no site to record. */
-        if (ctx.state.group !== g || ['site', 'site_region'].includes(ctx.state.stage)) fail(at0 + ' (unbuilt) reached stage ' + ctx.state.stage + ', group ' + ctx.state.group);
+        if (ctx.state.group !== g || ['site_system', 'site', 'site_region'].includes(ctx.state.stage)) fail(at0 + ' (unbuilt) reached stage ' + ctx.state.stage + ', group ' + ctx.state.group);
         continue;
       }
-      if (ctx.state.stage !== 'site' || ctx.state.group !== null) {
+      if (!atSite() || ctx.state.group !== null) {
         fail(at0 + ' reached stage ' + ctx.state.stage + ', group ' + ctx.state.group + ', not the record-only site question');
         continue;
       }
       let screen = '';
-      try { screen = ctx.renderSite(); } catch (e) { fail(at0 + ' site screen throws: ' + e.message); continue; }
+      try { screen = siteScreen(); } catch (e) { fail(at0 + ' site screen throws: ' + e.message); continue; }
       if (screen.indexOf(ctx.esc(term)) < 0) fail(at0 + ' site screen does not name the term');
       if (screen.indexOf('data-act="site-unstated"') < 0) fail(at0 + ' site screen offers no "not stated" answer');
       const cgOf = (c) => topo.topography_lookup[c].candidate_groups;
@@ -505,24 +521,24 @@ async function expressLane(ctx, out) {
         const st = ctx.state;
         out.recorded = (out.recorded || 0) + 1;
         if (st.captured.topography !== code) fail(at0 + ' at ' + code + ': topography captured as ' + st.captured.topography);
-        else if (st.group !== g || ['site', 'site_region', 'search_unresolved'].includes(st.stage)) {
+        else if (st.group !== g || ['site_system', 'site', 'site_region', 'search_unresolved'].includes(st.stage)) {
           fail(at0 + ' at ' + code + ' ' + JSON.stringify(cgOf(code)) + ': expected Group ' + g + ' entered, got stage ' + st.stage + ', group ' + st.group);
         }
       }
       await enter(term); await tap('site-unstated', 0);
       const su = ctx.state;
-      if (su.group !== g || su.captured.topography !== undefined || ['site', 'site_region', 'search_unresolved'].includes(su.stage)) {
+      if (su.group !== g || su.captured.topography !== undefined || ['site_system', 'site', 'site_region', 'search_unresolved'].includes(su.stage)) {
         fail(at0 + ' "not stated": expected Group ' + g + ' with no topography, got stage ' + su.stage + ', group ' + su.group + ', topography ' + su.captured.topography);
       }
       continue;
     }
     groups.length > 1 ? out.terms++ : out.siteSingles++;
-    if (ctx.state.stage !== 'site' || ctx.state.group !== null) {
+    if (!atSite() || ctx.state.group !== null) {
       fail('"' + term + '" ' + JSON.stringify(groups) + ' reached stage ' + ctx.state.stage + ', group ' + ctx.state.group + ', not the site question');
       continue;
     }
     let screen = '';
-    try { screen = ctx.renderSite(); } catch (e) { fail('"' + term + '" site screen throws: ' + e.message); continue; }
+    try { screen = siteScreen(); } catch (e) { fail('"' + term + '" site screen throws: ' + e.message); continue; }
     if (screen.indexOf(ctx.esc(term)) < 0) fail('"' + term + '" site screen does not name the term');
     if (screen.indexOf('data-act="site-unstated"') >= 0 || ctx.state.siteRecordOnly) {
       fail('"' + term + '" ' + JSON.stringify(groups) + ' site screen offers "not stated" or sets the record-only flag, which would enter a group the site did not choose');
@@ -581,23 +597,21 @@ async function expressLane(ctx, out) {
     for (const row of rows) {
       const routed = row.codes.find((c) => expectAt(groups, c, term).length === 1 && ctx.groupMeta(expectAt(groups, c, term)[0]).tree_routing);
       if (!routed) continue;
-      /* Back at the Tree entry the clerk is on this row's region screen, or
-         on the organ-system screen when the row holds one code. */
+      /* Back at the Tree entry the clerk is on the last site screen they answered: the region
+         screen, the organ screen, or the system screen when the system held one organ of one
+         code. An organ of another system is reached by stepping back to the system screen. */
       for (const code of row.codes.length > 1 ? row.codes : codes) {
         await enter(term); await pickSite(routed);
         if (!(await rewindTo('Tree'))) { fail('R1 "' + term + '" at ' + routed + ': routed with no Tree entry'); break; }
-        if (ctx.state.stage === 'site_region') {
-          await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
-        } else {
-          await pickSite(code);
-        }
+        if (!canPick(code) && !(await rewindTo('Site of origin'))) { fail('R1 "' + term + '" at ' + routed + ': ' + code + ' is not on the screen the Tree entry returns to, and there is no system entry to step back to'); break; }
+        await pickSite(code);
         out.rewinds++;
         const expect = expectAt(groups, code, term), st = ctx.state;
         const at = 'R1 "' + term + '" ' + JSON.stringify(groups) + ' at ' + routed + ', back to Tree, then ' + code;
         /* The trail must describe this case only: the site answered once, and
            no group or tree left over from the case before the step back. */
         const labels = st.trail.map((t) => t.label);
-        const twice = ['Organ system', 'Topography'].filter((l) => labels.filter((x) => x === l).length > 1);
+        const twice = ['Site of origin', 'Organ', 'Topography'].filter((l) => labels.filter((x) => x === l).length > 1);
         const stale = expect.length === 1 ? [] : labels.filter((l) => l === 'Group' || l === 'Tree');
         if (twice.length || stale.length) {
           fail(at + ': the trail still carries the case before the step back: ' + JSON.stringify(st.trail.map((t) => t.label + ': ' + t.value)));
@@ -618,7 +632,7 @@ async function expressLane(ctx, out) {
     if (!(await enter(term))) continue;
     /* A routed group reads the site, so its term is asked it first: answer
        with a site that keeps the group, then step back to the Tree entry. */
-    if (ctx.state.stage === 'site') {
+    if (atSite()) {
       const keep = codes.find((c) => expectAt([g], c, term).length === 1);
       if (!keep) continue;
       await pickSite(keep);
@@ -626,7 +640,7 @@ async function expressLane(ctx, out) {
     if (!(await rewindTo('Tree'))) continue;
     routedGroups.add(g);
     await tap('guided', 0);
-    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site', 'site_region'].includes(ctx.state.stage); k++) {
+    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site_system', 'site', 'site_region'].includes(ctx.state.stage); k++) {
       await tap(ctx.state.stage, 0);
     }
     out.rewinds++;
@@ -650,18 +664,18 @@ async function expressLane(ctx, out) {
     await enter(term); await pickSite(codes[0]);
     if (!(await rewindTo('Search'))) { fail('R4 "' + term + '" [' + g + ']: no Search entry to step back to'); continue; }
     await tap('guided', 0);
-    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site', 'site_region'].includes(ctx.state.stage); k++) await tap(ctx.state.stage, 0);
+    for (let k = 0; k < 8 && ['archetype', 'discriminator', 'site_system', 'site', 'site_region'].includes(ctx.state.stage); k++) await tap(ctx.state.stage, 0);
     out.rewinds++;
     if (ctx.state.searchTerm || ctx.state.siteRecordOnly || ctx.state.stage === 'search_unresolved') {
       fail('R4 "' + term + '" [' + g + '], back to Search, then the guided route: term ' + JSON.stringify(ctx.state.searchTerm) +
         ', record-only ' + ctx.state.siteRecordOnly + ', stage ' + ctx.state.stage);
     }
     await enter(term); await pickSite(codes[0]);
-    if (!(await rewindTo('Organ system'))) { fail('R4 "' + term + '" [' + g + ']: no Organ system entry to step back to'); continue; }
+    if (!(await rewindTo('Site of origin'))) { fail('R4 "' + term + '" [' + g + ']: no Site of origin entry to step back to'); continue; }
     await tap('site-unstated', 0);
     out.rewinds++;
     const labels = ctx.state.trail.map((x) => x.label), st = ctx.state;
-    if (st.group !== g || st.captured.topography !== undefined || labels.includes('Organ system') ||
+    if (st.group !== g || st.captured.topography !== undefined || labels.includes('Site of origin') || labels.includes('Organ') ||
         labels.filter((l) => l === 'Topography').length !== 1) {
       fail('R4 "' + term + '" [' + g + '], back to the organ system and "not stated": group ' + st.group + ', topography ' +
         st.captured.topography + ', trail ' + JSON.stringify(st.trail.map((x) => x.label + ': ' + x.value)));
@@ -675,7 +689,7 @@ async function expressLane(ctx, out) {
          the key the site takes Group II away at most sites. */
   for (const a of router.archetypes) {
     const d = a.dual_group_discriminator && (router.discriminators || {})[a.dual_group_discriminator];
-    if (!d || !d.ask_before_site) continue;
+    if (!d || !(d.ask_before_site || d.ask_when)) continue;
     const ai = router.archetypes.indexOf(a);
     for (const [answer, rule] of Object.entries(d.narrows || {})) {
       const keep = (rule.keep_on_site || []).filter((g) => (a.candidate_groups || []).includes(g));
@@ -683,9 +697,16 @@ async function expressLane(ctx, out) {
       const oi = d.options.findIndex((o) => String(typeof o === 'string' ? o : o.value) === answer);
       for (const code of codes) {
         ctx.reset(); ctx.state.router = router; ctx.state.topography = topo; ctx.state.aliasIndex = index;
-        await tap('guided', 0); await tap('archetype', ai); await tap('discriminator', oi);
+        await tap('guided', 0); await tap('archetype', ai);
+        if (d.ask_before_site) await tap('discriminator', oi);
         if (ctx.systemRows().findIndex((row) => row.codes.includes(code)) < 0) continue;
         await pickSite(code);
+        /* A question asked after the site appears only where it can matter, and not at all where the
+           site answers it; the sites that never ask it have nothing to protect. */
+        if (d.ask_when) {
+          if (ctx.state.stage !== 'discriminator') continue;
+          await tap('discriminator', oi);
+        }
         out.keepWalks++;
         for (const g of keep) {
           if (ctx.state.group !== g && !(ctx.state.candidates || []).includes(g)) {
@@ -709,12 +730,19 @@ async function expressLane(ctx, out) {
   /* A screen with an option to tap. An unbuilt group's handoff is a banner. */
   const asks = (st) => ['discriminator', 'site_region', 'group'].includes(st) ||
     (st === 'handoff' && ctx.groupMeta(ctx.state.group).built && !!ctx.groupMeta(ctx.state.group).tree_selection);
+  /* Row r of the presentation's organ list, reached through whichever of the system and organ
+     screens the case is on. */
+  const tapSite = async (st, r) => {
+    const row = ctx.systemRows()[r];
+    if (st === 'site_system') await tap('site_system', ctx.siteSystems().findIndex((x) => x.organs.includes(row.organ)));
+    else await tap('site', ctx.organRows().findIndex((x) => x.organ === row.organ));
+  };
   const walk = async (a, r) => {
     ctx.reset(); ctx.state.router = router; ctx.state.topography = topo; ctx.state.aliasIndex = index;
     await tap('guided', 0); await tap('archetype', a);
     for (let k = 0; k < 8 && ctx.state.stage !== 'node'; k++) {
       const st = ctx.state.stage;
-      if (st === 'site') await tap('site', r);
+      if (st === 'site_system' || st === 'site') await tapSite(st, r);
       else if (asks(st)) await tap(st, 0);
       else break;
     }
@@ -731,14 +759,15 @@ async function expressLane(ctx, out) {
       await tap('rewind', t);
       for (let k = 0; k < 8 && ctx.state.stage !== 'node'; k++) {
         const st = ctx.state.stage;
-        if (st === 'site' || asks(st)) await tap(st, st === 'site' ? r : 0);
+        if (st === 'site_system' || st === 'site') await tapSite(st, r);
+        else if (asks(st)) await tap(st, 0);
         else break;
       }
       guidedRewinds++;
       const labels = ctx.state.trail.map((x) => x.label);
       const twice = [...new Set(labels)].filter((l) => labels.filter((x) => x === l).length > 1);
       if (twice.length) {
-        fail('R3 guided, presentation ' + a + ', organ system ' + r + ', back to Tree and answered again: the trail holds ' +
+        fail('R3 guided, presentation ' + a + ', organ ' + r + ', back to Tree and answered again: the trail holds ' +
           twice.join(', ') + ' twice: ' + JSON.stringify(ctx.state.trail.map((x) => x.label + ': ' + x.value)));
       }
     }
@@ -1451,8 +1480,13 @@ async function uxScenarios(ctx) {
       const rule = tr && tr.rules.find((r) => r.tree_id === treeId);
       return (rule && rule.topography_in.find((c) => selectable.includes(c))) || siteFor(g);
     };
+    const atSiteUx = () => ['site_system', 'site'].includes(ctx.state.stage);
     const pickSiteUx = async (code) => {
-      await tap('site', ctx.systemRows().findIndex((row) => row.codes.includes(code)));
+      if (ctx.state.stage === 'site_system') {
+        const organ = ctx.systemRows().find((row) => row.codes.includes(code)).organ;
+        await tap('site_system', ctx.siteSystems().findIndex((x) => x.organs.includes(organ)));
+      }
+      if (ctx.state.stage === 'site') await tap('site', ctx.organRows().findIndex((row) => row.codes.includes(code)));
       if (ctx.state.stage === 'site_region') await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
     };
     const cases = [];
@@ -1481,17 +1515,17 @@ async function uxScenarios(ctx) {
       if (/Topography code/.test(out)) bad.push(label + ': the referral screen prints the deposit\'s site as the case\'s');
       if (!/data-act="hop"/.test(out)) { bad.push(label + ': no hop offered with no site on the case'); continue; }
       await tap('hop');
-      if (!(st.stage === 'site' && st.group === to && st.recordGroup === to && st.captured.topography === undefined && st.captured.organ_system === undefined)) {
+      if (!(atSiteUx() && st.group === to && st.recordGroup === to && st.captured.topography === undefined && st.captured.organ_system === undefined)) {
         bad.push(label + ': after the hop stage ' + st.stage + ', group ' + st.group + ', record group ' + st.recordGroup + ', topography ' + st.captured.topography); continue;
       }
       if (st.siteRecordOnly !== !reads) bad.push(label + ': record-only is ' + st.siteRecordOnly + ' for a group that ' + (reads ? 'reads' : 'does not read') + ' the site');
-      const scr = rend(() => ctx.renderSite());
+      const scr = rend(() => (ctx.state.stage === 'site_system' ? ctx.renderSiteSystem() : ctx.renderSite()));
       if (!/Record the site of the primary tumour/.test(scr)) bad.push(label + ': the site screen does not ask for the primary\'s site');
       if (/data-act="site-unstated"/.test(scr) === reads) bad.push(label + ': the "not stated" answer is ' + (reads ? 'offered to a group that reads the site' : 'missing for a group that does not'));
       if (/data-act="site-unstated"/.test(scr) && !reads) {
         await tap('site-unstated');
         const su = ctx.state;
-        if (!(su.group === to && su.captured.topography === undefined && su.stage !== 'site')) bad.push(label + ': "not stated" ends at stage ' + su.stage + ', group ' + su.group);
+        if (!(su.group === to && su.captured.topography === undefined && !['site_system', 'site'].includes(su.stage))) bad.push(label + ': "not stated" ends at stage ' + su.stage + ', group ' + su.group);
         begin(c.dt, c.tree.tree_id, c.n.node_id, startSite(c.g, c.tree.tree_id)); ctx.state.group = c.g;
         await tap('opt', oi); await tap('hop');
       }
@@ -1502,12 +1536,12 @@ async function uxScenarios(ctx) {
       if (!(en.group === to && ['node', 'handoff'].includes(en.stage) && en.captured.topography === code && en.recordGroup === null)) {
         bad.push(label + ': after recording ' + code + ' stage ' + en.stage + ', group ' + en.group + ', topography ' + en.captured.topography + ', record group ' + en.recordGroup); continue;
       }
-      /* An organ system with one code records it without a region question, so no Topography entry. */
-      if (!['Referral', 'Organ system'].every((l) => labels.includes(l))) bad.push(label + ': the trail does not show the referral and the site: ' + labels.join(', '));
+      /* An organ with one code records it without a region question, so no Topography entry. */
+      if (!['Referral', 'Site of origin'].every((l) => labels.includes(l))) bad.push(label + ': the trail does not show the referral and the site: ' + labels.join(', '));
       /* Back to the site, and a different one. */
-      const ti = labels.lastIndexOf('Organ system');
+      const ti = labels.lastIndexOf('Site of origin');
       await tap('rewind', ti);
-      if (!(ctx.state.stage === 'site' && ctx.state.recordGroup === to && ctx.state.captured.topography === undefined)) { bad.push(label + ': stepping back to the organ system gave stage ' + ctx.state.stage + ', record group ' + ctx.state.recordGroup); continue; }
+      if (!(ctx.state.stage === 'site_system' && ctx.state.recordGroup === to && ctx.state.captured.topography === undefined)) { bad.push(label + ': stepping back to the body system gave stage ' + ctx.state.stage + ', record group ' + ctx.state.recordGroup); continue; }
       const other = selectable.find((x) => x !== code && ctx.systemRows().some((row) => row.codes.includes(x)));
       await pickSiteUx(other);
       if (!(ctx.state.group === to && ['node', 'handoff'].includes(ctx.state.stage) && ctx.state.captured.topography === other)) bad.push(label + ': a second site gave stage ' + ctx.state.stage + ', topography ' + ctx.state.captured.topography);
@@ -1554,7 +1588,7 @@ async function uxScenarios(ctx) {
         const before = ctx.systemRows().length;
         await tap('opt', i4); await tap('hop');
         t('after a recapture hop the primary\'s site is asked from every organ system, not only those the opening presentation fixed',
-          !!blood && before < topo.coarse_organ_crosswalk.length && ctx.state.stage === 'site' && ctx.systemRows().length === topo.coarse_organ_crosswalk.length,
+          !!blood && before < topo.coarse_organ_crosswalk.length && ctx.state.stage === 'site_system' && ctx.systemRows().length === topo.coarse_organ_crosswalk.length,
           'system rows ' + before + ' then ' + ctx.systemRows().length + ' of ' + topo.coarse_organ_crosswalk.length);
       }
       /* A recapture referral to a group that is not built hides the deposit's site and offers no hop, and a
@@ -1877,6 +1911,99 @@ async function uxScenarios(ctx) {
     t('a retinocytomatous area inside a tumour with a poorer grade or severe anaplasia records Retinoblastoma, undifferentiated 9512/3', g3 === '9512/3', g3);
     t('a retinocytomatous area with a stated diffuse infiltrating pattern records Retinoblastoma, diffuse 9513/3', dif === '9513/3', dif);
     t('a retinocytomatous area with nothing poorer stated still records Retinoblastoma, differentiated 9511/3', low === '9511/3', low);
+  }
+
+  /* Guided entry: presentation wording, body system, organ, and the marrow-aspirate question
+     (registrar, 13 October 2026; spec 2026-10-13-guided-entry-site-flow-design.md). Driven through
+     the handlers the buttons call, on the real router and crosswalk. */
+  {
+    const WORDS = {
+      blood_marrow: 'Pale, bruising or bleeding, repeated infections or bone pain, with an abnormal blood count',
+      solid_mass: 'A lump, mass or swelling',
+      lymphadenopathy: 'Enlarged lymph nodes',
+      organ_functional_sign: 'A symptom from an organ, such as a white pupil, a bulging eye, blood in the urine, jaundice or signs of raised pressure in the head',
+      cutaneous_mucosal_lesion: 'A lesion, sore or growth on the skin or on a mucous surface',
+      incidental_imaging_finding: 'An abnormal mass found by chance on a scan or X-ray',
+      unsure: 'More than one of these, or not sure',
+    };
+    const wrongWords = router.archetypes.filter((a) => a.label !== WORDS[a.archetype_id]).map((a) => a.archetype_id);
+    t('the seven presentations are worded as the registrar ruled', router.archetypes.length === 7 && wrongWords.length === 0, 'wrong: ' + wrongWords.join(', '));
+
+    const start = async (id) => {
+      ctx.reset(); Object.assign(ctx.state, { router, topography: topo, aliasIndex: {} });
+      await tap('guided', 0); await tap('archetype', router.archetypes.findIndex((a) => a.archetype_id === id));
+    };
+    const toSite = async (systemId, organId, code) => {
+      if (ctx.state.stage === 'site_system') await tap('site_system', ctx.siteSystems().findIndex((x) => x.system.system_id === systemId));
+      if (ctx.state.stage === 'site') await tap('site', ctx.organRows().findIndex((r) => r.organ === organId));
+      if (ctx.state.stage === 'site_region') await tap('site_region', ctx.regionOptions(ctx.state.organSystem).findIndex((o) => o.topography === code));
+    };
+    const answer = async (value) => { const d = ctx.discriminator(); await tap('discriminator', d.options.findIndex((o) => o.value === value)); };
+    const labelsOf = () => ctx.state.trail.map((x) => x.label);
+    const cands = () => JSON.stringify((ctx.state.candidates || []).slice().sort((a, b) => a - b));
+
+    /* A blood presentation fixes the system and the organ: the clerk sees only the region screen,
+       and the marrow question is answered by the site. */
+    await start('blood_marrow');
+    t('a blood presentation skips the system and organ screens and asks the region, in its own words',
+      ctx.state.stage === 'site_region' && /Which of these does the disease arise in\?/.test(rend(() => ctx.renderSiteRegion())) &&
+      labelsOf().join() === 'Presentation', ctx.state.stage + ' ' + labelsOf().join());
+    await toSite('blood_haematopoietic', 'blood_marrow_haematopoietic', 'C42.1');
+    t('the bone marrow answers the marrow question: no question is shown and nothing about it is on the trail',
+      ctx.state.captured.primary_compartment === 'marrow' && ctx.state.group === 1 && !labelsOf().includes('Marrow blasts') &&
+      !labelsOf().includes('Site of origin') && !labelsOf().includes('Organ'), ctx.state.stage + ' ' + labelsOf().join() + ' ' + ctx.state.captured.primary_compartment);
+    await start('blood_marrow'); await toSite(null, null, 'C42.2');
+    t('the spleen is the one blood site that is asked the marrow question', ctx.state.stage === 'discriminator' &&
+      /How many blasts does the marrow aspirate show\?/.test(rend(() => ctx.renderDiscriminator())), ctx.state.stage);
+
+    /* A leukaemia that presents in a lymph node is still Group I. */
+    await start('lymphadenopathy');
+    const sysScreen = rend(() => ctx.renderSiteSystem());
+    t('the system screen lists every system once, with the lymph nodes among them', ctx.state.stage === 'site_system' &&
+      (sysScreen.match(/data-act="site_system"/g) || []).length === router.site_systems.length && /Lymph nodes/.test(sysScreen), ctx.state.stage);
+    await toSite('lymph_nodes', 'lymph_node', 'C77.0');
+    t('a system holding one organ skips the organ screen, and the region of the node is asked', ctx.state.stage === 'discriminator' && labelsOf().join() === 'Presentation,Site of origin,Topography',
+      ctx.state.stage + ' ' + labelsOf().join());
+    const q = rend(() => ctx.renderDiscriminator());
+    t('the marrow question reads as the registrar worded it, with its three answers', /How many blasts does the marrow aspirate show\?/.test(q) &&
+      /More than 25% blasts/.test(q) && /25% or less/.test(q) && /No marrow aspirate yet/.test(q) && /points to leukaemia/.test(q), q.slice(0, 400));
+    await answer('marrow');
+    t('more than 25% blasts keeps Group I for a node that is the site, and drops Group II', JSON.parse(cands()).includes(1) && !JSON.parse(cands()).includes(2), cands());
+    t('the trail shows the answer in words, never the stored value', labelsOf().join() === 'Presentation,Site of origin,Topography,Marrow blasts' &&
+      ctx.state.trail.every((x) => x.value !== 'marrow') && ctx.state.trail.slice(-1)[0].value === 'More than 25% blasts', JSON.stringify(ctx.state.trail.map((x) => x.label + ': ' + x.value)));
+    await tap('rewind', labelsOf().indexOf('Site of origin'));
+    t('stepping back to the site of origin shows the system screen with the earlier answers gone', ctx.state.stage === 'site_system' &&
+      ctx.state.captured.primary_compartment === undefined && ctx.state.system === null && labelsOf().join() === 'Presentation' && cands() === JSON.stringify([1, 2, 9]), ctx.state.stage + ' ' + cands());
+    await start('lymphadenopathy'); await toSite('lymph_nodes', 'lymph_node', 'C77.0'); await answer('not_marrow');
+    t('25% or less sends a lymph node to the lymphomas: Group I is dropped', !JSON.parse(cands()).includes(1) && JSON.parse(cands()).includes(2), cands());
+    await start('lymphadenopathy'); await toSite('lymph_nodes', 'lymph_node', 'C77.0'); await answer('not_known');
+    t('no marrow aspirate yet drops nothing: both Groups I and II stay on offer', JSON.parse(cands()).includes(1) && JSON.parse(cands()).includes(2), cands());
+
+    /* The question is asked only where it can change the family. */
+    await start('unsure'); await toSite('urinary', 'kidney', 'C64.9');
+    t('a kidney tumour is never asked the marrow question', ctx.state.stage !== 'discriminator' && ctx.state.captured.primary_compartment === undefined &&
+      !labelsOf().includes('Marrow blasts'), ctx.state.stage + ' ' + labelsOf().join());
+    await start('unsure'); await toSite('endocrine', 'thyroid', 'C73.9');
+    t('a thyroid under "not sure" is asked, because Group I and Group II are both still possible', ctx.state.stage === 'discriminator', ctx.state.stage);
+    await start('solid_mass'); await tap('discriminator', 0); await toSite('soft_tissue', 'soft_tissue_connective', 'C49.2');
+    t('a presentation that cannot be a leukaemia is never asked it', !labelsOf().includes('Marrow blasts') && ctx.state.captured.primary_compartment === undefined, labelsOf().join());
+
+    /* A system answers to the names of the organs and regions inside it. */
+    const headRow = [...rend(() => (ctx.reset(), Object.assign(ctx.state, { router, topography: topo, archetype: router.archetypes[1] }), ctx.renderSiteSystem()))
+      .matchAll(/data-find="([^"]*)"[^>]*data-act="site_system"/g)].map((m) => m[1]);
+    t('typing parotid finds a system, because the parotid gland is inside it', headRow.some((f) => /parotid gland/.test(f)), headRow.length + ' rows');
+
+    /* The group a code is output under, now that the question decides in one place. */
+    const rg = (code, topo2, vars, group) => { ctx.reset(); Object.assign(ctx.state, { router, topography: topo, group, captured: Object.assign({ topography: topo2 }, vars) }); return ctx.resolveGroup(code, topo2); };
+    const gm = rg('9811', 'C77.0', { primary_compartment: 'marrow' }, 1), gn = rg('9811', 'C77.0', { primary_compartment: 'not_marrow' }, 2);
+    t('more than 25% blasts routes 9811 to Group I and 25% or less to Group II', gm.group === 1 && gn.group === 2, JSON.stringify([gm, gn]));
+    const gb = rg('9811', 'C77.0', { primary_compartment: 'not_marrow', marrow_blast_percentage: 60 }, 2);
+    t('a blast percentage typed later in the tree does not overrule the answer given at the question', gb.group === 2, JSON.stringify(gb));
+    const g1 = rg('9811', 'C77.0', { primary_compartment: 'not_known' }, 1), g2 = rg('9811', 'C77.0', { primary_compartment: 'not_known' }, 2);
+    t('no marrow aspirate yet keeps the group the clerk chose and says the group is provisional', g1.group === 1 && g2.group === 2 &&
+      /provisional/.test(g1.note || '') && /no marrow aspirate/.test(g1.note || ''), JSON.stringify([g1, g2]));
+    t('all three rules that read the question answer each of its three answers', ['9811', '9823', '9827'].every((code) =>
+      ['marrow', 'not_marrow', 'not_known'].every((v) => rg(code, 'C77.0', { primary_compartment: v }, 1) !== null)), 'a rule has no branch for an answer');
   }
   return rows;
 }

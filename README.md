@@ -299,3 +299,20 @@ every organ system needs a clerk-facing label, and every discriminator needs a c
 question, hint and option labels. The discriminator screen used to print `settles` — "Group
 VIII vs Group IX split for 9260 (Ewing sarcoma family). See dual_group_rules." — at the
 abstractor.
+
+**Guided entry, 13 October 2026** (`docs/superpowers/specs/2026-10-13-guided-entry-site-flow-design.md`).
+The stage is now **presentation → body system → organ → region → family**. Fifteen body systems
+(`site_systems` in the router, taken from the ICD-O site blocks) sit above the organ list, so a
+clerk with a mass chooses among about fifteen systems and then a few organs instead of one flat
+list of 48. A screen that offers one answer is not shown: a blood presentation goes straight to
+the region, and a system holding one organ skips the organ screen. The presentations are worded
+as symptoms and findings in plain language.
+
+The old "where is the disease centred?" question is replaced by **"How many blasts does the
+marrow aspirate show?"** (more than 25%, 25% or less, no aspirate yet). It is asked after the
+site, and only when Group I and Group II are both still possible, so a leukaemia that presents in
+a lymph node stays in Group I. The bone marrow, blood, reticuloendothelial system and
+haematopoietic system answer it without a question. The 25% figure is the Murphy staging
+convention (Rosolen et al., *J Clin Oncol* 2015;33:2112, Table 1 footnote); WHO 5th edition and
+ICC give no percentage, and the router's separate blast-percentage branch is removed.
+
