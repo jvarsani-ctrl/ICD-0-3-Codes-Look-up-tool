@@ -1074,7 +1074,10 @@ async function uxScenarios(ctx) {
     t('picker: the screen offers the whole panel to add from, no result buttons and no "not done"',
       countButtons(hp, 'pickadd') === 4 && countButtons(hp, 'markerset') === 0 && !/not done|not read/i.test(hp.replace(/A marker you do not add is treated as not done\./, '')),
       'pickadd ' + countButtons(hp, 'pickadd') + ', markerset ' + countButtons(hp, 'markerset'));
+    t('picker: the markers are a dropdown that opens from the search box, not a list standing open on the screen',
+      /<div class="optbox optbox--dropdown">/.test(hp) && /placeholder="Search or choose a marker"/.test(hp), hp.slice(0, 240));
     await tap('pickadd', 0);
+    t('picker: choosing a marker moves the focus to that marker\'s results, which closes the dropdown', /data-act="markerset"\]\[data-m="A"\]/.test(ctx.state.focusNext || ''), 'focusNext ' + ctx.state.focusNext);
     hp = screenP();
     t('picker: an added marker gets a row with its results and leaves the list; strength is offered only where a rule grades it',
       countButtons(hp, 'pickadd') === 3 && /aria-label="A: Positive"/.test(hp) && /aria-label="A: Strongly positive"/.test(hp) &&
@@ -2184,6 +2187,65 @@ async function uxScenarios(ctx) {
       /provisional/.test(g1.note || '') && /no marrow aspirate/.test(g1.note || ''), JSON.stringify([g1, g2]));
     t('all three rules that read the question answer each of its three answers', ['9811', '9823', '9827'].every((code) =>
       ['marrow', 'not_marrow', 'not_known'].every((v) => rg(code, 'C77.0', { primary_compartment: v }, 1) !== null)), 'a rule has no branch for an answer');
+  }
+
+  {
+    /* A marrow report with a genetic test and no flow cytometry or IHC (registrar, 13 October 2026, found by running
+       an aspirate with PCR through the page). The gate used to send it down the morphology-only route, which never
+       asks the genetic result, so a BCR::ABL1-positive case could not be coded. The route now asks it, and a finding
+       the file cannot place stays an annotation at the lineage the smear supports. */
+    const dt1 = dts.get(1), TREE = 'tree_acute_leukemia';
+    const ALL = ['referral', 'marrow_aspirate', 'trephine', 'flow', 'ihc', 'karyotype', 'fish', 'pcr', 'sequencing'];
+    const gate = async (ids) => {
+      begin(dt1, TREE, 'ac_document_inventory', 'C42.1');
+      await tickSet(ALL, new Set(ids)); await tap('tick-continue');
+      return ctx.state.nodeId;
+    };
+    const pickBy = async (nodeId, head) => {
+      const n = ctx.findNode(nodeId), i = n.options.findIndex((o) => (o.label || '').startsWith(head));
+      if (i < 0) { thrown = 'no option "' + head + '" at ' + nodeId; return; }
+      await tap('opt', i);
+    };
+    const codeNow = () => { const e = ctx.state.result && ctx.state.result.entry; return e ? e.morphology_code : 'none (stage ' + ctx.state.stage + ', node ' + ctx.state.nodeId + ')'; };
+    const where = [['marrow_aspirate', 'pcr'], ['trephine', 'sequencing'], ['marrow_aspirate', 'trephine', 'fish'], ['marrow_aspirate', 'karyotype']];
+    const routed = []; for (const ids of where) routed.push(await gate(ids));
+    t('a marrow report with a genetic test and no flow or IHC goes to the genetics question, whichever marrow test and genetic test it is',
+      routed.every((x) => x === 'ac_morph_genetics_context'), JSON.stringify(routed));
+    t('a marrow report alone still goes to the morphology question, and with flow it still goes to prior therapy',
+      (await gate(['marrow_aspirate'])) === 'ac_morphology_only' && (await gate(['marrow_aspirate', 'pcr', 'flow'])) === 'ac_prior_therapy_gate', 'the other routes moved');
+    await gate(['marrow_aspirate', 'pcr']); await pickBy('ac_morph_genetics_context', 'BCR::ABL1 positive');
+    const afterGen = ctx.state.nodeId;
+    await pickBy('ac_morphology_only', 'Lymphoid blasts');
+    const up = JSON.stringify(ctx.state.result && ctx.state.result.upgrade || '');
+    t('lymphoid blasts with BCR::ABL1 positive and no flow or IHC stay at 9835 with the finding recorded, and the upgrade names what 9812, 9806 and 9875 need',
+      afterGen === 'ac_morphology_only' && codeNow() === '9835' && /BCR::ABL1 positive/.test(ctx.state.captured.genotype_annotation || '') &&
+      /9812/.test(up) && /9806/.test(up) && /9875/.test(up), 'after genetics ' + afterGen + ', code ' + codeNow() + ', annotation ' + ctx.state.captured.genotype_annotation + ', upgrade ' + up.slice(0, 160));
+    t('a lineage-level code reached without flow cytometry lists flow cytometry as outstanding, and does not read "complete"',
+      (ctx.state.workup || []).some((w) => w.test === 'Flow cytometry') && !/Complete — no outstanding tests/.test(rend(() => ctx.renderWorkup())), JSON.stringify(ctx.state.workup));
+    await gate(['marrow_aspirate', 'pcr']); await pickBy('ac_morph_genetics_context', 'BCR::ABL1 positive'); await pickBy('ac_morphology_only', 'Myeloid blasts');
+    const upM = JSON.stringify(ctx.state.result && ctx.state.result.upgrade || '');
+    t('myeloid blasts with BCR::ABL1 positive and no flow or IHC stay at 9861, and the upgrade names 9912 and 9875', codeNow() === '9861' && /9912/.test(upM) && /9875/.test(upM), codeNow() + ' ' + upM.slice(0, 160));
+    /* APL: the PML::RARA question settles the code itself. The free-text box that followed it decided nothing and is gone. */
+    const apl = async (head) => { begin(dt1, TREE, 'ac_apl_status', 'C42.1'); await pickBy('ac_apl_status', head); return codeNow(); };
+    const aPos = await apl('PML::RARA POSITIVE'), aNpm = await apl('PML::RARA NEGATIVE — NPM1 mutation found'), aNone = await apl('PML::RARA not tested');
+    t('the PML::RARA question settles the code itself and no free-text box follows it: positive 9866, NPM1 mutated 9877, not tested 9861',
+      aPos === '9866' && aNpm === '9877' && aNone === '9861' && !ctx.findNode('ac_apl_confirm'), [aPos, aNpm, aNone, !!ctx.findNode('ac_apl_confirm')].join(' '));
+    await apl('PML::RARA NEGATIVE — NPM1 wild-type');
+    t('PML::RARA negative with NPM1 wild-type returns to the AML genetics ladder', ctx.state.nodeId === 'ac_aml_genetics_upgrade', ctx.state.nodeId);
+    /* PML::RARA not tested, reached from the lineage rules, must not close at AML NOS: a BCR::ABL1 result given earlier would be
+       thrown away (registrar, 13 October 2026). It goes on to the AML genetics ladder. The closing question stays for the two routes
+       with no earlier genetics to honour: the morphology-only route and the ladder's own "APL-like phenotype" option, which would
+       otherwise loop. */
+    begin(dt1, TREE, 'ac_apl_status_lineage', 'C42.1'); await pickBy('ac_apl_status_lineage', 'PML::RARA not tested');
+    const fromLineage = ctx.state.nodeId;
+    const closing = await apl('PML::RARA not tested');
+    begin(dt1, TREE, 'ac_lineage_assignment', 'C42.1');
+    for (const m of ['cMPO', 'CD33']) { const i = ctx.pickerAvailable(ctx.node()).indexOf(m); await tap('pickadd', i); await mset(m, 'pos'); }
+    await tap('resolve');
+    const ladderApl = (ctx.findNode('ac_aml_genetics_upgrade').options || []).filter((o) => o.next_node === 'ac_apl_status').length;
+    t('PML::RARA not tested after the lineage rules goes on to the AML genetics ladder; the ladder\'s APL-like option still closes at 9861 and cannot loop',
+      fromLineage === 'ac_aml_genetics_upgrade' && closing === '9861' && ctx.state.nodeId === 'ac_apl_status_lineage' && ladderApl === 1,
+      'from lineage ' + fromLineage + ', closing ' + closing + ', after markers ' + ctx.state.nodeId + ', ladder options to the closing question ' + ladderApl);
   }
   return rows;
 }

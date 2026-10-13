@@ -601,10 +601,10 @@ function findMatch(haystack, typed) {
 function findText(it) {
   return foldText([it.label, it.meta, it.find].filter(Boolean).join(' '));
 }
-function filterBox(key) {
+function filterBox(key, placeholder) {
   return '<label class="field optbox__find"><span class="visually-hidden">Filter the options below</span>' +
     '<input type="search" data-act="filter" data-key="' + esc(key) + '" value="' + esc(state.draft['f:' + key] || '') +
-    '" placeholder="Type to filter the options" autocomplete="off"></label>';
+    '" placeholder="' + esc(placeholder || 'Type to filter the options') + '" autocomplete="off"></label>';
 }
 /* The count a screen reader hears after each keystroke in a filter box. */
 function shownText(n) { return n === 1 ? '1 option shown' : n + ' options shown'; }
@@ -659,7 +659,9 @@ function pick(act, items, o) {
       (it.alert ? '<span class="opt__alert"><b>Clinical alert</b> ' + rich(it.alert) + '</span>' : '') +
       '</span></button>';
   }).join('');
-  return '<div class="optbox">' + (withBox ? filterBox(key) : '') + '<div class="opts" role="group" aria-labelledby="node-q">' + rows + '</div>' +
+  /* `o.dropdown`: the list opens from its search box and closes when the clerk picks (style only: the
+     list is hidden unless the box or a row has the focus, and a pick redraws the screen). */
+  return '<div class="optbox' + (o.dropdown ? ' optbox--dropdown' : '') + '">' + (withBox ? filterBox(key, o.placeholder) : '') + '<div class="opts" role="group" aria-labelledby="node-q">' + rows + '</div>' +
     (withBox ? noneLine(shown) : '') + '</div>';
 }
 function noneLine(shown) {
@@ -1758,7 +1760,7 @@ function markerPicker(n) {
   var avail = pickerAvailable(n);
   if (avail.length) {
     h += '<div class="tag">' + (added.length ? 'Add another marker' : 'Search for a marker') + '</div>' +
-      pick('pickadd', avail.map(function (m) { return { label: m }; }), { key: 'pickadd', filter: true });
+      pick('pickadd', avail.map(function (m) { return { label: m }; }), { key: 'pickadd', filter: true, dropdown: true, placeholder: 'Search or choose a marker' });
   }
   var open = added.filter(function (m) { return state.markers[m] === undefined; });
   h += '<div class="actions"><button class="btn" data-act="resolve"' + (open.length ? ' disabled' : '') + '>Continue</button></div>';
@@ -3193,6 +3195,9 @@ function handleOption(act, el) {
       if (!pm) return;
       state.draft.added = pickerAdded(n).concat([pm]);
       state.draft['f:pickadd'] = '';
+      /* Focus goes to the new row's results, which closes the dropdown (it is open only while the box
+         or one of its rows has the focus) and lets the clerk answer from the keyboard at once. */
+      state.focusNext = '.pickrow [data-act="markerset"][data-m="' + String(pm).replace(/"/g, '\\"') + '"]';
       return;
     }
     case 'pickremove': {

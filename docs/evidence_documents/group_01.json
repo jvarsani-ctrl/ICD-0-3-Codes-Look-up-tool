@@ -31,14 +31,59 @@
           ],
           "excludes": [
             "flow",
-            "ihc"
+            "ihc",
+            "karyotype",
+            "fish",
+            "pcr",
+            "sequencing"
           ],
-          "rationale": "Morphology and neither flow cytometry nor IHC. Gene tests ticked here are credited as evidence but do not move the route: the next node is the morphology-only question, which asks about the marrow report.",
+          "rationale": "Morphology and none of flow cytometry, IHC or a genetic test. A genetic test ticked with the morphology takes one of the next two tiers, so its result is asked.",
           "confidence": "medium",
           "label_head": "Marrow aspirate, blood film or trephine morphology only — no flow cyto"
         },
         {
           "index": 2,
+          "kind": "tier",
+          "requires": [
+            "marrow_aspirate"
+          ],
+          "any_of": [
+            "karyotype",
+            "fish",
+            "pcr",
+            "sequencing"
+          ],
+          "excludes": [
+            "flow",
+            "ihc"
+          ],
+          "rationale": "A marrow aspirate or blood film and at least one genetic test, with no flow cytometry or IHC. The genetic result is asked, then the marrow report, so a finding such as BCR::ABL1 is recorded and the code stays at the lineage the smear supports.",
+          "confidence": "medium",
+          "label_head": "Marrow aspirate or blood film and a genetic test — no flow cytometry, "
+        },
+        {
+          "index": 3,
+          "kind": "tier",
+          "requires": [
+            "trephine"
+          ],
+          "any_of": [
+            "karyotype",
+            "fish",
+            "pcr",
+            "sequencing"
+          ],
+          "excludes": [
+            "marrow_aspirate",
+            "flow",
+            "ihc"
+          ],
+          "rationale": "The same with a trephine and no aspirate or blood film. Exclusive of the tier above, so a file never fits both.",
+          "confidence": "medium",
+          "label_head": "Trephine biopsy and a genetic test — no flow cytometry, no IHC"
+        },
+        {
+          "index": 4,
           "kind": "tier",
           "requires": [
             "flow"
@@ -53,7 +98,7 @@
           "label_head": "Morphology and flow cytometry"
         },
         {
-          "index": 3,
+          "index": 5,
           "kind": "tier",
           "requires": [
             "ihc"
@@ -70,7 +115,7 @@
           "label_head": "Morphology and IHC, no flow cytometry"
         },
         {
-          "index": 4,
+          "index": 6,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -80,7 +125,7 @@
           "label_head": "Trisomy 21 (Down syndrome) confirmed or suspected — neonatal or infant"
         },
         {
-          "index": 5,
+          "index": 7,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -90,7 +135,7 @@
           "label_head": "Extramedullary mass with a myeloid phenotype (myeloid sarcoma / chloro"
         },
         {
-          "index": 6,
+          "index": 8,
           "kind": "context",
           "requires": [],
           "any_of": [],

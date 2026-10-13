@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 80,
-    "total_decision_nodes": 97,
+    "total_decision_nodes": 98,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -2570,10 +2570,53 @@
                 ],
                 "excludes": [
                   "flow",
-                  "ihc"
+                  "ihc",
+                  "karyotype",
+                  "fish",
+                  "pcr",
+                  "sequencing"
                 ]
               },
               "next_node": "ac_morphology_only"
+            },
+            {
+              "label": "Marrow aspirate or blood film and a genetic test — no flow cytometry, no IHC",
+              "ticks": {
+                "requires": [
+                  "marrow_aspirate"
+                ],
+                "any_of": [
+                  "karyotype",
+                  "fish",
+                  "pcr",
+                  "sequencing"
+                ],
+                "excludes": [
+                  "flow",
+                  "ihc"
+                ]
+              },
+              "next_node": "ac_morph_genetics_context"
+            },
+            {
+              "label": "Trephine biopsy and a genetic test — no flow cytometry, no IHC",
+              "ticks": {
+                "requires": [
+                  "trephine"
+                ],
+                "any_of": [
+                  "karyotype",
+                  "fish",
+                  "pcr",
+                  "sequencing"
+                ],
+                "excludes": [
+                  "marrow_aspirate",
+                  "flow",
+                  "ihc"
+                ]
+              },
+              "next_node": "ac_morph_genetics_context"
             },
             {
               "label": "Morphology and flow cytometry",
@@ -2702,7 +2745,10 @@
               "label": "Lymphoid blasts — MPO / Sudan black negative on cytochemistry",
               "morphology_code": "9835",
               "confidence": "medium",
-              "upgrade_path": "Flow cytometry (CD19/CD10/TdT vs cCD3/CD7) would separate B-ALL (9811) from T-ALL (9837).",
+              "upgrade_path": "Flow cytometry (CD19/CD10/TdT vs cCD3/CD7) would separate B-ALL (9811) from T-ALL (9837). If a BCR::ABL1 result is on file, flow cytometry or IHC (to settle B or T lineage) and any history of a chronic phase are needed before 9812 (B-ALL), 9806 (mixed phenotype) or 9875 (chronic myeloid leukaemia in lymphoid blast phase).",
+              "outstanding_tests": [
+                "Flow cytometry"
+              ],
               "captures": {
                 "workup_status": "incomplete"
               }
@@ -2711,7 +2757,10 @@
               "label": "Myeloid blasts — Auer rods and/or MPO / Sudan black positive cytochemistry",
               "morphology_code": "9861",
               "confidence": "medium",
-              "upgrade_path": "Flow cytometry and cytogenetics/FISH would subtype the AML (9865–9912).",
+              "upgrade_path": "Flow cytometry and cytogenetics/FISH would subtype the AML (9865–9912). If a BCR::ABL1 result is on file, the blast count and any history of a chronic phase are needed before 9912 (AML with BCR::ABL1) or 9875 (chronic myeloid leukaemia in blast phase).",
+              "outstanding_tests": [
+                "Flow cytometry"
+              ],
               "captures": {
                 "workup_status": "incomplete"
               }
@@ -2729,6 +2778,9 @@
               "morphology_code": "9801",
               "confidence": "low",
               "upgrade_path": "Flow cytometry would establish lineage. Cytogenetics/FISH would subtype it.",
+              "outstanding_tests": [
+                "Flow cytometry"
+              ],
               "coding_note": "9801 in its NOS sense — lineage not established, workup incomplete. Not a positive AUL diagnosis.",
               "captures": {
                 "workup_status": "incomplete",
@@ -2882,6 +2934,100 @@
                 "kmt2a_status": "negative",
                 "cryptic_genetics_tested": "FISH performed",
                 "karyotype_result_status": "received"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ac_morph_genetics_context",
+          "node_type": "document_inventory",
+          "step_number": 2,
+          "step_label": "Genetics",
+          "question": "What does the genetic test report show?",
+          "hint": "No flow cytometry or IHC was done, so the lineage cannot be assigned from the file. The genetic result is recorded, and the code stays at the lineage the marrow report supports.",
+          "clinical_alert": null,
+          "options": [
+            {
+              "label": "A genetic test is in the file: no defining abnormality found (for example BCR::ABL1 negative)",
+              "next_node": "ac_morphology_only",
+              "captures": {
+                "aml_defining_genetic_abnormality": false,
+                "bcr_abl1_status": "negative",
+                "kmt2a_status": "negative",
+                "mds_defining_cytogenetics": "absent",
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "Karyotype normal, and no FISH or RT-PCR in the file",
+              "next_node": "ac_morphology_only",
+              "coding_note": "A normal karyotype closes nothing. The cryptic set (ETV6::RUNX1, CBFA2T3::GLIS2, FIP1L1::PDGFRA, masked hypodiploidy) is invisible on karyotype.",
+              "captures": {
+                "aml_defining_genetic_abnormality": false,
+                "bcr_abl1_status": "not tested",
+                "kmt2a_status": "not tested",
+                "mds_defining_cytogenetics": "not tested",
+                "cryptic_genetics_tested": "karyotype only",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "BCR::ABL1 positive: t(9;22) on karyotype, or positive on FISH or RT-PCR",
+              "next_node": "ac_morphology_only",
+              "coding_note": "BCR::ABL1 does NOT override the blast threshold — AML-BCR::ABL1 still requires ≥20% (WHO-HAEM5) / ≥10% (ICC). Lineage assignment decides between 9812, 9806 and 9912.",
+              "captures": {
+                "aml_defining_genetic_abnormality": false,
+                "bcr_abl1_status": "positive",
+                "kmt2a_status": "negative",
+                "mds_defining_cytogenetics": "absent",
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "genotype_annotation": "BCR::ABL1 positive — lineage not established (no flow cytometry or IHC)"
+              }
+            },
+            {
+              "label": "KMT2A / 11q23 rearrangement positive",
+              "next_node": "ac_morphology_only",
+              "coding_note": "KMT2A-r is lineage-ambiguous — it does not by itself make the case AML. Lineage assignment decides between 9813 (B), 9897 (myeloid) and 9807 (MPAL).",
+              "captures": {
+                "aml_defining_genetic_abnormality": false,
+                "kmt2a_status": "positive",
+                "bcr_abl1_status": "negative",
+                "mds_defining_cytogenetics": "absent",
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "genotype_annotation": "KMT2A rearrangement positive — lineage not established (no flow cytometry or IHC)"
+              }
+            },
+            {
+              "label": "Other AML-defining abnormality — PML::RARA, RUNX1::RUNX1T1, CBFB::MYH11, DEK::NUP214, RBM15::MRTFA, MECOM-r, NUP98-r or NPM1-mutated",
+              "next_node": "ac_morphology_only",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "This set defines AML at any blast percentage (WHO-HAEM5). ICC applies a ≥10% floor instead.",
+              "captures": {
+                "aml_defining_genetic_abnormality": true,
+                "bcr_abl1_status": "negative",
+                "kmt2a_status": "negative",
+                "mds_defining_cytogenetics": "absent",
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "genotype_annotation": "AML-defining abnormality reported — lineage not established (no flow cytometry or IHC)"
+              }
+            },
+            {
+              "label": "MDS-related cytogenetics, a complex karyotype, or an MDS-related gene mutation (ASXL1, BCOR, EZH2, RUNX1, SF3B1, SRSF2, STAG2, U2AF1, ZRSR2)",
+              "next_node": "ac_morphology_only",
+              "coding_note": "AML-MR genetics or a complex karyotype EXCLUDE MPAL even with a biphenotypic immunophenotype — the case codes 9895 (Pathway §4.1).",
+              "captures": {
+                "aml_defining_genetic_abnormality": false,
+                "mds_defining_cytogenetics": "present",
+                "bcr_abl1_status": "negative",
+                "kmt2a_status": "negative",
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received",
+                "genotype_annotation": "MDS-related cytogenetics or gene mutation reported — lineage not established (no flow cytometry or IHC)"
               }
             }
           ],
@@ -3115,7 +3261,7 @@
                 "HLA-DR",
                 "CD34"
               ],
-              "next_node": "ac_apl_status",
+              "next_node": "ac_apl_status_lineage",
               "coding_note": "APL flow signature: HLA-DR−, CD34−, MPO bright, CD33 bright, high side scatter. Confirm PML::RARA before coding 9866."
             },
             {
@@ -3127,7 +3273,7 @@
                 "HLA-DR",
                 "CD34"
               ],
-              "next_node": "ac_apl_status",
+              "next_node": "ac_apl_status_lineage",
               "coding_note": "Microgranular variant (M3v) has lower side scatter and frequent CD2/CD34 — still 9866 once PML::RARA is confirmed."
             },
             {
@@ -4247,53 +4393,7 @@
           "options": [
             {
               "label": "PML::RARA POSITIVE — FISH, RT-PCR/RQ-PCR or anti-PML immunostain",
-              "next_node": "ac_apl_confirm",
               "captures": {
-                "pml_rara_status": "positive"
-              }
-            },
-            {
-              "label": "PML::RARA NEGATIVE — NPM1 mutation found (CD4 positive, low/normal side scatter, high WBC)",
-              "next_node": "ac_apl_confirm",
-              "captures": {
-                "pml_rara_status": "negative",
-                "npm1_status": "mutated",
-                "cd4_status": "positive",
-                "side_scatter_pattern": "low"
-              }
-            },
-            {
-              "label": "PML::RARA NEGATIVE — NPM1 wild-type or not tested",
-              "next_node": "ac_apl_confirm",
-              "captures": {
-                "pml_rara_status": "negative",
-                "npm1_status": "not tested"
-              }
-            },
-            {
-              "label": "PML::RARA not tested / result pending / unavailable",
-              "next_node": "ac_apl_confirm",
-              "coding_note": "APL cannot be coded on morphology and DIC alone. The case will close to 9861 with PML::RARA named as the upgrade.",
-              "captures": {
-                "pml_rara_status": "not tested",
-                "karyotype_result_status": "pending"
-              }
-            }
-          ],
-          "nos_fallback": null
-        },
-        {
-          "node_id": "ac_apl_confirm",
-          "node_type": "molecular_freetext",
-          "step_number": 5,
-          "step_label": "APL confirmation",
-          "question": "Record the PML::RARA result and the mimic parameters as reported.",
-          "capture_label": "PML::RARA result, isoform, CD4, side scatter and WBC as reported",
-          "clinical_alert": null,
-          "coding_note": "The APL mimic: NPM1-mutated AML is also CD33+/CD13+/cMPO+ with CD34− and HLA-DR−, but is CD4 positive with low-to-moderate side scatter and a high WBC. APL has high side scatter.",
-          "resolution_logic": [
-            {
-              "when": {
                 "pml_rara_status": "positive"
               },
               "morphology_code": "9866",
@@ -4301,40 +4401,88 @@
               "coding_note": "PML::RARA confirmed — 9866. Document the DIC screen and ATRA initiation."
             },
             {
-              "when": {
+              "label": "PML::RARA NEGATIVE — NPM1 mutation found (CD4 positive, low/normal side scatter, high WBC)",
+              "captures": {
                 "pml_rara_status": "negative",
-                "npm1_status": "mutated"
+                "npm1_status": "mutated",
+                "cd4_status": "positive",
+                "side_scatter_pattern": "low"
               },
               "morphology_code": "9877",
               "coding_note": "APL excluded, NPM1-mutated AML confirmed — 9877, the documented APL mimic (Pathway §3.6)."
             },
             {
-              "when": {
-                "pml_rara_status": "negative"
-              },
+              "label": "PML::RARA NEGATIVE — NPM1 wild-type or not tested",
               "next_node": "ac_aml_genetics_upgrade",
+              "captures": {
+                "pml_rara_status": "negative",
+                "npm1_status": "not tested"
+              },
               "coding_note": "APL excluded. Return to the AML genetics ladder for the correct entity."
             },
             {
+              "label": "PML::RARA not tested / result pending / unavailable",
+              "coding_note": "PML::RARA pending or not done. Presumptive APL is a treatment rule, not a coding rule — re-enter the tool when the result returns.",
+              "captures": {
+                "pml_rara_status": "not tested",
+                "karyotype_result_status": "pending"
+              },
               "morphology_code": "9861",
               "confidence": "medium",
-              "upgrade_path": "FISH, RT-PCR/RQ-PCR or anti-PML immunostaining for PML::RARA would confirm or exclude APL (9866). Until then this case must not be coded 9866.",
-              "coding_note": "PML::RARA pending or not done. Presumptive APL is a treatment rule, not a coding rule — re-enter the tool when the result returns."
+              "upgrade_path": "FISH, RT-PCR/RQ-PCR or anti-PML immunostaining for PML::RARA would confirm or exclude APL (9866). Until then this case must not be coded 9866."
             }
           ],
-          "captured_variables": [
-            "pml_rara_status",
-            "npm1_status",
-            "cd4_status",
-            "side_scatter_pattern",
-            "genotype_annotation",
-            "karyotype_result_status"
+          "nos_fallback": null
+        },
+        {
+          "node_id": "ac_apl_status_lineage",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "PML::RARA status",
+          "question": "Has PML::RARA been tested, and what did it show?",
+          "hint": "Presumptive ATRA on hypergranular promyelocytes plus coagulopathy is the right clinical call. It is not a coding decision.",
+          "clinical_alert": null,
+          "coding_note": "For coding purposes 9866 needs FISH, RT-PCR/RQ-PCR/RT-QLAMP or anti-PML immunostaining. Morphology plus DIC alone is not enough (Pathway §3.6).",
+          "options": [
+            {
+              "label": "PML::RARA POSITIVE — FISH, RT-PCR/RQ-PCR or anti-PML immunostain",
+              "captures": {
+                "pml_rara_status": "positive"
+              },
+              "morphology_code": "9866",
+              "classification_system": "WHO-HAEM5",
+              "coding_note": "PML::RARA confirmed — 9866. Document the DIC screen and ATRA initiation."
+            },
+            {
+              "label": "PML::RARA NEGATIVE — NPM1 mutation found (CD4 positive, low/normal side scatter, high WBC)",
+              "captures": {
+                "pml_rara_status": "negative",
+                "npm1_status": "mutated",
+                "cd4_status": "positive",
+                "side_scatter_pattern": "low"
+              },
+              "morphology_code": "9877",
+              "coding_note": "APL excluded, NPM1-mutated AML confirmed — 9877, the documented APL mimic (Pathway §3.6)."
+            },
+            {
+              "label": "PML::RARA NEGATIVE — NPM1 wild-type or not tested",
+              "next_node": "ac_aml_genetics_upgrade",
+              "captures": {
+                "pml_rara_status": "negative",
+                "npm1_status": "not tested"
+              },
+              "coding_note": "APL excluded. Return to the AML genetics ladder for the correct entity."
+            },
+            {
+              "label": "PML::RARA not tested / result pending / unavailable",
+              "coding_note": "APL is not confirmed or excluded here. The AML genetics ladder follows, so a finding already on file (BCR::ABL1, KMT2A-r, NPM1) is coded; an APL-like phenotype with PML::RARA pending closes there at 9861 with PML::RARA named as the upgrade.",
+              "captures": {
+                "pml_rara_status": "not tested"
+              },
+              "next_node": "ac_aml_genetics_upgrade"
+            }
           ],
-          "nos_fallback": {
-            "code": "9861",
-            "name": "Acute myeloid leukemia, NOS",
-            "reason": "APL suspected but PML::RARA neither confirmed nor excluded."
-          }
+          "nos_fallback": null
         },
         {
           "node_id": "ac_ds_context",
