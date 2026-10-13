@@ -34,7 +34,7 @@ Data only, in `data/shared/presentation_router.json` → `archetypes[].label`.
 | lymphadenopathy | Enlarged lymph nodes |
 | organ_functional_sign | A symptom from an organ, such as a white pupil, a bulging eye, blood in the urine, jaundice or signs of raised pressure in the head |
 | cutaneous_mucosal_lesion | A lesion, sore or growth on the skin or on a mucous surface |
-| incidental_imaging_finding | Found by chance on a scan or X-ray |
+| incidental_imaging_finding | An abnormal mass found by chance on a scan or X-ray |
 | unsure | More than one of these, or not sure |
 
 The old labels also appear in `README.md`, `docs/TODO.md`, `docs/validator_negative_controls.md`, `docs/group_10_registrar_review.md`, `docs/group_11_build_report.md` and `docs/group_11_evidence/cross_group_A.md`. The plan updates the ones that describe the live tool and leaves dated build reports alone.
@@ -128,4 +128,4 @@ The routing fact behind it is real. The dual-group rules for 9811–9819, 9823 a
 
 1. The trail headings in section 5.
 2. Whether the plan should add the ICD-O-3.2 topography-chapter check if a source file exists.
-3. **A third answer to the marrow question.** A clerk with swollen nodes often does not yet know the marrow result. "No" drops Group I, as the old nodal answer did, so an unknown marrow reads as a firm no. A third answer, "Not known yet", would drop nothing and leave the "which family?" question to decide. This goes beyond the yes/no design approved in conversation. It is a small data addition, and the registrar decides whether it belongs.
+3. **A third answer to the marrow question.** A clerk with swollen nodes often does not yet know the marrow result. "No" drops Group I, as the old nodal answer did, so an unknown marrow reads as a firm no. A third answer, "Not known yet", would drop nothing and leave the "which family?" question to decide. A blood count cannot stand in for the answer: no rule in the router or in any group's data uses one to choose between Groups I and II. The marrow rules read the marrow blast percentage. The one place a count separates the groups is inside a single code (chronic lymphocytic leukaemia against small lymphocytic lymphoma, 9823), not in this question. A clerk holding a count but no marrow result has no honest Yes or No. This goes beyond the yes/no design approved in conversation. It is a small data addition, and the registrar decides whether it belongs.
