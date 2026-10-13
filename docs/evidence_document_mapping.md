@@ -30,37 +30,52 @@ copy placed after it: same label, route and captures, rule "needs IHC Report, no
 from the tests it credits (an IHC report is not flow cytometry). The tier "morphology only" now also excludes IHC Report. The
 acute gate has three copies and the mature gate two; they are listed under `extra_options` in `docs/evidence_documents/group_01.json`.
 
-## Changed on 10 October 2026: Group I evidence gates say which test each option covers
+## Changed on 13 October 2026: Group I evidence gates are one box per test
 
-**Why.** The registrar tried to code a B-ALL with a negative BCR::ABL1 and could not choose an answer. The checklist did not say which tick covers a bone marrow aspirate (BMA) or a BCR::ABL1 test, the options named tiers instead of tests, and a result by PCR alone had no honest option. The tables under Group 1 below keep the 6 October wording; **this section is the current wording** for the four Group I gates.
+**Why.** The registrar tried to code a B-ALL with a negative BCR::ABL1 and could not choose an answer. The seven document boxes could not say which gene test was done, so the gate asked the clerk to choose between clustered tiers ("karyotype or FISH", "PCR or sequencing", "both"). The registrar's direction: no clusters, one box per test. Design in `docs/superpowers/specs/2026-10-13-haematology-test-ticks-design.md`.
 
-**What each tick covers.** Each Group I evidence gate now opens with this line above the boxes: *A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.* It answers the question the checklist could not: the registrar's screenshot shows Lab Report, Histology Report and Gene reports ticked, and the registrar asked which option covers a BMA, which the mapping reads as Cytology.
+**What changed.** The four Group I gates (`ac_`, `ml_`, `mpn_`, `mds_document_inventory`) now use the vocabulary `haematology_tests` in the router. The tables under Group 1 below keep the 6 October document boxes and wording; **this section is current for Group I.** Groups II to XI are unchanged.
 
-**The gene-test tier is split three ways.** One "Gene reports" tick cannot tell karyotype or FISH from PCR or sequencing, so the old ladder credited *karyotype or FISH* or *karyotype or FISH and PCR*, and nothing between. A file whose only gene test was a BCR::ABL1 RT-PCR had no true option: either choice recorded a test that was not done. Each gate now offers, when Gene reports is ticked, the options that fit:
+| Box | Credits as evidence |
+|---|---|
+| Referral / clinical note | Referral only |
+| Marrow aspirate or blood film | Histology |
+| Trephine biopsy | Histology |
+| Flow cytometry | Flow cytometry |
+| IHC | IHC |
+| Karyotype | Cytogenetics/FISH |
+| FISH | Cytogenetics/FISH |
+| PCR | Molecular/PCR |
+| Sequencing | Molecular/PCR |
 
-| Option | Credits | Gates |
+**The evidence recorded is exactly what was ticked.** The engine adds up the credits of the ticked boxes (`tickCredited()` in `app.js`). A tier's own list of evidence is no longer trusted, because a tier says more or less than the file holds: the old "karyotype or FISH" tier credited FISH to a file that had only a karyotype, and a PCR-only file had no tier it fitted. The tier's list is the fallback only when nothing ticked credits anything (the referral route on an empty checklist). Karyotype and FISH are separate boxes because only a karyotype sees hyperdiploidy, hypodiploidy and complex karyotypes. Marrow aspirate and trephine are separate because the MDS gate needs both.
+
+**The tiers are routing rules the clerk never sees.** The vocabulary sets `tiers_exclusive`, so no ticked set fits two tiers and the "pick the one that describes it" question cannot appear. The build enumerates every ticked set (512 per gate) and fails if one fits no tier, if one fits two, or if a tier can never be offered. Routes are the ones the gates already had:
+
+| Gate | Route | Rule |
 |---|---|---|
-| Karyotype or FISH **only** (including BCR::ABL1 FISH) | Cytogenetics/FISH | acute, mature lymphoid, MPN, MDS |
-| PCR or sequencing **only** (including BCR::ABL1 RT-PCR and NGS) | Molecular/PCR; karyotype recorded as not done | acute, mature lymphoid, MPN, MDS |
-| Karyotype or FISH **and** PCR or sequencing | both | acute, mature lymphoid, MPN, MDS |
+| all four | referral node | no aspirate and no trephine |
+| acute, mature lymphoid | morphology-only node | an aspirate or trephine, no flow cytometry, no IHC |
+| acute, mature lymphoid | next node of the tree | an aspirate or trephine, with flow; or with IHC and no flow |
+| MPN | morphology-only node | an aspirate or trephine, none of karyotype, FISH, PCR, sequencing |
+| MPN | prior-therapy node | an aspirate or trephine with a gene test (four exclusive cases) |
+| MDS | morphology-only node | morphology that is not aspirate + trephine + IHC (three exclusive cases) |
+| MDS | marrow-pattern node | aspirate, trephine and IHC |
 
-The second row is new in all four gates, and the first row is new in the mature lymphoid gate, whose single tier used to credit both tests whichever was done. All three rows go to the same next node. No clinical branch was added: the copies exist only so that the evidence recorded matches the file. They are generated from `docs/evidence_documents/group_01.json` (`extra_options`, with the new `label` and `captures_set` fields), and the build fails if the data and the mapping drift apart.
+**Behaviour that differs from 6 October, so none of it is a surprise.**
+1. A file with morphology and a gene test but no flow or IHC still goes to the morphology-only node, as before. The gene test is now credited on the way.
+2. The special situations (Trisomy 21, extramedullary mass, malignancy excluded) are unchanged. Their own assumed evidence is replaced by the ticks when anything is ticked.
+3. `karyotype_result_status` and `workup_status` are no longer set at the gate. Nothing reads either.
 
-**The other tier labels** now say what they cover: *Bone marrow aspirate (BMA), blood film or trephine morphology only*, and *Morphology + flow cytometry and/or IHC — no genetic tests*. The second one does not read genetic tests, because a Gene report is what moves a file up a tier.
+**The acute tree's genetics steps** are separate from the boxes and also changed. `ac_defining_genetics_context` offered only *BCR::ABL1 positive*, while the MPN and MDS trees already offered *BCR::ABL1 NEGATIVE*; its answers now say what they cover, including *…none of the abnormalities below were found (for example BCR::ABL1 negative)*. `ac_ball_cytogenetics` carried a clinical hazard: its only answer containing *negative* was *Karyotype normal AND FISH / RT-PCR negative for the cryptic set*, which routes to 9811 and prints *None — the cryptic set has been excluded*. A clerk holding only a BCR::ABL1 negative would take it, and the tool would claim ETV6::RUNX1 was excluded when nobody had tested for it. Pathway §4.4 gives the method as FISH or RT-PCR for ETV6::RUNX1; a BCR::ABL1 result says nothing about it. The answers and the two follow-up prompts now name ETV6::RUNX1 and say a BCR::ABL1 result alone does not count. No route changed.
 
-**The acute tree's genetics steps.** `ac_defining_genetics_context` offered only *BCR::ABL1 positive*, while the MPN and MDS trees already offered *BCR::ABL1 NEGATIVE*. Its answers now read *A genetics report is in the file and none of the abnormalities below were found (for example BCR::ABL1 negative)*, *Karyotype normal, and no FISH or RT-PCR in the file*, and *BCR::ABL1 positive: t(9;22) on karyotype, or positive on FISH or RT-PCR*.
+### Still open
 
-`ac_ball_cytogenetics` is the one that mattered clinically. Its only answer containing the word *negative* was *Karyotype normal AND FISH / RT-PCR negative for the cryptic set*, which routes to 9811 and prints *None — the cryptic set has been excluded*. A clerk holding only a BCR::ABL1 negative would take it, and the tool would then claim ETV6::RUNX1 was excluded when nobody had tested for it. Pathway §4.4 gives the method for ETV6::RUNX1 as FISH or RT-PCR, and a BCR::ABL1 result says nothing about it. The two answers now read *Karyotype normal, with no FISH or RT-PCR for ETV6::RUNX1 (a BCR::ABL1 result alone does not count)* and *Karyotype normal, and FISH or RT-PCR negative for ETV6::RUNX1*. The first goes to the existing FISH-status prompt, so a BCR::ABL1-only file reaches 9811 with ETV6::RUNX1 named as untested, and no route changed.
-
-**The second question** ("the reports ticked fit more than one description") is the router's `sibling_prompt` and is shared by every group. It read *More than one description fits what is in the file. Pick the one that describes it.* It now reads *The reports ticked fit more than one description. Pick the one that says what the reports contain.*
-
-### Still open from this review
-
-1. **The genetics step still offers "No … report in the file" after Gene reports was ticked**, and asks again what the checklist already answered. A clerk can contradict their own ticks. Hiding the option when Gene reports is ticked needs an engine rule, so it is the registrar's call.
-2. **Masked hypodiploidy is not asked on the clerk's path.** Pathway §4.4 and §3.1 name it as a second cryptic abnormality, needing SNP array or DNA index, and `ac_cryptic_unresolved` says so in its upgrade text. The *negative for ETV6::RUNX1* answer still closes to 9811 with *None* as the upgrade.
-3. **Groups II to XI have the same gate shape** (one Gene tick, labels that name tiers, no BCR::ABL1 or equivalent example). Each needs the same pass with its own tests named.
-4. **Other "cryptic" wording remains** in `ac_amkl_genetics`, `ac_amkl_cryptic_prompt` and `mpn_eos_cryptic_unresolved`. Those are different entities (AMKL fusions, PDGFRA) and were left alone.
-5. **The lineage-marker screen** is headed *What does the immunohistochemistry report say?* for markers that usually come from flow cytometry.
+1. **Karyotype and FISH credit one test, and PCR and sequencing credit one.** They are separate boxes on the case but credit the merged tests (61 lines in Group I). Splitting the list also means the upgrade text. It matters clinically: PCR cannot find an ASXL1 mutation and sequencing can.
+2. **The ticks answer questions the tool asks again.** The genetics step still offers *"No cytogenetics / FISH / molecular report in the file"* after a gene test was ticked, and later steps ask for FISH or RT-PCR results the clerk has just ticked. Nothing reads the ticks after the gate.
+3. **Masked hypodiploidy is not asked on the clerk's path.** Pathway §4.4 names it as a second cryptic abnormality (SNP array or DNA index), yet *negative for ETV6::RUNX1* closes to 9811 with *None* as the upgrade. This predates the change.
+4. **Groups II to XI** have the old shape and would each need their own vocabulary of tests.
+5. Other "cryptic" wording remains for AMKL and PDGFRA (different entities). The lineage-marker screen is headed *What does the immunohistochemistry report say?* for markers that usually come from flow cytometry.
 
 ## Group 1
 

@@ -958,6 +958,41 @@ async function uxScenarios(ctx) {
     t('a second gate in the same case opens with the documents already ticked', (prefilled.match(/data-act="tick" data-id="[a-z]+" checked/g) || []).length === 1 && /data-id="cytology" checked/.test(prefilled), 'not prefilled');
   }
 
+  /* ---- FIXTURE: a vocabulary with credits records exactly what was ticked ---------------
+     The tier below overclaims on purpose: its own evidence lists five tests. The engine must
+     record what the clerk ticked and nothing the tier assumed, and fall back to the tier's own
+     list only when nothing ticked credits anything. */
+  {
+    const fc = {
+      node_id: 'fc_gate', node_type: 'document_inventory', step_label: 'Evidence in file', question: 'q', hint: 'h',
+      tick_list: { variable: 'fc_ticks', resolve: 'ask_siblings', items: [
+        { id: 'smear', label: 'Smear', credits: ['Histology'] }, { id: 'trephine', label: 'Trephine', credits: ['Histology'] },
+        { id: 'flow', label: 'Flow', credits: ['Flow cytometry'] }, { id: 'pcr', label: 'PCR', credits: ['Molecular/PCR'] },
+        { id: 'note', label: 'Note', credits: ['Referral only'] }] },
+      nos_fallback: null,
+      options: [
+        { label: 'Smear and more', next_node: 'fc_more', ticks: { requires: ['smear'] },
+          captures: { evidence_tests: ['Histology', 'IHC', 'Flow cytometry', 'Cytogenetics/FISH', 'Molecular/PCR'] } },
+        { label: 'No smear', next_node: 'fc_ref', ticks: { excludes: ['smear'] }, captures: { evidence_tests: ['Referral only'] } },
+      ],
+    };
+    const fcDt = { morphology_entries: [], decision_trees: [{ tree_id: 'fc', entry_node: 'fc_gate', nodes: [fc, stub('fc_more'), stub('fc_ref')] }] };
+    const runFc = async (ticks) => { begin(fcDt, 'fc', 'fc_gate', 'C42.1'); ctx.state.draft.ticks = ticks.slice(); await tap('tick-continue'); return ctx.state; };
+    const ev = (st) => (st.captured.evidence_tests || []).join('|');
+    let sc = await runFc(['smear', 'pcr']);
+    t('credits: the evidence recorded is what was ticked, not the five tests the tier assumed',
+      sc.nodeId === 'fc_more' && ev(sc) === 'Histology|Molecular/PCR', 'went to ' + sc.nodeId + ' with ' + ev(sc));
+    sc = await runFc(['pcr', 'smear']);
+    t('credits: the order the boxes were ticked in does not change the evidence', ev(sc) === 'Histology|Molecular/PCR', ev(sc));
+    sc = await runFc(['smear', 'trephine']);
+    t('credits: two boxes that prove the same test credit it once', ev(sc) === 'Histology', ev(sc));
+    sc = await runFc([]);
+    t('credits: nothing ticked falls back to the tier\'s own evidence', sc.nodeId === 'fc_ref' && ev(sc) === 'Referral only', 'went to ' + sc.nodeId + ' with ' + ev(sc));
+    sc = await runFc(['flow']);
+    t('credits: a test ticked without a smear is still recorded, and replaces the tier\'s assumption',
+      sc.nodeId === 'fc_ref' && ev(sc) === 'Flow cytometry', 'went to ' + sc.nodeId + ' with ' + ev(sc));
+  }
+
   /* ---- FIXTURE: first_match, the mixed-tumour shape ---------------------- */
   const mixed = {
     node_id: 'fx_mixed', node_type: 'histology_subclassification', step_label: 'Components', question: 'Which components does the report list?', nos_fallback: null,

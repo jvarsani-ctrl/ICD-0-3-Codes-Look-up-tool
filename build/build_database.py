@@ -11917,6 +11917,10 @@ def check_lab_results(ctx: DTContext, vocabularies=None, repo=None):
 # ticked. `ticks: {}` fits every set.
 TICK_FIELDS = ("requires", "any_of", "excludes")
 TICK_RESOLVE_MODES = ("ask_siblings", "first_match")
+# The atomic tests a tick may credit: the closed diagnostic-test list, without the one tolerated
+# compound form. A credit outside it can never match a `diagnostic_tests_required` entry, so the
+# test would silently never be recorded as done.
+TICK_CREDIT_TESTS = DIAGNOSTIC_TESTS - {"IHC or flow cytometry"}
 TICK_MAX_ITEMS = 12          # 2^12 = 4096 ticked sets per node is the enumeration budget
 
 
@@ -12029,6 +12033,22 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             continue
         if any(not isinstance(i.get("label"), str) or not i["label"].strip() for i in items):
             out.append((FAIL, "node %s: every tick_list item needs a clerk-facing label" % node_id))
+        for it in items:
+            if "credits" not in it:
+                continue
+            cr = it["credits"]
+            if not isinstance(cr, list) or not cr or any(not isinstance(c, str) for c in cr):
+                out.append((FAIL, "node %s: tick item %r: `credits` must be a non-empty list of "
+                                  "test names" % (node_id, it.get("id"))))
+                continue
+            bad = [c for c in cr if c not in TICK_CREDIT_TESTS]
+            if bad:
+                out.append((FAIL, "node %s: tick item %r credits %s, which is not in the closed test "
+                                  "list (%s). A credit that matches no `diagnostic_tests_required` "
+                                  "entry is a test the tool silently never records as done."
+                            % (node_id, it.get("id"), bad, ", ".join(sorted(TICK_CREDIT_TESTS)))))
+        if "tiers_exclusive" in merged and not isinstance(merged["tiers_exclusive"], bool):
+            out.append((FAIL, "node %s: `tiers_exclusive` must be true or false" % node_id))
         if len(ids) > TICK_MAX_ITEMS:
             out.append((FAIL, "node %s: %d tick items; the build enumerates every ticked set and "
                               "stops at %d" % (node_id, len(ids), TICK_MAX_ITEMS)))
@@ -12096,6 +12116,7 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
         ever_fits = {i: False for i in tiers}
         first_fits = {i: False for i in tiers}
         dead = []
+        overlaps = []
         for mask in range(1 << n):
             ticked = frozenset(ids[b] for b in range(n) if mask >> b & 1)
             fitting = [i for i in tiers if _tick_fits(options[i]["ticks"], ticked)]
@@ -12106,6 +12127,8 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             for i in fitting:
                 ever_fits[i] = True
             first_fits[fitting[0]] = True
+            if len(fitting) > 1:
+                overlaps.append((ticked, fitting))
         checked += 1
         if dead:
             def show(s):
@@ -12113,6 +12136,13 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             out.append((FAIL, "node %s: %d of %d ticked sets fit no option, so a clerk can tick "
                               "them and be stranded, e.g. %s"
                         % (node_id, len(dead), 1 << n, "; ".join(show(s) for s in sorted(dead, key=lambda s: (len(s), sorted(s)))[:3]))))
+        if merged.get("tiers_exclusive") is True and overlaps:
+            ex = sorted(overlaps, key=lambda t: (len(t[0]), sorted(t[0])))[:3]
+            out.append((FAIL, "node %s declares its tiers exclusive, so the ticks alone decide the route "
+                              "and the clerk is never asked to choose between tiers, but %d of %d ticked "
+                              "sets fit more than one tier, e.g. %s"
+                        % (node_id, len(overlaps), 1 << n,
+                           "; ".join("{%s} fits options %s" % (", ".join(sorted(t)) or "nothing", f) for t, f in ex))))
         never = [i for i in tiers if not ever_fits[i]]
         if never:
             out.append((FAIL, "node %s: option(s) %s fit no ticked set, so they can never be offered"

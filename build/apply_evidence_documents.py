@@ -15,18 +15,11 @@ own rules and with the tests it may not credit removed from `captures.evidence_t
 (`drop_tests`; an IHC report alone is not flow cytometry). The copy keeps the label, route and
 every other capture, so no clinical branch is added.
 
-Two optional fields let a copy say something its source does not, for a tier the clerk cannot
-otherwise tell apart from its source. `label` replaces the copy's label. `captures_set` merges
-into its captures. Together with `drop_tests` they split one gene-test tier into "karyotype or
-FISH only", "PCR or sequencing only" and "both" without a new route: all three go to the same
-next node, and each credits only what its label says was done. A copy with a `label` must also
-say so in its rationale, since two options with different wording and the same route are
-otherwise indistinguishable in the mapping.
-
 The rules live in a mapping file, one per group, in docs/evidence_documents/group_NN.json:
 
   { "group": 5,
     "nodes": [ { "node_id": "rb_document_inventory",
+                 "vocabulary": "evidence_documents",     (optional; names the router vocabulary)
                  "question_edit": "", "hint_edit": "",
                  "options": [ { "index": 0, "label_head": "...", "kind": "tier",
                                 "requires": [], "any_of": [], "excludes": ["imaging", ...],
@@ -131,10 +124,6 @@ def apply(group_data: dict, mapping: dict) -> list:
             tests = (copy.get("captures") or {}).get("evidence_tests")
             if tests and e.get("drop_tests"):
                 copy["captures"]["evidence_tests"] = [t for t in tests if t not in e["drop_tests"]]
-            if e.get("label"):
-                copy["label"] = e["label"]
-            if e.get("captures_set"):
-                copy["captures"] = dict(copy.get("captures") or {}, **e["captures_set"])
             new_opts.insert(e["after"] + 1 + k, copy)
         node = dict(node)
         node["options"] = new_opts
@@ -151,7 +140,7 @@ def apply(group_data: dict, mapping: dict) -> list:
                 continue
             node[field] = edit
         node = put_after(node, "hint" if "hint" in node else "question", "tick_list",
-                         {"vocabulary": VOCABULARY, "resolve": "ask_siblings"})
+                         {"vocabulary": m.get("vocabulary", VOCABULARY), "resolve": "ask_siblings"})
         tree["nodes"][pos] = node
     return problems
 

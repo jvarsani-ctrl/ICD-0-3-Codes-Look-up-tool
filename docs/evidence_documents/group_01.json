@@ -4,8 +4,9 @@
     {
       "group": 1,
       "node_id": "ac_document_inventory",
-      "question_edit": "What reports are in this patient's file?",
-      "hint_edit": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
+      "vocabulary": "haematology_tests",
+      "question_edit": "What tests are in this patient's file?",
+      "question_was": "What reports are in this patient's file?",
       "options": [
         {
           "index": 0,
@@ -13,10 +14,10 @@
           "requires": [],
           "any_of": [],
           "excludes": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "rationale": "Lowest tier. Fits any set with no smear and no tissue report, so a lone Lab, IHC or Gene report, imaging, or nothing ticked all land here and are understated rather than overstated.",
+          "rationale": "Lowest tier: no marrow aspirate, blood film or trephine ticked. Whatever else is ticked is still credited as evidence, but the route is the referral one.",
           "confidence": "high",
           "label_head": "Referral / clinical note only — no marrow report"
         },
@@ -25,68 +26,51 @@
           "kind": "tier",
           "requires": [],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
           "excludes": [
-            "lab",
+            "flow",
             "ihc"
           ],
-          "rationale": "Marrow aspirate or blood film morphology is Cytology; a Histology Report (trephine) is also accepted as morphology because the ladder has no tissue tier. Excludes Lab to honour 'no flow cytometry'. A Gene report is tolerated so that a Gene report without a flow rung stay at this tier.",
+          "rationale": "Morphology and neither flow cytometry nor IHC. Gene tests ticked here are credited as evidence but do not move the route: the next node is the morphology-only question, which asks about the marrow report.",
           "confidence": "medium",
-          "label_head": "Bone marrow aspirate (BMA), blood film or trephine morphology only — n"
+          "label_head": "Marrow aspirate, blood film or trephine morphology only — no flow cyto"
         },
         {
           "index": 2,
           "kind": "tier",
           "requires": [
-            "lab"
+            "flow"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [
-            "genetics"
-          ],
-          "rationale": "Morphology (Cytology or Histology) plus flow cytometry, mapped to the Lab Report. Excludes Gene reports so a file with genetics fits options 3 and 4 instead. One any_of cannot also express 'IHC beside Histology', so an IHC Report without a Lab Report does not lift the tier.",
+          "excludes": [],
+          "rationale": "Morphology and flow cytometry. Gene tests and IHC change what is credited, not where the case goes.",
           "confidence": "medium",
-          "label_head": "Morphology + flow cytometry and/or IHC — no genetic tests"
+          "label_head": "Morphology and flow cytometry"
         },
         {
           "index": 3,
           "kind": "tier",
           "requires": [
-            "lab",
-            "genetics"
+            "ihc"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [],
-          "rationale": "Every rung named: morphology (Cytology or Histology), flow (Lab Report), cytogenetics/FISH (Gene report). A set with genetics but no Lab Report falls to option 1.",
+          "excludes": [
+            "flow"
+          ],
+          "rationale": "Morphology and IHC without flow cytometry. Exclusive of the tier above, so a file never fits both.",
           "confidence": "medium",
-          "label_head": "Morphology + flow/IHC + karyotype or FISH only (including BCR::ABL1 FI"
+          "label_head": "Morphology and IHC, no flow cytometry"
         },
         {
           "index": 4,
-          "kind": "tier",
-          "requires": [
-            "lab",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [],
-          "rationale": "Same sets as option 3: cytogenetics and molecular testing are both Gene reports and no document id separates them, so the clerk is asked which describes the file.",
-          "confidence": "medium",
-          "label_head": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing (incl"
-        },
-        {
-          "index": 5,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -96,7 +80,7 @@
           "label_head": "Trisomy 21 (Down syndrome) confirmed or suspected — neonatal or infant"
         },
         {
-          "index": 6,
+          "index": 5,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -106,7 +90,7 @@
           "label_head": "Extramedullary mass with a myeloid phenotype (myeloid sarcoma / chloro"
         },
         {
-          "index": 7,
+          "index": 6,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -115,119 +99,14 @@
           "confidence": "high",
           "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno"
         }
-      ],
-      "extra_options": [
-        {
-          "after": 2,
-          "copy_of": 2,
-          "requires": [
-            "ihc"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab",
-            "genetics"
-          ],
-          "drop_tests": [
-            "Flow cytometry"
-          ],
-          "rationale": "The same tier for a file with an IHC Report and no Lab Report: the label says flow cytometry and/or IHC, and the IHC Report beside morphology satisfies it. A copy of option 2 that does not credit flow cytometry, since none is ticked."
-        },
-        {
-          "after": 3,
-          "copy_of": 3,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry"
-          ],
-          "rationale": "Option 3 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
-        },
-        {
-          "after": 3,
-          "copy_of": 4,
-          "requires": [
-            "lab",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [],
-          "drop_tests": [
-            "Cytogenetics/FISH"
-          ],
-          "label": "Morphology + flow/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
-        },
-        {
-          "after": 3,
-          "copy_of": 4,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry",
-            "Cytogenetics/FISH"
-          ],
-          "label": "Morphology + flow/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
-        },
-        {
-          "after": 4,
-          "copy_of": 4,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry"
-          ],
-          "rationale": "Option 4 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
-        }
-      ],
-      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
-      "hint_was": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block."
+      ]
     },
     {
       "group": 1,
       "node_id": "ml_document_inventory",
-      "question_edit": "What reports are in this patient's file?",
-      "hint_edit": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
+      "vocabulary": "haematology_tests",
+      "question_edit": "What tests are in this patient's file?",
+      "question_was": "What reports are in this patient's file?",
       "options": [
         {
           "index": 0,
@@ -235,10 +114,10 @@
           "requires": [],
           "any_of": [],
           "excludes": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "rationale": "Lowest tier. A lone Lab Report is allowed here (otherwise it would dead-end), so 'no flow report' is not enforced.",
+          "rationale": "Lowest tier: no marrow aspirate, blood film or trephine ticked. Whatever else is ticked is still credited as evidence, but the route is the referral one.",
           "confidence": "high",
           "label_head": "Referral / clinical note only — no blood film, no marrow, no flow repo"
         },
@@ -247,49 +126,48 @@
           "kind": "tier",
           "requires": [],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
           "excludes": [
-            "lab",
+            "flow",
             "ihc"
           ],
-          "rationale": "Blood film (Cytology) and/or marrow morphology (Cytology or Histology Report; the next node names the trephine). Excludes Lab to honour 'no flow cytometry'. IHC and Gene reports are tolerated and stay at this tier.",
+          "rationale": "Morphology and neither flow cytometry nor IHC. Gene tests ticked here are credited as evidence but do not move the route: the next node is the morphology-only question, which asks about the marrow report.",
           "confidence": "medium",
-          "label_head": "Bone marrow aspirate (BMA), blood film or trephine morphology only — n"
+          "label_head": "Blood film, marrow aspirate or trephine morphology only — no flow cyto"
         },
         {
           "index": 2,
           "kind": "tier",
           "requires": [
-            "lab"
+            "flow"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [
-            "genetics"
-          ],
-          "rationale": "Morphology plus flow cytometry (Lab Report). Excludes Gene reports so genetics lifts to option 3. An IHC Report without a Lab Report does not lift the tier.",
+          "excludes": [],
+          "rationale": "Morphology and flow cytometry. Gene tests and IHC change what is credited, not where the case goes.",
           "confidence": "medium",
-          "label_head": "Morphology + flow cytometry and/or IHC — no genetic tests"
+          "label_head": "Morphology and flow cytometry"
         },
         {
           "index": 3,
           "kind": "tier",
           "requires": [
-            "lab",
-            "genetics"
+            "ihc"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [],
-          "rationale": "Morphology, flow (Lab Report) and a Gene report (cytogenetics, FISH, molecular and PCR are all Gene reports). Genetics without a Lab Report falls to option 1.",
+          "excludes": [
+            "flow"
+          ],
+          "rationale": "Morphology and IHC without flow cytometry. Exclusive of the tier above.",
           "confidence": "medium",
-          "label_head": "Morphology + flow/IHC + karyotype or FISH, and PCR or sequencing"
+          "label_head": "Morphology and IHC, no flow cytometry"
         },
         {
           "index": 4,
@@ -311,139 +189,14 @@
           "confidence": "high",
           "label_head": "Malignancy excluded on review — reactive lymphocytosis, viral, or the "
         }
-      ],
-      "extra_options": [
-        {
-          "after": 2,
-          "copy_of": 2,
-          "requires": [
-            "ihc"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab",
-            "genetics"
-          ],
-          "drop_tests": [
-            "Flow cytometry"
-          ],
-          "rationale": "The same tier for a file with an IHC Report and no Lab Report: the label says flow cytometry and/or IHC, and the IHC Report beside morphology satisfies it. A copy of option 2 that does not credit flow cytometry, since none is ticked."
-        },
-        {
-          "after": 2,
-          "copy_of": 3,
-          "requires": [
-            "lab",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [],
-          "drop_tests": [
-            "Molecular/PCR"
-          ],
-          "label": "Morphology + flow/IHC + karyotype or FISH only",
-          "rationale": "A file whose only gene test is karyotype or FISH. The source tier credits both Cytogenetics/FISH and Molecular/PCR; this copy credits Cytogenetics/FISH only. Same route, no new branch."
-        },
-        {
-          "after": 2,
-          "copy_of": 3,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry",
-            "Molecular/PCR"
-          ],
-          "label": "Morphology + flow/IHC + karyotype or FISH only",
-          "rationale": "A file whose only gene test is karyotype or FISH. The source tier credits both Cytogenetics/FISH and Molecular/PCR; this copy credits Cytogenetics/FISH only. Same route, no new branch."
-        },
-        {
-          "after": 2,
-          "copy_of": 3,
-          "requires": [
-            "lab",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [],
-          "drop_tests": [
-            "Cytogenetics/FISH"
-          ],
-          "label": "Morphology + flow/IHC + PCR or sequencing only",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
-        },
-        {
-          "after": 2,
-          "copy_of": 3,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry",
-            "Cytogenetics/FISH"
-          ],
-          "label": "Morphology + flow/IHC + PCR or sequencing only",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
-        },
-        {
-          "after": 3,
-          "copy_of": 3,
-          "requires": [
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [
-            "lab"
-          ],
-          "drop_tests": [
-            "Flow cytometry"
-          ],
-          "rationale": "Option 3 for a file with an IHC Report and a Gene report and no Lab Report. Credits no flow cytometry."
-        }
-      ],
-      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
-      "hint_was": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block."
+      ]
     },
     {
       "group": 1,
       "node_id": "mpn_document_inventory",
-      "question_edit": "What reports are in this patient's file?",
-      "hint_edit": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
+      "vocabulary": "haematology_tests",
+      "question_edit": "What tests are in this patient's file?",
+      "question_was": "What reports are in this patient's file?",
       "options": [
         {
           "index": 0,
@@ -451,10 +204,10 @@
           "requires": [],
           "any_of": [],
           "excludes": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "rationale": "Lowest tier. Fits any set with no smear and no tissue report, including a lone Gene report (understated).",
+          "rationale": "Lowest tier: no marrow aspirate, blood film or trephine ticked. Whatever else is ticked is still credited as evidence, but the route is the referral one.",
           "confidence": "high",
           "label_head": "Referral / clinical note only — no blood film or marrow report"
         },
@@ -463,48 +216,90 @@
           "kind": "tier",
           "requires": [],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
           "excludes": [
-            "genetics"
+            "karyotype",
+            "fish",
+            "pcr",
+            "sequencing"
           ],
-          "rationale": "Blood film or marrow morphology (Cytology or Histology Report). Excludes Gene reports to honour 'no cytogenetics, no molecular'. Lab and IHC Reports have no rung in this ladder and are tolerated.",
-          "confidence": "high",
-          "label_head": "Bone marrow aspirate (BMA), blood film or trephine morphology only — n"
+          "rationale": "Morphology and no gene test (karyotype, FISH, PCR or sequencing).",
+          "confidence": "medium",
+          "label_head": "Blood film, marrow aspirate or trephine morphology only — no gene test"
         },
         {
           "index": 2,
           "kind": "tier",
           "requires": [
-            "genetics"
+            "karyotype"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
           "excludes": [],
-          "rationale": "Morphology plus a Gene report (cytogenetics or FISH). A Gene report cannot be told apart from molecular testing, so this fits the same sets as option 3.",
+          "rationale": "A gene test is ticked, so the case goes on. The four gene-test tiers are mutually exclusive and share one route: the rule language has one 'any of' group, so 'a gene test' is spelled as four exclusive cases.",
           "confidence": "medium",
-          "label_head": "Morphology + karyotype or FISH only (including BCR::ABL1 FISH)"
+          "label_head": "Morphology and a karyotype"
         },
         {
           "index": 3,
           "kind": "tier",
           "requires": [
-            "genetics"
+            "fish"
           ],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [],
-          "rationale": "Same sets as option 2: cytogenetics and molecular testing are both Gene reports, so the clerk is asked which describes the file.",
+          "excludes": [
+            "karyotype"
+          ],
+          "rationale": "Same route as above; excludes karyotype so a file fits exactly one of the four.",
           "confidence": "medium",
-          "label_head": "Morphology + karyotype or FISH, and PCR or sequencing (including BCR::"
+          "label_head": "Morphology and FISH, no karyotype"
         },
         {
           "index": 4,
+          "kind": "tier",
+          "requires": [
+            "pcr"
+          ],
+          "any_of": [
+            "marrow_aspirate",
+            "trephine"
+          ],
+          "excludes": [
+            "karyotype",
+            "fish"
+          ],
+          "rationale": "Same route as above; excludes karyotype and FISH.",
+          "confidence": "medium",
+          "label_head": "Morphology and PCR, no karyotype or FISH"
+        },
+        {
+          "index": 5,
+          "kind": "tier",
+          "requires": [
+            "sequencing"
+          ],
+          "any_of": [
+            "marrow_aspirate",
+            "trephine"
+          ],
+          "excludes": [
+            "karyotype",
+            "fish",
+            "pcr"
+          ],
+          "rationale": "Same route as above; excludes the three other gene tests.",
+          "confidence": "medium",
+          "label_head": "Morphology and sequencing, no karyotype, FISH or PCR"
+        },
+        {
+          "index": 6,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -514,7 +309,7 @@
           "label_head": "Hypereosinophilia is the dominant finding, whatever else is in the fil"
         },
         {
-          "index": 5,
+          "index": 7,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -524,7 +319,7 @@
           "label_head": "Monocytosis-predominant picture — persistent monocytosis with or witho"
         },
         {
-          "index": 6,
+          "index": 8,
           "kind": "context",
           "requires": [],
           "any_of": [],
@@ -533,164 +328,116 @@
           "confidence": "high",
           "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno"
         }
-      ],
-      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
-      "hint_was": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
-      "extra_options": [
-        {
-          "after": 2,
-          "copy_of": 3,
-          "requires": [
-            "genetics"
-          ],
-          "any_of": [
-            "cytology",
-            "histology"
-          ],
-          "excludes": [],
-          "drop_tests": [
-            "Cytogenetics/FISH"
-          ],
-          "label": "Morphology + PCR or sequencing only (including BCR::ABL1 RT-PCR, JAK2, CALR, MPL and NGS)",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
-        }
       ]
     },
     {
       "group": 1,
       "node_id": "mds_document_inventory",
-      "question_edit": "What reports are in this patient's file?",
-      "hint_edit": "A bone marrow aspirate (BMA) or blood film is Cytology. A trephine biopsy is a Histology Report. Flow cytometry is a Lab Report. Karyotype, FISH, PCR and sequencing are Gene reports, including every BCR::ABL1 test.",
+      "vocabulary": "haematology_tests",
+      "question_edit": "What tests are in this patient's file?",
+      "question_was": "What reports are in this patient's file?",
       "options": [
         {
           "index": 0,
-          "label_head": "Referral / clinical note only — no marrow report",
           "kind": "tier",
           "requires": [],
           "any_of": [],
           "excludes": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "rationale": "Fallback for any set with no smear and no tissue report. A lone IHC, Gene, Lab or imaging report falls here and is understated, which is the safe direction.",
-          "confidence": "high"
+          "rationale": "Lowest tier: no marrow aspirate, blood film or trephine ticked. Whatever else is ticked is still credited as evidence, but the route is the referral one.",
+          "confidence": "high",
+          "label_head": "Referral / clinical note only — no marrow report"
         },
         {
           "index": 1,
-          "label_head": "Bone marrow aspirate (BMA) or blood film morphology only — no trephine",
           "kind": "tier",
           "requires": [],
           "any_of": [
-            "cytology",
-            "histology"
+            "marrow_aspirate",
+            "trephine"
           ],
-          "excludes": [],
-          "rationale": "Catches every set with a smear or trephine report that does not reach the rungs of options 2 to 4, including immunocytochemistry (Cytology plus IHC Report with no Histology Report), a trephine without IHC, and genetics without the full ladder. Excluding IHC or genetics would dead-end those sets, and the tick rules cannot express 'not all of the three'. Complete files also fit this option, so the clerk is asked between this option and the higher rung that fits.",
+          "excludes": [
+            "ihc"
+          ],
+          "rationale": "Morphology and no IHC. Gene tests ticked are credited, not routed.",
           "confidence": "medium",
-          "rungs_note": "Proposer A's rule kept."
+          "label_head": "Blood film, marrow aspirate or trephine morphology only — no IHC"
         },
         {
           "index": 2,
-          "label_head": "Bone marrow aspirate (BMA) + trephine biopsy with IHC (CD61 / CD41 per",
           "kind": "tier",
           "requires": [
-            "cytology",
-            "histology",
-            "ihc"
+            "ihc",
+            "marrow_aspirate"
           ],
           "any_of": [],
           "excludes": [
-            "genetics"
+            "trephine"
           ],
-          "rationale": "The label names the aspirate, the trephine and the IHC, so all three documents are required (standing rule 8, rule c). Cytology plus IHC Report with no Histology Report is immunocytochemistry and must not reach a tissue tier (rule d), so Proposer B's any_of lift is rejected. Genetics is excluded so files with a Gene report fit options 3 and 4 instead.",
-          "confidence": "medium"
+          "rationale": "IHC with an aspirate but no trephine: IHC without the trephine does not reach the marrow-pattern question, which needs both.",
+          "confidence": "medium",
+          "label_head": "Marrow aspirate and IHC, no trephine"
         },
         {
           "index": 3,
-          "label_head": "Marrow + trephine/IHC + karyotype or FISH only (including BCR::ABL1 FI",
           "kind": "tier",
           "requires": [
-            "cytology",
-            "histology",
             "ihc",
-            "genetics"
+            "trephine"
           ],
           "any_of": [],
-          "excludes": [],
-          "rationale": "Every rung the label names is required: aspirate, trephine, IHC and a Gene report. Genetics without the trephine and IHC rungs falls to option 1, which understates. Same fit set as option 4 because one Gene report cannot say which tests were done.",
-          "confidence": "medium"
+          "excludes": [
+            "marrow_aspirate"
+          ],
+          "rationale": "IHC with a trephine but no aspirate. Same route as the tier above.",
+          "confidence": "medium",
+          "label_head": "Trephine and IHC, no marrow aspirate"
         },
         {
           "index": 4,
-          "label_head": "Marrow + trephine/IHC + karyotype or FISH, and PCR or sequencing (incl",
           "kind": "tier",
           "requires": [
-            "cytology",
-            "histology",
-            "ihc",
-            "genetics"
+            "marrow_aspirate",
+            "trephine",
+            "ihc"
           ],
           "any_of": [],
           "excludes": [],
-          "rationale": "Sibling of option 3 with an identical fit set; the clerk is asked which describes the file.",
-          "confidence": "medium"
+          "rationale": "The full set the marrow-pattern question needs: aspirate, trephine and IHC. Gene tests change what is credited, not where the case goes.",
+          "confidence": "medium",
+          "label_head": "Marrow aspirate + trephine biopsy with IHC (CD61 / CD41 performed)"
         },
         {
           "index": 5,
-          "label_head": "Monocytosis-predominant picture — persistent monocytosis with or witho",
           "kind": "context",
           "requires": [],
           "any_of": [],
           "excludes": [],
           "rationale": "A dominant finding that redirects to the monocyte-count gate; independent of which documents exist.",
-          "confidence": "high"
+          "confidence": "high",
+          "label_head": "Monocytosis-predominant picture — persistent monocytosis with or witho"
         },
         {
           "index": 6,
-          "label_head": "Hypereosinophilia is the dominant finding, not monocytosis or dysplasi",
           "kind": "context",
           "requires": [],
           "any_of": [],
           "excludes": [],
           "rationale": "A dominant finding that redirects to the MDS/MPN overlap confirmation; independent of which documents exist.",
-          "confidence": "high"
+          "confidence": "high",
+          "label_head": "Hypereosinophilia is the dominant finding, not monocytosis or dysplasi"
         },
         {
           "index": 7,
-          "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno",
           "kind": "context",
           "requires": [],
           "any_of": [],
           "excludes": [],
           "rationale": "Malignancy excluded on review; always available.",
-          "confidence": "high"
-        }
-      ],
-      "question_was": "What reports are in this patient's file? Pick the highest tier available, or the special context that applies.",
-      "hint_was": "This is the evidence gate. It fixes what precision is achievable and drives every 'upgrade available' line on the output block.",
-      "extra_options": [
-        {
-          "after": 3,
-          "copy_of": 4,
-          "requires": [
-            "cytology",
-            "histology",
-            "ihc",
-            "genetics"
-          ],
-          "any_of": [],
-          "excludes": [],
-          "drop_tests": [
-            "Cytogenetics/FISH"
-          ],
-          "label": "Marrow + trephine/IHC + PCR or sequencing only (including BCR::ABL1 RT-PCR and NGS)",
-          "rationale": "A file whose only gene test is PCR or sequencing (for example BCR::ABL1 RT-PCR alone). The ladder had no tier for it: \"karyotype or FISH\" credits a test that was not done, and \"karyotype or FISH, and PCR or sequencing\" credits two. This copy credits Molecular/PCR and not Cytogenetics/FISH, and records the karyotype as not done. Same route as its source, so no clinical branch is added.",
-          "captures_set": {
-            "karyotype_result_status": "not done"
-          }
+          "confidence": "high",
+          "label_head": "Malignancy excluded on review — reactive, non-neoplastic or the diagno"
         }
       ]
     }

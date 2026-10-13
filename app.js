@@ -1067,6 +1067,28 @@ function tickSiblings(n, tl) {
       return { label: optionLabel(c.o), meta: priorText(c.o.prior_probability) || null, alert: c.o.clinical_alert || null };
     }));
 }
+/* What the ticks prove was done. A vocabulary whose items carry `credits` names, for each
+   box, the diagnostic tests ticking it proves are in the file. The case's evidence is then
+   exactly the union of the ticked boxes' credits, so the tool can never record a test the
+   clerk did not tick: a tier's own `captures.evidence_tests` describes a tier, and a tier
+   says more or less than the file holds. That list is kept only as the fallback when nothing
+   ticked credits anything (the referral tier on an empty checklist). Returns a copy; the
+   option in the data is never changed. A vocabulary with no `credits` is left alone. */
+function tickCredited(o, tl, ids) {
+  if (!tl.items.some(function (it) { return it.credits; })) return o;
+  var credits = [];
+  tl.items.forEach(function (it) {
+    if (ids.indexOf(it.id) === -1) return;
+    arr(it.credits).forEach(function (t) { if (credits.indexOf(t) === -1) credits.push(t); });
+  });
+  if (!credits.length) return o;
+  var copy = {};
+  Object.keys(o).forEach(function (k) { copy[k] = o[k]; });
+  copy.captures = {};
+  Object.keys(o.captures || {}).forEach(function (k) { copy.captures[k] = o.captures[k]; });
+  copy.captures.evidence_tests = credits;
+  return copy;
+}
 /* Continue on the checklist. The ticks go on the trail and onto the case, then
    the destination is the special situation chosen, the first fit, the one tier
    that fits, or, when several fit, a second question. */
@@ -1081,18 +1103,18 @@ function tickContinue(n, before) {
   if (tl.resolve === 'first_match') {
     var hit = tickOffered(n, ids)[0];
     if (!hit) throw new Error('No option on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
-    return advance(hit.o, label, optionLabel(hit.o), after, true);
+    return advance(tickCredited(hit.o, tl, ids), label, optionLabel(hit.o), after, true);
   }
   var pickedCtx = Number(state.draft.ctx) || 0;
   if (pickedCtx > 0) {
     var c = tickContexts(n)[pickedCtx - 1];
-    if (c) return advance(c.o, label, optionLabel(c.o), after, true);
+    if (c) return advance(tickCredited(c.o, tl, ids), label, optionLabel(c.o), after, true);
   }
   var offered = tickOffered(n, ids);
   if (!offered.length) throw new Error('No tier on ' + n.node_id + ' fits the ticked set: ' + (ids.join(', ') || 'nothing'));
   if (offered.length === 1) {
     var at = state.trail.length;
-    var went = advance(offered[0].o, label, optionLabel(offered[0].o), after, true);
+    var went = advance(tickCredited(offered[0].o, tl, ids), label, optionLabel(offered[0].o), after, true);
     /* The tier is the engine's description of the documents ticked, not the clerk's
        answer, and its wording can say more or less than they ticked ("no imaging
        report" beside an imaging report). The documents ticked are the evidence, so
@@ -2883,9 +2905,10 @@ function handleOption(act, el) {
     }
     case 'labs-continue': return labsContinue(n, before);
     case 'tickopt': {
-      var pick2 = tickOffered(n, arr(state.captured[tickList(n).variable]))[i];
+      var tl2 = tickList(n), ids2 = arr(state.captured[tl2.variable]);
+      var pick2 = tickOffered(n, ids2)[i];
       if (!pick2) return;
-      return advance(pick2.o, n.step_label || 'Answer', optionLabel(pick2.o), before);
+      return advance(tickCredited(pick2.o, tl2, ids2), n.step_label || 'Answer', optionLabel(pick2.o), before);
     }
     /* A referral to a built group continues into that group's tree. */
     case 'hop': return hopToGroup(before);
