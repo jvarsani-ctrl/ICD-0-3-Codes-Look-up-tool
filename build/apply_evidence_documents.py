@@ -21,6 +21,7 @@ The rules live in a mapping file, one per group, in docs/evidence_documents/grou
     "nodes": [ { "node_id": "rb_document_inventory",
                  "vocabulary": "evidence_documents",     (optional; names the router vocabulary)
                  "question_edit": "", "hint_edit": "",
+                 "items": [ ... ],                       (optional; the node's own boxes, replacing the vocabulary's)
                  "options": [ { "index": 0, "label_head": "...", "kind": "tier",
                                 "requires": [], "any_of": [], "excludes": ["imaging", ...],
                                 "rationale": "...", "confidence": "high" }, ... ] } ] }
@@ -139,8 +140,10 @@ def apply(group_data: dict, mapping: dict) -> list:
                                 "overwrite it. Re-derive %s_edit from the current text" % (nid, field, field))
                 continue
             node[field] = edit
-        node = put_after(node, "hint" if "hint" in node else "question", "tick_list",
-                         {"vocabulary": m.get("vocabulary", VOCABULARY), "resolve": "ask_siblings"})
+        tick_list = {"vocabulary": m.get("vocabulary", VOCABULARY), "resolve": "ask_siblings"}
+        if m.get("items"):
+            tick_list["items"] = m["items"]
+        node = put_after(node, "hint" if "hint" in node else "question", "tick_list", tick_list)
         tree["nodes"][pos] = node
     return problems
 

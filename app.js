@@ -1167,9 +1167,19 @@ function tickControl(n) {
     h += '<div class="tag">' + esc(tl.context_prompt || 'Does one of these apply?') + '</div>' +
       choose('ctx', [{ label: tl.none_label || 'None of these' }].concat(ctx.map(function (c) {
         return { label: optionLabel(c.o) };
-      })), Number(state.draft.ctx) || 0);
+      })), Number(state.draft.ctx) || 0) + tickConflictNotice(ctx, on);
   }
   return h + '<div class="actions"><button class="btn" data-act="tick-continue">Continue</button></div>';
+}
+/* A special-situation row may name boxes it cannot stand beside: `tick_conflict: { ids, notice }`. When the row is
+   chosen and one of those boxes is ticked, the notice shows under the list. The notice only warns: the row still
+   decides the route, as it does with every other box, and tickContinue() drops the conflicting boxes from the case
+   (registrar, 14 October 2026: a specimen reported inadequate gives no histological diagnosis, so a ticked histology
+   report beside it is a discrepancy the clerk should see, and never a report the result claims to rest on). */
+function tickConflictNotice(ctx, on) {
+  var c = ctx[(Number(state.draft.ctx) || 0) - 1], tc = c && c.o.tick_conflict;
+  if (!tc || !arr(tc.ids).some(function (id) { return on.indexOf(id) !== -1; })) return '';
+  return '<div role="alert">' + banner('warn', 'Check the file', tc.notice) + '</div>';
 }
 /* Two or more tiers fit the ticked documents: the clerk says which describes the file. */
 function tickSiblings(n, tl) {
@@ -1208,6 +1218,12 @@ function tickCredited(o, tl, ids) {
 function tickContinue(n, before) {
   var tl = tickList(n);
   var ids = orderedTicks(tl, ticksNow(tl));
+  /* A special-situation row that names boxes it cannot stand beside (`tick_conflict`) discards them from the case: the
+     result never lists, as the evidence it rests on, a report the clerk has just said gives no diagnosis. */
+  var row = tl.resolve === 'ask_siblings' ? tickContexts(n)[(Number(state.draft.ctx) || 0) - 1] : null;
+  if (row && row.o.tick_conflict) {
+    ids = ids.filter(function (id) { return arr(row.o.tick_conflict.ids).indexOf(id) === -1; });
+  }
   var names = tickLabels(tl, ids);
   pushTrail(tl.label || n.step_label || 'Ticked', names.length ? names.join(', ') : 'Nothing ticked', before);
   state.trail[state.trail.length - 1].ticks = ids.slice();

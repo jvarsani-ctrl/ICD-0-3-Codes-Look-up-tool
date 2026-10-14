@@ -1,12 +1,12 @@
 {
- "_comment": "Group 5 question-flow golden routes, recorded on main f19df62 before the 14 October 2026 question-flow edits (branch flow-g05). Each route starts on rb_document_inventory with topography C69.2 and gives the macro steps a clerk takes there; expect is what the case must end on: kind, code, behaviour, referral group, outstanding tests, basis of diagnosis and the evidence credited. A macro is one screen answered: tickset = boxes ticked on the evidence checklist (ctxRow 1 picks the inadequate-specimen row), opt = one list answer, imaging = features and diversion boxes ticked then Continue, tickopt = a tier picked on the sibling screen. Routes were found by trying every answer on every screen and folding answers that land on the same screen with the same variables, so the 41 routes stand for 558 answers.",
+ "_comment": "Group 5 question-flow golden routes. Each route starts on rb_document_inventory with topography C69.2 and gives the macro steps a clerk takes there; expect is what the case must end on: kind, code, behaviour, referral group, outstanding tests, basis of diagnosis and the evidence credited. A macro is one screen answered: tickset = boxes ticked on a checklist (ctxRow 1 picks the inadequate-specimen row), opt = one list answer, imaging = features and diversion boxes ticked then Continue. Recorded on main f19df62 for the first version (41 routes, branch flow-g05), then rewritten on 14 October 2026 for the registrar's rulings of that day (RQ1 the two 'tissue has since been obtained' answers are gone, RQ2 and RQ6 the enucleation and retinocytoma screens are one tick screen, RQ3 the referral wording is a tick list with a named non-malignant cause first, RQ7 the first screen offers four boxes, RP1 and RP3 a required imaging feature that is not stated reads the referral note when the file holds one, RP2 pseudohypopyon needs tissue, RQ4 a mimic pattern beside a pattern that needs tissue reads as tissue, RP4 a liquid biopsy report has its own box and answer, RP6 the inadequate-specimen row beats a ticked histology report). Every expectation was written from the ruling and the Pathway, not copied from a run. A `ruling` field names the ruling a route came from; a route without one is unchanged in meaning from the recorded 41.",
  "entry": {
   "node": "rb_document_inventory",
   "topography": "C69.2"
  },
  "routes": [
   {
-   "name": "tick [nothing] > opt 0",
+   "name": "tick [nothing] > tick [nothing]",
    "steps": [
     {
      "m": "tickset",
@@ -14,8 +14,32 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RQ3"
+  },
+  {
+   "name": "tick [nothing] > tick [named]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -32,7 +56,7 @@
    }
   },
   {
-   "name": "tick [nothing] > opt 1",
+   "name": "tick [nothing] > tick [leukocoria]",
    "steps": [
     {
      "m": "tickset",
@@ -40,431 +64,134 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "non_reportable",
-    "workup": [],
-    "basis": null
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 0",
-   "steps": [
-    {
      "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 0
-    }
-   ],
-   "expect": {
-    "kind": "non_reportable",
-    "workup": [],
-    "basis": null
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 1",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "referral",
-    "workup": [],
-    "basis": null,
-    "group": 12
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 2 > opt 0",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 2
-    },
-    {
-     "m": "opt",
-     "i": 0
+     "set": [
+      "leukocoria"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
     "kind": "code",
-    "workup": [],
-    "basis": 5,
+    "workup": [
+     "Imaging"
+    ],
+    "basis": 1,
     "code": "9510",
     "behavior": "3",
     "evidence_tests": [
-     "Cytology"
+     "Referral only"
     ]
-   }
+   },
+   "ruling": "RQ3"
   },
   {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 2 > opt 1",
+   "name": "tick [nothing] > tick [strabismus]",
    "steps": [
     {
      "m": "tickset",
      "set": [],
-     "ctxRow": 1
+     "ctxRow": 0
     },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 2
-    },
-    {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "referral",
-    "workup": [],
-    "basis": null,
-    "group": 12
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 0",
-   "steps": [
     {
      "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 0
+     "set": [
+      "strabismus"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
     "kind": "code",
     "workup": [
-     "Histology"
+     "Imaging"
     ],
-    "basis": 7,
-    "code": "9513",
-    "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 1",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9511",
-    "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 2",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 2
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9512",
-    "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 3",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 3
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [],
-    "basis": 7,
+    "basis": 1,
     "code": "9510",
     "behavior": "3",
-    "evidence_tests": []
-   }
+    "evidence_tests": [
+     "Referral only"
+    ]
+   },
+   "ruling": "RQ3"
   },
   {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 4 > opt 0",
+   "name": "tick [nothing] > tick [other_cause]",
    "steps": [
     {
      "m": "tickset",
      "set": [],
-     "ctxRow": 1
+     "ctxRow": 0
     },
     {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [
+      "other_cause"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
-    "kind": "behaviour_exclusion",
+    "kind": "non_reportable",
     "workup": [],
-    "basis": null,
+    "basis": null
+   },
+   "ruling": "RQ3"
+  },
+  {
+   "name": "tick [nothing] > tick [named, other_cause]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named",
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RQ3"
+  },
+  {
+   "name": "tick [nothing] > tick [leukocoria, strabismus]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "leukocoria",
+      "strabismus"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [
+     "Imaging"
+    ],
+    "basis": 1,
     "code": "9510",
-    "behavior": "0"
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 4 > opt 1",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9511",
     "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 4 > opt 2",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 2
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9512",
-    "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 4 > opt 3",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 3
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9513",
-    "behavior": "3",
-    "evidence_tests": []
-   }
-  },
-  {
-   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > opt 3 > opt 5",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [],
-     "ctxRow": 1
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 5
-    }
-   ],
-   "expect": {
-    "kind": "behaviour_exclusion",
-    "workup": [],
-    "basis": null,
-    "code": "9514",
-    "behavior": "1"
-   }
+    "evidence_tests": [
+     "Referral only"
+    ]
+   },
+   "ruling": "RQ3"
   },
   {
    "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions []",
@@ -496,14 +223,12 @@
    }
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 0",
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [mimic]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
@@ -511,8 +236,11 @@
      "D": []
     },
     {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -522,14 +250,12 @@
    }
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 1",
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [tissue]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
@@ -537,8 +263,11 @@
      "D": []
     },
     {
-     "m": "opt",
-     "i": 1
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -549,14 +278,12 @@
    }
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 2 > opt 0",
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [note] > tick [named]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
@@ -564,34 +291,41 @@
      "D": []
     },
     {
-     "m": "opt",
-     "i": 2
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
     "kind": "code",
-    "workup": [],
-    "basis": 5,
+    "workup": [
+     "Imaging"
+    ],
+    "basis": 1,
     "code": "9510",
     "behavior": "3",
     "evidence_tests": [
-     "Cytology"
+     "Referral only"
     ]
-   }
+   },
+   "ruling": "RP1"
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 2 > opt 1",
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [note] > tick [nothing]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
@@ -599,12 +333,77 @@
      "D": []
     },
     {
-     "m": "opt",
-     "i": 2
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 1
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [note] > tick [other_cause]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [nothing] + context row 1 > imaging features [], diversions [] > tick [nothing]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -612,344 +411,186 @@
     "workup": [],
     "basis": null,
     "group": 12
-   }
+   },
+   "ruling": "RP3"
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 0",
+   "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions [2] > tick [tissue]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
-     "F": [],
-     "D": []
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      2
+     ]
     },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 0
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9513",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 1",
-   "steps": [
     {
      "m": "tickset",
      "set": [
-      "imaging"
+      "tissue"
      ],
      "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 1
     }
    ],
    "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9511",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 2",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 2
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9512",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 3",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 3
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [],
-    "basis": 7,
-    "code": "9510",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 4 > opt 0",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 0
-    }
-   ],
-   "expect": {
-    "kind": "behaviour_exclusion",
+    "kind": "referral",
     "workup": [],
     "basis": null,
-    "code": "9510",
-    "behavior": "0"
-   }
+    "group": 12
+   },
+   "ruling": "RP2"
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 4 > opt 1",
+   "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions [3] > tick [mimic]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
-     "F": [],
-     "D": []
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      3
+     ]
     },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9511",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 4 > opt 2",
-   "steps": [
     {
      "m": "tickset",
      "set": [
-      "imaging"
+      "mimic"
      ],
      "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 2
     }
    ],
    "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9512",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
    }
   },
   {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 4 > opt 3",
+   "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions [0, 1] > tick [mimic, tissue]",
    "steps": [
     {
      "m": "tickset",
-     "set": [
-      "imaging"
-     ],
-     "ctxRow": 0
+     "set": [],
+     "ctxRow": 1
     },
     {
      "m": "imaging",
-     "F": [],
-     "D": []
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
     },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 3
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [
-     "Histology"
-    ],
-    "basis": 7,
-    "code": "9513",
-    "behavior": "3",
-    "evidence_tests": [
-     "Imaging"
-    ]
-   }
-  },
-  {
-   "name": "tick [imaging] > imaging features [], diversions [] > opt 3 > opt 5",
-   "steps": [
     {
      "m": "tickset",
      "set": [
-      "imaging"
+      "mimic",
+      "tissue"
      ],
      "ctxRow": 0
-    },
-    {
-     "m": "imaging",
-     "F": [],
-     "D": []
-    },
-    {
-     "m": "opt",
-     "i": 3
-    },
-    {
-     "m": "opt",
-     "i": 5
     }
    ],
    "expect": {
-    "kind": "behaviour_exclusion",
+    "kind": "referral",
     "workup": [],
     "basis": null,
-    "code": "9514",
-    "behavior": "1"
-   }
+    "group": 12
+   },
+   "ruling": "RQ4"
+  },
+  {
+   "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions [0, 1] > tick [mimic, note]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic",
+      "note"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RQ4"
+  },
+  {
+   "name": "tick [nothing] + context row 1 > imaging features [0, 1, 2], diversions [0, 1] > tick [tissue, note]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue",
+      "note"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RQ4"
   },
   {
    "name": "tick [imaging] > imaging features [0, 1, 2], diversions []",
@@ -981,6 +622,398 @@
      "Imaging"
     ]
    }
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [mimic]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   }
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [tissue]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   }
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [note] > tick [named]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [
+     "Imaging"
+    ],
+    "basis": 1,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Referral only"
+    ]
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [note] > tick [nothing]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [note] > tick [other_cause]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [imaging] > imaging features [], diversions [] > tick [nothing]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RP3"
+  },
+  {
+   "name": "tick [imaging] > imaging features [0, 1, 2], diversions [2] > tick [tissue]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      2
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RP2"
+  },
+  {
+   "name": "tick [imaging] > imaging features [0, 1, 2], diversions [3] > tick [mimic]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      3
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   }
+  },
+  {
+   "name": "tick [imaging] > imaging features [0, 1, 2], diversions [0, 1] > tick [mimic, tissue]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic",
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RQ4"
+  },
+  {
+   "name": "tick [imaging] > imaging features [0, 1, 2], diversions [0, 1] > tick [mimic, note]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic",
+      "note"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable",
+    "workup": [],
+    "basis": null
+   },
+   "ruling": "RQ4"
+  },
+  {
+   "name": "tick [imaging] > imaging features [0, 1, 2], diversions [0, 1] > tick [tissue, note]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue",
+      "note"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RQ4"
   },
   {
    "name": "tick [cytology] > opt 0",
@@ -1024,6 +1057,81 @@
     }
    ],
    "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 5,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Cytology"
+    ]
+   },
+   "ruling": "RP4"
+  },
+  {
+   "name": "tick [cytology] > opt 2 > imaging features [0, 1, 2], diversions []",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 2,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Imaging"
+    ]
+   },
+   "ruling": "C2"
+  },
+  {
+   "name": "tick [cytology] > opt 2 > imaging features [], diversions [] > tick [tissue]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
     "kind": "referral",
     "workup": [],
     "basis": null,
@@ -1031,7 +1139,206 @@
    }
   },
   {
-   "name": "tick [histology] > opt 0",
+   "name": "tick [cytology] > opt 2 > imaging features [], diversions [] > tick [note] > tick [named]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [
+     "Imaging"
+    ],
+    "basis": 1,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Referral only"
+    ]
+   },
+   "ruling": "RP1"
+  },
+  {
+   "name": "tick [cytology] > opt 2 > imaging features [], diversions [] > tick [nothing]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "workup": [],
+    "basis": null,
+    "group": 12
+   },
+   "ruling": "RP3"
+  },
+  {
+   "name": "tick [liquid_biopsy] > opt 1",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 1
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 5,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Cytology"
+    ]
+   },
+   "ruling": "RP4"
+  },
+  {
+   "name": "tick [liquid_biopsy] > opt 0",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 5,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Cytology"
+    ]
+   },
+   "ruling": "RP4"
+  },
+  {
+   "name": "tick [liquid_biopsy] > opt 2 > imaging features [0, 1, 2], diversions []",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 2,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Imaging"
+    ]
+   },
+   "ruling": "RP4"
+  },
+  {
+   "name": "tick [cytology, liquid_biopsy] > opt 1",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology",
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 1
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 5,
+    "code": "9510",
+    "behavior": "3",
+    "evidence_tests": [
+     "Cytology"
+    ]
+   },
+   "ruling": "RP4"
+  },
+  {
+   "name": "tick [histology] > tick [diffuse]",
    "steps": [
     {
      "m": "tickset",
@@ -1041,8 +1348,11 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [
+      "diffuse"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -1057,7 +1367,7 @@
    }
   },
   {
-   "name": "tick [histology] > opt 1",
+   "name": "tick [histology] > tick [g34]",
    "steps": [
     {
      "m": "tickset",
@@ -1067,34 +1377,11 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 1
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [],
-    "basis": 7,
-    "code": "9511",
-    "behavior": "3",
-    "evidence_tests": [
-     "Histology"
-    ]
-   }
-  },
-  {
-   "name": "tick [histology] > opt 2",
-   "steps": [
-    {
      "m": "tickset",
      "set": [
-      "histology"
+      "g34"
      ],
      "ctxRow": 0
-    },
-    {
-     "m": "opt",
-     "i": 2
     }
    ],
    "expect": {
@@ -1109,7 +1396,7 @@
    }
   },
   {
-   "name": "tick [histology] > opt 3",
+   "name": "tick [histology] > tick [g12]",
    "steps": [
     {
      "m": "tickset",
@@ -1119,8 +1406,38 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 3
+     "m": "tickset",
+     "set": [
+      "g12"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9511",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   }
+  },
+  {
+   "name": "tick [histology] > tick [nothing]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -1135,7 +1452,7 @@
    }
   },
   {
-   "name": "tick [histology] > opt 4 > opt 0",
+   "name": "tick [histology] > tick [area]",
    "steps": [
     {
      "m": "tickset",
@@ -1145,12 +1462,103 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 4
+     "m": "tickset",
+     "set": [
+      "area"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9511",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ6"
+  },
+  {
+   "name": "tick [histology] > tick [area, g34]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 0
+     "m": "tickset",
+     "set": [
+      "area",
+      "g34"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9512",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [area, diffuse]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "area",
+      "diffuse"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9513",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [whole]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "whole"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -1162,7 +1570,7 @@
    }
   },
   {
-   "name": "tick [histology] > opt 4 > opt 1",
+   "name": "tick [histology] > tick [phthisis]",
    "steps": [
     {
      "m": "tickset",
@@ -1172,12 +1580,252 @@
      "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 4
+     "m": "tickset",
+     "set": [
+      "phthisis"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "behaviour_exclusion",
+    "workup": [],
+    "basis": null,
+    "code": "9514",
+    "behavior": "1"
+   }
+  },
+  {
+   "name": "tick [histology] > tick [g12, g34]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
     },
     {
-     "m": "opt",
-     "i": 1
+     "m": "tickset",
+     "set": [
+      "g12",
+      "g34"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9512",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [g12, diffuse]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g12",
+      "diffuse"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9513",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [g34, diffuse]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g34",
+      "diffuse"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9513",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [whole, g12]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "whole",
+      "g12"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9511",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [whole, phthisis]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "whole",
+      "phthisis"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "behaviour_exclusion",
+    "workup": [],
+    "basis": null,
+    "code": "9510",
+    "behavior": "0"
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [area, whole]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "area",
+      "whole"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9511",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [histology] > tick [g34, phthisis]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g34",
+      "phthisis"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "workup": [],
+    "basis": 7,
+    "code": "9512",
+    "behavior": "3",
+    "evidence_tests": [
+     "Histology"
+    ]
+   },
+   "ruling": "RQ2"
+  },
+  {
+   "name": "tick [imaging, histology] > tick [g12]",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging",
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g12"
+     ],
+     "ctxRow": 0
     }
    ],
    "expect": {
@@ -1192,87 +1840,36 @@
    }
   },
   {
-   "name": "tick [histology] > opt 4 > opt 2",
+   "name": "tick [histology] + context row 1 > imaging features [0, 1, 2], diversions []",
    "steps": [
     {
      "m": "tickset",
      "set": [
       "histology"
      ],
-     "ctxRow": 0
+     "ctxRow": 1
     },
     {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 2
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
     }
    ],
    "expect": {
     "kind": "code",
     "workup": [],
-    "basis": 7,
-    "code": "9512",
+    "basis": 2,
+    "code": "9510",
     "behavior": "3",
     "evidence_tests": [
-     "Histology"
+     "Imaging"
     ]
-   }
-  },
-  {
-   "name": "tick [histology] > opt 4 > opt 3",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [
-      "histology"
-     ],
-     "ctxRow": 0
-    },
-    {
-     "m": "opt",
-     "i": 4
-    },
-    {
-     "m": "opt",
-     "i": 3
-    }
-   ],
-   "expect": {
-    "kind": "code",
-    "workup": [],
-    "basis": 7,
-    "code": "9513",
-    "behavior": "3",
-    "evidence_tests": [
-     "Histology"
-    ]
-   }
-  },
-  {
-   "name": "tick [histology] > opt 5",
-   "steps": [
-    {
-     "m": "tickset",
-     "set": [
-      "histology"
-     ],
-     "ctxRow": 0
-    },
-    {
-     "m": "opt",
-     "i": 5
-    }
-   ],
-   "expect": {
-    "kind": "behaviour_exclusion",
-    "workup": [],
-    "basis": null,
-    "code": "9514",
-    "behavior": "1"
-   }
+   },
+   "ruling": "RP6"
   }
  ]
 }

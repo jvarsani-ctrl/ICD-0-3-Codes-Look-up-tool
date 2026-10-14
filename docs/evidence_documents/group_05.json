@@ -5,7 +5,7 @@
       "group": 5,
       "node_id": "rb_document_inventory",
       "question_edit": "",
-      "hint_edit": "Biopsy of an eye that still contains the tumour is avoided, because incisional or needle biopsy risks seeding the tumour outside the eye. A pathology report therefore exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere, so the next step records which imaging was actually performed.",
+      "hint_edit": "Biopsy of an eye that still contains the tumour is avoided, because incisional or needle biopsy risks seeding the tumour outside the eye. A pathology report therefore exists only once the eye itself has been removed as treatment. The next step records which imaging was performed.",
       "options": [
         {
           "index": 0,
@@ -16,9 +16,10 @@
           "excludes": [
             "imaging",
             "cytology",
+            "liquid_biopsy",
             "histology"
           ],
-          "rationale": "Lowest tier. Fits every set with no Imaging Report, Cytology or Histology Report, so a lone Lab Report, IHC Report or Gene report, or nothing ticked, lands here. Mirrors the label's three 'no' clauses.",
+          "rationale": "Lowest tier. Fits the empty set, which is a file with no imaging report, cytology report, liquid biopsy report or histology report. The other four documents (referral letter, laboratory results, immunohistochemistry report, genetic test report) are not boxes on this node (registrar, 14 Oct 2026, RQ7), so a file holding only those lands here.",
           "confidence": "high"
         },
         {
@@ -31,23 +32,25 @@
           "any_of": [],
           "excludes": [
             "cytology",
+            "liquid_biopsy",
             "histology"
           ],
-          "rationale": "Imaging Report ticked with no cytology and no pathology report, as the label states. Lab, IHC and genetics ticked beside imaging do not change the tier. 'Eye is intact' follows from the absence of a Histology Report.",
+          "rationale": "Imaging report ticked with no cytology, liquid biopsy or histology report, as the label states. 'Eye is intact' follows from the absence of a histology report.",
           "confidence": "high"
         },
         {
           "index": 2,
           "label_head": "Cytology report, or an aqueous-humour or plasma liquid biopsy report —",
           "kind": "tier",
-          "requires": [
-            "cytology"
+          "requires": [],
+          "any_of": [
+            "cytology",
+            "liquid_biopsy"
           ],
-          "any_of": [],
           "excludes": [
             "histology"
           ],
-          "rationale": "Requires the Cytology document itself (aqueous-humour or liquid-biopsy cytology is in its definition). IHC beside Cytology stays here as immunocytochemistry. Excludes Histology Report because the label says no enucleation or exenteration specimen is in the file; a set with Histology falls to the tissue tier.",
+          "rationale": "Cytology report or liquid biopsy report ticked (registrar, 14 Oct 2026, RP4: a liquid biopsy has its own box). Excludes histology because the label says no enucleation or exenteration specimen is in the file; a set with histology falls to the tissue tier.",
           "confidence": "medium"
         },
         {
@@ -64,16 +67,38 @@
         },
         {
           "index": 4,
-          "label_head": "A specimen (cytology, or enucleation/exenteration) was obtained but is",
+          "label_head": "A specimen was taken but reported inadequate or non-diagnostic",
           "kind": "context",
           "requires": [],
           "any_of": [],
           "excludes": [],
-          "rationale": "States a quality finding (inadequate, non-diagnostic or uninterpretable specimen) that no document id can express. Always available, carries no tick rules.",
+          "rationale": "States a quality finding (inadequate or non-diagnostic specimen) that no document id can express. Always available, carries no tick rules. A histology report ticked beside it is a discrepancy, so the engine shows a notice (tick_conflict) and the row still decides the route (registrar, 14 Oct 2026, RP6).",
           "confidence": "high"
         }
       ],
-      "hint_was": "Pick the highest tier of evidence genuinely in the file. There is no 'histology' or 'biopsy' option for an intact eye: incisional or needle biopsy of an eye that still contains the tumour risks seeding it outside the eye, so a pathology report exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere -- record which imaging was actually performed, at the next step."
+      "hint_was": "Pick the highest tier of evidence genuinely in the file. There is no 'histology' or 'biopsy' option for an intact eye: incisional or needle biopsy of an eye that still contains the tumour risks seeding it outside the eye, so a pathology report exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere -- record which imaging was actually performed, at the next step.",
+      "items": [
+        {
+          "id": "imaging",
+          "label": "Imaging report",
+          "about": "Eye examination under anaesthesia, ultrasound or orbital magnetic resonance imaging."
+        },
+        {
+          "id": "cytology",
+          "label": "Cytology report",
+          "about": "Cells from a needle aspirate or a fluid sample, read under the microscope."
+        },
+        {
+          "id": "liquid_biopsy",
+          "label": "Liquid biopsy report",
+          "about": "Tumour DNA from the aqueous humour or from plasma."
+        },
+        {
+          "id": "histology",
+          "label": "Histology report",
+          "about": "A pathology report on an enucleation or exenteration specimen."
+        }
+      ]
     }
   ]
 }

@@ -2045,17 +2045,15 @@ async function uxScenarios(ctx) {
       names.length === 6 && bad.length === 0, names.length + ' grade markers; ' + bad.slice(0, 3).join('; '));
   }
   {
-    /* A retinocytomatous area does not set the code when the report states a poorer grade or a growth pattern. */
-    const rb = async (needle) => {
-      begin(dts.get(5), 'g5_retinoblastoma', 'rb_retinocytoma_word', 'C69.2');
-      const n = ctx.findNode('rb_retinocytoma_word');
-      const i = n.options.findIndex((o) => (o.label || '').includes(needle));
-      if (i < 0) return 'no option "' + needle + '"';
-      await tap('opt', i);
+    /* A retinocytomatous area does not set the code when the report states a poorer grade or a growth pattern. Since the registrar's
+       ruling of 14 October 2026 (RQ2, RQ6) the area is a box on the enucleation report's own tick screen, read in file order. */
+    const rb = async (ids) => {
+      begin(dts.get(5), 'g5_retinoblastoma', 'rb_enucleation_report', 'C69.2');
+      await tickSet(ctx.tickList(ctx.node()).items.map((x) => x.id), new Set(ids)); await tap('tick-continue');
       const e = ctx.state.result && ctx.state.result.entry;
       return e ? e.morphology_code + '/' + e.behavior_code : 'no code (stage ' + ctx.state.stage + ')';
     };
-    const g3 = await rb('states a poorly differentiated grade'), dif = await rb('also states a diffuse infiltrating growth pattern'), low = await rb('no poorer grade and no severe anaplasia');
+    const g3 = await rb(['area', 'g34']), dif = await rb(['area', 'diffuse']), low = await rb(['area']);
     t('a retinocytomatous area inside a tumour with a poorer grade or severe anaplasia records Retinoblastoma, undifferentiated 9512/3', g3 === '9512/3', g3);
     t('a retinocytomatous area with a stated diffuse infiltrating pattern records Retinoblastoma, diffuse 9513/3', dif === '9513/3', dif);
     t('a retinocytomatous area with nothing poorer stated still records Retinoblastoma, differentiated 9511/3', low === '9511/3', low);
@@ -2251,13 +2249,14 @@ async function uxScenarios(ctx) {
 }
 
 /* ------------------------------------------------- Group 5 question flow (14 October 2026)
-   The registrar's question-flow review shortened the wording of Group 5's screens and left every route as it was. This section keeps both
-   true. `build/flow_golden_g05.json` holds 41 routes, recorded on `main` before the edit, that stand for every answer a clerk can give on
-   Group 5's seven screens; each is replayed through the handlers the buttons call and must end on the same code, behaviour, referral,
-   outstanding tests, basis of diagnosis and evidence credited. The labels the page draws must stay at 90 characters or fewer, and no screen
-   may carry the wording the review removed: shouted capitals, a double hyphen, an internal feature number, or an intensifier. The first
-   screen's hint and its inadequate-specimen row are pinned by docs/evidence_documents/group_05.json (the data gate compares them with
-   that file), so they are listed as exceptions and not edited here. */
+   The registrar's question-flow review shortened the wording of Group 5's screens and left every route as it was; the registrar's rulings
+   of the same day then changed some routes on purpose. This section keeps both true. `build/flow_golden_g05.json` holds the routes that
+   stand for every answer a clerk can give on Group 5's six screens (41 recorded on `main` before the review, rewritten for the rulings);
+   each is replayed through the handlers the buttons call and must end on the same code, behaviour, referral, outstanding tests, basis of
+   diagnosis and evidence credited. The labels the page draws must stay at 90 characters or fewer, and no screen may carry the wording the
+   review removed: shouted capitals, a double hyphen, an internal feature number, or an intensifier. The first screen's hint and row were
+   pinned by docs/evidence_documents/group_05.json until the registrar released them (RQ5, 14 October 2026); the mapping now holds the new
+   wording and the data gate still compares the file with it. */
 async function g05Flow(ctx) {
   const SHARED = path.join(ROOT, 'data', 'shared');
   const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
@@ -2309,7 +2308,7 @@ async function g05Flow(ctx) {
     if (bad.length || thrown) wrong.push(r.name + ' -> ' + bad.map((k) => k + ' ' + JSON.stringify(got[k]) + ' (wanted ' + JSON.stringify(r.expect[k]) + ')').join('; ') + (thrown ? ' [threw: ' + thrown + ']' : ''));
   }
   t('Group 5: every one of the ' + golden.routes.length + ' recorded routes still ends on the same code, behaviour, referral, outstanding tests, basis of diagnosis and evidence credited',
-    golden.routes.length === 41 && wrong.length === 0, wrong.length + ' differ: ' + wrong.slice(0, 3).join(' | '));
+    golden.routes.length >= 50 && wrong.length === 0, wrong.length + ' differ: ' + wrong.slice(0, 3).join(' | '));
 
   /* The labels the page draws, read from the page's own markup. */
   const tree = dt.decision_trees[0], drawn = [];
@@ -2324,30 +2323,201 @@ async function g05Flow(ctx) {
     add('answer row', grab(html, /<input type="radio"[^>]*> <span>([\s\S]*?)(?:<span class="opt__meta"|<\/span><\/label>)/g));
     add('feature', grab(html, /data-act="feature"[^>]*> ([\s\S]*?)<\/label>/g));
     add('diversion', grab(html, /data-act="diversion"[^>]*> ([\s\S]*?)(?:<span class="opt__meta"|<\/label>)/g));
+    add('tick box', grab(html, /<span class="check__text">([\s\S]*?)<\/span>/g));
   }
-  const PINNED = (d) => d.node === 'rb_document_inventory' && d.kind === 'answer row' && /^A specimen \(cytology, or enucleation\/exenteration\) was obtained but is/.test(d.text);
-  const long = drawn.filter((d) => d.text.length > 90 && !PINNED(d));
-  t('Group 5: every answer, row, feature and diversion box the page draws is 90 characters or fewer (the pinned inadequate-specimen row is the one exception)',
-    drawn.length >= 25 && long.length === 0, drawn.length + ' drawn; over 90: ' + long.slice(0, 3).map((d) => d.node + ' "' + d.text.slice(0, 60) + '" (' + d.text.length + ')').join('; '));
+  const long = drawn.filter((d) => d.text.length > 90);
+  t('Group 5: every answer, row, box, feature and diversion the page draws is 90 characters or fewer',
+    drawn.length >= 28 && long.length === 0, drawn.length + ' drawn; over 90: ' + long.slice(0, 3).map((d) => d.node + ' "' + d.text.slice(0, 60) + '" (' + d.text.length + ')').join('; '));
 
   const TEXT = [];
   for (const n of tree.nodes) {
     TEXT.push([n.node_id, 'question', n.question]);
-    if (n.node_id !== 'rb_document_inventory') TEXT.push([n.node_id, 'hint', n.hint]);
+    TEXT.push([n.node_id, 'hint', n.hint]);
     (n.options || []).forEach((o, i) => TEXT.push([n.node_id, 'option ' + i, o.label]));
+    ((n.tick_list || {}).items || []).forEach((it) => { TEXT.push([n.node_id, 'box ' + it.id, it.label]); if (it.about) TEXT.push([n.node_id, 'about ' + it.id, it.about]); });
     (n.imaging_features || []).forEach((f, i) => TEXT.push([n.node_id, 'feature ' + i, f]));
     (n.diversion_criteria || []).forEach((d, i) => TEXT.push([n.node_id, 'diversion ' + i, d.feature]));
   }
   const BAD = /\bactually\b|\b[A-Z]{5,}\b|--|\b(feature|option|node|step) ?\d\b|\b(very|highly|extremely|truly|really|simply)\b/;
   const hits = TEXT.filter(([, , x]) => x && BAD.test(x));
-  t('Group 5: no question, hint (the first screen\'s is pinned), answer, feature or diversion carries "actually", shouted capitals, a double hyphen, an internal number or an intensifier',
+  t('Group 5: no question, hint, answer, box, feature or diversion carries "actually", shouted capitals, a double hyphen, an internal number or an intensifier',
     TEXT.length >= 40 && hits.length === 0, hits.length + ' hit: ' + hits.slice(0, 3).map(([n, w, x]) => n + ' ' + w + ' "' + x.slice(0, 50) + '"').join('; '));
+
+  /* The registrar's rulings of 14 October 2026, driven through the handlers the buttons call. The expected results below are the rulings'
+     own precedence written a second time, not read from the data. */
+  const at = (nodeId) => { begin(); ctx.state.nodeId = nodeId; };
+  const tickIds = async (ids) => { for (const id of ids) await tap('tick', { 'data-id': id }, { type: 'checkbox', checked: true }); };
+  const subsets = (all) => { const out = []; for (let m = 0; m < (1 << all.length); m++) out.push(all.filter((_, b) => m >> b & 1)); return out; };
+  const nodeById = (id) => tree.nodes.find((n) => n.node_id === id);
+  const sameList = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+  begin();
+  const firstBoxes = ctx.tickList(ctx.node()).items.map((x) => x.id);
+  const sharedIds = router.tick_vocabularies.evidence_documents.items.map((x) => x.id);
+  t('Group 5 first screen: four boxes (imaging, cytology, liquid biopsy, histology); the shared list of seven is unchanged, so no other group\'s first screen moves (RQ7, RP4)',
+    sameList(firstBoxes, ['imaging', 'cytology', 'liquid_biopsy', 'histology']) && sharedIds.length === 7 && !sharedIds.includes('liquid_biopsy'), firstBoxes.join(',') + ' / shared ' + sharedIds.join(','));
+
+  const wentTo = [];
+  for (const set of subsets(firstBoxes)) { begin(); await tickIds(set); await tap('tick-continue', {}); wentTo.push(set.join('+') + ' -> ' + ctx.state.nodeId + (ctx.state.captured.tick_gate ? ' (asks which tier)' : '')); }
+  const want = (set) => set.includes('histology') ? 'rb_enucleation_report' : (set.includes('cytology') || set.includes('liquid_biopsy')) ? 'rb_cytology' : set.includes('imaging') ? 'rb_imaging_pathway' : 'rb_clinical_alias';
+  const bad1 = wentTo.filter((x, i) => !x.endsWith('-> ' + want(subsets(firstBoxes)[i])));
+  t('Group 5 first screen: each of the 16 ticked sets goes straight to histology, cytology (or liquid biopsy), imaging or the referral wording in that order, and the clerk is never asked to choose between tiers',
+    bad1.length === 0, bad1.length + ' differ: ' + bad1.slice(0, 3).join('; '));
+
+  begin();
+  const inadequate = ctx.tickContexts(ctx.node()).length === 1;
+  const openRow = async (ids, row) => { begin(); await tickIds(ids); if (row) await tap('draft', { 'data-k': 'ctx' }, { type: 'radio', value: String(row) }); return ctx.renderLiveNode(); };
+  const warnHist = await openRow(['histology'], 1), warnCyto = await openRow(['cytology'], 1), warnNone = await openRow(['histology'], 0), warnNoTick = await openRow([], 1);
+  t('Group 5 first screen: the inadequate-specimen row beside a ticked histology report shows a notice, and the notice does not show for a cytology report, for no row, or for a row with nothing ticked (RP6)',
+    inadequate && /banner--warn/.test(warnHist) && /no histological diagnosis/.test(warnHist) && !/banner--warn/.test(warnCyto) && !/banner--warn/.test(warnNone) && !/banner--warn/.test(warnNoTick),
+    [inadequate, /banner--warn/.test(warnHist), /banner--warn/.test(warnCyto), /banner--warn/.test(warnNone), /banner--warn/.test(warnNoTick)].join(' '));
+  begin(); await tickIds(['histology']); await tap('draft', { 'data-k': 'ctx' }, { type: 'radio', value: '1' }); await tap('tick-continue', {});
+  const keptTicks = JSON.stringify(ctx.state.captured.documents_in_file);
+  await tap('feature', { 'data-i': 0 }, { type: 'checkbox', checked: true }); await tap('feature', { 'data-i': 1 }, { type: 'checkbox', checked: true }); await tap('feature', { 'data-i': 2 }, { type: 'checkbox', checked: true });
+  await tap('resolve', {});
+  const outHtml = ctx.state.stage === 'output' ? ctx.renderOutput() : '';
+  t('Group 5 first screen: with a histology report ticked, the inadequate-specimen row still wins, the case goes to the imaging screen without reading the report, and the result does not list the report as the evidence it rests on (RP6)',
+    keptTicks === '[]' && /9510/.test(outHtml) && !/Histology report/.test(outHtml) && /Constellation confirmed/.test(outHtml),
+    'ticks kept ' + keptTicks + ', stage ' + ctx.state.stage + ', "Histology report" in the result: ' + /Histology report/.test(outHtml));
+
+  const ins = nodeById('rb_imaging_insufficient');
+  t('Group 5: the two "tissue has since been obtained" answers are gone and the retinocytoma screen is merged into the enucleation screen: six nodes, no way back to the cytology or enucleation screens from the imaging screens (RQ1, RQ2)',
+    tree.nodes.length === 6 && !nodeById('rb_retinocytoma_word') && ins.options.length === 4 && !ins.options.some((o) => ['rb_cytology', 'rb_enucleation_report'].includes(o.next_node)),
+    tree.nodes.length + ' nodes, ' + ins.options.length + ' answers on the fourth screen');
+
+  const enu = [];
+  for (const set of subsets(nodeById('rb_enucleation_report').tick_list.items.map((x) => x.id))) {
+    at('rb_enucleation_report'); await tickIds(set); await tap('tick-continue', {});
+    const got = endOf();
+    const w = set.includes('diffuse') ? { kind: 'code', code: '9513' } : set.includes('g34') ? { kind: 'code', code: '9512' } : (set.includes('g12') || set.includes('area')) ? { kind: 'code', code: '9511' }
+      : set.includes('whole') ? { kind: 'behaviour_exclusion', code: '9510', behavior: '0' } : set.includes('phthisis') ? { kind: 'behaviour_exclusion', code: '9514', behavior: '1' } : { kind: 'code', code: '9510' };
+    const off = Object.keys(w).filter((k) => got[k] !== w[k]);
+    if (off.length) enu.push('{' + set.join(',') + '} gave ' + JSON.stringify(got) + ' wanted ' + JSON.stringify(w));
+  }
+  t('Group 5 enucleation screen: every one of the 64 ticked sets ends where the order says (diffuse 9513, poorly differentiated or undifferentiated 9512, differentiated or a retinocytoma-grade area 9511, whole-specimen retinocytoma 9510/0, phthisis bulbi 9514/1, nothing 9510) (RQ2, RQ6)',
+    enu.length === 0, enu.length + ' differ: ' + enu.slice(0, 2).join(' | '));
+
+  const ali = [];
+  for (const set of subsets(nodeById('rb_clinical_alias').tick_list.items.map((x) => x.id))) {
+    at('rb_clinical_alias'); await tickIds(set); await tap('tick-continue', {});
+    const got = endOf();
+    const registrable = !set.includes('other_cause') && ['named', 'leukocoria', 'strabismus'].some((x) => set.includes(x));
+    const ok = registrable ? (got.kind === 'code' && got.code === '9510' && got.basis === 1) : got.kind === 'non_reportable';
+    if (!ok) ali.push('{' + set.join(',') + '} gave ' + JSON.stringify(got));
+  }
+  t('Group 5 referral wording: of the 16 ticked sets only a named retinoblastoma, leukocoria or strabismus with no non-malignant cause named records 9510/3 at basis 1; the rest are not reportable (RQ3)',
+    ali.length === 0, ali.length + ' differ: ' + ali.slice(0, 2).join(' | '));
+
+  const dia = (n) => n.diversion_criteria.map((x) => x.feature);
+  const img = nodeById('rb_imaging_pathway');
+  const boxLabel = (id) => ins.tick_list.items.find((x) => x.id === id).label;
+  t('Group 5 imaging screen: pseudohypopyon and an anterior-segment mass are separate boxes, and the fourth screen offers a needs-tissue box that names pseudohypopyon and a mimic box that does not (RP2)',
+    dia(img).includes('Pseudohypopyon') && dia(img).includes('An anterior-segment mass') && /pseudohypopyon/.test(boxLabel('tissue')) && !/pseudohypopyon/i.test(boxLabel('mimic')) &&
+      ins.options[0].refer_group === 12 && ins.options[1].non_reportable === true,
+    dia(img).join(' | ') + ' / ' + ins.tick_list.items.map((x) => x.label.slice(0, 40)).join(' | '));
+  const fourth = [];
+  for (const set of subsets(ins.tick_list.items.map((x) => x.id))) {
+    at('rb_imaging_insufficient'); await tickIds(set); await tap('tick-continue', {});
+    const got = endOf();
+    const ok = (set.includes('tissue') || (!set.includes('mimic') && !set.includes('note'))) ? (got.kind === 'referral' && got.group === 12)
+      : set.includes('mimic') ? got.kind === 'non_reportable' : (ctx.state.stage === 'node' && ctx.state.nodeId === 'rb_clinical_alias');
+    if (!ok) fourth.push('{' + set.join(',') + '} gave ' + JSON.stringify(got) + ' at ' + ctx.state.nodeId);
+  }
+  t('Group 5 fourth screen: of the 8 ticked sets, any needs-tissue box refers Group XII even beside a mimic box or a note; a mimic box alone ends the case; a note alone reads the referral wording; nothing ticked refers Group XII (RQ4, RP1, RP3)',
+    fourth.length === 0, fourth.length + ' differ: ' + fourth.slice(0, 2).join(' | '));
+  const aliases = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'aliases', 'aliases_group_05.json'), 'utf8'));
+  const trilateral = aliases.find((a) => a.alias === 'Trilateral retinoblastoma');
+  const referring = aliases.filter((a) => 'refer_group' in a || 'refer_code' in a || 'reason' in a);
+  t('Group 5 aliases: trilateral retinoblastoma maps to 9510 in Group V and no alias entry refers to another group or tells the clerk to open a Group III record (RP5: a pineal or suprasellar mass is metastatic spread)',
+    !!trilateral && referring.length === 0 && JSON.stringify(trilateral.maps_to_morphology_codes) === '["9510"]' && !/Group III/.test(trilateral.full_form || ''),
+    referring.map((a) => a.alias).join(', ') + ' / ' + (trilateral ? trilateral.full_form : 'no trilateral entry'));
+  return rows;
+}
+
+/* ------------------------------------------------- Group 5 Pathway case table (14 October 2026, reachability review)
+   `build/pathway_cases_g05.json` holds clerk walks whose result the Pathway, the registrar's rulings or the build contract fix: one ideal case
+   for every emitter, the Pathway's own quick-reference rows and edge cases, and each defining result of the primary paths removed one at a time.
+   Every walk is replayed through the handlers the buttons call and must end where its source says. A row marked `assert: false` is a case
+   a registrar ruling is still owed on: it is replayed and must still give the `current` result, so a change is made on purpose. */
+async function g05Pathway(ctx) {
+  const SHARED = path.join(ROOT, 'data', 'shared');
+  const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
+  const topo = JSON.parse(fs.readFileSync(path.join(SHARED, 'topography_codes.json'), 'utf8'));
+  const dt = JSON.parse(fs.readFileSync(path.join(DB, 'group_05_dt.json'), 'utf8'));
+  const table = JSON.parse(fs.readFileSync(path.join(HERE, 'pathway_cases_g05.json'), 'utf8'));
+  ctx.groupCache.set(5, { dt, aliases: [] });
+  const rows = [];
+  const t = (name, ok, detail) => rows.push({ name, ok: !!ok, detail: ok ? '' : detail });
+  const el = (attrs, extra) => Object.assign({ getAttribute: (k) => (attrs && k in attrs ? String(attrs[k]) : null), value: '', checked: false, type: 'button' }, extra || {});
+  const tap = (act, attrs, extra) => ctx.handleOption(act, el(attrs, extra));
+  const play = async (steps) => {
+    ctx.reset();
+    Object.assign(ctx.state, { router, topography: topo, dt, treeId: 'g5_retinoblastoma', nodeId: table.entry.node, stage: 'node', aliasIndex: {} });
+    ctx.state.captured = { topography: table.entry.topography }; ctx.state.trailAtGroupEntry = 0;
+    for (const k of steps) {
+      if (k.m === 'opt') await tap('opt', { 'data-i': k.i });
+      else if (k.m === 'tickopt') await tap('tickopt', { 'data-i': k.j });
+      else if (k.m === 'tickset') {
+        for (const id of k.set) await tap('tick', { 'data-id': id }, { type: 'checkbox', checked: true });
+        if (k.ctxRow) await tap('draft', { 'data-k': 'ctx' }, { type: 'radio', value: String(k.ctxRow) });
+        await tap('tick-continue', {});
+      } else if (k.m === 'imaging') {
+        for (const i of k.F) await tap('feature', { 'data-i': i }, { type: 'checkbox', checked: true });
+        for (const i of k.D) await tap('diversion', { 'data-i': i }, { type: 'checkbox', checked: true });
+        await tap('resolve', {});
+      } else throw new Error('unknown macro ' + k.m);
+    }
+  };
+  const endOf = () => {
+    const st = ctx.state, r = st.result;
+    if (st.stage !== 'output') return { kind: 'open at ' + st.stage + ' ' + st.nodeId };
+    const e = { workup: (st.workup || []).map((w) => w.test), basis: r.basisOfDiagnosis === undefined ? null : r.basisOfDiagnosis };
+    if (r.referral) return Object.assign(e, { kind: 'referral', group: r.group });
+    if (r.excluded) return Object.assign(e, { kind: 'non_reportable' });
+    if (r.behaviourExcluded) return Object.assign(e, { kind: 'behaviour_exclusion', code: r.icdoCode, behavior: r.icdoBehaviour });
+    return Object.assign(e, { kind: 'code', code: r.code, behavior: r.entry.behavior_code });
+  };
+  const differs = (got, want) => Object.keys(want).filter((k) => JSON.stringify(got[k]) !== JSON.stringify(want[k]));
+  const asserted = table.cases.filter((c) => c.assert), pending = table.cases.filter((c) => !c.assert);
+  const wrong = [];
+  for (const c of asserted) {
+    let thrown = '';
+    try { await play(c.steps); } catch (e) { thrown = e.message; }
+    const got = endOf(), bad = differs(got, c.expect);
+    if (bad.length || thrown) wrong.push(c.id + ' ' + c.name.slice(0, 50) + ' -> ' + bad.map((k) => k + ' ' + JSON.stringify(got[k]) + ' (wanted ' + JSON.stringify(c.expect[k]) + ')').join('; ') + (thrown ? ' [threw: ' + thrown + ']' : ''));
+  }
+  t('Group 5 Pathway cases: all ' + asserted.length + ' walks the Pathway, the rulings or the build contract settle replay to the code, behaviour, referral, basis and outstanding tests they give',
+    asserted.length >= 38 && wrong.length === 0, wrong.length + ' differ: ' + wrong.slice(0, 3).join(' | '));
+  const noSource = asserted.filter((c) => !c.source || String(c.source).trim().length < 8);
+  t('Group 5 Pathway cases: every asserted walk names the Pathway section, ruling or contract section that gives its result', noSource.length === 0, noSource.map((c) => c.id).join(', '));
+  const kinds = new Set(asserted.map((c) => c.kind));
+  const codes = new Set(asserted.filter((c) => c.expect.kind === 'code').map((c) => c.expect.code));
+  t('Group 5 Pathway cases: the table holds an ideal case for each of 9510, 9511, 9512 and 9513, the two behaviour-exclusion terminals, a referral and a not-reportable terminal',
+    ['9510', '9511', '9512', '9513'].every((c) => codes.has(c)) && kinds.has('ideal') &&
+      asserted.some((c) => c.expect.kind === 'behaviour_exclusion' && c.expect.code === '9510') && asserted.some((c) => c.expect.kind === 'behaviour_exclusion' && c.expect.code === '9514') &&
+      asserted.some((c) => c.expect.kind === 'referral') && asserted.some((c) => c.expect.kind === 'non_reportable'), 'codes ' + [...codes].join(','));
+  const moved = [];
+  for (const c of pending) {
+    let thrown = '';
+    try { await play(c.steps); } catch (e) { thrown = e.message; }
+    const got = endOf(), bad = differs(got, c.current);
+    if (bad.length || thrown) moved.push(c.id + ' -> ' + bad.map((k) => k + ' ' + JSON.stringify(got[k]) + ' (was ' + JSON.stringify(c.current[k]) + ')').join('; '));
+  }
+  t('Group 5 Pathway cases: the ' + pending.length + ' walks a registrar ruling is still owed on give the result they gave when the table was written (' + pending.map((c) => c.id).join(', ') + ')', moved.length === 0, moved.join(' | '));
   return rows;
 }
 
 /* ---------------------------------------------------------------------- main */
 const ctx = loadEngine();
 let bad = 0, partial = 0;
+
+/* ONLY=g05p runs the Group 5 Pathway case table alone */
+if (ONLY === 'g05p') {
+  let rows = [];
+  try { rows = await g05Pathway(ctx); } catch (e) { rows = [{ name: 'the Group 5 Pathway section ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
+  for (const r of rows) { console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name); if (!r.ok) { console.log('        ' + r.detail); bad++; } }
+  process.exit(bad ? 1 : 0);
+}
 
 /* ONLY=g05 runs the Group 5 question-flow section alone */
 if (ONLY === 'g05') {
@@ -2391,6 +2561,16 @@ console.log('\nGroup 5 question flow — the routes it keeps and the wording its
   let g5 = [];
   try { g5 = await g05Flow(ctx); } catch (e) { g5 = [{ name: 'the Group 5 section ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
   for (const r of g5) {
+    console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name);
+    if (!r.ok) { console.log('        ' + r.detail); bad++; }
+  }
+}
+
+console.log('\nGroup 5 Pathway cases — the codes the Pathway, the rulings and the build contract give\n');
+{
+  let g5p = [];
+  try { g5p = await g05Pathway(ctx); } catch (e) { g5p = [{ name: 'the Group 5 Pathway section ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
+  for (const r of g5p) {
     console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name);
     if (!r.ok) { console.log('        ' + r.detail); bad++; }
   }

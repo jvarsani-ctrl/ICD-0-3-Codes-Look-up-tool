@@ -988,6 +988,22 @@ Recorded, not resolved. The build proceeds around each of these.
 
 ---
 
+## 12. Amendments from the registrar's rulings of 14 October 2026
+
+These override the sections they name. The tree and the rulings file (`memory/registrar-rulings.md`, entry of 14 October 2026) carry the same decisions.
+
+- **§4.1 and §2.5, pseudohypopyon.** Pseudohypopyon is the commonest presentation of diffuse infiltrating retinoblastoma (Razek and Elkhamary 2011, p. 2), so it needs tissue and is no longer a mimic. An anterior-segment mass stays a mimic.
+- **§4, the fall-through.** The rungs are taken in order: cytology, imaging, referral wording. A failed cytology continues on the imaging screen; an imaging constellation with a required feature not stated continues on the referral wording when the file holds a note, and otherwise records a suspected neoplasm at Group XII (8000/3). A mimic pattern or a pattern that needs tissue ends there.
+- **§4, options 3 and 4 of the fourth screen.** The two "tissue has since been obtained" answers are removed. A clerk with a new report goes back to the first screen.
+- **§4 and §2.3, the enucleation and retinocytoma screens** are one tick screen. A retinocytoma-grade area is read as an area inside a viable tumour.
+- **§4, the referral wording** is a tick list with a named non-malignant cause read first.
+- **§4.1, the fourth screen** is a tick list read in file order: a pattern that needs tissue first, then a mimic pattern, then the referral note, then nothing. When the imaging shows a mimic pattern and a pattern that needs tissue together, tissue wins (RQ4, option A): no possible cancer is dropped.
+- **§4, the first screen** offers four boxes (imaging, cytology, liquid biopsy, histology) and a liquid biopsy report is basis of diagnosis 5 (§10.9, Visser 2023 rule 8, p. 06).
+- **§4, an inadequate specimen** gives no histological diagnosis; a ticked histology report beside the row is discarded and the clerk is warned.
+- **§4.2, §6 and §9, trilateral retinoblastoma.** It is not a second Group III primary. A pineal or suprasellar mass in a child with retinoblastoma is metastatic spread, and the case stays one retinoblastoma case. The alias entry *Trilateral retinoblastoma* no longer carries `refer_group: 3`, `refer_code` or the `reason` that told the clerk to open a Group III record. Final ruling: the case keeps the eye as its topography. The registry records the pineal or suprasellar mass in its separate field for the site of metastasis, which has its own topography code (`sites_metastasis` in the REDCap dictionary, the same ICD-O-3 topography list as the primary site). The registrar had proposed 698 (C69.8, Overlapping lesion of eye and adnexa) and asked for it to be checked: the code exists, but ICD-O-3 Rule C limits `.8` to a single tumour across adjacent, contiguous sites, and the pineal gland is not adjacent to the eye (European Network of Cancer Registries training, Dimitrova 2017, slides on Rule C), so the registrar chose the eye. The tool opens no Group III record and no screen carries the instruction.
+
+---
+
 *Group 5 build contract. Written before the tree, as the Group 3 method requires. Every code in
 §0.2 was verified against `icdo32.sqlite` and the four IARC 3.1→3.2 change documents on
 22 September 2026; every ICCC-3 assignment against `ICCC-2017.sqlite` the same day.*
