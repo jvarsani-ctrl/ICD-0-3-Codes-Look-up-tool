@@ -5,7 +5,7 @@
     "iccc3_version": "3rd edition",
     "icdo_version": "ICD-O-3.2",
     "total_morphology_entries": 80,
-    "total_decision_nodes": 98,
+    "total_decision_nodes": 101,
     "decision_trees": [
       "tree_acute_leukemia",
       "tree_mature_lymphoid",
@@ -2629,7 +2629,7 @@
                   "trephine"
                 ]
               },
-              "next_node": "ac_prior_therapy_gate"
+              "next_node": "ac_morphology_first"
             },
             {
               "label": "Morphology and IHC, no flow cytometry",
@@ -2645,7 +2645,7 @@
                   "flow"
                 ]
               },
-              "next_node": "ac_prior_therapy_gate"
+              "next_node": "ac_morphology_first"
             },
             {
               "label": "Trisomy 21 (Down syndrome) confirmed or suspected — neonatal or infant blasts",
@@ -2796,42 +2796,59 @@
           "nos_fallback": null
         },
         {
-          "node_id": "ac_prior_therapy_gate",
-          "node_type": "document_inventory",
+          "node_id": "ac_morphology_first",
+          "node_type": "morphology_only",
           "step_number": 2,
-          "step_label": "Prior therapy",
-          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
-          "hint": "Asked once, here, and carried in session state for the rest of the case.",
-          "clinical_alert": null,
-          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8). This tree never routes to 9920 or 9987 — it codes the underlying entity and sets therapy_related_qualifier.",
+          "step_label": "Blood film / marrow morphology",
+          "question": "What does the blood film, marrow aspirate or trephine report describe?",
+          "hint": "Cytochemistry (MPO, Sudan black, PAS, non-specific esterase) counts as morphology, not as flow cytometry.",
+          "coding_note": "Asked before the lineage markers when the file holds a marrow, film or trephine report with flow cytometry or IHC (registrar, 14 Oct 2026). If no marker rule on ac_lineage_assignment fires, the case reverts to the answer given here and takes the closest diagnosis. No option writes evidence_tests, so the tick-derived evidence is kept.",
           "options": [
             {
-              "label": "No prior cytotoxic chemotherapy or radiotherapy",
+              "label": "Lymphoid blasts — MPO / Sudan black negative on cytochemistry",
               "next_node": "ac_defining_genetics_context",
+              "coding_note": "Closest diagnosis 9835 if no marker defines a lineage. Held as morphology_finding and read only by the last rules of ac_lineage_assignment: a marker combination that defines a lineage overrides it.",
               "captures": {
-                "therapy_related_qualifier": "no",
-                "prior_cytotoxic_therapy": "no"
+                "morphology_finding": "lymphoid_blasts"
               }
             },
             {
-              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
+              "label": "Myeloid blasts — Auer rods and/or MPO / Sudan black positive cytochemistry",
               "next_node": "ac_defining_genetics_context",
-              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying entity — e.g. therapy-related AML with MDS-related cytogenetics is 9895, never 9920.",
+              "coding_note": "Closest diagnosis 9861 if no marker defines a lineage. Held as morphology_finding and read only by the last rules of ac_lineage_assignment: a marker combination that defines a lineage overrides it.",
               "captures": {
-                "therapy_related_qualifier": "yes",
-                "prior_cytotoxic_therapy": "yes",
-                "qualifiers": [
-                  "therapy_related"
-                ]
+                "morphology_finding": "myeloid_blasts"
               }
             },
             {
-              "label": "Not documented in the file",
+              "label": "Hypergranular promyelocytes / faggot cells with coagulopathy (DIC)",
               "next_node": "ac_defining_genetics_context",
+              "coding_note": "Presumptive APL is a treatment rule, not a coding rule (Pathway §3.6). If no marker defines a lineage the case goes to the lineage-route PML::RARA question. Held as morphology_finding and read only by the last rules of ac_lineage_assignment: a marker combination that defines a lineage overrides it.",
               "captures": {
-                "therapy_related_qualifier": "unknown",
-                "prior_cytotoxic_therapy": "unknown"
+                "morphology_finding": "hypergranular_promyelocytes",
+                "apl_phenotype": "suspected"
               }
+            },
+            {
+              "label": "Two distinct blast populations, or the report states \"mixed phenotype\" / \"biphenotypic acute leukaemia\"",
+              "next_node": "ac_defining_genetics_context",
+              "coding_note": "Closest diagnosis 9805 if the markers entered do not meet the lineage criteria. Replaces ac_alal_resolve option 4. Held as morphology_finding and read only by the last rules of ac_lineage_assignment: a marker combination that defines a lineage overrides it.",
+              "captures": {
+                "morphology_finding": "mixed_phenotype_stated"
+              }
+            },
+            {
+              "label": "Blasts present, lineage not stated in the report",
+              "next_node": "ac_defining_genetics_context",
+              "coding_note": "Closest diagnosis 9801 if no marker defines a lineage. Held as morphology_finding and read only by the last rules of ac_lineage_assignment: a marker combination that defines a lineage overrides it.",
+              "captures": {
+                "morphology_finding": "lineage_not_stated"
+              }
+            },
+            {
+              "label": "Marrow reviewed — no leukaemic population; reactive or non-neoplastic",
+              "non_reportable": true,
+              "reason": "Morphology showed no leukaemic population. Not a reportable malignancy — no code is emitted."
             }
           ],
           "nos_fallback": null
@@ -3534,20 +3551,90 @@
             },
             {
               "when": {
-                "lineage_markers_entered": 0
+                "morphology_finding": "hypergranular_promyelocytes"
               },
-              "morphology_code": "9801",
+              "next_node": "ac_apl_status_lineage",
+              "coding_note": "No marker defined a lineage and the report describes hypergranular promyelocytes: ask the PML::RARA question. Its \"not tested\" answer goes on to the AML genetics ladder, so a result given earlier is not thrown away."
+            },
+            {
+              "when": {
+                "morphology_finding": "myeloid_blasts"
+              },
+              "morphology_code": "9861",
               "confidence": "low",
-              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish AUL, ALAL-NOS or a definite lineage.",
+              "upgrade_path": "No lineage-defining marker was entered, so the code follows the morphology report. A defining marker combination (for example cMPO strong) and cytogenetics/FISH would subtype the AML (9865–9912).",
+              "captures": {
+                "workup_status": "incomplete"
+              },
+              "coding_note": "Morphology fall-back (registrar, 14 Oct 2026): the report describes myeloid blasts and no marker rule fired."
+            },
+            {
+              "when": {
+                "morphology_finding": "lymphoid_blasts"
+              },
+              "morphology_code": "9835",
+              "confidence": "low",
+              "upgrade_path": "No lineage-defining marker was entered, so the code follows the morphology report. A B- or T-lineage marker combination would give 9811 or 9837, and cytogenetics/FISH a genetic subtype (9812–9818).",
+              "captures": {
+                "workup_status": "incomplete"
+              },
+              "coding_note": "Morphology fall-back (registrar, 14 Oct 2026): the report describes lymphoid blasts and no marker rule fired."
+            },
+            {
+              "when": {
+                "morphology_finding": "mixed_phenotype_stated"
+              },
+              "morphology_code": "9805",
+              "confidence": "low",
+              "upgrade_path": "No lineage-defining marker was entered, so the code follows the morphology report. The marker-level flow report would give 9806, 9807, 9808 or 9809.",
               "captures": {
                 "workup_status": "incomplete",
                 "alal_subtype": null
               },
-              "coding_note": "No marker was entered, so the panel was not run or not available. Asking what the panel covered would ask the clerk to describe a panel they have just said they did not have. This is the 'panel incomplete, not performed' outcome of ac_alal_resolve, reached directly. 9801 in its NOS sense: do NOT report as AUL."
+              "coding_note": "Morphology fall-back (registrar, 14 Oct 2026): the report states a mixed phenotype or two blast populations and the markers entered do not meet the lineage criteria. Replaces ac_alal_resolve option 4."
             },
             {
-              "next_node": "ac_alal_resolve",
-              "coding_note": "No lineage-defining combination met. Panel adequacy is the second gate — resolve AUL vs ALAL-NOS vs 'lineage not established' before emitting 9801 (Pathway §4.1)."
+              "when": {
+                "morphology_finding": "burkitt_pattern"
+              },
+              "next_node": "ml_burkitt_refer",
+              "coding_note": "Morphology fall-back (registrar, 14 Oct 2026): the report describes Burkitt-pattern cells, the markers entered defined no lineage, and ICD-O-3.2 codes Burkitt lymphoma and its leukaemic synonyms (Burkitt cell leukemia, acute leukemia Burkitt type) to 9687/3, a Group II code. The referral is confirmed on ml_burkitt_refer, where the clerk can still go back to the discriminator panel."
+            },
+            {
+              "when": {
+                "morphology_finding": "lineage_not_stated"
+              },
+              "morphology_code": "9801",
+              "confidence": "low",
+              "upgrade_path": "No lineage-defining marker was entered, so the code follows the morphology report. A comprehensive flow panel covering the five rare lineages would establish a definite lineage.",
+              "captures": {
+                "workup_status": "incomplete",
+                "alal_subtype": null
+              },
+              "coding_note": "Morphology fall-back (registrar, 14 Oct 2026): the report names no lineage and no marker rule fired. 9801 in its NOS sense."
+            },
+            {
+              "when": {
+                "lineage_markers_entered": 0
+              },
+              "morphology_code": "9801",
+              "confidence": "low",
+              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish a definite lineage.",
+              "captures": {
+                "workup_status": "incomplete",
+                "alal_subtype": null
+              },
+              "coding_note": "No marker was entered and the report gave no morphology answer that names a lineage, so the panel was not run or not available. 9801 in its NOS sense: do NOT report as AUL."
+            },
+            {
+              "morphology_code": "9801",
+              "confidence": "low",
+              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish a definite lineage.",
+              "captures": {
+                "workup_status": "incomplete",
+                "alal_subtype": null
+              },
+              "coding_note": "No lineage-defining combination met and no morphology answer was given on this route (a case handed in from another tree). 9801 in its NOS sense: do NOT report as AUL. Replaces the panel-adequacy question (registrar, 14 Oct 2026)."
             }
           ],
           "captured_variables": [
@@ -3561,7 +3648,8 @@
             "alal_subtype",
             "blast_percent_band",
             "therapy_related_qualifier",
-            "lineage_markers_entered"
+            "lineage_markers_entered",
+            "morphology_finding"
           ],
           "nos_fallback": {
             "code": "9801",
@@ -3572,17 +3660,17 @@
             "order": [
               "cMPO",
               "CD19",
-              "CD33",
-              "CD34",
-              "HLA-DR",
               "CD41",
               "CD61",
+              "CD33",
               "CD13",
+              "CD34",
               "cCD3",
               "sCD3",
               "CD117",
               "CD64",
               "CD14",
+              "HLA-DR",
               "CD10",
               "cCD79a",
               "CD11c",
@@ -3596,77 +3684,9 @@
               "CD19",
               "cMPO"
             ],
-            "rule_count": 42
+            "rule_count": 48
           },
           "marker_count_variable": "lineage_markers_entered"
-        },
-        {
-          "node_id": "ac_alal_resolve",
-          "node_type": "document_inventory",
-          "step_number": 3,
-          "step_label": "Panel adequacy",
-          "question": "No lineage-defining marker (MPO, cCD3, or a second strong B marker) was found. What does the panel actually cover?",
-          "hint": "Five lineages must be actively excluded before AUL can be claimed: basophilic, erythrocytic, megakaryocytic, plasmacytoid dendritic and NK.",
-          "clinical_alert": null,
-          "coding_note": "9801 carries three distinct situations. workup_status and alal_subtype disambiguate them — the pending / not-done / unavailable / declined values are reachable ONLY by the last row. Check for BCL11B rearrangement/activation before finalising (Pathway §4.1).",
-          "options": [
-            {
-              "label": "Comprehensive panel — no more than ONE lineage-associated marker for any single lineage; megakaryocytic (CD41/CD61), erythroid (glycophorin A) and NK (CD56) excluded, pDC (CD123/HLA-DR/CD11c) assessed",
-              "morphology_code": "9801",
-              "coding_note": "A positive AUL diagnosis of exclusion. CD123 alone does not settle the pDC exclusion (AML expresses it too) — treat that exclusion as a soft warning until CD303/BDCA-2, TCL1 or TCF4 is available.",
-              "upgrade_path": "None at this evidence tier — AUL has no more specific ICD-O-3.2 code. Record BCL11B status in the genotype annotation.",
-              "captures": {
-                "workup_status": "complete",
-                "alal_subtype": "aul"
-              }
-            },
-            {
-              "label": "Comprehensive panel — TWO OR MORE markers of one single lineage, but still no lineage-defining marker (ALAL-NOS)",
-              "morphology_code": "9801",
-              "coding_note": "ALAL-NOS: not MPAL, not B-ALL/T-ALL/AML, and not AUL. 9805 is wrong on definition (MPAL-NOS), so 9801 carries this sense too.",
-              "captures": {
-                "workup_status": "complete",
-                "alal_subtype": "alal_nos"
-              }
-            },
-            {
-              "label": "Case is assignable to a genetically or clinically defined category — AML-MR, AML with a defining genetic abnormality, CML blast crisis, therapy-related AML, or M/LN-eo with a kinase fusion",
-              "next_node": "ac_aml_genetics_upgrade",
-              "coding_note": "Not AUL. Code that entity and note the ambiguous immunophenotype (Pathway §4.1)."
-            },
-            {
-              "label": "Divergent-lineage clone is under 5% of cells",
-              "next_node": "ac_aml_genetics_upgrade",
-              "coding_note": "Code the dominant leukaemia with a descriptive modifier, not MPAL (Pathway §4.1)."
-            },
-            {
-              "label": "The flow report states \"mixed phenotype\" / \"biphenotypic acute leukaemia\" but gives no marker detail and no lineage pair",
-              "morphology_code": "9805",
-              "confidence": "low",
-              "coding_note": "9805 is the MPAL-NOS rung. Prefer 9808 (B/myeloid) or 9809 (T/myeloid) whenever the lineage pair is determinable; 9805 only where the report asserts a mixed phenotype without stating which lineages.",
-              "upgrade_path": "The marker-level flow report would give 9806, 9807, 9808 or 9809.",
-              "captures": {
-                "alal_subtype": null
-              }
-            },
-            {
-              "label": "Panel incomplete, not performed, unavailable or declined — lineage not established",
-              "morphology_code": "9801",
-              "confidence": "low",
-              "coding_note": "9801 in its NOS sense. Do NOT report this as AUL. Record the reason in workup_status.",
-              "upgrade_path": "A comprehensive flow panel covering the five rare lineages would establish AUL, ALAL-NOS or a definite lineage.",
-              "captures": {
-                "workup_status": "incomplete",
-                "alal_subtype": null
-              }
-            },
-            {
-              "label": "Comprehensive review found no leukaemic population — diagnosis revised, not a malignancy",
-              "non_reportable": true,
-              "reason": "No lineage and no leukaemic population on a comprehensive panel; the diagnosis was revised. Not a reportable malignancy — no code is emitted."
-            }
-          ],
-          "nos_fallback": null
         },
         {
           "node_id": "ac_ball_cytogenetics",
@@ -4009,7 +4029,7 @@
           "question": "Which cytogenetic / FISH / molecular finding does the report give?",
           "hint": "Base code is 9861. Each finding below upgrades it.",
           "clinical_alert": null,
-          "coding_note": "Therapy-related AML is a qualifier on the entity below, never 9920 (Pathway §4.8). Prior cytotoxic therapy was captured at the evidence gate and appears on the output block.",
+          "coding_note": "Therapy-related AML is a qualifier on the entity below, never 9920 (Pathway §4.8). The tool does not ask about prior cytotoxic therapy (registrar, 14 October 2026).",
           "options": [
             {
               "finding": "t(15;17)(q22;q11-12) PML::RARA positive — by FISH, RT-PCR/RQ-PCR or anti-PML immunostain",
@@ -4568,6 +4588,12 @@
               "equals": "negative",
               "next_node": "ac_lineage_assignment",
               "coding_note": "GATA1s negative — neither TAM nor ML-DS. B-ALL in Down syndrome (9811 family, frequently CRLF2-rearranged) is a separate real entity and is coded on its own lineage evidence."
+            },
+            {
+              "captured_variable": "gata1s_status",
+              "equals": "not tested",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "GATA1s not tested. Myeloid leukaemia of Down syndrome needs a positive GATA1s result (Pathway §1, §3.8), so 9898/3 cannot be emitted on age alone. Assign lineage normally; B-ALL in Down syndrome is a separate entity (Pathway §4.5)."
             }
           ],
           "bands": [
@@ -4716,7 +4742,7 @@
             },
             {
               "site": "Concurrent marrow AML at diagnosis (or diagnosed shortly apart)",
-              "next_node": "ac_prior_therapy_gate",
+              "next_node": "ac_defining_genetics_context",
               "coding_note": "SEER Rule M3 — an extramedullary sarcoma and marrow leukaemia of the same lineage are ONE primary. Code the AML entity (specific subtype, or 9861 if unsubtyped), not 9930. Record the extramedullary site and set myeloid_sarcoma_present.",
               "captures": {
                 "myeloid_sarcoma_present": true,
@@ -5038,7 +5064,8 @@
                 "evidence_tests": [
                   "Histology"
                 ],
-                "workup_status": "incomplete"
+                "workup_status": "incomplete",
+                "morphology_finding": "burkitt_pattern"
               }
             },
             {
@@ -5082,14 +5109,14 @@
           "options": [
             {
               "label": "Blood and/or bone marrow — a leukaemic presentation (C42.0 / C42.1 / C42.3 / C42.4)",
-              "next_node": "ml_prior_therapy_gate",
+              "next_node": "ml_morphology_pattern",
               "captures": {
                 "primary_compartment": "marrow"
               }
             },
             {
               "label": "Marrow involvement together with nodal disease — the marrow is the dominant compartment",
-              "next_node": "ml_prior_therapy_gate",
+              "next_node": "ml_morphology_pattern",
               "coding_note": "Marrow-dominant disease routes to Group I on the compartment discriminator even when nodes are involved.",
               "captures": {
                 "primary_compartment": "marrow"
@@ -5121,51 +5148,10 @@
             },
             {
               "label": "Compartment not stated in the file",
-              "next_node": "ml_prior_therapy_gate",
+              "next_node": "ml_morphology_pattern",
               "coding_note": "The compartment is left unset rather than guessed. The topography captured at Stage 1 then decides the group for the dual-group codes; an undocumented compartment must be recorded as an outstanding abstraction item, not invented.",
               "captures": {
                 "workup_status": "incomplete"
-              }
-            }
-          ],
-          "nos_fallback": null
-        },
-        {
-          "node_id": "ml_prior_therapy_gate",
-          "node_type": "document_inventory",
-          "step_number": 2,
-          "step_label": "Prior therapy",
-          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
-          "hint": "Asked once, here, and carried in session state for the rest of the case.",
-          "clinical_alert": null,
-          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8, §5.3.7). This tree never routes to 9920 or 9987 — both are retained as codes but closed as terminals. It codes the underlying entity and sets therapy_related_qualifier.",
-          "options": [
-            {
-              "label": "No prior cytotoxic chemotherapy or radiotherapy",
-              "next_node": "ml_morphology_pattern",
-              "captures": {
-                "therapy_related_qualifier": "no",
-                "prior_cytotoxic_therapy": "no"
-              }
-            },
-            {
-              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
-              "next_node": "ml_morphology_pattern",
-              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying entity.",
-              "captures": {
-                "therapy_related_qualifier": "yes",
-                "prior_cytotoxic_therapy": "yes",
-                "qualifiers": [
-                  "therapy_related"
-                ]
-              }
-            },
-            {
-              "label": "Not documented in the file",
-              "next_node": "ml_morphology_pattern",
-              "captures": {
-                "therapy_related_qualifier": "unknown",
-                "prior_cytotoxic_therapy": "unknown"
               }
             }
           ],
@@ -5205,7 +5191,10 @@
             },
             {
               "descriptor": "Medium-sized cells, deeply basophilic vacuolated cytoplasm, starry-sky pattern (FAB L3)",
-              "next_node": "ml_burkitt_screen"
+              "next_node": "ml_burkitt_screen",
+              "captures": {
+                "morphology_finding": "burkitt_pattern"
+              }
             },
             {
               "descriptor": "Blasts 20% or more of nucleated marrow cells",
@@ -5377,8 +5366,7 @@
                 "CD16"
               ],
               "negative": [
-                "CD3",
-                "cCD3"
+                "CD3"
               ],
               "next_node": "ml_nk_lgl_criteria",
               "coding_note": "Surface CD3-negative with CD16/CD56 is NK lineage (Pathway §3.11)."
@@ -5389,7 +5377,6 @@
               ],
               "negative": [
                 "CD3",
-                "cCD3",
                 "CD19"
               ],
               "next_node": "ml_nk_lgl_criteria"
@@ -5400,7 +5387,6 @@
               ],
               "negative": [
                 "CD3",
-                "cCD3",
                 "CD19"
               ],
               "next_node": "ml_nk_lgl_criteria"
@@ -5441,7 +5427,6 @@
               "CD3",
               "CD7",
               "CD19",
-              "cCD3",
               "CD16",
               "CD56",
               "CD20",
@@ -5452,6 +5437,7 @@
               "CD94/NKG2A",
               "TdT",
               "CD34",
+              "cCD3",
               "CD5",
               "CD23",
               "CD4",
@@ -5655,6 +5641,19 @@
             },
             {
               "positive": [
+                "CD11c",
+                "CD25"
+              ],
+              "morphology_code": "9820",
+              "confidence": "low",
+              "satisfies_tests": [
+                "Referral only"
+              ],
+              "upgrade_path": "CD103 and annexin-A1, with BRAF V600E, would confirm 9940 Hairy cell leukemia, NOS.",
+              "coding_note": "Hairy-cell features without CD103 do not meet the hairy cell panel (Pathway §3.11). The case is not sent to B-cell prolymphocytic leukaemia, a diagnosis of exclusion, because CD19 and a bright CD20 are also present."
+            },
+            {
+              "positive": [
                 "CD19",
                 "CD20:strong"
               ],
@@ -5705,11 +5704,11 @@
               "CD103",
               "Ki-67 >95%",
               "MYC protein IHC >80%",
-              "CD19",
               "CD11c",
+              "CD19",
+              "CD25",
               "CD23",
               "cyclin D1",
-              "CD25",
               "CD123",
               "CD200",
               "ROR1",
@@ -5723,7 +5722,7 @@
             "intensity_markers": [
               "CD20"
             ],
-            "rule_count": 19
+            "rule_count": 20
           }
         },
         {
@@ -6211,6 +6210,46 @@
               "coding_note": "B lineage established on CD20 with no T markers."
             },
             {
+              "positive": [
+                "kappa"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium"
+            },
+            {
+              "positive": [
+                "lambda"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium"
+            },
+            {
+              "positive": [
+                "CD22"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium"
+            },
+            {
+              "positive": [
+                "FMC7"
+              ],
+              "negative": [
+                "CD3"
+              ],
+              "morphology_code": "9833",
+              "confidence": "medium"
+            },
+            {
               "morphology_code": "9832",
               "confidence": "medium",
               "upgrade_path": "B markers (CD19, CD20, CD22, FMC7, surface light chains) or T markers (CD2, CD3, CD5, CD7, TCL1) would resolve 9833 or 9834.",
@@ -6231,23 +6270,26 @@
           "branch_sequence": {
             "order": [
               "CD3",
-              "TCL1",
-              "CD19",
               "CD20",
+              "CD19",
               "CD22",
-              "CD2",
-              "CD7",
+              "FMC7",
+              "kappa",
+              "lambda",
               "cyclin D1",
               "SOX11",
               "CD103",
               "CD11c",
               "TdT",
-              "CD34"
+              "CD34",
+              "CD2",
+              "CD7",
+              "TCL1"
             ],
             "intensity_markers": [
               "CD20"
             ],
-            "rule_count": 16
+            "rule_count": 20
           }
         },
         {
@@ -7134,6 +7176,13 @@
               "coding_note": "CD58 is positive in nearly all BCP-ALL and negative in Burkitt (Pathway §3.3). With no MYC rearrangement demonstrated, this is B-ALL."
             },
             {
+              "when": {
+                "morphology_finding": "burkitt_pattern"
+              },
+              "next_node": "ml_burkitt_refer",
+              "coding_note": "The report described a Burkitt pattern and no marker overrides it. Registrar, 14 October 2026: the case reverts to what the morphology report says and takes the closest diagnosis, the Group II referral at 9687/3, which ICD-O-3.2 gives Burkitt lymphoma and its leukaemic synonyms (Pathway §3.3). The referral screen lets the clerk go back if MYC rearrangement is not established."
+            },
+            {
               "next_node": "ac_morphology_only",
               "coding_note": "MYC rearrangement neither demonstrated nor surrogated, and the precursor discriminators are not recorded. Burkitt is NOT established — absence of MYC-r excludes it (Pathway §3.3) — and this tree must not emit a mature B code it cannot support. The case is an unresolved lymphoid blast population and the acute tree's morphology-only tier carries the correct code for that state. If FISH is simply unavailable, order Ki-67 and MYC protein IHC and re-enter."
             }
@@ -7144,7 +7193,8 @@
             "primary_compartment",
             "workup_status",
             "karyotype_result_status",
-            "genotype_annotation"
+            "genotype_annotation",
+            "morphology_finding"
           ],
           "nos_fallback": {
             "code": "9820",
@@ -7166,7 +7216,7 @@
               "CD20",
               "CD45"
             ],
-            "rule_count": 11
+            "rule_count": 12
           }
         },
         {
@@ -7380,7 +7430,7 @@
                   "trephine"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate"
+              "next_node": "mpn_bcr_abl1_gate"
             },
             {
               "label": "Morphology and FISH, no karyotype",
@@ -7396,7 +7446,7 @@
                   "karyotype"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate"
+              "next_node": "mpn_bcr_abl1_gate"
             },
             {
               "label": "Morphology and PCR, no karyotype or FISH",
@@ -7413,7 +7463,7 @@
                   "fish"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate"
+              "next_node": "mpn_bcr_abl1_gate"
             },
             {
               "label": "Morphology and sequencing, no karyotype, FISH or PCR",
@@ -7431,7 +7481,7 @@
                   "pcr"
                 ]
               },
-              "next_node": "mpn_prior_therapy_gate"
+              "next_node": "mpn_bcr_abl1_gate"
             },
             {
               "label": "Hypereosinophilia is the dominant finding, whatever else is in the file",
@@ -7600,47 +7650,6 @@
               "label": "Film reviewed — the leucocytosis is reactive (infection, inflammation, steroids, post-splenectomy)",
               "non_reportable": true,
               "reason": "The blood picture is reactive, not a myeloproliferative neoplasm. Not a reportable malignancy — no code is emitted (Pathway §4.9)."
-            }
-          ],
-          "nos_fallback": null
-        },
-        {
-          "node_id": "mpn_prior_therapy_gate",
-          "node_type": "document_inventory",
-          "step_number": 2,
-          "step_label": "Prior therapy",
-          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
-          "hint": "Asked once, here, and carried in session state for the rest of the case.",
-          "clinical_alert": null,
-          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8). This tree never routes to 9920 or 9987 — it codes the underlying entity and sets therapy_related_qualifier.",
-          "options": [
-            {
-              "label": "No prior cytotoxic chemotherapy or radiotherapy",
-              "next_node": "mpn_bcr_abl1_gate",
-              "captures": {
-                "therapy_related_qualifier": "no",
-                "prior_cytotoxic_therapy": "no"
-              }
-            },
-            {
-              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
-              "next_node": "mpn_bcr_abl1_gate",
-              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying entity.",
-              "captures": {
-                "therapy_related_qualifier": "yes",
-                "prior_cytotoxic_therapy": "yes",
-                "qualifiers": [
-                  "therapy_related"
-                ]
-              }
-            },
-            {
-              "label": "Not documented in the file",
-              "next_node": "mpn_bcr_abl1_gate",
-              "captures": {
-                "therapy_related_qualifier": "unknown",
-                "prior_cytotoxic_therapy": "unknown"
-              }
             }
           ],
           "nos_fallback": null
@@ -8599,13 +8608,27 @@
               }
             },
             {
-              "finding": "Karyotype abnormal or blasts increased, but FISH for the CHIC2 deletion / RT-PCR for FIP1L1::PDGFRA NOT performed",
+              "finding": "Karyotype normal, blasts increased as the only evidence of clonality, and FISH for the CHIC2 deletion / RT-PCR for FIP1L1::PDGFRA NOT performed",
               "detection_method": "karyotype_only",
               "next_node": "mpn_eos_cryptic_fish_prompt",
-              "coding_note": "Clonality is established but the cryptic branch is still open. Do not resolve to 9964 yet — a normal or non-specific karyotype does not exclude 9965 (Pathway §4.4, §5.6).",
+              "coding_note": "Clonality rests on the blast count alone and the karyotype is normal, so the cryptic branch stays open and 9964 is not assigned (Pathway §4.4, §5.6).",
               "captures": {
                 "cryptic_genetics_tested": "karyotype only",
                 "karyotype_result_status": "received"
+              }
+            },
+            {
+              "finding": "Karyotype ABNORMAL (a clonal abnormality is shown), but FISH for the CHIC2 deletion / RT-PCR for FIP1L1::PDGFRA NOT performed",
+              "detection_method": "karyotype_only",
+              "next_node": "mpn_eos_clonal_fish_prompt",
+              "coding_note": "Clonality is demonstrated with secondary causes excluded, so the case codes 9964 (Pathway §3.10 step 5). The bar on 9964 in §5.6 applies on a normal karyotype.",
+              "captures": {
+                "cryptic_genetics_tested": "karyotype only",
+                "karyotype_result_status": "received",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ]
               }
             },
             {
@@ -8752,6 +8775,84 @@
             "name": "Chronic eosinophilic leukemia",
             "reason": "Clonal hypereosinophilia with the secondary causes excluded, but no specific kinase fusion identified."
           }
+        },
+        {
+          "node_id": "mpn_eos_clonal_fish_prompt",
+          "node_type": "document_inventory",
+          "step_number": 4,
+          "step_label": "CHIC2 FISH status",
+          "question": "A clonal karyotype abnormality is shown, but FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA was not done. Has it been performed since?",
+          "hint": "Clonality is shown, so the case codes 9964 with the missing test named. A positive FIP1L1::PDGFRA result would upgrade it to 9965.",
+          "clinical_alert": null,
+          "coding_note": "Pathway §3.10 step 5: clonality after secondary causes are excluded gives 9964. The chain 9965 → 9964 → 9960 (§6) reaches 9960 only when clonality is not shown.",
+          "options": [
+            {
+              "label": "FISH (CHIC2) / RT-PCR now available — go back and enter the result",
+              "next_node": "mpn_eos_molecular",
+              "captures": {
+                "cryptic_genetics_tested": "FISH performed",
+                "karyotype_result_status": "received"
+              }
+            },
+            {
+              "label": "FISH / RT-PCR requested — result pending",
+              "next_node": "mpn_eos_clonal_unresolved"
+            },
+            {
+              "label": "FISH / RT-PCR not available at this facility",
+              "next_node": "mpn_eos_clonal_unresolved"
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mpn_eos_clonal_unresolved",
+          "node_type": "morphology_only",
+          "step_number": 4,
+          "step_label": "Cryptic set unresolved",
+          "question": "Record why FIP1L1::PDGFRA could not be tested. The case codes 9964 with the missing test named.",
+          "hint": "9964, not 9960: clonality is shown by the abnormal karyotype. The missing test is what would move the case up to 9965.",
+          "clinical_alert": null,
+          "coding_note": "The eosinophilic chain is 9965 / 9966 / 9967 → 9964 → 9960 (Pathway §6). Clonality with secondary causes excluded gives 9964 (§3.10 step 5); the §5.6 bar applies on a normal karyotype only.",
+          "options": [
+            {
+              "label": "Pending — record now and re-enter the tool when the result returns",
+              "morphology_code": "9964",
+              "confidence": "medium",
+              "upgrade_path": "FISH for the CHIC2 deletion or RT-PCR for FIP1L1::PDGFRA would upgrade this to 9965 if positive. Result pending — re-enter when it returns.",
+              "coding_note": "Do not treat this as settled. The FIP1L1::PDGFRA branch is still open, and that diagnosis is imatinib-responsive.",
+              "captures": {
+                "karyotype_result_status": "pending",
+                "cryptic_genetics_tested": "karyotype only",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Not available at this facility — permanent terminal state",
+              "morphology_code": "9964",
+              "confidence": "medium",
+              "upgrade_path": "FISH (CHIC2) and RT-PCR for FIP1L1::PDGFRA are unavailable; the code cannot be upgraded at this facility.",
+              "coding_note": "Do not treat this as settled. The FIP1L1::PDGFRA branch is still open, and that diagnosis is imatinib-responsive.",
+              "captures": {
+                "karyotype_result_status": "unavailable",
+                "cryptic_genetics_tested": "karyotype only",
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Test declined or not done for another reason",
+              "morphology_code": "9964",
+              "confidence": "medium",
+              "upgrade_path": "FISH (CHIC2) or RT-PCR for FIP1L1::PDGFRA would upgrade this code to 9965 if positive; the test was not done.",
+              "captures": {
+                "karyotype_result_status": "not done",
+                "cryptic_genetics_tested": "not tested",
+                "workup_status": "incomplete"
+              },
+              "coding_note": "Do not treat this as settled. The FIP1L1::PDGFRA branch is still open, and that diagnosis is imatinib-responsive."
+            }
+          ],
+          "nos_fallback": null
         }
       ]
     },
@@ -9188,9 +9289,9 @@
               "reason": "The monocytosis is reactive (infection, marrow recovery or growth-factor effect). Not a reportable malignancy — no code is emitted (Pathway §4.9)."
             },
             {
-              "label": "Persistent monocytosis but under 10% of the white cell count, or the CMML criteria are otherwise unmet — CMUS / CCMUS",
-              "non_reportable": true,
-              "reason": "Clonal or idiopathic monocytosis of undetermined significance (CMUS/CCMUS). Explicitly not malignant and must not be reported (Pathway §3.10, §4.9)."
+              "label": "Persistent monocytosis but under 10% of the white cell count, or the CMML criteria are otherwise unmet",
+              "next_node": "mds_monocytic_entity_fork_lt10",
+              "coding_note": "The 10% test belongs to CMML. The JMML monocyte criterion is an absolute count of at least 1×10⁹/L with no percentage (Pathway §3.4), so the case still gets the JMML pattern question before it can leave as CMUS (§3.10)."
             },
             {
               "label": "Splenomegaly and cytopenias fully explained by malaria or HIV hypersplenism",
@@ -9199,8 +9300,8 @@
             },
             {
               "label": "Reactive causes not yet assessed — the file does not document the exclusions",
-              "next_node": "mds_monocytic_entity_fork",
-              "coding_note": "Recorded as an incomplete exclusion. It does not change the code, but it is the single largest false-positive registration risk in this group and must appear on the output block.",
+              "next_node": "mds_monocytic_entity_fork_unassessed",
+              "coding_note": "Recorded as an incomplete exclusion. Reactive monocytosis must be excluded before CMML is coded (Pathway §3.10), so a CMML-pattern answer on this route closes at 9975 with the exclusion named as outstanding.",
               "captures": {
                 "reactive_monocytosis_excluded": "not assessed",
                 "workup_status": "incomplete"
@@ -9271,8 +9372,8 @@
             },
             {
               "label": "BCR::ABL1 POSITIVE — Philadelphia chromosome t(9;22) on karyotype, or BCR::ABL1 detected by FISH or RT-PCR",
-              "next_node": "mpn_document_inventory",
-              "coding_note": "The mandatory JMML criterion fails in the POSITIVE direction, which is diagnostic rather than merely disqualifying. Monocytosis in a Ph-positive case does not make it CMML: the case is owned by the chronic myeloid / MPN tree (Pathway §7.1), which resolves BCR::ABL1-positive disease to 9875 and records the phase as a display-only qualifier. Do not code 9946, 9945 or any MDS terminal here.",
+              "next_node": "mpn_cml_phase_capture",
+              "coding_note": "The mandatory JMML criterion fails in the POSITIVE direction, which is diagnostic rather than merely disqualifying. Monocytosis in a Ph-positive case does not make it CMML: the case is owned by the chronic myeloid / MPN tree (Pathway §7.1), which resolves BCR::ABL1-positive disease to 9875 and records the phase as a display-only qualifier. Do not code 9946, 9945 or any MDS terminal here. A positive result codes 9875 whatever else is in the file (Pathway §3.9), so the case goes straight to the phase question instead of through the chronic myeloid evidence checklist, which never read the held answer.",
               "captures": {
                 "bcr_abl1_status": "positive",
                 "evidence_tests": [
@@ -10061,7 +10162,7 @@
           "options": [
             {
               "label": "B12 / folate / iron deficiency, HIV, chronic infection and drug effect all excluded and documented",
-              "next_node": "mds_prior_therapy_gate",
+              "next_node": "mds_germline_ibmfs_gate",
               "captures": {
                 "reversible_cytopenia_excluded": "excluded"
               }
@@ -10083,53 +10184,11 @@
             },
             {
               "label": "Not assessed — the file does not document these exclusions",
-              "next_node": "mds_prior_therapy_gate",
+              "next_node": "mds_germline_ibmfs_gate",
               "coding_note": "The case can still be coded, but the omission is recorded and appears as a workup row on the output block. Skipping this step is the largest single false-positive registration risk in this group.",
               "captures": {
                 "reversible_cytopenia_excluded": "not assessed",
                 "workup_status": "incomplete"
-              }
-            }
-          ],
-          "nos_fallback": null
-        },
-        {
-          "node_id": "mds_prior_therapy_gate",
-          "node_type": "document_inventory",
-          "step_number": 3,
-          "step_label": "Prior therapy",
-          "question": "Has this patient had prior cytotoxic chemotherapy or radiotherapy?",
-          "hint": "'No prior cytotoxic therapy' is one of the ICC criteria for refractory cytopenia of childhood, so it is asked explicitly.",
-          "clinical_alert": null,
-          "coding_note": "Therapy-related disease is a QUALIFIER, not a code (Pathway §4.8, §5.3.7). This tree never routes to 9987 or 9920 — both are closed as terminals. Code the underlying MDS subtype and set the qualifier.",
-          "options": [
-            {
-              "label": "No prior cytotoxic chemotherapy or radiotherapy",
-              "next_node": "mds_germline_ibmfs_gate",
-              "coding_note": "Satisfies the ICC 'no prior cytotoxic therapy' criterion for refractory cytopenia of childhood.",
-              "captures": {
-                "therapy_related_qualifier": "no",
-                "prior_cytotoxic_therapy": "no"
-              }
-            },
-            {
-              "label": "Prior cytotoxic chemotherapy and/or radiotherapy documented",
-              "next_node": "mds_germline_ibmfs_gate",
-              "coding_note": "The qualifier is recorded on the output block. Continue and code the underlying MDS entity — never 9987, never 9920. The ICC criteria for refractory cytopenia of childhood are not met once prior cytotoxic therapy is documented, so 9985 is not available on this branch.",
-              "captures": {
-                "therapy_related_qualifier": "yes",
-                "prior_cytotoxic_therapy": "yes",
-                "qualifiers": [
-                  "therapy_related"
-                ]
-              }
-            },
-            {
-              "label": "Not documented in the file",
-              "next_node": "mds_germline_ibmfs_gate",
-              "captures": {
-                "therapy_related_qualifier": "unknown",
-                "prior_cytotoxic_therapy": "unknown"
               }
             }
           ],
@@ -10254,7 +10313,7 @@
             {
               "finding": "Isolated del(5q)",
               "detection_method": "karyotype_or_fish",
-              "next_node": "mds_blast_confirm_gate",
+              "next_node": "mds_del5q_blast_gate",
               "coding_note": "9986 requires the deletion to be ISOLATED and the blast count to be under 5%. Both are confirmed at the next two steps before the code is emitted.",
               "captures": {
                 "mds_defining_cytogenetics": "present",
@@ -10330,24 +10389,6 @@
                 "karyotype_result_status": "unavailable",
                 "workup_status": "incomplete"
               }
-            },
-            {
-              "finding": "MDS-defining cytogenetics after prior cytotoxic chemotherapy or radiotherapy, subtype otherwise unclassified",
-              "detection_method": "karyotype_or_fish",
-              "morphology_code": "9989",
-              "coding_note": "DO NOT CODE 9987. Therapy-related MDS is a qualifier on the underlying diagnosis, not a terminal (Pathway §4.8, §5.3.7). 9989 carries the subtype-unclassified MDS; therapy_related_qualifier carries the relationship.",
-              "captures": {
-                "therapy_related_qualifier": "yes",
-                "qualifiers": [
-                  "therapy_related"
-                ],
-                "karyotype_result_status": "received",
-                "mds_defining_cytogenetics": "present",
-                "evidence_tests": [
-                  "Histology",
-                  "Cytogenetics/FISH"
-                ]
-              }
             }
           ],
           "captured_variables": [
@@ -10414,8 +10455,8 @@
             },
             {
               "range": "not_documented",
-              "next_node": "mds_dysplasia_extent",
-              "coding_note": "Blast percentage undocumented. Do not assume the excess-blast band — resolve the case on the dysplasia pattern and record the missing blast count as an upgrade."
+              "next_node": "mds_blast_nd_fork",
+              "coding_note": "Blast percentage undocumented. A band entered earlier is kept (Pathway §2.2, §6): the next screen asks which band the report gave, so a 5–19% report is not turned into a low-blast code."
             }
           ],
           "captured_variables": [
@@ -10490,18 +10531,6 @@
               }
             },
             {
-              "descriptor": "Isolated del(5q) with macrocytic anaemia and preserved or raised platelets",
-              "morphology_code": "9986",
-              "coding_note": "The deletion must be ISOLATED and the blasts under 5%. Rare in children; kept reachable with the age-implausibility warning.",
-              "captures": {
-                "del5q_status": "isolated",
-                "evidence_tests": [
-                  "Histology",
-                  "Cytogenetics/FISH"
-                ]
-              }
-            },
-            {
               "descriptor": "Dysplasia documented but the subtype is not stated, or the lineages involved are not recorded",
               "morphology_code": "9989",
               "coding_note": "9989 is the MDS fallback when the subtype is undocumented. It is a real terminal, not a placeholder — but the missing detail is listed as an upgrade.",
@@ -10518,6 +10547,208 @@
             }
           ],
           "nos_fallback": null
+        },
+        {
+          "node_id": "mds_monocytic_entity_fork_unassessed",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Monocytic entity",
+          "question": "Which entity does the marrow and clinical picture describe?",
+          "hint": "Age is not diagnostic for JMML — it is prognostic only (Pathway §3.4). The genetics decide, not the age.",
+          "coding_note": "JMML (9946) and CMML (9945) share a monocytic phenotype and separate on the RAS-pathway lesion and the supporting-criteria rule, not on age.",
+          "options": [
+            {
+              "descriptor": "Myeloproliferative picture — splenomegaly, elevated HbF for age, circulating myeloid precursors, monosomy 7 (JMML pattern)",
+              "next_node": "mds_jmml_mandatory_gate",
+              "captures": {
+                "splenomegaly_present": "yes"
+              }
+            },
+            {
+              "descriptor": "Dysplastic monocytic picture — dysplasia ≥10% in ≥1 lineage and/or a clonal marker, no splenomegaly-led myeloproliferative picture (CMML pattern)",
+              "next_node": "mds_cmml_unassessed",
+              "captures": {
+                "splenomegaly_present": "no"
+              }
+            },
+            {
+              "descriptor": "Overlapping myelodysplastic and myeloproliferative features — the CMML, atypical CML and JMML criteria are all unmet",
+              "next_node": "mds_overlap_confirm"
+            },
+            {
+              "descriptor": "Blasts ≥20% in blood or marrow — an acute picture",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "Blasts <20% in both blood and marrow is a MANDATORY JMML criterion and bounds CMML too. At ≥20% the case is acute leukaemia and belongs in the acute tree (Pathway §3.4, §3.10).",
+              "captures": {
+                "blast_percent_band": ">=20"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_cmml_unassessed",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "CMML, reactive causes open",
+          "question": "Reactive causes of the monocytosis were not excluded and documented, so the CMML criteria cannot be confirmed. What does the file support?",
+          "hint": "CMML needs reactive monocytosis excluded first (Pathway §3.10).",
+          "clinical_alert": null,
+          "coding_note": "Pathway §3.10: exclude reactive monocytosis before CMML (9945). With the exclusion undocumented the criteria are not established and the chain 9945 → 9975 (§6) steps down. Ruling 11 of 4 Sep 2026: an untested result drops to the nearest code.",
+          "options": [
+            {
+              "label": "Monocytosis with dysplasia and/or a clonal marker; reactive causes still to be excluded",
+              "morphology_code": "9975",
+              "confidence": "low",
+              "upgrade_path": "Documentation that reactive causes are excluded would allow 9945 if the CMML supporting criteria are met.",
+              "captures": {
+                "workup_status": "incomplete",
+                "evidence_tests": [
+                  "Histology"
+                ]
+              }
+            },
+            {
+              "label": "Reviewed — the monocytosis is reactive",
+              "non_reportable": true,
+              "reason": "Reactive monocytosis is not a neoplasm and is not reported (Pathway §3.10, §4.9)."
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_monocytic_entity_fork_lt10",
+          "node_type": "histology_subclassification",
+          "step_number": 3,
+          "step_label": "Monocytic entity",
+          "question": "CMML is excluded on the percentage or criteria. Does the picture fit JMML?",
+          "hint": "Age is not diagnostic for JMML. The genetics decide, not the age (Pathway §3.4).",
+          "coding_note": "The JMML monocyte criterion has no percentage test (Pathway §3.4). Monocytosis that fits neither JMML nor CMML is CMUS or CCMUS: not malignant, no code (§3.10, §4.9).",
+          "options": [
+            {
+              "descriptor": "Myeloproliferative picture — splenomegaly, elevated HbF for age, circulating myeloid precursors, monosomy 7 (JMML pattern)",
+              "next_node": "mds_jmml_mandatory_gate",
+              "captures": {
+                "splenomegaly_present": "yes"
+              }
+            },
+            {
+              "descriptor": "No JMML pattern — monocytosis of undetermined significance (CMUS / CCMUS)",
+              "non_reportable": true,
+              "reason": "Clonal or idiopathic monocytosis of undetermined significance (CMUS/CCMUS). Explicitly not malignant and must not be reported (Pathway §3.10, §4.9)."
+            },
+            {
+              "descriptor": "Blasts ≥20% in blood or marrow — an acute picture",
+              "next_node": "ac_lineage_assignment",
+              "captures": {
+                "blast_percent_band": ">=20"
+              }
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_blast_nd_fork",
+          "node_type": "document_inventory",
+          "step_number": 3,
+          "step_label": "Blast band",
+          "question": "The exact blast percentage is not documented. What did the marrow report give?",
+          "hint": "Pathway §2.2 and §6 send marrow blasts of 5–19% with dysplasia to 9983.",
+          "clinical_alert": null,
+          "coding_note": "The blast band entered earlier on the route is held; the not-documented answer must not overwrite it (Pathway §5.1 keeps the band as its own routing variable).",
+          "options": [
+            {
+              "label": "Marrow blasts of 5–19%, with dysplasia documented",
+              "morphology_code": "9983",
+              "confidence": "medium",
+              "classification_system": "ICC-2022",
+              "upgrade_path": "An exact blast count would confirm the band. The code is unchanged.",
+              "captures": {
+                "blast_percent_band": "5-19",
+                "evidence_tests": [
+                  "Histology"
+                ],
+                "workup_status": "incomplete"
+              }
+            },
+            {
+              "label": "Marrow blasts under 5%, or the report gave no blast band",
+              "next_node": "mds_dysplasia_extent"
+            }
+          ],
+          "nos_fallback": null
+        },
+        {
+          "node_id": "mds_del5q_blast_gate",
+          "node_type": "numeric_gate",
+          "step_number": 3,
+          "step_label": "Blast %",
+          "question": "Marrow blast percentage (of ALL nucleated marrow cells)?",
+          "hint": "The denominator is all nucleated cells, not non-erythroid cells. If the acute tree already recorded a blast count, re-enter the same value — this is the gate that fixes the code. Tick 'not documented' rather than guessing.",
+          "variable": "marrow_blast_percentage",
+          "variable_label": "Marrow blast percentage",
+          "unit": "%",
+          "band_variable": "blast_percent_band",
+          "clinical_alert": null,
+          "coding_note": "Isolated del(5q) defines 9986 (Pathway §0, §1). With marrow blasts under 5% the case codes 9986 whatever the dysplasia pattern; a higher blast band or acute picture still leaves the low-blast route.",
+          "bands": [
+            {
+              "range": ">=20",
+              "next_node": "ac_lineage_assignment",
+              "coding_note": "≥20% is acute leukaemia under both WHO-HAEM5 and ICC — no divergence. Leave the MDS tree and assign lineage."
+            },
+            {
+              "range": "10-19",
+              "morphology_code": "9983",
+              "classification_system": "ICC-2022",
+              "coding_note": "ICC's MDS/AML 10–19% category is explicitly EXCLUDED under 18 years (Pathway §5.4). In a child a dysplastic marrow at 10–19% blasts is paediatric MDS with excess blasts — 9983 — not MDS/AML. In an adult patient this band would be MDS/AML under ICC; flag for review if the patient is 18 or over.",
+              "upgrade_path": "None on the blast count. Cytogenetics/FISH would add prognostic detail; the code is unchanged."
+            },
+            {
+              "range": "5-19",
+              "morphology_code": "9983",
+              "classification_system": "ICC-2022",
+              "coding_note": "Paediatric MDS with excess blasts: BM 5–19%, PB 2–19% (Pathway §3.5). The 5–19% band is retained for children under both the ICC arbitration and the registry's code list.",
+              "upgrade_path": "None on the blast count. Cytogenetics/FISH would add prognostic detail; the code is unchanged."
+            },
+            {
+              "range": "<5",
+              "coding_note": "Isolated del(5q) with marrow blasts under 5%: 9986 Myelodysplastic syndrome with isolated del (5q) (Pathway §1).",
+              "morphology_code": "9986",
+              "confidence": "medium",
+              "classification_system": "ICC-2022",
+              "upgrade_path": "None on the genetics. The code is unchanged by the dysplasia pattern.",
+              "captures": {
+                "del5q_status": "isolated",
+                "evidence_tests": [
+                  "Histology",
+                  "Cytogenetics/FISH"
+                ],
+                "workup_status": "complete"
+              }
+            },
+            {
+              "range": "not_documented",
+              "next_node": "mds_blast_nd_fork",
+              "coding_note": "Blast percentage undocumented. A band entered earlier is kept (Pathway §2.2, §6): the next screen asks which band the report gave, so a 5–19% report is not turned into a low-blast code."
+            }
+          ],
+          "captured_variables": [
+            "marrow_blast_percentage",
+            "blast_percent_band",
+            "aml_defining_genetic_abnormality",
+            "mds_defining_cytogenetics",
+            "del5q_status",
+            "therapy_related_qualifier",
+            "germline_predisposition",
+            "ibmfs_exclusion_status",
+            "ring_sideroblast_status"
+          ],
+          "nos_fallback": {
+            "code": "9989",
+            "name": "Myelodysplastic syndrome, NOS",
+            "reason": "Myelodysplastic picture recorded but the subtype could not be established."
+          }
         }
       ]
     }

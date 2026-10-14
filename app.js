@@ -2821,7 +2821,11 @@ function renderOutput() {
       (altc.length ? ' **Alternative codes:** ' + altc.join(', ') + '.' : ''), true, 'provisional');
   }
 
-  h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
+  /* The row exists to record a status for each test still outstanding. With none outstanding it is not drawn: the
+     sentence it used to print, "Complete — no outstanding tests", sat above an upgrade line naming what would
+     refine the code and read as a contradiction (registrar, 14 October 2026). The Upgrade row below is always drawn
+     and says "None — fully subtyped" when there is nothing to upgrade. */
+  if (state.workup.length) h += '<div class="orow"><b>Workup</b><span>' + renderWorkup() + '</span></div>';
   /* A registry data item in its own right, next to the workup it is derived
      from: what the diagnosis RESTS ON is not a claim about how sure the tool
      is of its own answer (§2.5). */
@@ -2904,7 +2908,7 @@ function orow(label, value, emphasise, mod) {
 }
 /* Per MISSING TEST, not per case. */
 function renderWorkup() {
-  if (!state.workup.length) return 'Complete — no outstanding tests.';
+  if (!state.workup.length) return '';
   return '<span class="workup">' + state.workup.map(function (w, i) {
     return '<span class="workup__row"><span class="workup__test">' + esc(w.test) + '</span>' +
       '<select data-act="workup" data-i="' + i + '" aria-label="Workup status for ' + esc(w.test) + '">' +

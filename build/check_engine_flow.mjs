@@ -2211,8 +2211,9 @@ async function uxScenarios(ctx) {
     const routed = []; for (const ids of where) routed.push(await gate(ids));
     t('a marrow report with a genetic test and no flow or IHC goes to the genetics question, whichever marrow test and genetic test it is',
       routed.every((x) => x === 'ac_morph_genetics_context'), JSON.stringify(routed));
-    t('a marrow report alone still goes to the morphology question, and with flow it still goes to prior therapy',
-      (await gate(['marrow_aspirate'])) === 'ac_morphology_only' && (await gate(['marrow_aspirate', 'pcr', 'flow'])) === 'ac_prior_therapy_gate', 'the other routes moved');
+    t('a marrow report alone still goes to its morphology question, and with flow or IHC it goes to the morphology question that comes before the markers',
+      (await gate(['marrow_aspirate'])) === 'ac_morphology_only' && (await gate(['marrow_aspirate', 'pcr', 'flow'])) === 'ac_morphology_first' &&
+      (await gate(['marrow_aspirate', 'ihc'])) === 'ac_morphology_first', 'the routes moved');
     await gate(['marrow_aspirate', 'pcr']); await pickBy('ac_morph_genetics_context', 'BCR::ABL1 positive');
     const afterGen = ctx.state.nodeId;
     await pickBy('ac_morphology_only', 'Lymphoid blasts');
@@ -2246,6 +2247,159 @@ async function uxScenarios(ctx) {
     t('PML::RARA not tested after the lineage rules goes on to the AML genetics ladder; the ladder\'s APL-like option still closes at 9861 and cannot loop',
       fromLineage === 'ac_aml_genetics_upgrade' && closing === '9861' && ctx.state.nodeId === 'ac_apl_status_lineage' && ladderApl === 1,
       'from lineage ' + fromLineage + ', closing ' + closing + ', after markers ' + ctx.state.nodeId + ', ladder options to the closing question ' + ladderApl);
+
+    /* Morphology first (registrar, 14 October 2026). With flow or IHC in the file the morphology question comes before the markers. When no
+       marker rule fires the case reverts to what the morphology report says and takes the closest diagnosis; a marker combination that
+       defines a lineage still overrides it. The panel-adequacy question is gone: with one marker entered its comprehensive-panel answers
+       described a panel the engine had no way to check. */
+    const toLineage = async (head) => {
+      begin(dt1, TREE, 'ac_morphology_first', 'C42.1');
+      await pickBy('ac_morphology_first', head);
+      await pickBy('ac_defining_genetics_context', 'No cytogenetics');
+      await draftSet('value', '80', 'number'); await tap('resolve');
+    };
+    const enterMarkers = async (markers) => {
+      for (const [m, v] of Object.entries(markers)) { const i = ctx.pickerAvailable(ctx.node()).indexOf(m); await tap('pickadd', i); await mset(m, v); }
+      await tap('resolve');
+    };
+    const sum = () => 'node ' + ctx.state.nodeId + ', code ' + codeNow() + ', workup ' + ctx.state.captured.workup_status;
+    await toLineage('Lymphoid blasts'); const atLineage = ctx.state.nodeId; await enterMarkers({ TdT: 'pos' });
+    t('lymphoid blasts and TdT alone, which define no lineage, revert to the morphology: 9835, with no panel question',
+      atLineage === 'ac_lineage_assignment' && codeNow() === '9835' && !ctx.findNode('ac_alal_resolve'), 'at ' + atLineage + ', ' + sum());
+    await toLineage('Lymphoid blasts'); await enterMarkers({ CD19: 'strong', CD10: 'pos', cMPO: 'neg' });
+    t('a marker combination that defines a lineage overrides the morphology: B-lineage markers reach the B-ALL genetics', ctx.state.nodeId === 'ac_ball_cytogenetics', sum());
+    await toLineage('Myeloid blasts'); await tap('resolve');
+    t('myeloid blasts with no marker entered revert to 9861', codeNow() === '9861', sum());
+    await toLineage('Myeloid blasts'); await enterMarkers({ cMPO: 'strong' });
+    t('myeloid blasts with cMPO strong go to the AML genetics, not to the morphology code', ctx.state.nodeId === 'ac_aml_genetics_upgrade', sum());
+    await toLineage('Two distinct blast populations'); await enterMarkers({ TdT: 'pos' });
+    t('a stated mixed phenotype with markers that meet no lineage criteria reverts to 9805', codeNow() === '9805', sum());
+    await toLineage('Hypergranular promyelocytes'); await enterMarkers({ CD45: 'neg' });
+    t('hypergranular promyelocytes with no defining marker go to the PML::RARA question that carries a held result on', ctx.state.nodeId === 'ac_apl_status_lineage', sum());
+    await toLineage('Blasts present, lineage not stated'); await tap('resolve');
+    t('lineage not stated and no marker entered records 9801 as incomplete', codeNow() === '9801' && ctx.state.captured.workup_status === 'incomplete', sum());
+    begin(dt1, TREE, 'ac_morphology_first', 'C42.1'); await pickBy('ac_morphology_first', 'Marrow reviewed');
+    t('no leukaemic population on the morphology question ends as not reportable, with no code', !!(ctx.state.result && ctx.state.result.excluded), 'stage ' + ctx.state.stage);
+    /* The Burkitt route the registrar drove: a Burkitt-pattern film, MYC rearrangement and TdT, then the acute lineage markers with TdT alone.
+       ICD-O-3.2 codes Burkitt lymphoma and its leukaemic synonyms to 9687/3, a Group II code, so the case ends at the Group II referral. */
+    begin(dt1, 'tree_mature_lymphoid', 'ml_morphology_only', 'C42.1'); await pickBy('ml_morphology_only', 'Medium-sized cells');
+    await enterMarkers({ 'MYC rearrangement (FISH)': 'pos', TdT: 'pos' });
+    const atAcute = ctx.state.nodeId; await enterMarkers({ TdT: 'pos' });
+    t('a Burkitt-pattern film with MYC rearrangement and TdT, and no lineage defined on the acute markers, reaches the Group II referral and not a panel question',
+      atAcute === 'ac_lineage_assignment' && ctx.state.nodeId === 'ml_burkitt_refer', 'at ' + atAcute + ', then ' + ctx.state.nodeId);
+
+    /* The Workup row (registrar, 14 October 2026): drawn only while a test is outstanding. With none outstanding it is absent and prints no
+       "Complete — no outstanding tests"; the Upgrade row, which is always drawn, carries what would refine the code. */
+    /* From the tick screen, as a clerk would: the ticks credit marrow morphology and flow cytometry, so nothing is outstanding. */
+    await gate(['marrow_aspirate', 'flow']); await pickBy('ac_morphology_first', 'Lymphoid blasts');
+    await pickBy('ac_defining_genetics_context', 'No cytogenetics');
+    await draftSet('value', '80', 'number'); await tap('resolve'); await enterMarkers({ TdT: 'pos' });
+    const noOutstanding = rend(() => ctx.renderOutput());
+    t('a code with no test outstanding draws no Workup row and no "Complete" sentence, and its Upgrade row is still drawn',
+      codeNow() === '9835' && (ctx.state.workup || []).length === 0 && !/<b>Workup<\/b>/.test(noOutstanding) && !/Complete — no outstanding tests/.test(noOutstanding) &&
+      /orow--upgrade/.test(noOutstanding) && /would give 9811 or 9837/.test(noOutstanding),
+      'workup ' + JSON.stringify(ctx.state.workup) + ', row drawn ' + /<b>Workup<\/b>/.test(noOutstanding) + ', upgrade drawn ' + /orow--upgrade/.test(noOutstanding));
+    begin(dt1, TREE, 'ac_morphology_only', 'C42.1'); await pickBy('ac_morphology_only', 'Lymphoid blasts');
+    const outstanding = rend(() => ctx.renderOutput());
+    t('a code with a test outstanding keeps the Workup row and its status control',
+      /<b>Workup<\/b>/.test(outstanding) && /data-act="workup"/.test(outstanding) && /Flow cytometry/.test(outstanding), 'row drawn ' + /<b>Workup<\/b>/.test(outstanding));
+
+    /* The prior-therapy question is gone from all four Group 1 trees (registrar, 14 October 2026). Every answer led to the same next screen
+       and no rule read it, so it only added a "therapy_related" chip to the output. The screens that led to it lead to what followed it. */
+    const asksTherapy = [];
+    for (const tr of dt1.decision_trees) for (const n of tr.nodes) if (/prior cytotoxic/i.test(n.question || '') || /^prior therapy$/i.test(n.step_label || '')) asksTherapy.push(n.node_id);
+    t('no Group 1 screen asks about prior cytotoxic therapy', asksTherapy.length === 0, JSON.stringify(asksTherapy));
+    const hop = async (treeId, nodeId, dest) => {
+      begin(dt1, treeId, nodeId, 'C42.1');
+      const i = ctx.findNode(nodeId).options.findIndex((o) => o.next_node === dest);
+      if (i < 0) return 'no link to ' + dest + ' at ' + nodeId;
+      await tap('opt', i); return ctx.state.nodeId;
+    };
+    const hops = [await hop(TREE, 'ac_morphology_first', 'ac_defining_genetics_context'), await hop('tree_mature_lymphoid', 'ml_compartment_gate', 'ml_morphology_pattern'),
+      await hop('tree_mds_jmml', 'mds_reversible_cause_gate', 'mds_germline_ibmfs_gate')];
+    begin(dt1, 'tree_chronic_myeloid_mpn', 'mpn_document_inventory', 'C42.1'); await tickSet(ALL, new Set(['marrow_aspirate', 'karyotype'])); await tap('tick-continue');
+    hops.push(ctx.state.nodeId);
+    t('the screens that led to a prior-therapy question now lead to the screen that followed it, in all four trees',
+      hops.join() === 'ac_defining_genetics_context,ml_morphology_pattern,mds_germline_ibmfs_gate,mpn_bcr_abl1_gate', JSON.stringify(hops));
+
+    /* Where the Group 1 Diagnostic Pathway supports a code, the tool gives it (registrar, 14 October 2026). Each fix below was found by the
+       pathway recheck of the failing reachability cases; each is driven here from the screen where the case went wrong. */
+    const pickAny = async (nodeId, head) => {
+      const n = ctx.findNode(nodeId), i = n.options.findIndex((o) => (o.label || o.descriptor || o.finding || '').startsWith(head));
+      if (i < 0) { thrown = 'no option "' + head + '" at ' + nodeId; return; }
+      if (n.node_type === 'cytogenetics_dropdown') { await draftSet('option', String(i)); await tap('resolve'); } else await tap('opt', i);
+    };
+    const num = async (v) => { await draftSet('value', String(v), 'number'); await tap('resolve'); };
+    const notDoc = async () => { try { await ctx.handleOption('draft', fakeEl({ 'data-k': 'not_documented' }, { type: 'checkbox', checked: true })); await tap('resolve'); } catch (e) { thrown = e.message; } };
+    const nodeNow = () => ctx.state.nodeId;
+    const TT = 'tree_mds_jmml', MPN = 'tree_chronic_myeloid_mpn', ML = 'tree_mature_lymphoid';
+
+    begin(dt1, TREE, 'ac_ds_context', 'C42.1'); await pickAny('ac_ds_context', 'Trisomy 21 confirmed — GATA1s not tested'); await num(24);
+    const dsUntested = nodeNow(), dsUntestedCode = codeNow();
+    begin(dt1, TREE, 'ac_ds_context', 'C42.1'); await pickAny('ac_ds_context', 'Trisomy 21 confirmed on constitutional karyotype AND GATA1s'); await num(24);
+    t('Down syndrome leukaemia needs a positive GATA1s result: untested goes to lineage assignment, positive at 3 months or more still codes 9898',
+      dsUntested === 'ac_lineage_assignment' && /^none/.test(dsUntestedCode) && codeNow() === '9898', dsUntested + ', ' + dsUntestedCode + ', positive ' + codeNow());
+
+    begin(dt1, TT, 'mds_jmml_mandatory_gate', 'C42.1'); await pickAny('mds_jmml_mandatory_gate', 'BCR::ABL1 POSITIVE');
+    const toCml = nodeNow(); await pickAny('mpn_cml_phase_capture', 'Blasts under 10%');
+    t('BCR::ABL1 positive recorded at the JMML gate goes straight to the CML phase question and codes 9875, not back through the evidence checklist',
+      toCml === 'mpn_cml_phase_capture' && codeNow() === '9875', toCml + ', ' + codeNow());
+
+    begin(dt1, MPN, 'mpn_eos_molecular', 'C42.1'); await pickAny('mpn_eos_molecular', 'Karyotype ABNORMAL');
+    const e1 = nodeNow(); await pickAny('mpn_eos_clonal_fish_prompt', 'FISH / RT-PCR requested'); const e2 = nodeNow(); await pickAny('mpn_eos_clonal_unresolved', 'Pending');
+    const abn = codeNow();
+    begin(dt1, MPN, 'mpn_eos_molecular', 'C42.1'); await pickAny('mpn_eos_molecular', 'Karyotype normal, blasts increased');
+    await pickAny('mpn_eos_cryptic_fish_prompt', 'FISH / RT-PCR requested'); await pickAny('mpn_eos_cryptic_unresolved', 'Pending');
+    t('eosinophilia with a clonal karyotype and no FIP1L1::PDGFRA test codes 9964; a normal karyotype with increased blasts still stops at 9960',
+      e1 === 'mpn_eos_clonal_fish_prompt' && e2 === 'mpn_eos_clonal_unresolved' && abn === '9964' && codeNow() === '9960', e1 + ', ' + e2 + ', ' + abn + ', ' + codeNow());
+
+    begin(dt1, TT, 'mds_monocytosis_context', 'C42.1'); await pickAny('mds_monocytosis_context', 'Reactive causes not yet assessed');
+    const c1 = nodeNow(); await pickAny('mds_monocytic_entity_fork_unassessed', 'Dysplastic monocytic'); const c2 = nodeNow(); await pickAny('mds_cmml_unassessed', 'Monocytosis with dysplasia');
+    const cUn = codeNow();
+    begin(dt1, TT, 'mds_monocytosis_context', 'C42.1'); await pickAny('mds_monocytosis_context', 'Persistent monocytosis, ≥10%');
+    await pickAny('mds_monocytic_entity_fork', 'Dysplastic monocytic'); await pickAny('mds_cmml_criteria', 'Monocytes ≥1×10⁹/L and ≥10% of WBC');
+    t('CMML with reactive causes not assessed closes at 9975; with the exclusion documented it still reaches 9945',
+      c1 === 'mds_monocytic_entity_fork_unassessed' && c2 === 'mds_cmml_unassessed' && cUn === '9975' && codeNow() === '9945', c1 + ', ' + c2 + ', ' + cUn + ', ' + codeNow());
+
+    begin(dt1, TT, 'mds_monocytosis_context', 'C42.1'); await pickAny('mds_monocytosis_context', 'Persistent monocytosis but under 10%');
+    const lt1 = nodeNow(); await pickAny('mds_monocytic_entity_fork_lt10', 'Myeloproliferative picture'); const lt2 = nodeNow();
+    begin(dt1, TT, 'mds_monocytosis_context', 'C42.1'); await pickAny('mds_monocytosis_context', 'Persistent monocytosis but under 10%'); await pickAny('mds_monocytic_entity_fork_lt10', 'No JMML pattern');
+    t('monocytosis under 10% of the white cells still gets the JMML question; only a case with no JMML pattern leaves as CMUS',
+      lt1 === 'mds_monocytic_entity_fork_lt10' && lt2 === 'mds_jmml_mandatory_gate' && !!(ctx.state.result && ctx.state.result.excluded), lt1 + ', ' + lt2 + ', stage ' + ctx.state.stage);
+
+    begin(dt1, ML, 'ml_morphology_only', 'C42.1'); await pickBy('ml_morphology_only', 'Medium-sized cells'); await enterMarkers({ CD19: 'pos', 'CD20': 'strong' });
+    const bk1 = nodeNow();
+    begin(dt1, ML, 'ml_burkitt_screen', 'C42.1'); await enterMarkers({ CD19: 'pos', 'CD20': 'strong' });
+    t('a Burkitt-pattern film that no marker overrides reaches the Group II referral; the same markers with no Burkitt pattern keep the acute morphology question',
+      bk1 === 'ml_burkitt_refer' && nodeNow() === 'ac_morphology_only', bk1 + ', ' + nodeNow());
+
+    begin(dt1, ML, 'ml_b_entity_panel', 'C42.1'); await enterMarkers({ CD19: 'pos', CD20: 'strong', CD11c: 'pos', CD25: 'pos', CD123: 'pos', 'annexin-A1': 'pos' });
+    const hairy = codeNow();
+    begin(dt1, ML, 'ml_pll_lineage', 'C42.1'); await enterMarkers({ kappa: 'pos', CD3: 'neg' });
+    t('hairy-cell markers without CD103 are not sent to B-cell prolymphocytic leukaemia (9820), and kappa with CD3 negative is enough for 9833',
+      hairy === '9820' && codeNow() === '9833', hairy + ', ' + codeNow());
+
+    begin(dt1, ML, 'ml_lineage_screen', 'C42.1'); await enterMarkers({ CD56: 'pos', CD16: 'pos', CD3: 'neg', cCD3: 'pos' });
+    const nk1 = nodeNow(); await pickAny('ml_nk_lgl_criteria', 'Aggressive NK-cell');
+    t('CD56 and CD16 positive with surface CD3 negative and cytoplasmic CD3 positive opens the NK criteria and reaches 9948',
+      nk1 === 'ml_nk_lgl_criteria' && codeNow() === '9948', nk1 + ', ' + codeNow());
+
+    const toCyto = async (startNode, startHead, nextHead) => {
+      begin(dt1, TT, startNode, 'C42.1'); await pickAny(startNode, startHead);
+      await pickAny('mds_reversible_cause_gate', 'B12 / folate / iron deficiency'); await pickAny('mds_germline_ibmfs_gate', 'Germline panel performed');
+    };
+    await toCyto('mds_eb_pediatric_entry', 'Dysplasia documented'); await pickAny('mds_mds_cytogenetics', 'Karyotype normal'); await notDoc();
+    const nd1 = nodeNow(); await pickAny('mds_blast_nd_fork', 'Marrow blasts of 5–19%'); const nd1Code = codeNow();
+    await toCyto('mds_rcc_entry', 'Persistent age-adjusted cytopenia'); await pickAny('mds_mds_cytogenetics', 'Karyotype normal'); await notDoc(); await pickAny('mds_blast_nd_fork', 'Marrow blasts under 5%');
+    t('a 5–19% blast band is kept when the exact percentage is not documented (9983); a low-blast case still goes on to the dysplasia pattern',
+      nd1 === 'mds_blast_nd_fork' && nd1Code === '9983' && nodeNow() === 'mds_dysplasia_extent', nd1 + ', ' + nd1Code + ', ' + nodeNow());
+
+    await toCyto('mds_rcc_entry', 'Persistent age-adjusted cytopenia'); await pickAny('mds_mds_cytogenetics', 'Isolated del(5q)');
+    const d5 = nodeNow(); await num(2);
+    const cyOpts = ctx.findNode('mds_mds_cytogenetics').options, dyOpts = ctx.findNode('mds_dysplasia_extent').options;
+    t('isolated del(5q) with marrow blasts under 5% codes 9986; the dysplasia screen no longer offers 9986, and the cytogenetics screen no longer offers a therapy shortcut',
+      d5 === 'mds_del5q_blast_gate' && codeNow() === '9986' && dyOpts.every((o) => o.morphology_code !== '9986') && !cyOpts.some((o) => /prior cytotoxic/i.test(o.finding || '')),
+      d5 + ', ' + codeNow() + ', dysplasia options ' + dyOpts.length + ', cytogenetics options ' + cyOpts.length);
   }
   return rows;
 }
