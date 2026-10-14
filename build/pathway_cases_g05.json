@@ -1,0 +1,1684 @@
+{
+ "_comment": "Group 5 Pathway case table, 14 October 2026 (branch reach-g05), rewritten the same day for the registrar's rulings. Each row is a clerk walk from the evidence checklist with topography C69.2, the result the Pathway, the registrar rulings or the build contract give for it, and where it says so. kind: ideal (one per emitter), pathway (the Pathway's own quick-reference rows and edge cases), degrade (one result missing or contradicted), ablation (one defining result of a primary path removed), correction (a case a correction or a ruling fixed). A row with assert false is a case a registrar ruling is still owed on; the gate replays it and checks it still gives the `current` result, so a change has to be made on purpose. None is owed today: the registrar ruled on every queue item on 14 October 2026. Macros are those of flow_golden_g05.json.",
+ "entry": {
+  "node": "rb_document_inventory",
+  "topography": "C69.2"
+ },
+ "cases": [
+  {
+   "id": "I01",
+   "name": "Ideal 9510 on imaging: mass, calcification, under five, no diversion feature",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Pathway §6 row 1; §1C; §7.4; contract §0.4 point 2",
+   "assert": true
+  },
+  {
+   "id": "I02",
+   "name": "Ideal 9510 on a referral note naming retinoblastoma or leukocoria (basis 1)",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Pathway §6 row 2; §1A; contract §0.4 point 1, §4",
+   "assert": true
+  },
+  {
+   "id": "I03",
+   "name": "Ideal 9510 on a cytology with necrosis, mitoses or atypia (basis 5)",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 5,
+    "workup": []
+   },
+   "source": "Contract §10.9 and §4 (Milman 2023, Table 10, p. 11; Visser 2023 Table 1 p. 03, rule 8 p. 06)",
+   "assert": true
+  },
+  {
+   "id": "I04",
+   "name": "Ideal 9510 on an enucleation report with no grade and no pattern (GX)",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 4; §6 row 7",
+   "assert": true
+  },
+  {
+   "id": "I05",
+   "name": "Ideal 9511: enucleation report, fleurettes or many Flexner-Wintersteiner rosettes (G1 or G2)",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g12"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9511",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 2; §6 row 4",
+   "assert": true
+  },
+  {
+   "id": "I06",
+   "name": "Ideal 9512: enucleation report, occasional or no rosettes with anaplasia (G3 or G4)",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g34"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9512",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 3; §6 row 5",
+   "assert": true
+  },
+  {
+   "id": "I07",
+   "name": "Ideal 9513: enucleation report, diffuse infiltrating growth with no discrete mass",
+   "kind": "ideal",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "diffuse"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9513",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 1; §6 row 6",
+   "assert": true
+  },
+  {
+   "id": "I08",
+   "name": "Retinocytomatous area inside a viable tumour, nothing poorer stated: 9511",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "area"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9511",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §4C, §7.10; contract §2.3; registrar ruling 14 Oct 2026 (RQ6)",
+   "assert": true
+  },
+  {
+   "id": "I09",
+   "name": "Retinocytomatous area, report states a poorly differentiated grade: 9512",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "area",
+      "g34"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9512",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Registrar decision 7 Oct 2026 (the higher grade governs); contract §2.4; Mendoza 2015 p. 765",
+   "assert": true
+  },
+  {
+   "id": "I10",
+   "name": "Retinocytomatous area, report states a diffuse pattern: 9513",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "area",
+      "diffuse"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9513",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Registrar decision 7 Oct 2026 (Rule K, the higher code); contract §2.4",
+   "assert": true
+  },
+  {
+   "id": "I11",
+   "name": "Whole specimen retinocytoma, no viable retinoblastoma: no Group V code, behaviour 0",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "whole"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "behaviour_exclusion",
+    "code": "9510",
+    "behavior": "0"
+   },
+   "source": "Pathway §4C, §6 row 8; contract §2.1, §2.3",
+   "assert": true
+  },
+  {
+   "id": "I12",
+   "name": "Phthisis bulbi, no viable tumour: no Group V code, 9514/1",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "phthisis"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "behaviour_exclusion",
+    "code": "9514",
+    "behavior": "1"
+   },
+   "source": "Pathway §4C, §6 row 8; contract §2.2",
+   "assert": true
+  },
+  {
+   "id": "E01",
+   "name": "Imaging shows retinal detachment or exudate with no calcified mass: not Group V",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0
+     ],
+     "D": [
+      0
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Pathway §4D, §6 row 3; contract §0.4 point 4 (Visser rule 4, p. 03)",
+   "assert": true
+  },
+  {
+   "id": "E02",
+   "name": "Referral note names a mass and a Coats disease differential: not registered",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Pathway §4D; contract §0.4 point 4 (Visser rule 4, p. 03); registrar ruling 14 Oct 2026 (RQ3)",
+   "assert": true
+  },
+  {
+   "id": "E03",
+   "name": "Imaging complete but extraocular extension ticked: not 9510, needs tissue",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      4
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Contract §4.1, §2.5",
+   "assert": true
+  },
+  {
+   "id": "E04",
+   "name": "Mass and calcification, child five or older (age box unticked): needs tissue, not 9510",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1
+     ],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §4A, §7.7; contract §4.1",
+   "assert": true
+  },
+  {
+   "id": "E05",
+   "name": "Imaging with a flat diffuse intraocular process and no discrete mass: needs tissue",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0
+     ],
+     "D": [
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §4A, §7.7; contract §4.1",
+   "assert": true
+  },
+  {
+   "id": "E06",
+   "name": "Cytology without features of malignancy (scant material), nothing else in the file: not 9510",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Contract §10.9 (Milman 2023, Table 10, p. 11); registrar ruling 14 Oct 2026 (RP3: without imaging it is a suspected neoplasm)",
+   "assert": true
+  },
+  {
+   "id": "E07",
+   "name": "Inadequate specimen and a complete imaging constellation: 9510 on imaging",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Contract §4 note on the fifth route; registrar ruling 11",
+   "assert": true
+  },
+  {
+   "id": "E08",
+   "name": "Report states G2 and severe anaplasia: the higher governs, 9512",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g12",
+      "g34"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9512",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Registrar decision 7 Oct 2026; WHO ICD-O-3 first revision §4.3.4, pp. 21-22; Mendoza 2015 p. 765",
+   "assert": true
+  },
+  {
+   "id": "E09",
+   "name": "Report states only moderate anaplasia, no grade: 9510",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Contract §2.4 (moderate anaplasia alone folds to GX)",
+   "assert": true
+  },
+  {
+   "id": "E10",
+   "name": "Enucleation report and an imaging report both in the file: the report decides",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging",
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "g12"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9511",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2; contract §4 (histology outranks imaging)",
+   "assert": true
+  },
+  {
+   "id": "D01",
+   "name": "Cytology non-diagnostic and the file also holds a complete imaging constellation",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging",
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Contract §4 note on the fifth route; registrar ruling 11; correction C2",
+   "assert": true
+  },
+  {
+   "id": "D02",
+   "name": "Pseudohypopyon alone on imaging: diffuse retinoblastoma presents this way, so it needs tissue",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0
+     ],
+     "D": [
+      2
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP2); Pathway §4A; Razek and Elkhamary 2011 p. 2: 59%",
+   "assert": true
+  },
+  {
+   "id": "D03",
+   "name": "Anterior-segment mass alone on imaging: an inflammatory mimic, not registered",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0
+     ],
+     "D": [
+      3
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Pathway §4D; contract §4.1; Visser 2023 rule 4 p. 03",
+   "assert": true
+  },
+  {
+   "id": "D04",
+   "name": "Aqueous-humour cell-free DNA report only: a liquid biopsy is basis 5",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 1
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 5,
+    "workup": []
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP4); contract §10.9; Visser 2023 rule 8 p. 06; Ghose and Kaliki 2022 p. 3",
+   "assert": true
+  },
+  {
+   "id": "D05",
+   "name": "Cytology and histology both ticked and the inadequate-specimen row chosen: the row wins, imaging decides",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology",
+      "histology"
+     ],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP6); contract §4 note on the fifth route",
+   "assert": true
+  },
+  {
+   "id": "D06",
+   "name": "Histology report ticked beside the inadequate-specimen row: no histological diagnosis, imaging decides",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP6)",
+   "assert": true
+  },
+  {
+   "id": "D07",
+   "name": "Liquid biopsy non-diagnostic, and the file holds a complete imaging constellation",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": []
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 2,
+    "workup": []
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP4, RP1); contract §4 note on the fifth route",
+   "assert": true
+  },
+  {
+   "id": "A01",
+   "name": "Imaging 9510 path with mass, no referral note in the file: a suspected neoplasm, not 9510",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      1,
+      2
+     ],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §7.6 (the calcified mass is required); registrar ruling 14 Oct 2026 (RP3)",
+   "assert": true
+  },
+  {
+   "id": "A02",
+   "name": "Imaging 9510 path with calcification, no referral note in the file: a suspected neoplasm, not 9510",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      2
+     ],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §7.6 (the calcified mass is required); registrar ruling 14 Oct 2026 (RP3)",
+   "assert": true
+  },
+  {
+   "id": "A03",
+   "name": "Imaging 9510 path with age, no referral note in the file: a suspected neoplasm, not 9510",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1
+     ],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §7.6 (the calcified mass is required); registrar ruling 14 Oct 2026 (RP3)",
+   "assert": true
+  },
+  {
+   "id": "A04",
+   "name": "Imaging 9510 path with a diversion box ticked: retinal detachment or exudate",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Pathway §4D; contract §4.1",
+   "assert": true
+  },
+  {
+   "id": "A05",
+   "name": "Imaging 9510 path with a diversion box ticked: flat diffuse process",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Pathway §4A; contract §4.1",
+   "assert": true
+  },
+  {
+   "id": "A06",
+   "name": "Imaging 9510 path with a diversion box ticked: pseudohypopyon",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      2
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP2); Pathway §4A",
+   "assert": true
+  },
+  {
+   "id": "A07",
+   "name": "Imaging 9510 path with a diversion box ticked: anterior-segment mass",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      3
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Pathway §4D; contract §4.1",
+   "assert": true
+  },
+  {
+   "id": "A08",
+   "name": "Imaging 9510 path with a diversion box ticked: extraocular or orbital extension",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      4
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Contract §4.1, §2.5",
+   "assert": true
+  },
+  {
+   "id": "A09",
+   "name": "Imaging 9510 path with the imaging report not ticked (referral only)",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Pathway §6 row 2 (next rung: referral only)",
+   "assert": true
+  },
+  {
+   "id": "A10",
+   "name": "Enucleation path 9511 without the histology report ticked",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Pathway §6 row 2 (next rung: no tissue report in the file)",
+   "assert": true
+  },
+  {
+   "id": "A11",
+   "name": "Enucleation path 9511 with the grade not stated",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 4 (GX)",
+   "assert": true
+  },
+  {
+   "id": "A12",
+   "name": "Enucleation path 9513 with the growth pattern not stated",
+   "kind": "ablation",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Pathway §2A row 4 (GX)",
+   "assert": true
+  },
+  {
+   "id": "N01",
+   "name": "Non-diagnostic cytology, no imaging, a referral letter names retinoblastoma: 9510 on the note",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP1: cytology, then imaging, then referral wording); Visser 2023 Table 3 (retinoblastoma, basis 1 or 2)",
+   "assert": true
+  },
+  {
+   "id": "N02",
+   "name": "Non-diagnostic cytology, no imaging, the referral letter names retinoblastoma and Coats disease: not registered",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 2
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named",
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Registrar rulings 14 Oct 2026 (RP1, RQ3); Visser 2023 rule 4 p. 03",
+   "assert": true
+  },
+  {
+   "id": "N03",
+   "name": "Imaging states a mass and calcification but not the age, and the file holds a referral letter naming retinoblastoma: 9510 on the note",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1
+     ],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "note"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "named"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Registrar rulings 14 Oct 2026 (RP1, RP3)",
+   "assert": true
+  },
+  {
+   "id": "N04",
+   "name": "Inadequate-specimen row alone, no imaging and no note: a suspected neoplasm",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 1
+    },
+    {
+     "m": "imaging",
+     "F": [],
+     "D": []
+    },
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP3)",
+   "assert": true
+  },
+  {
+   "id": "N05",
+   "name": "Referral note describes leukocoria with a suspected tumour",
+   "kind": "pathway",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "leukocoria"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 1,
+    "workup": [
+     "Imaging"
+    ]
+   },
+   "source": "Pathway §6 row 2; §1A; contract §0.4 point 1",
+   "assert": true
+  },
+  {
+   "id": "N06",
+   "name": "Referral note describes leukocoria and names Coats disease: the non-malignant cause wins, not registered",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "leukocoria",
+      "other_cause"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RQ3); Visser 2023 rule 4 p. 03; Pathway §4D",
+   "assert": true
+  },
+  {
+   "id": "N07",
+   "name": "Cytology and a liquid biopsy ticked together, the liquid biopsy reports a tumour-specific change: 9510, basis 5",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "cytology",
+      "liquid_biopsy"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "opt",
+     "i": 1
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9510",
+    "behavior": "3",
+    "basis": 5,
+    "workup": []
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RP4); Visser 2023 rule 8 p. 06",
+   "assert": true
+  },
+  {
+   "id": "N08",
+   "name": "Report states a retinocytoma-grade area and diffuse growth and a whole-specimen retinocytoma: diffuse outranks, 9513",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "histology"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "diffuse",
+      "area",
+      "whole"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "code",
+    "code": "9513",
+    "behavior": "3",
+    "basis": 7,
+    "workup": []
+   },
+   "source": "Registrar rulings 14 Oct 2026 (RQ2, RQ6); registrar decision 7 Oct 2026 (Rule K)",
+   "assert": true
+  },
+  {
+   "id": "N09",
+   "name": "Imaging shows a mimic pattern (detachment, no calcified mass) and a diffuse pattern together: tissue wins, Group XII provisional",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0,
+      1
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic",
+      "tissue"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "referral",
+    "group": 12
+   },
+   "source": "Registrar ruling 14 Oct 2026 (RQ4, option A: no possible cancer is dropped); Foerl 2008 (PubMed 18299842); Visser 2023 rule 4 p. 03",
+   "assert": true
+  },
+  {
+   "id": "N10",
+   "name": "Imaging shows a mimic pattern and the file holds a referral letter naming retinoblastoma: the mimic ends the case, the note is not read",
+   "kind": "correction",
+   "steps": [
+    {
+     "m": "tickset",
+     "set": [
+      "imaging"
+     ],
+     "ctxRow": 0
+    },
+    {
+     "m": "imaging",
+     "F": [
+      0,
+      1,
+      2
+     ],
+     "D": [
+      0
+     ]
+    },
+    {
+     "m": "tickset",
+     "set": [
+      "mimic",
+      "note"
+     ],
+     "ctxRow": 0
+    }
+   ],
+   "expect": {
+    "kind": "non_reportable"
+   },
+   "source": "Registrar rulings 14 Oct 2026 (RP1, RQ4); Visser 2023 rule 4 p. 03",
+   "assert": true
+  }
+ ]
+}

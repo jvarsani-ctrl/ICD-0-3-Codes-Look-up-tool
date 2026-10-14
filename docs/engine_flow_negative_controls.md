@@ -536,3 +536,17 @@ must fail for the reason shown. The unbroken engine passes all 196 checks.
 |---|---|---|
 | The site narrows the candidates before the marrow question is settled (the order the engine had before this change). The design exists to prevent it: a leukaemia that presents in a lymph node loses Group I. | `app.js`, `afterSite()` | gate FAIL, 5 checks: `more than 25% blasts keeps Group I for a node that is the site` (candidates `[9]`), `no marrow aspirate yet drops nothing` (`[2,9]`), `a thyroid under "not sure" is asked`, the region check, the trail check |
 | A step back forgets the body system, so the case keeps the system it had chosen and lists only that system's organs. | `app.js`, `snapshot()` | gate FAIL, exactly one check: `stepping back to the site of origin shows the system screen with the earlier answers gone` |
+
+### Group 5: the registrar's rulings of 14 October 2026
+
+Hard controls only (`CLAUDE.md`, rule 10). Each was planted in a scratch copy of the tree and run with `ONLY=g05 node build/check_engine_flow.mjs`. The unbroken tree passes every Group 5 check.
+
+| Breakage | Where | Result |
+|---|---|---|
+| The conflict notice ignores which boxes conflict and shows for any ticked box beside the row. | `app.js`, `tickConflictNotice()` | gate FAIL: `the inadequate-specimen row beside a ticked histology report shows a notice, and the notice does not show for a cytology report ...` |
+| The conflicting tick is kept when the row wins. Found on the real page: the result read "Suggested based on Histology report" for a report the clerk had marked inadequate. | `app.js`, `tickContinue()` | gate FAIL: `... does not list the report as the evidence it rests on (RP6)` |
+| The enucleation screen reads a differentiated finding before a poorly differentiated one. The data gate's first-match rules still pass, because each option stays the first fit for some set. | `group_05_dt.json`, `rb_enucleation_report` options | gate FAIL, 2 checks: the golden routes and `every one of the 64 ticked sets ends where the order says` |
+| The referral wording reads a named retinoblastoma before a named non-malignant cause. | `group_05_dt.json`, `rb_clinical_alias` options | gate FAIL, 2 checks: the golden routes and `of the 16 ticked sets only a named retinoblastoma ... records 9510/3` |
+| The fourth screen reads a mimic box before a needs-tissue box, so both ticked ends the case as not reportable. The data gate's first-match rules still pass, because each option stays the first fit for some set. | `group_05_dt.json`, `rb_imaging_insufficient` options | gate FAIL, 3 checks: the golden routes, the RP2 box check, and `of the 8 ticked sets, any needs-tissue box refers Group XII even beside a mimic box` |
+| The imaging tier forgets to exclude a liquid biopsy, so two tiers fit and the clerk is asked to choose. | `group_05_dt.json`, `rb_document_inventory` option 1 | gate FAIL: `each of the 16 ticked sets goes straight to ... and the clerk is never asked to choose between tiers` (the data gate's mapping check fails too) |
+

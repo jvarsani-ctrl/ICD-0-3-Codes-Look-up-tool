@@ -256,7 +256,7 @@
   },
   {
     "alias": "Trilateral retinoblastoma",
-    "full_form": "Trilateral retinoblastoma -> Retinoblastoma, NOS (9510) for the ocular component; the intracranial component is a separate primary, refer to ICCC-3 Group III",
+    "full_form": "Trilateral retinoblastoma -> Retinoblastoma, NOS (9510). The pineal or suprasellar mass is metastatic spread of the same tumour: the topography stays the eye, and the mass is recorded as the site of metastasis",
     "also_known_as": [],
     "alias_type": "descriptive",
     "origin_system": "Clinical descriptive term",
@@ -270,11 +270,8 @@
     "ihc_tree_id": "g5_retinoblastoma",
     "tree_entry_node": "rb_document_inventory",
     "clinical_alert": null,
-    "notes": "Bilateral retinoblastoma with a midline intracranial primitive neuroectodermal tumour - usually pineoblastoma, suprasellar in the tetralateral form - occurs in 1.5-5% of cases and is associated with hereditary disease (contract Sec.4.2). The ocular tumour codes 9510/3 in ICCC-3 Group V. The intracranial tumour is a separate primary in ICCC-3 Group III and needs its own tumour record - this is not a dual-group code; the same code does not route to two groups by site, and topography_dependent is false on every Group V entry (contract Sec.4.2).",
-    "coding_note": "Extends alias-instruction entry 9, which mapped only to 9510 with a descriptive note about the intracranial component. Contract Sec.4.2 and Sec.6 require refer_group: 3 on this entry: trilateral retinoblastoma is a second primary, not a dual-group code. refer_code names pineoblastoma, 9362/3, ICD-O-3.2 Preferred term, verified directly against icdo32.sqlite 22 Sep 2026 (Related: 'Mixed pineal tumor'; Synonym: 'Mixed pineocytoma-pineoblastoma'). The tetralateral variant's suprasellar component has no single fixed ICD-O-3.2 code and is not asserted here; refer_code names the usual intracranial component only. This entry adds a 'reason' field, which is not part of the key set in aliases_group_04.json, to carry the clerk-facing instruction to open the second record - the alias schema in contract Sec.6 has no dedicated clerk-facing field the way a tree branch destination does (contract Sec.0.7). Flagged as a schema deviation in the build report for this entry alone; no other entry in this file carries a 'reason' key.",
-    "refer_group": 3,
-    "refer_code": "9362",
-    "reason": "Bilateral retinoblastoma with a pineal or suprasellar mass is trilateral disease. Code the eye here as retinoblastoma. Open a second tumour record in Group III for the intracranial mass - it is a separate primary and does not share this code."
+    "notes": "Bilateral retinoblastoma with a midline intracranial primitive neuroectodermal tumour - usually pineoblastoma, suprasellar in the tetralateral form - occurs in 1.5-5% of cases and is associated with hereditary disease (contract Sec.4.2). The ocular tumour codes 9510/3 in ICCC-3 Group V. Registrar ruling, 14 October 2026: the intracranial mass is not a second primary and is not connected to Group III. It is metastatic spread of the same tumour, so the case keeps the eye as its topography and the mass is recorded as the site of metastasis, which has its own topography code. This is not a dual-group code either: the same code does not route to two groups by site, and topography_dependent is false on every Group V entry.",
+    "coding_note": "Rewritten 14 October 2026 by the registrar's ruling on the reachability queue item RP5. Build contract Sec.4.2 and Sec.6 had this entry carry refer_group: 3, refer_code 9362 and a clerk-facing reason telling the clerk to open a second tumour record in Group III. All three are removed: the registrar ruled the pineal or suprasellar mass is metastatic spread of the retinoblastoma, not a separate primary. The entry maps only to 9510 in Group V, like every other entry in this file. The engine never rendered refer_group or reason on an alias (docs/TODO.md Sec.17), so no screen changes."
   },
   {
     "alias": "Retinoblastoma, differentiated",

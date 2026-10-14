@@ -500,6 +500,8 @@ CLERK_FACING_TEXT_KEYS = {
     # Tick lists and the laboratory screen (6 Oct 2026): the sentences above and below a
     # checklist, drawn by tickControl()/tickSiblings(). Their `label`s are covered above.
     "prompt", "context_prompt", "none_label", "sibling_prompt",
+    # A special-situation row's `tick_conflict.notice`, drawn under the checklist by tickConflictNotice().
+    "notice",
 }
 # Author-facing per memory `uccf-lookup-tool-clerk-facing-text` — not displayed, so a
 # banned code here is reported but does not block.
@@ -12072,6 +12074,10 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
             if carries:
                 out.append((FAIL, "node %s: options %s carry `ticks` but the node declares no "
                                   "`tick_list`" % (node_id, carries)))
+            stray = [i for i, o in enumerate(options) if isinstance(o, dict) and "tick_conflict" in o]
+            if stray:
+                out.append((FAIL, "node %s: options %s carry `tick_conflict` but the node declares no "
+                                  "`tick_list`, so the engine never reads it" % (node_id, stray)))
             if evidence_gate:
                 out.append((FAIL, "node %s is an evidence gate ('Evidence in file') with no "
                                   "`tick_list`: the registrar replaced the single-choice gate "
@@ -12135,6 +12141,23 @@ def check_tick_lists(ctx: DTContext, repo: Path, vocabularies=None):
         if not options:
             out.append((FAIL, "node %s: a tick_list node has no options to resolve to" % node_id))
             continue
+
+        # `tick_conflict` (registrar, 14 Oct 2026): a special-situation row names boxes it cannot stand
+        # beside, and the engine shows its notice when the row is chosen with one of them ticked.
+        # tickControl() draws the rows only for an ask_siblings list, and a tier is never a row.
+        for idx, o in enumerate(options):
+            tc = o.get("tick_conflict") if isinstance(o, dict) else None
+            if tc is None:
+                continue
+            if "ticks" in o or mode != "ask_siblings":
+                out.append((FAIL, "node %s option %d: `tick_conflict` belongs on a special-situation row (no "
+                                  "`ticks`) of an ask_siblings list; the engine draws it nowhere else"
+                            % (node_id, idx)))
+            elif not (isinstance(tc, dict) and isinstance(tc.get("ids"), list) and tc["ids"]
+                      and all(i in ids for i in tc["ids"])
+                      and isinstance(tc.get("notice"), str) and tc["notice"].strip()):
+                out.append((FAIL, "node %s option %d: `tick_conflict` needs `ids` (a non-empty list of ids from the "
+                                  "tick list) and a non-empty `notice`" % (node_id, idx)))
 
         problems = False
         tiers = []

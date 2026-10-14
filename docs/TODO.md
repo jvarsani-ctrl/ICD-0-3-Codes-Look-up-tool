@@ -1056,7 +1056,7 @@ Mostly nothing today, and one thing that will bite.
   sources of truth for the same fact, one of them unread. The day they disagree, nothing notices.
 - **`refer_group` on an alias does not refer.** `aliases_group_04.json`'s *Peripheral
   neuroectodermal tumor* entry carries `refer_group: [8, 9]` and `refer_code: "9364"`; Group 5's
-  *Trilateral retinoblastoma* entry carries `refer_group: 3`. A clerk who reaches either by search
+  *Trilateral retinoblastoma* entry carried `refer_group: 3` until the registrar's ruling of 14 October 2026 removed it. A clerk who reaches either by search
   is put into the entry's own group and sees no referral at all. The referral survives only because
   both trees also carry it as a branch destination, where it *is* rendered. Nobody should rely on
   that holding for the next group.
