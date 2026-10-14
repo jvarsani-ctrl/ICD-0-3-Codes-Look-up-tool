@@ -151,7 +151,7 @@
           "node_type": "document_inventory",
           "step_number": 1,
           "step_label": "Evidence in file",
-          "question": "A child with a suspected retinal tumour (retinoblastoma). What is actually in this patient's file?",
+          "question": "What is in this patient's file?",
           "hint": "Biopsy of an eye that still contains the tumour is avoided, because incisional or needle biopsy risks seeding the tumour outside the eye. A pathology report therefore exists only once the eye itself has been removed as treatment. B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere, so the next step records which imaging was actually performed.",
           "tick_list": {
             "vocabulary": "evidence_documents",
@@ -244,7 +244,7 @@
               }
             },
             {
-              "label": "A specimen (cytology, or enucleation/exenteration) was obtained but is reported INADEQUATE, non-diagnostic, or technically UNINTERPRETABLE",
+              "label": "A specimen (cytology, or enucleation/exenteration) was obtained but is reported inadequate, non-diagnostic or uninterpretable",
               "next_node": "rb_imaging_pathway",
               "captures": {
                 "evidence_tests": [],
@@ -262,7 +262,7 @@
           "step_number": 2,
           "step_label": "Referral wording",
           "question": "What does the referral letter or clinical note say?",
-          "hint": "This is the only clinical-alias node in the tool that emits a specific code on wording alone. Recorded only when cancer is at least likely on the note's own words -- not merely possible, and not when a non-malignant cause could equally explain the findings.",
+          "hint": "Choose the first answer only when the note itself makes cancer at least likely. A note that only describes a mass, a red-reflex abnormality or a request for eye examination does not qualify. A differential that names a non-malignant cause, such as Coats disease or persistent hyperplastic primary vitreous, that could equally explain the findings does not qualify either. Leukocoria is a white pupillary reflex, or a cat's-eye reflex. Strabismus counts only with a suspected intraocular tumour of the retina.",
           "clinical_alert": null,
           "coding_note": "Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05: retinoblastoma is one of only five entities in the entire European Network of Cancer Registries scheme registrable at basis 1, clinical examination alone, with no imaging and no tissue (build contract Sec.0.4, Sec.4). Basis 1 is legal here specifically because it is guarded by group in the validator and Table 3 names retinoblastoma's row '1 or 2' -- the ban that applies to Group 3 does not apply to Group 5 (contract Sec.0.6). Rule 4, p. 03: 'possible is not registrable' -- if clinical investigation makes cancer only possible, or a non-malignant disorder could equally explain the findings, the case is not registered at all in the absence of pathology; this is a non_reportable destination, not a refer_group one, because Coats disease and persistent hyperplastic primary vitreous are not cancers in any group (contract Sec.0.4 point 4).",
           "captured_variables": [
@@ -272,7 +272,7 @@
           ],
           "options": [
             {
-              "label": "Note states retinoblastoma, or describes leukocoria (white pupillary reflex, or 'cat's-eye reflex') or strabismus with a suspected intraocular tumour of the retina",
+              "label": "Note names retinoblastoma, or describes leukocoria or strabismus with a suspected tumour",
               "morphology_code": "9510",
               "behavior_code": "3",
               "basis_of_diagnosis": 1,
@@ -286,7 +286,7 @@
               }
             },
             {
-              "label": "Note describes a mass, a red-reflex abnormality, or 'for eye examination' with no diagnosis asserted — or the differential named includes a non-malignant cause (for example Coats disease or persistent hyperplastic primary vitreous) that could equally explain the findings",
+              "label": "Note states no diagnosis, or names a non-malignant cause that could equally explain it",
               "non_reportable": true,
               "reason": "Cancer is only possible, not at least likely, on the note's own wording, or a non-malignant disorder could equally explain the findings. Under Visser 2023 rule 4 (p. 03), this is not registered at all in the absence of pathology.",
               "captures": {
@@ -305,13 +305,13 @@
           "node_type": "imaging_pathway",
           "step_number": 2,
           "step_label": "Imaging, no tissue",
-          "question": "No tissue exists. Tick every feature the ophthalmic examination and imaging report actually state, then answer the diversion checklist below.",
-          "hint": "Feature 2, calcification within the mass, is the discriminator and is not optional. Leukocoria causes retinoblastoma in only 56-72% of children; the rest is Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek & Elkhamary 2011), and those mimics characteristically show no calcified mass. Ultrasound, not magnetic resonance imaging, is the calcification detector -- magnetic resonance imaging detects calcification poorly, and computed tomography is avoided in a child who may carry a germline tumour-suppressor mutation. Record whichever imaging was actually performed; B-scan ultrasound and orbital magnetic resonance imaging are not available everywhere, and that is a reason to record what was done, not a reason to withhold this route.",
+          "question": "Tick every feature the eye examination and imaging report state.",
+          "hint": "Calcification within the mass is the discriminator and is not optional. Leukocoria causes retinoblastoma in only 56-72% of children; the rest is Coats disease, persistent hyperplastic primary vitreous, coloboma, sclerosing endophthalmitis, retinal astrocytoma, Norrie disease, retinopathy of prematurity and medulloepithelioma (Razek & Elkhamary 2011), and those mimics characteristically show no calcified mass. Ultrasound, not magnetic resonance imaging, detects calcification: magnetic resonance imaging detects it poorly, and computed tomography is avoided in children at risk of a germline tumour-suppressor mutation. Record whichever imaging was performed.",
           "clinical_alert": null,
           "coding_note": "Engine constraint (build contract Sec.0.6, docs/TODO.md Sec.10): imagingPathway() renders only imaging_features, biochemical_questions and diversion_criteria -- options[] is never rendered. This node therefore declares insufficient_next_node, does not declare options[], and carries its own morphology_code/behavior_code/basis_of_diagnosis for the confirmed-constellation outcome. Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 3, pp. 04-05: retinoblastoma is basis 2 on clinical investigation (imaging) with no tissue -- the modal output of the whole group (contract Sec.0.4 point 2). Diversion criteria per contract Sec.4.1: two patterns (no calcified mass; anterior-segment/inflammatory picture) point to a non-malignant mimic and are not registered without pathology (Visser rule 4, p. 03); two patterns (diffuse-infiltrating/older child; extraocular or orbital extension) still need tissue and must not be read as 'not cancer' (contract Sec.2.5, Sec.4.1) -- rb_imaging_insufficient carries that distinction forward.",
           "imaging_features": [
             "An intraocular mass on B-scan ultrasound or on orbital magnetic resonance imaging",
-            "Calcification within the mass — on ultrasound, high-reflectivity foci casting acoustic shadows",
+            "Calcification within the mass (high-reflectivity foci casting acoustic shadows)",
             "Child under five years of age"
           ],
           "diversion_criteria": [
@@ -320,7 +320,7 @@
               "reason": "Matches the Coats disease or persistent hyperplastic primary vitreous pattern rather than retinoblastoma. A non-malignant disorder could equally explain the findings, and under Visser 2023 rule 4 (p. 03) the case is not registered without pathology."
             },
             {
-              "feature": "A flat, diffusely infiltrating intraocular process with no discrete mass, or a child aged five years or older",
+              "feature": "A flat, diffusely infiltrating intraocular process with no discrete mass",
               "reason": "Matches diffuse infiltrating retinoblastoma, which grows without a discrete calcified mass and presents later than typical retinoblastoma. The calcified-mass and under-five criteria above would wrongly exclude it. This constellation needs tissue, not exclusion."
             },
             {
@@ -357,8 +357,8 @@
           "node_type": "morphology_only",
           "step_number": 3,
           "step_label": "Imaging did not confirm — what next",
-          "question": "The imaging constellation did not confirm retinoblastoma — either a diversion criterion applies or a required feature is missing. What does the file show?",
-          "hint": "The diversion criteria are not equivalent. A non-calcified pattern, or an anterior-segment/inflammatory picture, points to a mimic and is not registered without pathology. A diffuse infiltrating pattern, an older child, or extraocular extension is still a real possibility of retinoblastoma that needs tissue, not exclusion.",
+          "question": "The imaging did not confirm retinoblastoma: a feature that needs tissue was ticked, or a required feature is missing. What does the file show?",
+          "hint": "The patterns are not equivalent. Retinal detachment or exudate with no calcified mass is the Coats disease or persistent hyperplastic primary vitreous pattern, and pseudohypopyon or an anterior-segment mass points to an inflammatory mimic: with no pathology, neither is registered. A diffuse infiltrating pattern, an older child or extraocular extension is still a real possibility of retinoblastoma and needs tissue, not exclusion.",
           "clinical_alert": null,
           "coding_note": "Reached only from rb_imaging_pathway's insufficient_next_node. Build contract Sec.4.1: the diversion criteria send a case to tissue, which is the correct outcome, not to a 'not cancer' terminal — so the diffuse-variant/older-child and extraocular-extension patterns route to refer_group 12 (an honest 'pending tissue' state), never to non_reportable. The non-calcified and anterior-segment/inflammatory patterns are the genuine Visser rule 4 case (p. 03): a non-malignant disorder could equally explain the findings, so the case is not registered without pathology. Options 3 and 4 exist because tissue can arrive after an imaging attempt was already made.",
           "captured_variables": [
@@ -367,7 +367,7 @@
           ],
           "options": [
             {
-              "label": "Findings match a non-malignant mimic — retinal detachment or exudate with no calcified mass (Coats disease / persistent hyperplastic primary vitreous pattern), or an anterior-segment/inflammatory picture (pseudohypopyon) — and no tissue is in the file",
+              "label": "Mimic pattern: retinal detachment or exudate with no calcified mass, or pseudohypopyon",
               "non_reportable": true,
               "reason": "A non-malignant disorder could equally explain these findings. Under Visser 2023 rule 4 (p. 03), the case is not registered at all in the absence of pathology.",
               "captures": {
@@ -376,7 +376,7 @@
               }
             },
             {
-              "label": "Findings match the diffuse variant (a flat, diffusely infiltrating process with no discrete mass, or a child aged five or older), or show extraocular or orbital extension — no tissue yet obtained",
+              "label": "Needs tissue: diffuse pattern, age five or older, or extraocular or orbital extension",
               "refer_group": 12,
               "refer_code": "8000",
               "reason": "This cannot be registered as Retinoblastoma, NOS on the imaging constellation alone — a diffuse infiltrating growth pattern, an older child, or extraocular extension all need a tissue diagnosis rather than exclusion. Record it provisionally under Group XII (8000/3, malignant neoplasm, NOS) pending cytology, a liquid biopsy, or an enucleation/exenteration specimen.",
@@ -394,7 +394,7 @@
               }
             },
             {
-              "label": "Tissue has since been obtained — an enucleation or exenteration specimen with a pathology report is now in the file",
+              "label": "Tissue has since been obtained — an enucleation or exenteration report is now in the file",
               "next_node": "rb_enucleation_report",
               "captures": {
                 "basis_evidence_tier": "histology",
@@ -410,7 +410,7 @@
           "step_number": 2,
           "step_label": "Cytology or liquid biopsy",
           "question": "What does the cytology or liquid-biopsy report show?",
-          "hint": "Biopsy of an intact globe is avoided because of the risk of extraocular seeding; this option exists only because the report may already be in the file, not as a route to seek out. Diagnostic features of malignancy — necrosis, mitoses and nuclear atypia — should be present before retinoblastoma is diagnosed on a cytology. Sampling of retinal neurons and scant material are the two pitfalls that can mislead a cytological read; consultation with an experienced ophthalmic cytopathologist is recommended when a biopsy is considered. A cytology cannot grade differentiation or establish a growth pattern, so it never yields a subtype.",
+          "hint": "Biopsy of an intact globe is avoided because of the risk of extraocular seeding. Diagnostic features of malignancy — necrosis, mitoses and nuclear atypia — should be present before retinoblastoma is diagnosed on a cytology. Sampling of retinal neurons and scant material are the two pitfalls that can mislead a cytological read; consultation with an experienced ophthalmic cytopathologist is recommended when a biopsy is considered. A cytology cannot grade differentiation or establish a growth pattern, so it never yields a subtype.",
           "clinical_alert": null,
           "coding_note": "Added once the baseline paper was on disk (build contract Sec.4, Sec.10.9). Milman T, et al. Ocular Oncology and Pathology 2023;9(3-4):71-95 [online-first copy held, paginated 1-25], Table 10, Diagnostic cytology of tumours of the retina and neuroepithelium, verbatim: 'Generally, biopsy is avoided due to the risk of extraocular recurrence and metastasis. Cytological samples often have pitfalls (sampling of retinal neurons, scant material) that may be misleading. Diagnostic features of malignancy such as necrosis, mitoses, and nuclear atypia should be present when diagnosing retinoblastoma in a cytology. Consultation with an experienced ophthalmic cytopathologist is recommended if a biopsy is considered.' Read carefully: avoided, with conditions attached for when it is done, not never done. Visser O, et al. Frontiers in Oncology 2023;13:1250549, Table 1 (p. 03): cytology is basis 5, stronger than the imaging route's basis 2. Rule 8, p. 06: an aqueous-humour or plasma liquid biopsy is basis 5 as well, not 8, whenever no pathology is available, even when it finds a cancer-specific genetic abnormality. 'Cytology' is used here as the evidence_tests tag; the closed diagnostic_tests_required vocabulary on morphology_entries[] (Referral only / Histology / Imaging / IHC / ISH / Flow cytometry / Cytogenetics-FISH / Molecular-PCR) has no literal cytology entry, so morphology_entries[9510].diagnostic_tests_required is left at ['Histology'] and this branch-level tag is a free-form tracking value, not a closed-list field.",
           "captured_variables": [
@@ -420,7 +420,7 @@
           ],
           "options": [
             {
-              "label": "Cytology or liquid biopsy shows malignant cells consistent with retinoblastoma, with necrosis, mitoses and/or nuclear atypia present",
+              "label": "Malignant cells consistent with retinoblastoma, with necrosis, mitoses or nuclear atypia",
               "morphology_code": "9510",
               "behavior_code": "3",
               "basis_of_diagnosis": 5,
@@ -438,7 +438,7 @@
               "coding_note": " satisfies_tests ['Imaging'] added 2026-09-22: a cytology or liquid-biopsy report is ENCR basis 5, above the basis 2 the imaging constellation carries (Visser 2023, Table 1). Imaging is not an outstanding test on a case that already has cells, and leaving it outstanding would have printed 'Imaging would yield a more specific code.' — which is untrue: imaging yields no more specific code in this group at all."
             },
             {
-              "label": "Cytology or liquid biopsy is non-diagnostic, shows scant material or sampled retinal neurons only, or the diagnostic features of malignancy (necrosis, mitoses, nuclear atypia) are not present",
+              "label": "Non-diagnostic: scant material, retinal neurons only, or no features of malignancy",
               "refer_group": 12,
               "refer_code": "8000",
               "reason": "The cytology or liquid biopsy did not show the diagnostic features of malignancy, or yielded only scant material or sampled retinal neurons. This cannot be registered as Retinoblastoma, NOS. Record it provisionally under Group XII (8000/3, malignant neoplasm, NOS) pending a diagnostic specimen — an enucleation or exenteration report, or a repeat liquid biopsy.",
@@ -459,7 +459,7 @@
           "step_number": 2,
           "step_label": "Enucleation or exenteration report",
           "question": "What does the enucleation or exenteration pathology report state about the tumour's differentiation, growth pattern, or anaplasia?",
-          "hint": "Code from the report's own stated wording — do not infer a grade or growth pattern yourself. Where the report gives a differentiation grade, use it. Where it gives a Mendoza anaplasia grade instead, retinocytoma-grade or mild anaplasia sits at the differentiated end and severe anaplasia at the undifferentiated end. Where the report states more than one grade, code the higher. Severe anaplasia outranks a G1 or G2 differentiation grade, and a G3 or G4 differentiation grade outranks mild anaplasia. Moderate anaplasia changes no code where a differentiation grade is stated. Where the report also states a diffuse infiltrating growth pattern, code diffuse (9513), the higher code. Enucleation is the treatment that produced this specimen, not an outstanding investigation — nothing further needs to be removed from the child to read a fuller report on tissue already in hand.",
+          "hint": "Code from the report's own stated wording — do not infer a grade or growth pattern yourself. Where the report gives a differentiation grade, use it: G1 is fleurette formation or neuronal differentiation, G2 is numerous Flexner-Wintersteiner rosettes (moderately differentiated), G3 is occasional rosettes (poorly differentiated), and G4 is no rosettes with anaplasia (poorly differentiated). Where it gives a Mendoza anaplasia grade instead, retinocytoma-grade or mild anaplasia sits at the differentiated end and severe anaplasia at the undifferentiated end. Where the report states more than one grade, code the higher. Severe anaplasia outranks a G1 or G2 differentiation grade, and a G3 or G4 differentiation grade outranks mild anaplasia. Moderate anaplasia changes no code where a differentiation grade is stated. Where the report also states a diffuse infiltrating growth pattern, code diffuse (9513), the higher code. Enucleation is the treatment that produced this specimen, not an outstanding investigation — nothing further needs to be removed from the child to read a fuller report on tissue already in hand.",
           "clinical_alert": null,
           "coding_note": "Mapping per College of American Pathologists Retinoblastoma Protocol v4.0.0.0 (2017) and build contract Sec.2.4. Where a report states more than one grade the higher governs (registrar's decision, 7 October 2026): the WHO ICD-O-3 first revision, section 4.3.4, pp. 21-22, assigns the higher of two stated degrees and sets 'anaplastic' at grade IV beside 'undifferentiated'; the College of American Pathologists protocol, p. 4, and Mendoza 2015, p. 765, grade anaplasia on its highest level in the tumour. Severe anaplasia therefore outranks G1 and G2. Moderate anaplasia alone stays unresolved, as below. A stated diffuse infiltrating growth pattern outranks a grade because 9513 is the higher code (Rule K; registrar's decision, 7 October 2026). Mendoza bridge: 'Where the report states a Mendoza anaplasia grade instead of a differentiation grade, the bridge is: retinocytoma-grade or mild ~ the differentiated end; severe ~ the undifferentiated end' (contract Sec.2.4). The contract does not state where a report giving moderate anaplasia alone (no differentiation grade, and not severe) should fall; this build folds that case into the GX/9510 option as the conservative, least-specific default, rather than guessing toward 9511 or 9512 — flagged here for the registrar, not resolved. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 defines the scale. The retinocytoma homonym (contract Sec.2.3) is not resolved on this node: any report using the word 'retinocytoma' or 'retinoma' routes to rb_retinocytoma_word, which asks whether the word names a standalone lesion or an area of differentiation inside an active retinoblastoma, in the report's own words, and does not infer.",
           "captured_variables": [
@@ -467,7 +467,7 @@
           ],
           "options": [
             {
-              "label": "Diffuse infiltrating growth — the tumour spreads laterally within the retina with no discrete mass",
+              "label": "Diffuse infiltrating growth, spreading within the retina with no discrete mass",
               "morphology_code": "9513",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -476,7 +476,7 @@
               }
             },
             {
-              "label": "Fleurette formation or neuronal differentiation (grade G1); numerous Flexner-Wintersteiner rosettes, moderately differentiated (grade G2); or, on the Mendoza anaplasia scale, a retinocytoma-grade area or mild anaplasia recorded within an otherwise viable retinoblastoma; and no poorer grade or severe anaplasia stated",
+              "label": "Differentiated: grade G1 or G2, mild anaplasia, or a retinocytoma-grade area; none poorer",
               "morphology_code": "9511",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -485,7 +485,7 @@
               }
             },
             {
-              "label": "Occasional rosettes, poorly differentiated (grade G3); no rosettes present, anaplasia, poorly differentiated (grade G4); or, on the Mendoza anaplasia scale, severe anaplasia (also where a G1 or G2 grade is stated beside it)",
+              "label": "Poorly differentiated or undifferentiated: grade G3 or G4, or severe anaplasia",
               "morphology_code": "9512",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -494,7 +494,7 @@
               }
             },
             {
-              "label": "Enucleation performed; the report states no differentiation grade and no growth pattern (grade GX) — or states only moderate anaplasia on the Mendoza scale with no differentiation grade given",
+              "label": "No grade and no growth pattern stated (grade GX), or moderate anaplasia only",
               "morphology_code": "9510",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -515,7 +515,7 @@
               }
             },
             {
-              "label": "The report describes a shrunken, calcified, non-functional globe (phthisis bulbi) with no viable tumour — consistent with spontaneous regression",
+              "label": "Phthisis bulbi: a shrunken, calcified, non-functional globe with no viable tumour",
               "behaviour_exclusion": {
                 "icdo_code": "9514",
                 "icdo_behaviour": "1",
@@ -536,8 +536,8 @@
           "node_type": "clinical_alias",
           "step_number": 3,
           "step_label": "Retinocytoma — which meaning",
-          "question": "The enucleation or exenteration report uses the word 'retinocytoma' or 'retinoma'. What does the report actually describe?",
-          "hint": "'Retinocytoma' names two different things and only the report's own wording can decide which: a standalone benign lesion with no viable retinoblastoma anywhere in the specimen, or an area of differentiation — the lowest grade on Mendoza's anaplasia scale — inside an otherwise active, malignant retinoblastoma. Read what the rest of the report says about the specimen as a whole; do not infer from the word alone. If the report also states a diffuse infiltrating growth pattern, choose the diffuse option: a growth pattern outranks a grade.",
+          "question": "The enucleation or exenteration report uses the word 'retinocytoma' or 'retinoma'. What does the report describe?",
+          "hint": "'Retinocytoma' names two different things and only the report's own wording can decide which: a standalone benign lesion with no viable retinoblastoma anywhere in the specimen, or an area of differentiation — the lowest grade on Mendoza's anaplasia scale — inside an otherwise active, malignant retinoblastoma. Read what the rest of the report says about the specimen as a whole; do not infer from the word alone. If the report also states a diffuse infiltrating growth pattern, choose the diffuse option: a growth pattern outranks a grade. In the answers below, 'area' means an area of differentiation, a retinocytomatous area, inside a viable, active retinoblastoma.",
           "clinical_alert": null,
           "coding_note": "Build contract Sec.2.3: coding a retinocytomatous area within an active retinoblastoma as 9510/0 would record a benign tumour for a child who has a malignant one. Mendoza PR, et al. American Journal of Ophthalmology 2015;159(4):764-776 runs the anaplasia scale retinocytoma/mild/moderate/severe inside an active retinoblastoma. Al-Hussaini M, Al Sharie S, Sultan H, Mohammad M, Yousef YA. Retinocytoma: understanding pathogenesis, diagnosis, and treatment approaches. International Journal of Retina and Vitreous 2025;11:20, confirms 9510/0 as the ICD-O code for standalone retinocytoma. Milman 2023 records that the World Health Organization classifies retinocytoma as premalignant on genetic and clinical grounds (biallelic RB1 mutations; can dedifferentiate into retinoblastoma), while ICD-O-3.2 codes it 9510/0, behaviour 0 (benign) — the behaviour code is IARC's, not the World Health Organization's, and the tool codes to ICD-O-3.2 (contract Sec.10.4). That divergence is a registrar item (Sec.11.6), not something this branch resolves. A retinocytomatous area does not set the code where the report states G3, G4 or severe anaplasia for the rest of the tumour: the higher grade governs (registrar's decision, 7 October 2026; contract Sec.2.4).",
           "captured_variables": [
@@ -545,7 +545,7 @@
           ],
           "options": [
             {
-              "label": "The entire specimen is retinocytoma/retinoma — no viable (malignant) retinoblastoma component is described anywhere in the specimen",
+              "label": "The whole specimen is retinocytoma or retinoma; no viable retinoblastoma anywhere",
               "behaviour_exclusion": {
                 "icdo_code": "9510",
                 "icdo_behaviour": "0",
@@ -559,7 +559,7 @@
               }
             },
             {
-              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma — a 'retinocytomatous area', or retinocytoma-grade on the Mendoza anaplasia scale — and the report states no poorer grade and no severe anaplasia for the rest of the tumour",
+              "label": "Area in a viable tumour; no poorer grade and no severe anaplasia stated",
               "morphology_code": "9511",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -569,7 +569,7 @@
               }
             },
             {
-              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma, and the report states a poorly differentiated grade (G3 or G4) or severe anaplasia for the rest of the tumour",
+              "label": "Area in a viable tumour; report states a poorly differentiated grade or severe anaplasia",
               "morphology_code": "9512",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,
@@ -579,7 +579,7 @@
               }
             },
             {
-              "label": "The word describes an area of differentiation within an otherwise viable, active retinoblastoma, and the report also states a diffuse infiltrating growth pattern",
+              "label": "Area in a viable tumour; report also states a diffuse infiltrating growth pattern",
               "morphology_code": "9513",
               "behavior_code": "3",
               "basis_of_diagnosis": 7,

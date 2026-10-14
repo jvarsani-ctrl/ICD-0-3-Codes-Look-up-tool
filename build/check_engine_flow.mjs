@@ -2250,9 +2250,112 @@ async function uxScenarios(ctx) {
   return rows;
 }
 
+/* ------------------------------------------------- Group 5 question flow (14 October 2026)
+   The registrar's question-flow review shortened the wording of Group 5's screens and left every route as it was. This section keeps both
+   true. `build/flow_golden_g05.json` holds 41 routes, recorded on `main` before the edit, that stand for every answer a clerk can give on
+   Group 5's seven screens; each is replayed through the handlers the buttons call and must end on the same code, behaviour, referral,
+   outstanding tests, basis of diagnosis and evidence credited. The labels the page draws must stay at 90 characters or fewer, and no screen
+   may carry the wording the review removed: shouted capitals, a double hyphen, an internal feature number, or an intensifier. The first
+   screen's hint and its inadequate-specimen row are pinned by docs/evidence_documents/group_05.json (the data gate compares them with
+   that file), so they are listed as exceptions and not edited here. */
+async function g05Flow(ctx) {
+  const SHARED = path.join(ROOT, 'data', 'shared');
+  const router = JSON.parse(fs.readFileSync(path.join(SHARED, 'presentation_router.json'), 'utf8'));
+  const topo = JSON.parse(fs.readFileSync(path.join(SHARED, 'topography_codes.json'), 'utf8'));
+  const dt = JSON.parse(fs.readFileSync(path.join(DB, 'group_05_dt.json'), 'utf8'));
+  const golden = JSON.parse(fs.readFileSync(path.join(HERE, 'flow_golden_g05.json'), 'utf8'));
+  ctx.groupCache.set(5, { dt, aliases: [] });
+  const rows = [];
+  const t = (name, ok, detail) => rows.push({ name, ok: !!ok, detail: ok ? '' : detail });
+  const el = (attrs, extra) => Object.assign({ getAttribute: (k) => (attrs && k in attrs ? String(attrs[k]) : null), value: '', checked: false, type: 'button' }, extra || {});
+  const tap = (act, attrs, extra) => ctx.handleOption(act, el(attrs, extra));
+  const begin = () => {
+    ctx.reset();
+    Object.assign(ctx.state, { router, topography: topo, dt, treeId: 'g5_retinoblastoma', nodeId: golden.entry.node, stage: 'node', aliasIndex: {} });
+    ctx.state.captured = { topography: golden.entry.topography };
+    ctx.state.trailAtGroupEntry = 0;
+  };
+  const play = async (steps) => {
+    for (const k of steps) {
+      if (k.m === 'opt') await tap('opt', { 'data-i': k.i });
+      else if (k.m === 'tickopt') await tap('tickopt', { 'data-i': k.j });
+      else if (k.m === 'tickset') {
+        for (const id of k.set) await tap('tick', { 'data-id': id }, { type: 'checkbox', checked: true });
+        if (k.ctxRow) await tap('draft', { 'data-k': 'ctx' }, { type: 'radio', value: String(k.ctxRow) });
+        await tap('tick-continue', {});
+      } else if (k.m === 'imaging') {
+        for (const i of k.F) await tap('feature', { 'data-i': i }, { type: 'checkbox', checked: true });
+        for (const i of k.D) await tap('diversion', { 'data-i': i }, { type: 'checkbox', checked: true });
+        await tap('resolve', {});
+      } else throw new Error('unknown macro ' + k.m);
+    }
+  };
+  const endOf = () => {
+    const st = ctx.state, r = st.result;
+    if (st.stage !== 'output') return { kind: 'open at ' + st.stage + ' ' + st.nodeId };
+    const e = { workup: (st.workup || []).map((w) => w.test), basis: r.basisOfDiagnosis === undefined ? null : r.basisOfDiagnosis };
+    if (r.referral) return Object.assign(e, { kind: 'referral', group: r.group });
+    if (r.excluded) return Object.assign(e, { kind: 'non_reportable' });
+    if (r.behaviourExcluded) return Object.assign(e, { kind: 'behaviour_exclusion', code: r.icdoCode, behavior: r.icdoBehaviour });
+    return Object.assign(e, { kind: 'code', code: r.code, behavior: r.entry.behavior_code, evidence_tests: st.captured.evidence_tests || [] });
+  };
+  const wrong = [];
+  for (const r of golden.routes) {
+    begin();
+    let thrown = '';
+    try { await play(r.steps); } catch (e) { thrown = e.message; }
+    const got = endOf();
+    const bad = Object.keys(r.expect).filter((k) => JSON.stringify(got[k]) !== JSON.stringify(r.expect[k]));
+    if (bad.length || thrown) wrong.push(r.name + ' -> ' + bad.map((k) => k + ' ' + JSON.stringify(got[k]) + ' (wanted ' + JSON.stringify(r.expect[k]) + ')').join('; ') + (thrown ? ' [threw: ' + thrown + ']' : ''));
+  }
+  t('Group 5: every one of the ' + golden.routes.length + ' recorded routes still ends on the same code, behaviour, referral, outstanding tests, basis of diagnosis and evidence credited',
+    golden.routes.length === 41 && wrong.length === 0, wrong.length + ' differ: ' + wrong.slice(0, 3).join(' | '));
+
+  /* The labels the page draws, read from the page's own markup. */
+  const tree = dt.decision_trees[0], drawn = [];
+  const grab = (html, re) => [...html.matchAll(re)].map((m) => m[1].replace(/<[^>]+>/g, '').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"').trim());
+  for (const n of tree.nodes) {
+    ctx.reset();
+    Object.assign(ctx.state, { router, topography: topo, dt, treeId: tree.tree_id, nodeId: n.node_id, stage: 'node', aliasIndex: {} });
+    ctx.state.captured = { topography: golden.entry.topography };
+    const html = ctx.renderLiveNode();
+    const add = (kind, list) => list.forEach((text) => drawn.push({ node: n.node_id, kind, text }));
+    add('answer', grab(html, /<span class="opt__label">([\s\S]*?)(?:<span class="opt__meta"|<\/span><\/button>)/g));
+    add('answer row', grab(html, /<input type="radio"[^>]*> <span>([\s\S]*?)(?:<span class="opt__meta"|<\/span><\/label>)/g));
+    add('feature', grab(html, /data-act="feature"[^>]*> ([\s\S]*?)<\/label>/g));
+    add('diversion', grab(html, /data-act="diversion"[^>]*> ([\s\S]*?)(?:<span class="opt__meta"|<\/label>)/g));
+  }
+  const PINNED = (d) => d.node === 'rb_document_inventory' && d.kind === 'answer row' && /^A specimen \(cytology, or enucleation\/exenteration\) was obtained but is/.test(d.text);
+  const long = drawn.filter((d) => d.text.length > 90 && !PINNED(d));
+  t('Group 5: every answer, row, feature and diversion box the page draws is 90 characters or fewer (the pinned inadequate-specimen row is the one exception)',
+    drawn.length >= 25 && long.length === 0, drawn.length + ' drawn; over 90: ' + long.slice(0, 3).map((d) => d.node + ' "' + d.text.slice(0, 60) + '" (' + d.text.length + ')').join('; '));
+
+  const TEXT = [];
+  for (const n of tree.nodes) {
+    TEXT.push([n.node_id, 'question', n.question]);
+    if (n.node_id !== 'rb_document_inventory') TEXT.push([n.node_id, 'hint', n.hint]);
+    (n.options || []).forEach((o, i) => TEXT.push([n.node_id, 'option ' + i, o.label]));
+    (n.imaging_features || []).forEach((f, i) => TEXT.push([n.node_id, 'feature ' + i, f]));
+    (n.diversion_criteria || []).forEach((d, i) => TEXT.push([n.node_id, 'diversion ' + i, d.feature]));
+  }
+  const BAD = /\bactually\b|\b[A-Z]{5,}\b|--|\b(feature|option|node|step) ?\d\b|\b(very|highly|extremely|truly|really|simply)\b/;
+  const hits = TEXT.filter(([, , x]) => x && BAD.test(x));
+  t('Group 5: no question, hint (the first screen\'s is pinned), answer, feature or diversion carries "actually", shouted capitals, a double hyphen, an internal number or an intensifier',
+    TEXT.length >= 40 && hits.length === 0, hits.length + ' hit: ' + hits.slice(0, 3).map(([n, w, x]) => n + ' ' + w + ' "' + x.slice(0, 50) + '"').join('; '));
+  return rows;
+}
+
 /* ---------------------------------------------------------------------- main */
 const ctx = loadEngine();
 let bad = 0, partial = 0;
+
+/* ONLY=g05 runs the Group 5 question-flow section alone */
+if (ONLY === 'g05') {
+  let rows = [];
+  try { rows = await g05Flow(ctx); } catch (e) { rows = [{ name: 'the Group 5 section ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
+  for (const r of rows) { console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name); if (!r.ok) { console.log('        ' + r.detail); bad++; } }
+  process.exit(bad ? 1 : 0);
+}
 
 console.log('Fixtures — the defect, and the controls that keep a fix honest\n');
 for (const r of (ONLY === 'ux' ? [] : fixtures(ctx))) {
@@ -2278,6 +2381,16 @@ console.log('\nTick lists, Home, filter, result block and referral hop\n');
   let ux = [];
   try { ux = await uxScenarios(ctx); } catch (e) { ux = [{ name: 'the scenarios ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
   for (const r of ux) {
+    console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name);
+    if (!r.ok) { console.log('        ' + r.detail); bad++; }
+  }
+}
+
+console.log('\nGroup 5 question flow — the routes it keeps and the wording its screens carry\n');
+{
+  let g5 = [];
+  try { g5 = await g05Flow(ctx); } catch (e) { g5 = [{ name: 'the Group 5 section ran to the end', ok: false, detail: 'the engine threw: ' + e.stack }]; }
+  for (const r of g5) {
     console.log('  %s  %s', r.ok ? 'OK  ' : 'FAIL', r.name);
     if (!r.ok) { console.log('        ' + r.detail); bad++; }
   }
