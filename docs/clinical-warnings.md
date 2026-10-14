@@ -275,7 +275,9 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ APL — haematological emergency. Document the DIC screen and ATRA initiation. Presumptive treatment is a clinical decision, not a coding one.
 
 
-### tree_acute_leukemia · ac_prior_therapy_gate
+### tree_acute_leukemia · ac_prior_therapy_gate — REMOVED 14 October 2026
+
+*The node no longer exists: the tool does not ask about prior cytotoxic therapy (registrar, 14 October 2026; `memory/registrar-rulings.md`). The warning below is kept as archive text.*
 
 **the node — Prior therapy**
 
@@ -308,7 +310,9 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ APL — haematological emergency. Document the DIC screen and ATRA initiation. Presumptive treatment is a clinical decision, not a coding one.
 
 
-### tree_acute_leukemia · ac_alal_resolve
+### tree_acute_leukemia · ac_alal_resolve — REMOVED 14 October 2026
+
+*The node no longer exists (replaced by the morphology question `ac_morphology_first` and the fall-back rules on `ac_lineage_assignment`; `docs/superpowers/specs/2026-10-14-acute-morphology-first-design.md`). The warning below is kept as archive text.*
 
 **the node — Panel adequacy**
 
@@ -461,7 +465,9 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ Burkitt versus B-ALL — MYC rearrangement with a mature B phenotype (CD20 bright, CD45 bright, CD34−, CD58−, TdT−) and more than 25% marrow blasts is leukaemic Burkitt. B-ALL is TdT+, CD34+, CD58+ and MYC-r negative — a different tree and a different code. sIgM is unreliable in both directions and is not the gate.
 
 
-### tree_mature_lymphoid · ml_prior_therapy_gate
+### tree_mature_lymphoid · ml_prior_therapy_gate — REMOVED 14 October 2026
+
+*The node no longer exists: the tool does not ask about prior cytotoxic therapy (registrar, 14 October 2026; `memory/registrar-rulings.md`). The warning below is kept as archive text.*
 
 **the node — Prior therapy**
 
@@ -602,7 +608,9 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ Before any clonal eosinophilia code (9964–9968), document exclusion of parasitic infection and HIV. Unresolved secondary cause → do not code as a myeloid neoplasm.
 
 
-### tree_chronic_myeloid_mpn · mpn_prior_therapy_gate
+### tree_chronic_myeloid_mpn · mpn_prior_therapy_gate — REMOVED 14 October 2026
+
+*The node no longer exists: the tool does not ask about prior cytotoxic therapy (registrar, 14 October 2026; `memory/registrar-rulings.md`). The warning below is kept as archive text.*
 
 **the node — Prior therapy**
 
@@ -908,7 +916,9 @@ Generated 2026-09-04 from `group_01_dt.json` and `group_02_dt.json`. **302 warni
 > ⚠️ Nutritional (B12 / folate / iron) deficiency, HIV, chronic infection and drug effect all mimic myelodysplasia. Exclude them and document the exclusion before coding — they are non-reportable terminals, not NOS codes (Pathway §3.5, §4.9).
 
 
-### tree_mds_jmml · mds_prior_therapy_gate
+### tree_mds_jmml · mds_prior_therapy_gate — REMOVED 14 October 2026
+
+*The node no longer exists: the tool does not ask about prior cytotoxic therapy (registrar, 14 October 2026; `memory/registrar-rulings.md`). The warning below is kept as archive text.*
 
 **the node — Prior therapy**
 

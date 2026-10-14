@@ -111,7 +111,7 @@ acute gate has three copies and the mature gate two; they are listed under `extr
 
 *For the registrar:*
 
-- option 2: Flow cytometry is mapped to the Lab Report, which also holds blood counts, and the node after options 2 to 4 does not ask for the flow result (ac_prior_therapy_gate asks about prior therapy), so is it acceptable that any Lab Report ticked beside a smear or tissue report places the file at 'Morphology + flow cytometry and/or IHC'?
+- option 2: Flow cytometry is mapped to the Lab Report, which also holds blood counts, and the node after options 2 to 4 does not ask for the flow result (ac_morphology_first asks the morphology question), so is it acceptable that any Lab Report ticked beside a smear or tissue report places the file at 'Morphology + flow cytometry and/or IHC'?
 - option 1: The label names only marrow aspirate and blood film (mapped to Cytology), so is it acceptable that a Histology Report on its own (a trephine, or an extramedullary biopsy that is not marrow at all) also fits option 1?
 - option 2: An IHC Report beside Cytology or Histology with no Lab Report stays at option 1, which says 'no IHC', although option 2 says 'and/or IHC'; is this understatement acceptable, in particular for a trephine with IHC and no flow report?
 - option 3: A file with morphology and a Gene report but no Lab Report falls to option 1 because the flow/IHC rung is missing; is it right to understate it this way?
