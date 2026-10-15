@@ -1791,6 +1791,82 @@ async function uxScenarios(ctx) {
     }
   }
 
+  /* ---- the Group routing row carries clerk-facing text only ------------------------- */
+  {
+    /* Standing rule 7 (registrar, 16 October 2026). The router's dual-group rules hold build
+       documentation, and the row printed it: a 9814/3 at the marrow showed "9819 is an ICD-O-3.2
+       addition postdating DT master §6's table (Pathway §5.7) ... group_01_dt.json sets
+       topography_dependent:true". Only a `reason` is written for the clerk. Every path through every
+       rule, for every code it names, is rendered on a real output: the row shows exactly the reason
+       that path resolves to, or is absent, and no other text the rule holds reaches the page. The
+       paths and the strings are read off the router, so a rule added later is covered as it lands. */
+    const STRUCTURAL = new Set(['reason', 'label', 'codes', 'topography_in', 'captured_variable', 'equals', 'operator', 'value', 'discriminator', 'type', 'subgroup']);
+    const textsOf = (v, k, out) => {
+      if (typeof v === 'string') { if (!STRUCTURAL.has(k)) out.push(v); }
+      else if (Array.isArray(v)) v.forEach((x) => textsOf(x, k, out));
+      else if (v && typeof v === 'object') for (const [kk, vv] of Object.entries(v)) textsOf(vv, kk, out);
+      return out;
+    };
+    const rules = Object.entries(router.dual_group_rules || {}).filter(([, v]) => v && typeof v === 'object' && !Array.isArray(v));
+    const sites = Object.keys(topo.topography_lookup || {});
+    const ownerOf = (code) => {
+      for (const [g, dt] of dts) {
+        const es = dt.morphology_entries.filter((x) => String(x.morphology_code) === String(code));
+        if (es.length) return { g, dt, e: es.find((x) => String(x.behavior_code) === '3') || es[0] };
+      }
+      return null;
+    };
+    /* The two `when` shapes the router's closed vocabulary allows, read here independently of the engine. */
+    const satisfy = (w) => ({ '>=': w.value, '<=': w.value, '==': w.value, '>': Number(w.value) + 1, '<': Number(w.value) - 1, '!=': Number(w.value) + 1 })[w.operator];
+    const holds = (w, cap) => {
+      if (w.topography_in) return w.topography_in.includes(cap.topography);
+      if (!w.captured_variable || cap[w.captured_variable] === undefined) return false;
+      if (w.equals !== undefined) return String(cap[w.captured_variable]) === String(w.equals);
+      return ctx.numCompare(cap[w.captured_variable], w.operator, w.value) === true;
+    };
+    const paths = [];
+    for (const [key, r] of rules) {
+      const named = (r.branches || []).flatMap((b) => (b.when && b.when.topography_in) || []);
+      const free = sites.find((s) => !named.includes(s));
+      const caps = [];
+      if (r.always) caps.push({ topography: free });
+      for (const b of r.branches || []) {
+        const w = b.when || {}, cap = { topography: w.topography_in ? w.topography_in[0] : free };
+        if (w.captured_variable) cap[w.captured_variable] = w.equals !== undefined ? w.equals : satisfy(w);
+        caps.push(cap);
+      }
+      if (!r.always) caps.push({ topography: free });
+      for (const cap of caps) {
+        const b = r.always ? null : (r.branches || []).find((x) => holds(x.when || {}, cap));
+        const reason = r.always ? (r.always.reason || r.reason) : b ? (b.reason || r.reason) : ((r.default && r.default.reason) || r.reason);
+        for (const code of r.codes || []) paths.push({ key, code, cap, reason: reason || null, texts: textsOf(r, '', []) });
+      }
+    }
+    const wrongRow = [], leaks = [], noOwner = [];
+    let shown = 0;
+    for (const p of paths) {
+      const o = ownerOf(p.code);
+      if (!o) { noOwner.push(p.code); continue; }
+      ctx.reset(); Object.assign(ctx.state, { router, topography: topo, dt: o.dt, group: o.g, stage: 'output' });
+      ctx.state.captured = Object.assign({}, p.cap);
+      ctx.state.trail = [{ label: 'Evidence in file', value: 'A histology report' }];
+      let html = '', threw = '';
+      try { ctx.finish({ morphology_code: o.e.morphology_code, behavior_code: o.e.behavior_code }, 'x'); html = ctx.renderOutput(); } catch (e) { threw = e.message; }
+      const row = /<b>Group routing<\/b><span>([\s\S]*?)<\/span><\/div>/.exec(html), got = row ? row[1] : null;
+      const want = p.reason ? ctx.esc(p.reason) : null, where = p.key + ' ' + p.code + ' ' + JSON.stringify(p.cap);
+      if (threw || got !== want) wrongRow.push(where + ': row ' + JSON.stringify(got) + ', wanted ' + JSON.stringify(want) + (threw ? ' [threw: ' + threw + ']' : ''));
+      const leaked = p.texts.filter((s) => html.includes(s) || html.includes(ctx.esc(s)));
+      if (leaked.length) leaks.push(where + ': ' + leaked.map((s) => JSON.stringify(s.slice(0, 90))).join(' | '));
+      if (got !== null) shown++;
+    }
+    const texts = new Set(paths.flatMap((p) => p.texts)).size;
+    t('the Group routing row shows exactly the reason each path resolves to, and nothing where none does (' + paths.length + ' paths over ' + rules.length + ' dual-group rules, ' + shown + ' with a row)',
+      paths.length >= rules.length && !wrongRow.length && !noOwner.length,
+      wrongRow.length + ' wrong: ' + wrongRow.slice(0, 3).join(' || ') + (noOwner.length ? ' || no group holds ' + [...new Set(noOwner)].join(', ') : ''));
+    t('no other text a dual-group rule holds reaches the result (' + texts + ' strings checked)', texts > 0 && !leaks.length,
+      leaks.length + ' path(s) leak: ' + leaks.slice(0, 3).join(' || '));
+  }
+
   /* ---- Home, the leave bar and the keyboard focus, through render() ------------- */
   {
     const dom = ctx.__dom;
@@ -2182,7 +2258,7 @@ async function uxScenarios(ctx) {
     t('a blast percentage typed later in the tree does not overrule the answer given at the question', gb.group === 2, JSON.stringify(gb));
     const g1 = rg('9811', 'C77.0', { primary_compartment: 'not_known' }, 1), g2 = rg('9811', 'C77.0', { primary_compartment: 'not_known' }, 2);
     t('no marrow aspirate yet keeps the group the clerk chose and says the group is provisional', g1.group === 1 && g2.group === 2 &&
-      /provisional/.test(g1.note || '') && /no marrow aspirate/.test(g1.note || ''), JSON.stringify([g1, g2]));
+      /provisional/.test(g1.reason || '') && /no marrow aspirate/.test(g1.reason || ''), JSON.stringify([g1, g2]));
     t('all three rules that read the question answer each of its three answers', ['9811', '9823', '9827'].every((code) =>
       ['marrow', 'not_marrow', 'not_known'].every((v) => rg(code, 'C77.0', { primary_compartment: v }, 1) !== null)), 'a rule has no branch for an answer');
   }

@@ -1812,7 +1812,7 @@
     }
   },
   "dual_group_rules": {
-    "_comment": "Transcribed from Decision Tree JSON Build master §6. Consulted at Moment 1 (routePresentation, before any tree loads, when candidates.length > 1) and/or Moment 2 (resolveGroup at a terminal, Architecture §6). Engine walks branches[] in order; first match wins; falls to default if none match. | BRANCH `when` VOCABULARY IS CLOSED, and it is closed because it was not. branchMatches() in app.js reads exactly two shapes: `topography_in` (a list) and `captured_variable` with `equals` or with `operator`+`value`. It has never read `topography_equals`, and four branches used it -- 9380 at C72.3, 8158/8290 at C75.1, 8963 at C64.9 and 8000-8005 at C64.9. All four were dead: the branch never matched and every case fell to the rule's default, which for two of them is a different ICCC-3 group. Found and fixed 22 September 2026 during the Group VI build, and check_router_branch_when_vocabulary() now rejects any key branchMatches() does not read.",
+    "_comment": "Transcribed from Decision Tree JSON Build master §6. Consulted at Moment 1 (routePresentation, before any tree loads, when candidates.length > 1) and/or Moment 2 (resolveGroup at a terminal, Architecture §6). Engine walks branches[] in order; first match wins; falls to default if none match. | BRANCH `when` VOCABULARY IS CLOSED, and it is closed because it was not. branchMatches() in app.js reads exactly two shapes: `topography_in` (a list) and `captured_variable` with `equals` or with `operator`+`value`. It has never read `topography_equals`, and four branches used it -- 9380 at C72.3, 8158/8290 at C75.1, 8963 at C64.9 and 8000-8005 at C64.9. All four were dead: the branch never matched and every case fell to the rule's default, which for two of them is a different ICCC-3 group. Found and fixed 22 September 2026 during the Group VI build, and check_router_branch_when_vocabulary() now rejects any key branchMatches() does not read. | TEXT: the one string a rule carries to the clerk is `reason`, printed on the result's Group routing row: the matched branch's, else the `default`'s or `always`'s, else the rule's own. `authoring_note` documents the build -- specs, files, commits, ICCC-2017 rows -- and is never rendered. A `note` key is rejected by the build: until 16 October 2026 the engine printed `note` on that row, and nearly every one was build documentation (standing rule 7, registrar, 16 October 2026).",
     "9811-9819": {
       "codes": [
         "9811",
@@ -1872,14 +1872,14 @@
             "group": null,
             "subgroup": null
           },
-          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
+          "reason": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
         "group": 2,
         "subgroup": "IIb1"
       },
-      "note": "Includes 9819 (B-ALL, BCR::ABL1-like/Ph-like) alongside 9811-9818: 9819 is an ICD-O-3.2 addition postdating DT master §6's table (Pathway §5.7), belongs to the same B-ALL family, and group_01_dt.json sets topography_dependent:true on it with the identical routing note applied to 9811-9818.",
+      "authoring_note": "Includes 9819 (B-ALL, BCR::ABL1-like/Ph-like) alongside 9811-9818: 9819 is an ICD-O-3.2 addition postdating DT master §6's table (Pathway §5.7), belongs to the same B-ALL family, and group_01_dt.json sets topography_dependent:true on it with the identical routing note applied to 9811-9818.",
       "spleen_carveout_note": "C42.2 (spleen) is deliberately excluded from the C42.x branch here, consistent with the 9591 rule's carve-out -- not a transcription slip. DT master §6's literal text says only 'C42.x' without naming spleen, but the registry reads it the same way it reads 9591 (spleen presentation of a B-ALL-family code is not marrow-primary)."
     },
     "9823": {
@@ -1933,7 +1933,7 @@
             "group": null,
             "subgroup": null
           },
-          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
+          "reason": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
@@ -1959,7 +1959,7 @@
             "group": 1,
             "subgroup": "Ia3"
           },
-          "note": "Leukaemic phase."
+          "authoring_note": "Leukaemic phase."
         },
         {
           "when": {
@@ -1980,14 +1980,14 @@
             "group": null,
             "subgroup": null
           },
-          "note": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
+          "reason": "The group is provisional: no marrow aspirate was available, so the split between leukaemia and lymphoma is not settled until one is done."
         }
       ],
       "default": {
         "group": 2,
         "subgroup": "IIb3"
       },
-      "note": "HTLV-1 serology mandatory before coding either way (clinical_alert, DT master §5)."
+      "authoring_note": "HTLV-1 serology mandatory before coding either way (clinical_alert, DT master §5)."
     },
     "9591": {
       "codes": [
@@ -2016,7 +2016,7 @@
         "group": 2,
         "subgroup": "IIb4"
       },
-      "note": "Group-1-specific dual-group rule (Pathway §1, §5.3). C42.2 (spleen) and every other site fall to the default — this is exactly why C42.0-C42.4 must be individually addressable in topography_codes.json, not lumped as C42.x."
+      "authoring_note": "Group-1-specific dual-group rule (Pathway §1, §5.3). C42.2 (spleen) and every other site fall to the default — this is exactly why C42.0-C42.4 must be individually addressable in topography_codes.json, not lumped as C42.x."
     },
     "9380": {
       "codes": [
@@ -2036,7 +2036,7 @@
             "group": 3,
             "subgroup": "IIIb"
           },
-          "note": "Optic nerve."
+          "authoring_note": "Optic nerve."
         }
       ],
       "default": {
@@ -2090,7 +2090,7 @@
       "default": {
         "group": 4,
         "subgroup": null,
-        "note": "Non-CNS."
+        "authoring_note": "Non-CNS."
       },
       "cns_topography_scope_note": "Extended 2026-09-18 to the full C70.0-C72.9 CNS range (all 21 codes topography_codes.json's brain_cns crosswalk enumerates), now that Group III was authored 2026-09-16. Previously covered only the NOS-level codes C70.9/C71.9/C72.9, so a medulloepithelioma at a specific CNS subsite (e.g. C71.6) fell through to the default and misrouted to Group 4. ICCC-3 gives 9501-9504 to Group III (IIIc3) across the whole of C70.0-C72.9, Group 4 only outside it. Group 4 build contract §2.5."
     },
@@ -2124,8 +2124,7 @@
             "group": 7,
             "subgroup": "VIIb"
           },
-          "note": "At the liver (C22.0, C22.1) an ACTH-producing tumour is ICCC-3 Group VII, subgroup VIIb, hepatic carcinomas.",
-          "authoring_note": "ICCC-2017 range 70 lists 8158 among the C22 carcinomas at sites 220,221, behaviour 3, subgroup VIIb, and group_07_dt.json carries 8158/3 'ACTH-producing tumor' as a VIIb entry. 8158 shared a rule with 8290 until 4 October 2026; the two no longer route alike, because ICCC-2017 gives 8290 no Group VII row and its XIf10 site list excludes 220-238, so 8158 was split into this rule. Without the branch a hepatic ACTH-producing tumour took the shared rule's group 11 default and never reached Group VII -- the same defect the Group VII build corrected for 8170 (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
+          "authoring_note": "At the liver (C22.0, C22.1) an ACTH-producing tumour is ICCC-3 Group VII, subgroup VIIb, hepatic carcinomas. ICCC-2017 range 70 lists 8158 among the C22 carcinomas at sites 220,221, behaviour 3, subgroup VIIb, and group_07_dt.json carries 8158/3 'ACTH-producing tumor' as a VIIb entry. 8158 shared a rule with 8290 until 4 October 2026; the two no longer route alike, because ICCC-2017 gives 8290 no Group VII row and its XIf10 site list excludes 220-238, so 8158 was split into this rule. Without the branch a hepatic ACTH-producing tumour took the shared rule's group 11 default and never reached Group VII -- the same defect the Group VII build corrected for 8170 (Group 7 build contract Sec.0.2 point 3, Sec.7.1)."
         },
         {
           "when": {
@@ -2958,7 +2957,7 @@
         "group": null,
         "subgroup": null,
         "requires_disambiguation": true,
-        "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
+        "authoring_note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
       },
       "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
     },
@@ -2995,7 +2994,7 @@
         "group": null,
         "subgroup": null,
         "requires_disambiguation": true,
-        "note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
+        "authoring_note": "No safe topography default — tumour_origin must be captured; site alone (limb/trunk) does not resolve bone vs soft tissue."
       },
       "authoring_note": "Re-keyed from the former '9260' rule during the Group VIII build, 2 October 2026 (docs/TODO.md §8.1; Group 8 build contract §7). ICD-O-3.2 deleted 9260/3 Ewing sarcoma and moved it to 9364/3 (IARC 'Deleted codes and their terms', 9 Oct 2020, p. 6); 9260 now carries only 9260/0 Aneurysmal bone cyst, so the old rule matched a code no group emits. Subgroups per ICCC-2017.sqlite: 9364 -> VIIIc2 (range 65, 400-419) / IXd2 (range 81); 9365 -> VIIIc1 (range 64, 400-419) / IXd1 (range 80). Group VIII owns this rule by agreement with the Group IX session."
     },
@@ -3037,7 +3036,7 @@
             "group": 3,
             "subgroup": null
           },
-          "note": "Via 9508 (ATRT)."
+          "authoring_note": "Via 9508 (ATRT)."
         },
         {
           "when": {
@@ -3061,8 +3060,7 @@
             "group": 7,
             "subgroup": "VIIa2"
           },
-          "note": "At the liver (C22.0, C22.1) a rhabdoid tumour is ICCC-3 Group VII, subgroup VIIa2, rhabdoid hepatic tumour.",
-          "authoring_note": "ICCC-2017 range 68: 8963 at sites 220,221, behaviour 3, is VIIa2. Without this branch a hepatic rhabdoid tumour fell to the Group IX IXd3 default, whose site list (000-218,239-639,659-699,739-768,809) excludes 220-238. Added by the Group VII build, 2 October 2026 (Group 7 build contract Sec.7.1)."
+          "authoring_note": "At the liver (C22.0, C22.1) a rhabdoid tumour is ICCC-3 Group VII, subgroup VIIa2, rhabdoid hepatic tumour. ICCC-2017 range 68: 8963 at sites 220,221, behaviour 3, is VIIa2. Without this branch a hepatic rhabdoid tumour fell to the Group IX IXd3 default, whose site list (000-218,239-639,659-699,739-768,809) excludes 220-238. Added by the Group VII build, 2 October 2026 (Group 7 build contract Sec.7.1)."
         }
       ],
       "default": {
@@ -3090,8 +3088,7 @@
             "group": 7,
             "subgroup": "VIIa3"
           },
-          "note": "At the liver (C22.0, C22.1) an embryonal sarcoma is ICCC-3 Group VII, subgroup VIIa3, embryonal sarcoma of liver.",
-          "authoring_note": "ICCC-2017 range 69: 8991 at sites 220,221, behaviour 3, is VIIa3 (Group 7 build contract Sec.0.2 point 2, Sec.7.1)."
+          "authoring_note": "At the liver (C22.0, C22.1) an embryonal sarcoma is ICCC-3 Group VII, subgroup VIIa3, embryonal sarcoma of liver. ICCC-2017 range 69: 8991 at sites 220,221, behaviour 3, is VIIa3 (Group 7 build contract Sec.0.2 point 2, Sec.7.1)."
         }
       ],
       "default": {
@@ -3184,7 +3181,7 @@
             "group": 6,
             "subgroup": "VIc"
           },
-          "note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
+          "authoring_note": "ICCC-2017 range 52: 8000-8005 at site 649, behaviour 3, is subgroup VIc, Unspecified malignant renal tumors. Without this branch a malignant renal neoplasm with no pathology fell to the Group XII default and could not reach Group VI at all -- the same defect as a neuroblastoma at C48.2 never reaching Group IV (commit 10ca4fa). Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5: anything outside Tables 3 and 4 diagnosed without pathology is 8000/3, so this is the modal destination for a renal mass that fails the nephroblastoma imaging constellation (Group 6 build contract Sec.0.11, Sec.3.4)."
         },
         {
           "when": {
@@ -3221,8 +3218,7 @@
             "group": 7,
             "subgroup": "VIIc"
           },
-          "note": "At the liver (C22.0, C22.1) a malignant neoplasm with no specific type is ICCC-3 Group VII, subgroup VIIc, unspecified malignant hepatic tumours.",
-          "authoring_note": "ICCC-2017 range 72: 8000-8005 at sites 220,221, behaviour 3, is VIIc. Without this branch a liver case coded 8000/3 fell to the Group XII default, whose XIIb site list excludes 220-238. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5 (Group 7 build contract Sec.0.6, Sec.7.1)."
+          "authoring_note": "At the liver (C22.0, C22.1) a malignant neoplasm with no specific type is ICCC-3 Group VII, subgroup VIIc, unspecified malignant hepatic tumours. ICCC-2017 range 72: 8000-8005 at sites 220,221, behaviour 3, is VIIc. Without this branch a liver case coded 8000/3 fell to the Group XII default, whose XIIb site list excludes 220-238. Visser O, et al. Frontiers in Oncology 2023;13:1250549, rule 5 (Group 7 build contract Sec.0.6, Sec.7.1)."
         },
         {
           "when": {
@@ -3257,7 +3253,7 @@
         "group": 1,
         "subgroup": "Ib"
       },
-      "note": "Always Group I (Ib), regardless of presenting site. An orbital, cutaneous, nodal or other extramedullary myeloid sarcoma must NOT be re-routed to Group II or IX. Record the involved site in topography — it does not change the group."
+      "authoring_note": "Always Group I (Ib), regardless of presenting site. An orbital, cutaneous, nodal or other extramedullary myeloid sarcoma must NOT be re-routed to Group II or IX. Record the involved site in topography — it does not change the group."
     }
   },
   "tick_vocabularies": {

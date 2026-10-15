@@ -13089,6 +13089,56 @@ def check_router_branch_when_vocabulary(repo: Path, contexts: dict):
     return out
 
 
+def check_router_dual_group_text_keys(repo: Path, contexts: dict):
+    """
+    A dual-group rule carries clerk-facing text in `reason` and author-facing text in
+    `authoring_note`. It carries no `note`.
+
+    Until 16 October 2026 resolveGroup() returned `note` and the result's "Group routing"
+    row printed it. Thirteen distinct strings reached the row, and twelve were written for
+    the build, not for the clerk: a 9814/3 at the marrow showed "9819 is an ICD-O-3.2 addition postdating
+    DT master §6's table (Pathway §5.7) ... group_01_dt.json sets topography_dependent:true".
+    That is standing rule 7. The engine now reads `reason` only, so a `note` written today
+    is text its author expects the clerk to see and the clerk never does. Registrar,
+    16 October 2026.
+
+    The engine gate proves the rendering: every path through every rule shows exactly the
+    `reason` it resolves to and no other string the rule holds. This check keeps the
+    retired key from coming back, at any depth: rule, branch, `default` or `always`.
+    """
+    path = repo / "data" / "shared" / "presentation_router.json"
+    data, findings = load_json(path)
+    out = list(findings)
+    if data is None:
+        return out
+    rules = (data or {}).get("dual_group_rules") or {}
+    if not isinstance(rules, dict):
+        return out + [(FAIL, "dual_group_rules is not an object")]
+
+    reasons = 0
+    for key, rule in sorted(rules.items()):
+        if key.startswith("_") or not isinstance(rule, dict):
+            continue
+        parts = [("rule", rule)] + [("branch[%d]" % i, b) for i, b in enumerate(rule.get("branches") or [])]
+        parts += [(p, rule[p]) for p in ("default", "always") if isinstance(rule.get(p), dict)]
+        for where, obj in parts:
+            if not isinstance(obj, dict):
+                continue
+            if "note" in obj:
+                out.append((FAIL, "dual_group_rule %r %s carries `note`. The engine no longer reads "
+                                  "it: write clerk-facing text as `reason`, which the result's "
+                                  "Group routing row prints, or author-facing text as "
+                                  "`authoring_note`, which nothing renders (standing rule 7)"
+                            % (key, where)))
+            if isinstance(obj.get("reason"), str) and obj["reason"].strip():
+                reasons += 1
+
+    if not [f for f in out if f[0] == FAIL]:
+        out.append((OK, "router dual-group text: no rule carries `note`; %d `reason` string(s) "
+                        "reach the Group routing row" % reasons))
+    return out
+
+
 def check_router_cns_topography_completeness(repo: Path, contexts: dict):
     """
     A dual-group branch that names ANY CNS topography must name all 21 of them.
@@ -13618,6 +13668,7 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report.run(check_presentation_router, repo, contexts)
     report.run(check_routing_narrows, repo, contexts)
     report.run(check_router_branch_when_vocabulary, repo, contexts)
+    report.run(check_router_dual_group_text_keys, repo, contexts)
     report.run(check_site_systems, repo, contexts)
     report.run(check_compartment_discriminator, repo, contexts)
     report.run(check_router_cns_topography_completeness, repo, contexts)
