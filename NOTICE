@@ -1,0 +1,90 @@
+PedsCode — Childhood Cancer Coding Guide
+Copyright 2026 Uganda Child Cancer Foundation
+
+PedsCode was developed by the Uganda Child Cancer Foundation (UCCF) for the
+Uganda Cancer Institute / UCCF Paediatric Cancer Registry. To cite it, see
+CITATION.cff.
+
+The Apache License, Version 2.0 (see LICENSE) covers the work of the Uganda
+Child Cancer Foundation in this repository: the engine, the stylesheet, the
+build scripts, the decision trees, the aliases written for the tool and the
+documentation. It does not cover the material listed below. That material
+belongs to its owners and stays under their terms, and this repository grants
+no rights in it.
+
+
+1. The UCCF name and logo
+
+   The Uganda Child Cancer Foundation name and logo, and the files in
+   assets/ (uccf-mark.png, uccf-colour-wide.png, uccf-white-wide.png),
+   belong to the Uganda Child Cancer Foundation. They are not covered by the
+   Apache License, Version 2.0. All rights are reserved. A modified or
+   redistributed version of PedsCode must remove or replace them.
+
+   "PedsCode" is a product name of the Uganda Child Cancer Foundation.
+   Section 6 of the Apache License, Version 2.0 grants no permission to use
+   it, except to describe where a work came from.
+
+
+2. ICD-O codes and terms
+
+   The morphology codes and terms in data/ come from the International
+   Classification of Diseases for Oncology, third edition, second revision
+   (ICD-O-3.2), final tables of 9 October 2020. The topography codes in
+   data/ are those of the International Classification of Diseases for
+   Oncology, third edition. ICD-O is a classification of the World Health
+   Organization (WHO), which holds its copyright. ICD-O-3.2 was prepared by
+   the ICD-O Committee of the International Agency for Research on Cancer
+   (IARC) and WHO, and the International Association of Cancer Registries
+   distributes its tables: http://www.iacr.com.fr/
+
+   IARC's terms of use permit extracts of IARC materials to be reproduced for
+   research, private study, educational or non-commercial purposes with
+   limited circulation, when the IARC source is acknowledged. Substantial
+   portions, wider circulation and any other use require IARC's written
+   permission: https://publications.iarc.who.int/Terms-Of-Use
+
+
+3. ICCC-3 groupings
+
+   The assignment of codes to diagnostic groups and subgroups in data/
+   follows the International Classification of Childhood Cancer, third
+   edition (ICCC-3), and its 2017 update:
+
+   Steliarova-Foucher E, Stiller CA, Lacour B, Kaatsch P. International
+   Classification of Childhood Cancer, third edition. Cancer
+   2005;103:1457-67. doi:10.1002/cncr.20910. Copyright 2005 American Cancer
+   Society.
+
+   Steliarova-Foucher E, Colombet M, Ries LAG, Rous B, Stiller CA.
+   Classification of tumours. In: International Incidence of Childhood
+   Cancer, Volume III. Lyon: International Agency for Research on Cancer.
+
+
+4. Table 1 of the 2021 WHO classification of central nervous system tumours
+
+   data/shared/who_cns5_table1.json transcribes Table 1 of Louis DN, et al.
+   The 2021 WHO Classification of Tumors of the Central Nervous System: a
+   summary. Neuro-Oncology 2021;23(8):1231-1251. doi:10.1093/neuonc/noab106.
+   © The Author(s) 2021. Published by Oxford University Press on behalf of
+   the Society for Neuro-Oncology. All rights reserved.
+
+
+5. Visser 2023, in docs/references/
+
+   docs/references/Visser-2023-ENCR-basis-of-diagnosis.pdf is Visser O,
+   Kościańska B, Caetano dos Santos FL, Cuccaro F, Forjaz G, Michalek IM,
+   Mousavi M, Sulkowska U, Martos C, Giusti F. 2022 revised European
+   recommendations for the coding of the basis of diagnosis of cancer cases
+   in population-based cancer registries. Frontiers in Oncology
+   2023;13:1250549. doi:10.3389/fonc.2023.1250549. Copyright © 2023 the
+   authors. It is distributed unchanged under the Creative Commons
+   Attribution License (CC BY), as its first page states.
+
+
+6. Quotations in docs/
+
+   The build contracts, build reports and evidence files in docs/ quote
+   published papers, classification volumes and reporting guides, each with
+   its citation and page. Each quotation remains the copyright of its author
+   or publisher.
