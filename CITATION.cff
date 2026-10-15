@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use PedsCode, please cite it as below."
+title: "PedsCode — Childhood Cancer Coding Guide"
+type: software
+authors:
+  - name: "Uganda Child Cancer Foundation"
+abstract: >-
+  An advisory decision tool that helps a cancer registry data abstractor turn
+  the clinical language in a patient file into an ICD-O-3.2 morphology code,
+  mapped to its group in the International Classification of Childhood
+  Cancer, third edition (ICCC-3).
+repository-code: "https://github.com/jvarsani-ctrl/ICD-0-3-Codes-Look-up-tool"
+url: "https://jvarsani-ctrl.github.io/ICD-0-3-Codes-Look-up-tool/"
+license: Apache-2.0
+keywords:
+  - cancer registry
+  - childhood cancer
+  - ICD-O-3.2
+  - ICCC-3
+  - paediatric oncology

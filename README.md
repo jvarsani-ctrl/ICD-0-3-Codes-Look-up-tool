@@ -87,6 +87,9 @@ data/
   shared/           presentation_router.json, topography_codes.json
 build/
   build_database.py regenerates alias_index.json and validates everything
+LICENSE             Apache License, Version 2.0
+NOTICE              copyright, credit, and the material the licence does not cover
+CITATION.cff        how to cite PedsCode
 ```
 
 ## The four layers — never inverted
@@ -321,4 +324,37 @@ A marrow aspirate, blood film or trephine with a genetic test and no flow cytome
 The marker picker is a dropdown: closed until its search box is opened, it lists only the markers not yet added, and choosing one closes it and leaves that marker as its own row with its result buttons, focused.
 
 Every step stays on the case trail, before and after a result. Clicking a step opens that step's own window, locked, with the earlier choice highlighted and the answer repeated above it; nothing is deleted by looking. Two buttons sit in the window: "Move back here", which rewinds the case to that step and removes the steps after it, and "Back to where I was". The current step on the list also returns. A step keeps the window the clerk answered in (`screen` on its trail entry).
+
+## Licence
+
+PedsCode is open source under the [Apache License, Version 2.0](LICENSE).
+Copyright 2026 Uganda Child Cancer Foundation. The registrar chose the licence on
+16 October 2026.
+
+The licence covers the work of the Uganda Child Cancer Foundation in this repository: the
+engine, the stylesheet, the build scripts, the decision trees, the aliases written for the
+tool and the documentation. It does not cover the material below. [`NOTICE`](NOTICE) lists
+each item with its owner and terms.
+
+- **The UCCF name and logo**, and the files in `assets/`. All rights are reserved. A modified
+  or redistributed version of PedsCode must remove or replace them, and section 6 of the
+  licence grants no right to the name "PedsCode".
+- **The ICD-O-3.2 codes and terms** in `data/`. ICD-O is a World Health Organization
+  classification, and the International Agency for Research on Cancer's terms of use govern
+  its reuse.
+- **The ICCC-3 groupings** in `data/`, from Steliarova-Foucher et al., *Cancer*
+  2005;103:1457–67, and the International Agency for Research on Cancer's 2017 update.
+- **Table 1 of the 2021 WHO classification of central nervous system tumours**, transcribed
+  in `data/shared/who_cns5_table1.json` (Louis et al., *Neuro-Oncology* 2021;23:1231–51).
+- **The Visser 2023 paper** in `docs/references/`, distributed unchanged under CC BY.
+- **Quotations in `docs/`**, each with its citation and page.
+
+Anyone who redistributes PedsCode, changed or not, must include `LICENSE` and keep the
+attribution notices in `NOTICE` (section 4 of the licence). The UCCF credit travels with
+every copy that way.
+
+### Citing PedsCode
+
+[`CITATION.cff`](CITATION.cff) holds the citation. GitHub shows it as "Cite this repository"
+on the repository page.
 
