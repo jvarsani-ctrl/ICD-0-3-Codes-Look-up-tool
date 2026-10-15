@@ -1,5 +1,5 @@
 /* ============================================================================
-   app.js — the ICCC-3 Lookup engine. ONE file, identical logic for all
+   app.js — the PedsCode engine. ONE file, identical logic for all
    12 groups.
 
    THE RULE (Architecture §11.2, engine.md §5):
