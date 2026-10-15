@@ -2012,3 +2012,21 @@ anchored on the /1 term, and 8974/3 goes on the REDCap-side list (§7, standing 
 - Group X's ovary picker records `8452/3` *Solid pseudopapillary neoplasm of pancreas* (review A21). It belongs to the
   Group X session.
 - The four Group XI evidence texts the publisher withholds are requested in `docs/sources-requested.md`.
+
+## 36. The Group routing row: what the 16 October 2026 fix leaves open
+
+The result's "Group routing" row now prints a dual-group rule's `reason` only (registrar, 16 October 2026; standing rule 7).
+The one `reason` is the "no marrow aspirate yet" sentence on the 9811–9819, 9823 and 9827 rules. Driving the page found
+three things outside that fix. None was changed.
+
+- **Group II overwrites "No marrow aspirate yet."** `g2_compartment_gate`, option "No marrow examination in the file",
+  captures `primary_compartment: "not_marrow"`. The router's answer `not_known` is replaced before the case reaches a code,
+  so a Group II case never shows the provisional sentence, although the node's own hint says the split "is then provisional
+  and must be recorded as such". Group I's acute tree keeps `not_known`, and the sentence shows there. Changing the capture
+  to `not_known` is a Group II data change and waits on the registrar.
+- **Group II cannot emit 9827 from the page.** The `g2_matureT` rule for 9827 requires `htlv1_serology: "positive"`, and no
+  Group II question records `htlv1_serology`; only the rule's own `captures` sets it. `whenOk()` fails on an unset value.
+  Group I's ATLL route was not driven.
+- **The myeloid sarcoma site question replaces the recorded site.** In Group I, `ac_myeloid_sarcoma_site` option "Other or
+  multiple extramedullary sites" records C80.9 over the site the clerk chose at the start (C69.6, orbit, in the walk). The
+  topography row then reads "809 (Unknown Primary Site)" with nothing on screen saying the site changed.

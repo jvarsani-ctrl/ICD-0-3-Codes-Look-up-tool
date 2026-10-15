@@ -550,3 +550,27 @@ Hard controls only (`CLAUDE.md`, rule 10). Each was planted in a scratch copy of
 | The fourth screen reads a mimic box before a needs-tissue box, so both ticked ends the case as not reportable. The data gate's first-match rules still pass, because each option stays the first fit for some set. | `group_05_dt.json`, `rb_imaging_insufficient` options | gate FAIL, 3 checks: the golden routes, the RP2 box check, and `of the 8 ticked sets, any needs-tissue box refers Group XII even beside a mimic box` |
 | The imaging tier forgets to exclude a liquid biopsy, so two tiers fit and the clerk is asked to choose. | `group_05_dt.json`, `rb_document_inventory` option 1 | gate FAIL: `each of the 16 ticked sets goes straight to ... and the clerk is never asked to choose between tiers` (the data gate's mapping check fails too) |
 
+
+### The Group routing row carries clerk-facing text only (registrar, 16 October 2026)
+
+The result's "Group routing" row printed the `note` of the router's dual-group rule, and twelve of the
+thirteen distinct strings that reached it were build documentation. A 9814/3 reached through "More than 25%
+blasts" read "9819 is an ICD-O-3.2 addition postdating DT master §6's table (Pathway §5.7) ... group_01_dt.json
+sets topography_dependent:true". That breaks standing rule 7. The registrar ruled that the row reads `reason`
+only. The "no marrow aspirate yet" sentence of 13 October 2026 is the one `reason` (three rules), and every
+other `note` became `authoring_note`. The check renders every path through every rule (148 paths over 15
+rules, for every code each names) on a real output. It asserts that the row shows exactly the `reason` the
+path resolves to, or is absent, and that no other string the rule holds reaches the page. Both lists are read
+off the router.
+
+Hard controls only (`CLAUDE.md`, rule 10), each in a scratch copy of the whole tree, run with
+`ONLY=ux node build/check_engine_flow.mjs`. The unbroken tree passes all 273 checks of the full gate.
+
+| Breakage | Where | Result |
+|---|---|---|
+| The defect as it shipped: the tree at `22ab45d`, the pre-fix engine and router, with only the new gate added. | whole tree | gate FAIL, 3 checks: the row check (70 of 148 paths show text, among them `9811-9819 9814` at C42.0 and through the marrow answer, printing the text above), the leak check (70 paths), and `no marrow aspirate yet keeps the group ... says the group is provisional` (the resolver returns `note`) |
+| The pre-fix rendering restored on the fixed router: `resolveGroup` returns `note` and the row prints `routing.note`. | `app.js` from `22ab45d` | gate FAIL, 2 checks: the row check (`0 with a row`; the 11 "no marrow aspirate yet" paths show nothing where the sentence is due) and the provisional check |
+| The empty row "filled": the resolver falls back to `authoring_note` when a path has no `reason`. | `app.js`, `resolveGroup()` | gate FAIL, 3 checks: the row check (103 wrong), the leak check (103 paths, ICCC-2017 row citations among them), and `a code from the standard terminal at behavior /0 ...`, because the leaked text spells "behaviour" |
+
+The data gate's `check_router_dual_group_text_keys` rejects a `note` key at any depth of a dual-group rule. Its
+control is plain from its name and is not written (rule 10).

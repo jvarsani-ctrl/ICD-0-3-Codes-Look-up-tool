@@ -65,6 +65,9 @@ These apply to every session and every subagent working in this repository.
    from `coding_note` or from a new field (registrar, 4 October 2026). One
    exception, ruled 6 October 2026: `recognition_aid`, clerk-facing text in
    report vocabulary that shows only under the option the clerk has selected.
+   In the router's `dual_group_rules`, only `reason` reaches the clerk, on the
+   result's "Group routing" row; `authoring_note` is for the build, and the
+   build rejects a `note` (registrar, 16 October 2026).
 8. **The tool is advisory and must never overstate its evidence.** Every defect
    that reached the browser made a case look better evidenced than it was. Test
    that class of fault first. The abstractor confirms every code.

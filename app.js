@@ -269,7 +269,10 @@ function subgroupFor(e, topo) {
 /* ----------------------------------------------------- dual-group routing */
 /* Applies the router's topography-dependent rules to a resolved code
    (Architecture §6). The rules are data; only the mechanism is here — first
-   matching branch wins, then `default`. */
+   matching branch wins, then `default`. The one text it carries out is a
+   `reason`, the clerk-facing sentence for the path taken, falling back to the
+   rule's own. A rule's `authoring_note` documents the build and is never read
+   here (standing rule 7; registrar, 16 October 2026). */
 function branchMatches(when, topo) {
   if (!when) return false;
   if (when.topography_in) return arr(when.topography_in).indexOf(topo) !== -1;
@@ -302,16 +305,16 @@ function resolveGroup(code, topo) {
     if (!r || arr(r.codes).map(String).indexOf(String(code)) === -1) continue;
     /* A rule may assert a fixed group irrespective of site — a warning
        against re-routing rather than a split. */
-    if (r.always) return { group: r.always.group, subgroup: r.always.subgroup, note: r.note };
+    if (r.always) return { group: r.always.group, subgroup: r.always.subgroup, reason: r.always.reason || r.reason };
     for (j = 0; j < arr(r.branches).length; j++) {
       var b = r.branches[j];
       if (branchMatches(b.when, topo)) {
         /* A result with group null keeps the group the case was routed to: a branch that
-           cannot name a group (no marrow aspirate yet) only adds its note. */
-        return { group: b.result.group === null ? state.group : b.result.group, subgroup: b.result.subgroup, note: b.note || r.note };
+           cannot name a group (no marrow aspirate yet) only adds its reason. */
+        return { group: b.result.group === null ? state.group : b.result.group, subgroup: b.result.subgroup, reason: b.reason || r.reason };
       }
     }
-    if (r.default) return { group: r.default.group, subgroup: r.default.subgroup, note: r.note };
+    if (r.default) return { group: r.default.group, subgroup: r.default.subgroup, reason: r.default.reason || r.reason };
     return null;
   }
   return null;
@@ -2875,7 +2878,9 @@ function renderOutput() {
   /* Always persisted, even where the finding is code-neutral — otherwise an
      uncoded entity loses its genotype permanently (Pathway §7.3 item 7). */
   if (state.captured.genotype_annotation) h += orow('Genotype', state.captured.genotype_annotation);
-  if (r.routing && r.routing.note) h += orow('Group routing', r.routing.note);
+  /* `reason` only. The rule's `authoring_note` cites specs, files and commits, and it reached
+     this row until 16 October 2026 (standing rule 7). */
+  if (r.routing && r.routing.reason) h += orow('Group routing', r.routing.reason);
   h += labResultsBlock();
   h += outActions();
   return h + '</div>';
