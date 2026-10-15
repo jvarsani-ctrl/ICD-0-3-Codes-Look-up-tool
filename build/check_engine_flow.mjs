@@ -2398,6 +2398,44 @@ async function uxScenarios(ctx) {
     t('isolated del(5q) with marrow blasts under 5% codes 9986; the dysplasia screen no longer offers 9986, and the cytogenetics screen no longer offers a therapy shortcut',
       d5 === 'mds_del5q_blast_gate' && codeNow() === '9986' && dyOpts.every((o) => o.morphology_code !== '9986') && !cyOpts.some((o) => /prior cytotoxic/i.test(o.finding || '')),
       d5 + ', ' + codeNow() + ', dysplasia options ' + dyOpts.length + ', cytogenetics options ' + cyOpts.length);
+
+    /* A genetic subtype holds no genetic test open once one test that establishes it is in the file (registrar, 16 October 2026:
+       karyotype, FISH and RT-PCR each establish BCR::ABL1 on their own for 9812, 9806 and 9912, and the rest of the table stands).
+       The table gives, for each subtype code, the tests that establish its finding on their own (Group 1 Pathway §3.1 table Ia1 and
+       §4.1). Each case starts at the tick screen with marrow morphology, flow cytometry and that one test.
+       No ICD-O-3.2 code is more specific than the subtype, so the Workup row may hold no genetic test and the Upgrade row may not say
+       a test "would yield a more specific code". 9812 used to list Molecular/PCR after a FISH or a karyotype, under an option that
+       reads "positive on FISH or RT-PCR"; 9806 and 9912 did the same. The code is compared first: a walk that stops short has no
+       workup and would otherwise pass. */
+    const GENETIC = ['Cytogenetics/FISH', 'Molecular/PCR'], BALL = { CD19: 'strong' }, NONE_DEFINING = 'Genetics report in the file';
+    const subtypes = [
+      ['9812', ['karyotype', 'fish', 'pcr'], 'Lymphoid blasts', 'BCR::ABL1 positive', BALL, 'ac_ball_cytogenetics', 't(9;22)'],
+      ['9813', ['karyotype', 'fish'], 'Lymphoid blasts', 'KMT2A', BALL, 'ac_ball_cytogenetics', 't(v;11q23)'],
+      ['9814', ['fish', 'pcr'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 't(12;21)'],
+      ['9815', ['karyotype'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 'Hyperdiploidy'],
+      ['9816', ['karyotype'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 'Hypodiploidy'],
+      ['9817', ['karyotype', 'fish'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 't(5;14)'],
+      ['9818', ['karyotype', 'fish', 'pcr'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 't(1;19)'],
+      ['9819', ['fish', 'pcr', 'sequencing'], 'Lymphoid blasts', NONE_DEFINING, BALL, 'ac_ball_cytogenetics', 'BCR::ABL1-like'],
+      ['9806', ['karyotype', 'fish', 'pcr'], 'Two distinct blast populations', 'BCR::ABL1 positive', { CD19: 'pos', cMPO: 'strong' }, null, null],
+      ['9912', ['karyotype', 'fish', 'pcr'], 'Myeloid blasts', 'BCR::ABL1 positive', { cMPO: 'strong' }, 'ac_aml_genetics_upgrade', 'BCR::ABL1 positive AML'],
+    ];
+    const heldOpen = [];
+    for (const [code, tests, morph, genetics, markers, ladder, finding] of subtypes) {
+      for (const test of tests) {
+        await gate(['marrow_aspirate', 'flow', test]);
+        await pickAny('ac_morphology_first', morph); await pickAny('ac_defining_genetics_context', genetics);
+        await num(85); await enterMarkers(markers);
+        if (ladder) await pickAny(ladder, finding);
+        const owed = (ctx.state.workup || []).map((w) => w.test).filter((x) => GENETIC.includes(x));
+        const claims = /would yield a more specific code/.test(rend(() => ctx.renderOutput()));
+        if (codeNow() !== code || owed.length || claims) {
+          heldOpen.push(code + ' on ' + test + ' alone: reached ' + codeNow() + ', outstanding ' + JSON.stringify(owed) + (claims ? ', upgrade claims a more specific code' : ''));
+        }
+      }
+    }
+    t('a genetic subtype reached on any one test that establishes it holds no genetic test open and names no upgrade (9806, 9812 to 9819, 9912)',
+      !heldOpen.length, heldOpen.join('; '));
   }
   return rows;
 }
