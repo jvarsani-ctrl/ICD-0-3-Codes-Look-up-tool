@@ -1,5 +1,5 @@
 /* ============================================================================
-   uccf-tool.css — ICCC-3 Lookup Tool
+   uccf-tool.css — PedsCode
    ONE flattened stylesheet. No @import, no CDN, no Google Fonts request.
    (memory/design.md §7 — styles.css's four-file @import chain ends in a Google
    Fonts request, which breaks Architecture §7's lean startup and the offline
@@ -276,19 +276,26 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 
 .appbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;   /* lockup | name | context + Home */
   align-items: center;
-  gap: var(--sp-2);
+  column-gap: var(--sp-2);
   padding: var(--sp-2) var(--sp-3);
   background: var(--ink-900);
   color: var(--color-surface);
   font-size: var(--fs-small);
   font-weight: var(--w-semi);
 }
-/* Mark at 22px. The wide lockup NEVER goes here — its wordmark renders at
-   ~8px: present, unreadable, worse than absent (design.md §8). */
-.appbar__mark { width: 22px; height: 22px; flex: none; }
-.appbar__context { margin-left: auto; color: var(--ink-400); font-weight: var(--w-medium); font-size: var(--fs-micro); }
+/* White wide lockup on the ink bar (UCCF logo rule: white on dark). It is a
+   shield plus a three-line wordmark, so it needs about 40px to stay readable;
+   the 22px mark it replaced could not carry the wordmark (design.md §8). */
+.appbar__lockup { height: 40px; width: auto; justify-self: start; }
+/* The name sits in the middle column, so it is centred on the bar whatever the
+   side columns hold. */
+.appbar__name { font-size: var(--fs-body); font-weight: var(--w-bold); letter-spacing: .01em; }
+.appbar__right { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2); min-width: 0; }
+/* A long group name is cut with an ellipsis rather than pushed under the name. */
+.appbar__context { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-400); font-weight: var(--w-medium); font-size: var(--fs-micro); }
 /* Home: outlined, so it reads as the way out and not as the next step. */
 .appbar__home {
   padding: var(--sp-1) var(--sp-3);
@@ -432,22 +439,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
   [data-shell="auto"] .layout     { display: flex; }
   [data-shell="auto"] .rail       { display: block; }
   [data-shell="auto"] .trail-rows { display: none; }
-}
-
-.appfoot {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  padding: var(--sp-2) var(--sp-3);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  flex-wrap: wrap;
-}
-.appfoot__lockup { height: 26px; width: auto; }
-.appfoot__note {
-  font-size: var(--fs-micro);
-  color: var(--color-muted);
-  font-weight: var(--w-semi);
 }
 
 /* ==========================================================================

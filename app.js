@@ -1,5 +1,5 @@
 /* ============================================================================
-   app.js — the ICCC-3 Lookup engine. ONE file, identical logic for all
+   app.js — the PedsCode engine. ONE file, identical logic for all
    12 groups.
 
    THE RULE (Architecture §11.2, engine.md §5):
@@ -515,7 +515,7 @@ function renderLanding() {
     'group assignment is topography-dependent.</p><div class="doors">' +
     '<div class="door card"><h2>Guided entry</h2><p>Presentation, then site, then what ' +
     'documents are in the file.</p><button class="btn" data-act="guided">Start guided entry</button></div>' +
-    '<div class="door card"><h2>Express lane</h2><p>Search the diagnostic term as written. ' +
+    '<div class="door card"><h2>Confirm existing diagnosis</h2><p>Search the diagnostic term as written. ' +
     'Enters at the evidence gate.</p>' +
     '<label class="field"><span class="visually-hidden">Search diagnostic term</span>' +
     '<input type="search" id="q" data-act="query" value="' + esc(state.query) + '" placeholder="e.g. as written in the report"></label>' +

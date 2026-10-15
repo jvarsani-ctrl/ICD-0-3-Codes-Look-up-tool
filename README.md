@@ -1,4 +1,4 @@
-# ICCC-3 Lookup Tool
+# PedsCode — Childhood Cancer Coding Guide
 
 An **advisory** decision tool for the UCI / UCCF paediatric cancer registry. It helps a data
 abstractor turn the clinical language in a patient file into a standardised ICD-O-3

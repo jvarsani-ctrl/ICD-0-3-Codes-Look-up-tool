@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ICCC-3 Lookup Tool — UCI / UCCF Paediatric Cancer Registry</title>
-  <meta name="description" content="Advisory ICD-O-3 morphology lookup for the UCI/UCCF paediatric cancer registry. The abstractor confirms every code.">
+  <title>PedsCode — Childhood Cancer Coding Guide</title>
+  <meta name="description" content="PedsCode, the childhood cancer coding guide: advisory ICD-O-3 morphology lookup for the UCI/UCCF paediatric cancer registry. The abstractor confirms every code.">
   <!-- One flattened stylesheet: no @import chain, no CDN, no Google Fonts
        request. design.md §7 supersedes Architecture §12's "CSS inline in
        index.html" here — data.md §7's startup list names uccf-tool.css as its
@@ -17,11 +17,14 @@
        container query in uccf-tool.css. -->
   <main class="app" id="app" data-shell="auto">
     <div class="appbar">
-      <img class="appbar__mark" src="assets/uccf-mark.png" alt="">
-      <span>ICCC-3 Lookup</span>
-      <span class="appbar__context" id="appbar-context">Loading…</span>
-      <!-- The way out of a case at any point. app.js shows it once there is a case. -->
-      <button class="appbar__home" id="appbar-home" data-act="home" hidden>Home</button>
+      <img class="appbar__lockup" src="assets/uccf-white-wide.png"
+           alt="Uganda Child Cancer Foundation">
+      <span class="appbar__name">PedsCode</span>
+      <div class="appbar__right">
+        <span class="appbar__context" id="appbar-context">Loading…</span>
+        <!-- The way out of a case at any point. app.js shows it once there is a case. -->
+        <button class="appbar__home" id="appbar-home" data-act="home" hidden>Home</button>
+      </div>
     </div>
 
     <div class="layout">
@@ -39,17 +42,6 @@
         <section id="slot" aria-live="polite"></section>
       </div>
     </div>
-
-    <footer class="appfoot">
-      <!-- Full colour wide lockup, white footer strip only. Never the header:
-           at header height the wordmark renders at ~8px — present, unreadable,
-           worse than absent (design.md §8). -->
-      <img class="appfoot__lockup" src="assets/uccf-colour-wide.png"
-           alt="Uganda Child Cancer Foundation">
-      <!-- Permanent overconfidence guardrail (Critical Review §4.3), and
-           load-bearing now the tool is advisory (design.md §9). -->
-      <span class="appfoot__note">Advisory only — the abstractor confirms every code.</span>
-    </footer>
   </main>
 
   <script src="app.js"></script>
