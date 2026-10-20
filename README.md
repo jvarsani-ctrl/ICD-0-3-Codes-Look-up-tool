@@ -31,8 +31,7 @@ PedsCode is static files with no framework and no build step. `app.js` is a sing
 | `data/database/` | one decision-tree file per group, `group_NN_dt.json` |
 | `data/aliases/` | alternative names for each code, and the search index built from them |
 | `data/shared/` | the presentation router, the topography lookup and the walk-through cases |
-| `build/` | the build and the checks |
-| `docs/` | build reports, contracts and notes for maintainers |
+| `assets/` | the two UCCF logos the page shows |
 
 ## Requirements
 
@@ -42,12 +41,6 @@ To use PedsCode:
 - A web server. The page loads its data over HTTP, so it cannot run from a file opened off the disk. Any static server works.
 
 To run it on your own computer, Python 3 provides a server. Any other static server does the same job.
-
-To run the checks, which only contributors need:
-
-- Node.js 24, the version the project's GitHub check uses.
-- Python 3.9 or newer, for the full build.
-- For the full build only, the registry's classification files: the ICD-O-3.2 table (`icdo32.sqlite`), the ICCC-2017 database (`ICCC-2017.sqlite`) and the REDCap option lists. They are not in this repository.
 
 ## Installation
 
@@ -74,24 +67,6 @@ https://jvarsani-ctrl.github.io/ICD-0-3-Codes-Look-up-tool/?host=redcap&mode=tra
 ```
 
 `host=redcap` labels the answer as the option to select in REDCap. `mode=transcript` gives a single-column layout that suits a wide form, and `mode=rail` forces the side column instead. The walk-through cases are hidden in the embedded view. PedsCode shows the answer and the abstractor selects the option in REDCap.
-
-### Run the checks
-
-```bash
-node build/check_engine_flow.mjs        # drives the engine through every group
-node build/check_demo_walkthroughs.mjs  # replays the walk-through cases
-```
-
-Both read only the files in this repository. The full build also verifies every code against the registry's classification files:
-
-```bash
-export ICD_LAYER1="/path/to/ICD coding"
-python3 build/build_database.py
-```
-
-The build looks for `ICD-O-3.2/icdo32.sqlite` inside that folder and `ICCC-2017.sqlite` next to it. If either is elsewhere, set `ICDO_DB` or `ICCC_DB` to its path. Without the files the build stops at its first step and lists what is missing.
-
-The standing rules, the registrar's rulings and the design history are in [`docs/maintainer_notes.md`](docs/maintainer_notes.md).
 
 ## Licence
 

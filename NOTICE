@@ -7,17 +7,22 @@ CITATION.cff.
 
 The Apache License, Version 2.0 (see LICENSE) covers the work of the Uganda
 Child Cancer Foundation in this repository: the engine, the stylesheet, the
-build scripts, the decision trees, the aliases written for the tool and the
-documentation. It does not cover the material listed below. That material
-belongs to its owners and stays under their terms, and this repository grants
-no rights in it.
+decision trees and the aliases written for the tool. Earlier versions of this
+repository also held the build scripts and the documentation, which stay under
+the same licence. The licence does not cover the material listed below. That
+material belongs to its owners and stays under their terms, and this
+repository grants no rights in it.
+
+Items 4 to 6 describe material that earlier versions of this repository held
+and the current version does not. The notices still apply to those earlier
+versions.
 
 
 1. The UCCF name and logo
 
    The Uganda Child Cancer Foundation name and logo, and the files in
-   assets/ (uccf-mark.png, uccf-colour-wide.png, uccf-white-wide.png),
-   belong to the Uganda Child Cancer Foundation. They are not covered by the
+   assets/ (uccf-mark.png and uccf-white-wide.png, and uccf-colour-wide.png
+   in earlier versions), belong to the Uganda Child Cancer Foundation. They are not covered by the
    Apache License, Version 2.0. All rights are reserved. A modified or
    redistributed version of PedsCode must remove or replace them.
 
