@@ -946,6 +946,69 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .results { display: flex; flex-direction: column; gap: var(--sp-1); margin-top: var(--sp-2); }
 
+/* ==========================================================================
+   10. Walk-through examples (demo.js) — below the tool, landing screen only
+   ========================================================================== */
+.demos {
+  max-width: var(--container-max);
+  margin: var(--sp-5) auto;
+  padding: 0 var(--sp-3);
+}
+.demos__h { font-size: var(--fs-title); margin: 0 0 var(--sp-1); }
+.demos__lead { font-size: var(--fs-body); color: var(--ink-700); margin: 0 0 var(--sp-3); max-width: 64ch; }
+.demos__list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.demo-card {
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  width: 100%; height: 100%;
+  text-align: left; cursor: pointer;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.demo-card:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-lift); }
+.demo-card__group { font-size: var(--fs-micro); font-weight: var(--w-semi); color: var(--color-muted); }
+.demo-card__title { font-size: var(--fs-h); font-weight: var(--w-bold); line-height: 1.25; }
+.demo-card__teaser { font-size: var(--fs-small); color: var(--ink-700); }
+.demo-card__go { margin-top: auto; padding-top: var(--sp-2); font-size: var(--fs-small); font-weight: var(--w-semi); color: var(--color-primary); }
+.demo-card__go::after { content: " \203A"; }
+
+/* The control the player is about to press. A dark ring with a sunshine halo:
+   sunshine alone does not reach 3:1 against white. */
+.demo-focus {
+  outline: 3px solid var(--ink-900);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 7px var(--sunshine-300);
+  border-radius: var(--radius-sm);
+}
+
+/* The player: pinned to the foot of the window, so the tool above can scroll and
+   the caption stays in view. */
+.demobar {
+  position: fixed; z-index: 20; left: 0; right: 0; bottom: 0;
+  background: var(--ink-900);
+  color: var(--color-surface);
+  border-top: 3px solid var(--color-accent);
+}
+.demobar__in { max-width: var(--container-max); margin: 0 auto; padding: var(--sp-3); }
+.demobar__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.demobar__title { font-size: var(--fs-body); }
+.demobar__count { font-size: var(--fs-small); color: var(--ink-300); white-space: nowrap; }
+.demobar__file { margin: var(--sp-2) 0 0; font-size: var(--fs-small); color: var(--ink-200); }
+.demobar__file summary { cursor: pointer; font-weight: var(--w-semi); }
+.demobar__file ul { margin: var(--sp-1) 0 0; padding-left: var(--sp-4); }
+.demobar__say { margin: var(--sp-2) 0; font-size: var(--fs-q); line-height: 1.4; max-height: 9em; overflow-y: auto; }
+.demobar__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.demobar .btn { background: var(--sky-400); color: var(--ink-900); }
+.demobar .btn:hover { background: var(--sky-300); }
+.demobar .btn--ghost { background: transparent; color: var(--color-surface); border: 1px solid var(--ink-400); }
+.demobar .btn--ghost:hover { background: var(--ink-700); }
+.demobar .btn[disabled] { background: var(--ink-600); color: var(--ink-300); }
+.demobar :focus-visible { outline-color: var(--color-accent); }
+/* Room under the page for the bar, so the foot of the tool is never covered. */
+body.has-demobar { padding-bottom: var(--demobar-h, 220px); }
+
 @media (prefers-reduced-motion: reduce) {
   .btn, .opt, .marker { transition: none; }
   .btn:active { transform: none; }
