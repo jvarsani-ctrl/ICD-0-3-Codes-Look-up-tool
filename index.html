@@ -44,6 +44,30 @@
     </div>
   </main>
 
+  <!-- Walk-through examples: made-up cases the tool plays back through the real
+       engine. Filled and shown by demo.js, and only on the landing screen, so a
+       case in progress is never replaced. Not shown when embedded (?host=redcap). -->
+  <section class="demos" id="demos" aria-labelledby="demos-h" hidden>
+    <h2 class="demos__h" id="demos-h">Walk-through examples</h2>
+    <p class="demos__lead">Made-up cases from the registry's most complex groups. Press one and the tool above fills itself in, step by step, to the code a clerk would record. No patient data is used.</p>
+    <ol class="demos__list" id="demos-list"></ol>
+  </section>
+
+  <div class="demobar" id="demobar" role="region" aria-label="Walk-through" hidden>
+    <div class="demobar__in">
+      <div class="demobar__head"><strong class="demobar__title"></strong><span class="demobar__count"></span></div>
+      <details class="demobar__file"><summary>What is in the file</summary><ul></ul></details>
+      <p class="demobar__say" aria-live="polite"></p>
+      <div class="demobar__actions">
+        <button type="button" class="btn" data-demo="next">Next step</button>
+        <button type="button" class="btn btn--ghost" data-demo="play">Play all</button>
+        <button type="button" class="btn" data-demo="replay" hidden>Watch again</button>
+        <button type="button" class="btn btn--ghost" data-demo="close">Close</button>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
+  <script src="demo.js"></script>
 </body>
 </html>

@@ -13386,6 +13386,10 @@ def check_requirements(repo: Path, layer1: Path):
     need("build/check_engine_flow.mjs", engine_check.exists(), str(engine_check),
          "restore it; it is the only thing in this repository that tests app.js")
 
+    demo_check = repo / "build" / "check_demo_walkthroughs.mjs"
+    need("build/check_demo_walkthroughs.mjs", demo_check.exists(), str(demo_check),
+         "restore it; it replays every landing-page walk-through through the real engine")
+
     node = shutil.which("node")
     if node:
         try:
@@ -13441,6 +13445,40 @@ def run_engine_gate(repo: Path):
                    "check_engine_flow.mjs drives the ENGINE, and a defect in the seam "
                    "between them passes every data check while the tool tells a clerk one "
                    "code and records another. Output above" % proc.returncode)]
+
+
+def run_demo_gate(repo: Path):
+    """Run build/check_demo_walkthroughs.mjs and fold its result into this report.
+
+    The landing page plays five made-up cases back through the real engine
+    (data/shared/demo_walkthroughs.json). A recording rots when an option is renamed or a
+    question is added, and the page would stop part-way in front of an audience, so every case
+    is replayed here and must reach the code it promises. Same shape as run_engine_gate: a
+    non-zero exit is a FAIL and its output is printed, because which case, which beat and
+    which control could not be found is the whole value.
+    """
+    script = repo / "build" / "check_demo_walkthroughs.mjs"
+    node = shutil.which("node")
+    if not node or not script.exists():
+        return [(NOTE, "walk-through gate not run — see the missing requirement above")]
+    try:
+        proc = subprocess.run([node, str(script)], capture_output=True, text=True,
+                              cwd=str(repo), timeout=300)
+    except subprocess.TimeoutExpired:
+        return [(FAIL, "walk-through gate timed out after 300s — it normally runs in seconds")]
+    except Exception as exc:                                   # pragma: no cover
+        return [(FAIL, "walk-through gate could not be run: %s" % exc)]
+
+    tail = (proc.stdout or "").rstrip().splitlines()
+    if proc.returncode == 0:
+        summary = next((l.strip() for l in reversed(tail) if l.strip()), "OK")
+        return [(OK, "walk-through gate (build/check_demo_walkthroughs.mjs): %s" % summary)]
+
+    print("\n".join(tail))
+    if proc.stderr.strip():
+        print(proc.stderr.rstrip())
+    return [(FAIL, "walk-through gate FAILED (exit %d) — a recorded landing-page case no longer "
+                   "reaches its code through the engine. Output above" % proc.returncode)]
 
 
 def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
@@ -13685,6 +13723,9 @@ def run_build(repo: Path, layer1: Path, strict: bool, quiet: bool) -> int:
     report.section("E. engine — the guided flow")
     report.checks_run += 1
     report.add(run_engine_gate(repo))
+    report.section("F. landing-page walk-throughs")
+    report.checks_run += 1
+    report.add(run_demo_gate(repo))
 
     print(report.render(quiet=quiet))
     return 0 if report.passed() else 1

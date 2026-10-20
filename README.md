@@ -79,18 +79,27 @@ checkout sits in the vault.
 ```
 index.html          single entry point
 app.js              the engine — ONE file, identical logic for all 12 groups
+demo.js             the landing page's walk-through player (no clinical content)
 uccf-tool.css       one flattened stylesheet: tokens + corrections + primitives
 assets/             UCCF mark and wide lockup
 data/
   database/         group_NN_dt.json — morphology_entries[] + decision_trees[]
   aliases/          aliases_group_NN.json + the generated alias_index.json
-  shared/           presentation_router.json, topography_codes.json
+  shared/           presentation_router.json, topography_codes.json, demo_walkthroughs.json
 build/
   build_database.py regenerates alias_index.json and validates everything
+  check_demo_walkthroughs.mjs  replays every walk-through through the engine
 LICENSE             Apache License, Version 2.0
 NOTICE              copyright, credit, and the material the licence does not cover
 CITATION.cff        how to cite PedsCode
 ```
+
+## Walk-through examples
+
+The landing page carries five made-up cases below the tool, each played back through the real
+engine with a caption at every step. They are data, not code: `data/shared/demo_walkthroughs.json`.
+`build/check_demo_walkthroughs.mjs` replays every case and fails if one no longer reaches its code.
+How to record one, and the controls that prove the gate: `docs/demo_walkthroughs.md`.
 
 ## The four layers — never inverted
 

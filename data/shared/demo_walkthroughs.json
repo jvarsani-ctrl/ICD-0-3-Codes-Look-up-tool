@@ -1,0 +1,446 @@
+{
+  "_comment": "Walk-through examples for the landing page. Every case is made up: no patient data. Each beat is one decision the clerk makes, as the recorded clicks that make it and a caption that says what the tool is doing. build/check_demo_walkthroughs.mjs replays every case through the real engine and fails unless it reaches `expect`. A step names a control by its on-screen text or its data attributes, never by position. Written 20 October 2026.",
+  "version": 1,
+  "cases": [
+    {
+      "id": "g01-bcr-abl1-b-all",
+      "title": "B-cell acute lymphoblastic leukaemia with BCR::ABL1",
+      "group": "Group I · Leukaemias",
+      "teaser": "Four tests in the file. The tool reads the genetics, then the lineage markers, then names the subtype.",
+      "file": [
+        "Seven-year-old with pallor and bruising. White cell count raised.",
+        "Marrow aspirate: 82% blasts, lymphoid, myeloperoxidase and Sudan black negative.",
+        "Flow cytometry: CD19, CD10, cCD79a and TdT positive; cMPO negative.",
+        "Karyotype: t(9;22)(q34;q11.2). Polymerase chain reaction: BCR::ABL1 positive."
+      ],
+      "beats": [
+        {
+          "say": "The tool starts from how the child presented, not from a diagnosis already written in the file. Pallor and bruising with an abnormal blood count point to the blood and marrow.",
+          "do": [
+            {"act": "guided", "text": "Start guided entry"},
+            {"act": "archetype", "text": "Pale, bruising"}
+          ]
+        },
+        {
+          "say": "Every leukaemia is recorded at bone marrow, C42.1, wherever the blasts were seen.",
+          "do": [
+            {"act": "site_region", "text": "Bone marrow"}
+          ]
+        },
+        {
+          "say": "The marrow shows blasts, so the case enters the acute leukaemia tree.",
+          "do": [
+            {"act": "handoff", "text": "Blasts / acute picture"}
+          ]
+        },
+        {
+          "say": "Tick every test that is in the file. The tests ticked fix how specific the code can be.",
+          "do": [
+            {"act": "tick", "text": "Marrow aspirate or blood film"},
+            {"act": "tick", "text": "Flow cytometry"},
+            {"act": "tick", "text": "Karyotype"},
+            {"act": "tick", "text": "PCR"},
+            {"act": "draft", "text": "None of these. Code from the tests ticked above"},
+            {"act": "tick-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "The aspirate report calls the blasts lymphoid: myeloperoxidase and Sudan black are negative.",
+          "do": [
+            {"act": "opt", "text": "Lymphoid blasts"}
+          ]
+        },
+        {
+          "say": "The genetics report shows t(9;22), and the polymerase chain reaction confirms BCR::ABL1. This finding changes the final code.",
+          "do": [
+            {"act": "opt", "text": "BCR::ABL1 positive"}
+          ]
+        },
+        {
+          "say": "Blasts are 82% of all nucleated marrow cells. The tool records the figure it was given and does not guess a missing one.",
+          "do": [
+            {"act": "draft", "text": "Marrow blast percentage", "type": "82"},
+            {"act": "resolve", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "Each marker the flow report lists is added with its result. A marker the report does not list is treated as not done.",
+          "do": [
+            {"act": "pickadd", "text": "CD19"},
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD19", "v": "pos"}
+            },
+            {"act": "pickadd", "text": "CD10"},
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD10", "v": "pos"}
+            },
+            {"act": "pickadd", "text": "cCD79a"},
+            {
+              "act": "markerset",
+              "attrs": {"m": "cCD79a", "v": "pos"}
+            },
+            {"act": "pickadd", "text": "TdT"},
+            {
+              "act": "markerset",
+              "attrs": {"m": "TdT", "v": "pos"}
+            },
+            {"act": "pickadd", "text": "cMPO"},
+            {
+              "act": "markerset",
+              "attrs": {"m": "cMPO", "v": "neg"}
+            },
+            {"act": "resolve", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "The subtype is picked from the finding the report gives. Result: B lymphoblastic leukemia/lymphoma with t(9;22)(q34;q11.2); BCR-ABL1, 9812, malignant, at bone marrow.",
+          "do": [
+            {"act": "draft", "text": "t(9;22)(q34;q11.2) BCR::ABL1"},
+            {"act": "resolve", "text": "Continue"}
+          ]
+        }
+      ],
+      "expect": {
+        "code": "9812",
+        "behavior": "3",
+        "screen": ["Morphology code 9812", "Behavior code /3", "Topography code 421", "82% → >=20", "CD19+, CD10+, cCD79a+, TdT+, cMPO−"]
+      }
+    },
+    {
+      "id": "g01-myeloid-leukaemia-down-syndrome",
+      "title": "Myeloid leukaemia in a child with Down syndrome",
+      "group": "Group I · Leukaemias",
+      "teaser": "Trisomy 21 sends the case to its own workup, and the child's age in months decides between two entities.",
+      "file": [
+        "Twenty-two-month-old with Down syndrome, anaemia and a low platelet count.",
+        "Marrow aspirate and flow cytometry: myeloid blasts.",
+        "Constitutional karyotype: trisomy 21. Sequencing: GATA1s mutation positive."
+      ],
+      "beats": [
+        {
+          "say": "The child presented with pallor and an abnormal blood count, so the case enters through the blood and marrow and is recorded at bone marrow.",
+          "do": [
+            {"act": "guided", "text": "Start guided entry"},
+            {"act": "archetype", "text": "Pale, bruising"},
+            {"act": "site_region", "text": "Bone marrow"}
+          ]
+        },
+        {
+          "say": "The marrow shows blasts, so the case enters the acute leukaemia tree.",
+          "do": [
+            {"act": "handoff", "text": "Blasts / acute picture"}
+          ]
+        },
+        {
+          "say": "Down syndrome is declared at the evidence step, because trisomy 21 sends the case to a workup of its own.",
+          "do": [
+            {"act": "tick", "text": "Marrow aspirate or blood film"},
+            {"act": "tick", "text": "Flow cytometry"},
+            {"act": "tick", "text": "Karyotype"},
+            {"act": "tick", "text": "Sequencing"},
+            {"act": "draft", "text": "Trisomy 21 (Down syndrome) confirmed or suspected"},
+            {"act": "tick-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "Three entities share trisomy 21 and are separated before any code is given. Here the karyotype is confirmed and the GATA1s mutation is positive.",
+          "do": [
+            {"act": "opt", "text": "Trisomy 21 confirmed on constitutional karyotype AND GATA1s mutation positive"}
+          ]
+        },
+        {
+          "say": "Three months is the dividing line between transient abnormal myelopoiesis and myeloid leukaemia of Down syndrome. At 22 months the case falls on the leukaemia side. Result: Myeloid leukemia associated with Down syndrome, 9898, malignant, at bone marrow.",
+          "do": [
+            {"act": "draft", "text": "Age at diagnosis", "type": "22"},
+            {"act": "resolve", "text": "Continue"}
+          ]
+        }
+      ],
+      "expect": {
+        "code": "9898",
+        "behavior": "3",
+        "screen": ["Morphology code 9898", "Behavior code /3", "Topography code 421", "22months → >=3"]
+      }
+    },
+    {
+      "id": "g02-alk-positive-alcl",
+      "title": "ALK-positive anaplastic large cell lymphoma, from the diagnosis in the file",
+      "group": "Group II · Lymphomas",
+      "teaser": "The diagnosis is already written down. The tool confirms it by asking for the evidence behind it, one marker at a time.",
+      "file": [
+        "Eleven-year-old with fever and enlarged lymph nodes in the neck, chest and abdomen.",
+        "Histology: large atypical cells. Immunohistochemistry: CD30 strong and homogeneous, ALK positive. FISH: ALK rearrangement.",
+        "Marrow aspirate: lymphoma cells about 10% of the cells counted.",
+        "Diagnosis in the file: ALK-positive anaplastic large cell lymphoma."
+      ],
+      "beats": [
+        {
+          "say": "The diagnosis is already in the file, so this route starts from the term. The search finds it under Group II.",
+          "do": [
+            {"act": "query", "text": "Search diagnostic term", "type": "anaplastic large cell"},
+            {"act": "alias", "text": "ALK-positive anaplastic large cell lymphoma"}
+          ]
+        },
+        {
+          "say": "The tool still asks where the disease started, because the site is recorded with the code. The nodes involve several regions.",
+          "do": [
+            {"act": "site_system", "text": "Lymph nodes"},
+            {"act": "site_region", "text": "Lymph nodes of multiple regions"}
+          ]
+        },
+        {
+          "say": "The lesion is a nodal mass, which opens the main lymphoma tree.",
+          "do": [
+            {"act": "handoff", "text": "Lymphadenopathy or a nodal"}
+          ]
+        },
+        {
+          "say": "Tick every report in the file: histology, immunohistochemistry and a genetic test.",
+          "do": [
+            {"act": "tick", "text": "Histology report"},
+            {"act": "tick", "text": "Immunohistochemistry (IHC) report"},
+            {"act": "tick", "text": "Genetic test report"},
+            {"act": "draft", "text": "None of these. Code from the reports ticked above"},
+            {"act": "tick-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "The compartment gate asks about the marrow, because heavy marrow involvement would send the case to leukaemia. Lymphoma cells are 5% to 25% of the aspirate, so it stays a lymphoma.",
+          "do": [
+            {"act": "opt", "text": "lymphoma cells 5% or more but not above 25%"}
+          ]
+        },
+        {
+          "say": "Before any lymphoma code the tool asks whether the file explains the lump another way. It does not: a malignant lymphoid population is present.",
+          "do": [
+            {"act": "opt", "text": "A malignant lymphoid population is present"}
+          ]
+        },
+        {
+          "say": "The tool asks one marker at a time and stops when the answer can no longer change. TdT, skin origin and CD20 are negative and CD30 is positive, so the case moves to the mature T-cell and natural killer cell entities.",
+          "do": [
+            {
+              "act": "markerset",
+              "attrs": {"m": "TdT", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "Primary lesion is in skin", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD20", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD30", "v": "pos"}
+            },
+            {"act": "resolve", "text": "Skip the rest and resolve"}
+          ]
+        },
+        {
+          "say": "Within the T-cell entities the tool asks the answers that change the code most often. ALK positive keeps the case at 9714; ALK negative would move it to 9715, Anaplastic large cell lymphoma, ALK negative. Result: Anaplastic large cell lymphoma, T cell and Null cell type, 9714, malignant.",
+          "do": [
+            {
+              "act": "state",
+              "text": "negative",
+              "attrs": {"b": "0"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD30 strong and homogeneous", "v": "pos"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD56 positive", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "Subcutaneous panniculitic infiltrate", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "Intestinal or gastric primary", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "CD57", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "≥2 TFH markers positive (of CD10, PD-1/CD279, ICOS, CXCL13, BCL6)", "v": "neg"}
+            },
+            {
+              "act": "markerset",
+              "attrs": {"m": "ALK positive (granular cytoplasmic)", "v": "pos"}
+            },
+            {"act": "resolve", "text": "Continue"}
+          ]
+        }
+      ],
+      "expect": {
+        "code": "9714",
+        "behavior": "3",
+        "screen": ["Morphology code 9714", "Behavior code /3", "Topography code 778", "CD30+", "ALK positive (granular cytoplasmic)+"]
+      }
+    },
+    {
+      "id": "g06-rhabdoid-tumour-kidney",
+      "title": "Rhabdoid tumour of the kidney in a toddler",
+      "group": "Group VI · Renal tumours",
+      "teaser": "Loss of one protein fits two different kidney tumours. Age and sickle-cell status decide which.",
+      "file": [
+        "Fourteen-month-old with a palpable abdominal mass on the left. Imaging: large kidney mass.",
+        "Nephrectomy histology: small round blue cells with eccentric nuclei, prominent nucleoli and eosinophilic cytoplasmic inclusions (rhabdoid features).",
+        "Immunohistochemistry: SMARCB1 (INI1) nuclear expression lost. Sickle-cell test: negative."
+      ],
+      "beats": [
+        {
+          "say": "A palpable abdominal mass. The tool asks whether it arises in bone or soft tissue, then the body system and the organ: the kidney.",
+          "do": [
+            {"act": "guided", "text": "Start guided entry"},
+            {"act": "archetype", "text": "A lump, mass or swelling"},
+            {"act": "discriminator", "text": "Soft tissue"},
+            {"act": "site_system", "text": "Urinary system"},
+            {"act": "site", "text": "Kidney"}
+          ]
+        },
+        {
+          "say": "Tick the reports in the file. A kidney tumour is often treated before any tissue is taken, so a missing histology report would be expected. Here all four are present.",
+          "do": [
+            {"act": "tick", "text": "Imaging report"},
+            {"act": "tick", "text": "Histology report"},
+            {"act": "tick", "text": "Immunohistochemistry (IHC) report"},
+            {"act": "tick", "text": "Genetic test report"},
+            {"act": "draft", "text": "None of these. Code from the reports ticked above"},
+            {"act": "tick-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "Age is captured to read the differential that follows. It does not change a code by itself.",
+          "do": [
+            {"act": "draft", "text": "Patient's age", "type": "1"},
+            {"act": "resolve", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "The histology report describes rhabdoid features. The tool codes from the report's own stated pattern and does not infer architecture.",
+          "do": [
+            {"act": "opt", "text": "Small round blue cell tumour with rhabdoid features"}
+          ]
+        },
+        {
+          "say": "Sickle-cell status is its own question, because SMARCB1 loss also occurs in renal medullary carcinoma. Not documented is recorded as its own state, not as negative.",
+          "do": [
+            {"act": "opt", "text": "Tested, negative for sickle-cell"}
+          ]
+        },
+        {
+          "say": "SMARCB1 loss is positive. In a child under five with no sickle-cell trait the case settles as a rhabdoid tumour of the kidney. Result: Rhabdoid tumor, NOS, 8963, malignant, at the kidney.",
+          "do": [
+            {
+              "act": "markerset",
+              "attrs": {"m": "SMARCB1 (INI1) loss", "v": "pos"}
+            },
+            {"act": "resolve", "text": "Continue"}
+          ]
+        }
+      ],
+      "expect": {
+        "code": "8963",
+        "behavior": "3",
+        "screen": ["Morphology code 8963", "Behavior code /3", "Topography code 649", "1years → <2", "SMARCB1 (INI1) loss+"]
+      }
+    },
+    {
+      "id": "g10-mediastinal-germ-cell-no-tissue",
+      "title": "Mediastinal germ cell tumour with no tissue",
+      "group": "Group X · Germ cell tumours",
+      "teaser": "No biopsy. Imaging and a typed laboratory value are enough for a code, and the tool records what is still missing.",
+      "file": [
+        "Three-year-old with a cough and an anterior mediastinal mass on imaging.",
+        "Alpha-fetoprotein 1850 ng/mL, called raised for age by the laboratory. Lactate dehydrogenase 480 U/L. Beta human chorionic gonadotropin not measured.",
+        "No biopsy was taken. The clinical file calls it a germ cell tumour."
+      ],
+      "beats": [
+        {
+          "say": "A mass found on examination. The tool asks soft tissue or bone, then the body system, the organ and the region: the anterior mediastinum.",
+          "do": [
+            {"act": "guided", "text": "Start guided entry"},
+            {"act": "archetype", "text": "A lump, mass or swelling"},
+            {"act": "discriminator", "text": "Soft tissue"},
+            {"act": "site_system", "text": "Chest and airway"},
+            {"act": "site", "text": "Mediastinum"},
+            {"act": "site_region", "text": "Anterior mediastinum"}
+          ]
+        },
+        {
+          "say": "The site narrows the case to three families. The file calls the tumour a germ cell tumour, so the case goes to the germ cell family.",
+          "do": [
+            {"act": "group", "text": "Germ Cell, Trophoblastic Tumors"}
+          ]
+        },
+        {
+          "say": "No tissue: only an imaging report and laboratory results are in the file.",
+          "do": [
+            {"act": "tick", "text": "Imaging report"},
+            {"act": "tick", "text": "Laboratory results"},
+            {"act": "tick-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "Each value is typed as the report gives it, with its unit. A test the file does not hold is marked Not in the file.",
+          "do": [
+            {
+              "act": "labval",
+              "text": null,
+              "type": "1850",
+              "attrs": {"i": "0"}
+            },
+            {
+              "act": "labunit",
+              "attrs": {"i": "0"},
+              "value": "ng/mL"
+            },
+            {
+              "act": "lababsent",
+              "attrs": {"i": "1"}
+            },
+            {
+              "act": "labval",
+              "text": null,
+              "type": "480",
+              "attrs": {"i": "2"}
+            },
+            {"act": "labs-continue", "text": "Continue"}
+          ]
+        },
+        {
+          "say": "The imaging report shows a tumour, the laboratory calls the alpha-fetoprotein raised for the child's age, and the file calls it a germ cell tumour. All three are needed for a code without tissue.",
+          "do": [
+            {"act": "opt", "text": "Imaging shows a tumour and the report calls alpha-fetoprotein raised"}
+          ]
+        },
+        {
+          "say": "Result: Germ cell tumor, nonseminomatous, 9065, malignant, at the anterior mediastinum, recorded at basis of diagnosis 4. The workup line records why histology is missing, so the case can be upgraded if tissue arrives.",
+          "do": [
+            {
+              "act": "workup",
+              "attrs": {"i": "0"},
+              "value": "not done"
+            }
+          ]
+        }
+      ],
+      "expect": {
+        "code": "9065",
+        "behavior": "3",
+        "screen": ["Morphology code 9065", "Behavior code /3", "Topography code 381"],
+        "trail": ["Alpha-fetoprotein (AFP) 1850 ng/mL", "Lactate dehydrogenase (LDH) 480 U/L"],
+        "workup": {"Histology": "not done"}
+      }
+    }
+  ]
+}
