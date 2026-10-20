@@ -19,8 +19,8 @@ authoritative for design, engine, data, nodes and REDCap output. Read the router
 before changing any of them.
 
 **In a standalone clone they are absent, and that is expected — it blocks
-nothing in this file.** `README.md` and `docs/` carry the same decisions: the
-three rules and the registrar's thirteen rulings in `README.md`; the per-group
+nothing in this file.** `docs/` carries the same decisions: the
+three rules and the registrar's thirteen rulings in `docs/maintainer_notes.md`; the per-group
 build contracts, build reports, baseline documents and negative controls in
 `docs/`. The tool itself runs with no build step and no vault — see "Run it".
 
@@ -46,7 +46,7 @@ These apply to every session and every subagent working in this repository.
    valid code outside every range still belongs to its major group. Only a code
    ICCC places in a different group is a conflict.
 4. **Jay is the registrar.** Their ruling settles any coding conflict. The
-   thirteen rulings of 4 September 2026 are in `README.md`, which is in this
+   thirteen rulings of 4 September 2026 are in `docs/maintainer_notes.md`, which is in this
    repository, and in full in `../memory/registrar-rulings.md` when the vault is
    present: paediatric verification governs rather than the ICCC range, the
    latest document wins, and the tool shows no warnings.
